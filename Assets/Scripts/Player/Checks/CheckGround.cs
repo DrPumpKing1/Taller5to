@@ -1,0 +1,57 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CheckGround : MonoBehaviour
+{
+    [Header("Components")]
+    [SerializeField] CharacterController characterController;
+
+    [Header("Check Ground Settings")]
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField, Range(0f, 1f)] private float checkGoundRayLenght = 0.1f;
+    [SerializeField, Range(0.01f, 1f)] private float raySphereRadius = 0.1f;
+
+    [Header("Check Slope Settings")]
+    [SerializeField, Range(0f, 1f)] private float checkSlopeRayLength = 0.2f;
+
+    [Header("Debug")]
+    [SerializeField] private bool drawRaycasts;
+
+    public bool IsGrounded { get; private set; }
+    public bool OnSlope { get; private set; } 
+    public Vector3 SlopeNormal { get; private set; }
+
+    private void Update()
+    {
+        IsGrounded = CheckGrounded();
+        OnSlope = CheckSlope();
+    }
+
+    private bool CheckGrounded() => CheckRaycastGrounded() || CheckCharacterControllerGrounded();
+
+    private bool CheckRaycastGrounded()
+    {
+        Vector3 origin = transform.position + characterController.center;
+        float finalRayLength = checkGoundRayLenght + characterController.center.y;
+
+        bool isGrounded = Physics.SphereCast(origin, raySphereRadius, Vector3.down, out RaycastHit groundInfo, finalRayLength, groundLayer);
+
+        if(drawRaycasts) Debug.DrawRay(origin, Vector3.down * (finalRayLength), Color.red);
+
+        return isGrounded;
+    }
+
+    private bool CheckSlope()
+    {
+        Vector3 origin = transform.position + characterController.center;
+        float finalRayLength = checkSlopeRayLength + characterController.center.y;
+
+        bool onSlope = Physics.Raycast(origin, Vector3.down, out RaycastHit hitInfo, finalRayLength, groundLayer);
+        SlopeNormal = hitInfo.normal;
+
+        return onSlope;
+    }
+
+    private bool CheckCharacterControllerGrounded() => characterController.isGrounded;
+}
