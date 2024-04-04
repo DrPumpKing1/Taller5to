@@ -53,15 +53,29 @@ public class PlayerAnimationController : MonoBehaviour
         HandleHorizontalSpeedBlend();
     }
 
+    private void LateUpdate()
+    {
+        HandleTriggerReset();
+    }
+
     private void HandleHorizontalSpeedBlend()
     {
         animator.SetFloat(HORIZONTAL_SPEED_FLOAT, horizontalSpeed);
     }
 
-    private void PlayerJump_OnPlayerJump(object sender, System.EventArgs e) => animator.SetTrigger(JUMP_TRIGGER);
-    private void PlayerFall_OnPlayerFall(object sender, System.EventArgs e) => animator.SetTrigger(FALL_TRIGGER);
+    private void HandleTriggerReset()
+    {
+        //animator.ResetTrigger(JUMP_TRIGGER);
+        animator.ResetTrigger(FALL_TRIGGER);
+        //animator.ResetTrigger(LAND_TRIGGER);
+        animator.ResetTrigger(STAND_DOWN_TRIGGER);
+        animator.ResetTrigger(STAND_UP_TRIGGER);
+    }
+
+    private void PlayerJump_OnPlayerJump(object sender, EventArgs e) => animator.SetTrigger(JUMP_TRIGGER);
+    private void PlayerFall_OnPlayerFall(object sender, EventArgs e) => animator.SetTrigger(FALL_TRIGGER);
     private void PlayerLand_OnPlayerLand(object sender, PlayerLand.OnPlayerLandEventArgs e) => animator.SetTrigger(LAND_TRIGGER);
-    private void PlayerCrouch_OnPlayerStandDown(object sender, System.EventArgs e) => animator.SetTrigger(STAND_DOWN_TRIGGER);
-    private void PlayerCrouch_OnPlayerStandUp(object sender, System.EventArgs e) => animator.SetTrigger(STAND_UP_TRIGGER);
+    private void PlayerCrouch_OnPlayerStandDown(object sender, EventArgs e) => animator.SetTrigger(STAND_DOWN_TRIGGER);
+    private void PlayerCrouch_OnPlayerStandUp(object sender, EventArgs e) => animator.SetTrigger(STAND_UP_TRIGGER);
 
 }
