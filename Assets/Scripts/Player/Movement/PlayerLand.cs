@@ -11,11 +11,22 @@ public class PlayerLand : MonoBehaviour
 
     [Header("Land Settings")]
     [SerializeField, Range(0f, 1.5f)] private float landDetectionHeightThreshold;
+    [SerializeField, Range(1.5f, 3f)] private float hardLandingThreshold;
 
-    public bool IsLanding { get; private set; }
+    [SerializeField, Range(0f, 0.5f)] private float landRecoveryTime;
+    [SerializeField, Range(0f, 0.5f)] private float hardLandRecoveryTime;
+
+    public bool IsRecoveringFromLanding { get; private set; }
+
+    private enum State {Idle, RegularLanding, HardLanding}
+    private State state;
+
     private CharacterController characterController;
     private bool prevoiuslyGrounded;
+    private float timer = 0f;
 
+    public event EventHandler OnPlayerRegularLand;
+    public event EventHandler OnPlayerHardLand;
     public event EventHandler<OnPlayerLandEventArgs> OnPlayerLand;
 
     public class OnPlayerLandEventArgs : EventArgs
@@ -45,12 +56,73 @@ public class PlayerLand : MonoBehaviour
 
     private void HandleLand()
     {
-        if(!prevoiuslyGrounded && checkGround.IsGrounded)
+        switch (state)
         {
-            if (HasSurpassedThreshold()) OnPlayerLand?.Invoke(this, new OnPlayerLandEventArgs { landHeight = CalculateLandHeight(characterController.velocity.y, playerGravityController.GetGravity() )});
+            case State.Idle:
+                IdleLogic();
+                break;
+            case State.RegularLanding:
+                RegularLandingLogic();
+                break;
+            case State.HardLanding:
+                HardLandingLogic();
+                break;
         }
 
         prevoiuslyGrounded = checkGround.IsGrounded;
+    }
+
+    private void SetLandState(State state) { this.state = state; }
+
+    private void IdleLogic()
+    {
+        IsRecoveringFromLanding = false;
+
+        if (!prevoiuslyGrounded && checkGround.IsGrounded)
+        {
+            float landHeight = CalculateLandHeight(characterController.velocity.y, playerGravityController.GetGravity());
+
+            if (HasSurpassedThreshold()) OnPlayerLand?.Invoke(this, new OnPlayerLandEventArgs { landHeight = landHeight});
+
+            ResetTimer();
+
+            if (landHeight >= hardLandingThreshold)
+            {
+                OnPlayerHardLand?.Invoke(this, EventArgs.Empty);
+                SetLandState(State.HardLanding);
+            }
+            else
+            {
+                OnPlayerRegularLand?.Invoke(this, EventArgs.Empty);
+                SetLandState(State.RegularLanding);
+            }
+        }
+    }
+
+    private void RegularLandingLogic()
+    {
+        IsRecoveringFromLanding = true;
+
+        timer += Time.deltaTime;
+
+        if (timer >= landRecoveryTime)
+        {
+            ResetTimer();
+            SetLandState(State.Idle);
+        }
+    }
+
+    private void HardLandingLogic()
+    {
+        IsRecoveringFromLanding = true;
+
+        timer += Time.deltaTime;
+
+        if (timer >= hardLandRecoveryTime)
+        {
+            ResetTimer();
+            SetLandState(State.Idle);
+        }
     }
 
     private float CalculateLandVelocity(float height, float gravity)
@@ -66,4 +138,5 @@ public class PlayerLand : MonoBehaviour
     }
 
     private bool HasSurpassedThreshold() => characterController.velocity.y <= CalculateLandVelocity(landDetectionHeightThreshold, playerGravityController.GetGravity());
+    private void ResetTimer() => timer = 0f;
 }

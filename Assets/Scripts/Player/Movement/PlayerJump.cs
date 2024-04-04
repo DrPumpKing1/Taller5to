@@ -65,17 +65,14 @@ public class PlayerJump : MonoBehaviour
         {
             ResetTimer();
             SetJumpState(State.Impulsing);
+
+            OnPlayerImpulsing?.Invoke(this, EventArgs.Empty);
         }
 
     }
 
     private void ImpulsingLogic()
     {
-        if(timer <= 0f)
-        {
-            OnPlayerImpulsing?.Invoke(this, EventArgs.Empty);
-        }
-
         timer += Time.deltaTime;
 
         if(timer>= impulseTime)

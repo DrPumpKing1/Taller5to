@@ -1030,6 +1030,7 @@ MonoBehaviour:
   playerCrouch: {fileID: 616693934}
   checkGround: {fileID: 1380701025}
   checkWall: {fileID: 1380701023}
+  playerLand: {fileID: 616693938}
   walkSpeed: 2
   sprintSpeed: 5
   crouchSpeed: 1.5
@@ -1142,6 +1143,9 @@ MonoBehaviour:
   checkGround: {fileID: 1380701025}
   playerGravityController: {fileID: 616693935}
   landDetectionHeightThreshold: 0
+  hardLandingThreshold: 1.5
+  landRecoveryTime: 0
+  hardLandRecoveryTime: 0.5
 --- !u!114 &616693939
 MonoBehaviour:
   m_ObjectHideFlags: 0

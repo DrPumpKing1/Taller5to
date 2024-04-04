@@ -10,6 +10,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [SerializeField] private PlayerCrouch playerCrouch;
     [SerializeField] private CheckGround checkGround;
     [SerializeField] private CheckWall checkWall;
+    [SerializeField] private PlayerLand playerLand;
 
     [Header("Speed Settings")]
     [SerializeField] private float walkSpeed = 2f;
@@ -59,6 +60,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
         desiredSpeed = playerCrouch.IsCrouching ? crouchSpeed : desiredSpeed;
         desiredSpeed = DirectionInputVector == Vector2.zero ? 0f : desiredSpeed;
         desiredSpeed = checkWall.HitWall ? 0f: desiredSpeed;
+        desiredSpeed = playerLand.IsRecoveringFromLanding ? 0f : desiredSpeed;
     }
 
     private void SmoothSpeed()
