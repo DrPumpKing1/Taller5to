@@ -12,6 +12,7 @@ public class TestMethodSub : MonoBehaviour
     private void OnEnable()
     {
         playerJump.OnPlayerJump += PlayerJump_OnPlayerJump;
+        playerJump.OnPlayerImpulsing += PlayerJump_OnPlayerImpulsing;
         playerCrouch.OnPlayerStandDown += PlayerCrouch_OnPlayerStandDown;
         playerCrouch.OnPlayerStandUp += PlayerCrouch_OnPlayerStandUp;
         playerFall.OnPlayerFall += PlayerFall_OnPlayerFall;
@@ -41,6 +42,10 @@ public class TestMethodSub : MonoBehaviour
     private void PlayerJump_OnPlayerJump(object sender, System.EventArgs e)
     {
         Debug.Log("Jump");
+    }
+    private void PlayerJump_OnPlayerImpulsing(object sender, System.EventArgs e)
+    {
+        Debug.Log("Impulsing");
     }
 
     private void PlayerFall_OnPlayerFall(object sender, System.EventArgs e)

@@ -12,6 +12,7 @@ public class PlayerLand : MonoBehaviour
     [Header("Land Settings")]
     [SerializeField, Range(0f, 1.5f)] private float landDetectionHeightThreshold;
 
+    public bool IsLanding { get; private set; }
     private CharacterController characterController;
     private bool prevoiuslyGrounded;
 

@@ -12,6 +12,7 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField] private PlayerLand playerLand;
     [SerializeField] private PlayerCrouch playerCrouch;
     [SerializeField] private PlayerInteract playerInteract;
+    [SerializeField] private CheckGround checkGround;
 
     private Animator animator;
 
@@ -26,6 +27,8 @@ public class PlayerAnimationController : MonoBehaviour
     private const string STAND_UP_TRIGGER = "StandUp";
     private const string INTERACT_TRIGGER = "Interact";
 
+    private const string GROUNDED_BOOL = "Grounded";
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -33,7 +36,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void OnEnable()
     {
-        playerJump.OnPlayerJump += PlayerJump_OnPlayerJump;
+        playerJump.OnPlayerImpulsing += PlayerJump_OnPlayerImpulsing;
         playerFall.OnPlayerFall += PlayerFall_OnPlayerFall;
         playerLand.OnPlayerLand += PlayerLand_OnPlayerLand;
         playerCrouch.OnPlayerStandDown += PlayerCrouch_OnPlayerStandDown;
@@ -41,7 +44,7 @@ public class PlayerAnimationController : MonoBehaviour
     }
     private void OnDisable()
     {
-        playerJump.OnPlayerJump -= PlayerJump_OnPlayerJump;
+        playerJump.OnPlayerImpulsing -= PlayerJump_OnPlayerImpulsing;
         playerFall.OnPlayerFall -= PlayerFall_OnPlayerFall;
         playerLand.OnPlayerLand -= PlayerLand_OnPlayerLand;
         playerCrouch.OnPlayerStandDown -= PlayerCrouch_OnPlayerStandDown;
@@ -51,6 +54,7 @@ public class PlayerAnimationController : MonoBehaviour
     private void Update()
     {
         HandleHorizontalSpeedBlend();
+        UpdateBooleans();
     }
 
     private void LateUpdate()
@@ -63,16 +67,21 @@ public class PlayerAnimationController : MonoBehaviour
         animator.SetFloat(HORIZONTAL_SPEED_FLOAT, horizontalSpeed);
     }
 
+    private void UpdateBooleans()
+    {
+        animator.SetBool(GROUNDED_BOOL, checkGround.IsGrounded);
+    }
+
     private void HandleTriggerReset()
     {
         //animator.ResetTrigger(JUMP_TRIGGER);
         animator.ResetTrigger(FALL_TRIGGER);
         //animator.ResetTrigger(LAND_TRIGGER);
-        animator.ResetTrigger(STAND_DOWN_TRIGGER);
-        animator.ResetTrigger(STAND_UP_TRIGGER);
+        //animator.ResetTrigger(STAND_DOWN_TRIGGER);
+        //animator.ResetTrigger(STAND_UP_TRIGGER);
     }
 
-    private void PlayerJump_OnPlayerJump(object sender, EventArgs e) => animator.SetTrigger(JUMP_TRIGGER);
+    private void PlayerJump_OnPlayerImpulsing(object sender, EventArgs e) => animator.SetTrigger(JUMP_TRIGGER);
     private void PlayerFall_OnPlayerFall(object sender, EventArgs e) => animator.SetTrigger(FALL_TRIGGER);
     private void PlayerLand_OnPlayerLand(object sender, PlayerLand.OnPlayerLandEventArgs e) => animator.SetTrigger(LAND_TRIGGER);
     private void PlayerCrouch_OnPlayerStandDown(object sender, EventArgs e) => animator.SetTrigger(STAND_DOWN_TRIGGER);

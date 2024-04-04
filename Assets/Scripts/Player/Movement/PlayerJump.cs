@@ -12,12 +12,18 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private PlayerGravityController playerGravityController;
 
     [Header("Jump Settings")]
+    [SerializeField, Range(0f,0.5f)] private float impulseTime = 0.2f;
     [SerializeField] private float jumpHeight = 5f;
     [SerializeField] private float jumpCooldown = 1f;
 
+    private enum State {Idle, Impulsing, Jump}
+    private State state;
+
     private bool JumpInput => movementInput.GetJump();
     private float jumpCooldownTime = 0f;
+    private float timer = 0f;
 
+    public event EventHandler OnPlayerImpulsing;
     public event EventHandler OnPlayerJump;
 
     private void Start()
@@ -32,6 +38,24 @@ public class PlayerJump : MonoBehaviour
 
     public void HandleJump(ref Vector3 finalMoveVector)
     {
+        switch (state)
+        {
+            case State.Idle:
+                IdleLogic();
+                break;
+            case State.Impulsing:
+                ImpulsingLogic();
+                break;
+            case State.Jump:
+                JumpLogic(ref finalMoveVector);
+                break;
+        }
+    }
+
+    private void SetJumpState(State state) { this.state = state; }
+
+    private void IdleLogic() 
+    {
         HandleJumpCooldown();
 
         if (!checkGround.IsGrounded) return;
@@ -39,11 +63,37 @@ public class PlayerJump : MonoBehaviour
 
         if (JumpInput && !JumpOnCooldown())
         {
-            Jump(ref finalMoveVector);
-            jumpCooldownTime = jumpCooldown;
-
-            OnPlayerJump?.Invoke(this, EventArgs.Empty);
+            ResetTimer();
+            SetJumpState(State.Impulsing);
         }
+
+    }
+
+    private void ImpulsingLogic()
+    {
+        if(timer <= 0f)
+        {
+            OnPlayerImpulsing?.Invoke(this, EventArgs.Empty);
+        }
+
+        timer += Time.deltaTime;
+
+        if(timer>= impulseTime)
+        {
+            ResetTimer();
+            SetJumpState(State.Jump);
+        }
+    }
+
+    private void JumpLogic(ref Vector3 finalMoveVector)
+    {
+        OnPlayerJump?.Invoke(this, EventArgs.Empty);
+
+        Jump(ref finalMoveVector);
+        jumpCooldownTime = jumpCooldown;
+
+        ResetTimer();
+        SetJumpState(State.Idle);
     }
 
     private void Jump(ref Vector3 finalMoveVector)
@@ -59,8 +109,11 @@ public class PlayerJump : MonoBehaviour
 
     private void HandleJumpCooldown()
     {
+        if (!checkGround.IsGrounded) return;
         jumpCooldownTime = jumpCooldownTime > 0f ? jumpCooldownTime-=Time.deltaTime : 0f;
     }
 
     private bool JumpOnCooldown() => jumpCooldownTime > 0f;
+    private void ResetTimer() => timer = 0f;
+
 }
