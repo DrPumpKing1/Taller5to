@@ -958,6 +958,7 @@ GameObject:
   - component: {fileID: 616693937}
   - component: {fileID: 616693933}
   - component: {fileID: 616693936}
+  - component: {fileID: 616693940}
   - component: {fileID: 616693938}
   - component: {fileID: 616693934}
   - component: {fileID: 616693935}
@@ -1134,7 +1135,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 616693930}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01a93250d895c6e49a0e3df3386a9401, type: 3}
+  m_Script: {fileID: 11500000, guid: 6da5b9fc5735807418b3e262cb2b0669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   checkGround: {fileID: 1380701025}
@@ -1162,6 +1163,20 @@ MonoBehaviour:
   interactionSphereRadius: 0.5
   drawRaycasts: 1
   IsInteracting: 0
+--- !u!114 &616693940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616693930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1098479ba1dcc0b4bbd9bed9000784e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkGround: {fileID: 1380701025}
+  playerGravityController: {fileID: 616693935}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1296,6 +1311,7 @@ MonoBehaviour:
   playerJump: {fileID: 616693936}
   playerCrouch: {fileID: 616693934}
   playerLand: {fileID: 616693938}
+  playerFall: {fileID: 616693940}
 --- !u!1 &733943669
 GameObject:
   m_ObjectHideFlags: 0

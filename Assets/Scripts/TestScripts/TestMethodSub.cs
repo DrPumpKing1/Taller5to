@@ -7,12 +7,14 @@ public class TestMethodSub : MonoBehaviour
     [SerializeField] private PlayerJump playerJump;
     [SerializeField] private PlayerCrouch playerCrouch;
     [SerializeField] private PlayerLand playerLand;
+    [SerializeField] private PlayerFall playerFall;
 
     private void OnEnable()
     {
         playerJump.OnPlayerJump += PlayerJump_OnPlayerJump;
         playerCrouch.OnPlayerCrouch += PlayerCrouch_OnPlayerCrouch;
         playerCrouch.OnPlayerStandUp += PlayerCrouch_OnPlayerStandUp;
+        playerFall.OnPlayerFall += PlayerFall_OnPlayerFall;
         playerLand.OnPlayerLand += PlayerLand_OnPlayerLand;
     }
 
@@ -21,6 +23,7 @@ public class TestMethodSub : MonoBehaviour
         playerJump.OnPlayerJump -= PlayerJump_OnPlayerJump;
         playerCrouch.OnPlayerCrouch -= PlayerCrouch_OnPlayerCrouch;
         playerCrouch.OnPlayerStandUp -= PlayerCrouch_OnPlayerStandUp;
+        playerFall.OnPlayerFall -= PlayerFall_OnPlayerFall;
         playerLand.OnPlayerLand -= PlayerLand_OnPlayerLand;
 
     }
@@ -40,6 +43,10 @@ public class TestMethodSub : MonoBehaviour
         Debug.Log("Jump");
     }
 
+    private void PlayerFall_OnPlayerFall(object sender, System.EventArgs e)
+    {
+        Debug.Log("Fall");
+    }
 
     private void PlayerLand_OnPlayerLand(object sender, PlayerLand.OnPlayerLandEventArgs e)
     {

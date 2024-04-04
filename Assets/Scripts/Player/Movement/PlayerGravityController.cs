@@ -13,16 +13,9 @@ public class PlayerGravityController : MonoBehaviour
 
     private CharacterController characterController;
 
-    public bool IsFalling { get; private set; }
-
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-    }
-
-    private void Update()
-    {
-        IsFalling = CheckIsFalling();
     }
 
     public void ApplyGravity(ref Vector3 finalMoveVector)
@@ -39,6 +32,4 @@ public class PlayerGravityController : MonoBehaviour
 
     public float GetGravityMultiplier() => gravityMultiplier;
     public float GetGravity() => Physics.gravity.y * gravityMultiplier;
-
-    private bool CheckIsFalling() => !checkGround.IsGrounded && characterController.velocity.y < 0f;
 }

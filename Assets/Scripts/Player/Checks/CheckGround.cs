@@ -18,8 +18,8 @@ public class CheckGround : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool drawRaycasts;
 
-    public bool IsGrounded { get; private set; }
-    public bool OnSlope { get; private set; } 
+    public bool IsGrounded { get; private set; } = false;
+    public bool OnSlope { get; private set; } = false;
     public Vector3 SlopeNormal { get; private set; }
 
     private void Update()
