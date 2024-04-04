@@ -30,7 +30,7 @@ public class PlayerCrouch : MonoBehaviour
     private float stateStartingHeight;
     private float timer = 0f;
 
-    public event EventHandler OnPlayerCrouch;
+    public event EventHandler OnPlayerStandDown;
     public event EventHandler OnPlayerStandUp;
 
     private void Awake()
@@ -107,7 +107,7 @@ public class PlayerCrouch : MonoBehaviour
                 stateStartingHeight = characterController.height;
                 ResetTimer();
 
-                OnPlayerCrouch?.Invoke(this, EventArgs.Empty);
+                OnPlayerStandDown?.Invoke(this, EventArgs.Empty);
             }
 
             if (timer < crouchTransitionDuration)

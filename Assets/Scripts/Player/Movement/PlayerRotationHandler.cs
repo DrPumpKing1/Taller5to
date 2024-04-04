@@ -84,7 +84,7 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void DefineDesiredFacingDirection()
     {
-        if (CanChangeDirectionDueToMovement() && respondToMovement) desiredFacingDirection = GeneralMethods.DirectionToVector3(DirectionInput);
+        if (CanChangeDirectionDueToMovement() && respondToMovement) desiredFacingDirection = GeneralMethods.Vector2ToVector3(DirectionInput);
     }
     private bool CanChangeDirectionDueToMovement() => directionHoldingTimer >= holdDirectionThresholdTime;
 

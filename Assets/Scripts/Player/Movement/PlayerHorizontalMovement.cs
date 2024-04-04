@@ -78,7 +78,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     private void CalculateDesiredMovementDirection()
     {
-        Vector3 moveDirection = GeneralMethods.DirectionToVector3(smoothDirectionInputVector);
+        Vector3 moveDirection = GeneralMethods.Vector2ToVector3(smoothDirectionInputVector);
         Vector3 flattenDir = FlattenVectorOnSlopes(moveDirection);
 
         FinalMoveDir = flattenDir;

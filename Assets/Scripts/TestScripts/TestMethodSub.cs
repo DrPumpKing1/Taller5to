@@ -12,7 +12,7 @@ public class TestMethodSub : MonoBehaviour
     private void OnEnable()
     {
         playerJump.OnPlayerJump += PlayerJump_OnPlayerJump;
-        playerCrouch.OnPlayerCrouch += PlayerCrouch_OnPlayerCrouch;
+        playerCrouch.OnPlayerStandDown += PlayerCrouch_OnPlayerStandDown;
         playerCrouch.OnPlayerStandUp += PlayerCrouch_OnPlayerStandUp;
         playerFall.OnPlayerFall += PlayerFall_OnPlayerFall;
         playerLand.OnPlayerLand += PlayerLand_OnPlayerLand;
@@ -21,7 +21,7 @@ public class TestMethodSub : MonoBehaviour
     private void OnDisable()
     {
         playerJump.OnPlayerJump -= PlayerJump_OnPlayerJump;
-        playerCrouch.OnPlayerCrouch -= PlayerCrouch_OnPlayerCrouch;
+        playerCrouch.OnPlayerStandDown -= PlayerCrouch_OnPlayerStandDown;
         playerCrouch.OnPlayerStandUp -= PlayerCrouch_OnPlayerStandUp;
         playerFall.OnPlayerFall -= PlayerFall_OnPlayerFall;
         playerLand.OnPlayerLand -= PlayerLand_OnPlayerLand;
@@ -33,9 +33,9 @@ public class TestMethodSub : MonoBehaviour
         Debug.Log("StandUp");
     }
 
-    private void PlayerCrouch_OnPlayerCrouch(object sender, System.EventArgs e)
+    private void PlayerCrouch_OnPlayerStandDown(object sender, System.EventArgs e)
     {
-        Debug.Log("Crouch");
+        Debug.Log("StandDown");
     }
 
     private void PlayerJump_OnPlayerJump(object sender, System.EventArgs e)

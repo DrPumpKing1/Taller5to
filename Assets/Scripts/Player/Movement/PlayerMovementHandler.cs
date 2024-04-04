@@ -35,7 +35,7 @@ public class PlayerMovementHandler : MonoBehaviour
 
     private float GetHorizontalMovementMagnitude()
     {
-        Vector2 horizontalMovementVector = new Vector2(finalMoveVector.x, finalMoveVector.z);
+        Vector2 horizontalMovementVector = GeneralMethods.Vector3ToVector2(finalMoveVector);
         return horizontalMovementVector.magnitude;
     }
 }
