@@ -14,6 +14,7 @@ public interface IInteractable
     public void FailInteract();
     public void OnSelection();
     public void OnDeselection();
+    public void DecreaseUses();
     public Transform GetTransform();
 
     public bool IsSelectable { get; }

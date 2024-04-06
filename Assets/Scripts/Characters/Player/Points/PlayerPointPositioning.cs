@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PetOrbitPointPositioning : MonoBehaviour
+public class PlayerPointPositioning : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private CharacterController characterController;

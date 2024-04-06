@@ -16,7 +16,7 @@ public abstract class InteractionInput : MonoBehaviour, IInteractionInput
     {
         if (Instance != null)
         {
-            Debug.LogError("There is more than one CameraInput instance");
+            Debug.LogError("There is more than one InteractionInput instance");
         }
 
         Instance = this;

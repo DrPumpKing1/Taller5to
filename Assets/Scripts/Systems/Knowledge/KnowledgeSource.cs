@@ -1,17 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-public class TestHoldInteractable : MonoBehaviour, IHoldInteractable
+public class KnowledgeSource : MonoBehaviour, IInteractable
 {
+    [SerializeField] private KnowledgeSourceSO knowledgeSourceSO;
+
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
-
-    [Space]
-    [SerializeField] private bool holdInteract;
-    [SerializeField] private float holdDuration;
 
     [Space]
     [SerializeField] private bool infiniteUses;
@@ -24,7 +22,6 @@ public class TestHoldInteractable : MonoBehaviour, IHoldInteractable
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public string TooltipMessage => tooltipMessage;
-    public float HoldDuration => holdDuration;
     public bool InfiniteUses => infiniteUses;
     public int UseTimes => useTimes;
 
@@ -41,9 +38,20 @@ public class TestHoldInteractable : MonoBehaviour, IHoldInteractable
         remainingUses = useTimes;
     }
 
-    #region IInteractable
+
+    private void AddKnowledgeToDialects() 
+    { 
+        foreach(DialectKnowledge dialectKnowledgePercentageChange in knowledgeSourceSO.dialectKnowledgePercentageChanges)
+        {
+            KnowledgeManager.Instance.ChangeKnowledge(dialectKnowledgePercentageChange.dialect, dialectKnowledgePercentageChange.percentage);
+        }
+    }
+
+    #region  IInteractable
     public void Interact()
     {
+        AddKnowledgeToDialects();
+
         Debug.Log(gameObject.name + " Interacted");
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
@@ -56,13 +64,21 @@ public class TestHoldInteractable : MonoBehaviour, IHoldInteractable
         OnObjectFailInteracted?.Invoke(this, EventArgs.Empty);
     }
 
-    public void OnDeselection() => Debug.Log(gameObject.name + " Deselected");
+    public void OnSelection()
+    {
+        //Enable some UI feedback
+        Debug.Log(gameObject.name + " Selected");
+    }
 
-    public void OnSelection() => Debug.Log(gameObject.name + " Selected");
+    public void OnDeselection()
+    {
+        //Disable some UI feedback
+        Debug.Log(gameObject.name + " Deselected");
+    }
 
     public void TryInteract()
     {
-        if (IsInteractable) Interact();
+        if (isInteractable) Interact();
         else FailInteract();
     }
 
@@ -73,9 +89,9 @@ public class TestHoldInteractable : MonoBehaviour, IHoldInteractable
         remainingUses--;
 
         if (remainingUses <= 0) isInteractable = false;
-
     }
-    public Transform GetTransform() => transform;
-    #endregion
 
+    public Transform GetTransform() => transform;
+
+    #endregion
 }

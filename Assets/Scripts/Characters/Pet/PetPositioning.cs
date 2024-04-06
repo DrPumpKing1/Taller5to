@@ -37,7 +37,7 @@ public class PetPositioning : MonoBehaviour
 
     private void DefineDesiredDirectionVectorAndRadius()
     {
-        Vector3 dirVector = safePositionVector.normalized;
+        Vector3 dirVector = safePositionVector; //.normalized
         float radius = safeOrbitRadius;
 
         foreach (Vector3 directionVector in preferredDirectionVectors)
@@ -66,7 +66,7 @@ public class PetPositioning : MonoBehaviour
     {
         if (worldPreferredPosition.magnitude == 0f) return refferenceTransform.up;
 
-        Vector3 preferredVector = refferenceTransform.TransformDirection(worldPreferredPosition).normalized;
+        Vector3 preferredVector = refferenceTransform.TransformDirection(worldPreferredPosition); //.normalized
 
         return preferredVector;
     }

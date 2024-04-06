@@ -10,10 +10,6 @@ public class TestInteractable : MonoBehaviour, IInteractable
     [SerializeField] private bool isInteractable;
 
     [Space]
-    [SerializeField] private bool holdInteract;
-    [SerializeField] private float holdDuration;
-
-    [Space]
     [SerializeField] private bool infiniteUses;
     [SerializeField, Range(1, 100)] private int useTimes;
     private int remainingUses;
@@ -40,12 +36,13 @@ public class TestInteractable : MonoBehaviour, IInteractable
         remainingUses = useTimes;
     }
 
-    public Transform GetTransform() => transform;
-
+    #region IInteractable
     public void Interact()
     {
         Debug.Log(gameObject.name + " Interacted");
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
+
+        DecreaseUses();
     }
 
     public void FailInteract()
@@ -63,4 +60,16 @@ public class TestInteractable : MonoBehaviour, IInteractable
         if (IsInteractable) Interact();
         else FailInteract();
     }
+
+    public void DecreaseUses()
+    {
+        if (infiniteUses) return;
+
+        remainingUses--;
+
+        if (remainingUses <= 0) isInteractable = false;
+    }
+    public Transform GetTransform() => transform;
+
+    #endregion
 }
