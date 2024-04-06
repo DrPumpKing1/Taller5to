@@ -19,7 +19,7 @@ public class PlayerRotationHandler : MonoBehaviour
     [Header("Hold Settings")]
     [SerializeField, Range (0f, 0.1f)] private float holdDirectionThresholdTime;
 
-    private Vector2 DirectionInput => playerHorizontalMovement.LastNonZeroInput;
+    private Vector2 DirectionInput => playerHorizontalMovement.FixedLastNonZeroInput;
     private Vector3 desiredFacingDirection;
     public Vector3 FacingDirection { get; private set; }
 

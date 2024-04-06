@@ -32,6 +32,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     private Vector2 smoothDirectionInputVector;
     public Vector2 LastNonZeroInput { get; private set; }
+    public Vector2 FixedLastNonZeroInput { get; private set; }
     public Vector3 FinalMoveDir { get; private set; }
     public Vector3 SmoothFinalMoveDir { get; private set; }
 
@@ -46,6 +47,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
         SmoothSpeed();
 
         CalculateLastNonZeroDirectionInput();
+        FixDirectionVectorDueToWalls();
         SmoothDirectionInputVector();
 
         CalculateDesiredMovementDirection();
@@ -75,6 +77,25 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private bool IsRunning() => SprintInput && CanRun();
 
     private void CalculateLastNonZeroDirectionInput() => LastNonZeroInput = DirectionInputVector != Vector2.zero ? DirectionInputVector : LastNonZeroInput;
+
+    private void FixDirectionVectorDueToWalls()
+    {
+        if (checkWall.HitDiagonalWall)
+        {
+            Vector3 wallNormal = checkWall.GetDiagonalWallInfo().normal;
+
+            Vector3 vector3LastNonZeroInput = GeneralMethods.Vector2ToVector3(LastNonZeroInput);
+            Vector3 proyection = Vector3.Project(vector3LastNonZeroInput, wallNormal);
+            Vector3 perpendicularProyection = vector3LastNonZeroInput - proyection;
+
+            Vector2 vector2PerpendicularProyection = GeneralMethods.Vector3ToVector2(perpendicularProyection);
+
+            FixedLastNonZeroInput = vector2PerpendicularProyection.normalized;
+            return;
+        }
+
+        FixedLastNonZeroInput = LastNonZeroInput;
+    }
 
     private void SmoothDirectionInputVector() => smoothDirectionInputVector = Vector2.Lerp(smoothDirectionInputVector, DirectionInputVector, Time.deltaTime * smoothDirectionInputFactor);
 

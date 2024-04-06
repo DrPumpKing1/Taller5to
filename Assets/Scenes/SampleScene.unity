@@ -1373,7 +1373,7 @@ MonoBehaviour:
     m_Bits: 512
   interactionRayLenght: 1.5
   interactionSphereRadius: 0.5
-  drawRaycasts: 1
+  drawRaycasts: 0
   IsInteracting: 0
 --- !u!114 &616693940
 MonoBehaviour:
@@ -3099,9 +3099,10 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 1
-  rayObstacleLength: 0.4
-  rayObstacleSphereRadius: 0.2
-  drawRaycasts: 0
+  rayLength: 0.4
+  raySphereRadius: 0.2
+  diagonalRayLength: 1
+  drawRaycasts: 1
 --- !u!114 &1380701024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3119,7 +3120,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   useCharacterControllerValues: 1
-  rayLength: 0.6
+  rayLength: 0.75
   raySphereRadius: 0.2
   drawRaycasts: 0
 --- !u!114 &1380701025
