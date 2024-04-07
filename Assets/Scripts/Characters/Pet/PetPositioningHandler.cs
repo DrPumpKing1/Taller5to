@@ -6,6 +6,7 @@ using UnityEngine;
 public class PetPositioningHandler : MonoBehaviour
 {
     [Header("Components")]
+    [SerializeField] private PetPlayerAttachment petPlayerAttachment;
     [SerializeField] private Transform orbitPoint;
 
     [Header("Orbit Positioning Settings")]
@@ -27,6 +28,9 @@ public class PetPositioningHandler : MonoBehaviour
 
     private Vector3 targetDirectionVector;
     private Vector3 desiredPosition;
+
+    private bool AttachToPlayer => petPlayerAttachment.AttachToPlayer;
+
     private void Update()
     {
         HandlePositioning();
@@ -34,7 +38,7 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void HandlePositioning()
     {
-        if (!orbitPoint) return;
+        if (!AttachToPlayer) return;
 
         DefineDesiredDirectionVectorAndRadius();
         CalculateTargetDirectionVector();

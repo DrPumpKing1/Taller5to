@@ -2984,6 +2984,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1177506239}
+  - component: {fileID: 1177506241}
   - component: {fileID: 1177506240}
   m_Layer: 8
   m_Name: Pet
@@ -3021,6 +3022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0239925ee9a7d6d449781ed6aad073b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  petPlayerAttachment: {fileID: 1177506241}
   orbitPoint: {fileID: 228814066}
   orbitRadius: 1.5
   smoothPositionSpeedFactor: 2.5
@@ -3048,6 +3050,19 @@ MonoBehaviour:
   collisionLayers:
     serializedVersion: 2
     m_Bits: 193
+--- !u!114 &1177506241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177506238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20991ddc844fd12489fccefacc94553a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attachToPlayer: 1
 --- !u!1 &1184970366
 GameObject:
   m_ObjectHideFlags: 0
@@ -3393,6 +3408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dc6957442b2ff44c901a68ac7348775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  petPlayerAttachment: {fileID: 1177506241}
   playerRotationHandler: {fileID: 1959200772}
   playerInteract: {fileID: 616693939}
   smoothRotateFactor: 5

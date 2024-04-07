@@ -5,6 +5,7 @@ using UnityEngine;
 public class PetRotationHandler : MonoBehaviour
 {
     [Header("Components")]
+    [SerializeField] private PetPlayerAttachment petPlayerAttachment;
     [SerializeField] private PlayerRotationHandler playerRotationHandler;
     [SerializeField] private PlayerInteract playerInteract;
 
@@ -15,6 +16,8 @@ public class PetRotationHandler : MonoBehaviour
     [SerializeField] private bool applyStartingRotation;
     [SerializeField] private Vector3 startingFacingDirection;
 
+    private bool AttachToPlayer => petPlayerAttachment.AttachToPlayer;
+
     private Vector3 PlayerFacingDirection => playerRotationHandler.FacingDirection;
     public Vector3 FacingDirection { get; private set; }
 
@@ -23,16 +26,12 @@ public class PetRotationHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!playerInteract) return;
-
         playerInteract.OnInteractionStarted += PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;
     }
 
     private void OnDisable()
     {
-        if (!playerInteract) return;
-
         playerInteract.OnInteractionStarted -= PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded -= PlayerInteract_OnInteractionEnded;
     }
@@ -44,8 +43,15 @@ public class PetRotationHandler : MonoBehaviour
 
     private void Update()
     {
-        DefineDesiredFacingDirection();
         HandleRotation();
+    }
+
+    private void HandleRotation()
+    {
+        if (!AttachToPlayer) return;
+
+        DefineDesiredFacingDirection();
+        ApplyRotation();
     }
 
     private void InitializeVariables()
@@ -65,7 +71,7 @@ public class PetRotationHandler : MonoBehaviour
         if (respondToPlayerFacingDirection && playerRotationHandler) desiredFacingDirection = PlayerFacingDirection;
     }
 
-    private void HandleRotation()
+    private void ApplyRotation()
     {
         if (desiredFacingDirection.magnitude <= 0f) return;
 
