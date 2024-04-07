@@ -21,6 +21,19 @@ public class TestInteractable : MonoBehaviour, IInteractable
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
 
     #region IInteractable
+    public void Select() => Debug.Log(gameObject.name + " Selected");
+    public void Deselect() => Debug.Log(gameObject.name + " Deselected");
+    public void TryInteract()
+    {
+        if (hasAlreadyBeenInteracted)
+        {
+            AlreadyInteracted();
+            return;
+        }
+
+        if (IsInteractable) Interact();
+        else FailInteract();
+    }
     public void Interact()
     {
         Debug.Log(gameObject.name + " Interacted");
@@ -28,35 +41,16 @@ public class TestInteractable : MonoBehaviour, IInteractable
 
         hasAlreadyBeenInteracted = true;
     }
-
     public void FailInteract()
     {
         Debug.Log(gameObject.name + " Fail Interacted");
         OnObjectFailInteracted?.Invoke(this, EventArgs.Empty);
     }
-    public void OnHasAlreadyBeenInteracted()
+    public void AlreadyInteracted()
     {
         Debug.Log(gameObject.name + " Has Already Been Interacted");
         OnObjectHasAlreadyBeenInteracted?.Invoke(this, EventArgs.Empty);
     }
-
-    public void OnDeselection() => Debug.Log(gameObject.name + " Deselected");
-
-    public void OnSelection() => Debug.Log(gameObject.name + " Selected");
-
-    public void TryInteract()
-    {
-        if (hasAlreadyBeenInteracted)
-        {
-            OnHasAlreadyBeenInteracted();
-            return;
-        }
-
-        if (IsInteractable) Interact();
-        else FailInteract();
-    }
-
     public Transform GetTransform() => transform;
-
     #endregion
 }

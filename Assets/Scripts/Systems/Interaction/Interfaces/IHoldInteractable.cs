@@ -5,4 +5,6 @@ using UnityEngine;
 public interface IHoldInteractable : IInteractable
 {
     public float HoldDuration { get; }
+
+    public bool CheckSuccess();
 }

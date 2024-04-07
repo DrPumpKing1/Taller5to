@@ -47,19 +47,19 @@ public class KnowledgeSource : MonoBehaviour, IInteractable
         OnObjectFailInteracted?.Invoke(this, EventArgs.Empty);
     }
 
-    public void OnHasAlreadyBeenInteracted()
+    public void AlreadyInteracted()
     {
         Debug.Log(gameObject.name + " Has Already Been Interacted");
         OnObjectHasAlreadyBeenInteracted?.Invoke(this, EventArgs.Empty);
     }
 
-    public void OnSelection()
+    public void Select()
     {
         //Enable some UI feedback
         Debug.Log(gameObject.name + " Selected");
     }
 
-    public void OnDeselection()
+    public void Deselect()
     {
         //Disable some UI feedback
         Debug.Log(gameObject.name + " Deselected");
@@ -69,7 +69,7 @@ public class KnowledgeSource : MonoBehaviour, IInteractable
     {
         if (hasAlreadyBeenInteracted)
         {
-            OnHasAlreadyBeenInteracted();
+            AlreadyInteracted();
             return;
         }
 

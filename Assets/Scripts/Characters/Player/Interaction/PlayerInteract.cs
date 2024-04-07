@@ -130,7 +130,7 @@ public class PlayerInteract : MonoBehaviour
     {
         curentInteractable = interactable;
 
-        interactable.OnSelection();
+        interactable.Select();
         OnInteractableSelected?.Invoke(this, new OnInteractionEventArgs { interactable = interactable });
 
         //Debug.Log("Selected");
@@ -139,7 +139,7 @@ public class PlayerInteract : MonoBehaviour
     {
         curentInteractable = null;
 
-        interactable.OnDeselection();
+        interactable.Deselect();
         OnInteractableDeselected?.Invoke(this, new OnInteractionEventArgs { interactable = interactable });
 
         ResetInteractions();
@@ -168,7 +168,7 @@ public class PlayerInteract : MonoBehaviour
         
     }
 
-    private void HandleHoldInteractions(IHoldInteractable holdInteractable )
+    private void HandleHoldInteractions(IHoldInteractable holdInteractable)
     {  
         if (InteractionDownInput) inputDownToHold = true;
 
@@ -180,22 +180,10 @@ public class PlayerInteract : MonoBehaviour
                 IsInteracting = true;
             }
 
-            #region Optional if inmediate FailInteract after start holding if !IsInteractable
-            if (!curentInteractable.IsInteractable)
+            #region Optional to check if interaction will be successfull and execute FailInteract, OnHasAlreadyBeenInteracted,etc methods if won't. (Only One and ordered by priority)
+            if (!holdInteractable.CheckSuccess())
             {
-                curentInteractable.FailInteract();
-                OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = curentInteractable });
-
-                ResetInteractions();
-            }
-            #endregion
-
-            #region Optional if inmediate OnHasAlreadyBeenInteracted after start holding if HasAlreadyBeenInteracted
-            if (curentInteractable.HasAlreadyBeenInteracted)
-            {
-                curentInteractable.OnHasAlreadyBeenInteracted();
-                OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = curentInteractable });
-
+                OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
                 ResetInteractions();
             }
             #endregion
