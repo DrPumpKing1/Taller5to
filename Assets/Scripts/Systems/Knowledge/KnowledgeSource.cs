@@ -11,8 +11,6 @@ public class KnowledgeSource : MonoBehaviour, IInteractable
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
-
-    [Space]
     [SerializeField] private string tooltipMessage;
 
     public bool IsSelectable => canBeSelected;

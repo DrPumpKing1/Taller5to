@@ -20,7 +20,7 @@ public class PlayerInteract : MonoBehaviour
 
     private bool InteractionDownInput => interactionInput.GetInteractionDown();
     private bool InteractionHoldInput => interactionInput.GetInteractionHold();
-    private Vector3 interactionDirection => playerRotationHandler.FacingDirection;
+    private Vector3 InteractionDirection => playerRotationHandler.FacingDirection;
 
     public bool IsInteracting;
 
@@ -91,9 +91,9 @@ public class PlayerInteract : MonoBehaviour
     private IInteractable CheckForInteractable()
     {
         Vector3 origin = transform.position + characterController.center;
-        RaycastHit[] hits = Physics.SphereCastAll(origin, interactionSphereRadius, interactionDirection, interactionRayLenght, interactionLayer);
+        RaycastHit[] hits = Physics.SphereCastAll(origin, interactionSphereRadius, InteractionDirection, interactionRayLenght, interactionLayer);
 
-        if (drawRaycasts) Debug.DrawRay(origin, interactionDirection * interactionRayLenght, Color.yellow);
+        if (drawRaycasts) Debug.DrawRay(origin, InteractionDirection * interactionRayLenght, Color.yellow);
 
         if (hits.Length == 0) return null;
 

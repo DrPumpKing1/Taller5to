@@ -101,4 +101,6 @@ public class KnowledgeManager : MonoBehaviour
 
         return null;
     }
+
+    public List<DialectKnowledge> GetDialectKnowledges() => dialectKnowledges;
 }

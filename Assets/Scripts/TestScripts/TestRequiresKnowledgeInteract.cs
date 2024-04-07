@@ -1,9 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class TestInteractable : MonoBehaviour, IInteractable
+public class TestRequiresKnowledgeInteract : MonoBehaviour, IInteractable, IRequiresKnowledge
 {
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
@@ -11,10 +11,15 @@ public class TestInteractable : MonoBehaviour, IInteractable
     [SerializeField] private bool hasAlreadyBeenInteracted;
     [SerializeField] private string tooltipMessage;
 
+    [Header("Requires Knowledge Settings")]
+    [SerializeField] private List<DialectKnowledge> dialectKnowledgeRequirements = new List<DialectKnowledge>(Enum.GetValues(typeof(Dialect)).Length);
+
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
+
+    public List<DialectKnowledge> DialectKnowledges => dialectKnowledgeRequirements;
 
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
@@ -52,11 +57,29 @@ public class TestInteractable : MonoBehaviour, IInteractable
             return;
         }
 
-        if (IsInteractable) Interact();
+        if (IsInteractable && MeetsKnowledgeRequirements()) Interact();
         else FailInteract();
     }
 
     public Transform GetTransform() => transform;
 
+    #endregion
+
+    #region IRequiresKnowledge
+    public bool MeetsKnowledgeRequirements()
+    {
+        foreach (DialectKnowledge dialectKnowledge in KnowledgeManager.Instance.GetDialectKnowledges())
+        {
+            foreach (DialectKnowledge dialectKnowledgeRequirement in dialectKnowledgeRequirements)
+            {
+                if (dialectKnowledge.dialect == dialectKnowledgeRequirement.dialect)
+                {
+                    if (dialectKnowledge.level < dialectKnowledgeRequirement.level) return false;
+                }
+            }
+        }
+
+        return true;
+    }
     #endregion
 }
