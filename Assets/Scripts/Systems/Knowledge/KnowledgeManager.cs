@@ -7,7 +7,8 @@ public class KnowledgeManager : MonoBehaviour
 {
     public static KnowledgeManager Instance { get; private set; }
 
-    [SerializeField] private List<DialectKnowledge> dialectKnowledge = new List<DialectKnowledge>(Enum.GetValues(typeof(Dialect)).Length);
+    [SerializeField] private List<DialectKnowledge> dialectKnowledges = new List<DialectKnowledge>(Enum.GetValues(typeof(Dialect)).Length);
+    [SerializeField] private KnowledgeSettingsSO startingKnowledgeSettingsSO;
 
     public EventHandler<OnKnowledgeChangedEventArgs> OnKnowledgeChanged;
     public EventHandler<OnKnowledgeChangedEventArgs> OnKnowledgeIncreased;
@@ -24,6 +25,11 @@ public class KnowledgeManager : MonoBehaviour
         SetSingleton();
     }
 
+    private void Start()
+    {
+        CopySettings(startingKnowledgeSettingsSO);
+    }
+
     private void SetSingleton()
     {
         if (Instance != null)
@@ -34,15 +40,30 @@ public class KnowledgeManager : MonoBehaviour
         Instance = this;
     }
 
+    private void CopySettings(KnowledgeSettingsSO knowledgeSettingsSO)
+    {
+        foreach (DialectKnowledge dialectKnowledgeSetting in knowledgeSettingsSO.dialectKnowledgeSettings)
+        {
+            foreach(DialectKnowledge dialectKnowledge in dialectKnowledges)
+            {
+                if(dialectKnowledge.dialect == dialectKnowledgeSetting.dialect)
+                {
+                    dialectKnowledge.percentage = dialectKnowledgeSetting.percentage;
+                    break;
+                }
+            }
+        }
+    }
+
     public void ChangeKnowledge(Dialect dialect, float percentage)
     {
         if (percentage == 0f) return;
 
-        DialectKnowledge dialectKnowledge = GetDialectKnowledgePercentageByDialect(dialect);
+        DialectKnowledge dialectKnowledge = GetDialectKnowledgeByDialect(dialect);
 
         if (dialectKnowledge == null)
         {
-            Debug.Log($"Dialect {dialect} not found, addition will be ignored");
+            Debug.Log($"Dialect {dialect} not found, change will be ignored");
             return;
         }
 
@@ -72,11 +93,11 @@ public class KnowledgeManager : MonoBehaviour
         OnKnowledgeDecreased?.Invoke(this, new OnKnowledgeChangedEventArgs { dialect = dialectKnowledge.dialect, percentage = absolutePercentage });
     }
 
-    private DialectKnowledge GetDialectKnowledgePercentageByDialect(Dialect dialect)
+    private DialectKnowledge GetDialectKnowledgeByDialect(Dialect dialect)
     {
-        foreach (DialectKnowledge dialectKnowledgePercentage in dialectKnowledge)
+        foreach (DialectKnowledge dialectKnowledge in dialectKnowledges)
         {
-            if (dialectKnowledgePercentage.dialect == dialect) return dialectKnowledgePercentage;
+            if (dialectKnowledge.dialect == dialect) return dialectKnowledge;
         }
 
         return null;

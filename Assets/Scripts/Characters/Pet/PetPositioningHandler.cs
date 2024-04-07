@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PetPositioning : MonoBehaviour
+public class PetPositioningHandler : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Transform orbitPoint;
@@ -29,6 +29,13 @@ public class PetPositioning : MonoBehaviour
     private Vector3 desiredPosition;
     private void Update()
     {
+        HandlePositioning();
+    }
+
+    private void HandlePositioning()
+    {
+        if (!orbitPoint) return;
+
         DefineDesiredDirectionVectorAndRadius();
         CalculateTargetDirectionVector();
         CalculateTargetPosition();

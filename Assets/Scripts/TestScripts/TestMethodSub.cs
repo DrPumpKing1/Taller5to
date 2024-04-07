@@ -55,6 +55,8 @@ public class TestMethodSub : MonoBehaviour
 
     private void PlayerLand_OnPlayerLand(object sender, PlayerLand.OnPlayerLandEventArgs e)
     {
+        if (e.landHeight <= 0) return;
+
         Debug.Log("Land");
         Debug.Log(e.landHeight);
     }

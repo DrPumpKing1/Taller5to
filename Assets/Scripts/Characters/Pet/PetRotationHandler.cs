@@ -1,41 +1,38 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRotationHandler : MonoBehaviour
+public class PetRotationHandler : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private PlayerHorizontalMovement playerHorizontalMovement;
+    [SerializeField] private PlayerRotationHandler playerRotationHandler;
     [SerializeField] private PlayerInteract playerInteract;
 
     [Header("Rotation Settings")]
-    [SerializeField, Range(1f, 100f)] private float smoothRotateFactor = 10f;
+    [SerializeField, Range(1f, 100f)] private float smoothRotateFactor = 5f;
 
     [Header("Starting Rotation Settings")]
     [SerializeField] private bool applyStartingRotation;
     [SerializeField] private Vector3 startingFacingDirection;
 
-    [Header("Hold Settings")]
-    [SerializeField, Range (0f, 0.1f)] private float holdDirectionThresholdTime;
-
-    private Vector2 DirectionInput => playerHorizontalMovement.FixedLastNonZeroInput;
-    private Vector3 desiredFacingDirection;
+    private Vector3 PlayerFacingDirection => playerRotationHandler.FacingDirection;
     public Vector3 FacingDirection { get; private set; }
 
-    private Vector2 previousDirectionInput;
-    private float directionHoldingTimer = 0f;
-
-    private bool respondToMovement;
+    private Vector3 desiredFacingDirection;
+    private bool respondToPlayerFacingDirection;
 
     private void OnEnable()
     {
+        if (!playerInteract) return;
+
         playerInteract.OnInteractionStarted += PlayerInteract_OnInteractionStarted;
-        playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;    
+        playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;
     }
 
     private void OnDisable()
     {
+        if (!playerInteract) return;
+
         playerInteract.OnInteractionStarted -= PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded -= PlayerInteract_OnInteractionEnded;
     }
@@ -47,20 +44,15 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void Update()
     {
-        HandleHoldDirection();
-
         DefineDesiredFacingDirection();
         HandleRotation();
-
-        AvoidXZRotation();
     }
 
     private void InitializeVariables()
     {
-        respondToMovement = true;
-        previousDirectionInput = DirectionInput;
+        respondToPlayerFacingDirection = true;
 
-        FacingDirection = playerHorizontalMovement.transform.forward;
+        FacingDirection = transform.forward;
         if (applyStartingRotation) FacingDirection = startingFacingDirection;
 
         FacingDirection.Normalize();
@@ -68,26 +60,10 @@ public class PlayerRotationHandler : MonoBehaviour
         transform.localRotation = Quaternion.LookRotation(FacingDirection);
     }
 
-    private void HandleHoldDirection()
-    {
-        if(previousDirectionInput == DirectionInput && playerHorizontalMovement.HasMovementInput())
-        {
-            directionHoldingTimer += Time.deltaTime;
-        }
-        else
-        {
-            directionHoldingTimer = 0f;
-        }
-
-        previousDirectionInput = DirectionInput;
-    }
-
     private void DefineDesiredFacingDirection()
     {
-        if (CanChangeDirectionDueToMovement() && respondToMovement) desiredFacingDirection = GeneralMethods.Vector2ToVector3(DirectionInput);
+        if (respondToPlayerFacingDirection && playerRotationHandler) desiredFacingDirection = PlayerFacingDirection;
     }
-
-    private bool CanChangeDirectionDueToMovement() => directionHoldingTimer >= holdDirectionThresholdTime;
 
     private void HandleRotation()
     {
@@ -104,22 +80,19 @@ public class PlayerRotationHandler : MonoBehaviour
         transform.localRotation = Quaternion.LookRotation(FacingDirection);
     }
 
-    private void AvoidXZRotation() => transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
-
     #region PlayerInteractionSubscriptions
     private void PlayerInteract_OnInteractionStarted(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
         Vector3 interactablePosition = e.interactable.GetTransform().position;
         Vector3 facingVectorRaw = (interactablePosition - transform.position).normalized;
 
-        desiredFacingDirection = GeneralMethods.SupressYComponent(facingVectorRaw);
-        respondToMovement = false;
+        desiredFacingDirection = facingVectorRaw;
+        respondToPlayerFacingDirection = false;
     }
 
     private void PlayerInteract_OnInteractionEnded(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
-        respondToMovement = true;
+        respondToPlayerFacingDirection = true;
     }
-
     #endregion
 }
