@@ -10,40 +10,25 @@ public class KnowledgeSource : MonoBehaviour, IInteractable
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
-
-    [Space]
-    [SerializeField] private bool infiniteUses;
-    [SerializeField, Range(1, 100)] private int useTimes;
-    private int remainingUses;
+    [SerializeField] private bool hasAlreadyBeenInteracted;
 
     [Space]
     [SerializeField] private string tooltipMessage;
 
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
+    public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
-    public bool InfiniteUses => infiniteUses;
-    public int UseTimes => useTimes;
 
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
-
-    private void Start()
-    {
-        InitializeVariables();
-    }
-
-    private void InitializeVariables()
-    {
-        remainingUses = useTimes;
-    }
-
+    public event EventHandler OnObjectHasAlreadyBeenInteracted;
 
     private void AddKnowledgeToDialects() 
     { 
         foreach(DialectKnowledge dialectKnowledgePercentageChange in knowledgeSourceSO.dialectKnowledgePercentageChanges)
         {
-            KnowledgeManager.Instance.ChangeKnowledge(dialectKnowledgePercentageChange.dialect, dialectKnowledgePercentageChange.percentage);
+            KnowledgeManager.Instance.ChangeKnowledge(dialectKnowledgePercentageChange.dialect, dialectKnowledgePercentageChange.level);
         }
     }
 
@@ -55,13 +40,19 @@ public class KnowledgeSource : MonoBehaviour, IInteractable
         Debug.Log(gameObject.name + " Interacted");
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
-        DecreaseUses();
+        hasAlreadyBeenInteracted = true;
     }
 
     public void FailInteract()
     {
         Debug.Log(gameObject.name + " Fail Interacted");
         OnObjectFailInteracted?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void OnHasAlreadyBeenInteracted()
+    {
+        Debug.Log(gameObject.name + " Has Already Been Interacted");
+        OnObjectHasAlreadyBeenInteracted?.Invoke(this, EventArgs.Empty);
     }
 
     public void OnSelection()
@@ -78,17 +69,14 @@ public class KnowledgeSource : MonoBehaviour, IInteractable
 
     public void TryInteract()
     {
+        if (hasAlreadyBeenInteracted)
+        {
+            OnHasAlreadyBeenInteracted();
+            return;
+        }
+
         if (isInteractable) Interact();
         else FailInteract();
-    }
-
-    public void DecreaseUses()
-    {
-        if (infiniteUses) return;
-
-        remainingUses--;
-
-        if (remainingUses <= 0) isInteractable = false;
     }
 
     public Transform GetTransform() => transform;

@@ -14,8 +14,6 @@ public class PlayerMovementHandler : MonoBehaviour
     private CharacterController characterController;
     private Vector3 finalMoveVector;
 
-    public float test;
-
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -28,8 +26,6 @@ public class PlayerMovementHandler : MonoBehaviour
         playerJump.HandleJump(ref finalMoveVector);
         
         ApplyMovement();
-
-        test = HorizontalMovementMagnitude;
     }
 
     private void ApplyMovement()

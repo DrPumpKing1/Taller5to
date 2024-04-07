@@ -7,5 +7,5 @@ using System;
 public class KnowledgeSourceSO : ScriptableObject
 {
     public string _name;
-    public List<DialectKnowledge> dialectKnowledgePercentageChanges;
+    public List<DialectKnowledge> dialectKnowledgePercentageChanges = new List<DialectKnowledge>(Enum.GetValues(typeof(Dialect)).Length);
 }

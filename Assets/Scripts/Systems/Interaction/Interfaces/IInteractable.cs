@@ -9,18 +9,18 @@ public interface IInteractable
 
     public event EventHandler OnObjectFailInteracted;
 
+    public event EventHandler OnObjectHasAlreadyBeenInteracted;
+
     public void TryInteract();
     public void Interact();
     public void FailInteract();
+    public void OnHasAlreadyBeenInteracted();
     public void OnSelection();
     public void OnDeselection();
-    public void DecreaseUses();
     public Transform GetTransform();
 
     public bool IsSelectable { get; }
     public bool IsInteractable { get; }
+    public bool HasAlreadyBeenInteracted { get; }
     public string TooltipMessage { get; }
-    public bool InfiniteUses { get; }
-    public int UseTimes { get; }
-
 }

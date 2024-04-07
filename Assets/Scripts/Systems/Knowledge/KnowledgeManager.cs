@@ -9,6 +9,7 @@ public class KnowledgeManager : MonoBehaviour
 
     [SerializeField] private List<DialectKnowledge> dialectKnowledges = new List<DialectKnowledge>(Enum.GetValues(typeof(Dialect)).Length);
     [SerializeField] private KnowledgeSettingsSO startingKnowledgeSettingsSO;
+    [SerializeField] private int maxDialectLevel = 10;
 
     public EventHandler<OnKnowledgeChangedEventArgs> OnKnowledgeChanged;
     public EventHandler<OnKnowledgeChangedEventArgs> OnKnowledgeIncreased;
@@ -17,7 +18,7 @@ public class KnowledgeManager : MonoBehaviour
     public class OnKnowledgeChangedEventArgs
     {
         public Dialect dialect;
-        public float percentage;
+        public float level;
     }
 
     private void Awake()
@@ -34,7 +35,7 @@ public class KnowledgeManager : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogError("There is more than one InteractionInput instance");
+            Debug.LogError("There is more than one KnowledgeManager instance");
         }
 
         Instance = this;
@@ -48,16 +49,16 @@ public class KnowledgeManager : MonoBehaviour
             {
                 if(dialectKnowledge.dialect == dialectKnowledgeSetting.dialect)
                 {
-                    dialectKnowledge.percentage = dialectKnowledgeSetting.percentage;
+                    dialectKnowledge.level = dialectKnowledgeSetting.level;
                     break;
                 }
             }
         }
     }
 
-    public void ChangeKnowledge(Dialect dialect, float percentage)
+    public void ChangeKnowledge(Dialect dialect, int level)
     {
-        if (percentage == 0f) return;
+        if (level == 0f) return;
 
         DialectKnowledge dialectKnowledge = GetDialectKnowledgeByDialect(dialect);
 
@@ -67,30 +68,28 @@ public class KnowledgeManager : MonoBehaviour
             return;
         }
 
-        if (percentage > 0f) IncreaseKnowledge(dialectKnowledge, percentage); 
-        else DecreaseKnowledge(dialectKnowledge, percentage);
+        if (level > 0f) IncreaseKnowledge(dialectKnowledge, level); 
+        else DecreaseKnowledge(dialectKnowledge, level);
 
-        OnKnowledgeChanged?.Invoke(this, new OnKnowledgeChangedEventArgs { dialect = dialect, percentage = percentage });
+        OnKnowledgeChanged?.Invoke(this, new OnKnowledgeChangedEventArgs { dialect = dialect, level = level });
     }
 
-    public void IncreaseKnowledge(DialectKnowledge dialectKnowledge, float percentage)
+    public void IncreaseKnowledge(DialectKnowledge dialectKnowledge, int level)
     {
-        float absolutePercentage = Mathf.Abs(percentage);
+        int absoluteLevel = Mathf.Abs(level);
 
-        dialectKnowledge.percentage = dialectKnowledge.percentage + absolutePercentage > 1f? 1f: dialectKnowledge.percentage + absolutePercentage;
-        dialectKnowledge.percentage = GeneralMethods.RoundTo2DecimalPlaces(dialectKnowledge.percentage);
+        dialectKnowledge.level = dialectKnowledge.level + absoluteLevel > maxDialectLevel ? maxDialectLevel : dialectKnowledge.level + absoluteLevel;
 
-        OnKnowledgeIncreased?.Invoke(this, new OnKnowledgeChangedEventArgs { dialect = dialectKnowledge.dialect, percentage = absolutePercentage });
+        OnKnowledgeIncreased?.Invoke(this, new OnKnowledgeChangedEventArgs { dialect = dialectKnowledge.dialect, level = absoluteLevel });
     }
 
-    public void DecreaseKnowledge(DialectKnowledge dialectKnowledge, float percentage)
+    public void DecreaseKnowledge(DialectKnowledge dialectKnowledge, int level)
     {
-        float absolutePercentage = Mathf.Abs(percentage);
+        int absoluteLevel = Mathf.Abs(level);
 
-        dialectKnowledge.percentage = dialectKnowledge.percentage - absolutePercentage <= 0f ? 0f : dialectKnowledge.percentage - absolutePercentage;
-        dialectKnowledge.percentage = GeneralMethods.RoundTo2DecimalPlaces(dialectKnowledge.percentage);
+        dialectKnowledge.level = dialectKnowledge.level - absoluteLevel <= 0 ? 0 : dialectKnowledge.level - absoluteLevel;
 
-        OnKnowledgeDecreased?.Invoke(this, new OnKnowledgeChangedEventArgs { dialect = dialectKnowledge.dialect, percentage = absolutePercentage });
+        OnKnowledgeDecreased?.Invoke(this, new OnKnowledgeChangedEventArgs { dialect = dialectKnowledge.dialect, level = absoluteLevel });
     }
 
     private DialectKnowledge GetDialectKnowledgeByDialect(Dialect dialect)

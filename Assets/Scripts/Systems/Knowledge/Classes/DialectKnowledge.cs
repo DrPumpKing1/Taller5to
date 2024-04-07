@@ -4,5 +4,5 @@ using UnityEngine;
 public class DialectKnowledge
 {
     public Dialect dialect;
-    [Range(0, 1f)] public float percentage;
+    [Range(0, 10)] public int level;
 }

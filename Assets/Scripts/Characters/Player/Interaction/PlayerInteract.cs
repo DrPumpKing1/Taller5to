@@ -180,10 +180,20 @@ public class PlayerInteract : MonoBehaviour
                 IsInteracting = true;
             }
 
-            #region Optional if inmediate FailInteract after start holding
+            #region Optional if inmediate FailInteract after start holding if !IsInteractable
             if (!curentInteractable.IsInteractable)
             {
                 curentInteractable.FailInteract();
+                OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = curentInteractable });
+
+                ResetInteractions();
+            }
+            #endregion
+
+            #region Optional if inmediate OnHasAlreadyBeenInteracted after start holding if HasAlreadyBeenInteracted
+            if (curentInteractable.HasAlreadyBeenInteracted)
+            {
+                curentInteractable.OnHasAlreadyBeenInteracted();
                 OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = curentInteractable });
 
                 ResetInteractions();
