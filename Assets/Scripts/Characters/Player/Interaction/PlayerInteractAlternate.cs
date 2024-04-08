@@ -13,7 +13,8 @@ public class PlayerInteractAlternate : MonoBehaviour
     private bool InteractionAlternateDownInput => interactionInput.GetInteractionAlternateDown();
     private bool InteractionAlternateHoldInput => interactionInput.GetInteractionAlternateHold();
 
-    public bool IsInteractingAlternate;
+    public bool IsInteractingAlternate { get; private set; }
+
     private float holdTimer;
     private bool inputDownToHold;
 

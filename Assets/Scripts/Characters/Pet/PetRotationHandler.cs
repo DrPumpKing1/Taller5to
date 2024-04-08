@@ -23,7 +23,7 @@ public class PetRotationHandler : MonoBehaviour
     public Vector3 FacingDirection { get; private set; }
 
     private Vector3 desiredFacingDirection;
-    public bool respondToPlayerFacingDirection;
+    private bool respondToPlayerFacingDirection;
 
     private void OnEnable()
     {

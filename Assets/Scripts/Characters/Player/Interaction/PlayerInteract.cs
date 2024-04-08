@@ -23,7 +23,8 @@ public class PlayerInteract : MonoBehaviour
     private bool InteractionHoldInput => interactionInput.GetInteractionHold();
     public Vector3 InteractionDirection => playerRotationHandler.FacingDirection;
 
-    public bool IsInteracting;
+    public bool IsInteracting { get; private set; }
+
     private float holdTimer;
     private bool inputDownToHold;
 
