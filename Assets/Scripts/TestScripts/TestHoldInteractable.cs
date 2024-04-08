@@ -72,7 +72,5 @@ public class TestHoldInteractable : MonoBehaviour, IHoldInteractable
         return true;
     }
     public Transform GetTransform() => transform;
-
     #endregion
-
 }

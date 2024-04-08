@@ -43,4 +43,28 @@ public class NewInteractionInput : InteractionInput
         bool interactionInput = playerInputActions.Player.Interact.IsPressed();
         return interactionInput;
     }
+
+    public override bool GetInteractionAlternateDown()
+    {
+        if (!CanProcessInteractionInput()) return false;
+
+        bool interactionAlternateInput = playerInputActions.Player.InteractAlternate.WasPerformedThisFrame();
+        return interactionAlternateInput;
+    }
+
+    public override bool GetInteractionAlternateUp()
+    {
+        if (!CanProcessInteractionInput()) return false;
+
+        bool interactionAlternateInput = playerInputActions.Player.InteractAlternate.WasReleasedThisFrame();
+        return interactionAlternateInput;
+    }
+
+    public override bool GetInteractionAlternateHold()
+    {
+        if (!CanProcessInteractionInput()) return false;
+
+        bool interactionAlternateInput = playerInputActions.Player.InteractAlternate.IsPressed();
+        return interactionAlternateInput;
+    }
 }

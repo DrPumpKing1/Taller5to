@@ -8,6 +8,7 @@ public class PlayerRotationHandler : MonoBehaviour
     [Header("Components")]
     [SerializeField] private PlayerHorizontalMovement playerHorizontalMovement;
     [SerializeField] private PlayerInteract playerInteract;
+    [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
 
     [Header("Rotation Settings")]
     [SerializeField, Range(1f, 100f)] private float smoothRotateFactor = 10f;
@@ -31,13 +32,20 @@ public class PlayerRotationHandler : MonoBehaviour
     private void OnEnable()
     {
         playerInteract.OnInteractionStarted += PlayerInteract_OnInteractionStarted;
-        playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;    
+        playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;
+
+        playerInteractAlternate.OnInteractionAlternateStarted += PlayerInteractAlternate_OnInteractionAlternateStarted;
+        playerInteractAlternate.OnInteractionAlternateEnded += PlayerInteractAlternate_OnInteractionAlternateEnded;
+        
     }
 
     private void OnDisable()
     {
         playerInteract.OnInteractionStarted -= PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded -= PlayerInteract_OnInteractionEnded;
+
+        playerInteractAlternate.OnInteractionAlternateStarted -= PlayerInteractAlternate_OnInteractionAlternateStarted;
+        playerInteractAlternate.OnInteractionAlternateEnded -= PlayerInteractAlternate_OnInteractionAlternateEnded;
     }
 
     private void Start()
@@ -122,4 +130,21 @@ public class PlayerRotationHandler : MonoBehaviour
     }
 
     #endregion
+
+    #region PlayerInteractionAlternateSubscriptions
+
+    private void PlayerInteractAlternate_OnInteractionAlternateStarted(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
+    {
+        Vector3 interactablePosition = e.interactableAlternate.GetTransform().position;
+        Vector3 facingVectorRaw = (interactablePosition - transform.position).normalized;
+
+        desiredFacingDirection = GeneralMethods.SupressYComponent(facingVectorRaw);
+        respondToMovement = false;
+    }
+    private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
+    {
+        respondToMovement = true;
+    }
+    #endregion
+
 }

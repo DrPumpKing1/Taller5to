@@ -1167,6 +1167,7 @@ GameObject:
   - component: {fileID: 616693934}
   - component: {fileID: 616693935}
   - component: {fileID: 616693939}
+  - component: {fileID: 616693941}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -1366,6 +1367,7 @@ MonoBehaviour:
   interactionInput: {fileID: 148326290}
   playerHorizontalMovement: {fileID: 616693933}
   playerRotationHandler: {fileID: 1959200772}
+  playerInteractAlternate: {fileID: 616693941}
   interactionLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -1387,6 +1389,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkGround: {fileID: 1380701025}
   playerGravityController: {fileID: 616693935}
+--- !u!114 &616693941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616693930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b76cf9fd47893364087a5227239f4a39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionInput: {fileID: 148326290}
+  playerHorizontalMovement: {fileID: 616693933}
+  playerInteract: {fileID: 616693939}
+  IsInteractingAlternate: 0
 --- !u!1001 &687273043
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3450,6 +3468,11 @@ MonoBehaviour:
   hasAlreadyBeenInteracted: 0
   tooltipMessage: 
   holdDuration: 1
+  canBeSelectedAlternate: 1
+  isInteractableAlternate: 1
+  hasAlreadyBeenInteractedAlternate: 0
+  tooltipMessageAlternate: 
+  holdDurationAlternate: 1
   dialectKnowledgeRequirements:
   - dialect: 0
     level: 4
@@ -3660,9 +3683,11 @@ MonoBehaviour:
   petPlayerAttachment: {fileID: 1177506241}
   playerRotationHandler: {fileID: 1959200772}
   playerInteract: {fileID: 616693939}
+  playerInteractAlternate: {fileID: 616693941}
   smoothRotateFactor: 5
   applyStartingRotation: 1
   startingFacingDirection: {x: -1, y: 0, z: -1}
+  respondToPlayerFacingDirection: 0
 --- !u!1 &1929341140
 GameObject:
   m_ObjectHideFlags: 0
@@ -3967,6 +3992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHorizontalMovement: {fileID: 616693933}
   playerInteract: {fileID: 616693939}
+  playerInteractAlternate: {fileID: 616693941}
   smoothRotateFactor: 10
   applyStartingRotation: 1
   startingFacingDirection: {x: -1, y: 0, z: -1}

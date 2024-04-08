@@ -9,6 +9,7 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private InteractionInput interactionInput;
     [SerializeField] private PlayerHorizontalMovement playerHorizontalMovement;
     [SerializeField] private PlayerRotationHandler playerRotationHandler;
+    [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
 
     [Header("Interaction Settings")]
     [SerializeField] private LayerMask interactionLayer;
@@ -20,13 +21,17 @@ public class PlayerInteract : MonoBehaviour
 
     private bool InteractionDownInput => interactionInput.GetInteractionDown();
     private bool InteractionHoldInput => interactionInput.GetInteractionHold();
-    private Vector3 InteractionDirection => playerRotationHandler.FacingDirection;
+    public Vector3 InteractionDirection => playerRotationHandler.FacingDirection;
 
     public bool IsInteracting;
-
-    private CharacterController characterController;
     private float holdTimer;
     private bool inputDownToHold;
+
+    private bool canHoldInteract;
+    private bool previousCanHoldInteract;
+
+    private CharacterController characterController;
+
     private IInteractable curentInteractable;
 
     public event EventHandler<OnInteractionEventArgs> OnInteractableSelected;
@@ -90,10 +95,7 @@ public class PlayerInteract : MonoBehaviour
 
     private IInteractable CheckForInteractable()
     {
-        Vector3 origin = transform.position + characterController.center;
-        RaycastHit[] hits = Physics.SphereCastAll(origin, interactionSphereRadius, InteractionDirection, interactionRayLenght, interactionLayer);
-
-        if (drawRaycasts) Debug.DrawRay(origin, InteractionDirection * interactionRayLenght, Color.yellow);
+        RaycastHit[] hits = GetInteractableLayerHits();
 
         if (hits.Length == 0) return null;
 
@@ -135,6 +137,7 @@ public class PlayerInteract : MonoBehaviour
 
         //Debug.Log("Selected");
     }
+
     private void DeselectInteractable(IInteractable interactable)
     {
         curentInteractable = null;
@@ -149,6 +152,8 @@ public class PlayerInteract : MonoBehaviour
 
     private void HandleInteractions()
     {
+        if(playerInteractAlternate.IsInteractingAlternate) { ResetInteractions(); return; }
+
         if (curentInteractable == null) { ResetInteractions(); return; }
 
         if(CheckIfHoldInteractable(curentInteractable)) HandleHoldInteractions(curentInteractable as IHoldInteractable);
@@ -170,9 +175,11 @@ public class PlayerInteract : MonoBehaviour
 
     private void HandleHoldInteractions(IHoldInteractable holdInteractable)
     {  
+        canHoldInteract = CanHoldInteract();
+
         if (InteractionDownInput) inputDownToHold = true;
 
-        if (CanHoldInteract())
+        if (canHoldInteract)
         {
             if (!IsInteracting)
             {
@@ -203,13 +210,15 @@ public class PlayerInteract : MonoBehaviour
                 ResetInteractions();
             }
         }
-        else
+        else if (previousCanHoldInteract)
         {
             OnHoldInteractionStopped?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
             OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
 
             ResetInteractions();
-        }    
+        }
+
+        previousCanHoldInteract = canHoldInteract;
     }
 
     private void ResetInteractions()
@@ -222,4 +231,14 @@ public class PlayerInteract : MonoBehaviour
     private bool CheckIfHoldInteractable(IInteractable interactable) => (interactable is IHoldInteractable);
 
     private bool CanHoldInteract() => InteractionHoldInput && inputDownToHold && !playerHorizontalMovement.HasMovementInput();
+
+    public RaycastHit[] GetInteractableLayerHits()
+    {
+        Vector3 origin = transform.position + characterController.center;
+        RaycastHit[] hits = Physics.SphereCastAll(origin, interactionSphereRadius, InteractionDirection, interactionRayLenght, interactionLayer);
+
+        if (drawRaycasts) Debug.DrawRay(origin, InteractionDirection * interactionRayLenght, Color.yellow);
+
+        return hits;
+    }
 }

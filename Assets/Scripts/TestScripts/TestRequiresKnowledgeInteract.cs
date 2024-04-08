@@ -88,7 +88,6 @@ public class TestRequiresKnowledgeInteract : MonoBehaviour, IInteractable, IRequ
 
         return true;
     }
-
     public void KnowledgeRequirementsNotMet()
     {
         Debug.Log(gameObject.name + " knowledge requirements not met");

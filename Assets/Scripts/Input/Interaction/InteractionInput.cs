@@ -25,8 +25,10 @@ public abstract class InteractionInput : MonoBehaviour, IInteractionInput
     public abstract bool CanProcessInteractionInput();
 
     public abstract bool GetInteractionDown();
-
     public abstract bool GetInteractionUp();
-
     public abstract bool GetInteractionHold();
+
+    public abstract bool GetInteractionAlternateDown();
+    public abstract bool GetInteractionAlternateUp();
+    public abstract bool GetInteractionAlternateHold();
 }

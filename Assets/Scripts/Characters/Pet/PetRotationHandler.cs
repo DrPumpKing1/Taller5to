@@ -8,6 +8,7 @@ public class PetRotationHandler : MonoBehaviour
     [SerializeField] private PetPlayerAttachment petPlayerAttachment;
     [SerializeField] private PlayerRotationHandler playerRotationHandler;
     [SerializeField] private PlayerInteract playerInteract;
+    [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
 
     [Header("Rotation Settings")]
     [SerializeField, Range(1f, 100f)] private float smoothRotateFactor = 5f;
@@ -22,18 +23,24 @@ public class PetRotationHandler : MonoBehaviour
     public Vector3 FacingDirection { get; private set; }
 
     private Vector3 desiredFacingDirection;
-    private bool respondToPlayerFacingDirection;
+    public bool respondToPlayerFacingDirection;
 
     private void OnEnable()
     {
         playerInteract.OnInteractionStarted += PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;
+
+        playerInteractAlternate.OnInteractionAlternateStarted += PlayerInteractAlternate_OnInteractionAlternateStarted;
+        playerInteractAlternate.OnInteractionAlternateEnded += PlayerInteractAlternate_OnInteractionAlternateEnded;
     }
 
     private void OnDisable()
     {
         playerInteract.OnInteractionStarted -= PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded -= PlayerInteract_OnInteractionEnded;
+
+        playerInteractAlternate.OnInteractionAlternateStarted -= PlayerInteractAlternate_OnInteractionAlternateStarted;
+        playerInteractAlternate.OnInteractionAlternateEnded -= PlayerInteractAlternate_OnInteractionAlternateEnded;
     }
 
     private void Start()
@@ -101,4 +108,21 @@ public class PetRotationHandler : MonoBehaviour
         respondToPlayerFacingDirection = true;
     }
     #endregion
+
+    #region PlayerInteractionAlternateSubscriptions
+
+    private void PlayerInteractAlternate_OnInteractionAlternateStarted(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
+    {
+        Vector3 interactablePosition = e.interactableAlternate.GetTransform().position;
+        Vector3 facingVectorRaw = (interactablePosition - transform.position).normalized;
+
+        desiredFacingDirection = facingVectorRaw;
+        respondToPlayerFacingDirection = false;
+    }
+    private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
+    {
+        respondToPlayerFacingDirection = true;
+    }
+    #endregion
+
 }
