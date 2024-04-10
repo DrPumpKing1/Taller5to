@@ -9,12 +9,13 @@ public class ProyectionPlatformVisual : MonoBehaviour
 
     [Header("Visual Settings")]
     [SerializeField] private Renderer selectedVisualRenderer;
-    [SerializeField] private Material deselectedMaterial;
-    [SerializeField] private Material selectedMaterial;
-    [SerializeField] private float materialFadeTime;
-
-    private State state;
-    private enum State { Deselected, Selecting, Deselecting, Selected }
+    [Space]
+    [SerializeField] private Material deselectedVisualMaterial;
+    [SerializeField] private Material selectedVisualMaterial;
+    [Space]
+    [SerializeField, Range(0f,0.5f)] private float materialFadeTime;
+    [SerializeField, Range(0f,1f)] private float minAlpha = 0;
+    [SerializeField, Range(0f,1f)] private float maxAlpha = 1;
 
     private void OnEnable()
     {
@@ -34,23 +35,60 @@ public class ProyectionPlatformVisual : MonoBehaviour
 
     private void InitializeVariables()
     {
-        selectedVisualRenderer.material = deselectedMaterial;
-
+        selectedVisualRenderer.material.SetOverrideTag("RenderType", "Transparent");
+        SetVisualMaterial(deselectedVisualMaterial);
+        SetVisualMaterialAlpha(minAlpha);
     }
 
+    private IEnumerator SelectProyectionPlatform()
+    {
+        SetVisualMaterial(selectedVisualMaterial);
+
+        float time = 0;
+        float startingAlpha = selectedVisualRenderer.material.color.a;
+
+        while (selectedVisualRenderer.material.color.a < maxAlpha)
+        {
+            selectedVisualRenderer.material.color = new Color(selectedVisualRenderer.material.color.r, selectedVisualRenderer.material.color.g, selectedVisualRenderer.material.color.b, Mathf.Lerp(startingAlpha, maxAlpha, time * 1 / materialFadeTime));
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        SetVisualMaterialAlpha(maxAlpha);
+    }
+
+    private IEnumerator DeselelectProyectionPlatform()
+    {
+        float time = 0;
+        float startingAlpha = selectedVisualRenderer.material.color.a;
+
+        while (selectedVisualRenderer.material.color.a > minAlpha)
+        {
+            selectedVisualRenderer.material.color = new Color(selectedVisualRenderer.material.color.r, selectedVisualRenderer.material.color.g, selectedVisualRenderer.material.color.b, Mathf.Lerp(startingAlpha, minAlpha, time * 1 / materialFadeTime));
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        SetVisualMaterial(deselectedVisualMaterial);
+        SetVisualMaterialAlpha(minAlpha);
+    }
 
     private void SetVisualMaterial(Material material) => selectedVisualRenderer.material = material;
-
+    private void SetVisualMaterialAlpha(float alpha) => selectedVisualRenderer.material.color = new Color(selectedVisualRenderer.material.color.r, selectedVisualRenderer.material.color.g, selectedVisualRenderer.material.color.b, alpha);
 
     #region ProyectionPlatformSubscriptions
     private void ProyectionPlatform_OnObjectSelected(object sender, System.EventArgs e)
     {
-        selectedVisualRenderer.material = selectedMaterial;
+        //selectedVisualRenderer.material = selectedVisualMaterial;
+        StopAllCoroutines();
+        StartCoroutine(SelectProyectionPlatform());
     }
 
     private void ProyectionPlatform_OnObjectDeselected(object sender, System.EventArgs e)
     {
-        selectedVisualRenderer.material = deselectedMaterial;
+        //DelectedVisualRenderer.material = deselectedVisualMaterial;
+        StopAllCoroutines();
+        StartCoroutine(DeselelectProyectionPlatform());
     }
     #endregion
 }
