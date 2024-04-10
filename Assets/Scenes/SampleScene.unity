@@ -1374,7 +1374,6 @@ MonoBehaviour:
   interactionRayLenght: 1.5
   interactionSphereRadius: 0.5
   drawRaycasts: 0
-  IsInteracting: 0
 --- !u!114 &616693940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1404,7 +1403,6 @@ MonoBehaviour:
   interactionInput: {fileID: 148326290}
   playerHorizontalMovement: {fileID: 616693933}
   playerInteract: {fileID: 616693939}
-  IsInteractingAlternate: 0
 --- !u!1001 &687273043
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3687,7 +3685,6 @@ MonoBehaviour:
   smoothRotateFactor: 5
   applyStartingRotation: 1
   startingFacingDirection: {x: -1, y: 0, z: -1}
-  respondToPlayerFacingDirection: 0
 --- !u!1 &1929341140
 GameObject:
   m_ObjectHideFlags: 0
@@ -3897,7 +3894,7 @@ MonoBehaviour:
   - dialect: 3
     level: 0
   startingKnowledgeSettingsSO: {fileID: 11400000, guid: ffcdcb39c03516a45a3629e3685fad66, type: 2}
-  maxDialectLevel: 10
+  maxDialectLevel: 5
 --- !u!1 &1947424503
 GameObject:
   m_ObjectHideFlags: 0
