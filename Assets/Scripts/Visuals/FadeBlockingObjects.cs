@@ -111,7 +111,7 @@ public class FadeBlockingObjects : MonoBehaviour
                 }
 
                 runningCoroutines.Add(fadingObject, StartCoroutine(FadeObjectIn(fadingObject)));
-                 objectsToRemove.Add(fadingObject);
+                objectsToRemove.Add(fadingObject);
             }
         }
 

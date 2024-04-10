@@ -83,34 +83,39 @@ public class PlayerInteractAlternate : MonoBehaviour
 
         if (hits.Length == 0) return null;
 
-        IInteractableAlternate interactableAlternate = null;
-
         RaycastHit closestHit = hits[0];
-
-        CheckIfRayHitHasInteractableAlternate(closestHit, ref interactableAlternate);
-        float closestDistance = Vector3.Distance(playerInteract.GetRaycastOrigin(), closestHit.point); ;
+        IInteractableAlternate interactableAlternate = CheckIfRayHitHasInteractableAlternate(closestHit);
+        float closestDistance = Vector3.Distance(playerInteract.GetRaycastOrigin(), closestHit.transform.position); ;
 
         foreach (RaycastHit hit in hits)
         {
-            float distance = Vector3.Distance(playerInteract.GetRaycastOrigin(), hit.point);
+            IInteractableAlternate potentialInteractableAlternate = CheckIfRayHitHasInteractableAlternate(hit);
+
+            if (potentialInteractableAlternate == null) continue;
+
+            float distance = Vector3.Distance(playerInteract.GetRaycastOrigin(), potentialInteractableAlternate.GetTransform().position);
 
             if (distance < closestDistance)
             {
                 closestHit = hit;
-                CheckIfRayHitHasInteractableAlternate(closestHit, ref interactableAlternate);
+                closestDistance = distance;
+                interactableAlternate = potentialInteractableAlternate;
             }
+
         }
 
         return interactableAlternate;
     }
 
-    private void CheckIfRayHitHasInteractableAlternate(RaycastHit hit, ref IInteractableAlternate interactableAlternate)
+    private IInteractableAlternate CheckIfRayHitHasInteractableAlternate(RaycastHit hit)
     {
         if (hit.transform.TryGetComponent(out IInteractableAlternate hitInteractableAlternate))
         {
-            if (!hitInteractableAlternate.IsSelectableAlternate) return;
-            interactableAlternate = hitInteractableAlternate;
+            if (!hitInteractableAlternate.IsSelectableAlternate) return null;
+            return hitInteractableAlternate;
         }
+
+        return null;
     }
 
     private void SelectInteractable(IInteractableAlternate interactableAlternate)

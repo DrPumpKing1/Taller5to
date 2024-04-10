@@ -8,9 +8,13 @@ public class ProyectionPlatformVisual : MonoBehaviour
     [SerializeField] private ProyectionPlatform proyectionPlatform;
 
     [Header("Visual Settings")]
-    [SerializeField] private Renderer visualRenderer;
+    [SerializeField] private Renderer selectedVisualRenderer;
     [SerializeField] private Material deselectedMaterial;
     [SerializeField] private Material selectedMaterial;
+    [SerializeField] private float materialFadeTime;
+
+    private State state;
+    private enum State { Deselected, Selecting, Deselecting, Selected }
 
     private void OnEnable()
     {
@@ -25,17 +29,28 @@ public class ProyectionPlatformVisual : MonoBehaviour
 
     private void Start()
     {
-        visualRenderer.material = deselectedMaterial;
+        InitializeVariables();
     }
 
+    private void InitializeVariables()
+    {
+        selectedVisualRenderer.material = deselectedMaterial;
+
+    }
+
+
+    private void SetVisualMaterial(Material material) => selectedVisualRenderer.material = material;
+
+
+    #region ProyectionPlatformSubscriptions
     private void ProyectionPlatform_OnObjectSelected(object sender, System.EventArgs e)
     {
-        visualRenderer.material = selectedMaterial;
+        selectedVisualRenderer.material = selectedMaterial;
     }
 
     private void ProyectionPlatform_OnObjectDeselected(object sender, System.EventArgs e)
     {
-        visualRenderer.material = deselectedMaterial;
+        selectedVisualRenderer.material = deselectedMaterial;
     }
-
+    #endregion
 }

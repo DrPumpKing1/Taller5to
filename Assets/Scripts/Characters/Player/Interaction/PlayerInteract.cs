@@ -22,7 +22,7 @@ public class PlayerInteract : MonoBehaviour
 
     private bool InteractionDownInput => interactionInput.GetInteractionDown();
     private bool InteractionHoldInput => interactionInput.GetInteractionHold();
-    public Vector3 InteractionDirection => playerRotationHandler.FacingDirection;
+    public Vector3 InteractionDirection => playerRotationHandler.DesiredFacingDirection.normalized;
 
     public bool IsInteracting { get; private set; }
 
@@ -101,39 +101,25 @@ public class PlayerInteract : MonoBehaviour
 
         if (hits.Length == 0) return null;
 
-        IInteractable interactable = null;
-
-        /*
         RaycastHit closestHit = hits[0];
-        CheckIfRayHitHasInteractable(closestHit, ref interactable);
-        float closestDistance = Vector3.Distance(GetRaycastOrigin(), closestHit.point); ;
-
-        return interactable;
-
-        foreach(RaycastHit hit in hits)
-        {
-            float distance = Vector3.Distance(GetRaycastOrigin(), hit.point);
-
-            if (distance < closestDistance)
-            {
-                closestHit = hit;
-                CheckIfRayHitHasInteractable(closestHit, ref interactable);
-            }
-        }
-
-        return interactable;
-
-        */
+        IInteractable interactable = CheckIfRayHitHasInteractable(closestHit);
+        float closestDistance = Vector3.Distance(GetRaycastOrigin(), closestHit.transform.position); ;
 
         foreach(RaycastHit hit in hits)
         {
             IInteractable potentialInteractable = CheckIfRayHitHasInteractable(hit);
 
-            if (potentialInteractable != null)
+            if (potentialInteractable == null) continue;
+
+            float distance = Vector3.Distance(GetRaycastOrigin(), potentialInteractable.GetTransform().position);
+
+            if (distance < closestDistance)
             {
+                closestHit = hit;
+                closestDistance = distance;
                 interactable = potentialInteractable;
-                break;
-            }      
+            }
+
         }
 
         return interactable;

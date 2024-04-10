@@ -21,7 +21,7 @@ public class PlayerRotationHandler : MonoBehaviour
     [SerializeField, Range (0f, 0.1f)] private float holdDirectionThresholdTime;
 
     private Vector2 DirectionInput => playerHorizontalMovement.FixedLastNonZeroInput;
-    private Vector3 desiredFacingDirection;
+    public Vector3 DesiredFacingDirection { get; private set; }
     public Vector3 FacingDirection { get; private set; }
 
     private Vector2 previousDirectionInput;
@@ -92,16 +92,16 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void DefineDesiredFacingDirection()
     {
-        if (CanChangeDirectionDueToMovement() && respondToMovement) desiredFacingDirection = GeneralMethods.Vector2ToVector3(DirectionInput);
+        if (CanChangeDirectionDueToMovement() && respondToMovement) DesiredFacingDirection = GeneralMethods.Vector2ToVector3(DirectionInput);
     }
 
     private bool CanChangeDirectionDueToMovement() => directionHoldingTimer >= holdDirectionThresholdTime;
 
     private void HandleRotation()
     {
-        if (desiredFacingDirection.magnitude <= 0f) return;
+        if (DesiredFacingDirection.magnitude <= 0f) return;
 
-        RotateTowardsDirection(desiredFacingDirection);
+        RotateTowardsDirection(DesiredFacingDirection);
     }
 
     private void RotateTowardsDirection(Vector3 direction)
@@ -120,7 +120,7 @@ public class PlayerRotationHandler : MonoBehaviour
         Vector3 interactablePosition = e.interactable.GetTransform().position;
         Vector3 facingVectorRaw = (interactablePosition - transform.position).normalized;
 
-        desiredFacingDirection = GeneralMethods.SupressYComponent(facingVectorRaw);
+        DesiredFacingDirection = GeneralMethods.SupressYComponent(facingVectorRaw);
         respondToMovement = false;
     }
 
@@ -138,7 +138,7 @@ public class PlayerRotationHandler : MonoBehaviour
         Vector3 interactablePosition = e.interactableAlternate.GetTransform().position;
         Vector3 facingVectorRaw = (interactablePosition - transform.position).normalized;
 
-        desiredFacingDirection = GeneralMethods.SupressYComponent(facingVectorRaw);
+        DesiredFacingDirection = GeneralMethods.SupressYComponent(facingVectorRaw);
         respondToMovement = false;
     }
     private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
