@@ -18,6 +18,8 @@ public class KnowledgeSource : MonoBehaviour, IInteractable
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
 
+    public event EventHandler OnObjectSelected;
+    public event EventHandler OnObjectDeselected;
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
@@ -56,12 +58,14 @@ public class KnowledgeSource : MonoBehaviour, IInteractable
     public void Select()
     {
         //Enable some UI feedback
+        OnObjectSelected?.Invoke(this, EventArgs.Empty);
         Debug.Log(gameObject.name + " Selected");
     }
 
     public void Deselect()
     {
         //Disable some UI feedback
+        OnObjectDeselected?.Invoke(this, EventArgs.Empty);
         Debug.Log(gameObject.name + " Deselected");
     }
 

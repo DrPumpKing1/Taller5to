@@ -49,10 +49,22 @@ public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractabl
     public event EventHandler OnObjectHasAlreadyBeenInteractedAlternate;
 
     public event EventHandler<IRequiresKnowledge.OnKnowledgeRequirementsNotMetEventArgs> OnKnowledgeRequirementsNotMet;
+    public event EventHandler OnObjectSelected;
+    public event EventHandler OnObjectDeselected;
+    public event EventHandler OnObjectSelectedAlternate;
+    public event EventHandler OnObjectDeselectedAlternate;
 
     #region IInteractable
-    public void Select() => Debug.Log(gameObject.name + " Selected");
-    public void Deselect() => Debug.Log(gameObject.name + " Deselected");
+    public void Select()
+    {
+        OnObjectSelected?.Invoke(this, EventArgs.Empty);
+        Debug.Log(gameObject.name + " Selected");
+    }
+    public void Deselect()
+    {
+        OnObjectDeselected?.Invoke(this, EventArgs.Empty);
+        Debug.Log(gameObject.name + " Deselected");
+    }
     public void TryInteract()
     {
         if (!isInteractable)
@@ -118,9 +130,17 @@ public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractabl
     #endregion
 
     #region IInteractableAlternate
-    public void SelectAlternate() => Debug.Log(gameObject.name + " Selected Alternate");
+    public void SelectAlternate()
+    {
+        OnObjectSelectedAlternate?.Invoke(this, EventArgs.Empty);
+        Debug.Log(gameObject.name + " Selected Alternate");
+    }
 
-    public void DeselectAlternate() => Debug.Log(gameObject.name + " Deselected Alternate");
+    public void DeselectAlternate()
+    {
+        OnObjectDeselectedAlternate?.Invoke(this, EventArgs.Empty);
+        Debug.Log(gameObject.name + " Deselected Alternate");
+    }
 
     public void TryInteractAlternate()
     {

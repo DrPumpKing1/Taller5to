@@ -88,11 +88,11 @@ public class PlayerInteractAlternate : MonoBehaviour
         RaycastHit closestHit = hits[0];
 
         CheckIfRayHitHasInteractableAlternate(closestHit, ref interactableAlternate);
-        float closestDistance = Vector3.Distance(transform.position, closestHit.point);
+        float closestDistance = Vector3.Distance(playerInteract.GetRaycastOrigin(), closestHit.point); ;
 
         foreach (RaycastHit hit in hits)
         {
-            float distance = Vector3.Distance(transform.position, hit.point);
+            float distance = Vector3.Distance(playerInteract.GetRaycastOrigin(), hit.point);
 
             if (distance < closestDistance)
             {

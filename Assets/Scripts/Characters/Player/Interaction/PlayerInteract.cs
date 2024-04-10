@@ -13,8 +13,9 @@ public class PlayerInteract : MonoBehaviour
 
     [Header("Interaction Settings")]
     [SerializeField] private LayerMask interactionLayer;
-    [SerializeField, Range(0.5f, 2f)] private float interactionRayLenght = 1f;
-    [SerializeField, Range(0.5f, 1f)] private float interactionSphereRadius = 2f;
+    [SerializeField, Range(0f, 2.5f)] private float interactionRayStartDistance = 1f;
+    [SerializeField, Range(0.1f, 2f)] private float interactionRayLenght = 1f;
+    [SerializeField, Range(0.1f, 1f)] private float interactionSphereRadius = 2f;
 
     [Header("Debug")]
     [SerializeField] private bool drawRaycasts;
@@ -102,13 +103,16 @@ public class PlayerInteract : MonoBehaviour
 
         IInteractable interactable = null;
 
+        /*
         RaycastHit closestHit = hits[0];
         CheckIfRayHitHasInteractable(closestHit, ref interactable);
-        float closestDistance = Vector3.Distance(transform.position, closestHit.point);
+        float closestDistance = Vector3.Distance(GetRaycastOrigin(), closestHit.point); ;
+
+        return interactable;
 
         foreach(RaycastHit hit in hits)
         {
-            float distance = Vector3.Distance(transform.position, hit.point);
+            float distance = Vector3.Distance(GetRaycastOrigin(), hit.point);
 
             if (distance < closestDistance)
             {
@@ -118,15 +122,32 @@ public class PlayerInteract : MonoBehaviour
         }
 
         return interactable;
+
+        */
+
+        foreach(RaycastHit hit in hits)
+        {
+            IInteractable potentialInteractable = CheckIfRayHitHasInteractable(hit);
+
+            if (potentialInteractable != null)
+            {
+                interactable = potentialInteractable;
+                break;
+            }      
+        }
+
+        return interactable;
     }
 
-    private void CheckIfRayHitHasInteractable(RaycastHit hit, ref IInteractable interactable)
+    private IInteractable CheckIfRayHitHasInteractable(RaycastHit hit)
     {
         if (hit.transform.TryGetComponent(out IInteractable hitInteractable))
         {
-            if (!hitInteractable.IsSelectable) return;
-            interactable = hitInteractable;
+            if (!hitInteractable.IsSelectable) return null;
+            return hitInteractable;
         }
+
+        return null;
     }
 
     private void SelectInteractable(IInteractable interactable)
@@ -235,11 +256,12 @@ public class PlayerInteract : MonoBehaviour
 
     public RaycastHit[] GetInteractableLayerHits()
     {
-        Vector3 origin = transform.position + characterController.center;
-        RaycastHit[] hits = Physics.SphereCastAll(origin, interactionSphereRadius, InteractionDirection, interactionRayLenght, interactionLayer);
+        RaycastHit[] hits = Physics.SphereCastAll(GetRaycastOrigin(), interactionSphereRadius, InteractionDirection, interactionRayLenght, interactionLayer); ;
 
-        if (drawRaycasts) Debug.DrawRay(origin, InteractionDirection * interactionRayLenght, Color.yellow);
+        if (drawRaycasts) Debug.DrawRay(GetRaycastOrigin(), InteractionDirection * interactionRayLenght, Color.yellow);
 
         return hits;
     }
+
+    public Vector3 GetRaycastOrigin() => transform.position + characterController.center + InteractionDirection * interactionRayStartDistance;
 }

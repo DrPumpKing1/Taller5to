@@ -19,10 +19,20 @@ public class TestInteractable : MonoBehaviour, IInteractable
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
+    public event EventHandler OnObjectSelected; 
+    public event EventHandler OnObjectDeselected;
 
     #region IInteractable
-    public void Select() => Debug.Log(gameObject.name + " Selected");
-    public void Deselect() => Debug.Log(gameObject.name + " Deselected");
+    public void Select()
+    {
+        OnObjectSelected.Invoke(this, EventArgs.Empty);
+        Debug.Log(gameObject.name + " Selected");
+    }
+    public void Deselect()
+    {
+        OnObjectDeselected?.Invoke(this, EventArgs.Empty);
+        Debug.Log(gameObject.name + " Deselected");
+    }
     public void TryInteract()
     {
         if (hasAlreadyBeenInteracted)

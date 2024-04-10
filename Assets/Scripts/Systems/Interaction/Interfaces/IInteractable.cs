@@ -5,6 +5,9 @@ using System;
 
 public interface IInteractable 
 {
+    public event EventHandler OnObjectSelected;
+    public event EventHandler OnObjectDeselected;
+
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
