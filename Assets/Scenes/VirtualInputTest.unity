@@ -203,15 +203,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 21682682}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e424bc03a962c49884b750e372e41b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4654592bb4a6ecf4894a0dbb6f90c9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   codeName: Interaction Alt Up
-  buttonType: 0
   buttonKey: 102
-  buttonMode: 3
-  tapReleaseInputDurationSeconds: 0.05
-  doubleTapTimeWindowSeconds: 0
+  cooldown: 0.1
+  frames: 1
 --- !u!43 &30192035
 Mesh:
   m_ObjectHideFlags: 0
@@ -1323,15 +1321,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 523150717}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e424bc03a962c49884b750e372e41b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4654592bb4a6ecf4894a0dbb6f90c9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   codeName: Crouch Up
-  buttonType: 0
   buttonKey: 306
-  buttonMode: 3
-  tapReleaseInputDurationSeconds: 0.1
-  doubleTapTimeWindowSeconds: 0
+  cooldown: 0.1
+  frames: 1
 --- !u!1 &559011792
 GameObject:
   m_ObjectHideFlags: 0
@@ -3097,15 +3093,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 781520640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e424bc03a962c49884b750e372e41b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4654592bb4a6ecf4894a0dbb6f90c9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   codeName: Sprint Up
-  buttonType: 0
   buttonKey: 304
-  buttonMode: 3
-  tapReleaseInputDurationSeconds: 0.1
-  doubleTapTimeWindowSeconds: 0
+  cooldown: 0.1
+  frames: 1
 --- !u!1 &816464571
 GameObject:
   m_ObjectHideFlags: 0
@@ -3147,15 +3141,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 816464571}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e424bc03a962c49884b750e372e41b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4654592bb4a6ecf4894a0dbb6f90c9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   codeName: Interaction Up
-  buttonType: 0
   buttonKey: 101
-  buttonMode: 3
-  tapReleaseInputDurationSeconds: 0.05
-  doubleTapTimeWindowSeconds: 0
+  cooldown: 0.1
+  frames: 1
 --- !u!1 &849352206
 GameObject:
   m_ObjectHideFlags: 0
@@ -3776,7 +3768,7 @@ MonoBehaviour:
   codeName: Crouch Down
   buttonKey: 306
   cooldown: 0.1
-  frames: 0
+  frames: 1
 --- !u!1 &1052894639 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 331fdfaeb7bc09c459f5f09b019985e7, type: 3}
@@ -4229,15 +4221,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1148867298}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e424bc03a962c49884b750e372e41b, type: 3}
+  m_Script: {fileID: 11500000, guid: 27fd76a07f36ce8468840981f0bdc057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   codeName: Sprint Down
-  buttonType: 0
   buttonKey: 304
-  buttonMode: 1
-  tapReleaseInputDurationSeconds: 0.1
-  doubleTapTimeWindowSeconds: 0
+  cooldown: 0.1
+  frames: 1
 --- !u!1 &1156661881
 GameObject:
   m_ObjectHideFlags: 0
@@ -4776,15 +4766,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1332130080}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e424bc03a962c49884b750e372e41b, type: 3}
+  m_Script: {fileID: 11500000, guid: 27fd76a07f36ce8468840981f0bdc057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   codeName: Interaction Alt Down
-  buttonType: 0
   buttonKey: 102
-  buttonMode: 1
-  tapReleaseInputDurationSeconds: 0.05
-  doubleTapTimeWindowSeconds: 0
+  cooldown: 0.1
+  frames: 1
 --- !u!1 &1341691282
 GameObject:
   m_ObjectHideFlags: 0
@@ -5147,15 +5135,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1463487500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e424bc03a962c49884b750e372e41b, type: 3}
+  m_Script: {fileID: 11500000, guid: 27fd76a07f36ce8468840981f0bdc057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   codeName: Jump
-  buttonType: 0
   buttonKey: 32
-  buttonMode: 1
-  tapReleaseInputDurationSeconds: 0.1
-  doubleTapTimeWindowSeconds: 0
+  cooldown: 0.1
+  frames: 1
 --- !u!1 &1519369983
 GameObject:
   m_ObjectHideFlags: 0
@@ -5525,15 +5511,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1735968861}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e424bc03a962c49884b750e372e41b, type: 3}
+  m_Script: {fileID: 11500000, guid: 27fd76a07f36ce8468840981f0bdc057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   codeName: Interaction Down
-  buttonType: 0
   buttonKey: 101
-  buttonMode: 1
-  tapReleaseInputDurationSeconds: 0.05
-  doubleTapTimeWindowSeconds: 0
+  cooldown: 0.1
+  frames: 1
 --- !u!1 &1764026339
 GameObject:
   m_ObjectHideFlags: 0
@@ -6847,7 +6831,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2107039491
 Transform:
   m_ObjectHideFlags: 0
