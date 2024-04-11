@@ -580,7 +580,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &148326287
 Transform:
   m_ObjectHideFlags: 0
@@ -1330,7 +1330,7 @@ MonoBehaviour:
   buttonType: 0
   buttonKey: 306
   buttonMode: 3
-  tapReleaseInputDurationSeconds: 0.05
+  tapReleaseInputDurationSeconds: 0.1
   doubleTapTimeWindowSeconds: 0
 --- !u!1 &559011792
 GameObject:
@@ -1774,7 +1774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f470ff018dfc5a4e82018e6fbf21775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementInput: {fileID: 148326289}
+  movementInput: {fileID: 1936272247}
   playerCrouch: {fileID: 616693934}
   checkGround: {fileID: 1380701025}
   checkWall: {fileID: 1380701023}
@@ -1798,7 +1798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb355f145fc7bc4dbed136b1c50ed86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementInput: {fileID: 148326289}
+  movementInput: {fileID: 1936272247}
   checkGround: {fileID: 1380701025}
   checkRoof: {fileID: 1380701024}
   crouchPercent: 0.6
@@ -1854,7 +1854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89dd2049e1b430d4e95d0eab7f11dd7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementInput: {fileID: 148326289}
+  movementInput: {fileID: 1936272247}
   checkGround: {fileID: 1380701025}
   playerCrouch: {fileID: 616693934}
   playerGravityController: {fileID: 616693935}
@@ -1906,7 +1906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369fda25c566a034a93a425bba5d0235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionInput: {fileID: 148326290}
+  interactionInput: {fileID: 1148618695}
   playerHorizontalMovement: {fileID: 616693933}
   playerRotationHandler: {fileID: 1959200772}
   playerInteractAlternate: {fileID: 616693941}
@@ -1943,7 +1943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b76cf9fd47893364087a5227239f4a39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionInput: {fileID: 148326290}
+  interactionInput: {fileID: 1148618695}
   playerHorizontalMovement: {fileID: 616693933}
   playerInteract: {fileID: 616693939}
 --- !u!1001 &687273043
@@ -3104,7 +3104,7 @@ MonoBehaviour:
   buttonType: 0
   buttonKey: 304
   buttonMode: 3
-  tapReleaseInputDurationSeconds: 0.05
+  tapReleaseInputDurationSeconds: 0.1
   doubleTapTimeWindowSeconds: 0
 --- !u!1 &816464571
 GameObject:
@@ -3770,15 +3770,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1052093669}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e424bc03a962c49884b750e372e41b, type: 3}
+  m_Script: {fileID: 11500000, guid: 27fd76a07f36ce8468840981f0bdc057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   codeName: Crouch Down
-  buttonType: 0
   buttonKey: 306
-  buttonMode: 1
-  tapReleaseInputDurationSeconds: 0.05
-  doubleTapTimeWindowSeconds: 0
+  cooldown: 0.1
+  frames: 0
 --- !u!1 &1052894639 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 331fdfaeb7bc09c459f5f09b019985e7, type: 3}
@@ -3985,7 +3983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f26b087dea3d31d4a83675a510422fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraInput: {fileID: 148326288}
+  cameraInput: {fileID: 271254599}
   CMVCam: {fileID: 206339465}
   scrollSensitivity: 0.5
   maxDistance: 8
@@ -4238,7 +4236,7 @@ MonoBehaviour:
   buttonType: 0
   buttonKey: 304
   buttonMode: 1
-  tapReleaseInputDurationSeconds: 0.05
+  tapReleaseInputDurationSeconds: 0.1
   doubleTapTimeWindowSeconds: 0
 --- !u!1 &1156661881
 GameObject:
@@ -5156,7 +5154,7 @@ MonoBehaviour:
   buttonType: 0
   buttonKey: 32
   buttonMode: 1
-  tapReleaseInputDurationSeconds: 0.05
+  tapReleaseInputDurationSeconds: 0.1
   doubleTapTimeWindowSeconds: 0
 --- !u!1 &1519369983
 GameObject:
