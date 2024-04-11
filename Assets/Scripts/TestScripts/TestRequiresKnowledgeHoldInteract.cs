@@ -13,7 +13,7 @@ public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractabl
     [Space]
     [SerializeField] private float holdDuration;
 
-    [Header("Interactable Settings")]
+    [Header("Interactable Alternate Settings")]
     [SerializeField] private bool canBeSelectedAlternate;
     [SerializeField] private bool isInteractableAlternate;
     [SerializeField] private bool hasAlreadyBeenInteractedAlternate;

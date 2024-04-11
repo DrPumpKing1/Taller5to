@@ -33,12 +33,16 @@ public class KnowledgeManager : MonoBehaviour
 
     private void SetSingleton()
     {
-        if (Instance != null)
+        if (Instance == null)
         {
-            Debug.LogError("There is more than one KnowledgeManager instance");
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-
-        Instance = this;
+        else
+        {
+            Debug.LogWarning("There is more than one KnowledgeManager instance, proceding to destroy duplicate");
+            Destroy(gameObject);
+        }
     }
 
     private void CopySettings(KnowledgeSettingsSO knowledgeSettingsSO)
