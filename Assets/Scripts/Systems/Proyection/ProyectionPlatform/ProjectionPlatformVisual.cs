@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProyectionPlatformVisual : MonoBehaviour
+public class ProjectionPlatformVisual : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private ProyectionPlatform proyectionPlatform;
+    [SerializeField] private ProjectionPlatform projectionPlatform;
 
     [Header("Visual Settings")]
     [SerializeField] private Renderer selectedVisualRenderer;
@@ -19,13 +19,13 @@ public class ProyectionPlatformVisual : MonoBehaviour
 
     private void OnEnable()
     {
-        proyectionPlatform.OnObjectSelected += ProyectionPlatform_OnObjectSelected;
-        proyectionPlatform.OnObjectDeselected += ProyectionPlatform_OnObjectDeselected;
+        projectionPlatform.OnObjectSelected += ProyectionPlatform_OnObjectSelected;
+        projectionPlatform.OnObjectDeselected += ProyectionPlatform_OnObjectDeselected;
     }
     private void OnDisable()
     {
-        proyectionPlatform.OnObjectSelected -= ProyectionPlatform_OnObjectSelected;
-        proyectionPlatform.OnObjectDeselected -= ProyectionPlatform_OnObjectDeselected;
+        projectionPlatform.OnObjectSelected -= ProyectionPlatform_OnObjectSelected;
+        projectionPlatform.OnObjectDeselected -= ProyectionPlatform_OnObjectDeselected;
     }
 
     private void Start()

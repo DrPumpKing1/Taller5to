@@ -7,13 +7,13 @@ public class LearningManager : MonoBehaviour
 {
     public static LearningManager Instance { get; private set; }
 
-    [SerializeField] private List<ProyectableObjectSO> objectsLearned = new List<ProyectableObjectSO>();
+    [SerializeField] private List<ProjectableObjectSO> objectsLearned = new List<ProjectableObjectSO>();
 
     public EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
 
     public class OnObjectLearnedEventArgs
     {
-        public ProyectableObjectSO proyectableObjectLearned;
+        public ProjectableObjectSO projectableObjectLearned;
     }
 
     private void Awake()
@@ -34,9 +34,9 @@ public class LearningManager : MonoBehaviour
         }
     }
 
-    public void LearnObject(ProyectableObjectSO objectToLearn)
+    public void LearnObject(ProjectableObjectSO projectableObjectToLearn)
     {
-        objectsLearned.Add(objectToLearn);
-        OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { proyectableObjectLearned = objectToLearn });
+        objectsLearned.Add(projectableObjectToLearn);
+        OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { projectableObjectLearned = projectableObjectToLearn });
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewProyectableObjectSO", menuName = "ScriptableObjects/Proyection/ProyectableObject")]
-public class ProyectableObjectSO : ScriptableObject
+public class ProjectableObjectSO : ScriptableObject
 {
     [Header("Scriptable Object Settings")]
     public Transform prefab;

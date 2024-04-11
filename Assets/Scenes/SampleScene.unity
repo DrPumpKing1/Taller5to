@@ -4596,7 +4596,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 191138811503599964, guid: cbee3ab86ab8bca41b482ab9f07bd8a4, type: 3}
       propertyPath: m_Name
-      value: ProyectionPlatform
+      value: ProjectionPlatform
       objectReference: {fileID: 0}
     - target: {fileID: 3061237008394950533, guid: cbee3ab86ab8bca41b482ab9f07bd8a4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4689,6 +4689,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5317452787623605092, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7187077217301300134, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: projectableObjectToLearn
+      value: 
+      objectReference: {fileID: 11400000, guid: dc0814517cd95a347a2fed73a1be50a5, type: 2}
+    - target: {fileID: 7187077217301300134, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: dialectKnowledgeRequirements.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7187077217301300134, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: dialectKnowledgeRequirements.Array.data[0].level
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7187077217301300134, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: dialectKnowledgeRequirements.Array.data[0].dialect
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8778120176789687259, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}

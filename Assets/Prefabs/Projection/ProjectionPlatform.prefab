@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3479351232685201495}
   - component: {fileID: 8511310348178492371}
   m_Layer: 9
-  m_Name: ProyectionPlatform
+  m_Name: ProjectionPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 477eef53336058e41840ae8a18734bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  proyectionPlatform: {fileID: 8511310348178492371}
+  projectionPlatform: {fileID: 8511310348178492371}
   selectedVisualRenderer: {fileID: 5503237954577967689}
   deselectedVisualMaterial: {fileID: 2100000, guid: 69529db4569931f449265a58791585b2, type: 2}
   selectedVisualMaterial: {fileID: 2100000, guid: f225cbf5f550f684a8c94cc51913eb0d, type: 2}

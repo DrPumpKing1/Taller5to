@@ -6,7 +6,10 @@ using System;
 public class LearningPlatform : MonoBehaviour, IHoldInteractable, IRequiresKnowledge
 {
     [Header("Leraning Platform Settings")]
-    [SerializeField] private ProyectableObjectSO proyectableObjectToLearn;
+    [SerializeField] private ProjectableObjectSO projectableObjectToLearn;
+
+    [Header("Requires Knowledge Settings")]
+    [SerializeField] private List<DialectKnowledge> dialectKnowledgeRequirements = new List<DialectKnowledge>(Enum.GetValues(typeof(Dialect)).Length);
 
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
@@ -15,9 +18,6 @@ public class LearningPlatform : MonoBehaviour, IHoldInteractable, IRequiresKnowl
     [SerializeField] private string tooltipMessage;
     [Space]
     [SerializeField] private float holdDuration;
-
-    [Header("Requires Knowledge Settings")]
-    [SerializeField] private List<DialectKnowledge> dialectKnowledgeRequirements = new List<DialectKnowledge>(Enum.GetValues(typeof(Dialect)).Length);
 
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
@@ -138,6 +138,6 @@ public class LearningPlatform : MonoBehaviour, IHoldInteractable, IRequiresKnowl
 
     private void LearnObject()
     {
-        LearningManager.Instance.LearnObject(proyectableObjectToLearn);
+        LearningManager.Instance.LearnObject(projectableObjectToLearn);
     }
 }

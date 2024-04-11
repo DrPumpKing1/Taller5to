@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProyectionPlatform : MonoBehaviour, IHoldInteractable
+public class ProjectionPlatform : MonoBehaviour, IHoldInteractable
 {
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
