@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class ProjectionPlatform : MonoBehaviour, IHoldInteractable
 {
+    [Header("Projection Platform Settings")]
+    [SerializeField] private Transform projectionPoint;
+    [SerializeField] private ProjectableObjectSO currentProjectedObject;
+
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
@@ -13,6 +17,7 @@ public class ProjectionPlatform : MonoBehaviour, IHoldInteractable
     [Space]
     [SerializeField] private float holdDuration;
 
+    #region IHoldInteractable Properties
     public bool IsSelectable => canBeSelected;
 
     public bool IsInteractable => isInteractable;
@@ -22,19 +27,27 @@ public class ProjectionPlatform : MonoBehaviour, IHoldInteractable
     public string TooltipMessage => tooltipMessage;
 
     public float HoldDuration => holdDuration;
+    #endregion
 
+    #region IHoldInteractable Events
     public event EventHandler OnObjectSelected;
     public event EventHandler OnObjectDeselected;
 
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
+    #endregion
 
-    public void AlreadyInteracted()
+    public event EventHandler<OnProjectionEventArgs> OnObjectProjectionSuccess;
+    public event EventHandler<OnProjectionEventArgs> OnObjectProjectionFailed;
+    public event EventHandler<OnProjectionEventArgs> OnObjectProjectionFailedInsuficientGems;
+
+    public class OnProjectionEventArgs : EventArgs
     {
-        OnObjectHasAlreadyBeenInteracted?.Invoke(this, EventArgs.Empty);
-        Debug.Log("Platform was already interacted");
+        public ProjectableObjectSO projectableObjectSO;
     }
+
+    #region IHoldInteractable Methods
     public void Select()
     {
         OnObjectSelected?.Invoke(this, EventArgs.Empty);
@@ -58,13 +71,29 @@ public class ProjectionPlatform : MonoBehaviour, IHoldInteractable
             return;
         }
 
+        if(currentProjectedObject != null)
+        {
+            FailObjectProjection(ProjectionManager.Instance.SelectedProjectableObjectSO);
+            return;
+        }
+
+        if (!ProjectionManager.Instance.CanProjectObject(ProjectionManager.Instance.SelectedProjectableObjectSO))
+        {
+            FailObjectProjectionInsuficientGems(ProjectionManager.Instance.SelectedProjectableObjectSO);
+            return;
+        }
+
         Interact();
     }
 
     public void Interact()
     {
+        ProjectObject(ProjectionManager.Instance.SelectedProjectableObjectSO);
+
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
         Debug.Log("Interact");
+
+        canBeSelected = false; //Can´t be selected until is Platform is Reseted (clearing the projected object resets it)
     }
 
     public void FailInteract()
@@ -72,7 +101,11 @@ public class ProjectionPlatform : MonoBehaviour, IHoldInteractable
         OnObjectFailInteracted?.Invoke(this, EventArgs.Empty);
         Debug.Log("FailInteract");
     }
-
+    public void AlreadyInteracted()
+    {
+        OnObjectHasAlreadyBeenInteracted?.Invoke(this, EventArgs.Empty);
+        Debug.Log("Platform was already interacted");
+    }
 
     public bool CheckSuccess()
     {
@@ -88,8 +121,54 @@ public class ProjectionPlatform : MonoBehaviour, IHoldInteractable
             return false;
         }
 
+        if (currentProjectedObject != null)
+        {
+            FailObjectProjection(ProjectionManager.Instance.SelectedProjectableObjectSO);
+            return false;
+        }
+
+        if (!ProjectionManager.Instance.CanProjectObject(ProjectionManager.Instance.SelectedProjectableObjectSO))
+        {
+            FailObjectProjectionInsuficientGems(ProjectionManager.Instance.SelectedProjectableObjectSO);
+            return false;
+        }
+
         return true;
     }
 
     public Transform GetTransform() => transform;
+    #endregion
+
+    private void FailObjectProjection(ProjectableObjectSO projectableObjectSO)
+    {
+        ProjectionManager.Instance.FailObjectProjection(projectableObjectSO, this);
+        OnObjectProjectionFailed?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO });
+        Debug.Log("Cant Project Object");
+    }
+
+
+    private void FailObjectProjectionInsuficientGems(ProjectableObjectSO projectableObjectSO)
+    {
+        ProjectionManager.Instance.FailObjectProjectionInsuficientGems(projectableObjectSO, this);
+        OnObjectProjectionFailedInsuficientGems?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO } );
+        Debug.Log("Insuficient Projection Gems");
+    }
+
+    private void ProjectObject(ProjectableObjectSO projectableObjectSO)
+    {
+        currentProjectedObject = projectableObjectSO;
+
+        ProjectionManager.Instance.SuccessObjectProjection(projectableObjectSO, this);
+        OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO } );
+
+        Debug.Log("Object Projected");
+    }
+
+    public void ResetProjectionPlatform()
+    {
+        ClearCurrentProjectedObject();
+        canBeSelected = true;
+    }
+
+    private void ClearCurrentProjectedObject() => currentProjectedObject = null;
 }

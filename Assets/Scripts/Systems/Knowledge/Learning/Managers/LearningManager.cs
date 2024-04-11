@@ -11,7 +11,7 @@ public class LearningManager : MonoBehaviour
 
     public EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
 
-    public class OnObjectLearnedEventArgs
+    public class OnObjectLearnedEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectLearned;
     }
