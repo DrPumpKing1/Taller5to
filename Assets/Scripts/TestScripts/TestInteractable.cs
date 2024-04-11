@@ -25,7 +25,7 @@ public class TestInteractable : MonoBehaviour, IInteractable
     #region IInteractable
     public void Select()
     {
-        OnObjectSelected.Invoke(this, EventArgs.Empty);
+        OnObjectSelected?.Invoke(this, EventArgs.Empty);
         Debug.Log(gameObject.name + " Selected");
     }
     public void Deselect()
