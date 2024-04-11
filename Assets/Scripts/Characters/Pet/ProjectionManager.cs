@@ -6,7 +6,7 @@ using System;
 public class ProjectionManager : MonoBehaviour
 {
     public static ProjectionManager Instance { get; private set; }
-    public ProjectableObjectSO SelectedProjectableObjectSO { get; private set; }
+    public ProjectableObjectSO SelectedProjectableObjectSO;
 
     public event EventHandler<OnProjectionEventArgs> OnObjectProjectionSuccess;
     public event EventHandler<OnProjectionEventArgs> OnObjectProjectionFailed;
