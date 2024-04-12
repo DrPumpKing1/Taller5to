@@ -19,23 +19,22 @@ public class ProjectionPlatform : MonoBehaviour, IHoldInteractable
 
     #region IHoldInteractable Properties
     public bool IsSelectable => canBeSelected;
-
     public bool IsInteractable => isInteractable;
-
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
-
     public string TooltipMessage => tooltipMessage;
-
     public float HoldDuration => holdDuration;
     #endregion
 
     #region IHoldInteractable Events
     public event EventHandler OnObjectSelected;
     public event EventHandler OnObjectDeselected;
-
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
+
+    public event EventHandler OnHoldInteractionStart;
+    public event EventHandler OnHoldInteractionEnd;
+    public event EventHandler<IHoldInteractable.OnHoldInteractionEventArgs> OnContinousHoldInteraction;
     #endregion
 
     public event EventHandler<OnProjectionEventArgs> OnObjectProjectionSuccess;
@@ -135,6 +134,10 @@ public class ProjectionPlatform : MonoBehaviour, IHoldInteractable
 
         return true;
     }
+
+    public void HoldInteractionStart() => OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
+    public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer });
+    public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
 
     public Transform GetTransform() => transform;
     #endregion

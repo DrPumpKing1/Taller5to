@@ -38,12 +38,16 @@ public class ProjectableObject : MonoBehaviour, IHoldInteractable, IInteractable
     public string TooltipMessageAlternate => tooltipMessageAlternate;
     #endregion
 
-    #region IInteractable Events
+    #region IHoldInteractable Events
     public event EventHandler OnObjectSelected;
     public event EventHandler OnObjectDeselected;
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
+
+    public event EventHandler OnHoldInteractionStart;
+    public event EventHandler OnHoldInteractionEnd;
+    public event EventHandler<IHoldInteractable.OnHoldInteractionEventArgs> OnContinousHoldInteraction;
     #endregion
 
     #region IInteractableAlternate Events
@@ -56,7 +60,7 @@ public class ProjectableObject : MonoBehaviour, IHoldInteractable, IInteractable
 
     public event EventHandler OnObjectDematerialized;
 
-    #region IInteractable Methods
+    #region IHoldInteractable Methods
     public void Select()
     {
         OnObjectSelected?.Invoke(this, EventArgs.Empty);
@@ -119,6 +123,11 @@ public class ProjectableObject : MonoBehaviour, IHoldInteractable, IInteractable
 
         return true;
     }
+    public void HoldInteractionStart() => OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
+    public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer });
+    public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
+
+
     public Transform GetTransform() => transform;
 
     #endregion

@@ -21,40 +21,58 @@ public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractabl
     [Space]
     [SerializeField] private float holdDurationAlternate;
 
-
     [Header("Requires Knowledge Settings")]
     [SerializeField] private List<DialectKnowledge> dialectKnowledgeRequirements = new List<DialectKnowledge>(Enum.GetValues(typeof(Dialect)).Length);
 
+    #region IHoldInteractable Properties
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
     public float HoldDuration => holdDuration;
+    #endregion
 
+    #region IHoldInteractableAlternate Properties
     public bool IsSelectableAlternate => canBeSelectedAlternate;
     public bool IsInteractableAlternate => IsInteractableAlternate;
     public bool HasAlreadyBeenInteractedAlternate => hasAlreadyBeenInteractedAlternate;
     public string TooltipMessageAlternate => tooltipMessageAlternate;
     public float HoldDurationAlternate => holdDurationAlternate;
+    #endregion
 
-
+    #region  IRequiresKnowledge Properties
     public List<DialectKnowledge> DialectKnowledgeRequirements => dialectKnowledgeRequirements;
+    #endregion
 
+    #region IHoldInteractableEvents
+    public event EventHandler OnObjectSelected;
+    public event EventHandler OnObjectDeselected;
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
 
+    public event EventHandler OnHoldInteractionStart;
+    public event EventHandler OnHoldInteractionEnd;
+    public event EventHandler<IHoldInteractable.OnHoldInteractionEventArgs> OnContinousHoldInteraction;
+    #endregion
+
+    #region IHoldInteractable Alternate Events
+    public event EventHandler OnObjectSelectedAlternate;
+    public event EventHandler OnObjectDeselectedAlternate;
     public event EventHandler OnObjectInteractedAlternate;
     public event EventHandler OnObjectFailInteractedAlternate;
     public event EventHandler OnObjectHasAlreadyBeenInteractedAlternate;
 
-    public event EventHandler<IRequiresKnowledge.OnKnowledgeRequirementsNotMetEventArgs> OnKnowledgeRequirementsNotMet;
-    public event EventHandler OnObjectSelected;
-    public event EventHandler OnObjectDeselected;
-    public event EventHandler OnObjectSelectedAlternate;
-    public event EventHandler OnObjectDeselectedAlternate;
+    public event EventHandler OnHoldInteractionAlternateStart;
+    public event EventHandler OnHoldInteractionAlternateEnd;
+    public event EventHandler<IHoldInteractableAlternate.OnHoldInteractionAlternateEventArgs> OnContinousHoldInteractionAlternate;
+    #endregion
 
-    #region IInteractable
+    #region IRequiresKnowledge Events
+    public event EventHandler<IRequiresKnowledge.OnKnowledgeRequirementsNotMetEventArgs> OnKnowledgeRequirementsNotMet;
+    #endregion
+
+    #region IHoldInteractable Methods
     public void Select()
     {
         OnObjectSelected?.Invoke(this, EventArgs.Empty);
@@ -126,10 +144,14 @@ public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractabl
 
         return true;
     }
+    public void HoldInteractionStart() => OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
+    public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer });
+    public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
+
     public Transform GetTransform() => transform;
     #endregion
 
-    #region IInteractableAlternate
+    #region IHoldInteractableAlternate Methods
     public void SelectAlternate()
     {
         OnObjectSelectedAlternate?.Invoke(this, EventArgs.Empty);
@@ -207,9 +229,14 @@ public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractabl
 
         return true;
     }
+
+    public void HoldInteractionAlternateStart() => OnHoldInteractionAlternateStart?.Invoke(this, EventArgs.Empty);
+    public void ContinousHoldInteractionAlternate(float holdTimer) => OnContinousHoldInteractionAlternate?.Invoke(this, new IHoldInteractableAlternate.OnHoldInteractionAlternateEventArgs { holdTimer = holdTimer });
+    public void HoldInteractionAlternateEnd() => OnHoldInteractionAlternateEnd?.Invoke(this, EventArgs.Empty);
+
     #endregion
 
-    #region IRequiresKnowledge
+    #region IRequiresKnowledge Methods
     public bool MeetsKnowledgeRequirements()
     {
         foreach (DialectKnowledge dialectKnowledge in KnowledgeManager.Instance.GetDialectKnowledges())

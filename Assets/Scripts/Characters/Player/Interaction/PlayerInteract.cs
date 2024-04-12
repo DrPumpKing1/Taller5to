@@ -193,6 +193,7 @@ public class PlayerInteract : MonoBehaviour
             if (!IsInteracting)
             {
                 OnInteractionStarted?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
+                holdInteractable.HoldInteractionStart();
                 IsInteracting = true;
             }
 
@@ -200,6 +201,7 @@ public class PlayerInteract : MonoBehaviour
             if (!holdInteractable.CheckSuccess())
             {
                 OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
+                holdInteractable.HoldInteractionEnd();
                 ResetInteractions();
             }
             #endregion
@@ -208,6 +210,7 @@ public class PlayerInteract : MonoBehaviour
             float holdPercent = holdTimer / holdInteractable.HoldDuration;
 
             OnHoldInteraction?.Invoke(this, new OnHoldInteractionEventArgs { holdInteractable = holdInteractable, holdTimer = holdTimer });
+            holdInteractable.ContinousHoldInteraction(holdTimer);
 
             if (holdPercent >= 1)
             {
@@ -215,6 +218,7 @@ public class PlayerInteract : MonoBehaviour
 
                 OnInteractionCompleted?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
                 OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
+                holdInteractable.HoldInteractionEnd();
 
                 ResetInteractions();
             }
@@ -223,6 +227,7 @@ public class PlayerInteract : MonoBehaviour
         {
             OnHoldInteractionStopped?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
             OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
+            holdInteractable.HoldInteractionEnd();
 
             ResetInteractions();
         }
