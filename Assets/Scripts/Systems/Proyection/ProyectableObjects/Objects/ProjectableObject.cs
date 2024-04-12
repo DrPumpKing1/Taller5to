@@ -9,6 +9,12 @@ public class ProjectableObject : MonoBehaviour, IHoldInteractable, IInteractable
     [SerializeField] private ProjectableObjectSO projectableObjectSO;
     [SerializeField] private ProjectionPlatform projectionPlatform;
 
+    [Header("Rotation Settings")]
+    [SerializeField] private Vector2 startingDirection;
+    [SerializeField] private bool clockwiseRotation;
+    [SerializeField] private int degreesPerTurn;
+    [SerializeField,Range(1f,100f)] private float smoothRotateFactor;
+
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
@@ -58,7 +64,20 @@ public class ProjectableObject : MonoBehaviour, IHoldInteractable, IInteractable
     public event EventHandler OnObjectHasAlreadyBeenInteractedAlternate;
     #endregion
 
+    public Vector3 DesiredDirection { get; private set; }
+    public Vector3 CurrentDirection { get; private set; }
+
     public event EventHandler OnObjectDematerialized;
+
+    protected virtual void Start()
+    {
+        InitializeRotation();
+    }
+
+    protected virtual void Update()
+    {
+        HandleRotation();
+    }
 
     #region IHoldInteractable Methods
     public void Select()
@@ -166,7 +185,7 @@ public class ProjectableObject : MonoBehaviour, IHoldInteractable, IInteractable
         Debug.Log("ProjectableObject Interacted Alternate");
         OnObjectInteractedAlternate?.Invoke(this, EventArgs.Empty);
 
-        RotateProyectableObject();
+        RotateObject();
     }
 
     public void FailInteractAlternate()
@@ -183,11 +202,30 @@ public class ProjectableObject : MonoBehaviour, IHoldInteractable, IInteractable
 
     #endregion
 
-    private void RotateProyectableObject()
+    private void InitializeRotation()
     {
-        Debug.Log("Rotation");
+        Vector3 initialDirectionVector3 = GeneralMethods.Vector2ToVector3(startingDirection);
+        initialDirectionVector3 = initialDirectionVector3.magnitude == 0 ? transform.forward : initialDirectionVector3;
+
+        DesiredDirection = initialDirectionVector3.normalized;
+        CurrentDirection = DesiredDirection;
+
+        transform.localRotation = Quaternion.LookRotation(DesiredDirection);
     }
 
+    private void HandleRotation()
+    {
+        CurrentDirection = Vector3.Slerp(CurrentDirection, DesiredDirection, smoothRotateFactor * Time.deltaTime);
+        CurrentDirection.Normalize();
+
+        transform.localRotation = Quaternion.LookRotation(CurrentDirection);
+    }
+
+    private void RotateObject()
+    {
+        float degreesToTurn = clockwiseRotation ? degreesPerTurn : -degreesPerTurn;
+        DesiredDirection = (Quaternion.AngleAxis(degreesToTurn, Vector3.up) * DesiredDirection).normalized;
+    }
     private void DematerializeObject()
     {
         ProjectionManager.Instance.ObjectDematerialized(projectableObjectSO, projectionPlatform);

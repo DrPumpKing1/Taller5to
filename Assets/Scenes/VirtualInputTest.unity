@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   codeName: Interaction Alt Up
-  buttonKey: 102
+  buttonKey: 114
   cooldown: 0.1
   frames: 1
 --- !u!43 &30192035
@@ -1176,7 +1176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   codeName: Interaction Alt
   buttonType: 0
-  buttonKey: 102
+  buttonKey: 114
   buttonMode: 0
   tapReleaseInputDurationSeconds: 0
   doubleTapTimeWindowSeconds: 0
@@ -4942,7 +4942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   codeName: Interaction Alt Down
-  buttonKey: 102
+  buttonKey: 114
   cooldown: 0.1
   frames: 1
 --- !u!1 &1341691282
@@ -6417,7 +6417,7 @@ MonoBehaviour:
   playerInteractAlternate: {fileID: 616693941}
   smoothRotateFactor: 10
   applyStartingRotation: 1
-  startingFacingDirection: {x: -1, y: 0, z: -1}
+  startingFacingDirection: {x: -1, y: -1}
   holdDirectionThresholdTime: 0.05
 --- !u!1 &1982850960
 GameObject:

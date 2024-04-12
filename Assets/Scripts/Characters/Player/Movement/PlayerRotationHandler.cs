@@ -15,7 +15,7 @@ public class PlayerRotationHandler : MonoBehaviour
 
     [Header("Starting Rotation Settings")]
     [SerializeField] private bool applyStartingRotation;
-    [SerializeField] private Vector3 startingFacingDirection;
+    [SerializeField] private Vector2 startingFacingDirection;
 
     [Header("Hold Settings")]
     [SerializeField, Range (0f, 0.1f)] private float holdDirectionThresholdTime;
@@ -69,7 +69,12 @@ public class PlayerRotationHandler : MonoBehaviour
         previousDirectionInput = DirectionInput;
 
         FacingDirection = playerHorizontalMovement.transform.forward;
-        if (applyStartingRotation) FacingDirection = startingFacingDirection;
+
+        if (applyStartingRotation)
+        {
+            FacingDirection = GeneralMethods.Vector2ToVector3(startingFacingDirection);
+            FacingDirection = FacingDirection.magnitude == 0 ? playerHorizontalMovement.transform.forward : FacingDirection;
+        }
 
         FacingDirection.Normalize();
 
