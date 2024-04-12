@@ -159,7 +159,7 @@ public class ProjectionPlatform : MonoBehaviour, IHoldInteractable
         currentProjectedObject = projectableObjectSO;
 
         GameObject projectedObject = Instantiate(projectableObjectSO.prefab.gameObject, projectionPoint.position, projectionPoint.rotation);
-        projectedObject.transform.SetParent(null);
+        projectedObject.transform.SetParent(projectionPoint);
         projectedObject.GetComponent<ProjectableObject>().SetProjectionPlatform(this);
 
         ProjectionManager.Instance.SuccessObjectProjection(projectableObjectSO, this);

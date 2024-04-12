@@ -49,11 +49,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &6756069592316873726
 MonoBehaviour:
@@ -74,6 +74,10 @@ MonoBehaviour:
   hasAlreadyBeenInteracted: 0
   tooltipMessage: 
   holdDuration: 1
+  canBeSelectedAlternate: 1
+  isInteractableAlternate: 1
+  hasAlreadyBeenInteractedAlternate: 0
+  tooltipMessageAlternate: 
 --- !u!1 &8290119369691090758
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,6 +89,7 @@ GameObject:
   - component: {fileID: 2198466493796282357}
   - component: {fileID: 6742571098033088443}
   - component: {fileID: 2969800682788108264}
+  - component: {fileID: 9112930406395664942}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -157,3 +162,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &9112930406395664942
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8290119369691090758}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
