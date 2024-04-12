@@ -126,7 +126,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7028397045733667877}
   - component: {fileID: 1516361548936382483}
-  - component: {fileID: 6756069592316873726}
+  - component: {fileID: 962389071713770340}
+  - component: {fileID: 2212840017335302867}
   m_Layer: 9
   m_Name: ReflectionCrystal
   m_TagString: Untagged
@@ -171,7 +172,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &6756069592316873726
+--- !u!114 &962389071713770340
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,11 +184,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f4626f9f92f454e8243e53c9569cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2212840017335302867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854092768283266886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d95dbf71d62a1cb49bd11126d8b28b8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   projectableObjectSO: {fileID: 11400000, guid: dc0814517cd95a347a2fed73a1be50a5, type: 2}
   projectionPlatform: {fileID: 0}
   startingDirection: {x: -1, y: 0}
   clockwiseRotation: 1
-  degreesPerTurn: 45
+  degreesPerTurn: 90
   smoothRotateFactor: 15
   canBeSelected: 1
   isInteractable: 1
@@ -198,7 +211,6 @@ MonoBehaviour:
   isInteractableAlternate: 1
   hasAlreadyBeenInteractedAlternate: 0
   tooltipMessageAlternate: 
-  DesiredDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &8290119369691090758
 GameObject:
   m_ObjectHideFlags: 0
