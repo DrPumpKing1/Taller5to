@@ -102,14 +102,16 @@ public class PlayerInteract : MonoBehaviour
         if (hits.Length == 0) return null;
 
         RaycastHit closestHit = hits[0];
-        IInteractable interactable = CheckIfRayHitHasInteractable(closestHit);
-        float closestDistance = Vector3.Distance(GetRaycastOrigin(), closestHit.transform.position); ;
+        IInteractable interactable = null;
+        float closestDistance = float.MaxValue;
 
         foreach(RaycastHit hit in hits)
         {
             IInteractable potentialInteractable = CheckIfRayHitHasInteractable(hit);
 
             if (potentialInteractable == null) continue;
+
+            if (!potentialInteractable.IsSelectable) continue;
 
             float distance = Vector3.Distance(GetRaycastOrigin(), potentialInteractable.GetTransform().position);
 
@@ -129,7 +131,6 @@ public class PlayerInteract : MonoBehaviour
     {
         if (hit.transform.TryGetComponent(out IInteractable hitInteractable))
         {
-            if (!hitInteractable.IsSelectable) return null;
             return hitInteractable;
         }
 

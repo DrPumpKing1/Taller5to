@@ -11,6 +11,8 @@ public class ProjectionManager : MonoBehaviour
     public event EventHandler<OnProjectionEventArgs> OnObjectProjectionSuccess;
     public event EventHandler<OnProjectionEventArgs> OnObjectProjectionFailed;
 
+    public event EventHandler<OnProjectionEventArgs> OnObjectDematerialized;
+
     public class OnProjectionEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectSO;
@@ -52,5 +54,11 @@ public class ProjectionManager : MonoBehaviour
     {
         OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
         ProjectionGemsManager.Instance.UseProyectionGems(projectableObjectSO.projectionGemsCost);
+    }
+
+    public void ObjectDematerialized(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform)
+    {
+        OnObjectDematerialized?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
+        ProjectionGemsManager.Instance.RefundProyectionGems(projectableObjectSO.projectionGemsCost);
     }
 }
