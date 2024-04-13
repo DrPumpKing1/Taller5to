@@ -10,9 +10,12 @@ public class ProjectionGemsManager : MonoBehaviour
     [SerializeField] private int totalProyectionGems;
     [SerializeField] private int availableProyectionGems;
 
+    public int TotalProjectionGems { get { return totalProyectionGems; } }
+    public int AvailableProyectionGems { get { return availableProyectionGems; } }
+
     public EventHandler<OnProjectionGemsEventArgs> OnProjectionGemsUsed;
     public EventHandler<OnProjectionGemsEventArgs> OnProjectionGemsRefunded;
-    public EventHandler<OnProjectionGemsEventArgs> OnProjectionGemsIncreased;
+    public EventHandler<OnProjectionGemsEventArgs> OnTotalProjectionGemsIncreased;
     public EventHandler<OnProjectionGemsEventArgs> OnInsuficentProjectionGems;
 
     public class OnProjectionGemsEventArgs: EventArgs
@@ -63,10 +66,10 @@ public class ProjectionGemsManager : MonoBehaviour
         OnProjectionGemsRefunded?.Invoke(this, new OnProjectionGemsEventArgs { projectionGems = quantity });
     }
 
-    public void IncreaseProjectionGems(int quantity)
+    public void IncreaseTotalProjectionGems(int quantity)
     {
         totalProyectionGems += quantity;
-        OnProjectionGemsIncreased?.Invoke(this, new OnProjectionGemsEventArgs { projectionGems = quantity });
+        OnTotalProjectionGemsIncreased?.Invoke(this, new OnProjectionGemsEventArgs { projectionGems = quantity });
     }
 
     public void InsuficientProjectionGems(int tryToUseQuantity)
