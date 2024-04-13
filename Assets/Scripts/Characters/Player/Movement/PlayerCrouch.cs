@@ -7,6 +7,7 @@ public class PlayerCrouch : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private MovementInput movementInput;
+    [SerializeField] private PlayerJump playerJump;
     [SerializeField] private CheckGround checkGround;
     [SerializeField] private CheckRoof checkRoof;
 
@@ -17,7 +18,7 @@ public class PlayerCrouch : MonoBehaviour
 
     private CharacterController characterController;
 
-    private enum State { Idle, Crouching }
+    private enum State { NotCrouching, Crouching }
     private State state;
 
     private bool CrouchInput => movementInput.GetCrouchDown();
@@ -62,7 +63,7 @@ public class PlayerCrouch : MonoBehaviour
     {
         switch (state)
         {
-            case State.Idle:
+            case State.NotCrouching:
                 IdleLogic();
                 break;
             case State.Crouching:
@@ -80,6 +81,8 @@ public class PlayerCrouch : MonoBehaviour
         if (CrouchInput)
         {
             if (IsCrouching && checkRoof.HitRoof) return;
+            if (!playerJump.NotJumping) return;
+
             shouldBeCrouching = !shouldBeCrouching;
         }
     }
@@ -124,7 +127,7 @@ public class PlayerCrouch : MonoBehaviour
             if (characterController.height == normalHeight)
             {
                 ResetTimer();
-                SetCrouchState(State.Idle);
+                SetCrouchState(State.NotCrouching);
                 return;
             }
 

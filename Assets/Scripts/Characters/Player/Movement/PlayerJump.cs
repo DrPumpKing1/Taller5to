@@ -16,10 +16,11 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private float jumpHeight = 5f;
     [SerializeField] private float jumpCooldown = 1f;
 
-    private enum State {Idle, Impulsing, Jump}
+    private enum State {NotJumping, Impulsing, Jump}
     private State state;
 
     private bool JumpInput => movementInput.GetJump();
+    public bool NotJumping => state == State.NotJumping;
     private float jumpCooldownTime = 0f;
     private float timer = 0f;
 
@@ -40,7 +41,7 @@ public class PlayerJump : MonoBehaviour
     {
         switch (state)
         {
-            case State.Idle:
+            case State.NotJumping:
                 IdleLogic();
                 break;
             case State.Impulsing:
@@ -90,7 +91,7 @@ public class PlayerJump : MonoBehaviour
         jumpCooldownTime = jumpCooldown;
 
         ResetTimer();
-        SetJumpState(State.Idle);
+        SetJumpState(State.NotJumping);
     }
 
     private void Jump(ref Vector3 finalMoveVector)

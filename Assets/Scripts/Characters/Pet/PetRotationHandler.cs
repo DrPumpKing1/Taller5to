@@ -124,5 +124,4 @@ public class PetRotationHandler : MonoBehaviour
         respondToPlayerFacingDirection = true;
     }
     #endregion
-
 }

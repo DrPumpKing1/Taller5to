@@ -23,7 +23,6 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [SerializeField, Range(1f, 100f)] private float smoothSprintVelocityFactor = 5f;
     [SerializeField, Range(1f, 100f)] private float smoothFinalDirectionSpeed = 5f;
 
-    private CharacterController characterController;
     private Vector2 DirectionInputVector => movementInput.GetIsometricDirectionVectorNormalized();
     private bool SprintInput => movementInput.GetSprintHold();
 
@@ -35,11 +34,6 @@ public class PlayerHorizontalMovement : MonoBehaviour
     public Vector2 FixedLastNonZeroInput { get; private set; }
     public Vector3 FinalMoveDir { get; private set; }
     public Vector3 SmoothFinalMoveDir { get; private set; }
-
-    public void Awake()
-    {
-        characterController = GetComponent<CharacterController>();
-    }
 
     public void HandleHorizontalMovement(ref Vector3 finalMoveVector)
     {
