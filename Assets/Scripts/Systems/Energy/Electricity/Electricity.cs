@@ -61,7 +61,7 @@ public class Electricity : MonoBehaviour
             List<ElectricityComponent> contacts = component.GetContacts();
             contacts.ForEach((c) =>
             {
-                if (!c.allContacts.Contains(component)) c.allContacts.Add(component);
+                if (!c.allContacts.Contains(component) && c.CheckValidElectricalContact(component)) c.allContacts.Add(component);
             });
         }
     }
