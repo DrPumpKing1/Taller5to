@@ -1,12 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
-using static Unity.VisualScripting.Member;
+using System;
 
 [System.Serializable]
 public class Circuit : IDisposable
@@ -17,12 +12,12 @@ public class Circuit : IDisposable
     {
         this.components = components;
 
-        Electricity.Instance.AddCircuit(this);
+        ElectricityManager.Instance.AddCircuit(this);
     }
 
     public void ResolveCircuit()
     {
-        components.ForEach((c) => c.Switch(c.source & c.On));
+        components.ForEach((c) => c.Switch(c.Source & c.On));
 
         List<ElectricityComponent> sources = new List<ElectricityComponent>(GetSources());
 
@@ -39,7 +34,7 @@ public class Circuit : IDisposable
     {
         if (evaluation.Contains(component)) return;
 
-        if(Electricity.Instance.debug) Debug.Log(sender.name + " -> " + component.name);
+        if(ElectricityManager.Instance.debug) Debug.Log(sender.name + " -> " + component.name);
 
         component.ElectricalState();
 
@@ -86,13 +81,13 @@ public class Circuit : IDisposable
             component.circuit = connectedCircuit;
         }
 
-        Electricity.Instance.RemoveCircuit(this);
-        Electricity.Instance.RemoveCircuit(circuit);
+        ElectricityManager.Instance.RemoveCircuit(this);
+        ElectricityManager.Instance.RemoveCircuit(circuit);
 
         this.Dispose();
         circuit.Dispose();
 
-        Electricity.Instance.AddCircuit(connectedCircuit);
+        ElectricityManager.Instance.AddCircuit(connectedCircuit);
 
         return connectedCircuit;
     }
@@ -104,17 +99,17 @@ public class Circuit : IDisposable
 
     public List<ElectricityComponent> GetSources()
     {
-        return components.FindAll((c) => c.source);
+        return components.FindAll((c) => c.Source);
     }
 
     public List<ElectricityComponent> GetTransmitters()
     {
-        return components.FindAll((c) => c.transmit);
+        return components.FindAll((c) => c.Transmit);
     }
 
     public List<ElectricityComponent> GetDevices()
     {
-        return components.FindAll((c) => c.device);
+        return components.FindAll((c) => c.Device);
     }
 
     public void Dispose()

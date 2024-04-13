@@ -5,24 +5,28 @@ using UnityEngine;
 
 public abstract class ElectricityComponent : MonoBehaviour
 {
-    [SerializeField] protected bool on;
-
-    public bool On { get { return on; } }
-
-    public bool transmit;
-
-    public bool source;
-
-    public bool device;
-
-    public bool debug;
-
+    [Header("Electricity Component Settings")]
+    [SerializeField] private bool on;
+    [Space]
+    [SerializeField] private bool transmit;
+    [SerializeField] private bool source;
+    [SerializeField] private bool device;
+    [Space]
     public Circuit circuit;
+
+    [Header("Debug")]
+    [SerializeField] protected bool debug;
 
     protected List<ElectricityComponent> contacts;
 
     [HideInInspector] public List<ElectricityComponent> allContacts;
 
+    #region ElectricityComponentProperties
+    public bool On { get { return on; } }
+    public bool Transmit { get { return transmit; } }
+    public bool Source { get { return source; } }
+    public bool Device { get { return device; } }
+    #endregion
     protected virtual void Start()
     {
         contacts = new List<ElectricityComponent>();

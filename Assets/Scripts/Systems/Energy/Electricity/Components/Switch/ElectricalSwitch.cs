@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ElectricalSwitch : ElectricityComponent
 {
+    [Header("Switch Settings")]
     [SerializeField] private bool switchOn;
 
     public bool SwitchOn { get { return switchOn; } }
@@ -12,7 +13,7 @@ public class ElectricalSwitch : ElectricityComponent
     {
         if (!switchOn) return false;
 
-        if (!other.source && !other.transmit) return false;
+        if (!other.Source && !other.Transmit) return false;
 
         return base.CheckValidElectricalContact(other);
     }

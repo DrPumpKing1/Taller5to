@@ -6,7 +6,7 @@ using UnityEngine;
 public class ElectricalSwitchInteraction : MonoBehaviour, IHoldInteractable
 {
     [Header("Electrical Settings")]
-    public ElectricalSwitch component;
+    [SerializeField] private ElectricalSwitch component;
 
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;

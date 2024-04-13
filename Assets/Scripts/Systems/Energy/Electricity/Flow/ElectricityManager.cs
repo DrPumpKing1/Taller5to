@@ -4,18 +4,20 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using UnityEngine;
 
-public class Electricity : MonoBehaviour
+public class ElectricityManager : MonoBehaviour
 {
+    [Header("Electricity Settings")]
     [SerializeField] private List<Circuit> circuits;
     [SerializeField] private List<ElectricityComponent> components;
 
+    [Header("Debug")]
     public bool debug;
 
-    public static Electricity Instance { get; private set; }
+    public static ElectricityManager Instance { get; private set; }
 
     private void Awake()
     {
-        Instance = this;
+        SetSingleton();
     }
 
     private void Update()
@@ -24,15 +26,27 @@ public class Electricity : MonoBehaviour
         DetectCircuits();
         circuits.ForEach(circuit => circuit.ResolveCircuit());
     }
+    private void SetSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("There is more than one ElectricityManager instance, proceding to destroy duplicate");
+            Destroy(gameObject);
+        }
+    }
 
     private void UpdateComponents()
     {
         List<ElectricityComponent> disorderedComponents = Resources.FindObjectsOfTypeAll<ElectricityComponent>().ToList();
 
         IEnumerable<ElectricityComponent> orderedComponents = disorderedComponents.OrderBy((component) => {
-            if (component.source) return 0;
-            else if (component.transmit) return 1;
-            else if (component.device) return 2;
+            if (component.Source) return 0;
+            else if (component.Transmit) return 1;
+            else if (component.Device) return 2;
             else return 3;
         });
 

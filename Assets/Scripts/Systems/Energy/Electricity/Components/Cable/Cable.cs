@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Cable : ElectricityComponent
 {
-    public Transform[] cableCorners;
-    public LineRenderer lineRenderer;
+    [Header("Components")]
+    [SerializeField] private Transform[] cableCorners;
+    [SerializeField] private LineRenderer lineRenderer;
 
-    public float cornerRadius;
+    [Header("Cable Settings")]
+    [SerializeField] private float cornerRadius;
 
     protected override void Start()
     {
@@ -69,7 +71,7 @@ public class Cable : ElectricityComponent
 
     public override bool CheckValidElectricalContact(ElectricityComponent other)
     {
-        if (!other.source && !other.transmit) return false;
+        if (!other.Source && !other.Transmit) return false;
 
         return base.CheckValidElectricalContact(other);
     }
