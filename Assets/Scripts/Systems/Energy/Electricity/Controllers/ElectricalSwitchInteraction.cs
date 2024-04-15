@@ -6,7 +6,7 @@ using UnityEngine;
 public class ElectricalSwitchInteraction : MonoBehaviour, IHoldInteractable
 {
     [Header("Electrical Settings")]
-    [SerializeField] private ElectricalSwitch component;
+    [SerializeField] private SwitchElectrode switchElectrode;
 
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
@@ -19,7 +19,7 @@ public class ElectricalSwitchInteraction : MonoBehaviour, IHoldInteractable
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
-    public string TooltipMessage => $"Switch {(!component.SwitchOn ? "on" : "off")}";
+    public string TooltipMessage => $"Switch {(!switchElectrode.SwitchOn ? "on" : "off")}";
     public float HoldDuration => holdDuration;
     #endregion
 
@@ -98,6 +98,6 @@ public class ElectricalSwitchInteraction : MonoBehaviour, IHoldInteractable
 
     private void SwitchComponent()
     {
-        component.SetSwitchState(!component.SwitchOn);
+        switchElectrode.SetSwitch(!switchElectrode.SwitchOn);
     }
 }

@@ -1,0 +1,147 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+public class Electricity : MonoBehaviour
+{
+    [SerializeField] private List<Electrode> electrodes;
+
+    public List<Electrode> Electrodes { get { return electrodes; } }
+
+    [SerializeField] private List<Circuit> electricalCircuits;
+
+    public List<Circuit> Circuits { get { return electricalCircuits; } }
+
+    public static Electricity Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+        electricalCircuits = new List<Circuit>();
+    }
+
+    private void Start()
+    {
+        SetComponentsList();
+    }
+
+    private void SetComponentsList()
+    {
+        electrodes = new List<Electrode>(Resources.FindObjectsOfTypeAll<Electrode>());
+    }
+
+    public void AddComponentToList(Electrode component)
+    {
+        if (electrodes.Contains(component)) return;
+
+        electrodes.Add(component);
+    }
+
+    public void RemoveComponentFromList(Electrode component)
+    {
+        if (!electrodes.Contains(component)) return;
+
+        electrodes.Remove(component);
+    }
+
+    public void ConnectComponents(Electrode a, Electrode b)
+    {
+        Circuit circuitA = a.Node.Circuit;
+        Circuit circuitB = b.Node.Circuit;
+
+        if (circuitA == circuitB)
+        {
+            return;
+        }
+
+        if (circuitA == null && circuitB == null)
+        {
+            Circuit circuit = new Circuit();
+
+            circuit.AddNode(a.Node);
+            circuit.AddNode(b.Node);
+
+            circuit.ResolveCircuit();
+        }
+        else if (circuitA != null && circuitB == null)
+        {
+            circuitA.AddNode(b.Node);
+
+            circuitA.ResolveCircuit();
+        }
+        else if (circuitA == null && circuitB != null)
+        {
+            circuitB.AddNode(a.Node);
+
+            circuitB.ResolveCircuit();
+        }
+        else
+        {
+            Circuit circuit = Circuit.MergeCircuit(circuitA, circuitB);
+
+            circuit.ResolveCircuit();
+        }
+    }
+
+    public void DisconnectComponents(Circuit circuit)
+    {
+        List<Circuit> reorganizedCircuits = ReorganizeCircuit(circuit);
+
+        reorganizedCircuits.ForEach(c =>
+        {
+            c.ResolveCircuit();
+        });
+    }
+
+    private List<Circuit> ReorganizeCircuit(Circuit circuit)
+    {
+        List<Circuit> circuits = new List<Circuit>();
+
+        List<Electrode> componentsToPlaceRemaining = new List<Electrode>();
+
+        circuit.Elements.ForEach(e => componentsToPlaceRemaining.Add(e.Component));
+        circuit.Dispose();
+
+        do
+        {
+            Electrode component = componentsToPlaceRemaining.FirstOrDefault();
+
+            if (component == null) return circuits;
+
+            Circuit circuitTemp = new Circuit();
+
+            RecursiveFillCircuit(ref circuitTemp, component, ref componentsToPlaceRemaining);
+
+            circuits.Add(circuitTemp);
+
+        } while (componentsToPlaceRemaining.Count > 0);
+
+        return circuits;
+    }
+
+    private void RecursiveFillCircuit(ref Circuit circuit, Electrode component, ref List<Electrode> toFillFrom)
+    {
+        if (toFillFrom == null || !toFillFrom.Contains(component)) return;
+
+        toFillFrom.Remove(component);
+        circuit.AddNode(component.Node);
+
+        foreach (Electrode contact in component.RetrieveContacts())
+        {
+            if (!toFillFrom.Contains(contact)) continue;
+
+            RecursiveFillCircuit(ref circuit, contact, ref toFillFrom);
+        }
+    }
+
+    public void UpdateElectrode(Electrode component)
+    {
+        component.Node.Circuit.UpdateNodeForward(component.Node);
+    }
+
+    public void FlushCircuitTasks(Circuit circuit)
+    {
+        circuit.cancellationTokens.ForEach(token => token.Cancel());
+    }
+}
