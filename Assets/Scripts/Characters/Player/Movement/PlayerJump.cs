@@ -8,7 +8,6 @@ public class PlayerJump : MonoBehaviour
     [Header("Components")]
     [SerializeField] private MovementInput movementInput;
     [Space]
-    [SerializeField] private PlayerGravityController playerGravityController;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
     [Space]
@@ -25,6 +24,7 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private float gravityMultiplier = 1f;
     [SerializeField] private float fallMultiplier;
     [SerializeField] private float lowJumpMultiplier;
+    [SerializeField] private float stickToGroundForce = 5f;
 
     private Rigidbody _rigidbody;
     private enum State {NotJumping, Impulsing, Jump}
@@ -75,7 +75,7 @@ public class PlayerJump : MonoBehaviour
         if (playerCrouch.IsCrouching) return;
         if (playerInteract.IsInteracting) return;
         if (playerInteractAlternate.IsInteractingAlternate) return;
-        if (jumpCooldownTime > 0) return;
+        if (JumpOnCooldown()) return;
         if (!JumpInput) return;
 
         shouldJump = true;
@@ -101,15 +101,17 @@ public class PlayerJump : MonoBehaviour
     {
         HandleJumpCooldown();
 
-        if (shouldJump && !JumpOnCooldown())
+        if (shouldJump)
         {
             ResetTimer();
             SetJumpState(State.Impulsing);
             shouldJump = false;
-
             OnPlayerImpulsing?.Invoke(this, EventArgs.Empty);
         }
-
+        else if(checkGround.IsGrounded)
+        {
+            //StickToGround();
+        }
     }
 
     private void ImpulsingLogic()
@@ -164,6 +166,11 @@ public class PlayerJump : MonoBehaviour
         {
             _rigidbody.velocity += Vector3.up * Physics.gravity.y * gravityMultiplier * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
         }
+    }
+
+    private void StickToGround()
+    {
+        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, -stickToGroundForce, _rigidbody.velocity.z);
     }
 
     private bool JumpOnCooldown() => jumpCooldownTime > 0f;

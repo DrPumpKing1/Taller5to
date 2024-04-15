@@ -2185,18 +2185,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementInput: {fileID: 1936272247}
-  playerGravityController: {fileID: 0}
   playerInteract: {fileID: 616693939}
   playerInteractAlternate: {fileID: 616693941}
   checkGround: {fileID: 1380701025}
   playerCrouch: {fileID: 616693934}
   jumpHeight: 1.35
-  jumpHeightError: 0.1
+  jumpHeightError: 0.05
   impulseTime: 0.5
   jumpCooldown: 0.5
   gravityMultiplier: 1
-  fallMultiplier: 1.5
-  lowJumpMultiplier: 1.5
+  fallMultiplier: 2
+  lowJumpMultiplier: 2
+  stickToGroundForce: 5
 --- !u!114 &616693938
 MonoBehaviour:
   m_ObjectHideFlags: 0
