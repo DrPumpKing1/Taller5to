@@ -13,10 +13,10 @@ public class ProjectionGemsManager : MonoBehaviour
     public int TotalProjectionGems { get { return totalProyectionGems; } }
     public int AvailableProyectionGems { get { return availableProyectionGems; } }
 
-    public EventHandler<OnProjectionGemsEventArgs> OnProjectionGemsUsed;
-    public EventHandler<OnProjectionGemsEventArgs> OnProjectionGemsRefunded;
-    public EventHandler<OnProjectionGemsEventArgs> OnTotalProjectionGemsIncreased;
-    public EventHandler<OnProjectionGemsEventArgs> OnInsuficentProjectionGems;
+    public static EventHandler<OnProjectionGemsEventArgs> OnProjectionGemsUsed;
+    public static EventHandler<OnProjectionGemsEventArgs> OnProjectionGemsRefunded;
+    public static EventHandler<OnProjectionGemsEventArgs> OnTotalProjectionGemsIncreased;
+    public static EventHandler<OnProjectionGemsEventArgs> OnInsuficentProjectionGems;
 
     public class OnProjectionGemsEventArgs: EventArgs
     {

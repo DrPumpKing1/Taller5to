@@ -9,7 +9,7 @@ public class LearningManager : MonoBehaviour
 
     [SerializeField] private List<ProjectableObjectSO> objectsLearned = new List<ProjectableObjectSO>();
 
-    public EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
+    public static EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
 
     public class OnObjectLearnedEventArgs : EventArgs
     {

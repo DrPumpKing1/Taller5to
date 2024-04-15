@@ -8,10 +8,9 @@ public class ProjectionManager : MonoBehaviour
     public static ProjectionManager Instance { get; private set; }
     public ProjectableObjectSO SelectedProjectableObjectSO;
 
-    public event EventHandler<OnProjectionEventArgs> OnObjectProjectionSuccess;
-    public event EventHandler<OnProjectionEventArgs> OnObjectProjectionFailed;
-
-    public event EventHandler<OnProjectionEventArgs> OnObjectDematerialized;
+    public static event EventHandler<OnProjectionEventArgs> OnObjectProjectionSuccess;
+    public static event EventHandler<OnProjectionEventArgs> OnObjectProjectionFailed;
+    public static event EventHandler<OnProjectionEventArgs> OnObjectDematerialized;
 
     public class OnProjectionEventArgs : EventArgs
     {

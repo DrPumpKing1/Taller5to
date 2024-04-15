@@ -11,9 +11,9 @@ public class KnowledgeManager : MonoBehaviour
     [SerializeField] private KnowledgeSettingsSO startingKnowledgeSettingsSO;
     [SerializeField] private int maxDialectLevel = 10;
 
-    public EventHandler<OnKnowledgeChangedEventArgs> OnKnowledgeChanged;
-    public EventHandler<OnKnowledgeChangedEventArgs> OnKnowledgeIncreased;
-    public EventHandler<OnKnowledgeChangedEventArgs> OnKnowledgeDecreased;
+    public static EventHandler<OnKnowledgeChangedEventArgs> OnKnowledgeChanged;
+    public static EventHandler<OnKnowledgeChangedEventArgs> OnKnowledgeIncreased;
+    public static EventHandler<OnKnowledgeChangedEventArgs> OnKnowledgeDecreased;
 
     public class OnKnowledgeChangedEventArgs
     {
