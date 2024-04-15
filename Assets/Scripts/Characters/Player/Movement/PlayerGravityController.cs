@@ -7,6 +7,6 @@ public class PlayerGravityController : MonoBehaviour
     [Header("Gravity Settings")]
     [SerializeField] private float gravityMultiplier = 1f;
 
-    public float GetGravityMultiplier() => gravityMultiplier;
-    public float GetGravity() => Physics.gravity.y * gravityMultiplier;
+    //public float GetGravityMultiplier() => gravityMultiplier;
+    //public float GetGravity() => Physics.gravity.y * gravityMultiplier;
 }

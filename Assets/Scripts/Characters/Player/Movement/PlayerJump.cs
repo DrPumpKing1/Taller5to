@@ -16,11 +16,13 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private PlayerCrouch playerCrouch;
 
     [Header("Jump Settings")]
-    [SerializeField, Range(0f,0.5f)] private float impulseTime = 0.2f;
     [SerializeField] private float jumpHeight = 5f;
+    [SerializeField] private float jumpHeightError = 0.05f;
+    [SerializeField, Range(0f,0.5f)] private float impulseTime = 0.2f;
     [SerializeField] private float jumpCooldown = 1f;
 
     [Header("Gravity Settings")]
+    [SerializeField] private float gravityMultiplier = 1f;
     [SerializeField] private float fallMultiplier;
     [SerializeField] private float lowJumpMultiplier;
 
@@ -33,6 +35,10 @@ public class PlayerJump : MonoBehaviour
     private float jumpCooldownTime = 0f;
     private float timer = 0f;
     private bool shouldJump;
+
+    public float GravityMultiplier { get { return gravityMultiplier; } }
+    public float FallMultiplier { get { return fallMultiplier; } }
+    public float LowJumpMultiplier { get { return lowJumpMultiplier; } }
 
     public event EventHandler OnPlayerImpulsing;
     public event EventHandler OnPlayerJump;
@@ -130,7 +136,7 @@ public class PlayerJump : MonoBehaviour
 
     private void Jump()
     {
-        float jumpForce = CalculateJumpForce(jumpHeight, playerGravityController.GetGravity());
+        float jumpForce = CalculateJumpForce(jumpHeight + jumpHeightError, Physics.gravity.y * gravityMultiplier * lowJumpMultiplier);
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
     }
 
@@ -152,11 +158,11 @@ public class PlayerJump : MonoBehaviour
 
         if (_rigidbody.velocity.y < 0)
         {
-            _rigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+            _rigidbody.velocity += Vector3.up * Physics.gravity.y * gravityMultiplier * (fallMultiplier - 1) * Time.fixedDeltaTime;
         }
         else if (_rigidbody.velocity.y > 0 && !shouldJump)
         {
-            _rigidbody.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
+            _rigidbody.velocity += Vector3.up * Physics.gravity.y * gravityMultiplier * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
         }
     }
 

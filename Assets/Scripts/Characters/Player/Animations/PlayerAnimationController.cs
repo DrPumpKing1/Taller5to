@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerAnimationController : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private PlayerMovementHandler playerMovementHandler;
+    [SerializeField] private PlayerHorizontalMovement playerHorizontalMovement;
     [SerializeField] private PlayerJump playerJump;
     [SerializeField] private PlayerFall playerFall;
     [SerializeField] private PlayerLand playerLand;
@@ -16,7 +16,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     private Animator animator;
 
-    public float horizontalSpeed => playerMovementHandler.HorizontalMovementMagnitude;
+    public float horizontalSpeed => playerHorizontalMovement.FinalMoveVector.magnitude;
 
     private const string HORIZONTAL_SPEED_FLOAT = "HorizontalSpeed";
 

@@ -9,7 +9,7 @@ public class CheckGround : MonoBehaviour
 
     [Header("Check Ground Settings")]
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField, Range(0f, 1f)] private float checkGoundRayLenght = 0.1f;
+    [SerializeField, Range(-1f, 1f)] private float checkGoundRayLenght = 0.1f;
     [SerializeField, Range(0.01f, 1f)] private float raySphereRadius = 0.1f;
 
     [Header("Check Slope Settings")]

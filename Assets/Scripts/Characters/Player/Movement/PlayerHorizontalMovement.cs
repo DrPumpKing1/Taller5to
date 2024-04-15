@@ -27,6 +27,8 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [SerializeField, Range(1f, 100f)] private float smoothSprintVelocityFactor = 5f;
     [SerializeField, Range(1f, 100f)] private float smoothFinalDirectionSpeed = 5f;
 
+    private Rigidbody _rigidbody;
+
     private Vector2 DirectionInputVector => movementInput.GetIsometricDirectionVectorNormalized();
     private bool SprintInput => movementInput.GetSprintHold();
 
@@ -38,8 +40,14 @@ public class PlayerHorizontalMovement : MonoBehaviour
     public Vector2 FixedLastNonZeroInput { get; private set; }
     public Vector3 FinalMoveDir { get; private set; }
     public Vector3 SmoothFinalMoveDir { get; private set; }
+    public Vector3 FinalMoveVector { get; private set; }
 
-    public void HandleHorizontalMovement(ref Vector3 finalMoveVector)
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
     {
         CalculateDesiredSpeed();
         SmoothSpeed();
@@ -51,7 +59,12 @@ public class PlayerHorizontalMovement : MonoBehaviour
         CalculateDesiredMovementDirection();
         SmoothDirectionVector();
 
-        CalculateFinalMovement(ref finalMoveVector);
+        CalculateFinalMovement();
+    }
+
+    private void FixedUpdate()
+    {
+        ApplyHorizontalMovement();
     }
 
     private void CalculateDesiredSpeed()
@@ -123,7 +136,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
         return vectorToFlat;
     }
 
-    private void CalculateFinalMovement(ref Vector3 finalMoveVector)
+    private void CalculateFinalMovement()
     {
         Vector3 finalVector = SmoothFinalMoveDir * smoothCurrentSpeed;
 
@@ -131,8 +144,12 @@ public class PlayerHorizontalMovement : MonoBehaviour
         roundedFinalVector.x = Math.Abs(finalVector.x) < 0.01f ? 0f : finalVector.x;
         roundedFinalVector.z = Math.Abs(finalVector.z) < 0.01f ? 0f : finalVector.z;
 
-        finalMoveVector.x = roundedFinalVector.x;
-        finalMoveVector.z = roundedFinalVector.z;
+        FinalMoveVector = new Vector3(roundedFinalVector.x, 0f, roundedFinalVector.z);
+    }
+
+    private void ApplyHorizontalMovement()
+    {
+        _rigidbody.velocity = new Vector3(FinalMoveVector.x, _rigidbody.velocity.y, FinalMoveVector.z);
     }
 
     public bool HasMovementInput() => DirectionInputVector != Vector2.zero;

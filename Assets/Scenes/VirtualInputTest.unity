@@ -1029,7 +1029,7 @@ Transform:
   m_GameObject: {fileID: 206339464}
   serializedVersion: 2
   m_LocalRotation: {x: 0.23911765, y: 0.3696438, z: -0.09904577, w: 0.89239913}
-  m_LocalPosition: {x: -31.818623, y: 26.000004, z: -32.798622}
+  m_LocalPosition: {x: -30.618622, y: 26.000004, z: -30.61862}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2069,13 +2069,11 @@ GameObject:
   - component: {fileID: 616693932}
   - component: {fileID: 616693943}
   - component: {fileID: 616693942}
-  - component: {fileID: 616693937}
   - component: {fileID: 616693933}
   - component: {fileID: 616693936}
   - component: {fileID: 616693940}
   - component: {fileID: 616693938}
   - component: {fileID: 616693934}
-  - component: {fileID: 616693935}
   - component: {fileID: 616693939}
   - component: {fileID: 616693941}
   m_Layer: 6
@@ -2094,7 +2092,7 @@ Transform:
   m_GameObject: {fileID: 616693930}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2, y: 0, z: -2.18}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2174,19 +2172,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &616693935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616693930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c1cf339b031e154a976cefc83be397a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravityMultiplier: 1
 --- !u!114 &616693936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2200,31 +2185,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementInput: {fileID: 1936272247}
-  playerGravityController: {fileID: 616693935}
+  playerGravityController: {fileID: 0}
   playerInteract: {fileID: 616693939}
   playerInteractAlternate: {fileID: 616693941}
   checkGround: {fileID: 1380701025}
   playerCrouch: {fileID: 616693934}
-  impulseTime: 0.5
   jumpHeight: 1.35
+  jumpHeightError: 0.1
+  impulseTime: 0.5
   jumpCooldown: 0.5
-  fallMultiplier: 1
-  lowJumpMultiplier: 1
---- !u!114 &616693937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616693930}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95c60797cb26e0f40ba6bc5933a66423, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerHorizontalMovement: {fileID: 616693933}
-  playerJump: {fileID: 616693936}
-  playerGravityController: {fileID: 616693935}
+  gravityMultiplier: 1
+  fallMultiplier: 1.5
+  lowJumpMultiplier: 1.5
 --- !u!114 &616693938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2238,7 +2210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkGround: {fileID: 1380701025}
-  playerGravityController: {fileID: 616693935}
+  playerJump: {fileID: 616693936}
   landDetectionHeightThreshold: 0
   hardLandingThreshold: 1.5
   landRecoveryTime: 0
@@ -2301,7 +2273,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 616693930}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 92654f77c75a30942b65fd0733755522, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2314,9 +2286,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 1.8
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &616693943
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2415,7 +2387,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 331fdfaeb7bc09c459f5f09b019985e7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.08
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 331fdfaeb7bc09c459f5f09b019985e7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4569,7 +4541,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.23911765, y: 0.3696438, z: -0.09904577, w: 0.89239913}
-  m_LocalPosition: {x: -31.818623, y: 26.000004, z: -32.798622}
+  m_LocalPosition: {x: -30.618622, y: 26.000004, z: -30.61862}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4834,7 +4806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b68d7fde668304daeb997fad671bb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMovementHandler: {fileID: 616693937}
+  playerHorizontalMovement: {fileID: 616693933}
   playerJump: {fileID: 616693936}
   playerFall: {fileID: 616693940}
   playerLand: {fileID: 616693938}
@@ -6006,10 +5978,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 129
-  checkGoundRayLenght: 0.05
-  raySphereRadius: 0.2
+  checkGoundRayLenght: -0.45
+  raySphereRadius: 0.5
   checkSlopeRayLength: 1
-  drawRaycasts: 0
+  drawRaycasts: 1
 --- !u!1 &1390819690
 GameObject:
   m_ObjectHideFlags: 0
