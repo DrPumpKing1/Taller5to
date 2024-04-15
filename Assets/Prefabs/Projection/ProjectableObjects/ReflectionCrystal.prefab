@@ -128,6 +128,8 @@ GameObject:
   - component: {fileID: 1516361548936382483}
   - component: {fileID: 962389071713770340}
   - component: {fileID: 2212840017335302867}
+  - component: {fileID: 6719406281843646087}
+  - component: {fileID: 8971957355950650021}
   m_Layer: 9
   m_Name: ReflectionCrystal
   m_TagString: Untagged
@@ -198,15 +200,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectableObjectSO: {fileID: 11400000, guid: dc0814517cd95a347a2fed73a1be50a5, type: 2}
   projectionPlatform: {fileID: 0}
-  startingDirection: {x: -1, y: 0}
-  clockwiseRotation: 1
-  degreesPerTurn: 45
-  smoothRotateFactor: 15
+--- !u!114 &6719406281843646087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854092768283266886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d317a91d3a922c84a86fec73316ea3a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectableObject: {fileID: 2212840017335302867}
   canBeSelected: 1
   isInteractable: 1
   hasAlreadyBeenInteracted: 0
   tooltipMessage: 
   holdDuration: 1
+--- !u!114 &8971957355950650021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854092768283266886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b74f03ccdf53f44d9a4f132f29fe4ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingDirection: {x: -1, y: 0}
+  clockwiseRotation: 1
+  degreesPerTurn: 45
+  smoothRotateFactor: 15
   canBeSelectedAlternate: 1
   isInteractableAlternate: 1
   hasAlreadyBeenInteractedAlternate: 0
