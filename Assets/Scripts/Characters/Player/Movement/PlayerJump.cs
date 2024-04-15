@@ -20,6 +20,11 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private float jumpHeight = 5f;
     [SerializeField] private float jumpCooldown = 1f;
 
+    [Header("Gravity Settings")]
+    [SerializeField] private float fallMultiplier;
+    [SerializeField] private float lowJumpMultiplier;
+
+    private Rigidbody _rigidbody;
     private enum State {NotJumping, Impulsing, Jump}
     private State state;
 
@@ -27,13 +32,30 @@ public class PlayerJump : MonoBehaviour
     public bool NotJumping => state == State.NotJumping;
     private float jumpCooldownTime = 0f;
     private float timer = 0f;
+    private bool shouldJump;
 
     public event EventHandler OnPlayerImpulsing;
     public event EventHandler OnPlayerJump;
 
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
+
     private void Start()
     {
         InitializeVariables();
+    }
+
+    private void Update()
+    {
+        CheckShouldJump();
+        HandleJumpStates();
+    }
+
+    private void FixedUpdate()
+    {
+        BetterJumpLogic();
     }
 
     private void InitializeVariables()
@@ -41,7 +63,19 @@ public class PlayerJump : MonoBehaviour
         jumpCooldownTime = 0f;
     }
 
-    public void HandleJump(ref Vector3 finalMoveVector)
+    private void CheckShouldJump()
+    {
+        if (!checkGround.IsGrounded) return;
+        if (playerCrouch.IsCrouching) return;
+        if (playerInteract.IsInteracting) return;
+        if (playerInteractAlternate.IsInteractingAlternate) return;
+        if (jumpCooldownTime > 0) return;
+        if (!JumpInput) return;
+
+        shouldJump = true;
+    }
+    private void SetJumpState(State state) { this.state = state; }
+    public void HandleJumpStates()
     {
         switch (state)
         {
@@ -52,26 +86,20 @@ public class PlayerJump : MonoBehaviour
                 ImpulsingLogic();
                 break;
             case State.Jump:
-                JumpLogic(ref finalMoveVector);
+                JumpLogic();
                 break;
         }
     }
-
-    private void SetJumpState(State state) { this.state = state; }
 
     private void NotJumpingLogic() 
     {
         HandleJumpCooldown();
 
-        if (!checkGround.IsGrounded) return;
-        if (playerCrouch.IsCrouching) return;
-        if (playerInteract.IsInteracting) return;
-        if (playerInteractAlternate.IsInteractingAlternate) return;
-
-        if (JumpInput && !JumpOnCooldown())
+        if (shouldJump && !JumpOnCooldown())
         {
             ResetTimer();
             SetJumpState(State.Impulsing);
+            shouldJump = false;
 
             OnPlayerImpulsing?.Invoke(this, EventArgs.Empty);
         }
@@ -89,20 +117,21 @@ public class PlayerJump : MonoBehaviour
         }
     }
 
-    private void JumpLogic(ref Vector3 finalMoveVector)
+    private void JumpLogic()
     {
         OnPlayerJump?.Invoke(this, EventArgs.Empty);
 
-        Jump(ref finalMoveVector);
+        Jump();
         jumpCooldownTime = jumpCooldown;
 
         ResetTimer();
         SetJumpState(State.NotJumping);
     }
 
-    private void Jump(ref Vector3 finalMoveVector)
+    private void Jump()
     {
-        finalMoveVector.y = CalculateJumpForce(jumpHeight, Physics.gravity.y * playerGravityController.GetGravityMultiplier());
+        float jumpForce = CalculateJumpForce(jumpHeight, playerGravityController.GetGravity());
+        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
     }
 
     private float CalculateJumpForce(float jumpHeight, float gravity)
@@ -114,7 +143,21 @@ public class PlayerJump : MonoBehaviour
     private void HandleJumpCooldown()
     {
         if (!checkGround.IsGrounded) return;
-        jumpCooldownTime = jumpCooldownTime > 0f ? jumpCooldownTime-=Time.deltaTime : 0f;
+        jumpCooldownTime = jumpCooldownTime > 0f ? jumpCooldownTime -= Time.deltaTime : 0f;
+    }
+
+    private void BetterJumpLogic()
+    {
+        if (checkGround.IsGrounded) return;
+
+        if (_rigidbody.velocity.y < 0)
+        {
+            _rigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+        }
+        else if (_rigidbody.velocity.y > 0 && !shouldJump)
+        {
+            _rigidbody.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
+        }
     }
 
     private bool JumpOnCooldown() => jumpCooldownTime > 0f;

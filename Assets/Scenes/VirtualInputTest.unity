@@ -1182,7 +1182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9d7968b52806e45858318399df766e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterController: {fileID: 616693931}
+  capsulleCollider: {fileID: 616693942}
   positionOffset: {x: 0, y: 0.2, z: 0}
 --- !u!1 &239147746
 GameObject:
@@ -2067,7 +2067,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 616693932}
-  - component: {fileID: 616693931}
+  - component: {fileID: 616693943}
+  - component: {fileID: 616693942}
   - component: {fileID: 616693937}
   - component: {fileID: 616693933}
   - component: {fileID: 616693936}
@@ -2084,32 +2085,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!143 &616693931
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 616693930}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &616693932
 Transform:
   m_ObjectHideFlags: 0
@@ -2211,9 +2186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c1cf339b031e154a976cefc83be397a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkGround: {fileID: 1380701025}
-  gravityMultiplier: 2
-  stickToGroundForce: 1
+  gravityMultiplier: 1
 --- !u!114 &616693936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2235,6 +2208,8 @@ MonoBehaviour:
   impulseTime: 0.5
   jumpHeight: 1.35
   jumpCooldown: 0.5
+  fallMultiplier: 1
+  lowJumpMultiplier: 1
 --- !u!114 &616693937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2242,7 +2217,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 616693930}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 95c60797cb26e0f40ba6bc5933a66423, type: 3}
   m_Name: 
@@ -2304,7 +2279,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkGround: {fileID: 1380701025}
-  playerGravityController: {fileID: 616693935}
 --- !u!114 &616693941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2320,6 +2294,56 @@ MonoBehaviour:
   interactionInput: {fileID: 1148618695}
   playerHorizontalMovement: {fileID: 616693933}
   playerInteract: {fileID: 616693939}
+--- !u!136 &616693942
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616693930}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!54 &616693943
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616693930}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &677615568
 GameObject:
   m_ObjectHideFlags: 0
@@ -5937,7 +5961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5e30251e7da1e4483b99e10c0b1820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterController: {fileID: 616693931}
+  capsulleCollider: {fileID: 616693942}
   playerHorizontalMovement: {fileID: 616693933}
   obstacleLayer:
     serializedVersion: 2
@@ -5958,7 +5982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71284ec6579df974a9760e353f47ecd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterController: {fileID: 616693931}
+  capsuleCollider: {fileID: 616693942}
   roofLayer:
     serializedVersion: 2
     m_Bits: 1
@@ -5978,7 +6002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36aca7cd3b7a29448b6de55838817e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterController: {fileID: 616693931}
+  capsuleCollider: {fileID: 616693942}
   groundLayer:
     serializedVersion: 2
     m_Bits: 129
@@ -7442,7 +7466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9d7968b52806e45858318399df766e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterController: {fileID: 616693931}
+  capsulleCollider: {fileID: 616693942}
   positionOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1959200770
 GameObject:
@@ -8021,7 +8045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9d7968b52806e45858318399df766e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterController: {fileID: 616693931}
+  capsulleCollider: {fileID: 616693942}
   positionOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &2094468816
 GameObject:

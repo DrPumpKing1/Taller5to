@@ -1,0 +1,7 @@
+﻿[*.cs]
+
+# CS8632: La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
+dotnet_diagnostic.CS8632.severity = none
+
+# CS1998: El método asincrónico carece de operadores "await" y se ejecutará de forma sincrónica
+dotnet_diagnostic.CS1998.severity = warning

@@ -32,7 +32,7 @@ public class PlayerInteract : MonoBehaviour
     private bool canHoldInteract;
     private bool previousCanHoldInteract;
 
-    private CharacterController characterController;
+    private CapsuleCollider capsulleCollider;
 
     private IInteractable curentInteractable;
 
@@ -60,7 +60,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
+        capsulleCollider = GetComponent<CapsuleCollider>();
     }
 
     private void Start()
@@ -255,5 +255,5 @@ public class PlayerInteract : MonoBehaviour
         return hits;
     }
 
-    public Vector3 GetRaycastOrigin() => transform.position + characterController.center + InteractionDirection * interactionRayStartDistance;
+    public Vector3 GetRaycastOrigin() => transform.position + capsulleCollider.center + InteractionDirection * interactionRayStartDistance;
 }

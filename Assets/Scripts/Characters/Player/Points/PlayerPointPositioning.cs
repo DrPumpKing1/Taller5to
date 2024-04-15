@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerPointPositioning : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private CharacterController characterController;
+    [SerializeField] private CapsuleCollider capsulleCollider;
 
     [Header("Settings")]
     [SerializeField] private Vector3 positionOffset;
@@ -16,5 +16,5 @@ public class PlayerPointPositioning : MonoBehaviour
         HandlePositionDueToCharacterControllerCenter();
     }
 
-    private void HandlePositionDueToCharacterControllerCenter() => transform.localPosition = characterController.center + positionOffset;
+    private void HandlePositionDueToCharacterControllerCenter() => transform.localPosition = capsulleCollider.center + positionOffset;
 }

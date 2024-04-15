@@ -7,9 +7,8 @@ public class PlayerFall : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private CheckGround checkGround;
-    [SerializeField] private PlayerGravityController playerGravityController;
 
-    private CharacterController characterController;
+    private Rigidbody _rigidbody;
 
     private bool isFalling;
     private bool previouslyFalling;
@@ -18,7 +17,7 @@ public class PlayerFall : MonoBehaviour
 
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -50,5 +49,5 @@ public class PlayerFall : MonoBehaviour
     }
 
 
-    private bool CheckIsFalling() => !checkGround.IsGrounded && characterController.velocity.y < 0f;
+    private bool CheckIsFalling() => !checkGround.IsGrounded && _rigidbody.velocity.y < 0f;
 }

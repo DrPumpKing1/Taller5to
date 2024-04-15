@@ -20,7 +20,7 @@ public class PlayerCrouch : MonoBehaviour
     [SerializeField] private float crouchTransitionDuration = 1f;
     [SerializeField] private AnimationCurve crouchTransitionCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
-    private CharacterController characterController;
+    private CapsuleCollider capsuleCollider;
 
     private enum State { NotCrouching, Crouching }
     private State state;
@@ -42,7 +42,7 @@ public class PlayerCrouch : MonoBehaviour
 
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
         InitializeVariables();
     }
 
@@ -53,7 +53,7 @@ public class PlayerCrouch : MonoBehaviour
 
     private void InitializeVariables()
     {
-        normalHeight = characterController.height;
+        normalHeight = capsuleCollider.height;
         crouchHeight = normalHeight * crouchPercent;
 
         IsCrouching = false;
@@ -110,7 +110,7 @@ public class PlayerCrouch : MonoBehaviour
     {
         if (shouldBeCrouching)
         {
-            if (characterController.height == crouchHeight)
+            if (capsuleCollider.height == crouchHeight)
             {
                 IsCrouchingTransitioning = false;
                 return;
@@ -119,7 +119,7 @@ public class PlayerCrouch : MonoBehaviour
             if (!crouchingActive)
             {
                 crouchingActive = true;
-                stateStartingHeight = characterController.height;
+                stateStartingHeight = capsuleCollider.height;
                 ResetTimer();
 
                 OnPlayerStandDown?.Invoke(this, EventArgs.Empty);
@@ -131,13 +131,13 @@ public class PlayerCrouch : MonoBehaviour
                 float percent = timer / crouchTransitionDuration;
                 float curveValue = crouchTransitionCurve.Evaluate(percent);
 
-                characterController.height = Mathf.Lerp(stateStartingHeight, crouchHeight, curveValue);
+                capsuleCollider.height = Mathf.Lerp(stateStartingHeight, crouchHeight, curveValue);
                 IsCrouchingTransitioning = true;
             }
         }
         else
         {
-            if (characterController.height == normalHeight)
+            if (capsuleCollider.height == normalHeight)
             {
                 ResetTimer();
                 SetCrouchState(State.NotCrouching);
@@ -148,7 +148,7 @@ public class PlayerCrouch : MonoBehaviour
             if (crouchingActive)
             {
                 crouchingActive = false;
-                stateStartingHeight = characterController.height;
+                stateStartingHeight = capsuleCollider.height;
                 ResetTimer();
 
                 OnPlayerStandUp?.Invoke(this, EventArgs.Empty);
@@ -160,15 +160,15 @@ public class PlayerCrouch : MonoBehaviour
                 float percent = timer / crouchTransitionDuration;
                 float curveValue = crouchTransitionCurve.Evaluate(percent);
 
-                characterController.height = Mathf.Lerp(stateStartingHeight, normalHeight, curveValue);
+                capsuleCollider.height = Mathf.Lerp(stateStartingHeight, normalHeight, curveValue);
                 IsCrouchingTransitioning = true;
             }
         }
 
         IsCrouching = true;
 
-        Vector3 newCharacterControllerCenter = new Vector3(characterController.center.x, characterController.height / 2, characterController.center.z);
-        characterController.center = newCharacterControllerCenter;
+        Vector3 newCharacterControllerCenter = new Vector3(capsuleCollider.center.x, capsuleCollider.height / 2, capsuleCollider.center.z);
+        capsuleCollider.center = newCharacterControllerCenter;
     }
 
     private void ResetTimer() => timer = 0f;

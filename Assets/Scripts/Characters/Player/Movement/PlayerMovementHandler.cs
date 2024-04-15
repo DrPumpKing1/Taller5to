@@ -22,8 +22,8 @@ public class PlayerMovementHandler : MonoBehaviour
     private void Update()
     {
         playerHorizontalMovement.HandleHorizontalMovement(ref finalMoveVector);
-        playerGravityController.ApplyGravity(ref finalMoveVector); //First apply gravity (Stick to ground force applied if grounded) 
-        playerJump.HandleJump(ref finalMoveVector);
+        //playerGravityController.ApplyGravity(ref finalMoveVector); //First apply gravity (Stick to ground force applied if grounded) 
+        //playerJump.HandleJump(ref finalMoveVector);
         
         ApplyMovement();
     }

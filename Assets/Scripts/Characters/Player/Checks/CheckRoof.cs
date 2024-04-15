@@ -6,7 +6,7 @@ using UnityEngine;
 public class CheckRoof : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private CharacterController characterController;
+    [SerializeField] private CapsuleCollider capsuleCollider;
 
     [Header("Settings")]
     [SerializeField] private LayerMask roofLayer;
@@ -32,7 +32,7 @@ public class CheckRoof : MonoBehaviour
     }
     private void InitializeVariabled()
     {
-        characterControllerHeight = characterController.height;
+        characterControllerHeight = capsuleCollider.height;
     }
 
     private bool CheckIfRoofRegular()
@@ -52,9 +52,9 @@ public class CheckRoof : MonoBehaviour
     {
         Vector3 origin = transform.position;
 
-        float finalRayLength = characterControllerHeight - characterController.radius; 
+        float finalRayLength = characterControllerHeight - capsuleCollider.radius; 
 
-        bool hitRoof = Physics.SphereCast(origin, characterController.radius, Vector3.up, out roofInfo, finalRayLength, roofLayer);
+        bool hitRoof = Physics.SphereCast(origin, capsuleCollider.radius, Vector3.up, out roofInfo, finalRayLength, roofLayer);
 
         if (drawRaycasts) Debug.DrawRay(origin, Vector3.up * (finalRayLength), Color.green);
 

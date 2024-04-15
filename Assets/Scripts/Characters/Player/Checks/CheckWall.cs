@@ -5,7 +5,7 @@ using UnityEngine;
 public class CheckWall : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private CharacterController characterController;
+    [SerializeField] private CapsuleCollider capsulleCollider;
     [SerializeField] private PlayerHorizontalMovement playerHorizontalMovement;
 
     [Header("General Settings")]
@@ -35,14 +35,14 @@ public class CheckWall : MonoBehaviour
 
     private bool CheckIfWall()
     {
-        bool checkWallHalfBody = CheckIfWallAtPoint(transform.position + characterController.center,rayLength,raySphereRadius);
-        bool checkWall95PercentBody = CheckIfWallAtPoint(transform.position + characterController.center + new Vector3(0f,characterController.height * 0.45f,0f), rayLength, raySphereRadius);
+        bool checkWallHalfBody = CheckIfWallAtPoint(transform.position + capsulleCollider.center,rayLength,raySphereRadius);
+        bool checkWall95PercentBody = CheckIfWallAtPoint(transform.position + capsulleCollider.center + new Vector3(0f,capsulleCollider.height * 0.45f,0f), rayLength, raySphereRadius);
 
         return checkWallHalfBody || checkWall95PercentBody;
     }
     private bool CheckIfDiagonalWall()
     {
-        bool checkWallHalfBody = CheckIfWallAtPoint(transform.position + characterController.center, diagonalRayLength);
+        bool checkWallHalfBody = CheckIfWallAtPoint(transform.position + capsulleCollider.center, diagonalRayLength);
 
         return checkWallHalfBody;
     }

@@ -21,7 +21,7 @@ public class PlayerLand : MonoBehaviour
     private enum State {Idle, RegularLanding, HardLanding}
     private State state;
 
-    private CharacterController characterController;
+    private Rigidbody _rigidbody;
     private bool prevoiuslyGrounded;
     private float timer = 0f;
 
@@ -36,7 +36,7 @@ public class PlayerLand : MonoBehaviour
 
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -46,7 +46,7 @@ public class PlayerLand : MonoBehaviour
 
     private void Update()
     {
-        HandleLand();
+        HandleLandStates();
     }
 
     private void InitializeVariables()
@@ -54,7 +54,7 @@ public class PlayerLand : MonoBehaviour
         prevoiuslyGrounded = checkGround.IsGrounded;
     }
 
-    private void HandleLand()
+    private void HandleLandStates()
     {
         switch (state)
         {
@@ -80,7 +80,7 @@ public class PlayerLand : MonoBehaviour
 
         if (!prevoiuslyGrounded && checkGround.IsGrounded)
         {
-            float landHeight = CalculateLandHeight(characterController.velocity.y, playerGravityController.GetGravity());
+            float landHeight = CalculateLandHeight(_rigidbody.velocity.y, playerGravityController.GetGravity());
 
             if (HasSurpassedThreshold()) OnPlayerLand?.Invoke(this, new OnPlayerLandEventArgs { landHeight = landHeight});
 
@@ -137,6 +137,6 @@ public class PlayerLand : MonoBehaviour
         return landHeight;
     }
 
-    private bool HasSurpassedThreshold() => characterController.velocity.y <= CalculateLandVelocity(landDetectionHeightThreshold, playerGravityController.GetGravity());
+    private bool HasSurpassedThreshold() => _rigidbody.velocity.y <= CalculateLandVelocity(landDetectionHeightThreshold, playerGravityController.GetGravity());
     private void ResetTimer() => timer = 0f;
 }

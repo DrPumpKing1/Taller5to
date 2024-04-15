@@ -5,7 +5,7 @@ using UnityEngine;
 public class CheckGround : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] CharacterController characterController;
+    [SerializeField] CapsuleCollider capsuleCollider;
 
     [Header("Check Ground Settings")]
     [SerializeField] private LayerMask groundLayer;
@@ -28,12 +28,12 @@ public class CheckGround : MonoBehaviour
         OnSlope = CheckSlope();
     }
 
-    private bool CheckGrounded() => CheckRaycastGrounded() || CheckCharacterControllerGrounded();
+    private bool CheckGrounded() => CheckRaycastGrounded();
 
     private bool CheckRaycastGrounded()
     {
-        Vector3 origin = transform.position + characterController.center;
-        float finalRayLength = checkGoundRayLenght + characterController.center.y;
+        Vector3 origin = transform.position + capsuleCollider.center;
+        float finalRayLength = checkGoundRayLenght + capsuleCollider.center.y;
 
         bool isGrounded = Physics.SphereCast(origin, raySphereRadius, Vector3.down, out RaycastHit groundInfo, finalRayLength, groundLayer);
 
@@ -44,8 +44,8 @@ public class CheckGround : MonoBehaviour
 
     private bool CheckSlope()
     {
-        Vector3 origin = transform.position + characterController.center;
-        float finalRayLength = checkSlopeRayLength + characterController.center.y;
+        Vector3 origin = transform.position + capsuleCollider.center;
+        float finalRayLength = checkSlopeRayLength + capsuleCollider.center.y;
 
         bool onSlope = Physics.Raycast(origin, Vector3.down, out RaycastHit hitInfo, finalRayLength, groundLayer);
         SlopeNormal = hitInfo.normal;
@@ -53,5 +53,5 @@ public class CheckGround : MonoBehaviour
         return onSlope;
     }
 
-    private bool CheckCharacterControllerGrounded() => characterController.isGrounded;
+    //private bool CheckCharacterControllerGrounded() => capsuleCollider.isGrounded;
 }
