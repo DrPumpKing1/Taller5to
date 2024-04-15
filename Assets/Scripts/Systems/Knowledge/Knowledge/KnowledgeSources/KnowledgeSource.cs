@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class KnowledgeSource : MonoBehaviour, IInteractable
 {
+    [Header ("Knowledge Source Settings")]
     [SerializeField] private KnowledgeSourceSO knowledgeSourceSO;
+    [SerializeField, Range (0f,1f)] private float destroyTime;
 
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
@@ -24,23 +26,19 @@ public class KnowledgeSource : MonoBehaviour, IInteractable
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
 
-    private void AddKnowledgeToDialects() 
-    { 
-        foreach(DialectKnowledge dialectKnowledgePercentageChange in knowledgeSourceSO.dialectKnowledgePercentageChanges)
-        {
-            KnowledgeManager.Instance.ChangeKnowledge(dialectKnowledgePercentageChange.dialect, dialectKnowledgePercentageChange.level);
-        }
-    }
-
     #region  IInteractable
     public void Interact()
     {
-        AddKnowledgeToDialects();
-
         Debug.Log(gameObject.name + " Interacted");
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
         hasAlreadyBeenInteracted = true;
+        isInteractable = false;
+        canBeSelected = false;
+
+        AddKnowledgeToDialects();
+
+        Destroy(gameObject, destroyTime);
     }
 
     public void FailInteract()
@@ -84,4 +82,12 @@ public class KnowledgeSource : MonoBehaviour, IInteractable
     public Transform GetTransform() => transform;
 
     #endregion
+
+    private void AddKnowledgeToDialects()
+    {
+        foreach (DialectKnowledge dialectKnowledgePercentageChange in knowledgeSourceSO.dialectKnowledgePercentageChanges)
+        {
+            KnowledgeManager.Instance.ChangeKnowledge(dialectKnowledgePercentageChange.dialect, dialectKnowledgePercentageChange.level);
+        }
+    }
 }
