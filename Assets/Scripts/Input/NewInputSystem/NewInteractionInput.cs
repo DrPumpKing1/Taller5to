@@ -15,7 +15,7 @@ public class NewInteractionInput : InteractionInput
     private void InitializePlayerInputActions()
     {
         playerInputActions = new PlayerInputActions();
-        playerInputActions.Player.Enable();
+        playerInputActions.Interaction.Enable();
     }
 
     public override bool CanProcessInteractionInput() => true;
@@ -24,7 +24,7 @@ public class NewInteractionInput : InteractionInput
     {
         if (!CanProcessInteractionInput()) return false;
 
-        bool interactionInput = playerInputActions.Player.Interact.WasPerformedThisFrame();
+        bool interactionInput = playerInputActions.Interaction.Interact.WasPerformedThisFrame();
         return interactionInput;
     }
 
@@ -32,7 +32,7 @@ public class NewInteractionInput : InteractionInput
     {
         if (!CanProcessInteractionInput()) return false;
 
-        bool interactionInput = playerInputActions.Player.Interact.WasReleasedThisFrame();
+        bool interactionInput = playerInputActions.Interaction.Interact.WasReleasedThisFrame();
         return interactionInput;
     }
 
@@ -40,7 +40,7 @@ public class NewInteractionInput : InteractionInput
     {
         if (!CanProcessInteractionInput()) return false;
 
-        bool interactionInput = playerInputActions.Player.Interact.IsPressed();
+        bool interactionInput = playerInputActions.Interaction.Interact.IsPressed();
         return interactionInput;
     }
 
@@ -48,7 +48,7 @@ public class NewInteractionInput : InteractionInput
     {
         if (!CanProcessInteractionInput()) return false;
 
-        bool interactionAlternateInput = playerInputActions.Player.InteractAlternate.WasPerformedThisFrame();
+        bool interactionAlternateInput = playerInputActions.Interaction.InteractAlternate.WasPerformedThisFrame();
         return interactionAlternateInput;
     }
 
@@ -56,7 +56,7 @@ public class NewInteractionInput : InteractionInput
     {
         if (!CanProcessInteractionInput()) return false;
 
-        bool interactionAlternateInput = playerInputActions.Player.InteractAlternate.WasReleasedThisFrame();
+        bool interactionAlternateInput = playerInputActions.Interaction.InteractAlternate.WasReleasedThisFrame();
         return interactionAlternateInput;
     }
 
@@ -64,7 +64,7 @@ public class NewInteractionInput : InteractionInput
     {
         if (!CanProcessInteractionInput()) return false;
 
-        bool interactionAlternateInput = playerInputActions.Player.InteractAlternate.IsPressed();
+        bool interactionAlternateInput = playerInputActions.Interaction.InteractAlternate.IsPressed();
         return interactionAlternateInput;
     }
 }

@@ -244,7 +244,7 @@ public class PlayerInteract : MonoBehaviour
 
     private bool CheckIfHoldInteractable(IInteractable interactable) => (interactable is IHoldInteractable);
 
-    private bool CanHoldInteract() => InteractionHoldInput && inputDownToHold && !playerHorizontalMovement.HasMovementInput();
+    private bool CanHoldInteract() => InteractionHoldInput && inputDownToHold; //&& !playerHorizontalMovement.HasMovementInput();
 
     public RaycastHit[] GetInteractableLayerHits()
     {

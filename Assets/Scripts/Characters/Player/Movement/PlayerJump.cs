@@ -7,9 +7,13 @@ public class PlayerJump : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private MovementInput movementInput;
+    [Space]
+    [SerializeField] private PlayerGravityController playerGravityController;
+    [SerializeField] private PlayerInteract playerInteract;
+    [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
+    [Space]
     [SerializeField] private CheckGround checkGround;
     [SerializeField] private PlayerCrouch playerCrouch;
-    [SerializeField] private PlayerGravityController playerGravityController;
 
     [Header("Jump Settings")]
     [SerializeField, Range(0f,0.5f)] private float impulseTime = 0.2f;
@@ -42,7 +46,7 @@ public class PlayerJump : MonoBehaviour
         switch (state)
         {
             case State.NotJumping:
-                IdleLogic();
+                NotJumpingLogic();
                 break;
             case State.Impulsing:
                 ImpulsingLogic();
@@ -55,12 +59,14 @@ public class PlayerJump : MonoBehaviour
 
     private void SetJumpState(State state) { this.state = state; }
 
-    private void IdleLogic() 
+    private void NotJumpingLogic() 
     {
         HandleJumpCooldown();
 
         if (!checkGround.IsGrounded) return;
         if (playerCrouch.IsCrouching) return;
+        if (playerInteract.IsInteracting) return;
+        if (playerInteractAlternate.IsInteractingAlternate) return;
 
         if (JumpInput && !JumpOnCooldown())
         {

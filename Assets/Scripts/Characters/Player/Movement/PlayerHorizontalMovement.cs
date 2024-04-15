@@ -7,10 +7,14 @@ public class PlayerHorizontalMovement : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private MovementInput movementInput;
+    [Space]
     [SerializeField] private PlayerCrouch playerCrouch;
+    [SerializeField] private PlayerLand playerLand;
+    [SerializeField] private PlayerInteract playerInteract;
+    [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
+    [Space]
     [SerializeField] private CheckGround checkGround;
     [SerializeField] private CheckWall checkWall;
-    [SerializeField] private PlayerLand playerLand;
 
     [Header("Speed Settings")]
     [SerializeField] private float walkSpeed = 2f;
@@ -54,9 +58,18 @@ public class PlayerHorizontalMovement : MonoBehaviour
     {
         desiredSpeed = SprintInput && CanRun() ? sprintSpeed : walkSpeed;
         desiredSpeed = playerCrouch.IsCrouching ? crouchSpeed : desiredSpeed;
-        desiredSpeed = DirectionInputVector == Vector2.zero ? 0f : desiredSpeed;
-        desiredSpeed = checkWall.HitWall ? 0f: desiredSpeed;
-        desiredSpeed = playerLand.IsRecoveringFromLanding ? 0f : desiredSpeed;
+        desiredSpeed = CanMove()? desiredSpeed : 0f;
+    }
+
+    private bool CanMove()
+    {
+        if (DirectionInputVector == Vector2.zero) return false;
+        if (checkWall.HitWall) return false;
+        if (playerLand.IsRecoveringFromLanding) return false;
+        if (playerInteract.IsInteracting) return false;
+        if (playerInteractAlternate.IsInteractingAlternate) return false;
+
+        return true;
     }
 
     private void SmoothSpeed()

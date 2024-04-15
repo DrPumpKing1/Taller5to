@@ -219,5 +219,5 @@ public class PlayerInteractAlternate : MonoBehaviour
 
     private bool CheckIfHoldInteractableAlternate(IInteractableAlternate interactableAlternate) => (interactableAlternate is IHoldInteractableAlternate);
 
-    private bool CanHoldInteractAlternate() => InteractionAlternateHoldInput && inputDownToHold && !playerHorizontalMovement.HasMovementInput();
+    private bool CanHoldInteractAlternate() => InteractionAlternateHoldInput && inputDownToHold; //&& !playerHorizontalMovement.HasMovementInput();
 }

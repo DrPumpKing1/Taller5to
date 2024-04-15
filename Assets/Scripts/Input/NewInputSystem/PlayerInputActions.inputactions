@@ -2,7 +2,7 @@
     "name": "PlayerInputActions",
     "maps": [
         {
-            "name": "Player",
+            "name": "Movement",
             "id": "d461f66a-7efd-48fb-beb7-ecd7258703e2",
             "actions": [
                 {
@@ -36,24 +36,6 @@
                     "name": "Sprint",
                     "type": "Button",
                     "id": "7e53e401-321c-401a-ae05-ebeb8955f2a3",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Interact",
-                    "type": "Button",
-                    "id": "bfdcde56-ee3e-4046-a717-3fb1fe5fd51e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "InteractAlternate",
-                    "type": "Button",
-                    "id": "0544f6fb-1e35-4d60-a879-6b31439d3391",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -148,28 +130,6 @@
                     "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "169e9f7a-ed02-47eb-9c1e-032010b17bb3",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d2d7d5ce-feea-45cd-9acc-eeb9728ad19f",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "InteractAlternate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
@@ -196,6 +156,102 @@
                     "processors": "Scale(factor=0.01)",
                     "groups": "",
                     "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Interaction",
+            "id": "11e19665-0238-4a0c-9559-3a728a78c86a",
+            "actions": [
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "a810f263-3139-43ea-ac2f-314de0b03b84",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "InteractAlternate",
+                    "type": "Button",
+                    "id": "ff5f2bb5-7b66-487f-a497-55391f674c73",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "50a1d4f1-9225-4a59-86af-604c915e3d1a",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e29c5480-01ad-4bcf-afa8-1db63e3975b8",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractAlternate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Projection",
+            "id": "b9079e11-a64a-42d0-922a-d0fd00315400",
+            "actions": [
+                {
+                    "name": "NextProjectableObject",
+                    "type": "Button",
+                    "id": "9934c92b-016a-4e12-8577-ccd414ebec7c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PrevoiusProjectableObject",
+                    "type": "Button",
+                    "id": "953b7721-858e-45a8-aaba-cde690cdf4d7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0c694681-bd41-4d3f-84fd-411a1a4dea61",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextProjectableObject",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ab405e1-9a95-4271-b346-b228ac8aa88b",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrevoiusProjectableObject",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

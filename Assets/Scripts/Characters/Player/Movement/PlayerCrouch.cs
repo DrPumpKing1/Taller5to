@@ -7,7 +7,11 @@ public class PlayerCrouch : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private MovementInput movementInput;
+    [Space]
     [SerializeField] private PlayerJump playerJump;
+    [SerializeField] private PlayerInteract playerInteract;
+    [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
+    [Space]
     [SerializeField] private CheckGround checkGround;
     [SerializeField] private CheckRoof checkRoof;
 
@@ -23,6 +27,8 @@ public class PlayerCrouch : MonoBehaviour
 
     private bool CrouchInput => movementInput.GetCrouchDown();
     public bool IsCrouching { get; private set; }
+    public bool IsCrouchingTransitioning { get; private set; }
+
     private bool shouldBeCrouching;
     private bool crouchingActive;
 
@@ -64,7 +70,7 @@ public class PlayerCrouch : MonoBehaviour
         switch (state)
         {
             case State.NotCrouching:
-                IdleLogic();
+                NotCrouchingLogic();
                 break;
             case State.Crouching:
                 CrouchingLogic();
@@ -82,12 +88,14 @@ public class PlayerCrouch : MonoBehaviour
         {
             if (IsCrouching && checkRoof.HitRoof) return;
             if (!playerJump.NotJumping) return;
+            if (playerInteract.IsInteracting) return;
+            if (playerInteractAlternate.IsInteractingAlternate) return;
 
             shouldBeCrouching = !shouldBeCrouching;
         }
     }
 
-    private void IdleLogic()
+    private void NotCrouchingLogic()
     {
         if (shouldBeCrouching)
         {
@@ -102,7 +110,11 @@ public class PlayerCrouch : MonoBehaviour
     {
         if (shouldBeCrouching)
         {
-            if (characterController.height == crouchHeight) return;
+            if (characterController.height == crouchHeight)
+            {
+                IsCrouchingTransitioning = false;
+                return;
+            }
 
             if (!crouchingActive)
             {
@@ -120,6 +132,7 @@ public class PlayerCrouch : MonoBehaviour
                 float curveValue = crouchTransitionCurve.Evaluate(percent);
 
                 characterController.height = Mathf.Lerp(stateStartingHeight, crouchHeight, curveValue);
+                IsCrouchingTransitioning = true;
             }
         }
         else
@@ -128,6 +141,7 @@ public class PlayerCrouch : MonoBehaviour
             {
                 ResetTimer();
                 SetCrouchState(State.NotCrouching);
+                IsCrouchingTransitioning = false;
                 return;
             }
 
@@ -147,6 +161,7 @@ public class PlayerCrouch : MonoBehaviour
                 float curveValue = crouchTransitionCurve.Evaluate(percent);
 
                 characterController.height = Mathf.Lerp(stateStartingHeight, normalHeight, curveValue);
+                IsCrouchingTransitioning = true;
             }
         }
 

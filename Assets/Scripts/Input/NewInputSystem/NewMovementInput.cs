@@ -17,7 +17,7 @@ public class NewMovementInput : MovementInput
     private void InitializePlayerInputActions()
     {
         playerInputActions = new PlayerInputActions();
-        playerInputActions.Player.Enable();
+        playerInputActions.Movement.Enable();
     }
 
     public override bool CanProcessMovementInput() => true;
@@ -26,7 +26,7 @@ public class NewMovementInput : MovementInput
     {
         if (!CanProcessMovementInput()) return Vector2.zero;
 
-        Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
+        Vector2 inputVector = playerInputActions.Movement.Move.ReadValue<Vector2>();
         inputVector.Normalize();
         return inputVector;
     }
@@ -48,7 +48,7 @@ public class NewMovementInput : MovementInput
     {
         if (!CanProcessMovementInput()) return false;
 
-        bool jumpInput = playerInputActions.Player.Jump.WasPerformedThisFrame();
+        bool jumpInput = playerInputActions.Movement.Jump.WasPerformedThisFrame();
         return jumpInput;
     }
 
@@ -56,7 +56,7 @@ public class NewMovementInput : MovementInput
     {
         if (!CanProcessMovementInput()) return false;
 
-        bool sprintInput = playerInputActions.Player.Sprint.WasPerformedThisFrame();
+        bool sprintInput = playerInputActions.Movement.Sprint.WasPerformedThisFrame();
         return sprintInput;
     }
 
@@ -64,7 +64,7 @@ public class NewMovementInput : MovementInput
     {
         if (!CanProcessMovementInput()) return false;
 
-        bool sprintInput = playerInputActions.Player.Sprint.WasReleasedThisFrame();
+        bool sprintInput = playerInputActions.Movement.Sprint.WasReleasedThisFrame();
         return sprintInput;
     }
 
@@ -72,7 +72,7 @@ public class NewMovementInput : MovementInput
     {
         if (!CanProcessMovementInput()) return false;
 
-        bool sprintInput = playerInputActions.Player.Sprint.IsPressed();
+        bool sprintInput = playerInputActions.Movement.Sprint.IsPressed();
         return sprintInput;
     }
 
@@ -80,7 +80,7 @@ public class NewMovementInput : MovementInput
     {
         if (!CanProcessMovementInput()) return false;
 
-        bool crouchInput = playerInputActions.Player.Crouch.WasPerformedThisFrame();
+        bool crouchInput = playerInputActions.Movement.Crouch.WasPerformedThisFrame();
         return crouchInput;
     }
 
@@ -88,7 +88,7 @@ public class NewMovementInput : MovementInput
     {
         if (!CanProcessMovementInput()) return false;
 
-        bool crouchInput = playerInputActions.Player.Crouch.WasReleasedThisFrame();
+        bool crouchInput = playerInputActions.Movement.Crouch.WasReleasedThisFrame();
         return crouchInput;
     }
 
@@ -96,7 +96,7 @@ public class NewMovementInput : MovementInput
     {
         if (!CanProcessMovementInput()) return false;
 
-        bool crouchInput = playerInputActions.Player.Crouch.IsPressed();
+        bool crouchInput = playerInputActions.Movement.Crouch.IsPressed();
         return crouchInput;
     }
 }
