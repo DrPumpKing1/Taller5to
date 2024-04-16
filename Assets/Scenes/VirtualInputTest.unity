@@ -2467,10 +2467,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkGround: {fileID: 1380701025}
+  frictionMaterial: {fileID: 13400000, guid: ef9e2b06b6f73ed40ba21c19e6ceb70f, type: 2}
+  frictionlessMaterial: {fileID: 13400000, guid: 92654f77c75a30942b65fd0733755522, type: 2}
   gravityMultiplier: 1
   fallMultiplier: 2
   lowJumpMultiplier: 2
-  stickToGroundForce: 5
+  stickToSlopeForce: 30
+  stickToSlopeFrames: 1
 --- !u!4 &670787726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3061237008394950533, guid: cbee3ab86ab8bca41b482ab9f07bd8a4, type: 3}
@@ -3393,7 +3396,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd904788516aa044aac503a07d2b010f, type: 3}
   m_Name: 
@@ -6448,11 +6451,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 129
-  checkGoundRayLenght: -0.45
+  checkGoundRayLenght: -0.4
   raySphereRadius: 0.5
-  checkSlopeRayLength: 1
-  drawRaycasts: 1
-  OnSlope: 0
+  checkSlopeRayLength: 0.1
+  drawRaycasts: 0
 --- !u!1 &1390819690
 GameObject:
   m_ObjectHideFlags: 0

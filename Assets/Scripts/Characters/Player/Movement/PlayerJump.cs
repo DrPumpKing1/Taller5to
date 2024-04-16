@@ -105,7 +105,7 @@ public class PlayerJump : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, 0f, _rigidbody.velocity.z);
+        //_rigidbody.velocity = new Vector3(_rigidbody.velocity.x, 0f, _rigidbody.velocity.z);
 
         if(timer>= impulseTime)
         {   
