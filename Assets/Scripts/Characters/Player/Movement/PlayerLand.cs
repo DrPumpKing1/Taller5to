@@ -7,7 +7,7 @@ public class PlayerLand : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private CheckGround checkGround;
-    [SerializeField] private PlayerJump playerJump;
+    [SerializeField] private PlayerGravityController playerGravityController;
 
     [Header("Land Settings")]
     [SerializeField, Range(0f, 1.5f)] private float landDetectionHeightThreshold;
@@ -80,7 +80,7 @@ public class PlayerLand : MonoBehaviour
 
         if (!prevoiuslyGrounded && checkGround.IsGrounded)
         {
-            float landHeight = CalculateLandHeight(_rigidbody.velocity.y, Physics.gravity.y * playerJump.GravityMultiplier * playerJump. FallMultiplier);
+            float landHeight = CalculateLandHeight(_rigidbody.velocity.y, Physics.gravity.y * playerGravityController.GravityMultiplier * playerGravityController. FallMultiplier);
 
             if (HasSurpassedThreshold()) OnPlayerLand?.Invoke(this, new OnPlayerLandEventArgs { landHeight = landHeight});
 
@@ -137,6 +137,6 @@ public class PlayerLand : MonoBehaviour
         return landHeight;
     }
 
-    private bool HasSurpassedThreshold() => _rigidbody.velocity.y <= CalculateLandVelocity(landDetectionHeightThreshold, Physics.gravity.y * playerJump.GravityMultiplier * playerJump.FallMultiplier);
+    private bool HasSurpassedThreshold() => _rigidbody.velocity.y <= CalculateLandVelocity(landDetectionHeightThreshold, Physics.gravity.y * playerGravityController.GravityMultiplier * playerGravityController.FallMultiplier);
     private void ResetTimer() => timer = 0f;
 }

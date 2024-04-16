@@ -2213,6 +2213,7 @@ GameObject:
   - component: {fileID: 616693936}
   - component: {fileID: 616693940}
   - component: {fileID: 616693938}
+  - component: {fileID: 616693944}
   - component: {fileID: 616693934}
   - component: {fileID: 616693939}
   - component: {fileID: 616693941}
@@ -2325,6 +2326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementInput: {fileID: 1936272247}
+  playerGravityController: {fileID: 616693944}
   playerInteract: {fileID: 616693939}
   playerInteractAlternate: {fileID: 616693941}
   checkGround: {fileID: 1380701025}
@@ -2333,10 +2335,6 @@ MonoBehaviour:
   jumpHeightError: 0.05
   impulseTime: 0.5
   jumpCooldown: 0.5
-  gravityMultiplier: 1
-  fallMultiplier: 2
-  lowJumpMultiplier: 2
-  stickToGroundForce: 5
 --- !u!114 &616693938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2350,7 +2348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkGround: {fileID: 1380701025}
-  playerJump: {fileID: 616693936}
+  playerGravityController: {fileID: 616693944}
   landDetectionHeightThreshold: 0
   hardLandingThreshold: 1.5
   landRecoveryTime: 0
@@ -2456,6 +2454,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &616693944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616693930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faea9491a6531004cbcff5a4c90cd5c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkGround: {fileID: 1380701025}
+  gravityMultiplier: 1
+  fallMultiplier: 2
+  lowJumpMultiplier: 2
+  stickToGroundForce: 5
 --- !u!4 &670787726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3061237008394950533, guid: cbee3ab86ab8bca41b482ab9f07bd8a4, type: 3}
@@ -6437,6 +6452,7 @@ MonoBehaviour:
   raySphereRadius: 0.5
   checkSlopeRayLength: 1
   drawRaycasts: 1
+  OnSlope: 0
 --- !u!1 &1390819690
 GameObject:
   m_ObjectHideFlags: 0

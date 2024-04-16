@@ -8,6 +8,7 @@ public class PlayerJump : MonoBehaviour
     [Header("Components")]
     [SerializeField] private MovementInput movementInput;
     [Space]
+    [SerializeField] private PlayerGravityController playerGravityController;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
     [Space]
@@ -20,12 +21,6 @@ public class PlayerJump : MonoBehaviour
     [SerializeField, Range(0f,0.5f)] private float impulseTime = 0.2f;
     [SerializeField] private float jumpCooldown = 1f;
 
-    [Header("Gravity Settings")]
-    [SerializeField] private float gravityMultiplier = 1f;
-    [SerializeField] private float fallMultiplier;
-    [SerializeField] private float lowJumpMultiplier;
-    [SerializeField] private float stickToGroundForce = 5f;
-
     private Rigidbody _rigidbody;
     private enum State {NotJumping, Impulsing, Jump}
     private State state;
@@ -35,10 +30,6 @@ public class PlayerJump : MonoBehaviour
     private float jumpCooldownTime = 0f;
     private float timer = 0f;
     private bool shouldJump;
-
-    public float GravityMultiplier { get { return gravityMultiplier; } }
-    public float FallMultiplier { get { return fallMultiplier; } }
-    public float LowJumpMultiplier { get { return lowJumpMultiplier; } }
 
     public event EventHandler OnPlayerImpulsing;
     public event EventHandler OnPlayerJump;
@@ -108,18 +99,16 @@ public class PlayerJump : MonoBehaviour
             shouldJump = false;
             OnPlayerImpulsing?.Invoke(this, EventArgs.Empty);
         }
-        else if(checkGround.IsGrounded)
-        {
-            //StickToGround();
-        }
     }
 
     private void ImpulsingLogic()
     {
         timer += Time.deltaTime;
 
+        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, 0f, _rigidbody.velocity.z);
+
         if(timer>= impulseTime)
-        {
+        {   
             ResetTimer();
             SetJumpState(State.Jump);
         }
@@ -138,7 +127,7 @@ public class PlayerJump : MonoBehaviour
 
     private void Jump()
     {
-        float jumpForce = CalculateJumpForce(jumpHeight + jumpHeightError, Physics.gravity.y * gravityMultiplier * lowJumpMultiplier);
+        float jumpForce = CalculateJumpForce(jumpHeight + jumpHeightError, Physics.gravity.y * playerGravityController.GravityMultiplier * playerGravityController.LowJumpMultiplier);
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
     }
 
@@ -160,17 +149,12 @@ public class PlayerJump : MonoBehaviour
 
         if (_rigidbody.velocity.y < 0)
         {
-            _rigidbody.velocity += Vector3.up * Physics.gravity.y * gravityMultiplier * (fallMultiplier - 1) * Time.fixedDeltaTime;
+            _rigidbody.velocity += Vector3.up * Physics.gravity.y * playerGravityController.GravityMultiplier * (playerGravityController.FallMultiplier - 1) * Time.fixedDeltaTime;
         }
         else if (_rigidbody.velocity.y > 0 && !shouldJump)
         {
-            _rigidbody.velocity += Vector3.up * Physics.gravity.y * gravityMultiplier * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
+            _rigidbody.velocity += Vector3.up * Physics.gravity.y * playerGravityController.GravityMultiplier * (playerGravityController.LowJumpMultiplier - 1) * Time.fixedDeltaTime;
         }
-    }
-
-    private void StickToGround()
-    {
-        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, -stickToGroundForce, _rigidbody.velocity.z);
     }
 
     private bool JumpOnCooldown() => jumpCooldownTime > 0f;

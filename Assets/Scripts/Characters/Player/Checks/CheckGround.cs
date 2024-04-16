@@ -19,7 +19,7 @@ public class CheckGround : MonoBehaviour
     [SerializeField] private bool drawRaycasts;
 
     public bool IsGrounded { get; private set; } = false;
-    public bool OnSlope { get; private set; } = false;
+    public bool OnSlope  = false;
     public Vector3 SlopeNormal { get; private set; }
 
     private void Update()
@@ -49,6 +49,8 @@ public class CheckGround : MonoBehaviour
 
         bool onSlope = Physics.Raycast(origin, Vector3.down, out RaycastHit hitInfo, finalRayLength, groundLayer);
         SlopeNormal = hitInfo.normal;
+
+        if (SlopeNormal == Vector3.up) return false;
 
         return onSlope;
     }
