@@ -19,7 +19,7 @@ public class ElectricalSwitchInteraction : MonoBehaviour, IHoldInteractable
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
-    public string TooltipMessage => $"Switch {(!switchElectrode.SwitchOn ? "on" : "off")}";
+    public string TooltipMessage => $"{(!switchElectrode.SwitchOn ? "Encender Switch" : "Apagar Switch")}";
     public float HoldDuration => holdDuration;
     #endregion
 
@@ -90,7 +90,7 @@ public class ElectricalSwitchInteraction : MonoBehaviour, IHoldInteractable
         return true;
     }
     public void HoldInteractionStart() => OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
-    public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer });
+    public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
     public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
 
     public Transform GetTransform() => transform;

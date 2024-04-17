@@ -5,14 +5,14 @@ using TMPro;
 
 public class InteractableAlternateSelectionUI : MonoBehaviour
 {
-    [Header("Components")]
+    [Header("Interactable Alternate Components")]
     [SerializeField] private Component interactableAlternateComponent;
+
+    [Header("UI Components")]
+    [SerializeField] private CanvasGroup alternateSelectionUICanvasGroup;
     [SerializeField] private TextMeshProUGUI interactableAlternateSelectionText;
 
     private IInteractableAlternate interactableAlternate;
-    private CanvasGroup canvasGroup;
-
-    private const string INTERACT_ALTERNATE_KEY = "[R]";
 
     private void OnEnable()
     {
@@ -29,7 +29,7 @@ public class InteractableAlternateSelectionUI : MonoBehaviour
     private void Awake()
     {
         InitializeComponents();
-        HideUI();
+        HideSelectionUI();
     }
 
     private void Start()
@@ -39,34 +39,32 @@ public class InteractableAlternateSelectionUI : MonoBehaviour
 
     private void InitializeComponents()
     {
-        canvasGroup = GetComponent<CanvasGroup>();
-
         interactableAlternate = interactableAlternateComponent.GetComponent<IInteractableAlternate>();
         if (interactableAlternate == null) Debug.LogError("The interactableAlternate component does not implement IInteractableAlternate");
     }
 
-    private void HideUI()
+    private void HideSelectionUI()
     {
-        SetCanvasGroupAlpha(0f);
+        GeneralUIMethods.SetCanvasGroupAlpha(alternateSelectionUICanvasGroup, 0f);
     }
 
-    private void ShowUI()
+    private void ShowSelectionUI()
     {
-        SetCanvasGroupAlpha(1f);
+        GeneralUIMethods.SetCanvasGroupAlpha(alternateSelectionUICanvasGroup, 1f);
     }
 
-    private void SetInteractableAlternateSelectionText() => interactableAlternateSelectionText.text = $"{INTERACT_ALTERNATE_KEY} {interactableAlternate.TooltipMessageAlternate}";
-    private void SetCanvasGroupAlpha(float alpha) => canvasGroup.alpha = alpha;
+    private void SetInteractableAlternateSelectionText() => interactableAlternateSelectionText.text = $"{interactableAlternate.TooltipMessageAlternate}";
 
     #region IInteractableAlternate Event Subscriptions
     private void InteractableAlternate_OnObjectSelectedAlternate(object sender, System.EventArgs e)
     {
-        ShowUI();
+        SetInteractableAlternateSelectionText();
+        ShowSelectionUI();
     }
 
     private void InteractableAlternate_OnObjectDeselectedAlternate(object sender, System.EventArgs e)
     {
-        HideUI();
+        HideSelectionUI();
     }
     #endregion
 }

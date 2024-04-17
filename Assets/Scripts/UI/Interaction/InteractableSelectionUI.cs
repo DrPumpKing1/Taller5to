@@ -5,14 +5,14 @@ using TMPro;
 
 public class InteractableSelectionUI : MonoBehaviour
 {
-    [Header("Components")]
+    [Header("Interactable Components")]
     [SerializeField] private Component interactableComponent;
+
+    [Header("UI Components")]
+    [SerializeField] private CanvasGroup selectionUICanvasGroup;
     [SerializeField] private TextMeshProUGUI interactableSelectionText;
 
     private IInteractable interactable;
-    private CanvasGroup canvasGroup;
-
-    private const string INTERACT_KEY = "[E]";
 
     private void OnEnable()
     {
@@ -29,7 +29,7 @@ public class InteractableSelectionUI : MonoBehaviour
     private void Awake()
     {
         InitializeComponents();
-        HideUI();
+        HideSelectionUI();
     }
 
     private void Start()
@@ -39,34 +39,32 @@ public class InteractableSelectionUI : MonoBehaviour
 
     private void InitializeComponents()
     {
-        canvasGroup = GetComponent<CanvasGroup>();
-
         interactable = interactableComponent.GetComponent<IInteractable>();
         if (interactable == null) Debug.LogError("The interactable component does not implement IInteractable");
     }
 
-    private void HideUI()
+    private void HideSelectionUI()
     {
-        SetCanvasGroupAlpha(0f);
+        GeneralUIMethods.SetCanvasGroupAlpha(selectionUICanvasGroup,0f);
     }
 
-    private void ShowUI()
+    private void ShowSelectionUI()
     {
-        SetCanvasGroupAlpha(1f);
+        GeneralUIMethods.SetCanvasGroupAlpha(selectionUICanvasGroup, 1f);
     }
 
-    private void SetInteractableSelectionText() => interactableSelectionText.text = $"{INTERACT_KEY} {interactable.TooltipMessage}";
-    private void SetCanvasGroupAlpha(float alpha) => canvasGroup.alpha = alpha;
+    private void SetInteractableSelectionText() => interactableSelectionText.text = $"{interactable.TooltipMessage}";
 
     #region IInteractable Event Subscriptions
     private void Interactable_OnObjectSelected(object sender, System.EventArgs e)
     {
-        ShowUI();
+        SetInteractableSelectionText();
+        ShowSelectionUI();
     }
 
     private void Interactable_OnObjectDeselected(object sender, System.EventArgs e)
     {
-        HideUI();
+        HideSelectionUI();
     }
     #endregion
 }

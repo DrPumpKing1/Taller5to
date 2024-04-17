@@ -91,7 +91,7 @@ public class TestHoldInteractable : MonoBehaviour, IHoldInteractable
         return true;
     }
     public void HoldInteractionStart() => OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
-    public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer });
+    public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
     public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
 
     public Transform GetTransform() => transform;

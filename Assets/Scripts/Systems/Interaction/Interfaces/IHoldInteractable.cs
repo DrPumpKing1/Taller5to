@@ -14,6 +14,7 @@ public interface IHoldInteractable : IInteractable
     public class OnHoldInteractionEventArgs : EventArgs
     {
         public float holdTimer;
+        public float holdDuration;
     }
 
     public bool CheckSuccess();
