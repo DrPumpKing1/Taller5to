@@ -131,6 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7881402616386405376}
   - component: {fileID: 8617461622517834303}
+  - component: {fileID: 925953812673219491}
   m_Layer: 9
   m_Name: Visual
   m_TagString: Untagged
@@ -173,6 +174,20 @@ MonoBehaviour:
   materialFadeTime: 0.1
   minAlpha: 0
   maxAlpha: 0.3
+--- !u!114 &925953812673219491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5576991132002602105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ce472eb7bcc76a4f99f778b2d90c419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectionPlatformProjection: {fileID: 934727211112781191}
+  insufficientProjectionGemsVisualSettingsSO: {fileID: 11400000, guid: 0775d82fbe3862242ada0742d82a58cd, type: 2}
 --- !u!1 &6114788342563889862
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,11 +433,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_SizeDelta.x
@@ -430,11 +445,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 5.625
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

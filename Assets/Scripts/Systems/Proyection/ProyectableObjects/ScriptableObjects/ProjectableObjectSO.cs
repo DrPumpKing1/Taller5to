@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewProyectableObjectSO", menuName = "ScriptableObjects/Proyection/ProyectableObject")]
+[CreateAssetMenu(fileName = "NewProjectableObjectSO", menuName = "ScriptableObjects/Projection/ProjectableObject")]
 public class ProjectableObjectSO : ScriptableObject
 {
     [Header("Scriptable Object Settings")]
