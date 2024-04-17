@@ -486,6 +486,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d32b1e311fa950d49b9ee5113a99fab5, type: 3}
+--- !u!114 &2698850743615299413 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8658070998138910687, guid: d32b1e311fa950d49b9ee5113a99fab5, type: 3}
+  m_PrefabInstance: {fileID: 6724889919926528138}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df87aa24e71d56140820fb9eb130c649, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7399902928906645997 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4315054554829363559, guid: d32b1e311fa950d49b9ee5113a99fab5, type: 3}
@@ -674,8 +685,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7778412572902011865, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 4515417924154158492}
   m_SourcePrefab: {fileID: 100100000, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
+--- !u!1 &761163546369908828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7778412572902011865, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
+  m_PrefabInstance: {fileID: 7017253854380774277}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4515417924154158492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761163546369908828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ce719bab2992ff468ed97bc55e0a70e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdInteractableComponent: {fileID: 7028397045733667877}
+  interactableAlternateSelectionUI: {fileID: 2698850743615299413}
 --- !u!224 &6521331501577161442 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4315054554829363559, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}

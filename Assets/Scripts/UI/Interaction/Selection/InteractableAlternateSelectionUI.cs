@@ -43,12 +43,12 @@ public class InteractableAlternateSelectionUI : MonoBehaviour
         if (interactableAlternate == null) Debug.LogError("The interactableAlternate component does not implement IInteractableAlternate");
     }
 
-    private void HideSelectionUI()
+    public void HideSelectionUI()
     {
         GeneralUIMethods.SetCanvasGroupAlpha(alternateSelectionUICanvasGroup, 0f);
     }
 
-    private void ShowSelectionUI()
+    public void ShowSelectionUI()
     {
         GeneralUIMethods.SetCanvasGroupAlpha(alternateSelectionUICanvasGroup, 1f);
     }
