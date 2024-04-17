@@ -1,13 +1,12 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class ProjectionPlatform : MonoBehaviour, IHoldInteractable
+public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
 {
-    [Header("Projection Platform Settings")]
-    [SerializeField] private Transform projectionPoint;
-    [SerializeField] private ProjectableObjectSO currentProjectedObject;
+    [Header("Components")]
+    [SerializeField] private ProjectionPlatform projectionPlatform;
 
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
@@ -46,6 +45,16 @@ public class ProjectionPlatform : MonoBehaviour, IHoldInteractable
         public ProjectableObjectSO projectableObjectSO;
     }
 
+    private void OnEnable()
+    {
+        projectionPlatform.OnProjectionPlatformClear += ProjectionPlatform_OnProjectionPlatformClear;
+    }
+
+    private void OnDisable()
+    {
+        projectionPlatform.OnProjectionPlatformClear -= ProjectionPlatform_OnProjectionPlatformClear;
+    }
+
     #region IHoldInteractable Methods
     public void Select()
     {
@@ -70,7 +79,7 @@ public class ProjectionPlatform : MonoBehaviour, IHoldInteractable
             return;
         }
 
-        if(currentProjectedObject != null)
+        if (projectionPlatform.CurrentProjectedObject != null)
         {
             FailObjectProjection(ProjectionManager.Instance.SelectedProjectableObjectSO);
             return;
@@ -120,7 +129,7 @@ public class ProjectionPlatform : MonoBehaviour, IHoldInteractable
             return false;
         }
 
-        if (currentProjectedObject != null)
+        if (projectionPlatform.CurrentProjectedObject != null)
         {
             FailObjectProjection(ProjectionManager.Instance.SelectedProjectableObjectSO);
             return false;
@@ -144,38 +153,34 @@ public class ProjectionPlatform : MonoBehaviour, IHoldInteractable
 
     private void FailObjectProjection(ProjectableObjectSO projectableObjectSO)
     {
-        ProjectionManager.Instance.FailObjectProjection(projectableObjectSO, this);
+        ProjectionManager.Instance.FailObjectProjection(projectableObjectSO, projectionPlatform);
         OnObjectProjectionFailed?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO });
         Debug.Log("Cant Project Object");
     }
 
-
     private void FailObjectProjectionInsuficientGems(ProjectableObjectSO projectableObjectSO)
     {
-        ProjectionManager.Instance.FailObjectProjectionInsuficientGems(projectableObjectSO, this);
-        OnObjectProjectionFailedInsuficientGems?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO } );
+        ProjectionManager.Instance.FailObjectProjectionInsuficientGems(projectableObjectSO, projectionPlatform);
+        OnObjectProjectionFailedInsuficientGems?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO });
         Debug.Log("Insuficient Projection Gems");
     }
 
     private void ProjectObject(ProjectableObjectSO projectableObjectSO)
     {
-        currentProjectedObject = projectableObjectSO;
+        projectionPlatform.SetProjectionPlatform(projectableObjectSO);
 
-        GameObject projectedObject = Instantiate(projectableObjectSO.prefab.gameObject, projectionPoint.position, projectionPoint.rotation);
-        projectedObject.transform.SetParent(projectionPoint);
-        projectedObject.GetComponent<ProjectableObject>().SetProjectionPlatform(this);
+        GameObject projectedObject = Instantiate(projectableObjectSO.prefab.gameObject, projectionPlatform.ProjectionPoint.position, projectionPlatform.ProjectionPoint.rotation);
+        projectedObject.transform.SetParent(projectionPlatform.ProjectionPoint);
+        projectedObject.GetComponent<ProjectableObject>().SetProjectionPlatform(projectionPlatform);
 
-        ProjectionManager.Instance.SuccessObjectProjection(projectableObjectSO, this);
-        OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO } );
+        ProjectionManager.Instance.SuccessObjectProjection(projectableObjectSO, projectionPlatform);
+        OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO });
 
         Debug.Log("Object Projected");
     }
 
-    public void ResetProjectionPlatform()
+    private void ProjectionPlatform_OnProjectionPlatformClear(object sender, EventArgs e)
     {
-        ClearCurrentProjectedObject();
         canBeSelected = true;
     }
-
-    private void ClearCurrentProjectedObject() => currentProjectedObject = null;
 }

@@ -57,7 +57,6 @@ public class ProjectionGemsUI : MonoBehaviour
     private void ProjectionGemsManager_OnProjectionGemsUsed(object sender, ProjectionGemsManager.OnProjectionGemsEventArgs e)
     {
         UpdateProjectionGemsUI();
-        Debug.Log("Test");
     }
 
     private void ProjectionGemsManager_OnProjectionGemsRefunded(object sender, ProjectionGemsManager.OnProjectionGemsEventArgs e)

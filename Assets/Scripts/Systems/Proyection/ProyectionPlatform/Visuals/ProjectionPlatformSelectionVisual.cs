@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectionPlatformVisual : MonoBehaviour
+public class ProjectionPlatformSelectionVisual : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private ProjectionPlatform projectionPlatform;
+    [SerializeField] private ProjectionPlatformProjection projectionPlatformProjection;
 
     [Header("Visual Settings")]
     [SerializeField] private Renderer selectedVisualRenderer;
@@ -19,13 +19,14 @@ public class ProjectionPlatformVisual : MonoBehaviour
 
     private void OnEnable()
     {
-        projectionPlatform.OnObjectSelected += ProyectionPlatform_OnObjectSelected;
-        projectionPlatform.OnObjectDeselected += ProyectionPlatform_OnObjectDeselected;
+        projectionPlatformProjection.OnObjectSelected += ProjectionPlatformProjection_OnObjectSelected;
+        projectionPlatformProjection.OnObjectDeselected += ProjectionPlatformProjection_OnObjectDeselected;
     }
+
     private void OnDisable()
     {
-        projectionPlatform.OnObjectSelected -= ProyectionPlatform_OnObjectSelected;
-        projectionPlatform.OnObjectDeselected -= ProyectionPlatform_OnObjectDeselected;
+        projectionPlatformProjection.OnObjectSelected -= ProjectionPlatformProjection_OnObjectSelected;
+        projectionPlatformProjection.OnObjectDeselected -= ProjectionPlatformProjection_OnObjectDeselected;
     }
 
     private void Start()
@@ -76,19 +77,21 @@ public class ProjectionPlatformVisual : MonoBehaviour
     private void SetVisualMaterial(Material material) => selectedVisualRenderer.material = material;
     private void SetVisualMaterialAlpha(float alpha) => selectedVisualRenderer.material.color = new Color(selectedVisualRenderer.material.color.r, selectedVisualRenderer.material.color.g, selectedVisualRenderer.material.color.b, alpha);
 
-    #region ProyectionPlatformSubscriptions
-    private void ProyectionPlatform_OnObjectSelected(object sender, System.EventArgs e)
+    #region ProyectionPlatformProjection Subscriptions
+
+    private void ProjectionPlatformProjection_OnObjectDeselected(object sender, System.EventArgs e)
+    {
+        //DelectedVisualRenderer.material = deselectedVisualMaterial;
+        StopAllCoroutines();
+        StartCoroutine(DeselelectProyectionPlatform());
+    }
+
+    private void ProjectionPlatformProjection_OnObjectSelected(object sender, System.EventArgs e)
     {
         //selectedVisualRenderer.material = selectedVisualMaterial;
         StopAllCoroutines();
         StartCoroutine(SelectProyectionPlatform());
     }
 
-    private void ProyectionPlatform_OnObjectDeselected(object sender, System.EventArgs e)
-    {
-        //DelectedVisualRenderer.material = deselectedVisualMaterial;
-        StopAllCoroutines();
-        StartCoroutine(DeselelectProyectionPlatform());
-    }
     #endregion
 }
