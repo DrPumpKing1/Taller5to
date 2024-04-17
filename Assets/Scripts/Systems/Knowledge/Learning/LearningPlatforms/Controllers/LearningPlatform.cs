@@ -15,8 +15,14 @@ public class LearningPlatform : MonoBehaviour, IRequiresKnowledge
     public ProjectableObjectSO ProjectableObjectToLearn { get { return projectableObjectToLearn; } }
 
     public event EventHandler<IRequiresKnowledge.OnKnowledgeRequirementsNotMetEventArgs> OnKnowledgeRequirementsNotMet;
+    public event EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
 
-    #region IRequiresKnowledge
+    public class OnObjectLearnedEventArgs : EventArgs
+    {
+        public ProjectableObjectSO objectLearned;
+    }
+
+    #region IRequiresKnowledge Methods
     public bool MeetsKnowledgeRequirements()
     {
         foreach (DialectKnowledge dialectKnowledge in KnowledgeManager.Instance.GetDialectKnowledges())
@@ -39,5 +45,10 @@ public class LearningPlatform : MonoBehaviour, IRequiresKnowledge
     }
     #endregion
 
+    public void LearnObject()
+    {
+        LearningManager.Instance.LearnObject(projectableObjectToLearn);
 
+        OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { objectLearned = projectableObjectToLearn });
+    }
 }

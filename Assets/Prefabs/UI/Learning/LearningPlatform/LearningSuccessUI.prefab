@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3541336719227873337}
   - component: {fileID: 6010537527205077833}
   m_Layer: 10
-  m_Name: LearningRequirementsNotMetText
+  m_Name: LearningSuccessText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "No cuentas con  la sabidur\xEDa suficiente para aprender este objeto"
+  m_text: Has aprendido a proyectar el objeto X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -146,10 +146,10 @@ GameObject:
   - component: {fileID: 8303193380812124950}
   - component: {fileID: 424850546057489896}
   - component: {fileID: 4435800722968597285}
-  - component: {fileID: 997369798935511269}
+  - component: {fileID: 4982798313870579048}
   - component: {fileID: 1732408297000097781}
   m_Layer: 10
-  m_Name: LearningRequirementsNotMetUI
+  m_Name: LearningSuccessUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &4435800722968597285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,7 +238,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &997369798935511269
+--- !u!114 &4982798313870579048
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -247,9 +247,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5692739672843499770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a69ec44ebbd23a743ae03c60358f8278, type: 3}
+  m_Script: {fileID: 11500000, guid: 66fb52718849ab84c978382cc18fd59d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  learningSuccessText: {fileID: 6010537527205077833}
   lifeTime: 3
 --- !u!114 &1732408297000097781
 MonoBehaviour:

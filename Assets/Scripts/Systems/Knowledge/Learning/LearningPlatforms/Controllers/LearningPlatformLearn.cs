@@ -71,7 +71,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     }
     public void Interact()
     {
-        LearnObject();
+        learningPlatform.LearnObject();
 
         Debug.Log("Learning Platform Interacted");
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
@@ -119,8 +119,4 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     public Transform GetTransform() => transform;
     #endregion
 
-    private void LearnObject()
-    {
-        LearningManager.Instance.LearnObject(learningPlatform.ProjectableObjectToLearn);
-    }
 }

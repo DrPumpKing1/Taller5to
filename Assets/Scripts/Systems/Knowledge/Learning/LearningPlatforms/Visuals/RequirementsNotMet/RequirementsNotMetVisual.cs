@@ -41,12 +41,10 @@ public class RequirementsNotMetVisual : MonoBehaviour
 
         if (!requirementsNotMetUI)
         {
-            Debug.LogWarning("There's not a requirementsNotMetUI attached to instantiated prefab");
+            Debug.LogWarning("There's not a RequirementsNotMetUI attached to instantiated prefab");
             return;
         }
 
         cooldownTimer = requirementsNotMetUI.LifeTime;
     }
-
-
 }
