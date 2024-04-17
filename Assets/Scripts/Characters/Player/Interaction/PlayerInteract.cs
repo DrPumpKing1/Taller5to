@@ -7,9 +7,9 @@ public class PlayerInteract : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private InteractionInput interactionInput;
-    [SerializeField] private PlayerHorizontalMovement playerHorizontalMovement;
     [SerializeField] private PlayerRotationHandler playerRotationHandler;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
+    [SerializeField] private CheckGround checkGround;
 
     [Header("Interaction Settings")]
     [SerializeField] private LayerMask interactionLayer;
@@ -69,6 +69,8 @@ public class PlayerInteract : MonoBehaviour
     }
     private void Update()
     {
+        if (!checkGround.IsGrounded) return;
+
         HandleInteractableSelections();
         HandleInteractions();
     }

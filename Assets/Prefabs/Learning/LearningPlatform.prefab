@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7886895228260677339}
   - component: {fileID: 5948549522181570392}
   - component: {fileID: 9005307523687412625}
+  - component: {fileID: 4045165294196780160}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -105,6 +106,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4045165294196780160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3426266784273449667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a9cb85b6d3a9344a4237fc34074880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  learningPlatform: {fileID: 7187077217301300134}
+  RequirementsNotMetVisualSettingsSO: {fileID: 11400000, guid: bd0956e336caa734da73a40b6ab73789, type: 2}
 --- !u!1 &8778120176789687259
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,6 +131,7 @@ GameObject:
   - component: {fileID: 5317452787623605092}
   - component: {fileID: 5486438081760139217}
   - component: {fileID: 7187077217301300134}
+  - component: {fileID: 4753622623426506771}
   m_Layer: 9
   m_Name: LearningPlatform
   m_TagString: Untagged
@@ -174,8 +190,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectableObjectToLearn: {fileID: 0}
   dialectKnowledgeRequirements: []
+--- !u!114 &4753622623426506771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778120176789687259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97db7df55374434797e3a76543134a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  learningPlatform: {fileID: 7187077217301300134}
   canBeSelected: 1
   isInteractable: 1
   hasAlreadyBeenInteracted: 0
-  tooltipMessage: 
+  tooltipMessage: Aprender Objeto
   holdDuration: 1

@@ -35,7 +35,6 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
     public Vector3 DesiredDirection { get; private set; }
     public Vector3 CurrentDirection { get; private set; }
 
-
     protected virtual void Start()
     {
         InitializeRotation();

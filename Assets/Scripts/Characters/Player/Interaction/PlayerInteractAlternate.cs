@@ -7,8 +7,8 @@ public class PlayerInteractAlternate : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private InteractionInput interactionInput;
-    [SerializeField] private PlayerHorizontalMovement playerHorizontalMovement;
     [SerializeField] private PlayerInteract playerInteract;
+    [SerializeField] private CheckGround checkGround;
 
     private bool InteractionAlternateDownInput => interactionInput.GetInteractionAlternateDown();
     private bool InteractionAlternateHoldInput => interactionInput.GetInteractionAlternateHold();
@@ -51,6 +51,8 @@ public class PlayerInteractAlternate : MonoBehaviour
     }
     private void Update()
     {
+        if (!checkGround.IsGrounded) return;
+
         HandleInteractableAlternateSelections();
         HandleInteractionsAlternate();
     }

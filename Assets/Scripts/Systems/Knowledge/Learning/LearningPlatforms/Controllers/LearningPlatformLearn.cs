@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class LearningPlatform : MonoBehaviour, IHoldInteractable, IRequiresKnowledge
+public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
 {
-    [Header("Leraning Platform Settings")]
-    [SerializeField] private ProjectableObjectSO projectableObjectToLearn;
-
-    [Header("Requires Knowledge Settings")]
-    [SerializeField] private List<DialectKnowledge> dialectKnowledgeRequirements = new List<DialectKnowledge>(Enum.GetValues(typeof(Dialect)).Length);
+    [Header("Components")]
+    [SerializeField] private LearningPlatform learningPlatform;
 
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
@@ -27,9 +24,6 @@ public class LearningPlatform : MonoBehaviour, IHoldInteractable, IRequiresKnowl
     public float HoldDuration => holdDuration;
     #endregion
 
-    public List<DialectKnowledge> DialectKnowledgeRequirements => dialectKnowledgeRequirements;
-
-
     #region IHoldInteractable Events
     public event EventHandler OnObjectSelected;
     public event EventHandler OnObjectDeselected;
@@ -41,8 +35,6 @@ public class LearningPlatform : MonoBehaviour, IHoldInteractable, IRequiresKnowl
     public event EventHandler OnHoldInteractionEnd;
     public event EventHandler<IHoldInteractable.OnHoldInteractionEventArgs> OnContinousHoldInteraction;
     #endregion
-
-    public event EventHandler<IRequiresKnowledge.OnKnowledgeRequirementsNotMetEventArgs> OnKnowledgeRequirementsNotMet;
 
     #region IHoldInteractable
     public void Select()
@@ -69,9 +61,9 @@ public class LearningPlatform : MonoBehaviour, IHoldInteractable, IRequiresKnowl
             return;
         }
 
-        if (!MeetsKnowledgeRequirements())
+        if (!learningPlatform.MeetsKnowledgeRequirements())
         {
-            KnowledgeRequirementsNotMet();
+            learningPlatform.KnowledgeRequirementsNotMet();
             return;
         }
 
@@ -111,9 +103,9 @@ public class LearningPlatform : MonoBehaviour, IHoldInteractable, IRequiresKnowl
             return false;
         }
 
-        if (!MeetsKnowledgeRequirements())
+        if (!learningPlatform.MeetsKnowledgeRequirements())
         {
-            KnowledgeRequirementsNotMet();
+            learningPlatform.KnowledgeRequirementsNotMet();
             return false;
         }
 
@@ -127,31 +119,8 @@ public class LearningPlatform : MonoBehaviour, IHoldInteractable, IRequiresKnowl
     public Transform GetTransform() => transform;
     #endregion
 
-    #region IRequiresKnowledge
-    public bool MeetsKnowledgeRequirements()
-    {
-        foreach (DialectKnowledge dialectKnowledge in KnowledgeManager.Instance.GetDialectKnowledges())
-        {
-            foreach (DialectKnowledge dialectKnowledgeRequirement in dialectKnowledgeRequirements)
-            {
-                if (dialectKnowledge.dialect == dialectKnowledgeRequirement.dialect)
-                {
-                    if (dialectKnowledge.level < dialectKnowledgeRequirement.level) return false;
-                }
-            }
-        }
-
-        return true;
-    }
-    public void KnowledgeRequirementsNotMet()
-    {
-        Debug.Log("Knowledge requirements not met");
-        OnKnowledgeRequirementsNotMet?.Invoke(this, new IRequiresKnowledge.OnKnowledgeRequirementsNotMetEventArgs { dialectKnowledgeRequirements = dialectKnowledgeRequirements });
-    }
-    #endregion
-
     private void LearnObject()
     {
-        LearningManager.Instance.LearnObject(projectableObjectToLearn);
+        LearningManager.Instance.LearnObject(learningPlatform.ProjectableObjectToLearn);
     }
 }
