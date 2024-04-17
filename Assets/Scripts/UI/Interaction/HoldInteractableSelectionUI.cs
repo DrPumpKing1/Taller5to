@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class HoldInteractableSelectionUI : MonoBehaviour
 {
-    [Header("Interactable Alternate Components")]
+    [Header("Hold Interactable Components")]
     [SerializeField] private Component holdInteractableComponent;
 
     [Header("UI Components")]

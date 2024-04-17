@@ -145,7 +145,7 @@ public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractabl
         return true;
     }
     public void HoldInteractionStart() => OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
-    public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer });
+    public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
     public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
 
     public Transform GetTransform() => transform;
@@ -231,7 +231,7 @@ public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractabl
     }
 
     public void HoldInteractionAlternateStart() => OnHoldInteractionAlternateStart?.Invoke(this, EventArgs.Empty);
-    public void ContinousHoldInteractionAlternate(float holdTimer) => OnContinousHoldInteractionAlternate?.Invoke(this, new IHoldInteractableAlternate.OnHoldInteractionAlternateEventArgs { holdTimer = holdTimer });
+    public void ContinousHoldInteractionAlternate(float holdTimer) => OnContinousHoldInteractionAlternate?.Invoke(this, new IHoldInteractableAlternate.OnHoldInteractionAlternateEventArgs { holdTimer = holdTimer, holdDuration = holdDurationAlternate });
     public void HoldInteractionAlternateEnd() => OnHoldInteractionAlternateEnd?.Invoke(this, EventArgs.Empty);
 
     #endregion
