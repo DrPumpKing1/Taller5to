@@ -9,16 +9,21 @@ public class KnowledgeManager : MonoBehaviour
 
     [SerializeField] private List<DialectKnowledge> dialectKnowledges = new List<DialectKnowledge>(Enum.GetValues(typeof(Dialect)).Length);
     [SerializeField] private KnowledgeSettingsSO startingKnowledgeSettingsSO;
-    [SerializeField] private int maxDialectLevel = 10;
+    [SerializeField] private int maxDialectLevel = 5;
+
+    public List<DialectKnowledge> DialectKnowledges { get { return dialectKnowledges; } }
 
     public static EventHandler<OnKnowledgeChangedEventArgs> OnKnowledgeChanged;
     public static EventHandler<OnKnowledgeChangedEventArgs> OnKnowledgeIncreased;
     public static EventHandler<OnKnowledgeChangedEventArgs> OnKnowledgeDecreased;
 
+    public static EventHandler OnKnowledgeSettingsCopied;
+
     public class OnKnowledgeChangedEventArgs
     {
         public Dialect dialect;
-        public float level;
+        public int levelChange;
+        public int newLevel;
     }
 
     private void Awake()
@@ -58,6 +63,8 @@ public class KnowledgeManager : MonoBehaviour
                 }
             }
         }
+
+        OnKnowledgeSettingsCopied?.Invoke(this, EventArgs.Empty);
     }
 
     public void ChangeKnowledge(Dialect dialect, int level)
@@ -75,7 +82,7 @@ public class KnowledgeManager : MonoBehaviour
         if (level > 0f) IncreaseKnowledge(dialectKnowledge, level); 
         else DecreaseKnowledge(dialectKnowledge, level);
 
-        OnKnowledgeChanged?.Invoke(this, new OnKnowledgeChangedEventArgs { dialect = dialect, level = level });
+        OnKnowledgeChanged?.Invoke(this, new OnKnowledgeChangedEventArgs { dialect = dialect, levelChange = level, newLevel = dialectKnowledge.level });
     }
 
     public void IncreaseKnowledge(DialectKnowledge dialectKnowledge, int level)
@@ -84,7 +91,7 @@ public class KnowledgeManager : MonoBehaviour
 
         dialectKnowledge.level = dialectKnowledge.level + absoluteLevel > maxDialectLevel ? maxDialectLevel : dialectKnowledge.level + absoluteLevel;
 
-        OnKnowledgeIncreased?.Invoke(this, new OnKnowledgeChangedEventArgs { dialect = dialectKnowledge.dialect, level = absoluteLevel });
+        OnKnowledgeIncreased?.Invoke(this, new OnKnowledgeChangedEventArgs { dialect = dialectKnowledge.dialect, levelChange = absoluteLevel, newLevel = dialectKnowledge.level });
     }
 
     public void DecreaseKnowledge(DialectKnowledge dialectKnowledge, int level)
@@ -93,7 +100,7 @@ public class KnowledgeManager : MonoBehaviour
 
         dialectKnowledge.level = dialectKnowledge.level - absoluteLevel <= 0 ? 0 : dialectKnowledge.level - absoluteLevel;
 
-        OnKnowledgeDecreased?.Invoke(this, new OnKnowledgeChangedEventArgs { dialect = dialectKnowledge.dialect, level = absoluteLevel });
+        OnKnowledgeDecreased?.Invoke(this, new OnKnowledgeChangedEventArgs { dialect = dialectKnowledge.dialect, levelChange = absoluteLevel, newLevel = dialectKnowledge.level });
     }
 
     private DialectKnowledge GetDialectKnowledgeByDialect(Dialect dialect)
