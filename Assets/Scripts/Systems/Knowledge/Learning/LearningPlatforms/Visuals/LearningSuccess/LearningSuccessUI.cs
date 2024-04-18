@@ -16,10 +16,10 @@ public class LearningSuccessUI : MonoBehaviour
         DestroyAfterLifetime();
     }
 
-    public void SetKnowledgeAddedText(ProjectableObjectSO learnedObject)
+    public void SetLearningSuccessText(ProjectableObjectSO learnedObject)
     {
         learningSuccessText.text = $"Has aprendido a proyectar el objeto {learnedObject.objectName}";
     }
 
-    private void DestroyAfterLifetime() => Destroy(gameObject, lifeTime);
+    private void DestroyAfterLifetime() => Destroy(transform.parent.gameObject, lifeTime);
 }

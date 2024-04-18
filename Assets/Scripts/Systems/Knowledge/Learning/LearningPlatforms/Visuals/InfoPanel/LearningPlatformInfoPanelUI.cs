@@ -55,5 +55,5 @@ public class LearningPlatformInfoPanelUI : MonoBehaviour
 
     private void DisableDialectRequirementsUITemplate() => dialectKnowledgeRequirementsTemplate.gameObject.SetActive(false);
 
-    public void DestroyPanel() => Destroy(gameObject);
+    public void DestroyPanel() => Destroy(transform.parent.gameObject);
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using System;
 
-public class UICamera : MonoBehaviour
+public class WorldSpaceUICamera : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Camera mainCamera;

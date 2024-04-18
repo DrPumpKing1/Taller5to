@@ -24,5 +24,5 @@ public class KnowledgeAddedUI : MonoBehaviour
         knowledgeAddedText.text = $"+{dialectKnowledgeAdded.level} {levelsText} de Dialecto {dialectKnowledgeAdded.dialect}";
     }
 
-    private void DestroyAfterLifetime() => Destroy(gameObject, lifeTime);
+    private void DestroyAfterLifetime() => Destroy(transform.parent.gameObject, lifeTime);
 }

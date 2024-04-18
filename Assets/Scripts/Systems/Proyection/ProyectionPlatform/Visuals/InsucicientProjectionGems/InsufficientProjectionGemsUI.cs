@@ -14,5 +14,5 @@ public class InsufficientProjectionGemsUI : MonoBehaviour
         DestroyAfterLifetime();
     }
 
-    private void DestroyAfterLifetime() => Destroy(gameObject, lifeTime);
+    private void DestroyAfterLifetime() => Destroy(transform.parent.gameObject, lifeTime);
 }

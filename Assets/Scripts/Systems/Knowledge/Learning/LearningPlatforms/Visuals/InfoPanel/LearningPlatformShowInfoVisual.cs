@@ -31,7 +31,7 @@ public class LearningPlatformShowInfoVisual : MonoBehaviour
 
         learningPlatformInfoPanelUIGameObject = Instantiate(learningPlatformShowInfoVisualSettingsSO.infoPanelUIPrefab.gameObject, transform.position + learningPlatformShowInfoVisualSettingsSO.instantiationPositionOffset, transform.rotation);
 
-        LearningPlatformInfoPanelUI learningPlatformInfoPanelUI = learningPlatformInfoPanelUIGameObject.GetComponent<LearningPlatformInfoPanelUI>();
+        LearningPlatformInfoPanelUI learningPlatformInfoPanelUI = learningPlatformInfoPanelUIGameObject.GetComponentInChildren<LearningPlatformInfoPanelUI>();
 
         if (!learningPlatformInfoPanelUI)
         {
@@ -46,7 +46,7 @@ public class LearningPlatformShowInfoVisual : MonoBehaviour
     {
         if (!learningPlatformInfoPanelUIGameObject) return;
 
-        LearningPlatformInfoPanelUI learningPlatformInfoPanelUI = learningPlatformInfoPanelUIGameObject.GetComponent<LearningPlatformInfoPanelUI>();
+        LearningPlatformInfoPanelUI learningPlatformInfoPanelUI = learningPlatformInfoPanelUIGameObject.GetComponentInChildren<LearningPlatformInfoPanelUI>();
 
         if (!learningPlatformInfoPanelUI)
         {

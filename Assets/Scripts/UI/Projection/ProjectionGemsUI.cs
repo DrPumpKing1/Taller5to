@@ -71,8 +71,8 @@ public class ProjectionGemsUI : MonoBehaviour
 
     private void ProjectionGemsManager_OnInsuficientProjectionGems(object sender, ProjectionGemsManager.OnProjectionGemsEventArgs e)
     {
-        StopAllCoroutines();
-        StartCoroutine(InsuficientProjectionGemsCoroutine());
+        //StopAllCoroutines();
+        //StartCoroutine(InsuficientProjectionGemsCoroutine());
     }
     #endregion
 }

@@ -22,7 +22,7 @@ public class LearningSuccessVisual : MonoBehaviour
     {
         GameObject learningSuccessUIGameObject = Instantiate(learningSuccessVisualSettingsSO.learningSuccessUIPrefab.gameObject, transform.position + learningSuccessVisualSettingsSO.instantiationPositionOffset, transform.rotation);
 
-        LearningSuccessUI learningSuccessUI = learningSuccessUIGameObject.GetComponent<LearningSuccessUI>();
+        LearningSuccessUI learningSuccessUI = learningSuccessUIGameObject.GetComponentInChildren<LearningSuccessUI>();
 
         if (!learningSuccessUI)
         {
@@ -30,7 +30,7 @@ public class LearningSuccessVisual : MonoBehaviour
             return;
         }
 
-        learningSuccessUI.SetKnowledgeAddedText(learningPlatform.ProjectableObjectToLearn);
+        learningSuccessUI.SetLearningSuccessText(learningPlatform.ProjectableObjectToLearn);
     }
 
 }

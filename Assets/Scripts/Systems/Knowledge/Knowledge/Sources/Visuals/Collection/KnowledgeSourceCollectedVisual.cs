@@ -28,7 +28,7 @@ public class KnowledgeSourceCollectedVisual : MonoBehaviour
         {
             GameObject knowledgeAddedUIGameObject = Instantiate(knowledgeSourceColectionVisualSettingsSO.knowledgeAddedUIPrefab.gameObject, transform.position + knowledgeSourceColectionVisualSettingsSO.instantiationPositionOffset + knowledgeSourceColectionVisualSettingsSO.offsetBetweenInstantiatedUIs * instantiatedUIs, transform.rotation);
 
-            KnowledgeAddedUI knowledgeAddedUI = knowledgeAddedUIGameObject.GetComponent<KnowledgeAddedUI>();
+            KnowledgeAddedUI knowledgeAddedUI = knowledgeAddedUIGameObject.GetComponentInChildren<KnowledgeAddedUI>();
 
             if (!knowledgeAddedUI)
             {

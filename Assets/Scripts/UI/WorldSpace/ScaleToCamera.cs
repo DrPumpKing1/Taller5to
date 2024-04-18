@@ -8,8 +8,6 @@ public class ScaleToCamera : MonoBehaviour
 
     private enum Mode { ConstantScale }
 
-    private float initialOrthoSize = 6.5f;
-
     private void LateUpdate()
     {
         ScaleLogic();
@@ -28,7 +26,7 @@ public class ScaleToCamera : MonoBehaviour
     private Vector3 CalculateScale()
     {
         float orthographicSize = Camera.main.orthographicSize;
-        float scaleFactor = orthographicSize / initialOrthoSize;
+        float scaleFactor = orthographicSize / CameraScroll.orthoSizeRefference;
 
         return Vector3.one * scaleFactor;
     }
