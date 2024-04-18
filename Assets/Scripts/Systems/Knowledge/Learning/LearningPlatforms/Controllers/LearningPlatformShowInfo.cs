@@ -69,6 +69,9 @@ public class LearningPlatformShowInfo : MonoBehaviour, IInteractableAlternate
     {
         OnObjectDeselectedAlternate?.Invoke(this, EventArgs.Empty);
         Debug.Log("ProjectableObject Deselected Alternate");
+
+        OnHideInfo?.Invoke(this, new OnLearningPlatformInfoEventArgs { projectableObjectToLearn = learningPlatform.ProjectableObjectToLearn, dialectKnowledgeRequirements = learningPlatform.DialectKnowledgeRequirements });
+        showingInfo = false;
     }
 
     public void TryInteractAlternate()
@@ -125,6 +128,8 @@ public class LearningPlatformShowInfo : MonoBehaviour, IInteractableAlternate
         canBeSelectedAlternate = false;
         isInteractableAlternate = false;
         hasAlreadyBeenInteractedAlternate = true;
+
+        OnHideInfo?.Invoke(this, new OnLearningPlatformInfoEventArgs { projectableObjectToLearn = learningPlatform.ProjectableObjectToLearn, dialectKnowledgeRequirements = learningPlatform.DialectKnowledgeRequirements });
     }
     #endregion
 }

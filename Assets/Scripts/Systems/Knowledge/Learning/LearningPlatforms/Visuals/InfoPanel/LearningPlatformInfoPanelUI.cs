@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RequirementsNotMetUI : MonoBehaviour
+public class LearningPlatformInfoPanelUI : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private float lifeTime;
@@ -11,8 +11,15 @@ public class RequirementsNotMetUI : MonoBehaviour
 
     private void Awake()
     {
-        DestroyAfterLifetime();
+        //DestroyAfterLifetime();
     }
 
     private void DestroyAfterLifetime() => Destroy(gameObject, lifeTime);
+
+    public void SetInfoPanelContents(ProjectableObjectSO projectableObjectToLearn, List<DialectKnowledge> dialectKnowledgeRequirements)
+    {
+
+    }
+
+    public void DestroyPanel() => Destroy(gameObject);
 }

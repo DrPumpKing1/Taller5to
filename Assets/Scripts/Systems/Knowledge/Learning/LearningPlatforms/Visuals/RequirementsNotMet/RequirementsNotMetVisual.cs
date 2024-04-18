@@ -37,7 +37,7 @@ public class RequirementsNotMetVisual : MonoBehaviour
 
         GameObject requirementsNotMetUIGameObject = Instantiate(requirementsNotMetVisualSettingsSO.requirementsNotMetUIPrefab.gameObject, transform.position + requirementsNotMetVisualSettingsSO.instantiationPositionOffset, transform.rotation);
         
-        RequirementsNotMetUI requirementsNotMetUI = requirementsNotMetUIGameObject.GetComponent<RequirementsNotMetUI>();
+        LearningRequirementsNotMetUI requirementsNotMetUI = requirementsNotMetUIGameObject.GetComponent<LearningRequirementsNotMetUI>();
 
         if (!requirementsNotMetUI)
         {
