@@ -18,12 +18,14 @@ public class InteractableSelectionUI : MonoBehaviour
     {
         interactable.OnObjectSelected += Interactable_OnObjectSelected;
         interactable.OnObjectDeselected += Interactable_OnObjectDeselected;
+        interactable.OnObjectInteracted += Interactable_OnObjectInteracted;
     }
 
     private void OnDisable()
     {
         interactable.OnObjectSelected -= Interactable_OnObjectSelected;
         interactable.OnObjectDeselected -= Interactable_OnObjectDeselected;
+        interactable.OnObjectInteracted -= Interactable_OnObjectInteracted;
     }
 
     private void Awake()
@@ -65,6 +67,11 @@ public class InteractableSelectionUI : MonoBehaviour
     private void Interactable_OnObjectDeselected(object sender, System.EventArgs e)
     {
         HideSelectionUI();
+    }
+
+    private void Interactable_OnObjectInteracted(object sender, System.EventArgs e)
+    {
+        SetInteractableSelectionText();
     }
     #endregion
 }

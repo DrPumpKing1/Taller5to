@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public GameManager Instance { get; private set; }
 
-    private enum State {OnGameplay, OnUI, OnUIProgress }
+    private enum State {OnGameplay, OnUI, OnDialog }
     private State state;
 
     private void Awake()

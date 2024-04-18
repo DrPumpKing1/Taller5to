@@ -18,12 +18,14 @@ public class InteractableAlternateSelectionUI : MonoBehaviour
     {
         interactableAlternate.OnObjectSelectedAlternate += InteractableAlternate_OnObjectSelectedAlternate;
         interactableAlternate.OnObjectDeselectedAlternate += InteractableAlternate_OnObjectDeselectedAlternate;
+        interactableAlternate.OnObjectInteractedAlternate += InteractableAlternate_OnObjectInteractedAlternate;
     }
 
     private void OnDisable()
     {
         interactableAlternate.OnObjectSelectedAlternate -= InteractableAlternate_OnObjectSelectedAlternate;
         interactableAlternate.OnObjectDeselectedAlternate -= InteractableAlternate_OnObjectDeselectedAlternate;
+        interactableAlternate.OnObjectInteractedAlternate += InteractableAlternate_OnObjectInteractedAlternate;
     }
 
     private void Awake()
@@ -65,6 +67,11 @@ public class InteractableAlternateSelectionUI : MonoBehaviour
     private void InteractableAlternate_OnObjectDeselectedAlternate(object sender, System.EventArgs e)
     {
         HideSelectionUI();
+    }
+
+    private void InteractableAlternate_OnObjectInteractedAlternate(object sender, System.EventArgs e)
+    {
+        SetInteractableAlternateSelectionText();
     }
     #endregion
 }
