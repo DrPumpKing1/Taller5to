@@ -9,7 +9,7 @@ public class ProjectableObjectSO : ScriptableObject
     public Transform prefab;
     public int projectionGemsCost;
     public string objectName;
-    public string description;
+    [TextArea(3, 10)] public string description;
     public Sprite sprite;
     public Transform visualPrefab;
 }

@@ -62,6 +62,7 @@ public class PlayerJump : MonoBehaviour
 
     private void CheckShouldJump()
     {
+        if (shouldJump) return;
         if (!checkGround.IsGrounded) return;
         if (playerCrouch.IsCrouching) return;
         if (playerInteract.IsInteracting) return;
@@ -71,6 +72,7 @@ public class PlayerJump : MonoBehaviour
 
         shouldJump = true;
     }
+
     private void SetJumpState(State state) { this.state = state; }
     public void HandleJumpStates()
     {
@@ -96,7 +98,6 @@ public class PlayerJump : MonoBehaviour
         {
             ResetTimer();
             SetJumpState(State.Impulsing);
-            shouldJump = false;
             OnPlayerImpulsing?.Invoke(this, EventArgs.Empty);
         }
     }
@@ -127,6 +128,7 @@ public class PlayerJump : MonoBehaviour
 
     private void Jump()
     {
+        shouldJump = false;
         float jumpForce = CalculateJumpForce(jumpHeight + jumpHeightError, Physics.gravity.y * playerGravityController.GravityMultiplier * playerGravityController.LowJumpMultiplier);
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
     }
