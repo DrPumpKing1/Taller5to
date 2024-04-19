@@ -2407,6 +2407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectedProjectableObjectSO: {fileID: 11400000, guid: a7ec37b997ae92f409ef433af1b0b518, type: 2}
+  currentProjectedObjects: []
 --- !u!1 &450817350
 GameObject:
   m_ObjectHideFlags: 0
@@ -9899,9 +9900,9 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 1
-  rayLength: 0.4
+  rayLength: 0.125
   raySphereRadius: 0.2
-  diagonalRayLength: 1
+  diagonalRayLength: 0.5
   drawRaycasts: 1
 --- !u!114 &1380701024
 MonoBehaviour:

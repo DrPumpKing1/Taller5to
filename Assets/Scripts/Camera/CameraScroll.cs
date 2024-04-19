@@ -29,12 +29,12 @@ public class CameraScroll : MonoBehaviour
         SetOrthoSizeRefference();
     }
 
-    void Start()
+    private void Start()
     {
         InitializeSettings();
     }
 
-    void Update()
+    private void LateUpdate()
     {
         HandleDistance();
     }
