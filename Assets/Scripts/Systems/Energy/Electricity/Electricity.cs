@@ -142,7 +142,8 @@ public class Electricity : MonoBehaviour
 
     public void UpdateElectrode(Electrode component)
     {
-        component.Node.Circuit.UpdateNodeForward(component.Node);
+        //component.Node.Circuit.UpdateNodeForward(component.Node);
+        component.Node.Circuit.ResolveCircuit();
     }
 
     public void FlushCircuitTasks(Circuit circuit)

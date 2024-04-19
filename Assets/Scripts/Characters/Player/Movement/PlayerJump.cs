@@ -96,6 +96,7 @@ public class PlayerJump : MonoBehaviour
 
         if (shouldJump)
         {
+            _rigidbody.useGravity = false;
             ResetTimer();
             SetJumpState(State.Impulsing);
             OnPlayerImpulsing?.Invoke(this, EventArgs.Empty);
@@ -118,6 +119,8 @@ public class PlayerJump : MonoBehaviour
     private void JumpLogic()
     {
         OnPlayerJump?.Invoke(this, EventArgs.Empty);
+
+        _rigidbody.useGravity = true;
 
         Jump();
         jumpCooldownTime = jumpCooldown;

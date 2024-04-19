@@ -15,12 +15,12 @@ public class ProjectionPlatform : MonoBehaviour
     public event EventHandler OnProjectionPlatformClear;
     public event EventHandler<OnProjectionEventArgs> OnProjectionPlatformSet;
 
-    public class OnProjectionEventArgs: EventArgs
+    public class OnProjectionEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectSO;
     }
 
-    public void ClearProjectionPlatform() 
+    public void ClearProjectionPlatform()
     {
         currentProjectedObject = null;
         OnProjectionPlatformClear?.Invoke(this, EventArgs.Empty);
