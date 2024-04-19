@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KnowledgeSource : MonoBehaviour, IInteractable
+public class KnowledgeSource : MonoBehaviour, IHoldInteractable
 {
     [Header ("Knowledge Source Settings")]
     [SerializeField] private KnowledgeSourceSO knowledgeSourceSO;
@@ -14,12 +14,15 @@ public class KnowledgeSource : MonoBehaviour, IInteractable
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
     [SerializeField] private string tooltipMessage;
+    [SerializeField] private float holdDuration;
 
     #region IInteractable Properties
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
+
+    public float HoldDuration => holdDuration;
     #endregion
 
     #region IInteractableEvents
@@ -31,6 +34,9 @@ public class KnowledgeSource : MonoBehaviour, IInteractable
     #endregion
 
     public event EventHandler<OnKnowledgeAddedEventArgs> OnKnowledgeAdded;
+    public event EventHandler OnHoldInteractionStart;
+    public event EventHandler OnHoldInteractionEnd;
+    public event EventHandler<IHoldInteractable.OnHoldInteractionEventArgs> OnContinousHoldInteraction;
 
     public class OnKnowledgeAddedEventArgs : EventArgs
     {
@@ -85,8 +91,13 @@ public class KnowledgeSource : MonoBehaviour, IInteractable
             return;
         }
 
-        if (isInteractable) Interact();
-        else FailInteract();
+        if (!isInteractable)
+        {
+            FailInteract();
+            return;
+        }
+
+        Interact();
     }
 
     public Transform GetTransform() => transform;
@@ -104,4 +115,26 @@ public class KnowledgeSource : MonoBehaviour, IInteractable
     }
 
     private void DestroyKnowledgeSource() => Destroy(gameObject, destroyTime);
+
+    public bool CheckSuccess()
+    {
+        if (hasAlreadyBeenInteracted)
+        {
+            AlreadyInteracted();
+            return false;
+        }
+
+        if (!isInteractable)
+        {
+            FailInteract();
+            return false;
+        }
+
+        return true;
+    }
+
+    public void HoldInteractionStart() => OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
+    public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
+    public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
+
 }
