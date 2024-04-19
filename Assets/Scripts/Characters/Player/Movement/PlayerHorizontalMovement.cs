@@ -111,13 +111,14 @@ public class PlayerHorizontalMovement : MonoBehaviour
             Vector2 vector2PerpendicularProyection = GeneralMethods.Vector3ToVector2(perpendicularProyection);
 
             FixedLastNonZeroInput = vector2PerpendicularProyection.normalized;
+
             return;
         }
 
         FixedLastNonZeroInput = LastNonZeroInput;
     }
 
-    private void SmoothDirectionInputVector() => smoothDirectionInputVector = Vector2.Lerp(smoothDirectionInputVector, DirectionInputVector, Time.deltaTime * smoothDirectionInputFactor);
+    private void SmoothDirectionInputVector() => smoothDirectionInputVector = Vector2.Lerp(smoothDirectionInputVector, FixedLastNonZeroInput, Time.deltaTime * smoothDirectionInputFactor);
 
     private void CalculateDesiredMovementDirection()
     {

@@ -8,7 +8,8 @@ public class LearningPlatformShowInfoVisual : MonoBehaviour
     [SerializeField] private LearningPlatformShowInfo learningPlatformShowInfo;
 
     [Header("Learning Platfown Show Info Settings")]
-    [SerializeField] private LearningPlatformShowInfoVisualSettingsSO learningPlatformShowInfoVisualSettingsSO;
+    [SerializeField] private Transform infoPanelUIPrefab;
+    [SerializeField] private Vector3 instantiationPositionOffset;
 
     private GameObject learningPlatformInfoPanelUIGameObject;
 
@@ -29,7 +30,7 @@ public class LearningPlatformShowInfoVisual : MonoBehaviour
     {
         if (learningPlatformInfoPanelUIGameObject) return;
 
-        learningPlatformInfoPanelUIGameObject = Instantiate(learningPlatformShowInfoVisualSettingsSO.infoPanelUIPrefab.gameObject, transform.position + learningPlatformShowInfoVisualSettingsSO.instantiationPositionOffset, transform.rotation);
+        learningPlatformInfoPanelUIGameObject = Instantiate(infoPanelUIPrefab.gameObject, transform.position + instantiationPositionOffset, transform.rotation);
 
         LearningPlatformInfoPanelUI learningPlatformInfoPanelUI = learningPlatformInfoPanelUIGameObject.GetComponentInChildren<LearningPlatformInfoPanelUI>();
 
