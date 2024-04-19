@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class Electrode : MonoBehaviour
@@ -15,8 +16,10 @@ public class Electrode : MonoBehaviour
 
     [Header("Electricity Component")]
 
+    [SerializeField] protected float sourcePower;
     [SerializeField] protected float power;
     public float Power { get { return power; } }
+    public float SourcePower { get { return sourcePower; } }
 
     public enum ComponentType
     {
@@ -59,7 +62,7 @@ public class Electrode : MonoBehaviour
         if (type.Contains(ComponentType.device) && !type.Contains(ComponentType.source)) device = true;
     }
 
-    protected void AddContact(Electrode other, bool enableContact)
+    public void AddContact(Electrode other, bool enableContact)
     {
         if (!CheckContact(other)) return;
 
@@ -78,12 +81,12 @@ public class Electrode : MonoBehaviour
         if (!Node.Circuit.Elements.Contains(other.Node)) Electricity.Instance.ConnectComponents(this, other);
     }
 
-    protected void AddContact(Electrode other)
+    public void AddContact(Electrode other)
     {
         AddContact(other, true);
     }
 
-    protected void RemoveContact(Electrode other, bool enableContact)
+    public void RemoveContact(Electrode other, bool enableContact)
     {
         if (!contacts.Contains(other)) return;
 
@@ -100,7 +103,7 @@ public class Electrode : MonoBehaviour
         Electricity.Instance.DisconnectComponents(Node.Circuit);
     }
 
-    protected void RemoveContact(Electrode other)
+    public void RemoveContact(Electrode other)
     {
         RemoveContact(other, true);
     }
@@ -168,5 +171,11 @@ public class Electrode : MonoBehaviour
     private void OnDestroy()
     {
         Electricity.Instance.RemoveComponentFromList(this);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Handles.Label(transform.position + new Vector3(0, 1, 0), $"{node.Weight}");
+        Handles.Label(transform.position + new Vector3(0, 1.2f, 0), $"{power}");
     }
 }

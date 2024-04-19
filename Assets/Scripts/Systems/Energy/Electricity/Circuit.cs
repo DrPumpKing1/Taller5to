@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,46 +11,30 @@ using UnityEngine;
 [System.Serializable]
 public class Circuit : IDisposable
 {
-    delegate void PropagateAction(Node node, int layer);
+    delegate void PropagateAction(Node node, int layer, float elementCount, List<Node> nodesEvaluated);
 
-    PropagateAction resetNodes = (Node node, int layer) => node.Component?.ResetPower();
+    PropagateAction resetNodes = (Node node, int layer, float elementCount, List<Node> nodesEvaluated) => node.Component?.ResetPower();
 
-    PropagateAction routeNodes = (Node node, int layer) => {
-        node.NextNodes.ForEach(nextNode =>
-        {
-            if(nextNode.PreviousNodes.Contains(node) && nextNode.Weight >= layer)
-            {
-                nextNode.Weight = layer;
-                nextNode.RemoveContact(node);
-                nextNode.AddContact(node);
-            }
-
-            if (!nextNode.PreviousNodes.Contains(node) && nextNode.Weight >= layer) {
-                nextNode.Weight = layer;
-                nextNode.RemoveContact(node);   
-                nextNode.AddPreviousNode(node);
-            }
+    PropagateAction routeNodes = (Node node, int layer, float elementCount, List<Node> nodesEvaluated) => {
+        node.ContactNodes.ForEach(contact => {
+            if(!nodesEvaluated.Contains(contact) && !contact.Component.Source) contact.Weight += (node.Weight - 1)/ (contact.ContactNodes.Count * (node.Component.Source ? (elementCount + 1) / 2 : 1));
         });
     };
 
-    PropagateAction logRoute = (Node node, int layer) => {
-        Debug.Log(node.Component.name + "(" + layer + "):");
-        node.NextNodes.ForEach(nextNode =>
-        {
-            Debug.Log("-> " + nextNode.Component.name);
-        });
-    };
-
-    PropagateAction powerNodes = (Node node, int layer) => node.Broadcast();
+    PropagateAction powerNodes = (Node node, int layer, float elementCount, List<Node> nodesEvaluated) => node.ContactNodes.ForEach(contact => {
+        contact.BroadcastSpecific(node);
+    });
 
     [SerializeField] private List<Node> nodes;
 
-    public List<Node> Elements { get { return nodes; } }
     public List<CancellationTokenSource> cancellationTokens { get; private set; }
+
+    public List<Node> Elements { get { return nodes; } }
 
     public Circuit()
     {
         nodes = new List<Node>();
+
         cancellationTokens = new List<CancellationTokenSource>();
 
         Electricity.Instance?.Circuits.Add(this);
@@ -67,9 +52,7 @@ public class Circuit : IDisposable
     {
         nodes.Sort((a, b) => Electrode.CompareElectrodes(a.Component, b.Component));
         nodes.ForEach(e => {
-            e.PreviousNodes?.Clear();
             e.Component?.ResetPower();
-            e.ResetContactsLists();
             e.ResetWeight();
         });
 
@@ -78,24 +61,30 @@ public class Circuit : IDisposable
 
         if (nodes.Count <= 0) return;
 
-        nodes.ForEach( async node =>
+        List<Node> nodesCopy = new List<Node>(nodes);
+
+        List<Node> evaluatedNode = new List<Node>();
+
+        foreach (Node node in nodesCopy)
+        {
+            if(node.Component.Source)
+            {
+                evaluatedNode.Clear();
+                await PropagateForward(node, routeNodes, false, true, evaluatedNode);
+            }
+        }
+
+        foreach (Node node in nodesCopy)
         {
             if (node.Component.Source)
             {
-                node.Weight = 0;
-                await PropagateForward(node, routeNodes);
-                //await PropagateForward(node, logRoute);
+                await PropagateForward(node, powerNodes, false, false, evaluatedNode);
             }
-        });
-
-        nodes.ForEach(async node =>
-        {
-            if (node.Component.Source) await PropagateForward(node, powerNodes);
-        });
+        }
     }
 
-    private async Task PropagateForward(Node startNode, PropagateAction action)
-    {
+    private async Task PropagateForward(Node startNode, PropagateAction action, bool debug, bool useEvaluation, List<Node> evaluatedNode) 
+    { 
         if (startNode == null) return;
 
         if (!nodes.Contains(startNode)) return;
@@ -103,40 +92,33 @@ public class Circuit : IDisposable
         CancellationTokenSource cancelSource = new CancellationTokenSource();
         cancellationTokens.Add(cancelSource);
 
-        await PropagateActionForward(startNode, action, cancelSource.Token, 1);
+        await PropagateActionForward(startNode, action, 1, cancelSource.Token, debug);
 
-        async Task PropagateActionForward(Node node, PropagateAction action, CancellationToken cancel, int layer)
+        async Task PropagateActionForward(Node node, PropagateAction action, int layer, CancellationToken cancel, bool debug)
         {
-            action(node, layer);
+            if(debug)Debug.Log("CALLING " + node.Component.name);
+            action(node, layer, this.nodes.Count, evaluatedNode);
+            evaluatedNode.Add(node);
 
-            List<Node> nodes = new List<Node>(node.NextNodes);
+            List<Node> nodes = new List<Node>(node.ContactNodes);
 
             foreach (Node nextNode in nodes)
             {
-                if (node.PreviousNodes.Contains(nextNode))
+                if (node.Weight <= nextNode.Weight)
+                {
+                    continue;
+                }
+
+                if(evaluatedNode.Contains(nextNode) && useEvaluation)
                 {
                     continue;
                 }
 
                 await Task.Delay(TimeSpan.FromSeconds(.01f));
 
-                if(!cancel.IsCancellationRequested) await PropagateActionForward(nextNode, action, cancel, ++layer);
+                await PropagateActionForward(nextNode, action, ++layer, cancel, debug);
             }
         }
-    }
-
-    public async void UpdateNodeForward(Node node)
-    {
-        if (!nodes.Contains(node)) return;
-
-        await PropagateForward(node, resetNodes);
-
-        foreach (Node previousNode in node.PreviousNodes)
-        {
-            previousNode.BroadcastSpecific(node);
-        }
-
-        await PropagateForward(node, powerNodes);
     }
 
     public static Circuit MergeCircuit(Circuit a, Circuit b)
@@ -158,10 +140,24 @@ public class Circuit : IDisposable
         {
             Electricity.Instance.Circuits.Remove(this);
         }
-
         Electricity.Instance.FlushCircuitTasks(this);
 
         cancellationTokens.Clear();
+
         nodes.Clear();
+    }
+
+    public async void UpdateNodeForward(Node node)
+    {
+        if (!nodes.Contains(node)) return;
+
+        await PropagateForward(node, resetNodes, false, false, new List<Node>());
+
+        foreach (Node previousNode in node.ContactNodes)
+        {
+            previousNode.BroadcastSpecific(node);
+        }
+
+        await PropagateForward(node, powerNodes, false, false, new List<Node>());
     }
 }

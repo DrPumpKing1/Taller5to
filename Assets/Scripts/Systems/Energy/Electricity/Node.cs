@@ -6,94 +6,70 @@ using UnityEngine;
 public class Node
 {
     [SerializeField] private Electrode electrode;
-    private List<Node> nextNodes;
-    private List<Node> previousNodes;
+    private List<Node> contactNodes;
     private Circuit circuit;
-    private int weight;
+    [SerializeField] private float weight;
     
-    [SerializeField] private List<Electrode> nextElectrodes;
-    [SerializeField] private List<Electrode> previousElectrodes;
+    [SerializeField] private List<Electrode> contactElectrodes;
 
-    public List<Node> NextNodes {  get { return nextNodes; } }
-    public List<Node> PreviousNodes { get { return previousNodes; } }
+    public List<Node> ContactNodes {  get { return contactNodes; } }
     public Electrode Component { get { return electrode; } }
     public Circuit Circuit { get { return circuit; } set { circuit = value; } }
-    public int Weight { get { return weight; } set { weight = value; } }
+    public float Weight { get { return weight; } set { weight = value; } }
 
     public Node(Electrode electrode)
     {
+        this.contactNodes = new List<Node>();
         this.electrode = electrode;
-        this.nextNodes = new List<Node>();
-        this.previousNodes = new List<Node>();
+        this.contactElectrodes = new List<Electrode>();
         this.circuit = new Circuit();
-        this.weight = int.MaxValue;
+        if(electrode.Source) this.weight = electrode.SourcePower;
+        else this.weight = 0;
         this.circuit.AddNode(this);
     }
 
     public void LabelElectrodes()
     {
-        nextElectrodes = new List<Electrode>();
-        previousElectrodes = new List<Electrode>();
+        contactElectrodes = new List<Electrode>();
 
-        nextNodes.ForEach(node => nextElectrodes.Add(node.Component));
-        previousNodes.ForEach(node => previousElectrodes.Add(node.Component));
+        contactNodes.ForEach(node => contactElectrodes.Add(node.Component));
     }
 
     public void AddContact(Node contact)
     {
-        if (nextNodes.Contains(contact))
+        if (contactNodes.Contains(contact))
         {
             return;
         }
 
-        nextNodes.Add(contact);
+        contactNodes.Add(contact);
         
         LabelElectrodes();
     }
 
     public void RemoveContact(Node contact)
     {
-        if (nextNodes.Contains(contact))
+        if (contactNodes.Contains(contact))
         {
-            nextNodes.Remove(contact);
-        }
-
-        if (previousNodes.Contains(contact))
-        {
-            previousNodes.Remove(contact);
+            contactNodes.Remove(contact);
         }
 
         LabelElectrodes();
-    }
-
-    public void AddPreviousNode(Node node)
-    {
-        if (previousNodes.Contains(node)) return;
-
-        previousNodes.Add(node);
-
-        LabelElectrodes();
-    }
-
-    public void ResetContactsLists()
-    {
-        nextNodes.Clear();
-        previousNodes.Clear();
-
-        electrode.RetrieveContacts().ForEach((electrode) => nextNodes.Add(electrode.Node));
     }
 
     public void ResetWeight()
     {
-        this.weight = int.MaxValue;
+        this.weight = 0;
+        if (Component.Source) this.weight = electrode.SourcePower;
     }
 
     public void Broadcast()
     {
         if (electrode.Power <= 0 || electrode.Device) return;
 
-        nextNodes.ForEach(node => {
-            node.electrode.ReceiveSignal(electrode.SendSignal(node.electrode));
+        contactNodes.ForEach(node => {
+            if (weight > node.weight) node.electrode.ReceiveSignal(electrode.SendSignal(node.electrode));
+            else if (electrode.DebugTool) Debug.Log($"{electrode.name} couldn't send signal to {node.electrode.name}");
         });
     }
 
@@ -101,8 +77,8 @@ public class Node
     {
         if (electrode.Power <= 0 || electrode.Device) return;
 
-        if (!nextNodes.Contains(node)) return;
+        if (!contactNodes.Contains(node)) return;
 
-        node.electrode.ReceiveSignal(electrode.SendSignal(node.electrode));
+        if(weight > node.weight) node.electrode.ReceiveSignal(electrode.SendSignal(node.electrode));
     }
 }

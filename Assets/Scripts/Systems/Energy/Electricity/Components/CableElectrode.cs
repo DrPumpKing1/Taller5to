@@ -35,11 +35,22 @@ public class CableElectrode : Electrode
             {
                 Electrode other = hit.collider.GetComponent<Electrode>();
 
-                if (other == null) continue;
+                ElectrodeCollider otherCol = hit.collider.GetComponent<ElectrodeCollider>();
 
-                electrodesDetected.Add(other);
+                if (other == null && otherCol == null) continue;
 
-                AddContact(other);
+                if(other != null)
+                {
+                    electrodesDetected.Add(other);
+
+                    AddContact(other);
+
+                    continue;
+                }
+
+                electrodesDetected.Add(otherCol.Electrode);
+
+                AddContact(otherCol.Electrode);
             }
 
             List<Electrode> ToRemove = new List<Electrode>();

@@ -42,7 +42,12 @@ public class Electricity : MonoBehaviour
     {
         if (!electrodes.Contains(component)) return;
 
-        electrodes.Remove(component);
+        List<Electrode> contacts = new List<Electrode>(component.RetrieveContacts());
+
+        contacts.ForEach(contact =>
+        {
+            component.RemoveContact(contact);
+        });
     }
 
     public void ConnectComponents(Electrode a, Electrode b)
