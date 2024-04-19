@@ -6,6 +6,7 @@ using UnityEngine;
 public class ProjectableObjectSO : ScriptableObject
 {
     [Header("Scriptable Object Settings")]
+    public int id;
     public Transform prefab;
     public int projectionGemsCost;
     public string objectName;

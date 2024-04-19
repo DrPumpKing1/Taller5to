@@ -6,11 +6,15 @@ using System;
 public class ProjectionManager : MonoBehaviour
 {
     public static ProjectionManager Instance { get; private set; }
+
     public ProjectableObjectSO SelectedProjectableObjectSO;
+    [SerializeField] private List<ProjectableObjectSO> currentProjectedObjects = new List<ProjectableObjectSO>();
 
     public static event EventHandler<OnProjectionEventArgs> OnObjectProjectionSuccess;
     public static event EventHandler<OnProjectionEventArgs> OnObjectProjectionFailed;
     public static event EventHandler<OnProjectionEventArgs> OnObjectDematerialized;
+
+    public List<ProjectableObjectSO> CurrentProjectedObjects { get { return currentProjectedObjects; } }
 
     public class OnProjectionEventArgs : EventArgs
     {
@@ -51,13 +55,17 @@ public class ProjectionManager : MonoBehaviour
 
     public void SuccessObjectProjection(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform)
     {
-        OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
+        currentProjectedObjects.Add(projectableObjectSO);
+
         ProjectionGemsManager.Instance.UseProyectionGems(projectableObjectSO.projectionGemsCost);
+        OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
     }
 
     public void ObjectDematerialized(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform)
     {
-        OnObjectDematerialized?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
+        currentProjectedObjects.Remove(projectableObjectSO);
+
         ProjectionGemsManager.Instance.RefundProyectionGems(projectableObjectSO.projectionGemsCost);
+        OnObjectDematerialized?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
     }
 }
