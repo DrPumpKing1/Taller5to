@@ -8,7 +8,9 @@ public class KnowledgeSourceCollectedVisual : MonoBehaviour
     [SerializeField] private KnowledgeSource knowledgeSource;
 
     [Header("Knowledge Added Settings")]
-    [SerializeField] private KnowledgeSourceCollectionVisualSettingsSO knowledgeSourceColectionVisualSettingsSO;
+    [SerializeField] private Transform knowledgeAddedUIPrefab;
+    [SerializeField] private Vector3 instantiationPositionOffset;
+    [SerializeField] private Vector3 offsetBetweenInstantiatedUIs;
 
     private void OnEnable()
     {
@@ -26,7 +28,7 @@ public class KnowledgeSourceCollectedVisual : MonoBehaviour
 
         foreach (DialectKnowledge dialectKnowledge in e.knowledgeSourceSO.dialectKnowledgeLevelChanges) 
         {
-            GameObject knowledgeAddedUIGameObject = Instantiate(knowledgeSourceColectionVisualSettingsSO.knowledgeAddedUIPrefab.gameObject, transform.position + knowledgeSourceColectionVisualSettingsSO.instantiationPositionOffset + knowledgeSourceColectionVisualSettingsSO.offsetBetweenInstantiatedUIs * instantiatedUIs, transform.rotation);
+            GameObject knowledgeAddedUIGameObject = Instantiate(knowledgeAddedUIPrefab.gameObject, transform.position + instantiationPositionOffset + offsetBetweenInstantiatedUIs * instantiatedUIs, transform.rotation);
 
             KnowledgeAddedUI knowledgeAddedUI = knowledgeAddedUIGameObject.GetComponentInChildren<KnowledgeAddedUI>();
 

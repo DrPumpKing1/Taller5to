@@ -8,7 +8,8 @@ public class InsufficientProjectionGemsVisual : MonoBehaviour
     [SerializeField] private ProjectionPlatformProjection projectionPlatformProjection;
 
     [Header("Insuficient Projection Gems Settings")]
-    [SerializeField] private InsufficientProjectionGemsVisualSettingsSO insufficientProjectionGemsVisualSettingsSO;
+    [SerializeField] private Transform insufficientProjectionGemsUIPrefab;
+    [SerializeField] private Vector3 instantiationPositionOffset;
 
     private float cooldownTimer;
 
@@ -35,7 +36,7 @@ public class InsufficientProjectionGemsVisual : MonoBehaviour
     {
         if (cooldownTimer > 0) return;
 
-        GameObject insufficientProjectionGemsUIGameObject = Instantiate(insufficientProjectionGemsVisualSettingsSO.insufficientProjectionGemsUIPrefab.gameObject, transform.position + insufficientProjectionGemsVisualSettingsSO.instantiationPositionOffset, transform.rotation);
+        GameObject insufficientProjectionGemsUIGameObject = Instantiate(insufficientProjectionGemsUIPrefab.gameObject, transform.position + instantiationPositionOffset, transform.rotation);
 
         InsufficientProjectionGemsUI insufficientProjectionGemsUI = insufficientProjectionGemsUIGameObject.GetComponentInChildren<InsufficientProjectionGemsUI>();
 
