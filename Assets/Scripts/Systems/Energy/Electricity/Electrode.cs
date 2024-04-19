@@ -173,9 +173,11 @@ public class Electrode : MonoBehaviour
         Electricity.Instance.RemoveComponentFromList(this);
     }
 
+    /*
     private void OnDrawGizmos()
     {
         Handles.Label(transform.position + new Vector3(0, 1, 0), $"{node.Weight}");
         Handles.Label(transform.position + new Vector3(0, 1.2f, 0), $"{power}");
     }
+    */
 }

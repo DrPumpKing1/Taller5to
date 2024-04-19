@@ -8,7 +8,8 @@ public class RequirementsNotMetVisual : MonoBehaviour
     [SerializeField] private LearningPlatform learningPlatform;
 
     [Header("Requirements Not Met Settings")]
-    [SerializeField] private RequirementsNotMetVisualSettingsSO requirementsNotMetVisualSettingsSO;
+    [SerializeField] private Transform requirementsNotMetUIPrefab;
+    [SerializeField] private Vector3 instantiationPositionOffset;
 
     private float cooldownTimer;
 
@@ -35,7 +36,7 @@ public class RequirementsNotMetVisual : MonoBehaviour
     {
         if (cooldownTimer > 0) return;
 
-        GameObject requirementsNotMetUIGameObject = Instantiate(requirementsNotMetVisualSettingsSO.requirementsNotMetUIPrefab.gameObject, transform.position + requirementsNotMetVisualSettingsSO.instantiationPositionOffset, transform.rotation);
+        GameObject requirementsNotMetUIGameObject = Instantiate(requirementsNotMetUIPrefab.gameObject, transform.position + instantiationPositionOffset, transform.rotation);
         
         LearningRequirementsNotMetUI requirementsNotMetUI = requirementsNotMetUIGameObject.GetComponentInChildren<LearningRequirementsNotMetUI>();
 

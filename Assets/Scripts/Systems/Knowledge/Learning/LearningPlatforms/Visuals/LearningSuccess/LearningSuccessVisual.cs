@@ -8,7 +8,9 @@ public class LearningSuccessVisual : MonoBehaviour
     [SerializeField] private LearningPlatform learningPlatform;
 
     [Header("Learning Success Settings")]
-    [SerializeField] private LearningSuccessVisualSettingsSO learningSuccessVisualSettingsSO;
+    [SerializeField] private Transform learningSuccessUIPrefab;
+    [SerializeField] private Vector3 instantiationPositionOffset;
+
     private void OnEnable()
     {
         learningPlatform.OnObjectLearned += LearningPlatform_OnObjectLearned;
@@ -20,7 +22,7 @@ public class LearningSuccessVisual : MonoBehaviour
 
     private void LearningPlatform_OnObjectLearned(object sender, LearningPlatform.OnObjectLearnedEventArgs e)
     {
-        GameObject learningSuccessUIGameObject = Instantiate(learningSuccessVisualSettingsSO.learningSuccessUIPrefab.gameObject, transform.position + learningSuccessVisualSettingsSO.instantiationPositionOffset, transform.rotation);
+        GameObject learningSuccessUIGameObject = Instantiate(learningSuccessUIPrefab.gameObject, transform.position + instantiationPositionOffset, transform.rotation);
 
         LearningSuccessUI learningSuccessUI = learningSuccessUIGameObject.GetComponentInChildren<LearningSuccessUI>();
 
