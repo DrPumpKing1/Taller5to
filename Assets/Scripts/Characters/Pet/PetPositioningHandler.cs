@@ -8,16 +8,21 @@ public class PetPositioningHandler : MonoBehaviour
     [Header("Components")]
     [SerializeField] private PetPlayerAttachment petPlayerAttachment;
     [SerializeField] private Transform orbitPoint;
+    [SerializeField] private PlayerInteract playerInteract;
+    [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
 
     [Header("Orbit Positioning Settings")]
     [SerializeField, Range(1f, 5f)] private float orbitRadius;
-    [SerializeField, Range(1f, 100f)] private float smoothPositionSpeedFactor;
-    [SerializeField, Range(1f, 100f)] private float smoothVectorSpeedFactor;
+    [SerializeField, Range(0.1f, 100f)] private float smoothPositionSpeedFactor;
+    [SerializeField, Range(0.1f, 100f)] private float smoothVectorSpeedFactor;
     [SerializeField] List<Vector3> preferredDirectionVectors;
 
     [Header("Safe Positioning Settings")]
     [SerializeField, Range(1f, 2f)] private float safeOrbitRadius;
     [SerializeField] private Vector3 safePositionVector;
+
+    [Header("Player Interaction Settings")]
+    [SerializeField] private Vector3 offsetFromInteractableObject;
 
     [Header("Colision Detection")]
     [SerializeField, Range(0.5f, 1.75f)] private float colisionDetectionRadius;
@@ -31,6 +36,26 @@ public class PetPositioningHandler : MonoBehaviour
 
     private bool AttachToPlayer => petPlayerAttachment.AttachToPlayer;
 
+    private Transform curentInteractingTransform;
+
+    private void OnEnable()
+    {
+        playerInteract.OnInteractionStarted += PlayerInteract_OnInteractionStarted;
+        playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;
+
+        playerInteractAlternate.OnInteractionAlternateStarted += PlayerInteractAlternate_OnInteractionAlternateStarted;
+        playerInteractAlternate.OnInteractionAlternateEnded += PlayerInteractAlternate_OnInteractionAlternateEnded;
+    }
+
+    private void OnDisable()
+    {
+        playerInteract.OnInteractionStarted -= PlayerInteract_OnInteractionStarted;
+        playerInteract.OnInteractionEnded -= PlayerInteract_OnInteractionEnded;
+
+        playerInteractAlternate.OnInteractionAlternateStarted -= PlayerInteractAlternate_OnInteractionAlternateStarted;
+        playerInteractAlternate.OnInteractionAlternateEnded -= PlayerInteractAlternate_OnInteractionAlternateEnded;
+    }
+
     private void Update()
     {
         HandlePositioning();
@@ -40,15 +65,29 @@ public class PetPositioningHandler : MonoBehaviour
     {
         if (!AttachToPlayer) return;
 
+        if (orbitPoint)
+        {
+            HandleRegularPositioning();
+        }
+
+        if (curentInteractingTransform)
+        {
+            desiredPosition = curentInteractingTransform.position + offsetFromInteractableObject;
+        }
+
+        MoveToTargetPosition();
+    }
+
+    private void HandleRegularPositioning()
+    {
         DefineDesiredDirectionVectorAndRadius();
         CalculateTargetDirectionVector();
         CalculateTargetPosition();
-        MoveToTargetPosition();
     }
 
     private void DefineDesiredDirectionVectorAndRadius()
     {
-        Vector3 dirVector = safePositionVector; //.normalized
+        Vector3 dirVector = CalculateLocalPreferredPositionVector(safePositionVector, orbitPoint); //.normalized
         float radius = safeOrbitRadius;
 
         foreach (Vector3 directionVector in preferredDirectionVectors)
@@ -86,6 +125,40 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void CalculateTargetPosition() => desiredPosition = CalculateOrbitPosition(orbitPoint, targetDirectionVector, targetRadius);
 
-    private void MoveToTargetPosition() => transform.position = Vector3.Slerp(transform.position, desiredPosition, smoothPositionSpeedFactor * Time.deltaTime);
+    private void MoveToTargetPosition() => transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothPositionSpeedFactor * Time.deltaTime);
 
+
+    #region PlayerInteractionSubscriptions
+    private void PlayerInteract_OnInteractionStarted(object sender, PlayerInteract.OnInteractionEventArgs e)
+    {
+        curentInteractingTransform = e.interactable.GetTransform();
+
+        if (e.interactable.GetTransform().GetComponent<ProjectableObject>()) return;
+        if (e.interactable.GetTransform().GetComponent<ProjectionPlatform>()) return;
+
+        curentInteractingTransform = null;
+    }
+
+    private void PlayerInteract_OnInteractionEnded(object sender, PlayerInteract.OnInteractionEventArgs e)
+    {
+        curentInteractingTransform = null;
+    }
+    #endregion
+
+    #region PlayerInteractionAlternateSubscriptions
+
+    private void PlayerInteractAlternate_OnInteractionAlternateStarted(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
+    {
+        curentInteractingTransform = e.interactableAlternate.GetTransform();
+
+        if (e.interactableAlternate.GetTransform().GetComponent<ProjectableObject>()) return;
+        if (e.interactableAlternate.GetTransform().GetComponent<ProjectionPlatform>()) return;
+
+        curentInteractingTransform = null;
+    }
+    private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
+    {
+        curentInteractingTransform = null;
+    }
+    #endregion
 }
