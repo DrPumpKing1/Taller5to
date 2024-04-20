@@ -19,7 +19,7 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private float jumpHeight = 5f;
     [SerializeField] private float jumpHeightError = 0.05f;
     [SerializeField, Range(0f,0.5f)] private float impulseTime = 0.2f;
-    [SerializeField] private float jumpCooldown = 1f;
+    [SerializeField, Range(0f,1.5f)] private float jumpCooldown = 1f;
 
     private Rigidbody _rigidbody;
     private enum State {NotJumping, Impulsing, Jump}

@@ -94,12 +94,13 @@ public class PlayerHorizontalMovement : MonoBehaviour
         
     private bool CanRun() => !checkWall.HitWall && !playerCrouch.IsCrouching;
 
-    private bool IsRunning() => SprintInput && CanRun();
+    private bool IsRunning() => SprintInput && CanRun() && CanMove();
 
     private void CalculateLastNonZeroDirectionInput() => LastNonZeroInput = DirectionInputVector != Vector2.zero ? DirectionInputVector : LastNonZeroInput;
 
     private void FixDirectionVectorDueToWalls()
     {
+        /*
         if (checkWall.HitDiagonalWall)
         {
             Vector3 wallNormal = checkWall.GetDiagonalWallInfo().normal;
@@ -114,6 +115,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
             return;
         }
+        */
 
         FixedLastNonZeroInput = LastNonZeroInput;
     }

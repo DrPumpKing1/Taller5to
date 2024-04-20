@@ -56,7 +56,7 @@ public class PetPositioningHandler : MonoBehaviour
             Vector3 localDirectionVector = CalculateLocalPreferredPositionVector(directionVector, orbitPoint);
             Vector3 posiblePosition = CalculateOrbitPosition(orbitPoint, localDirectionVector, orbitRadius);
 
-            bool willCollideSomething = Physics.CheckSphere(posiblePosition, colisionDetectionRadius);
+            bool willCollideSomething = Physics.CheckSphere(posiblePosition, colisionDetectionRadius, collisionLayers);
 
             if (!willCollideSomething)
             {

@@ -23,7 +23,8 @@ public class PetRotationHandler : MonoBehaviour
     public Vector3 FacingDirection { get; private set; }
 
     private Vector3 desiredFacingDirection;
-    private bool respondToPlayerFacingDirection;
+
+    private Transform curentInteractingTransform;
 
     private void OnEnable()
     {
@@ -63,8 +64,6 @@ public class PetRotationHandler : MonoBehaviour
 
     private void InitializeVariables()
     {
-        respondToPlayerFacingDirection = true;
-
         FacingDirection = transform.forward;
         if (applyStartingRotation) FacingDirection = startingFacingDirection;
 
@@ -75,7 +74,16 @@ public class PetRotationHandler : MonoBehaviour
 
     private void DefineDesiredFacingDirection()
     {
-        if (respondToPlayerFacingDirection && playerRotationHandler) desiredFacingDirection = PlayerFacingDirection;
+        if (playerRotationHandler) 
+        {
+            desiredFacingDirection = PlayerFacingDirection;
+        }
+
+        if (curentInteractingTransform)
+        {
+            desiredFacingDirection = (curentInteractingTransform.position - transform.position).normalized;
+        }
+
     }
 
     private void ApplyRotation()
@@ -96,16 +104,12 @@ public class PetRotationHandler : MonoBehaviour
     #region PlayerInteractionSubscriptions
     private void PlayerInteract_OnInteractionStarted(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
-        Vector3 interactablePosition = e.interactable.GetTransform().position;
-        Vector3 facingVectorRaw = (interactablePosition - transform.position).normalized;
-
-        desiredFacingDirection = facingVectorRaw;
-        respondToPlayerFacingDirection = false;
+        curentInteractingTransform = e.interactable.GetTransform();
     }
 
     private void PlayerInteract_OnInteractionEnded(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
-        respondToPlayerFacingDirection = true;
+        curentInteractingTransform = null;
     }
     #endregion
 
@@ -113,15 +117,11 @@ public class PetRotationHandler : MonoBehaviour
 
     private void PlayerInteractAlternate_OnInteractionAlternateStarted(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {
-        Vector3 interactablePosition = e.interactableAlternate.GetTransform().position;
-        Vector3 facingVectorRaw = (interactablePosition - transform.position).normalized;
-
-        desiredFacingDirection = facingVectorRaw;
-        respondToPlayerFacingDirection = false;
+        curentInteractingTransform = e.interactableAlternate.GetTransform();
     }
     private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {
-        respondToPlayerFacingDirection = true;
+        curentInteractingTransform = null;
     }
     #endregion
 }

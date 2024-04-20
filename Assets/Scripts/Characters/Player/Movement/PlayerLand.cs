@@ -109,6 +109,7 @@ public class PlayerLand : MonoBehaviour
         {
             ResetTimer();
             SetLandState(State.Idle);
+
         }
     }
 
