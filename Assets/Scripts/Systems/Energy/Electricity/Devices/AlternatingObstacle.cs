@@ -14,6 +14,7 @@ public class AlternatingObstacle : MonoBehaviour
     [SerializeField] private Vector3 maxScale;
     [SerializeField] private float scalingTime;
     [SerializeField] private AnimationCurve scalingCurve;
+    [SerializeField] private float force;
 
     [Header("Device Control")]
     [SerializeField] private bool state;

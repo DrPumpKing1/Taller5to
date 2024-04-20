@@ -48,6 +48,10 @@ public class Electricity : MonoBehaviour
         {
             component.RemoveContact(contact);
         });
+
+        component.Node.Circuit.Dispose();
+
+        electrodes.Remove(component);
     }
 
     public void ConnectComponents(Electrode a, Electrode b)
@@ -84,7 +88,6 @@ public class Electricity : MonoBehaviour
         else
         {
             Circuit circuit = Circuit.MergeCircuit(circuitA, circuitB);
-
             circuit.ResolveCircuit();
         }
     }

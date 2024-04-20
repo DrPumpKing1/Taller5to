@@ -17,7 +17,11 @@ public class Circuit : IDisposable
 
     PropagateAction routeNodes = (Node node, int layer, float elementCount, List<Node> nodesEvaluated) => {
         node.ContactNodes.ForEach(contact => {
-            if(!nodesEvaluated.Contains(contact) && !contact.Component.Source) contact.Weight += (node.Weight - 1)/ (contact.ContactNodes.Count * (node.Component.Source ? (elementCount + 1) / 2 : 1));
+            if (!nodesEvaluated.Contains(contact) && !contact.Component.Source) {
+                float value = (node.Weight - (1 * (elementCount))) / (2 * (node.ContactNodes.Count) * (node.Component.Source ? (elementCount + 1) / 2 : 1));
+                if (node.Component.DebugTool || contact.Component.DebugTool) Debug.Log($"{node.Component.name} add {value} weight to {contact.Component.name}");
+                contact.Weight += value;
+            };
         });
     };
 
