@@ -9,6 +9,8 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [SerializeField] private MovementInput movementInput;
     [Space]
     [SerializeField] private PlayerCrouch playerCrouch;
+    [SerializeField] private PlayerJump playerJump;
+    [SerializeField] private PlayerFall playerFall;
     [SerializeField] private PlayerLand playerLand;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
@@ -42,9 +44,26 @@ public class PlayerHorizontalMovement : MonoBehaviour
     public Vector3 SmoothFinalMoveDir { get; private set; }
     public Vector3 FinalMoveVector { get; private set; }
 
+    private bool processMoveDueToOnAir;
+
+    private void OnEnable()
+    {
+        playerJump.OnPlayerJump += PlayerJump_OnPlayerJump;
+    }
+
+    private void OnDisable()
+    {
+        playerJump.OnPlayerJump -= PlayerJump_OnPlayerJump;
+    }
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        InitializeVariables();
     }
 
     private void Update()
@@ -65,6 +84,11 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private void FixedUpdate()
     {
         ApplyHorizontalMovement();
+    }
+
+    private void InitializeVariables()
+    {
+        processMoveDueToOnAir = true;
     }
 
     private void CalculateDesiredSpeed()
@@ -151,10 +175,15 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     private void ApplyHorizontalMovement()
     {
-        if (!checkGround.IsGrounded) return;
-
         _rigidbody.velocity = new Vector3(FinalMoveVector.x, _rigidbody.velocity.y, FinalMoveVector.z);
     }
 
     public bool HasMovementInput() => DirectionInputVector != Vector2.zero;
+
+    #region Event Subscriptions
+    private void PlayerJump_OnPlayerJump(object sender, EventArgs e)
+    {
+        processMoveDueToOnAir = false;
+    }
+    #endregion
 }

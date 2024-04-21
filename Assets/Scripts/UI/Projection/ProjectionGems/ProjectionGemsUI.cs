@@ -13,7 +13,7 @@ public class ProjectionGemsUI : MonoBehaviour
 
     private void OnEnable()
     {
-        ProjectionGemsManager.OnProjectionGemsInitialized += ProjectionGemsManager_OnProjectionGemsInitialized;       
+        ProjectionGemsManager.OnProjectionGemsManagerInitialized += ProjectionGemsManager_OnProjectionGemsManagerInitialized;       
 
         ProjectionGemsManager.OnProjectionGemsUsed += ProjectionGemsManager_OnProjectionGemsUsed;
         ProjectionGemsManager.OnProjectionGemsRefunded += ProjectionGemsManager_OnProjectionGemsRefunded;
@@ -23,7 +23,7 @@ public class ProjectionGemsUI : MonoBehaviour
 
     private void OnDisable()
     {
-        ProjectionGemsManager.OnProjectionGemsInitialized -= ProjectionGemsManager_OnProjectionGemsInitialized;
+        ProjectionGemsManager.OnProjectionGemsManagerInitialized -= ProjectionGemsManager_OnProjectionGemsManagerInitialized;
 
         ProjectionGemsManager.OnProjectionGemsUsed -= ProjectionGemsManager_OnProjectionGemsUsed;
         ProjectionGemsManager.OnProjectionGemsRefunded -= ProjectionGemsManager_OnProjectionGemsRefunded;
@@ -58,9 +58,9 @@ public class ProjectionGemsUI : MonoBehaviour
     }
 
     #region ProjectionGemsManager Subscriptions
-    private void ProjectionGemsManager_OnProjectionGemsInitialized(object sender, EventArgs e)
+    private void ProjectionGemsManager_OnProjectionGemsManagerInitialized(object sender, EventArgs e)
     {
-        UpdateProjectionGemsUI();
+        InitializeUI();
     }
 
     private void ProjectionGemsManager_OnProjectionGemsUsed(object sender, ProjectionGemsManager.OnProjectionGemsEventArgs e)

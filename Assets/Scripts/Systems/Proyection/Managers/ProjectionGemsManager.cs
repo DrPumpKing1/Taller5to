@@ -18,7 +18,7 @@ public class ProjectionGemsManager : MonoBehaviour
     public static EventHandler<OnProjectionGemsEventArgs> OnTotalProjectionGemsIncreased;
     public static EventHandler<OnProjectionGemsEventArgs> OnInsuficentProjectionGems;
 
-    public static EventHandler OnProjectionGemsInitialized;
+    public static EventHandler OnProjectionGemsManagerInitialized;
 
     public class OnProjectionGemsEventArgs: EventArgs
     {
@@ -52,7 +52,7 @@ public class ProjectionGemsManager : MonoBehaviour
     private void InitializeVariables()
     {
         availableProyectionGems = totalProyectionGems;
-        OnProjectionGemsInitialized?.Invoke(this, EventArgs.Empty);
+        OnProjectionGemsManagerInitialized?.Invoke(this, EventArgs.Empty);
     }
 
     public bool CheckCanUseProjectionGems(int quantity) => availableProyectionGems >= quantity;

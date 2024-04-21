@@ -138,9 +138,6 @@ public class PlayerJump : MonoBehaviour
         shouldJump = false;
         float jumpForce = CalculateJumpForce(jumpHeight + jumpHeightError, Physics.gravity.y * playerGravityController.GravityMultiplier * playerGravityController.LowJumpMultiplier);
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
-
-        Vector3 forwardImpulseDirection = GeneralMethods.Vector2ToVector3(playerHorizontalMovement.DirectionInputVector);
-        _rigidbody.AddForce(forwardImpulseDirection * forwardImpulse, ForceMode. Impulse);
     }
 
     private float CalculateJumpForce(float jumpHeight, float gravity)
