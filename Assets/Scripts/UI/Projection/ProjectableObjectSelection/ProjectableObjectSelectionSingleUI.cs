@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ProjectableObjectSelectionSingleUI : MonoBehaviour
 {
     [Header("UI Components")]
     [SerializeField] private Image projectableObjectImage;
     [SerializeField] private Image border;
+    [SerializeField] private TextMeshProUGUI costText;
 
     [Header("Colors")]
     [SerializeField] private Color selectedColor;
@@ -18,6 +20,7 @@ public class ProjectableObjectSelectionSingleUI : MonoBehaviour
     public int LinkedIndex { get; private set; }
 
     public void SetProyectableObjectImage(Sprite sprite) => projectableObjectImage.sprite = sprite;
+    public void SetProyectableObjectCost(int cost) => costText.text = $"Coste: {cost}";
 
     public void SelectUI()
     {

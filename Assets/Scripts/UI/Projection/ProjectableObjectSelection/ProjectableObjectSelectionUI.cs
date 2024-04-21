@@ -51,6 +51,7 @@ public class ProjectableObjectSelectionUI : MonoBehaviour
             }
 
             projectableObjectSelectionUI.SetProyectableObjectImage(projectableObjectSO.sprite);
+            projectableObjectSelectionUI.SetProyectableObjectCost(projectableObjectSO.projectionGemsCost);
             projectableObjectSelectionUI.SetLinkedIndex(index);
 
             index++;
@@ -90,6 +91,7 @@ public class ProjectableObjectSelectionUI : MonoBehaviour
         }
 
         projectableObjectSelectionUI.SetProyectableObjectImage(e.projectableObjectLearned.sprite);
+        projectableObjectSelectionUI.SetProyectableObjectCost(e.projectableObjectLearned.projectionGemsCost);
         projectableObjectSelectionUI.SetLinkedIndex(index);
     }
 

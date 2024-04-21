@@ -61,13 +61,7 @@ public class PlayerInteractAlternate : MonoBehaviour
     {
         IInteractableAlternate interactableAlternate = CheckIfHoldInteractableAlternate();
 
-        if(playerInteract.CurrentInteractable != null && interactableAlternate != null)
-        {
-            if (interactableAlternate.GetTransform() != playerInteract.CurrentInteractable.GetTransform())
-            {
-                interactableAlternate = null;
-            }
-        }
+        CheckIfInteractableIsTheSame(ref interactableAlternate);
 
         if (interactableAlternate != null)
         {
@@ -84,6 +78,20 @@ public class PlayerInteractAlternate : MonoBehaviour
         else if (curentInteractableAlternate != null)
         {
             DeselectInteractable(curentInteractableAlternate);
+        }
+    }
+
+    private void CheckIfInteractableIsTheSame(ref IInteractableAlternate interactableAlternate)
+    {
+        if (playerInteract.CurrentInteractable != null && interactableAlternate != null)
+        {
+            if (playerInteract.CurrentInteractable.GetTransform() != null && interactableAlternate.GetTransform() != null)
+            {
+                if (playerInteract.CurrentInteractable.GetTransform() != interactableAlternate.GetTransform())
+                {
+                    interactableAlternate = null;
+                }
+            }
         }
     }
 
