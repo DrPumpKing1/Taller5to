@@ -61,6 +61,14 @@ public class PlayerInteractAlternate : MonoBehaviour
     {
         IInteractableAlternate interactableAlternate = CheckIfHoldInteractableAlternate();
 
+        if(playerInteract.CurrentInteractable != null && interactableAlternate != null)
+        {
+            if (interactableAlternate.GetTransform() != playerInteract.CurrentInteractable.GetTransform())
+            {
+                interactableAlternate = null;
+            }
+        }
+
         if (interactableAlternate != null)
         {
             if (curentInteractableAlternate == null)

@@ -13,11 +13,16 @@ public class ProjectableObjectSelectionUI : MonoBehaviour
 
     private List<ProjectableObjectSO> AvailableProjectableObjects => LearningManager.Instance.ObjectsLearned;
 
-    private void OnEnable()
+    private void Start()
     {
+        SetSelectionContents(AvailableProjectableObjects);
+
         LearningManager.OnObjectLearned += LearningManager_OnObjectLearned;
         ProjectionManager.OnObjectSelected += ProjectionManager_OnObjectSelected;
         ProjectionManager.OnObjectDeselected += ProjectionManager_OnObjectDeselected;
+
+        SetProjectableObjectText(AvailableProjectableObjects[ProjectionManager.Instance.InitialSelectionIndex]);
+        SelectProjectableObjectUIByIndex(ProjectionManager.Instance.InitialSelectionIndex);
     }
 
 
@@ -28,11 +33,6 @@ public class ProjectableObjectSelectionUI : MonoBehaviour
         ProjectionManager.OnObjectDeselected -= ProjectionManager_OnObjectDeselected;
     }
 
-    private void Start()
-    {
-        SetSelectionContents(AvailableProjectableObjects);
-        DeselectAllUI();
-    }
 
     private void SetSelectionContents(List<ProjectableObjectSO> projectableObjectsSOs)
     {
@@ -96,29 +96,16 @@ public class ProjectableObjectSelectionUI : MonoBehaviour
     private void ProjectionManager_OnObjectSelected(object sender, ProjectionManager.OnSelectionEventArgs e)
     {
         SetProjectableObjectText(e.projectableObjectSO);
-
-        foreach (Transform child in projectableObjectSelectionContainer)
-        {
-            ProjectableObjectSelectionSingleUI projectableObjectSelectionUI = child.GetComponent<ProjectableObjectSelectionSingleUI>();
-
-            if (!projectableObjectSelectionUI)
-            {
-                Debug.LogWarning("There's not a ProjectableObjectSelectionSingleUI attached to instantiated prefab");
-                continue;
-            }
-
-            if(projectableObjectSelectionUI.LinkedIndex == e.index)
-            {
-                projectableObjectSelectionUI.SelectUI();
-                return;
-            }   
-        }
+        SelectProjectableObjectUIByIndex(e.index);
     }
 
     private void ProjectionManager_OnObjectDeselected(object sender, ProjectionManager.OnSelectionEventArgs e)
     {
-        Debug.Log(sender);
+        DeselectProjectableObjectUIByIndex(e.index);
+    }
 
+    private void SelectProjectableObjectUIByIndex(int index)
+    {
         foreach (Transform child in projectableObjectSelectionContainer)
         {
             ProjectableObjectSelectionSingleUI projectableObjectSelectionUI = child.GetComponent<ProjectableObjectSelectionSingleUI>();
@@ -129,7 +116,27 @@ public class ProjectableObjectSelectionUI : MonoBehaviour
                 continue;
             }
 
-            if (projectableObjectSelectionUI.LinkedIndex == e.index)
+            if (projectableObjectSelectionUI.LinkedIndex == index)
+            {
+                projectableObjectSelectionUI.SelectUI();
+                return;
+            }
+        }
+    }
+
+    private void DeselectProjectableObjectUIByIndex(int index)
+    {
+        foreach (Transform child in projectableObjectSelectionContainer)
+        {
+            ProjectableObjectSelectionSingleUI projectableObjectSelectionUI = child.GetComponent<ProjectableObjectSelectionSingleUI>();
+
+            if (!projectableObjectSelectionUI)
+            {
+                Debug.LogWarning("There's not a ProjectableObjectSelectionSingleUI attached to instantiated prefab");
+                continue;
+            }
+
+            if (projectableObjectSelectionUI.LinkedIndex == index)
             {
                 projectableObjectSelectionUI.DeselectUI();
                 return;

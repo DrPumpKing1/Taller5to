@@ -104,19 +104,20 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     public void HoldInteractionStart() => OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
     public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
-
-
     public Transform GetTransform() => transform;
 
     #endregion
 
     private void DematerializeObject()
     {
-        ProjectionManager.Instance.ObjectDematerialized(projectableObject.ProjectableObjectSO, projectableObject.ProjectionPlatform);
-        OnObjectDematerialized?.Invoke(this, EventArgs.Empty);
-
         if (projectableObject.ProjectionPlatform) projectableObject.ProjectionPlatform.ClearProjectionPlatform();
 
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        ProjectionManager.Instance.ObjectDematerialized(projectableObject.ProjectableObjectSO, projectableObject.ProjectionPlatform);
+        OnObjectDematerialized?.Invoke(this, EventArgs.Empty);
     }
 }

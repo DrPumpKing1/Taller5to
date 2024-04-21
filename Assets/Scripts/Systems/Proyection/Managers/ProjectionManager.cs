@@ -28,9 +28,9 @@ public class ProjectionManager : MonoBehaviour
 
     public ProjectableObjectSO SelectedProjectableObjectSO { get { return selectedProjectableObjectSO; } }
 
-    private bool SelectionInput => projectionInput.GetNextProjectableObjectDown();
-
-    private int initialSelectionIndex;
+    private bool SelectionInputNext => projectionInput.GetNextProjectableObjectDown();
+    private bool SelectionInputPrevious => projectionInput.GetPreviousProjectableObjectDown();
+    public int InitialSelectionIndex { get; private set; } = 0;
     private int currentSelectionIndex;
 
     public class OnProjectionEventArgs : EventArgs
@@ -53,9 +53,7 @@ public class ProjectionManager : MonoBehaviour
     private void Start()
     {
         InitializeVariables();
-        SelectProjectableObject(availableProjectableObjects[initialSelectionIndex]);
-
-        OnObjectSelected?.Invoke(this, new OnSelectionEventArgs { index = currentSelectionIndex, projectableObjectSO = availableProjectableObjects[currentSelectionIndex] });
+        SelectProjectableObject(availableProjectableObjects[InitialSelectionIndex]);
     }
 
     private void Update()
@@ -78,16 +76,22 @@ public class ProjectionManager : MonoBehaviour
 
     private void InitializeVariables()
     {
-        initialSelectionIndex = 0;
-        currentSelectionIndex = initialSelectionIndex;
+        currentSelectionIndex = InitialSelectionIndex;
     }
+
 
     #region ProjectableObject Selection
     private void HandleProjectableObjectSelection()
     {
+        HandleProjectableObjectSelectionNext();
+        HandleProjectableObjectSelectionPrevious();
+    }
+
+    private void HandleProjectableObjectSelectionNext()
+    {
         if (playerInteract.IsInteracting) return;
         if (playerInteractAlternate.IsInteractingAlternate) return;
-        if (!SelectionInput) return;
+        if (!SelectionInputNext) return;
 
         int previousIndex = currentSelectionIndex;
         int maxIndex = availableProjectableObjects.Count - 1;
@@ -101,6 +105,26 @@ public class ProjectionManager : MonoBehaviour
 
         OnObjectDeselected?.Invoke(this,new OnSelectionEventArgs { index = previousIndex, projectableObjectSO = availableProjectableObjects[previousIndex] });
         OnObjectSelected?.Invoke(this,new OnSelectionEventArgs { index = currentSelectionIndex, projectableObjectSO = availableProjectableObjects[currentSelectionIndex] });
+    }
+
+    private void HandleProjectableObjectSelectionPrevious()
+    {
+        if (playerInteract.IsInteracting) return;
+        if (playerInteractAlternate.IsInteractingAlternate) return;
+        if (!SelectionInputPrevious) return;
+
+        int previousIndex = currentSelectionIndex;
+        int maxIndex = availableProjectableObjects.Count - 1;
+
+        int desiredIndex = currentSelectionIndex;
+        desiredIndex--;
+
+        currentSelectionIndex = desiredIndex < 0 ? maxIndex : desiredIndex;
+
+        SelectProjectableObject(availableProjectableObjects[currentSelectionIndex]);
+
+        OnObjectDeselected?.Invoke(this, new OnSelectionEventArgs { index = previousIndex, projectableObjectSO = availableProjectableObjects[previousIndex] });
+        OnObjectSelected?.Invoke(this, new OnSelectionEventArgs { index = currentSelectionIndex, projectableObjectSO = availableProjectableObjects[currentSelectionIndex] });
     }
 
 

@@ -34,7 +34,8 @@ public class PlayerInteract : MonoBehaviour
 
     private CapsuleCollider capsulleCollider;
 
-    private IInteractable curentInteractable;
+    private IInteractable currentInteractable;
+    public IInteractable CurrentInteractable { get { return currentInteractable; } }
 
     public event EventHandler<OnInteractionEventArgs> OnInteractableSelected;
     public event EventHandler<OnInteractionEventArgs> OnInteractableDeselected;
@@ -81,19 +82,19 @@ public class PlayerInteract : MonoBehaviour
 
         if (interactable != null)
         {
-            if (curentInteractable == null)
+            if (currentInteractable == null)
             {
                 SelectInteractable(interactable);
             }
-            else if (curentInteractable != interactable)
+            else if (currentInteractable != interactable)
             {
-                DeselectInteractable(curentInteractable);
+                DeselectInteractable(currentInteractable);
                 SelectInteractable(interactable);
             }
         }
-        else if (curentInteractable != null)
+        else if (currentInteractable != null)
         {
-            DeselectInteractable(curentInteractable);
+            DeselectInteractable(currentInteractable);
         }
     }
 
@@ -141,7 +142,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void SelectInteractable(IInteractable interactable)
     {
-        curentInteractable = interactable;
+        currentInteractable = interactable;
 
         interactable.Select();
         OnInteractableSelected?.Invoke(this, new OnInteractionEventArgs { interactable = interactable });
@@ -151,7 +152,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void DeselectInteractable(IInteractable interactable)
     {
-        curentInteractable = null;
+        currentInteractable = null;
 
         interactable.Deselect();
         OnInteractableDeselected?.Invoke(this, new OnInteractionEventArgs { interactable = interactable });
@@ -165,10 +166,10 @@ public class PlayerInteract : MonoBehaviour
     {
         if(playerInteractAlternate.IsInteractingAlternate) { ResetInteractions(); return; }
 
-        if (curentInteractable == null) { ResetInteractions(); return; }
+        if (currentInteractable == null) { ResetInteractions(); return; }
 
-        if(CheckIfHoldInteractable(curentInteractable)) HandleHoldInteractions(curentInteractable as IHoldInteractable);
-        else HandleDownInteractions(curentInteractable);
+        if(CheckIfHoldInteractable(currentInteractable)) HandleHoldInteractions(currentInteractable as IHoldInteractable);
+        else HandleDownInteractions(currentInteractable);
     }
 
     private void HandleDownInteractions(IInteractable interactable)
