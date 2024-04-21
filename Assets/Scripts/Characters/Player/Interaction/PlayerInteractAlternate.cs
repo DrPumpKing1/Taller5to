@@ -83,15 +83,19 @@ public class PlayerInteractAlternate : MonoBehaviour
 
     private void CheckIfInteractableIsTheSame(ref IInteractableAlternate interactableAlternate)
     {
-        if (playerInteract.CurrentInteractable != null && interactableAlternate != null)
+        try
         {
-            if (playerInteract.CurrentInteractable.GetTransform() != null && interactableAlternate.GetTransform() != null)
+            if (playerInteract.CurrentInteractable != null && interactableAlternate != null)
             {
                 if (playerInteract.CurrentInteractable.GetTransform() != interactableAlternate.GetTransform())
                 {
                     interactableAlternate = null;
                 }
             }
+        }
+        catch
+        {
+            Debug.Log("Avoided Exception");
         }
     }
 

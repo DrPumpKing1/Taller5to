@@ -29,7 +29,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
-    private Vector2 DirectionInputVector => movementInput.GetIsometricDirectionVectorNormalized();
+    public Vector2 DirectionInputVector => movementInput.GetIsometricDirectionVectorNormalized();
     private bool SprintInput => movementInput.GetSprintHold();
 
     private float desiredSpeed;
@@ -88,7 +88,6 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private void SmoothSpeed()
     {
         float smoothFactor = IsRunning() && smoothCurrentSpeed > walkSpeed ? smoothSprintVelocityFactor : smoothVelocityFactor;
-
         smoothCurrentSpeed = Mathf.Lerp(smoothCurrentSpeed, desiredSpeed, Time.deltaTime * smoothFactor);
     }
         
@@ -152,6 +151,8 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     private void ApplyHorizontalMovement()
     {
+        if (!checkGround.IsGrounded) return;
+
         _rigidbody.velocity = new Vector3(FinalMoveVector.x, _rigidbody.velocity.y, FinalMoveVector.z);
     }
 

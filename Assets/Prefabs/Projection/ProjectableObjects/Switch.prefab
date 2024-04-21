@@ -386,7 +386,6 @@ MonoBehaviour:
   canBeSelected: 1
   isInteractable: 1
   hasAlreadyBeenInteracted: 0
-  holdDuration: 0.25
 --- !u!1001 &4653054588438980331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -461,7 +460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4315054554829363559, guid: d32b1e311fa950d49b9ee5113a99fab5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1
+      value: -1.7
       objectReference: {fileID: 0}
     - target: {fileID: 4315054554829363559, guid: d32b1e311fa950d49b9ee5113a99fab5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -638,7 +637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4315054554829363559, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4315054554829363559, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

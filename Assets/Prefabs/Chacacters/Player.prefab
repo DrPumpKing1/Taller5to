@@ -144,6 +144,7 @@ MonoBehaviour:
   playerHorizontalMovement: {fileID: 1658583223491952907}
   playerInteract: {fileID: 4536946071876244043}
   playerInteractAlternate: {fileID: 907748609654045023}
+  checkGround: {fileID: 2176356878162520009}
   smoothRotateFactor: 10
   applyStartingRotation: 1
   startingFacingDirection: {x: -1, y: -1}
@@ -492,6 +493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementInput: {fileID: 0}
   playerGravityController: {fileID: 2300728550411198240}
+  playerHorizontalMovement: {fileID: 1658583223491952907}
   playerInteract: {fileID: 4536946071876244043}
   playerInteractAlternate: {fileID: 907748609654045023}
   checkGround: {fileID: 2176356878162520009}
@@ -500,6 +502,7 @@ MonoBehaviour:
   jumpHeightError: 0.05
   impulseTime: 0
   jumpCooldown: 0.75
+  forwardImpulse: 1.5
 --- !u!114 &2984513525385847362
 MonoBehaviour:
   m_ObjectHideFlags: 0

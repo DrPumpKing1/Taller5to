@@ -9,6 +9,7 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private MovementInput movementInput;
     [Space]
     [SerializeField] private PlayerGravityController playerGravityController;
+    [SerializeField] private PlayerHorizontalMovement playerHorizontalMovement;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
     [Space]
@@ -20,6 +21,9 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private float jumpHeightError = 0.05f;
     [SerializeField, Range(0f,0.5f)] private float impulseTime = 0.2f;
     [SerializeField, Range(0f,1.5f)] private float jumpCooldown = 1f;
+
+    [Header("Jump Forward Settings")]
+    [SerializeField] private float forwardImpulse;
 
     private Rigidbody _rigidbody;
     private enum State {NotJumping, Impulsing, Jump}
@@ -134,6 +138,9 @@ public class PlayerJump : MonoBehaviour
         shouldJump = false;
         float jumpForce = CalculateJumpForce(jumpHeight + jumpHeightError, Physics.gravity.y * playerGravityController.GravityMultiplier * playerGravityController.LowJumpMultiplier);
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, jumpForce, _rigidbody.velocity.z);
+
+        Vector3 forwardImpulseDirection = GeneralMethods.Vector2ToVector3(playerHorizontalMovement.DirectionInputVector);
+        _rigidbody.AddForce(forwardImpulseDirection * forwardImpulse, ForceMode. Impulse);
     }
 
     private float CalculateJumpForce(float jumpHeight, float gravity)

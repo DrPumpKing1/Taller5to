@@ -9,6 +9,7 @@ public class PlayerRotationHandler : MonoBehaviour
     [SerializeField] private PlayerHorizontalMovement playerHorizontalMovement;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
+    [SerializeField] private CheckGround checkGround;
 
     [Header("Rotation Settings")]
     [SerializeField, Range(1f, 100f)] private float smoothRotateFactor = 10f;
@@ -111,6 +112,8 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void RotateTowardsDirection(Vector3 direction)
     {
+        //if (!checkGround.IsGrounded) return;
+
         FacingDirection = Vector3.Slerp(FacingDirection, direction, smoothRotateFactor * Time.deltaTime);
         FacingDirection.Normalize();
 
