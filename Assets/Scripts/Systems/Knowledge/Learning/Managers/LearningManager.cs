@@ -11,6 +11,8 @@ public class LearningManager : MonoBehaviour
 
     public static EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
 
+    public List<ProjectableObjectSO> ObjectsLearned {  get { return objectsLearned; } }
+
     public class OnObjectLearnedEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectLearned;
@@ -20,6 +22,7 @@ public class LearningManager : MonoBehaviour
     {
         SetSingleton();
     }
+
     private void SetSingleton()
     {
         if (Instance == null)

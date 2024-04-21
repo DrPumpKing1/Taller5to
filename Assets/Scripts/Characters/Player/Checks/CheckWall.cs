@@ -27,7 +27,7 @@ public class CheckWall : MonoBehaviour
     public bool HitWall { get; private set; }
     public bool HitDiagonalWall { get; private set; }
 
-    private void Update()
+    private void FixedUpdate()
     {
         HitWall = CheckIfWall();
         HitDiagonalWall = CheckIfDiagonalWall();

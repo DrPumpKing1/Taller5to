@@ -28,11 +28,11 @@ public class NewProjectionInput : ProjectionInput
         return projectionInput;
     }
 
-    public override bool GetPrevoiusProjectableObjectDown()
+    public override bool GetPreviousProjectableObjectDown()
     {
         if (!CanProcessProjectionInput()) return false;
 
-        bool projectionInput = playerInputActions.Projection.PrevoiusProjectableObject.WasPerformedThisFrame();
+        bool projectionInput = playerInputActions.Projection.PreviousProjectableObject.WasPerformedThisFrame();
         return projectionInput;
     }
 }

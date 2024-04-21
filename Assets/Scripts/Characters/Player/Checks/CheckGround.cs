@@ -22,7 +22,7 @@ public class CheckGround : MonoBehaviour
     public bool OnSlope { get; private set; } = false;
     public Vector3 SlopeNormal { get; private set; }
 
-    private void Update()
+    private void FixedUpdate()
     {
         IsGrounded = CheckGrounded();
         OnSlope = CheckSlope();

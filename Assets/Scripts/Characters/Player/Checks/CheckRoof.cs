@@ -10,7 +10,7 @@ public class CheckRoof : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private LayerMask roofLayer;
-    [SerializeField] private bool useCharacterControllerValues;
+    [SerializeField] private bool useCapsuleColliderValues;
     [SerializeField, Range(0f, 1f)] private float rayLength = 0;
     [SerializeField, Range(0.01f, 1f)] private float raySphereRadius;
 
@@ -21,9 +21,9 @@ public class CheckRoof : MonoBehaviour
     private RaycastHit roofInfo;
     public bool HitRoof { get; private set; }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        HitRoof = useCharacterControllerValues? CheckIfRoofCharacterController():CheckIfRoofRegular();
+        HitRoof = useCapsuleColliderValues? CheckIfRoofCharacterController():CheckIfRoofRegular();
     }
 
     private void Start()

@@ -24,5 +24,5 @@ public abstract class ProjectionInput : MonoBehaviour, IProjectionInput
     public abstract bool CanProcessProjectionInput();
 
     public abstract bool GetNextProjectableObjectDown();
-    public abstract bool GetPrevoiusProjectableObjectDown();
+    public abstract bool GetPreviousProjectableObjectDown();
 }

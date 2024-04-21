@@ -7,14 +7,31 @@ public class ProjectionManager : MonoBehaviour
 {
     public static ProjectionManager Instance { get; private set; }
 
-    public ProjectableObjectSO SelectedProjectableObjectSO;
+    [Header("Components")]
+    [SerializeField] private PlayerInteract playerInteract;
+    [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
+    [SerializeField] private ProjectionInput projectionInput;
+
+    [SerializeField] private ProjectableObjectSO selectedProjectableObjectSO;
     [SerializeField] private List<ProjectableObjectSO> currentProjectedObjects = new List<ProjectableObjectSO>();
 
     public static event EventHandler<OnProjectionEventArgs> OnObjectProjectionSuccess;
     public static event EventHandler<OnProjectionEventArgs> OnObjectProjectionFailed;
     public static event EventHandler<OnProjectionEventArgs> OnObjectDematerialized;
 
+    public static event EventHandler<OnSelectionEventArgs> OnObjectSelected;
+    public static event EventHandler<OnSelectionEventArgs> OnObjectDeselected;
+
+
     public List<ProjectableObjectSO> CurrentProjectedObjects { get { return currentProjectedObjects; } }
+    private List<ProjectableObjectSO> availableProjectableObjects => LearningManager.Instance.ObjectsLearned;
+
+    public ProjectableObjectSO SelectedProjectableObjectSO { get { return selectedProjectableObjectSO; } }
+
+    private bool SelectionInput => projectionInput.GetNextProjectableObjectDown();
+
+    private int initialSelectionIndex;
+    private int currentSelectionIndex;
 
     public class OnProjectionEventArgs : EventArgs
     {
@@ -22,9 +39,28 @@ public class ProjectionManager : MonoBehaviour
         public ProjectionPlatform projectionPlatform;
     }
 
+    public class OnSelectionEventArgs : EventArgs
+    {
+        public int index;
+        public ProjectableObjectSO projectableObjectSO;
+    }
+
     private void Awake()
     {
         SetSingleton();
+    }
+
+    private void Start()
+    {
+        InitializeVariables();
+        SelectProjectableObject(availableProjectableObjects[initialSelectionIndex]);
+
+        OnObjectSelected?.Invoke(this, new OnSelectionEventArgs { index = currentSelectionIndex, projectableObjectSO = availableProjectableObjects[currentSelectionIndex] });
+    }
+
+    private void Update()
+    {
+        HandleProjectableObjectSelection();
     }
 
     private void SetSingleton()
@@ -40,6 +76,44 @@ public class ProjectionManager : MonoBehaviour
         }
     }
 
+    private void InitializeVariables()
+    {
+        initialSelectionIndex = 0;
+        currentSelectionIndex = initialSelectionIndex;
+    }
+
+    #region ProjectableObject Selection
+    private void HandleProjectableObjectSelection()
+    {
+        if (playerInteract.IsInteracting) return;
+        if (playerInteractAlternate.IsInteractingAlternate) return;
+        if (!SelectionInput) return;
+
+        int previousIndex = currentSelectionIndex;
+        int maxIndex = availableProjectableObjects.Count - 1;
+
+        int desiredIndex = currentSelectionIndex;
+        desiredIndex++;
+
+        currentSelectionIndex = desiredIndex > maxIndex ? 0 : desiredIndex;
+
+        SelectProjectableObject(availableProjectableObjects[currentSelectionIndex]);
+
+        OnObjectDeselected?.Invoke(this,new OnSelectionEventArgs { index = previousIndex, projectableObjectSO = availableProjectableObjects[previousIndex] });
+        OnObjectSelected?.Invoke(this,new OnSelectionEventArgs { index = currentSelectionIndex, projectableObjectSO = availableProjectableObjects[currentSelectionIndex] });
+    }
+
+
+    private void SelectProjectableObject(ProjectableObjectSO projectableObjectSO)
+    {
+        if (!projectableObjectSO) return;
+        selectedProjectableObjectSO = projectableObjectSO; 
+    }
+
+
+    #endregion
+
+    #region ProjectableObject Projection
     public bool CanProjectObject(ProjectableObjectSO projectableObjectSO) => ProjectionGemsManager.Instance.CheckCanUseProjectionGems(projectableObjectSO.projectionGemsCost);
 
     public void FailObjectProjection(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform)
@@ -68,4 +142,6 @@ public class ProjectionManager : MonoBehaviour
         ProjectionGemsManager.Instance.RefundProyectionGems(projectableObjectSO.projectionGemsCost);
         OnObjectDematerialized?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
     }
+
+    #endregion
 }

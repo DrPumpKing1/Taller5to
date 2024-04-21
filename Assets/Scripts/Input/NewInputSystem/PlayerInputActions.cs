@@ -245,7 +245,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""PrevoiusProjectableObject"",
+                    ""name"": ""PreviousProjectableObject"",
                     ""type"": ""Button"",
                     ""id"": ""953b7721-858e-45a8-aaba-cde690cdf4d7"",
                     ""expectedControlType"": ""Button"",
@@ -258,7 +258,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0c694681-bd41-4d3f-84fd-411a1a4dea61"",
-                    ""path"": ""<Keyboard>/2"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -273,7 +273,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""PrevoiusProjectableObject"",
+                    ""action"": ""PreviousProjectableObject"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -298,7 +298,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Projection
         m_Projection = asset.FindActionMap("Projection", throwIfNotFound: true);
         m_Projection_NextProjectableObject = m_Projection.FindAction("NextProjectableObject", throwIfNotFound: true);
-        m_Projection_PrevoiusProjectableObject = m_Projection.FindAction("PrevoiusProjectableObject", throwIfNotFound: true);
+        m_Projection_PreviousProjectableObject = m_Projection.FindAction("PreviousProjectableObject", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -531,13 +531,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Projection;
     private List<IProjectionActions> m_ProjectionActionsCallbackInterfaces = new List<IProjectionActions>();
     private readonly InputAction m_Projection_NextProjectableObject;
-    private readonly InputAction m_Projection_PrevoiusProjectableObject;
+    private readonly InputAction m_Projection_PreviousProjectableObject;
     public struct ProjectionActions
     {
         private @PlayerInputActions m_Wrapper;
         public ProjectionActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @NextProjectableObject => m_Wrapper.m_Projection_NextProjectableObject;
-        public InputAction @PrevoiusProjectableObject => m_Wrapper.m_Projection_PrevoiusProjectableObject;
+        public InputAction @PreviousProjectableObject => m_Wrapper.m_Projection_PreviousProjectableObject;
         public InputActionMap Get() { return m_Wrapper.m_Projection; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -550,9 +550,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @NextProjectableObject.started += instance.OnNextProjectableObject;
             @NextProjectableObject.performed += instance.OnNextProjectableObject;
             @NextProjectableObject.canceled += instance.OnNextProjectableObject;
-            @PrevoiusProjectableObject.started += instance.OnPrevoiusProjectableObject;
-            @PrevoiusProjectableObject.performed += instance.OnPrevoiusProjectableObject;
-            @PrevoiusProjectableObject.canceled += instance.OnPrevoiusProjectableObject;
+            @PreviousProjectableObject.started += instance.OnPreviousProjectableObject;
+            @PreviousProjectableObject.performed += instance.OnPreviousProjectableObject;
+            @PreviousProjectableObject.canceled += instance.OnPreviousProjectableObject;
         }
 
         private void UnregisterCallbacks(IProjectionActions instance)
@@ -560,9 +560,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @NextProjectableObject.started -= instance.OnNextProjectableObject;
             @NextProjectableObject.performed -= instance.OnNextProjectableObject;
             @NextProjectableObject.canceled -= instance.OnNextProjectableObject;
-            @PrevoiusProjectableObject.started -= instance.OnPrevoiusProjectableObject;
-            @PrevoiusProjectableObject.performed -= instance.OnPrevoiusProjectableObject;
-            @PrevoiusProjectableObject.canceled -= instance.OnPrevoiusProjectableObject;
+            @PreviousProjectableObject.started -= instance.OnPreviousProjectableObject;
+            @PreviousProjectableObject.performed -= instance.OnPreviousProjectableObject;
+            @PreviousProjectableObject.canceled -= instance.OnPreviousProjectableObject;
         }
 
         public void RemoveCallbacks(IProjectionActions instance)
@@ -599,6 +599,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IProjectionActions
     {
         void OnNextProjectableObject(InputAction.CallbackContext context);
-        void OnPrevoiusProjectableObject(InputAction.CallbackContext context);
+        void OnPreviousProjectableObject(InputAction.CallbackContext context);
     }
 }

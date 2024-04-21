@@ -7,5 +7,5 @@ public interface IProjectionInput
     public bool CanProcessProjectionInput();
 
     public bool GetNextProjectableObjectDown();
-    public bool GetPrevoiusProjectableObjectDown();
+    public bool GetPreviousProjectableObjectDown();
 }
