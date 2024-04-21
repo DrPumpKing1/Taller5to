@@ -20,7 +20,7 @@ public class ProjectionPlatform : MonoBehaviour
 
     public Transform ProjectionPoint { get { return projectionPoint; } }
     public ProjectableObjectSO CurrentProjectedObject { get { return currentProjectedObject; } }
-    public bool ObjectAvobe;
+    public bool ObjectAbove;
 
     public event EventHandler OnProjectionPlatformClear;
     public event EventHandler<OnProjectionEventArgs> OnProjectionPlatformSet;
@@ -33,16 +33,16 @@ public class ProjectionPlatform : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ObjectAvobe = CheckObjectAvobe();
+        ObjectAbove = CheckObjectAbove();
     }
 
-    private bool CheckObjectAvobe()
+    private bool CheckObjectAbove()
     {
-        bool objectAvobe = Physics.Raycast(transform.position, transform.up, rayLenght, objectAvobeLayers);
+        bool objectAbove = Physics.BoxCast(transform.position + new Vector3(0, 1.25f, 0), new Vector3(1, 1, 1),transform.up, Quaternion.identity, rayLenght, objectAvobeLayers);
 
         if (drawRaycasts) Debug.DrawRay(transform.position, transform.up * (rayLenght), Color.red);
 
-        return objectAvobe;
+        return objectAbove;
     }
 
     public void ClearProjectionPlatform()

@@ -27,8 +27,6 @@ public class MagicBoxDevice : MonoBehaviour
     {
         initialPosition = pistonHead.localPosition;
         extendedPosition = pistonHead.localPosition + Vector3.up * extension;
-
-        Electricity.Instance.AddComponentToList(electrode);
     }
 
     private void Update()
@@ -63,10 +61,5 @@ public class MagicBoxDevice : MonoBehaviour
         }
 
         pistonHead.localPosition = endPosition;
-    }
-
-    private void OnDestroy()
-    {
-        Electricity.Instance.RemoveComponentFromList(electrode);
     }
 }

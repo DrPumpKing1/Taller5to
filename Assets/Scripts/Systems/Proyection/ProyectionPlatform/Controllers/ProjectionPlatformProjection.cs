@@ -129,7 +129,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
             return false;
         }
 
-        if (projectionPlatform.CurrentProjectedObject != null)
+        if (projectionPlatform.CurrentProjectedObject != null && !projectionPlatform.ObjectAbove)
         {
             FailObjectProjection(ProjectionManager.Instance.SelectedProjectableObjectSO);
             return false;
