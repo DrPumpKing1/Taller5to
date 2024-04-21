@@ -39,6 +39,8 @@ public class LearningManager : MonoBehaviour
 
     public void LearnObject(ProjectableObjectSO projectableObjectToLearn)
     {
+        if (objectsLearned.Contains(projectableObjectToLearn)) return;
+
         objectsLearned.Add(projectableObjectToLearn);
         OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { projectableObjectLearned = projectableObjectToLearn });
     }
