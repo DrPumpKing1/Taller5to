@@ -22,6 +22,7 @@ public class PetPositioningHandler : MonoBehaviour
     [SerializeField] private Vector3 safePositionVector;
 
     [Header("Player Interaction Settings")]
+    [SerializeField] private bool moveTowardsObject;
     [SerializeField] private Vector3 offsetFromInteractableObject;
 
     [Header("Colision Detection")]
@@ -131,6 +132,8 @@ public class PetPositioningHandler : MonoBehaviour
     #region PlayerInteractionSubscriptions
     private void PlayerInteract_OnInteractionStarted(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
+        if (!moveTowardsObject) return;
+
         curentInteractingTransform = e.interactable.GetTransform();
 
         if (e.interactable.GetTransform().GetComponent<ProjectableObject>()) return;
@@ -149,6 +152,8 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void PlayerInteractAlternate_OnInteractionAlternateStarted(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {
+        if (!moveTowardsObject) return;
+
         curentInteractingTransform = e.interactableAlternate.GetTransform();
 
         if (e.interactableAlternate.GetTransform().GetComponent<ProjectableObject>()) return;

@@ -139,8 +139,8 @@ MonoBehaviour:
   playerInteract: {fileID: 0}
   playerInteractAlternate: {fileID: 0}
   orbitRadius: 1.5
-  smoothPositionSpeedFactor: 1.25
-  smoothVectorSpeedFactor: 1.25
+  smoothPositionSpeedFactor: 2.5
+  smoothVectorSpeedFactor: 2.5
   preferredDirectionVectors:
   - {x: 0.7, y: 0.5, z: 0}
   - {x: 0.7, y: 0.5, z: -0.7}
@@ -160,6 +160,7 @@ MonoBehaviour:
   - {x: 0.7, y: 0, z: 0.7}
   safeOrbitRadius: 1.25
   safePositionVector: {x: 0, y: 0, z: -1}
+  moveTowardsObject: 0
   offsetFromInteractableObject: {x: 0, y: 3.5, z: 0}
   colisionDetectionRadius: 1.5
   collisionLayers:
