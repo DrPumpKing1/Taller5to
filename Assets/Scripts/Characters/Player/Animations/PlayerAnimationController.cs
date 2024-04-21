@@ -29,6 +29,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     private const string GROUNDED_BOOL = "Grounded";
 
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
