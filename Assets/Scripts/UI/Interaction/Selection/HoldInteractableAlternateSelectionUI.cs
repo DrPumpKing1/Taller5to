@@ -93,6 +93,7 @@ public class HoldInteractableAlternateSelectionUI : MonoBehaviour
     private void HoldInteractableAlternate_OnObjectDeselected(object sender, System.EventArgs e)
     {
         HideSelectionUI();
+        HideHoldUI();
     }
 
     private void HoldInteractableAlternate_OnHoldInteractionAlternateStart(object sender, System.EventArgs e)
