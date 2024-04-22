@@ -6,9 +6,13 @@ using UnityEngine;
 
 public class Electrode : MonoBehaviour
 {
+    public delegate void ReceiveSignalDel();
+    public event ReceiveSignalDel OnReceiveSignal; 
+
     protected const float MAX_POWER = 10000;
     protected const float DECAY_MULTIPLIER = 50f;
     public const float ACTIVATION_THRESHOLD = 20f;
+    public const float ELECTRICITY_TICK_DURATION = 1f;
 
     [Header("Debug Tools")]
     [SerializeField] protected bool debug;
@@ -20,6 +24,12 @@ public class Electrode : MonoBehaviour
     [SerializeField] protected float power;
     public float Power { get { return power; } }
     public float SourcePower { get { return sourcePower; } }
+
+    [Header("Transmission Variables")]
+    [SerializeField] protected Signal signal;
+    [SerializeField] protected AnimationCurve powerCurve;
+    [SerializeField] protected float resistance;
+    [SerializeField] protected float powerTimer;
 
     public enum ComponentType
     {
@@ -49,6 +59,13 @@ public class Electrode : MonoBehaviour
         SetElectrodeType();
         ResetPower();
         node = new Node(this);
+    }
+
+    protected virtual void Update()
+    {
+        if (signal != null) power = signal.GetPower(powerTimer);
+
+        if (powerTimer < ELECTRICITY_TICK_DURATION) powerTimer += Time.deltaTime;
     }
 
     protected void SetElectrodeType()
@@ -117,24 +134,28 @@ public class Electrode : MonoBehaviour
         return true;
     }
 
-    public virtual void ReceiveSignal(Signal signal)
+    public virtual void ReceiveSignal(float intensity)
     {
-        if (signal.intensity <= 0) return;
+        if (intensity <= 0) return;
 
-        power = Mathf.Min(power + signal.intensity, MAX_POWER);
+        signal = new Signal(intensity, powerCurve);
+
+        powerTimer = 0f;
+
+        power = signal.GetPower(powerTimer);
+
+        if (OnReceiveSignal != null) OnReceiveSignal();
     }
 
-    public virtual Signal SendSignal(Electrode otherComponent)
+    public virtual float SendSignal(Electrode otherComponent)
     {
         float distance = Vector3.Distance(transform.position, otherComponent.transform.position);
 
-        float intensity = Mathf.Max(this.power - DECAY_MULTIPLIER * distance, 0f);
+        float intensity = Mathf.Max(this.power - (DECAY_MULTIPLIER * distance + resistance), 0f);
 
-        Signal signal = new Signal(transform.position, intensity);
+        if (debug) Debug.Log($"{name} sending signal of {intensity} to {otherComponent.name}");
 
-        if (debug) Debug.Log($"{name} sending signal of {signal.intensity} to {otherComponent.name}");
-
-        return signal;
+        return intensity;
     }
 
     public void SetPower(float power)

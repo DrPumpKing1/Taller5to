@@ -17,6 +17,8 @@ public class Electricity : MonoBehaviour
 
     private List<Circuit> rechargeNeededCircuits;
 
+    private float powerTimer;
+
     private void Awake()
     {
         Instance = this;
@@ -27,6 +29,24 @@ public class Electricity : MonoBehaviour
     private void Start()
     {
         SetComponentsList();
+    }
+
+    private void Update()
+    {
+        if (powerTimer < Electrode.ELECTRICITY_TICK_DURATION) powerTimer += Time.deltaTime;
+        else
+        {
+            powerTimer = 0f;
+            PowerCircuits();
+        }
+    }
+
+    private void PowerCircuits()
+    {
+        foreach (Circuit circuit in Circuits)
+        {
+            circuit.PowerCircuit();
+        }
     }
 
     private void LateUpdate()

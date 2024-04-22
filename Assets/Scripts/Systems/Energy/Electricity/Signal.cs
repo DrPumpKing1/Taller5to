@@ -2,14 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Signal
+public class Signal 
 {
-    public Vector3 origin {  get; private set; }
-    public float intensity { get; private set; }
+    public float intensity;
+    public AnimationCurve powerCurve;
+    public float duration;
 
-    public Signal(Vector3 origin, float intensity)
+    public float GetPower(float timer)
     {
-        this.origin = origin;
+        timer = Mathf.Clamp(timer, 0f, duration);
+
+        return intensity * powerCurve.Evaluate(timer);
+    }
+
+    public Signal(float intensity, AnimationCurve powerCurve)
+    {
         this.intensity = intensity;
+        this.powerCurve = powerCurve;
+        this.duration = Electrode.ELECTRICITY_TICK_DURATION;
     }
 }

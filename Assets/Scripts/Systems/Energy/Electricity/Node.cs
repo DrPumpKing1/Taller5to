@@ -26,6 +26,8 @@ public class Node
         if(electrode.Source) this.weight = electrode.SourcePower;
         else this.weight = 0;
         this.circuit.AddNode(this);
+
+        electrode.OnReceiveSignal += Broadcast;
     }
 
     public void LabelElectrodes()

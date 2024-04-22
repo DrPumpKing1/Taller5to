@@ -81,14 +81,7 @@ public class Circuit : IDisposable
         }
 
         ResolveWeghts();
-
-        foreach (Node node in nodesCopy)
-        {
-            if (node.Component.Source)
-            {
-                await PropagateForward(node, powerNodes, false, false, evaluatedNode);
-            }
-        }
+        PowerCircuit();
     }
 
     private async Task PropagateForward(Node startNode, PropagateAction action, bool debug, bool useEvaluation, List<Node> evaluatedNode) 
@@ -213,6 +206,19 @@ public class Circuit : IDisposable
         }
 
         weightsNodes.Clear();
+    }
+
+    public void PowerCircuit()
+    {
+        List<Node> nodesCopy = new List<Node>(nodes);
+
+        foreach (Node node in nodesCopy)
+        {
+            if (node.Component.Source)
+            {
+                node.Broadcast();
+            }
+        }
     }
 
     public static Circuit MergeCircuit(Circuit a, Circuit b)

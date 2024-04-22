@@ -10,8 +10,9 @@ public class CableElectrode : Electrode
 
     [SerializeField] private float radius;
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update(); 
         LabelLineRenderer();
     }
 
