@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Electrode : MonoBehaviour
 {
-    protected const float MAX_POWER = 1000;
+    protected const float MAX_POWER = 10000;
     protected const float DECAY_MULTIPLIER = 50f;
     public const float ACTIVATION_THRESHOLD = 20f;
 
@@ -172,12 +172,9 @@ public class Electrode : MonoBehaviour
     {
         Electricity.Instance.RemoveComponentFromList(this);
     }
-
-    /*
     private void OnDrawGizmos()
     {
-        Handles.Label(transform.position + new Vector3(0, 1, 0), $"{node.Weight}");
-        Handles.Label(transform.position + new Vector3(0, 1.2f, 0), $"{power}");
+        Handles.Label(transform.position + new Vector3(0, 1, 0), $"Weight: {node.Weight}");
+        Handles.Label(transform.position + new Vector3(0, 1.2f, 0), $"Voltage: {power}");
     }
-    */
 }

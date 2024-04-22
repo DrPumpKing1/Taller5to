@@ -15,15 +15,27 @@ public class Electricity : MonoBehaviour
 
     public static Electricity Instance { get; private set; }
 
+    private List<Circuit> rechargeNeededCircuits;
+
     private void Awake()
     {
         Instance = this;
         electricalCircuits = new List<Circuit>();
+        rechargeNeededCircuits = new List<Circuit>();
     }
 
     private void Start()
     {
         SetComponentsList();
+    }
+
+    private void LateUpdate()
+    {
+        if (rechargeNeededCircuits.Count <= 0) return;
+
+        rechargeNeededCircuits.ForEach(circuit => circuit.ResolveCircuit());
+
+        rechargeNeededCircuits.Clear();
     }
 
     private void SetComponentsList()
@@ -71,25 +83,27 @@ public class Electricity : MonoBehaviour
             circuit.AddNode(a.Node);
             circuit.AddNode(b.Node);
 
-            circuit.ResolveCircuit();
+            rechargeNeededCircuits.Add(circuit);
         }
         else if (circuitA != null && circuitB == null)
         {
             circuitA.AddNode(b.Node);
 
-            circuitA.ResolveCircuit();
+            rechargeNeededCircuits.Add(circuitA);
         }
         else if (circuitA == null && circuitB != null)
         {
             circuitB.AddNode(a.Node);
 
-            circuitB.ResolveCircuit();
+            rechargeNeededCircuits.Add(circuitB);
         }
         else
         {
             Circuit circuit = Circuit.MergeCircuit(circuitA, circuitB);
-            circuit.ResolveCircuit();
+            rechargeNeededCircuits.Add(circuit);
         }
+
+        SortCircuits();
     }
 
     public void DisconnectComponents(Circuit circuit)
@@ -98,8 +112,15 @@ public class Electricity : MonoBehaviour
 
         reorganizedCircuits.ForEach(c =>
         {
-            c.ResolveCircuit();
+            rechargeNeededCircuits.Add(c);
         });
+
+        SortCircuits();
+    }
+
+    public void SortCircuits()
+    {
+        Circuits.Sort((a, b) => a.Elements.Count - b.Elements.Count);
     }
 
     private List<Circuit> ReorganizeCircuit(Circuit circuit)
