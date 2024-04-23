@@ -36,13 +36,18 @@ public class SignalProjectile : MonoBehaviour
         {
             Electrode component = collision.gameObject.GetComponent<Electrode>();
 
-            component?.ReceiveSignal(intensity);
+            if (component != null)
+            {
+                if(!component.Source) component.ReceiveSignal(intensity);
+                else if(intensity > component.Power) component.ReceiveSignal(intensity);
+            }
 
             ElectrodeCollider electroCollider = collision.gameObject.GetComponent<ElectrodeCollider>();
 
             if(electroCollider != null )
             {
-                electroCollider.Electrode.ReceiveSignal(intensity);
+                if(!electroCollider.Electrode.Source) electroCollider.Electrode.ReceiveSignal(intensity);
+                else if(intensity < component.Power) component.ReceiveSignal(intensity);
             }
 
             Destroy(gameObject);
