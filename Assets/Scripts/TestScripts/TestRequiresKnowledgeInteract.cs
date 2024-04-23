@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class TestRequiresKnowledgeInteract : MonoBehaviour, IInteractable, IRequiresKnowledge
+public class TestRequiresKnowledgeInteract : MonoBehaviour, IInteractable, IRequiresDialectKnowledge
 {
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
@@ -25,7 +25,7 @@ public class TestRequiresKnowledgeInteract : MonoBehaviour, IInteractable, IRequ
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
 
-    public event EventHandler<IRequiresKnowledge.OnKnowledgeRequirementsNotMetEventArgs> OnKnowledgeRequirementsNotMet;
+    public event EventHandler<IRequiresDialectKnowledge.OnDialectKnowledgeRequirementsNotMetEventArgs> OnDialectKnowledgeRequirementsNotMet;
     public event EventHandler OnObjectSelected;
     public event EventHandler OnObjectDeselected;
 
@@ -54,7 +54,7 @@ public class TestRequiresKnowledgeInteract : MonoBehaviour, IInteractable, IRequ
             return;
         }
 
-        if (!MeetsKnowledgeRequirements())
+        if (!MeetsDialectKnowledgeRequirements())
         {
             KnowledgeRequirementsNotMet();
             return;
@@ -83,9 +83,9 @@ public class TestRequiresKnowledgeInteract : MonoBehaviour, IInteractable, IRequ
     #endregion
 
     #region IRequiresKnowledge
-    public bool MeetsKnowledgeRequirements()
+    public bool MeetsDialectKnowledgeRequirements()
     {
-        foreach (DialectKnowledge dialectKnowledge in KnowledgeManager.Instance.GetDialectKnowledges())
+        foreach (DialectKnowledge dialectKnowledge in DialectManager.Instance.DialectKnowledges)
         {
             foreach (DialectKnowledge dialectKnowledgeRequirement in dialectKnowledgeRequirements)
             {
@@ -101,7 +101,7 @@ public class TestRequiresKnowledgeInteract : MonoBehaviour, IInteractable, IRequ
     public void KnowledgeRequirementsNotMet()
     {
         Debug.Log(gameObject.name + " knowledge requirements not met");
-        OnKnowledgeRequirementsNotMet?.Invoke(this, new IRequiresKnowledge.OnKnowledgeRequirementsNotMetEventArgs { dialectKnowledgeRequirements = dialectKnowledgeRequirements });
+        OnDialectKnowledgeRequirementsNotMet?.Invoke(this, new IRequiresDialectKnowledge.OnDialectKnowledgeRequirementsNotMetEventArgs { dialectKnowledgeRequirements = dialectKnowledgeRequirements });
     }
     #endregion
 }

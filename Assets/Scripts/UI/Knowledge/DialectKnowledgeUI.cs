@@ -10,14 +10,14 @@ public class DialectKnowledgeUI : MonoBehaviour
 
     private void OnEnable()
     {
-        KnowledgeManager.OnKnowledgeSettingsCopied += KnowledgeManager_OnKnowledgeSettingsCopied;
-        KnowledgeManager.OnKnowledgeChanged += KnowledgeManager_OnKnowledgeChanged;        
+        DialectManager.OnDialectKnowledgeSettingsCopied += KnowledgeManager_OnKnowledgeSettingsCopied;
+        DialectManager.OnDialectKnowledgeChanged += KnowledgeManager_OnKnowledgeChanged;        
     }
 
     private void OnDisable()
     {
-        KnowledgeManager.OnKnowledgeSettingsCopied -= KnowledgeManager_OnKnowledgeSettingsCopied;
-        KnowledgeManager.OnKnowledgeChanged -= KnowledgeManager_OnKnowledgeChanged;
+        DialectManager.OnDialectKnowledgeSettingsCopied -= KnowledgeManager_OnKnowledgeSettingsCopied;
+        DialectManager.OnDialectKnowledgeChanged -= KnowledgeManager_OnKnowledgeChanged;
     }
 
     private void Start()
@@ -27,7 +27,7 @@ public class DialectKnowledgeUI : MonoBehaviour
 
     private void UpdateDialectLevels()
     {
-        foreach (DialectKnowledge dialectKnowledge in KnowledgeManager.Instance.DialectKnowledges)
+        foreach (DialectKnowledge dialectKnowledge in DialectManager.Instance.DialectKnowledges)
         {
             foreach (DialectKnowledgeSingleUI dialectKnowledgeSingleUI in dialectKnowledgeSingleUIs)
             {
@@ -46,7 +46,7 @@ public class DialectKnowledgeUI : MonoBehaviour
         UpdateDialectLevels();
 
     }
-    private void KnowledgeManager_OnKnowledgeChanged(object sender, KnowledgeManager.OnKnowledgeChangedEventArgs e)
+    private void KnowledgeManager_OnKnowledgeChanged(object sender, DialectManager.OnDialectKnowledgeChangedEventArgs e)
     {
         foreach (DialectKnowledgeSingleUI dialectKnowledgeSingleUI in dialectKnowledgeSingleUIs)
         {

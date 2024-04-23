@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System; 
+using System;
 
-public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractable
+public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
 {
     [Header("Components")]
-    [SerializeField] private ProjectableObject projectableObject;
+    [SerializeField] private LearningPlatform learningPlatform;
 
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
@@ -16,7 +16,7 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     [Space]
     [SerializeField] private float holdDuration;
 
-    #region IHoldInteractable Properties
+    #region IHoldInteractableProperties
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
@@ -36,20 +36,17 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     public event EventHandler<IHoldInteractable.OnHoldInteractionEventArgs> OnContinousHoldInteraction;
     #endregion
 
-    public event EventHandler OnObjectDematerialized;
-
-    #region IHoldInteractable Methods
+    #region IHoldInteractable
     public void Select()
     {
         OnObjectSelected?.Invoke(this, EventArgs.Empty);
-        Debug.Log("ProjectableObject Selected");
+        Debug.Log("Learning Platform Selected");
     }
     public void Deselect()
     {
         OnObjectDeselected?.Invoke(this, EventArgs.Empty);
-        Debug.Log("ProjectableObject Deselected");
+        Debug.Log("Learning Platform Deselected");
     }
-
     public void TryInteract()
     {
         if (!isInteractable)
@@ -64,25 +61,32 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
             return;
         }
 
+        if (!learningPlatform.MeetsDialectKnowledgeRequirements())
+        {
+            learningPlatform.KnowledgeRequirementsNotMet();
+            return;
+        }
+
         Interact();
     }
-
     public void Interact()
     {
-        Debug.Log("ProjectableObject Interacted");
+        learningPlatform.LearnObject();
+
+        Debug.Log("Learning Platform Interacted");
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
-        DematerializeObject();
+        hasAlreadyBeenInteracted = true;
+        canBeSelected = false;
     }
-
     public void FailInteract()
     {
-        Debug.Log("Cant Interact with ProjectableObject");
+        Debug.Log("Cant Interact with Learning Platform");
         OnObjectFailInteracted?.Invoke(this, EventArgs.Empty);
     }
     public void AlreadyInteracted()
     {
-        Debug.Log("ProjectableObject has Already Been Interacted");
+        Debug.Log("Learning Platform has Already Been Interacted");
         OnObjectHasAlreadyBeenInteracted?.Invoke(this, EventArgs.Empty);
     }
     public bool CheckSuccess()
@@ -99,25 +103,20 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
             return false;
         }
 
+        if (!learningPlatform.MeetsDialectKnowledgeRequirements())
+        {
+            learningPlatform.KnowledgeRequirementsNotMet();
+            return false;
+        }
+
         return true;
     }
+
     public void HoldInteractionStart() => OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
     public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
-    public Transform GetTransform() => transform;
 
+    public Transform GetTransform() => transform;
     #endregion
 
-    private void DematerializeObject()
-    {
-        if (projectableObject.ProjectionPlatform) projectableObject.ProjectionPlatform.ClearProjectionPlatform();
-
-        Destroy(gameObject);
-    }
-
-    private void OnDestroy()
-    {
-        OnObjectDematerialized?.Invoke(this, EventArgs.Empty);
-        ProjectionManager.Instance.ObjectDematerialized(projectableObject.ProjectableObjectSO, projectableObject.ProjectionPlatform);
-    }
 }

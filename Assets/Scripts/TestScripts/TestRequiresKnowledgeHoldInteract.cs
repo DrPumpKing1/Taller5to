@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractable, IHoldInteractableAlternate, IRequiresKnowledge
+public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractable, IHoldInteractableAlternate, IRequiresDialectKnowledge
 {
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
@@ -69,7 +69,7 @@ public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractabl
     #endregion
 
     #region IRequiresKnowledge Events
-    public event EventHandler<IRequiresKnowledge.OnKnowledgeRequirementsNotMetEventArgs> OnKnowledgeRequirementsNotMet;
+    public event EventHandler<IRequiresDialectKnowledge.OnDialectKnowledgeRequirementsNotMetEventArgs> OnDialectKnowledgeRequirementsNotMet;
     #endregion
 
     #region IHoldInteractable Methods
@@ -97,7 +97,7 @@ public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractabl
             return;
         }
 
-        if (!MeetsKnowledgeRequirements())
+        if (!MeetsDialectKnowledgeRequirements())
         {
             KnowledgeRequirementsNotMet();
             return;
@@ -136,7 +136,7 @@ public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractabl
             return false;
         }
 
-        if (!MeetsKnowledgeRequirements())
+        if (!MeetsDialectKnowledgeRequirements())
         {
             KnowledgeRequirementsNotMet();
             return false;
@@ -178,7 +178,7 @@ public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractabl
             return;
         }
 
-        if (!MeetsKnowledgeRequirements())
+        if (!MeetsDialectKnowledgeRequirements())
         {
             KnowledgeRequirementsNotMet();
             return;
@@ -221,7 +221,7 @@ public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractabl
             return false;
         }
 
-        if (!MeetsKnowledgeRequirements())
+        if (!MeetsDialectKnowledgeRequirements())
         {
             KnowledgeRequirementsNotMet();
             return false;
@@ -237,9 +237,9 @@ public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractabl
     #endregion
 
     #region IRequiresKnowledge Methods
-    public bool MeetsKnowledgeRequirements()
+    public bool MeetsDialectKnowledgeRequirements()
     {
-        foreach (DialectKnowledge dialectKnowledge in KnowledgeManager.Instance.GetDialectKnowledges())
+        foreach (DialectKnowledge dialectKnowledge in DialectManager.Instance.DialectKnowledges)
         {
             foreach (DialectKnowledge dialectKnowledgeRequirement in dialectKnowledgeRequirements)
             {
@@ -255,7 +255,7 @@ public class TestRequiresKnowledgeHoldInteract : MonoBehaviour, IHoldInteractabl
     public void KnowledgeRequirementsNotMet()
     {
         Debug.Log(gameObject.name + " knowledge requirements not met");
-        OnKnowledgeRequirementsNotMet?.Invoke(this, new IRequiresKnowledge.OnKnowledgeRequirementsNotMetEventArgs { dialectKnowledgeRequirements = dialectKnowledgeRequirements });
+        OnDialectKnowledgeRequirementsNotMet?.Invoke(this, new IRequiresDialectKnowledge.OnDialectKnowledgeRequirementsNotMetEventArgs { dialectKnowledgeRequirements = dialectKnowledgeRequirements });
     }
     #endregion
 
