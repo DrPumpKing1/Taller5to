@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class PlayerHorizontalMovement : MonoBehaviour
 {
+    [Header("Enabler")]
+    [SerializeField] private bool movementEnabled;
+
     [Header("Components")]
     [SerializeField] private MovementInput movementInput;
     [Space]
@@ -43,6 +46,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
     public Vector3 FinalMoveDir { get; private set; }
     public Vector3 SmoothFinalMoveDir { get; private set; }
     public Vector3 FinalMoveVector { get; private set; }
+    public bool MovementEnabled { get { return movementEnabled; } }
 
     private bool processMoveDueToOnAir;
 
@@ -68,6 +72,18 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     private void Update()
     {
+        HandleMovement();
+    }
+
+    private void FixedUpdate()
+    {
+        ApplyHorizontalMovement();
+    }
+
+    private void HandleMovement()
+    {
+        if (!movementEnabled) return;
+
         CalculateDesiredSpeed();
         SmoothSpeed();
 
@@ -79,11 +95,6 @@ public class PlayerHorizontalMovement : MonoBehaviour
         SmoothDirectionVector();
 
         CalculateFinalMovement();
-    }
-
-    private void FixedUpdate()
-    {
-        ApplyHorizontalMovement();
     }
 
     private void InitializeVariables()

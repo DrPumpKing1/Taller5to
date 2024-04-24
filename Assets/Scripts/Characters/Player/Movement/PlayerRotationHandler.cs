@@ -105,6 +105,7 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void HandleRotation()
     {
+        if (!playerHorizontalMovement.MovementEnabled) return;
         if (DesiredFacingDirection.magnitude <= 0f) return;
 
         RotateTowardsDirection(DesiredFacingDirection);

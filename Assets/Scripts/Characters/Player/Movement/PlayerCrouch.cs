@@ -5,6 +5,9 @@ using System;
 
 public class PlayerCrouch : MonoBehaviour
 {
+    [Header("Enabler")]
+    [SerializeField] private bool crouchEnabled;
+
     [Header("Components")]
     [SerializeField] private MovementInput movementInput;
     [Space]
@@ -29,6 +32,8 @@ public class PlayerCrouch : MonoBehaviour
     public bool IsCrouching { get; private set; }
     public bool IsCrouchingTransitioning { get; private set; }
 
+    public bool CrouchEnabled { get { return crouchEnabled; } }
+
     private bool shouldBeCrouching;
     private bool crouchingActive;
 
@@ -43,11 +48,17 @@ public class PlayerCrouch : MonoBehaviour
     private void Awake()
     {
         capsuleCollider = GetComponent<CapsuleCollider>();
+    }
+
+    private void Start()
+    {
         InitializeVariables();
     }
 
     private void Update()
     {
+        if (!crouchEnabled) return;
+
         HandleCrouch();
     }
 

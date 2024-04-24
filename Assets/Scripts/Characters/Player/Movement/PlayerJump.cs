@@ -5,6 +5,9 @@ using System;
 
 public class PlayerJump : MonoBehaviour
 {
+    [Header("Enabler")]
+    [SerializeField] private bool jumpEnabled;
+
     [Header("Components")]
     [SerializeField] private MovementInput movementInput;
     [Space]
@@ -28,12 +31,15 @@ public class PlayerJump : MonoBehaviour
     private Rigidbody _rigidbody;
     private enum State {NotJumping, Impulsing, Jump}
     private State state;
+    public bool NotJumping => state == State.NotJumping;
 
     private bool JumpInput => movementInput.GetJump();
-    public bool NotJumping => state == State.NotJumping;
+
     private float jumpCooldownTime = 0f;
     private float timer = 0f;
     private bool shouldJump;
+
+    public bool JumpEnabled { get { return jumpEnabled; } }
 
     public event EventHandler OnPlayerImpulsing;
     public event EventHandler OnPlayerJump;
@@ -50,6 +56,8 @@ public class PlayerJump : MonoBehaviour
 
     private void Update()
     {
+        if (!jumpEnabled) return;
+
         CheckShouldJump();
         HandleJumpStates();
     }
@@ -169,4 +177,6 @@ public class PlayerJump : MonoBehaviour
     private bool JumpOnCooldown() => jumpCooldownTime > 0f;
     private void ResetTimer() => timer = 0f;
 
+    public bool EnableJump() => jumpEnabled = true;
+    public bool DisableJump() => jumpEnabled = false;
 }

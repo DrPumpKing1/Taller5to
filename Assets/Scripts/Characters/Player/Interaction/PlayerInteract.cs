@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
+    [Header("Enabler")]
+    [SerializeField] private bool interactionEnabled;
+
     [Header("Components")]
     [SerializeField] private InteractionInput interactionInput;
     [SerializeField] private PlayerRotationHandler playerRotationHandler;
@@ -25,6 +28,8 @@ public class PlayerInteract : MonoBehaviour
     public Vector3 InteractionDirection => playerRotationHandler.DesiredFacingDirection.normalized;
 
     public bool IsInteracting { get; private set; }
+
+    public bool InteractionEnabled { get { return interactionEnabled; } }
 
     private float holdTimer;
     private bool inputDownToHold;
@@ -70,15 +75,20 @@ public class PlayerInteract : MonoBehaviour
     }
     private void Update()
     {
-        if (!checkGround.IsGrounded) return;
-
         HandleInteractableSelections();
+
+        if (!checkGround.IsGrounded) return;
+        if (!interactionEnabled) return;
+
         HandleInteractions();
     }
 
     private void HandleInteractableSelections()
     {
         IInteractable interactable = CheckForInteractable();
+
+        if (!checkGround.IsGrounded) interactable = null;
+        if (!interactionEnabled) interactable = null;
 
         if (interactable != null)
         {

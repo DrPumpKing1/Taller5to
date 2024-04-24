@@ -51,9 +51,11 @@ public class PlayerInteractAlternate : MonoBehaviour
     }
     private void Update()
     {
+        HandleInteractableAlternateSelections();
+
+        if (!playerInteract.InteractionEnabled) return;
         if (!checkGround.IsGrounded) return;
 
-        HandleInteractableAlternateSelections();
         HandleInteractionsAlternate();
     }
 
@@ -62,6 +64,9 @@ public class PlayerInteractAlternate : MonoBehaviour
         IInteractableAlternate interactableAlternate = CheckIfHoldInteractableAlternate();
 
         CheckIfInteractableIsTheSame(ref interactableAlternate);
+
+        if (!playerInteract.InteractionEnabled) interactableAlternate = null;
+        if (!checkGround.IsGrounded) interactableAlternate = null;
 
         if (interactableAlternate != null)
         {

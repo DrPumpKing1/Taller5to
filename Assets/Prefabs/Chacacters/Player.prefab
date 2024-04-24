@@ -465,6 +465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f470ff018dfc5a4e82018e6fbf21775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementEnabled: 1
   movementInput: {fileID: 0}
   playerCrouch: {fileID: 6106714240860128082}
   playerJump: {fileID: 5416400497481260393}
@@ -493,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89dd2049e1b430d4e95d0eab7f11dd7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpEnabled: 0
   movementInput: {fileID: 0}
   playerGravityController: {fileID: 2300728550411198240}
   playerHorizontalMovement: {fileID: 1658583223491952907}
@@ -568,6 +570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb355f145fc7bc4dbed136b1c50ed86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crouchEnabled: 1
   movementInput: {fileID: 0}
   playerJump: {fileID: 5416400497481260393}
   playerInteract: {fileID: 4536946071876244043}
@@ -612,6 +615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369fda25c566a034a93a425bba5d0235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionEnabled: 1
   interactionInput: {fileID: 0}
   playerRotationHandler: {fileID: 7765162024059724183}
   playerInteractAlternate: {fileID: 907748609654045023}
