@@ -41,7 +41,6 @@ public class SignalProjectile : MonoBehaviour
                 if (!component.Source) component.ReceiveSignal(intensity);
                 else if (intensity > component.Power)
                 {
-                    component.ReceiveSignal(intensity);
                     component.SourcePower = intensity;
                     Electricity.Instance.UpdateElectrode(component);
                 }
@@ -54,7 +53,6 @@ public class SignalProjectile : MonoBehaviour
                 if (!electroCollider.Electrode.Source) electroCollider.Electrode.ReceiveSignal(intensity);
                 else if (intensity < component.Power)
                 {
-                    component.ReceiveSignal(intensity);
                     component.SourcePower = intensity;
                     Electricity.Instance.UpdateElectrode(component);
                 }

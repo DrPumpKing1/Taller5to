@@ -1,25 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
 
-[System.Serializable]
-public class Signal 
+public class Signal : MonoBehaviour 
 {
-    public float intensity;
-    public AnimationCurve powerCurve;
-    public float duration;
+    [SerializeField] private float intensity;
+    [SerializeField] private AnimationCurve powerCurve;
+    [SerializeField] private float duration;
+    [SerializeField] private float timer;
 
-    public float GetPower(float timer)
+    private void Update()
+    {
+        if (timer < duration) timer += Time.deltaTime;
+        else timer = 0f;
+    }
+
+    public float GetPower()
     {
         timer = Mathf.Clamp(timer, 0f, duration);
 
-        return intensity * powerCurve.Evaluate(timer);
+        float power = intensity * powerCurve.Evaluate(timer);
+
+        if (power <= Electrode.ACTIVATION_THRESHOLD)
+        {
+            Expire();
+            return 0;
+        }
+
+        return power;
     }
 
-    public Signal(float intensity, AnimationCurve powerCurve)
+    public float GetConstant()
+    {
+        return intensity;
+    }
+
+    public Signal SetSignal(float intensity, AnimationCurve powerCurve, float duration)
     {
         this.intensity = intensity;
         this.powerCurve = powerCurve;
-        this.duration = Electrode.ELECTRICITY_TICK_DURATION;
+        this.duration = duration;
+        this.timer = 0f;
+    
+        return this;
+    }
+
+    public void Expire()
+    {
+        if (this.gameObject == null) return;
+
+        Electrode electrode = gameObject.GetComponent<Electrode>();
+        
+        if(electrode != null)
+        {
+            if(electrode.Signals.Contains(this)) electrode.Signals.Remove(this);
+        }
+
+        Destroy(this);
     }
 }

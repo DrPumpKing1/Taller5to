@@ -26,12 +26,11 @@ public class Electrode : MonoBehaviour
     public float SourcePower { get { return sourcePower; } set { sourcePower = value; } }
 
     [Header("Transmission Variables")]
-    [SerializeField] protected Signal signal;
+    [SerializeField] protected List<Signal> signals;
     [SerializeField] protected AnimationCurve powerCurve;
     [SerializeField] protected float resistance;
-    [SerializeField] protected float powerTimer;
 
-    public Signal Signal { get { return signal; } }
+    public List<Signal> Signals { get { return signals; } }
 
     public enum ComponentType
     {
@@ -51,12 +50,13 @@ public class Electrode : MonoBehaviour
 
     [Header("Circuit Representation")]
     [SerializeField] protected Node node;
-    public Node? Node { get { return node; } set { node = value; } }
+    public Node Node { get { return node; } set { node = value; } }
 
     [SerializeField] protected List<Electrode> contacts;
 
     protected virtual void Start()
     {
+        signals = new List<Signal>();
         contacts = new List<Electrode>();
         SetElectrodeType();
         ResetPower();
@@ -65,9 +65,7 @@ public class Electrode : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (signal != null) power = signal.GetPower(powerTimer);
-
-        if (powerTimer < ELECTRICITY_TICK_DURATION) powerTimer += Time.deltaTime;
+        CalculatePower();
     }
 
     protected void SetElectrodeType()
@@ -140,11 +138,11 @@ public class Electrode : MonoBehaviour
     {
         if (intensity <= 0) return;
 
-        signal = new Signal(intensity, powerCurve);
+        Signal signal = gameObject.AddComponent<Signal>();
+        signal.SetSignal(intensity, powerCurve, ELECTRICITY_TICK_DURATION);
+        signals.Add(signal);
 
-        powerTimer = 0f;
-
-        power = signal.GetPower(powerTimer);
+        CalculatePower();
 
         if (OnReceiveSignal != null) OnReceiveSignal();
     }
@@ -160,6 +158,19 @@ public class Electrode : MonoBehaviour
         return intensity;
     }
 
+    private void CalculatePower()
+    {
+        power = 0f;
+
+        if (signals == null) return;
+
+        if(signals.Count <= 0) return;
+
+        List<Signal> signalsCopy = new List<Signal>(signals);
+
+        signalsCopy.ForEach(signal => power += signal.GetPower());
+    }
+
     public void SetPower(float power)
     {
         if (!source) return;
@@ -171,10 +182,13 @@ public class Electrode : MonoBehaviour
 
     public virtual void ResetPower()
     {
-        if (!source) power = 0;
-        else
+        List<Signal> signalsCopy = new List<Signal>(signals);
+
+        signalsCopy.ForEach(s => s.Expire());
+
+        if (source)
         {
-            signal = new Signal(power, powerCurve);
+            signals.Add(gameObject.AddComponent<Signal>().SetSignal(sourcePower, powerCurve, ELECTRICITY_TICK_DURATION));
         }
     }
 
@@ -193,6 +207,19 @@ public class Electrode : MonoBehaviour
         if (source) return 0;
         else if (sender) return 5;
         else return 10;
+    }
+
+    public float GetConstant()
+    {
+        if(signals == null) return 0f;
+
+        if(signals.Count <= 0) return 0f;
+
+        float power = 0f;
+
+        signals.ForEach(s => power += s.GetConstant());
+
+        return power;
     }
 
     private void OnDestroy()

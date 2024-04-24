@@ -10,12 +10,7 @@ public class SwitchElectrode : Electrode
 
     public override void ReceiveSignal(float intensity)
     {
-        if (!switchOn)
-        {
-            signal = new Signal(0, powerCurve);
-            powerTimer = 0;
-            return;
-        }
+        if (!switchOn) return;
 
         base.ReceiveSignal(intensity);
     }
