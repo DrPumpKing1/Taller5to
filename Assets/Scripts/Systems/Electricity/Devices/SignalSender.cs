@@ -11,6 +11,8 @@ public class SignalSender : MonoBehaviour
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform shootPosition;
     [SerializeField] private float shootSpeed;
+    [SerializeField] private float shootCooldown;
+    [SerializeField] private float shootTimer;
 
     private void OnEnable()
     {
@@ -22,8 +24,17 @@ public class SignalSender : MonoBehaviour
         electrode.OnReceiveSignal -= ShootSender;
     }
 
+    private void Update()
+    {
+        if(shootTimer > 0) shootTimer -= Time.deltaTime;
+    }
+
     private void ShootSender()
     {
+        if (shootTimer > 0) return;
+
+        shootTimer = shootCooldown;
+
         float intensity = electrode.Power;
 
         if (intensity < Electrode.ACTIVATION_THRESHOLD) return;

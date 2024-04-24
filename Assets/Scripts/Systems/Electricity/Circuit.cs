@@ -264,6 +264,20 @@ public class Circuit : IDisposable
 
     public static float CalculateWeightPropagation(Node node, Node contact, float circuitElementCount, float layer, List<Node> nodesAlreadyEvaluated)
     {
+        SwitchElectrode nodeSwitch = node.Component.gameObject.GetComponent<SwitchElectrode>();
+        SwitchElectrode contactSwitch = contact.Component.gameObject.GetComponent<SwitchElectrode>();
+
+        if(nodeSwitch != null)
+        {
+            if (!nodeSwitch.SwitchOn) return 0;
+        }
+
+        if(contactSwitch != null)
+        {
+            if (!contactSwitch.SwitchOn) return 0;
+        }
+
+
         if (circuitElementCount <= 0) circuitElementCount = 1f;
 
         float decayConstant = .5f;
@@ -271,7 +285,7 @@ public class Circuit : IDisposable
         float nextNodes = GetNextRoutingNodes(node, nodesAlreadyEvaluated);
         float contactNodePreviousNodes = GetPreviousRoutingNodes(contact, nodesAlreadyEvaluated);
 
-        return (node.Weight - 1/circuitElementCount) / (nextNodes * contactNodePreviousNodes * sourceDecay);
+        return Mathf.Max(0f, (node.Weight - 1/circuitElementCount) / (nextNodes * contactNodePreviousNodes * sourceDecay));
     }
 
     public static float GetNextRoutingNodes(Node node, List<Node> nodesAlreadyEvaluated)

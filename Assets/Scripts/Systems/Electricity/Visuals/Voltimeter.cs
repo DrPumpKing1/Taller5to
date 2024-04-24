@@ -10,6 +10,6 @@ public class Voltimeter : MonoBehaviour
 
     private void LateUpdate()
     {
-        textMesh.text = (electrode.Power >= Electrode.ACTIVATION_THRESHOLD) ? $"Voltage: {electrode.Power}" : "0";
+        textMesh.text = (electrode.Power >= Electrode.ACTIVATION_THRESHOLD) ? $"Voltage: {electrode.Signal?.intensity}" : "0";
     }
 }

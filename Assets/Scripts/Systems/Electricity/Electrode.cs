@@ -23,13 +23,15 @@ public class Electrode : MonoBehaviour
     [SerializeField] protected float sourcePower;
     [SerializeField] protected float power;
     public float Power { get { return power; } }
-    public float SourcePower { get { return sourcePower; } }
+    public float SourcePower { get { return sourcePower; } set { sourcePower = value; } }
 
     [Header("Transmission Variables")]
     [SerializeField] protected Signal signal;
     [SerializeField] protected AnimationCurve powerCurve;
     [SerializeField] protected float resistance;
     [SerializeField] protected float powerTimer;
+
+    public Signal Signal { get { return signal; } }
 
     public enum ComponentType
     {
@@ -170,6 +172,10 @@ public class Electrode : MonoBehaviour
     public virtual void ResetPower()
     {
         if (!source) power = 0;
+        else
+        {
+            signal = new Signal(power, powerCurve);
+        }
     }
 
     public List<Electrode> RetrieveContacts()

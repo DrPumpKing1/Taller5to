@@ -110,6 +110,15 @@ MonoBehaviour:
   debug: 0
   sourcePower: 0
   power: 0
+  signal:
+    intensity: 0
+    powerCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 0
   powerCurve:
     serializedVersion: 2
     m_Curve:
@@ -506,6 +515,8 @@ MonoBehaviour:
   projectile: {fileID: 4730104855110791830, guid: 0f6afd807628e1b4c90fc8587217b0ad, type: 3}
   shootPosition: {fileID: 7520932257869012414}
   shootSpeed: 5
+  shootCooldown: 0.5
+  shootTimer: 0
 --- !u!114 &1045823965589451438
 MonoBehaviour:
   m_ObjectHideFlags: 0
