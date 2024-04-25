@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "NewDialectWriting", menuName = "ScriptableObjects/Dialects/DialectSymbol")]
+[CreateAssetMenu(fileName = "NewDialectSymbol", menuName = "ScriptableObjects/Dialects/DialectSymbol")]
 public class DialectSymbolSO : ScriptableObject
 {
     public int id;
