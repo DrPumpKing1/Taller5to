@@ -17,7 +17,7 @@ public class PlayerInteract : MonoBehaviour
     [Header("Interaction Settings")]
     [SerializeField] private LayerMask interactionLayer;
     [SerializeField, Range(0f, 2.5f)] private float interactionRayStartDistance = 1f;
-    [SerializeField, Range(0.1f, 2f)] private float interactionRayLenght = 1f;
+    [SerializeField, Range(0.1f, 2.5f)] private float interactionRayLenght = 1f;
     [SerializeField, Range(0.1f, 1f)] private float interactionSphereRadius = 2f;
 
     [Header("Debug")]

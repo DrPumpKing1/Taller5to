@@ -30,12 +30,12 @@ public class DialectKnowledgeSourceCollectedVisual : MonoBehaviour
 
     private void DialectKnowledgeSourceCollection_OnDialectKnowledgeAdded(object sender, DialectKnowledgeSourceCollection.OnDialectKnowledgeAddedEventArgs e)
     {
-        InstantiateKnowledgeAddedUIs(e.dialectKnowledgeSourceSO.dialectKnowledgeLevelChanges);   
+        //InstantiateKnowledgeAddedUIs(e.dialectKnowledgeSourceSO.dialectKnowledgeLevelChanges);   
     }
 
     private void DialectKnowledgeSourceCollection_OnSymbolsAdded(object sender, DialectKnowledgeSourceCollection.OnSymbolsAddedEventArgs e)
     {
-        //InstantiateSymbolsAddedUI(e.dialectKnowledgeSourceSO.dialectSymbolSOs);
+        InstantiateSymbolsAddedUI(e.dialectKnowledgeSourceSO.dialectSymbolSOs);
     }
 
     private void InstantiateKnowledgeAddedUIs(List<DialectKnowledge> dialectKnowledges)
