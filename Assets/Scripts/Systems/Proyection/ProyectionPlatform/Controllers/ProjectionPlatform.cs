@@ -11,12 +11,8 @@ public class ProjectionPlatform : MonoBehaviour
 
     [Header("Object Avobe Check Settings")]
     [SerializeField] private LayerMask objectAvobeLayers;
-    [SerializeField] private Vector3 originOffset;
-    [SerializeField] private float rayLenght;
-
-
-    [Header("Debug")]
-    [SerializeField] private bool drawRaycasts;
+    [SerializeField] private Vector3 checkBoxCenter;
+    [SerializeField] private Vector3 checkBoxHalfExtends;
 
     public Transform ProjectionPoint { get { return projectionPoint; } }
     public ProjectableObjectSO CurrentProjectedObject { get { return currentProjectedObject; } }
@@ -38,9 +34,7 @@ public class ProjectionPlatform : MonoBehaviour
 
     private bool CheckObjectAbove()
     {
-        bool objectAbove = Physics.BoxCast(transform.position + new Vector3(0, 1.25f, 0), new Vector3(1, 1, 1),transform.up, Quaternion.identity, rayLenght, objectAvobeLayers);
-
-        if (drawRaycasts) Debug.DrawRay(transform.position, transform.up * (rayLenght), Color.red);
+        bool objectAbove = Physics.CheckBox(transform.position + checkBoxCenter, checkBoxHalfExtends, Quaternion.identity, objectAvobeLayers);
 
         return objectAbove;
     }

@@ -17,7 +17,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     [SerializeField] private float holdDuration;
 
     #region IHoldInteractable Properties
-    public bool IsSelectable => canBeSelected;
+    public bool IsSelectable => canBeSelected && !projectionPlatform.ObjectAbove;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
