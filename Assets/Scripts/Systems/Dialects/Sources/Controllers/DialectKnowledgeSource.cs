@@ -30,9 +30,15 @@ public class DialectKnowledgeSource : MonoBehaviour, IInteractable
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
     #endregion
 
-    public event EventHandler<OnKnowledgeAddedEventArgs> OnDialectKnowledgeAdded;
+    public event EventHandler<OnDialectKnowledgeAddedEventArgs> OnDialectKnowledgeAdded;
+    public event EventHandler<OnSymbolsAddedEventArgs> OnSymbolsAdded;
 
-    public class OnKnowledgeAddedEventArgs : EventArgs
+    public class OnDialectKnowledgeAddedEventArgs : EventArgs
+    {
+        public DialectKnowledgeSourceSO dialectKnowledgeSourceSO;
+    }
+
+    public class OnSymbolsAddedEventArgs : EventArgs
     {
         public DialectKnowledgeSourceSO dialectKnowledgeSourceSO;
     }
@@ -106,7 +112,7 @@ public class DialectKnowledgeSource : MonoBehaviour, IInteractable
             DialectManager.Instance.ChangeDialectKnowledge(dialectKnowledgePercentageChange.dialect, dialectKnowledgePercentageChange.level);
         }
 
-        OnDialectKnowledgeAdded?.Invoke(this, new OnKnowledgeAddedEventArgs { dialectKnowledgeSourceSO = dialectKnowledgeSourceSO });
+        OnDialectKnowledgeAdded?.Invoke(this, new OnDialectKnowledgeAddedEventArgs { dialectKnowledgeSourceSO = dialectKnowledgeSourceSO });
     }
 
     private void AddSymbolsToInventory()
@@ -115,25 +121,9 @@ public class DialectKnowledgeSource : MonoBehaviour, IInteractable
         {
             DictionaryManager.Instance.AddSymbolToDictionary(dialectSymbolSO);
         }
+
+        OnSymbolsAdded?.Invoke(this, new OnSymbolsAddedEventArgs { dialectKnowledgeSourceSO = dialectKnowledgeSourceSO });
     }
 
     private void DestroyDialectKnowledgeSource() => Destroy(gameObject, destroyTime);
-
-    public bool CheckSuccess()
-    {
-        if (hasAlreadyBeenInteracted)
-        {
-            AlreadyInteracted();
-            return false;
-        }
-
-        if (!isInteractable)
-        {
-            FailInteract();
-            return false;
-        }
-
-        return true;
-    }
-
 }

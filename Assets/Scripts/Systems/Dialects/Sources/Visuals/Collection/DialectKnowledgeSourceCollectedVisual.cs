@@ -12,21 +12,37 @@ public class DialectKnowledgeSourceCollectedVisual : MonoBehaviour
     [SerializeField] private Vector3 instantiationPositionOffset;
     [SerializeField] private Vector3 offsetBetweenInstantiatedUIs;
 
+    [Header("Symbols Added Settings")]
+    [SerializeField] private Transform symbolsAddedUIPrefab;
+    [SerializeField] private Vector3 symbolsInstantiationPositionOffset;
+
     private void OnEnable()
     {
         dialectKnowledgeSource.OnDialectKnowledgeAdded += DialectKnowledgeSource_OnDialectKnowledgeAdded;
+        dialectKnowledgeSource.OnSymbolsAdded += DialectKnowledgeSource_OnSymbolsAdded;
     }
 
     private void OnDisable()
     {
         dialectKnowledgeSource.OnDialectKnowledgeAdded -= DialectKnowledgeSource_OnDialectKnowledgeAdded;
+        dialectKnowledgeSource.OnSymbolsAdded -= DialectKnowledgeSource_OnSymbolsAdded;
     }
 
-    private void DialectKnowledgeSource_OnDialectKnowledgeAdded(object sender, DialectKnowledgeSource.OnKnowledgeAddedEventArgs e)
+    private void DialectKnowledgeSource_OnDialectKnowledgeAdded(object sender, DialectKnowledgeSource.OnDialectKnowledgeAddedEventArgs e)
+    {
+        InstantiateKnowledgeAddedUIs(e.dialectKnowledgeSourceSO.dialectKnowledgeLevelChanges);   
+    }
+
+    private void DialectKnowledgeSource_OnSymbolsAdded(object sender, DialectKnowledgeSource.OnSymbolsAddedEventArgs e)
+    {
+        //InstantiateSymbolsAddedUI(e.dialectKnowledgeSourceSO.dialectSymbolSOs);
+    }
+
+    private void InstantiateKnowledgeAddedUIs(List<DialectKnowledge> dialectKnowledges)
     {
         int instantiatedUIs = 0;
 
-        foreach (DialectKnowledge dialectKnowledge in e.dialectKnowledgeSourceSO.dialectKnowledgeLevelChanges) 
+        foreach (DialectKnowledge dialectKnowledge in dialectKnowledges)
         {
             GameObject knowledgeAddedUIGameObject = Instantiate(dialectKnowledgeAddedUIPrefab.gameObject, transform.position + instantiationPositionOffset + offsetBetweenInstantiatedUIs * instantiatedUIs, transform.rotation);
 
@@ -42,5 +58,20 @@ public class DialectKnowledgeSourceCollectedVisual : MonoBehaviour
 
             instantiatedUIs++;
         }
+    }
+
+    private void InstantiateSymbolsAddedUI(List<DialectSymbolSO> dialectSymbolsSOs)
+    {
+        GameObject symbolsAddedUIGameObject = Instantiate(symbolsAddedUIPrefab.gameObject, transform.position + instantiationPositionOffset, transform.rotation);
+
+        SymbolsAddedUI symbolsAddedUI = symbolsAddedUIGameObject.GetComponentInChildren<SymbolsAddedUI>();
+
+        if (!symbolsAddedUI)
+        {
+            Debug.LogWarning("There's not a SymbolsAddedUI attached to instantiated prefab");
+            return;
+        }
+
+        symbolsAddedUI.SetSymbolsUIs(dialectSymbolsSOs);
     }
 }

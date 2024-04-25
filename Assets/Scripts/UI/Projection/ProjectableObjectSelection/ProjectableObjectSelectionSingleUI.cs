@@ -19,6 +19,8 @@ public class ProjectableObjectSelectionSingleUI : MonoBehaviour
 
     public int LinkedIndex { get; private set; }
 
+    public bool IsSelected { get { return isSelected; } }
+
     public void SetProyectableObjectImage(Sprite sprite) => projectableObjectImage.sprite = sprite;
     public void SetProyectableObjectCost(int cost) => costText.text = $"Coste: {cost}";
 

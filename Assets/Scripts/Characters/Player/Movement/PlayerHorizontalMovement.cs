@@ -24,7 +24,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [Header("Speed Settings")]
     [SerializeField, Range(1.5f,2.5f)] private float walkSpeed = 2f;
     [SerializeField, Range(4f,6f)] private float sprintSpeed = 3f;
-    [SerializeField, Range(0.75f, 1.25f)] private float crouchSpeed = 1f;
+    [SerializeField, Range(0.75f, 1.5f)] private float crouchSpeed = 1f;
 
     [Header("Smooth Settings")]
     [SerializeField, Range(1f, 100f)] private float smoothDirectionInputFactor = 5f;
