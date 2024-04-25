@@ -14,6 +14,9 @@ public class CheckWall : MonoBehaviour
     [Header("Wall Detection Settings")]
     [SerializeField, Range(0f, 1f)] private float rayLength = 0.1f;
     [SerializeField, Range(0.01f, 1f)] private float raySphereRadius = 0.1f;
+    [Space]
+    [SerializeField, Range(0f, 1f)] private float lowRayLenght = 0.1f;
+    [SerializeField, Range(0.01f, 1f)] private float lowRaySphereRadius = 0.1f;
 
     [Header("Forward Wall Detection Settings")]
     [SerializeField, Range(0f, 1f)] private float diagonalRayLength = 0.1f;
@@ -35,10 +38,11 @@ public class CheckWall : MonoBehaviour
 
     private bool CheckIfWall()
     {
+        bool checkWall15PercentBody = CheckIfWallAtPoint(transform.position + capsulleCollider.center + new Vector3(0f,capsulleCollider.height * -0.35f, 0f), lowRayLenght, lowRaySphereRadius);
         bool checkWallHalfBody = CheckIfWallAtPoint(transform.position + capsulleCollider.center,rayLength,raySphereRadius);
         bool checkWall95PercentBody = CheckIfWallAtPoint(transform.position + capsulleCollider.center + new Vector3(0f,capsulleCollider.height * 0.45f,0f), rayLength, raySphereRadius);
 
-        return checkWallHalfBody || checkWall95PercentBody;
+        return checkWall15PercentBody || checkWallHalfBody || checkWall95PercentBody;
     }
     private bool CheckIfDiagonalWall()
     {

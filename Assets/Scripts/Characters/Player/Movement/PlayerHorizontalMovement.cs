@@ -22,9 +22,9 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [SerializeField] private CheckWall checkWall;
 
     [Header("Speed Settings")]
-    [SerializeField] private float walkSpeed = 2f;
-    [SerializeField] private float sprintSpeed = 3f;
-    [SerializeField] private float crouchSpeed = 1f;
+    [SerializeField, Range(1.5f,2.5f)] private float walkSpeed = 2f;
+    [SerializeField, Range(4f,6f)] private float sprintSpeed = 3f;
+    [SerializeField, Range(0.75f, 1.25f)] private float crouchSpeed = 1f;
 
     [Header("Smooth Settings")]
     [SerializeField, Range(1f, 100f)] private float smoothDirectionInputFactor = 5f;
@@ -128,7 +128,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
         
     private bool CanRun() => !checkWall.HitWall && !playerCrouch.IsCrouching;
 
-    private bool IsRunning() => SprintInput && CanRun() && CanMove();
+    public bool IsRunning() => SprintInput && CanRun() && CanMove();
 
     private void CalculateLastNonZeroDirectionInput() => LastNonZeroInput = DirectionInputVector != Vector2.zero ? DirectionInputVector : LastNonZeroInput;
 

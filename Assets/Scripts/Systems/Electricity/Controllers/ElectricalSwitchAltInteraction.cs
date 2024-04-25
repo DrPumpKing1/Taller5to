@@ -26,10 +26,6 @@ public class ElectricalAltSwitchInteraction : MonoBehaviour, IInteractableAltern
     public event EventHandler OnObjectInteractedAlternate;
     public event EventHandler OnObjectFailInteractedAlternate;
     public event EventHandler OnObjectHasAlreadyBeenInteractedAlternate;
-
-    public event EventHandler OnHoldInteractionAlternateStart;
-    public event EventHandler OnHoldInteractionAlternateEnd;
-    public event EventHandler<IHoldInteractableAlternate.OnHoldInteractionAlternateEventArgs> OnContinousHoldInteractionAlternate;
     #endregion
 
     #region IHoldInteractable Methods

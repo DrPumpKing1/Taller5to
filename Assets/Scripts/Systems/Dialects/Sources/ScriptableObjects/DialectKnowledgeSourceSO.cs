@@ -8,5 +8,5 @@ public class DialectKnowledgeSourceSO : ScriptableObject
 {
     public string _name;
     public List<DialectKnowledge> dialectKnowledgeLevelChanges = new List<DialectKnowledge>(Enum.GetValues(typeof(Dialect)).Length);
-    public DialectWritingSO dialectWritingSO;
+    public List<DialectSymbolSO> dialectSymbolSOs;
 }

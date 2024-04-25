@@ -53,6 +53,7 @@ MonoBehaviour:
   checkGoundRayLenght: -0.4
   raySphereRadius: 0.5
   checkSlopeRayLength: 0.1
+  checkDistanceGroundRayLenght: 1
   drawRaycasts: 0
 --- !u!114 &8413128526021734546
 MonoBehaviour:
@@ -73,6 +74,8 @@ MonoBehaviour:
     m_Bits: 1
   rayLength: 0.2
   raySphereRadius: 0.2
+  lowRayLenght: 0.3
+  lowRaySphereRadius: 0.01
   diagonalRayLength: 0.5
   drawRaycasts: 1
 --- !u!114 &6503560014877264206
@@ -477,7 +480,7 @@ MonoBehaviour:
   checkWall: {fileID: 8413128526021734546}
   walkSpeed: 2
   sprintSpeed: 5
-  crouchSpeed: 1.5
+  crouchSpeed: 1.25
   smoothDirectionInputFactor: 10
   smoothVelocityFactor: 5
   smoothSprintVelocityFactor: 1.5
@@ -520,6 +523,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkGround: {fileID: 2176356878162520009}
+  fallVelocityThreshold: -0.2
+  fallDistanceFromGroundThreshold: 0.45
 --- !u!114 &545511874797415526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,7 +537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da5b9fc5735807418b3e262cb2b0669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkGround: {fileID: 2176356878162520009}
+  playerFall: {fileID: 2984513525385847362}
   playerGravityController: {fileID: 2300728550411198240}
   landDetectionHeightThreshold: 0
   hardLandingThreshold: 1.5
@@ -551,13 +556,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkGround: {fileID: 2176356878162520009}
+  playerHorizontalMovement: {fileID: 1658583223491952907}
   frictionMaterial: {fileID: 13400000, guid: ef9e2b06b6f73ed40ba21c19e6ceb70f, type: 2}
   frictionlessMaterial: {fileID: 13400000, guid: 92654f77c75a30942b65fd0733755522, type: 2}
   gravityMultiplier: 1
   fallMultiplier: 2
   lowJumpMultiplier: 2
-  stickToSlopeForce: 30
-  stickToSlopeFrames: 1
+  stickToSlopeForce: 10
 --- !u!114 &6106714240860128082
 MonoBehaviour:
   m_ObjectHideFlags: 0

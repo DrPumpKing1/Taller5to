@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialectKnowledgeSource : MonoBehaviour, IHoldInteractable
+public class DialectKnowledgeSource : MonoBehaviour, IInteractable
 {
     [Header ("Knowledge Source Settings")]
     [SerializeField] private DialectKnowledgeSourceSO dialectKnowledgeSourceSO;
@@ -14,15 +14,12 @@ public class DialectKnowledgeSource : MonoBehaviour, IHoldInteractable
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
     [SerializeField] private string tooltipMessage;
-    [SerializeField] private float holdDuration;
 
     #region IInteractable Properties
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
-
-    public float HoldDuration => holdDuration;
     #endregion
 
     #region IInteractableEvents
@@ -34,9 +31,6 @@ public class DialectKnowledgeSource : MonoBehaviour, IHoldInteractable
     #endregion
 
     public event EventHandler<OnKnowledgeAddedEventArgs> OnDialectKnowledgeAdded;
-    public event EventHandler OnHoldInteractionStart;
-    public event EventHandler OnHoldInteractionEnd;
-    public event EventHandler<IHoldInteractable.OnHoldInteractionEventArgs> OnContinousHoldInteraction;
 
     public class OnKnowledgeAddedEventArgs : EventArgs
     {
@@ -54,7 +48,7 @@ public class DialectKnowledgeSource : MonoBehaviour, IHoldInteractable
         canBeSelected = false;
 
         AddKnowledgeToDialects();
-        AddWrittingToInventory();
+        AddSymbolsToInventory();
         DestroyDialectKnowledgeSource();
     }
 
@@ -115,9 +109,12 @@ public class DialectKnowledgeSource : MonoBehaviour, IHoldInteractable
         OnDialectKnowledgeAdded?.Invoke(this, new OnKnowledgeAddedEventArgs { dialectKnowledgeSourceSO = dialectKnowledgeSourceSO });
     }
 
-    private void AddWrittingToInventory()
+    private void AddSymbolsToInventory()
     {
-        InventoryManager.Instance.AddDialectWritingToInventory(dialectKnowledgeSourceSO.dialectWritingSO);
+        foreach(DialectSymbolSO dialectSymbolSO in dialectKnowledgeSourceSO.dialectSymbolSOs)
+        {
+            DictionaryManager.Instance.AddSymbolToDictionary(dialectSymbolSO);
+        }
     }
 
     private void DestroyDialectKnowledgeSource() => Destroy(gameObject, destroyTime);
@@ -138,9 +135,5 @@ public class DialectKnowledgeSource : MonoBehaviour, IHoldInteractable
 
         return true;
     }
-
-    public void HoldInteractionStart() => OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
-    public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
-    public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
 
 }

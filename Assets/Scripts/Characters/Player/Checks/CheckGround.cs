@@ -15,22 +15,26 @@ public class CheckGround : MonoBehaviour
     [Header("Check Slope Settings")]
     [SerializeField, Range(0f, 1f)] private float checkSlopeRayLength = 0.2f;
 
+    [Header("Distance From Ground Settings)")]
+    [SerializeField, Range(0f, 1f)] private float checkDistanceGroundRayLenght;
+    private Vector3 checkDistanceFromGroundOffset = new Vector3(0f,0.5f,0f);
+
     [Header("Debug")]
     [SerializeField] private bool drawRaycasts;
 
     public bool IsGrounded { get; private set; } = false;
     public bool OnSlope { get; private set; } = false;
     public Vector3 SlopeNormal { get; private set; }
+    public float DistanceFromGround { get; private set; }
 
     private void FixedUpdate()
     {
         IsGrounded = CheckGrounded();
         OnSlope = CheckSlope();
+        DistanceFromGround = CalculateDistanceFromGround();
     }
 
-    private bool CheckGrounded() => CheckRaycastGrounded();
-
-    private bool CheckRaycastGrounded()
+    private bool CheckGrounded()
     {
         Vector3 origin = transform.position + capsuleCollider.center;
         float finalRayLength = checkGoundRayLenght + capsuleCollider.center.y;
@@ -57,5 +61,14 @@ public class CheckGround : MonoBehaviour
         return onSlope;
     }
 
-    //private bool CheckCharacterControllerGrounded() => capsuleCollider.isGrounded;
+    private float CalculateDistanceFromGround()
+    {
+        Vector3 origin = transform.position + checkDistanceFromGroundOffset;
+        float distance = float.MaxValue;
+
+        bool detectGround = Physics.Raycast(origin, Vector3.down, out RaycastHit hitInfo, checkDistanceGroundRayLenght, groundLayer);
+        if(detectGround) distance = (hitInfo.point - transform.position).magnitude;
+
+        return distance;
+    }
 }

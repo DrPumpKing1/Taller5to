@@ -8,10 +8,14 @@ public class PlayerFall : MonoBehaviour
     [Header("Components")]
     [SerializeField] private CheckGround checkGround;
 
+    [Header("Fall Settings")]
+    [SerializeField, Range(-1f,0f)] private float fallVelocityThreshold;
+    [SerializeField, Range(0f,1f)] private float fallDistanceFromGroundThreshold;
+
     private Rigidbody _rigidbody;
 
-    private bool isFalling;
-    private bool previouslyFalling;
+    public bool IsFalling { get; private set; }
+    public bool PreviouslyFalling { get; private set; }
 
     public event EventHandler OnPlayerFall;
 
@@ -32,22 +36,29 @@ public class PlayerFall : MonoBehaviour
 
     private void InitializeVariables()
     {
-        isFalling = CheckIsFalling();
-        previouslyFalling = isFalling;
+        IsFalling = CheckIsFalling();
+        PreviouslyFalling = IsFalling;
     }
 
     private void HandleFall()
     {
-        isFalling = CheckIsFalling();
+        IsFalling = CheckIsFalling();
 
-        if (!previouslyFalling && isFalling)
+        if (!PreviouslyFalling && IsFalling)
         {
             OnPlayerFall?.Invoke(this, EventArgs.Empty);
         }
 
-        previouslyFalling = isFalling;
+        PreviouslyFalling = IsFalling;
     }
 
 
-    private bool CheckIsFalling() => !checkGround.IsGrounded && _rigidbody.velocity.y < 0f;
+    private bool CheckIsFalling() 
+    {
+        if (checkGround.IsGrounded) return false;
+        if (checkGround.DistanceFromGround < fallDistanceFromGroundThreshold) return false;
+        if (_rigidbody.velocity.y > fallVelocityThreshold) return false;
+
+        return true;
+    }
 }

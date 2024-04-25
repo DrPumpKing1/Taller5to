@@ -7,19 +7,19 @@ public class PlayerGravityController : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private CheckGround checkGround;
+    [SerializeField] private PlayerHorizontalMovement playerHorizontalMovement;
 
     [Header("Physic Materials")]
     [SerializeField] private PhysicMaterial frictionMaterial;
     [SerializeField] private PhysicMaterial frictionlessMaterial;
 
     [Header("Gravity Settings")]
-    [SerializeField, Range(0.5f,2f)] private float gravityMultiplier = 1f;
-    [SerializeField, Range(0.5f,3f)] private float fallMultiplier;
-    [SerializeField, Range(0.5f,3f)] private float lowJumpMultiplier;
+    [SerializeField, Range(0.5f, 2f)] private float gravityMultiplier = 1f;
+    [SerializeField, Range(0.5f, 3f)] private float fallMultiplier;
+    [SerializeField, Range(0.5f, 3f)] private float lowJumpMultiplier;
 
     [Header("Slope Stick Settings")]
-    [SerializeField, Range(10f,100f)] private float stickToSlopeForce = 5f;
-    [SerializeField, Range(1f,50f)] private int stickToSlopeFrames = 30;
+    [SerializeField, Range(0f, 20f)] private float stickToSlopeForce = 5f;
 
     public float GravityMultiplier { get { return gravityMultiplier; } }
     public float FallMultiplier { get { return fallMultiplier; } }
@@ -52,7 +52,6 @@ public class PlayerGravityController : MonoBehaviour
     private void FixedUpdate()
     {
         HandleSlopes();
-        HandleSlopeChange();
     }
 
     private void HandleSlopes()
@@ -61,58 +60,36 @@ public class PlayerGravityController : MonoBehaviour
 
         if (currentIsOnSlope && !previousWasOnSlope)
         {
-            StickToSlope();
+            EnterSlope();
         }
 
-        if ( !currentIsOnSlope && previousWasOnSlope)
+        if (!currentIsOnSlope && previousWasOnSlope)
         {
             LeaveSlope();
+        }
+
+        if (currentIsOnSlope)
+        {
+            StayOnSlope();
         }
 
         previousWasOnSlope = currentIsOnSlope;
     }
 
-    private void HandleSlopeChange()
+    private void EnterSlope()
     {
-        currentSlopeNormal = checkGround.SlopeNormal;
-
-        if (currentSlopeNormal != previousSlopeNormal)
-        {
-            if (!checkGround.OnSlope) return;
-            StartCoroutine(StayOnSlopeCoroutine());
-        }
-
-        previousSlopeNormal = currentSlopeNormal;
-    }
-
-    private void StickToSlope()
-    {
-        capsulleCollider.material = frictionMaterial;       
+        capsulleCollider.material = frictionMaterial;
     }
 
     private void StayOnSlope()
     {
-        _rigidbody.AddForce(-checkGround.SlopeNormal * stickToSlopeForce, ForceMode.Force);
+        if (!playerHorizontalMovement.IsRunning()) return;
+        _rigidbody.AddForce(stickToSlopeForce * -checkGround.SlopeNormal, ForceMode.Force);
     }
 
     private void LeaveSlope()
     {
         capsulleCollider.material = frictionlessMaterial;
-    }
-
-    private IEnumerator StayOnSlopeCoroutine()
-    {
-        yield return new WaitForEndOfFrame();
-
-        int frames = 0;
-
-        while(frames < stickToSlopeFrames)
-        {
-            StayOnSlope();
-            frames++;
-
-            yield return null;
-        }
     }
 
 }

@@ -6,7 +6,7 @@ using System;
 public class PlayerLand : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private CheckGround checkGround;
+    [SerializeField] private PlayerFall playerFall;
     [SerializeField] private PlayerGravityController playerGravityController;
 
     [Header("Land Settings")]
@@ -18,11 +18,11 @@ public class PlayerLand : MonoBehaviour
 
     public bool IsRecoveringFromLanding { get; private set; }
 
-    private enum State {Idle, RegularLanding, HardLanding}
+    private enum State {NotLanding, RegularLanding, HardLanding}
     private State state;
 
     private Rigidbody _rigidbody;
-    private bool prevoiuslyGrounded;
+    private bool previouslyFalling;
     private float timer = 0f;
 
     public event EventHandler OnPlayerRegularLand;
@@ -51,15 +51,15 @@ public class PlayerLand : MonoBehaviour
 
     private void InitializeVariables()
     {
-        prevoiuslyGrounded = checkGround.IsGrounded;
+        previouslyFalling = playerFall.IsFalling;
     }
 
     private void HandleLandStates()
     {
         switch (state)
         {
-            case State.Idle:
-                IdleLogic();
+            case State.NotLanding:
+                NotLandingLogic();
                 break;
             case State.RegularLanding:
                 RegularLandingLogic();
@@ -69,16 +69,16 @@ public class PlayerLand : MonoBehaviour
                 break;
         }
 
-        prevoiuslyGrounded = checkGround.IsGrounded;
+        previouslyFalling = playerFall.IsFalling;
     }
 
     private void SetLandState(State state) { this.state = state; }
 
-    private void IdleLogic()
+    private void NotLandingLogic()
     {
         IsRecoveringFromLanding = false;
 
-        if (!prevoiuslyGrounded && checkGround.IsGrounded)
+        if (previouslyFalling && !playerFall.IsFalling)
         {
             float landHeight = CalculateLandHeight(_rigidbody.velocity.y, Physics.gravity.y * playerGravityController.GravityMultiplier * playerGravityController. FallMultiplier);
 
@@ -108,8 +108,7 @@ public class PlayerLand : MonoBehaviour
         if (timer >= landRecoveryTime)
         {
             ResetTimer();
-            SetLandState(State.Idle);
-
+            SetLandState(State.NotLanding);
         }
     }
 
@@ -122,7 +121,7 @@ public class PlayerLand : MonoBehaviour
         if (timer >= hardLandRecoveryTime)
         {
             ResetTimer();
-            SetLandState(State.Idle);
+            SetLandState(State.NotLanding);
         }
     }
 
