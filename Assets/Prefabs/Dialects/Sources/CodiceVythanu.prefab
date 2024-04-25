@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dadb109a8d8f60c478f55eb4b6e084a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialectKnowledgeSource: {fileID: 6612325739171289585}
+  dialectKnowledgeSourceCollection: {fileID: -4413392471722548361}
   dialectKnowledgeAddedUIPrefab: {fileID: 5842444769655504113, guid: 8237d20149646f6468d1c7e7301e85cd, type: 3}
   instantiationPositionOffset: {x: 0, y: 0.5, z: 0}
   offsetBetweenInstantiatedUIs: {x: 0, y: 0.75, z: 0}
@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 6651725108797250949}
   - component: {fileID: 8948169088837405330}
   - component: {fileID: 6612325739171289585}
+  - component: {fileID: -4413392471722548361}
   m_Layer: 9
   m_Name: CodiceVythanu
   m_TagString: Untagged
@@ -289,11 +290,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialectKnowledgeSourceSO: {fileID: 11400000, guid: 94211d12bd66a474aba2a8eb45c034c4, type: 2}
+--- !u!114 &-4413392471722548361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7849129103990734234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73aecc7226356bb44ad6dff15a79e50a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialectKnowledgeSource: {fileID: 6612325739171289585}
   destroyTime: 0.1
   canBeSelected: 1
   isInteractable: 1
   hasAlreadyBeenInteracted: 0
-  tooltipMessage: "Leer C\xF3dice Vythanu"
+  tooltipMessage: Collect Vythanu Codex
 --- !u!1001 &2875138013131977308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -385,6 +399,10 @@ PrefabInstance:
     - target: {fileID: 4315054554829363559, guid: 725c375f1adb78b43b9b84f670475ed0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5521186896684959983, guid: 725c375f1adb78b43b9b84f670475ed0, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5715490956989719229, guid: 725c375f1adb78b43b9b84f670475ed0, type: 3}
       propertyPath: m_AnchorMax.y

@@ -5,7 +5,7 @@ using UnityEngine;
 public class DialectKnowledgeSourceCollectedVisual : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private DialectKnowledgeSource dialectKnowledgeSource;
+    [SerializeField] private DialectKnowledgeSourceCollection dialectKnowledgeSourceCollection;
 
     [Header("Knowledge Added Settings")]
     [SerializeField] private Transform dialectKnowledgeAddedUIPrefab;
@@ -18,22 +18,22 @@ public class DialectKnowledgeSourceCollectedVisual : MonoBehaviour
 
     private void OnEnable()
     {
-        dialectKnowledgeSource.OnDialectKnowledgeAdded += DialectKnowledgeSource_OnDialectKnowledgeAdded;
-        dialectKnowledgeSource.OnSymbolsAdded += DialectKnowledgeSource_OnSymbolsAdded;
+        dialectKnowledgeSourceCollection.OnDialectKnowledgeAdded += DialectKnowledgeSourceCollection_OnDialectKnowledgeAdded;
+        dialectKnowledgeSourceCollection.OnSymbolsAdded += DialectKnowledgeSourceCollection_OnSymbolsAdded;
     }
 
     private void OnDisable()
     {
-        dialectKnowledgeSource.OnDialectKnowledgeAdded -= DialectKnowledgeSource_OnDialectKnowledgeAdded;
-        dialectKnowledgeSource.OnSymbolsAdded -= DialectKnowledgeSource_OnSymbolsAdded;
+        dialectKnowledgeSourceCollection.OnDialectKnowledgeAdded -= DialectKnowledgeSourceCollection_OnDialectKnowledgeAdded;
+        dialectKnowledgeSourceCollection.OnSymbolsAdded -= DialectKnowledgeSourceCollection_OnSymbolsAdded;
     }
 
-    private void DialectKnowledgeSource_OnDialectKnowledgeAdded(object sender, DialectKnowledgeSource.OnDialectKnowledgeAddedEventArgs e)
+    private void DialectKnowledgeSourceCollection_OnDialectKnowledgeAdded(object sender, DialectKnowledgeSourceCollection.OnDialectKnowledgeAddedEventArgs e)
     {
         InstantiateKnowledgeAddedUIs(e.dialectKnowledgeSourceSO.dialectKnowledgeLevelChanges);   
     }
 
-    private void DialectKnowledgeSource_OnSymbolsAdded(object sender, DialectKnowledgeSource.OnSymbolsAddedEventArgs e)
+    private void DialectKnowledgeSourceCollection_OnSymbolsAdded(object sender, DialectKnowledgeSourceCollection.OnSymbolsAddedEventArgs e)
     {
         //InstantiateSymbolsAddedUI(e.dialectKnowledgeSourceSO.dialectSymbolSOs);
     }
