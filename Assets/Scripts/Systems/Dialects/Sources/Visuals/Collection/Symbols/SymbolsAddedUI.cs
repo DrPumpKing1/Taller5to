@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SymbolsAddedUI : MonoBehaviour
 {
-    [Header("Components")]
+    [Header("UI Components")]
     [SerializeField] private Transform symbolContainer;
     [SerializeField] private Transform symbolTemplate;
 

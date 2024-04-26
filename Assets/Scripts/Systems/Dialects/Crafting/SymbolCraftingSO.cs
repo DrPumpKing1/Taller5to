@@ -6,4 +6,5 @@ using UnityEngine;
 public class SymbolCraftingSO : ScriptableObject
 {
     public DialectSymbolSO symbolToCraft;
+    public List<Vector2> symbolCraftingPoints;
 }

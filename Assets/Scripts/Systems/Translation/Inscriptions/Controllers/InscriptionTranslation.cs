@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class InscriptionTranslation : MonoBehaviour, IInteractable
+public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSymbolCrafting
 {
     [Header("Components")]
     [SerializeField] private Inscription inscription;
+
+    [Header("SymbolCraftingSettings")]
+    [SerializeField] private Transform symbolCraftingUIPrefab;
+    [SerializeField] private bool symbolCrafted;
+
+    [Header("TranslationSettings")]
+    [SerializeField] private Transform inscriptionTranslationUIPrefab;
 
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
@@ -19,6 +26,10 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
+    #endregion
+
+    #region IRequiresSymbolCraftingProperties
+    public bool SymbolCrafted => symbolCrafted;
     #endregion
 
     #region IInteractableEvents
@@ -35,7 +46,14 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable
         //Debug.Log(gameObject.name + " Interacted");
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
-        Debug.Log("Interact");
+        if (!symbolCrafted)
+        {
+            OpenSymbolCraftingUI();
+        }
+        else
+        {
+            OpenTranslationUI();
+        }
     }
 
     public void FailInteract()
@@ -85,4 +103,17 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable
 
     #endregion
 
+    #region IRequiresSymbolCraftingMethots
+    public void OpenSymbolCraftingUI()
+    {
+
+    }
+
+    public void CraftSymbol() => symbolCrafted = true;
+    #endregion
+
+    private void OpenTranslationUI()
+    {
+
+    }
 }
