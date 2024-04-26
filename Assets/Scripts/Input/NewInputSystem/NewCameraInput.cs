@@ -18,7 +18,7 @@ public class NewCameraInput : CameraInput
         playerInputActions.Camera.Enable();
     }
 
-    public override bool CanProcessCameraInput() => true;
+    public override bool CanProcessCameraInput() => GameManager.Instance.GameState == GameManager.State.OnGameplay;
 
     public override float GetScroll()
     {

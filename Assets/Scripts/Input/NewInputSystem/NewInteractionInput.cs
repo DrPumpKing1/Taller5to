@@ -18,7 +18,7 @@ public class NewInteractionInput : InteractionInput
         playerInputActions.Interaction.Enable();
     }
 
-    public override bool CanProcessInteractionInput() => true;
+    public override bool CanProcessInteractionInput() => GameManager.Instance.GameState == GameManager.State.OnGameplay;
 
     public override bool GetInteractionDown()
     {

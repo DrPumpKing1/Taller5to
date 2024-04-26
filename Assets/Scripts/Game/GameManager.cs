@@ -4,10 +4,27 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameManager Instance { get; private set; }
+    public static GameManager Instance { get; private set; }
 
-    private enum State {OnGameplay, OnUI, OnDialog }
-    private State state;
+    [Header("States")]
+    [SerializeField] private State state;
+    [SerializeField] private State previousState;
+
+    public enum State { OnGameplay, OnUI, OnDialog }
+
+    public State GameState { get { return state; } }
+
+    private void OnEnable()
+    {
+        SymbolCrafingUI.OnAnySymbolCraftingUIOpen += SymbolCrafingUI_OnAnySymbolCraftingUIOpen;
+        SymbolCrafingUI.OnAnySymbolCraftingUIClose += SymbolCrafingUI_OnAnySymbolCraftingUIClose;
+    }
+
+    private void OnDisable()
+    {
+        SymbolCrafingUI.OnAnySymbolCraftingUIOpen -= SymbolCrafingUI_OnAnySymbolCraftingUIOpen;
+        SymbolCrafingUI.OnAnySymbolCraftingUIClose -= SymbolCrafingUI_OnAnySymbolCraftingUIClose;
+    }
 
     private void Awake()
     {
@@ -33,5 +50,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void SetGameState(State state) => this.state = state;
+    private void SetGameState(State state)
+    {
+        previousState = this.state;
+        this.state = state;
+    }
+
+    #region SymbolCraftingUI Sumbcriptions
+    private void SymbolCrafingUI_OnAnySymbolCraftingUIOpen(object sender, System.EventArgs e)
+    {
+        SetGameState(State.OnUI);
+    }
+    private void SymbolCrafingUI_OnAnySymbolCraftingUIClose(object sender, System.EventArgs e)
+    {
+        SetGameState(State.OnGameplay);
+    }
+    #endregion
 }

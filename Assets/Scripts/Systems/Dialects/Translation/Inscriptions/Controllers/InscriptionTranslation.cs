@@ -7,10 +7,7 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
 {
     [Header("Components")]
     [SerializeField] private Inscription inscription;
-
-    [Header("SymbolCraftingSettings")]
-    [SerializeField] private Transform symbolCraftingUIPrefab;
-    [SerializeField] private bool symbolCrafted;
+    [SerializeField] private SymbolCrafting symbolCrafting;
 
     [Header("TranslationSettings")]
     [SerializeField] private Transform inscriptionTranslationUIPrefab;
@@ -28,10 +25,6 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     public string TooltipMessage => tooltipMessage;
     #endregion
 
-    #region IRequiresSymbolCraftingProperties
-    public bool SymbolCrafted => symbolCrafted;
-    #endregion
-
     #region IInteractableEvents
     public event EventHandler OnObjectSelected;
     public event EventHandler OnObjectDeselected;
@@ -40,19 +33,22 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
     #endregion
 
+    public event EventHandler OnOpenSymbolCraftingUI;
+    public event EventHandler OnOpenTranslationUI;
+
     #region  IInteractable Methods
     public void Interact()
     {
         //Debug.Log(gameObject.name + " Interacted");
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
-        if (!symbolCrafted)
+        if (!symbolCrafting.SymbolCrafted)
         {
-            OpenSymbolCraftingUI();
+            OnOpenSymbolCraftingUI?.Invoke(this, EventArgs.Empty);
         }
         else
         {
-            OpenTranslationUI();
+            OnOpenTranslationUI?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -102,18 +98,4 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     public Transform GetTransform() => transform;
 
     #endregion
-
-    #region IRequiresSymbolCraftingMethots
-    public void OpenSymbolCraftingUI()
-    {
-
-    }
-
-    public void CraftSymbol() => symbolCrafted = true;
-    #endregion
-
-    private void OpenTranslationUI()
-    {
-
-    }
 }

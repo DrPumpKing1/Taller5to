@@ -5,7 +5,5 @@ using System;
 
 public interface IRequiresSymbolCrafting
 {
-    public void OpenSymbolCraftingUI();
-    public void CraftSymbol();
-    public bool SymbolCrafted { get; }
+    public event EventHandler OnOpenSymbolCraftingUI;
 }

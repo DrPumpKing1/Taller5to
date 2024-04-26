@@ -13,7 +13,7 @@ public class VirtualCameraInput : CameraInput, IActionHandler
         SetUpActionListener();
     }
 
-    public override bool CanProcessCameraInput() => true;
+    public override bool CanProcessCameraInput() => GameManager.Instance.GameState == GameManager.State.OnGameplay;
 
     public override float GetScroll()
     {

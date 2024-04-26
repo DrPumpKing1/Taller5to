@@ -20,7 +20,7 @@ public class VirtualInteractionInput : InteractionInput, IActionHandler
         SetUpActionListener();
     }
 
-    public override bool CanProcessInteractionInput() => true;
+    public override bool CanProcessInteractionInput() => GameManager.Instance.GameState == GameManager.State.OnGameplay;
 
     public override bool GetInteractionDown()
     {

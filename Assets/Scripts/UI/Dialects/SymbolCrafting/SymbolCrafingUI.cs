@@ -7,9 +7,6 @@ using TMPro;
 
 public class SymbolCrafingUI : MonoBehaviour
 {
-    [Header("Compoents")]
-    [SerializeField] private Component iRequiresSymbolCraftingComponent;
-
     [Header("UI Components")]
     [SerializeField] private Transform availableSymbolsContainer;
     [SerializeField] private Transform availableSymbolTemplate;
@@ -49,22 +46,7 @@ public class SymbolCrafingUI : MonoBehaviour
         closeButton.onClick.AddListener(CloseUI);
     }
 
-    public void SetIRequiresSymbolCrafting(Component iRequiresSymbolCraftingComponent) 
-    { 
-        this.iRequiresSymbolCraftingComponent = iRequiresSymbolCraftingComponent;
-
-        IRequiresSymbolCrafting interf = iRequiresSymbolCraftingComponent.GetComponent<IRequiresSymbolCrafting>();
-
-        if (interf == null)
-        {
-            Debug.LogWarning("There's not a IRequiresSymbolCrafting attached to instantiated prefab");
-            return;
-        }
-
-        iRequiresSymbolCrafting = interf;
-    }
-
-    private void SetUI(SymbolCraftingSO symbolCraftingSO)
+    public void SetUI(SymbolCraftingSO symbolCraftingSO)
     {
         this.symbolCraftingSO = symbolCraftingSO;
 
