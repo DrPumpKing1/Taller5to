@@ -11,6 +11,7 @@ public class SymbolCrafingUI : MonoBehaviour
     [SerializeField] private Transform availableSymbolsContainer;
     [SerializeField] private Transform availableSymbolTemplate;
     [SerializeField] private TextMeshProUGUI titleText;
+    [SerializeField] private Image imageToTranslate;
     [SerializeField] private Button closeButton;
 
     [Header("Settings")]
@@ -51,11 +52,12 @@ public class SymbolCrafingUI : MonoBehaviour
         this.symbolCraftingSO = symbolCraftingSO;
 
         SetTitleText(symbolCraftingSO.symbolToCraft.dialect);
+        SetImageToTranslate(symbolCraftingSO.imageToTranslateSprite);
         SetAvailableSymbolsUI(symbolCraftingSO.symbolToCraft.dialect);
     }
 
     private void SetTitleText(Dialect dialect) => titleText.text = $"Translate to dialect {dialect}";
-
+    private void SetImageToTranslate(Sprite sprite) => imageToTranslate.sprite = sprite;
     private void SetAvailableSymbolsUI(Dialect dialect)
     {
         foreach(DialectDictionary dialectDictionary in DictionaryManager.Instance.Dictionary)
