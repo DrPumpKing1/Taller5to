@@ -22,9 +22,6 @@ public class ProjectionPlatform : MonoBehaviour
     public event EventHandler OnProjectionPlatformClear;
     public event EventHandler<OnProjectionEventArgs> OnProjectionPlatformSet;
 
-    public bool debugRotation = false;
-
-    public bool debug = false;
     public class OnProjectionEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectSO;
@@ -37,10 +34,7 @@ public class ProjectionPlatform : MonoBehaviour
 
     private bool CheckObjectAbove()
     {
-        bool objectAbove = Physics.CheckBox(transform.position + checkBoxCenter, checkBoxHalfExtends, Quaternion.LookRotation(transform.forward, -transform.up), objectAvobeLayers);
-
-        if (debug) Debug.Log(transform.forward);
-
+        bool objectAbove = Physics.CheckBox(transform.position + transform.TransformDirection(checkBoxCenter), transform.TransformDirection(checkBoxHalfExtends), Quaternion.identity, objectAvobeLayers);
         return objectAbove;
     }
 
