@@ -34,7 +34,7 @@ public class ProjectionPlatform : MonoBehaviour
 
     private bool CheckObjectAbove()
     {
-        bool objectAbove = Physics.CheckBox(transform.position + transform.TransformDirection(checkBoxCenter), transform.TransformDirection(checkBoxHalfExtends), Quaternion.identity, objectAvobeLayers);
+        bool objectAbove = Physics.CheckBox(transform.position + transform.TransformDirection(checkBoxCenter), checkBoxHalfExtends, transform.rotation, objectAvobeLayers);
         return objectAbove;
     }
 
