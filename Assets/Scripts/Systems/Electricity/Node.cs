@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+//[System.Serializable]
 public class Node
 {
     [SerializeField] private Electrode electrode;
@@ -83,4 +83,6 @@ public class Node
 
         if(weight > node.weight) node.electrode.ReceiveSignal(electrode.SendSignal(node.electrode));
     }
+
+    private Electrode GetComponent() => electrode;
 }
