@@ -103,32 +103,24 @@ MonoBehaviour:
   debug: 0
   sourcePower: 0
   power: 0
-  signal:
-    intensity: 0
-    powerCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    duration: 0
+  signals: []
   powerCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -1.3793424
-      outSlope: -1.3793424
+      inSlope: -0.4603366
+      outSlope: -0.4603366
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.44801748
-      value: 0.38203046
-      inSlope: -1.0357243
-      outSlope: -1.0357243
+      time: 0.630299
+      value: 0.7098503
+      inSlope: -1.1902013
+      outSlope: -1.1902013
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -136,8 +128,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -0.69210607
-      outSlope: -0.69210607
+      inSlope: -1.9200659
+      outSlope: -1.9200659
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -146,7 +138,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   resistance: 10
-  powerTimer: 0
   type: 00000000
   node:
     electrode: {fileID: 0}

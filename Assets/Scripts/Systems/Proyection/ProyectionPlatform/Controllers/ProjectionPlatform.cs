@@ -17,6 +17,7 @@ public class ProjectionPlatform : MonoBehaviour
     public Transform ProjectionPoint { get { return projectionPoint; } }
     public ProjectableObjectSO CurrentProjectedObject { get { return currentProjectedObject; } }
     public bool ObjectAbove;
+    public bool useObjectAbove;
 
     public event EventHandler OnProjectionPlatformClear;
     public event EventHandler<OnProjectionEventArgs> OnProjectionPlatformSet;
@@ -29,12 +30,12 @@ public class ProjectionPlatform : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ObjectAbove = CheckObjectAbove();
+        ObjectAbove = CheckObjectAbove() && useObjectAbove;
     }
 
     private bool CheckObjectAbove()
     {
-        bool objectAbove = Physics.CheckBox(transform.position + checkBoxCenter, checkBoxHalfExtends, Quaternion.identity, objectAvobeLayers);
+        bool objectAbove = Physics.CheckBox(transform.position + checkBoxCenter, checkBoxHalfExtends, transform.rotation, objectAvobeLayers);
 
         return objectAbove;
     }
