@@ -5,11 +5,9 @@ using System;
 using UnityEngine.UI;
 using TMPro;
 
-public class SymbolCrafingUI : MonoBehaviour
+public class SymbolCrafingUI : BaseUI
 {
     [Header("UI Components")]
-    [SerializeField] private Transform availableSymbolsContainer;
-    [SerializeField] private Transform availableSymbolTemplate;
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private Image imageToTranslate;
     [SerializeField] private Button closeButton;
@@ -22,24 +20,21 @@ public class SymbolCrafingUI : MonoBehaviour
 
     public IRequiresSymbolCrafting iRequiresSymbolCrafting;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         OnAnySymbolCraftingUIOpen?.Invoke(this, EventArgs.Empty);
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         OnAnySymbolCraftingUIClose?.Invoke(this, EventArgs.Empty);
     }
 
     private void Awake()
     {
         InitializeButtonsListeners();
-    }
-
-    private void Start()
-    {
-        availableSymbolTemplate.gameObject.SetActive(false);
     }
 
     private void InitializeButtonsListeners()
@@ -53,40 +48,13 @@ public class SymbolCrafingUI : MonoBehaviour
 
         SetTitleText(symbolCraftingSO.symbolToCraft.dialect);
         SetImageToTranslate(symbolCraftingSO.imageToTranslateSprite);
-        SetAvailableSymbolsUI(symbolCraftingSO.symbolToCraft.dialect);
     }
 
     private void SetTitleText(Dialect dialect) => titleText.text = $"Translate to dialect {dialect}";
     private void SetImageToTranslate(Sprite sprite) => imageToTranslate.sprite = sprite;
-    private void SetAvailableSymbolsUI(Dialect dialect)
+
+    protected override void CloseUI()
     {
-        foreach(DialectDictionary dialectDictionary in DictionaryManager.Instance.Dictionary)
-        {
-            if(dialectDictionary.dialect == dialect)
-            {
-                foreach (DialectSymbolSO dialectSymbolSO in dialectDictionary.dialectSymbolsSOs)
-                {
-                    GameObject availableSymbolUIGameObject = Instantiate(availableSymbolTemplate.gameObject, availableSymbolsContainer);
-                    availableSymbolUIGameObject.SetActive(true);
-
-                    AvailableSymbolSingleUI availableSymbolSingleUI = availableSymbolUIGameObject.GetComponent<AvailableSymbolSingleUI>();
-
-                    if (!availableSymbolSingleUI)
-                    {
-                        Debug.LogWarning("There's not a AvailableSymbolSingleUI attached to instantiated prefab");
-                        continue;
-                    }
-
-                    availableSymbolSingleUI.SetSymbolImage(dialectSymbolSO.symbolImage);
-                }
-
-                return;
-            }
-        }     
-    }
-
-    private void CloseUI()
-    {
-        Destroy(gameObject);
+        Destroy(transform.parent.gameObject);
     }
 }
