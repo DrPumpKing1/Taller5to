@@ -72,17 +72,17 @@ public class PlayerInteractAlternate : MonoBehaviour
         {
             if (curentInteractableAlternate == null)
             {
-                SelectInteractable(interactableAlternate);
+                SelectInteractableAlternate(interactableAlternate);
             }
             else if (curentInteractableAlternate != interactableAlternate)
             {
-                DeselectInteractable(curentInteractableAlternate);
-                SelectInteractable(interactableAlternate);
+                DeselectInteractableAlternate(curentInteractableAlternate);
+                SelectInteractableAlternate(interactableAlternate);
             }
         }
         else if (curentInteractableAlternate != null)
         {
-            DeselectInteractable(curentInteractableAlternate);
+            DeselectInteractableAlternate(curentInteractableAlternate);
         }
     }
 
@@ -146,7 +146,7 @@ public class PlayerInteractAlternate : MonoBehaviour
         return null;
     }
 
-    private void SelectInteractable(IInteractableAlternate interactableAlternate)
+    private void SelectInteractableAlternate(IInteractableAlternate interactableAlternate)
     {
         curentInteractableAlternate = interactableAlternate;
 
@@ -156,8 +156,13 @@ public class PlayerInteractAlternate : MonoBehaviour
         //Debug.Log("Selected");
     }
 
-    private void DeselectInteractable(IInteractableAlternate interactableAlternate)
+    private void DeselectInteractableAlternate(IInteractableAlternate interactableAlternate)
     {
+        if (IsInteractingAlternate)
+        {
+            OnInteractionAlternateEnded?.Invoke(this, new OnInteractionAlternateEventArgs { interactableAlternate = interactableAlternate });
+        }
+
         curentInteractableAlternate = null;
 
         interactableAlternate.DeselectAlternate();
@@ -231,7 +236,7 @@ public class PlayerInteractAlternate : MonoBehaviour
                 ResetInteractionsAlternate();
             }
         }
-        else if (previousCanHoldInteractAlternate)
+        else if (previousCanHoldInteractAlternate && IsInteractingAlternate)
         { 
             OnHoldInteractionAlternateStopped?.Invoke(this, new OnInteractionAlternateEventArgs { interactableAlternate = holdInteractableAlternate });
             OnInteractionAlternateEnded?.Invoke(this, new OnInteractionAlternateEventArgs { interactableAlternate = holdInteractableAlternate });

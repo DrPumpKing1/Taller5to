@@ -87,7 +87,7 @@ public class SingleDictionaryUI : BaseUI
         {
             if(child.TryGetComponent(out DictionarySymbolSlotUI dictionarySymbolSlotUI))
             {
-                DialectDictionary dialectDictionary = DictionaryManager.Instance.GetDialectDictionaryByDialect(dialect);
+                DialectDictionary dialectDictionary = SymbolsDictionaryManager.Instance.GetDialectDictionaryByDialect(dialect);
 
                 if (dialectDictionary.dialectSymbolsSOs.Contains(dictionarySymbolSlotUI.DialectSymbolSO))
                 {

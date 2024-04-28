@@ -156,20 +156,21 @@ public class PlayerInteract : MonoBehaviour
 
         interactable.Select();
         OnInteractableSelected?.Invoke(this, new OnInteractionEventArgs { interactable = interactable });
-
-        //Debug.Log("Selected");
     }
 
     private void DeselectInteractable(IInteractable interactable)
     {
+        if (IsInteracting)
+        {
+            OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = interactable });
+        }
+
         currentInteractable = null;
 
         interactable.Deselect();
         OnInteractableDeselected?.Invoke(this, new OnInteractionEventArgs { interactable = interactable });
 
         ResetInteractions();
-
-        //Debug.Log("Deselected");
     }
 
     private void HandleInteractions()
@@ -232,16 +233,14 @@ public class PlayerInteract : MonoBehaviour
                 OnInteractionCompleted?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
                 OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
                 holdInteractable.HoldInteractionEnd();
-
                 ResetInteractions();
             }
         }
-        else if (previousCanHoldInteract)
+        else if (previousCanHoldInteract && IsInteracting)
         {
             OnHoldInteractionStopped?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
             OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
             holdInteractable.HoldInteractionEnd();
-
             ResetInteractions();
         }
 
@@ -252,6 +251,7 @@ public class PlayerInteract : MonoBehaviour
     {
         holdTimer = 0f;
         inputDownToHold = false;
+
         IsInteracting = false;
     }
 

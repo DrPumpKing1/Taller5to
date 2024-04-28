@@ -42,12 +42,10 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     public void Select()
     {
         OnObjectSelected?.Invoke(this, EventArgs.Empty);
-        Debug.Log("ProjectableObject Selected");
     }
     public void Deselect()
     {
         OnObjectDeselected?.Invoke(this, EventArgs.Empty);
-        Debug.Log("ProjectableObject Deselected");
     }
 
     public void TryInteract()
@@ -69,7 +67,6 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
 
     public void Interact()
     {
-        Debug.Log("ProjectableObject Interacted");
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
         DematerializeObject();

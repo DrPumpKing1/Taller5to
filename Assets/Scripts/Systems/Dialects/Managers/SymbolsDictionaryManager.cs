@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class DictionaryManager : MonoBehaviour
+public class SymbolsDictionaryManager : MonoBehaviour
 {
-    public static DictionaryManager Instance { get; private set; }
+    public static SymbolsDictionaryManager Instance { get; private set; }
 
-    [Header("Dialect Writings Settings")]
-    [SerializeField] private List<DialectDictionary> dictionary;
+    [Header("Dialect Symbols Settings")]
+    [SerializeField] private List<DialectDictionary> dialectDictionaries;
 
-    public List<DialectDictionary> Dictionary { get { return dictionary; } }
+    public List<DialectDictionary> DialectDictionaries { get { return dialectDictionaries; } }
 
     public static event EventHandler OnDialectSymbolAddedToDictionary;
 
@@ -41,7 +41,7 @@ public class DictionaryManager : MonoBehaviour
 
     public void AddSymbolToDictionary(DialectSymbolSO dialectSymbolSO)
     {
-        foreach (DialectDictionary dialectDictionary in dictionary)
+        foreach (DialectDictionary dialectDictionary in dialectDictionaries)
         {
             if (dialectDictionary.dialect == dialectSymbolSO.dialect)
             {
@@ -56,7 +56,7 @@ public class DictionaryManager : MonoBehaviour
 
     public DialectDictionary GetDialectDictionaryByDialect(Dialect dialect)
     {
-        foreach (DialectDictionary dialectDictionary in dictionary)
+        foreach (DialectDictionary dialectDictionary in dialectDictionaries)
         {
             if (dialectDictionary.dialect == dialect)
             {

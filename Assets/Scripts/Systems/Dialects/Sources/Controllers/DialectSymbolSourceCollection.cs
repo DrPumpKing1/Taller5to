@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class DialectKnowledgeSourceCollection : MonoBehaviour, IInteractable
+public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
 {
     [Header("Components")]
-    [SerializeField] private DialectKnowledgeSource dialectKnowledgeSource;
+    [SerializeField] private DialectSymbolSource dialectSymbolSource;
 
-    [Header("Knowledge Source Collection Settings")]
+    [Header("Symbol Source Collection Settings")]
     [SerializeField, Range(0f, 1f)] private float destroyTime;
 
     [Header("Interactable Settings")]
@@ -32,17 +32,11 @@ public class DialectKnowledgeSourceCollection : MonoBehaviour, IInteractable
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
     #endregion
 
-    public event EventHandler<OnDialectKnowledgeAddedEventArgs> OnDialectKnowledgeAdded;
     public event EventHandler<OnSymbolsAddedEventArgs> OnSymbolsAdded;
-
-    public class OnDialectKnowledgeAddedEventArgs : EventArgs
-    {
-        public DialectKnowledgeSourceSO dialectKnowledgeSourceSO;
-    }
 
     public class OnSymbolsAddedEventArgs : EventArgs
     {
-        public DialectKnowledgeSourceSO dialectKnowledgeSourceSO;
+        public DialectSymbolsSourceSO dialectSymbolSourceSO;
     }
 
     #region  IInteractable Methods
@@ -55,9 +49,8 @@ public class DialectKnowledgeSourceCollection : MonoBehaviour, IInteractable
         isInteractable = false;
         canBeSelected = false;
 
-        AddKnowledgeToDialects();
         AddSymbolsToInventory();
-        DestroyDialectKnowledgeSource();
+        DestroyDialectSymbolSource();
     }
 
     public void FailInteract()
@@ -106,26 +99,15 @@ public class DialectKnowledgeSourceCollection : MonoBehaviour, IInteractable
     public Transform GetTransform() => transform;
 
     #endregion
-
-    private void AddKnowledgeToDialects()
-    {
-        foreach (DialectKnowledge dialectKnowledgePercentageChange in dialectKnowledgeSource.DialectKnowledgeSourceSO.dialectKnowledgeLevelChanges)
-        {
-            DialectManager.Instance.ChangeDialectKnowledge(dialectKnowledgePercentageChange.dialect, dialectKnowledgePercentageChange.level);
-        }
-
-        OnDialectKnowledgeAdded?.Invoke(this, new OnDialectKnowledgeAddedEventArgs { dialectKnowledgeSourceSO = dialectKnowledgeSource.DialectKnowledgeSourceSO });
-    }
-
     private void AddSymbolsToInventory()
     {
-        foreach (DialectSymbolSO dialectSymbolSO in dialectKnowledgeSource.DialectKnowledgeSourceSO.dialectSymbolSOs)
+        foreach (DialectSymbolSO dialectSymbolSO in dialectSymbolSource.DialectSymbolSourceSO.dialectSymbolSOs)
         {
-            DictionaryManager.Instance.AddSymbolToDictionary(dialectSymbolSO);
+            SymbolsDictionaryManager.Instance.AddSymbolToDictionary(dialectSymbolSO);
         }
 
-        OnSymbolsAdded?.Invoke(this, new OnSymbolsAddedEventArgs { dialectKnowledgeSourceSO = dialectKnowledgeSource.DialectKnowledgeSourceSO });
+        OnSymbolsAdded?.Invoke(this, new OnSymbolsAddedEventArgs { dialectSymbolSourceSO = dialectSymbolSource.DialectSymbolSourceSO });
     }
 
-    private void DestroyDialectKnowledgeSource() => Destroy(gameObject, destroyTime);
+    private void DestroyDialectSymbolSource() => Destroy(gameObject, destroyTime);
 }
