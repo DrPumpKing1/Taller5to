@@ -60,6 +60,8 @@ public class SymbolCrafting : MonoBehaviour
     #region IRequiresSymbolCrafting Subscriptions
     private void IRequiresSymbolCrafting_OnOpenSymbolCraftingUI(object sender, EventArgs e)
     {
+        if (UIManager.Instance.UIActive) return;
+
         OpenSymbolCraftingUI();
     }
     #endregion

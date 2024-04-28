@@ -75,6 +75,7 @@ public class DictionarySelectionUI : BaseUI
     private bool CheckOpen()
     {
         if (!DictionaryInput) return false;
+        if (UIManager.Instance.UIActive) return false;
         if (state != State.Closed) return false;
 
         OpenUI();

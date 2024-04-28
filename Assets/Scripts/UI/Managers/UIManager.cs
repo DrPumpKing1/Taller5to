@@ -18,6 +18,12 @@ public class UIManager : MonoBehaviour
 
     public static event EventHandler<OnUIToCloseInputEventArgs> OnUIToCloseInput;
 
+    public static event EventHandler OnUIActive;
+    public static event EventHandler OnUIInactive;
+
+    public bool UIActive => _UILayers.Count > 0;
+    private bool previousUIActive;
+
     public class OnUIToCloseInputEventArgs : EventArgs
     {
         public BaseUI UIToClose;
@@ -29,9 +35,15 @@ public class UIManager : MonoBehaviour
         SetSingleton();
     }
 
+    private void Start()
+    {
+        InitializeVariables();
+    }
+
     public void Update()
     {
         CheckUIToClose();
+        CheckUIActive();
     }
 
     private void SetSingleton()
@@ -47,15 +59,36 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void InitializeVariables()
+    {
+        previousUIActive = UIActive;
+    }
+
     public void CheckUIToClose()
     {
         if (!CloseInput) return;
-        if (!UIActive()) return;
+        if (!UIActive) return;
 
         OnUIToCloseInput?.Invoke(this, new OnUIToCloseInputEventArgs { UIToClose = _UILayers[^1] });
     }
 
+    public void CheckUIActive()
+    {
+        bool currentUIActive = UIActive;
+
+        if(currentUIActive && !previousUIActive)
+        {
+            OnUIActive?.Invoke(this, EventArgs.Empty);
+        }
+
+        if (!currentUIActive && previousUIActive)
+        {
+            OnUIInactive?.Invoke(this, EventArgs.Empty);
+        }
+
+        previousUIActive = currentUIActive;
+    }
+
     public void AddToLayersList(BaseUI baseUI) => _UILayers.Add(baseUI);
     public void RemoveFromLayersList(BaseUI baseUI) => _UILayers.Remove(baseUI);
-    public bool UIActive() => _UILayers.Count > 0;
 }
