@@ -15,7 +15,11 @@ public class DictionarySelectionUI : BaseUI
     [Header("UI Components")]
     [SerializeField] private List<DictionaryButtonPanel> dictionaryButtonPanels;
 
+    private bool DictionaryInput => UIInput.GetDictionaryDown();
     private CanvasGroup canvasGroup;
+
+    public static event EventHandler OnDictionarySelectionUIOpen;
+    public static event EventHandler OnDictionarySelectionUIClose;
 
     [Serializable]
     private class DictionaryButtonPanel
@@ -24,11 +28,6 @@ public class DictionarySelectionUI : BaseUI
         public Button dictionaryButton;
         public SingleDictionaryUI singleDictionaryUI;
     }
-
-    private bool DictionaryInput => UIInput.GetDictionaryDown();
-
-    public static event EventHandler OnDictionarySelectionUIOpen;
-    public static event EventHandler OnDictionarySelectionUIClose;
 
     protected override void OnEnable()
     {

@@ -6,6 +6,9 @@ using System;
 
 public class SingleDictionaryUI : BaseUI
 {
+    [Header("Components")]
+    [SerializeField] private UIInput UIInput;
+
     [Header("UI Components")]
     [SerializeField] private Transform symbolsContainer;
     [SerializeField] private Button closeButton;
@@ -13,6 +16,7 @@ public class SingleDictionaryUI : BaseUI
     [Header("Settings")]
     [SerializeField] private Dialect dialect;
 
+    private bool DictionaryInput => UIInput.GetDictionaryDown();
     private CanvasGroup canvasGroup;
 
     protected override void OnEnable()
@@ -34,6 +38,11 @@ public class SingleDictionaryUI : BaseUI
     {
         InitializeVariables();
         SetUIState(State.Closed);
+    }
+
+    private void LateUpdate() //If put on Update, both this and DictionarySelectionUI Will close
+    {
+        //CheckClose();
     }
 
     private void InitializeButtonsListeners()
@@ -73,6 +82,15 @@ public class SingleDictionaryUI : BaseUI
                 //dictionarySymbolSlotUI.SetMeaningImage
             }
         }
+    }
+
+    private void CheckClose()
+    {
+        if (!UIManager.Instance.IsFirstOnList(this)) return;
+        if (!DictionaryInput) return;
+        if (state != State.Open) return;
+
+        CloseUI();
     }
 
     protected override void CloseUI()

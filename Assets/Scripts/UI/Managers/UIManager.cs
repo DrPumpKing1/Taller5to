@@ -29,7 +29,6 @@ public class UIManager : MonoBehaviour
         public BaseUI UIToClose;
     }
 
-
     private void Awake()
     {
         SetSingleton();
