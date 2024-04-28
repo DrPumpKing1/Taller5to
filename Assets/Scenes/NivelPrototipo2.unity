@@ -56702,13 +56702,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIInput: {fileID: 1806641814}
   dictionaryButtonPanels:
-  - dictionaryButton: {fileID: 1202056936}
+  - dialect: 0
+    dictionaryButton: {fileID: 1202056936}
     dictionaryPanel: {fileID: 0}
-  - dictionaryButton: {fileID: 1544481732}
+  - dialect: 1
+    dictionaryButton: {fileID: 1544481732}
     dictionaryPanel: {fileID: 0}
-  - dictionaryButton: {fileID: 1713346819}
+  - dialect: 2
+    dictionaryButton: {fileID: 1713346819}
     dictionaryPanel: {fileID: 0}
-  - dictionaryButton: {fileID: 652024960}
+  - dialect: 3
+    dictionaryButton: {fileID: 652024960}
     dictionaryPanel: {fileID: 0}
 --- !u!225 &2106815583
 CanvasGroup:
@@ -56718,7 +56722,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2106815580}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

@@ -17,6 +17,7 @@ public class DictionarySelectionUI : BaseUI
     [Serializable]
     private class DictionaryButtonPanel
     {
+        public Dialect dialect;
         public Button dictionaryButton;
         public Transform dictionaryPanel;
     }
@@ -25,6 +26,17 @@ public class DictionarySelectionUI : BaseUI
 
     public static event EventHandler OnDictionarySelectionUIOpen;
     public static event EventHandler OnDictionarySelectionUIClose;
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        SymbolCrafingUI.OnSymbolCraftingUIOpenDIctionary += SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary;
+    }
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        SymbolCrafingUI.OnSymbolCraftingUIOpenDIctionary -= SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary;
+    }
 
     private void Awake()
     {
@@ -47,7 +59,7 @@ public class DictionarySelectionUI : BaseUI
     {
         foreach(DictionaryButtonPanel dictionaryButtonPanel in dictionaryButtonPanels)
         {
-            dictionaryButtonPanel.dictionaryButton.onClick.AddListener(() => OpenPanel(dictionaryButtonPanel.dictionaryPanel));
+            dictionaryButtonPanel.dictionaryButton.onClick.AddListener(() => OpenDictionary(dictionaryButtonPanel.dictionaryPanel));
         }
     }
 
@@ -58,9 +70,9 @@ public class DictionarySelectionUI : BaseUI
         canvasGroup.blocksRaycasts = false;
     }
 
-    private void OpenPanel(Transform panel)
+    private void OpenDictionary(Transform dictionaryPanel)
     {
-        
+        Debug.Log($"Open dictionary");
     }
 
     private void CheckOpenClose()
@@ -116,4 +128,32 @@ public class DictionarySelectionUI : BaseUI
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
     }
+
+    private DictionaryButtonPanel GetDictionaryButtonPanelByDialect(Dialect dialect)
+    {
+        foreach (DictionaryButtonPanel dictionaryButtonPanel in dictionaryButtonPanels)
+        {
+            if(dictionaryButtonPanel.dialect == dialect)
+            {
+                return dictionaryButtonPanel;
+            }
+        }
+
+        return null;
+    }
+
+    #region SymbolCraftingUI Subscriptions
+    private void SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary(object sender, SymbolCrafingUI.OnSymbolCraftingOpenDictionaryEventArgs e)
+    {
+        DictionaryButtonPanel dictionaryButtonPanel = GetDictionaryButtonPanelByDialect(e.dialect);
+
+        if (dictionaryButtonPanel == null)
+        {
+            Debug.LogWarning($"The dialect {e.dialect} does not match any DictionaryButtonPanel on list");
+            return;
+        }
+
+        OpenDictionary(dictionaryButtonPanel.dictionaryPanel);
+    }
+    #endregion
 }

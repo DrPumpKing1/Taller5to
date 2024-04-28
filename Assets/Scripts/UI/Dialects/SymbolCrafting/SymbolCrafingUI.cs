@@ -10,6 +10,7 @@ public class SymbolCrafingUI : BaseUI
     [Header("UI Components")]
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private Image imageToTranslate;
+    [SerializeField] private Button openDictionaryButton;
     [SerializeField] private Button closeButton;
 
     [Header("Settings")]
@@ -19,6 +20,13 @@ public class SymbolCrafingUI : BaseUI
     public static event EventHandler OnAnySymbolCraftingUIClose;
 
     public IRequiresSymbolCrafting iRequiresSymbolCrafting;
+
+    public static event EventHandler<OnSymbolCraftingOpenDictionaryEventArgs> OnSymbolCraftingUIOpenDIctionary;
+
+    public class OnSymbolCraftingOpenDictionaryEventArgs : EventArgs
+    {
+        public Dialect dialect;
+    }
 
     protected override void OnEnable()
     {
@@ -47,6 +55,7 @@ public class SymbolCrafingUI : BaseUI
     private void InitializeButtonsListeners()
     {
         closeButton.onClick.AddListener(CloseUI);
+        openDictionaryButton.onClick.AddListener(OpenDictionary);
     }
 
     public void SetUI(SymbolCraftingSO symbolCraftingSO)
@@ -59,6 +68,11 @@ public class SymbolCrafingUI : BaseUI
 
     private void SetTitleText(Dialect dialect) => titleText.text = $"Translate to dialect {dialect}";
     private void SetImageToTranslate(Sprite sprite) => imageToTranslate.sprite = sprite;
+
+    private void OpenDictionary()
+    {
+        OnSymbolCraftingUIOpenDIctionary?.Invoke(this, new OnSymbolCraftingOpenDictionaryEventArgs { dialect = symbolCraftingSO.symbolToCraft.dialect });
+    }
 
     protected override void CloseUI()
     {
