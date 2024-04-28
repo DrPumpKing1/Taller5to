@@ -51,7 +51,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 129
   checkGoundYOffset: -0.05
-  raySphereRadius: 0.3
+  raySphereRadius: 0.25
   checkSlopeRayLength: 0.1
   checkDistanceGroundRayLenght: 1
   drawRaycasts: 0
@@ -471,8 +471,6 @@ MonoBehaviour:
   movementEnabled: 1
   movementInput: {fileID: 0}
   playerCrouch: {fileID: 6106714240860128082}
-  playerJump: {fileID: 5416400497481260393}
-  playerFall: {fileID: 2984513525385847362}
   playerLand: {fileID: 545511874797415526}
   playerInteract: {fileID: 4536946071876244043}
   playerInteractAlternate: {fileID: 907748609654045023}
@@ -505,8 +503,8 @@ MonoBehaviour:
   playerInteractAlternate: {fileID: 907748609654045023}
   checkGround: {fileID: 2176356878162520009}
   playerCrouch: {fileID: 6106714240860128082}
-  jumpHeight: 1.35
-  jumpHeightError: 0.05
+  jumpHeight: 1.25
+  jumpHeightError: -0.12
   impulseTime: 0
   jumpCooldown: 0.75
   forwardImpulse: 1.5

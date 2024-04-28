@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class Inscription : MonoBehaviour
 {
+    [Header("Settings")]
+    [SerializeField] private InscriptionSO inscriptionSO;
 
+    public InscriptionSO InscriptionSO { get { return inscriptionSO; } }
 }

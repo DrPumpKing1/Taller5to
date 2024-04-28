@@ -53,4 +53,18 @@ public class DictionaryManager : MonoBehaviour
             }
         }
     }
+
+    public DialectDictionary GetDialectDictionaryByDialect(Dialect dialect)
+    {
+        foreach (DialectDictionary dialectDictionary in dictionary)
+        {
+            if (dialectDictionary.dialect == dialect)
+            {
+                return dialectDictionary;
+            }
+        }
+
+        Debug.LogWarning($"The dialect {dialect} does not match any dictionary on DicionaryManager");
+        return null;
+    }
 }

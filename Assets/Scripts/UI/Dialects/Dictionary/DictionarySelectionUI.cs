@@ -121,6 +121,8 @@ public class DictionarySelectionUI : BaseUI
         GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 1f);
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
+
+        OnDictionarySelectionUIOpen?.Invoke(this, EventArgs.Empty);
     }
 
     protected override void CloseUI()
@@ -134,6 +136,8 @@ public class DictionarySelectionUI : BaseUI
         GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
+
+        OnDictionarySelectionUIClose?.Invoke(this, EventArgs.Empty);
     }
 
     private DictionaryButtonPanel GetDictionaryButtonPanelByDialect(Dialect dialect)

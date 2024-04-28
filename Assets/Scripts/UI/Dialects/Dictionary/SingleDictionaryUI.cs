@@ -16,6 +16,14 @@ public class SingleDictionaryUI : BaseUI
     [Header("Settings")]
     [SerializeField] private Dialect dialect;
 
+    public static event EventHandler OnSingleDictionaryUIOpen;
+    public static event EventHandler OnSingleDictionaryUIClose;
+
+    public class OnSingleDiccionaryUIEventArgs : EventArgs
+    {
+        public Dialect dialect;
+    }
+
     private bool DictionaryInput => UIInput.GetDictionaryDown();
     private CanvasGroup canvasGroup;
 
@@ -69,6 +77,8 @@ public class SingleDictionaryUI : BaseUI
         canvasGroup.blocksRaycasts = true;
 
         UpdateSymbols();
+
+        OnSingleDictionaryUIOpen?.Invoke(this, new OnSingleDiccionaryUIEventArgs { dialect = dialect });
     }
 
     private void UpdateSymbols()
@@ -77,9 +87,12 @@ public class SingleDictionaryUI : BaseUI
         {
             if(child.TryGetComponent(out DictionarySymbolSlotUI dictionarySymbolSlotUI))
             {
-                
+                DialectDictionary dialectDictionary = DictionaryManager.Instance.GetDialectDictionaryByDialect(dialect);
 
-                //dictionarySymbolSlotUI.SetMeaningImage
+                if (dialectDictionary.dialectSymbolsSOs.Contains(dictionarySymbolSlotUI.DialectSymbolSO))
+                {
+                    dictionarySymbolSlotUI.ShowSymbol();
+                }           
             }
         }
     }
@@ -104,5 +117,7 @@ public class SingleDictionaryUI : BaseUI
         GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
+
+        OnSingleDictionaryUIClose?.Invoke(this, new OnSingleDiccionaryUIEventArgs { dialect = dialect });
     }
 }

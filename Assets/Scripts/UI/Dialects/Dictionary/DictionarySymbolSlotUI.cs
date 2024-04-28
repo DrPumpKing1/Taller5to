@@ -10,10 +10,16 @@ public class DictionarySymbolSlotUI : MonoBehaviour
     [SerializeField] private Image meaningImage;
 
     [Header("Settings")]
-    [SerializeField] private int symbolID;
+    [SerializeField] private DialectSymbolSO dialectSymbolSO;
 
-    public int SymbolID { get { return symbolID; } }
+    public DialectSymbolSO DialectSymbolSO { get { return dialectSymbolSO; } }
 
-    public void SetSymbolImage(Sprite sprite) => symbolImage.sprite = sprite;
-    public void SetMeaningImage(Sprite sprite) => meaningImage.sprite = sprite;
+    public void ShowSymbol()
+    {
+        ShowSymbolImage();
+        ShowMeaningImage();
+    }
+
+    private void ShowSymbolImage() => symbolImage.sprite = dialectSymbolSO.symbolImage;
+    private void ShowMeaningImage() => meaningImage.sprite = dialectSymbolSO.meaningImage;
 }
