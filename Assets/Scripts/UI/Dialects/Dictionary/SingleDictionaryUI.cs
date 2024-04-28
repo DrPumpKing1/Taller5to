@@ -1,18 +1,90 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System;
 
-public class SingleDictionaryUI : MonoBehaviour
+public class SingleDictionaryUI : BaseUI
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("UI Components")]
+    [SerializeField] private Transform symbolsContainer;
+    [SerializeField] private Button closeButton;
+
+    [Header("Settings")]
+    [SerializeField] private Dialect dialect;
+
+    private CanvasGroup canvasGroup;
+
+    protected override void OnEnable()
     {
-        
+        base.OnEnable();
+    }
+    protected override void OnDisable()
+    {
+        base.OnDisable();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        canvasGroup = GetComponent<CanvasGroup>();
+        InitializeButtonsListeners();
+    }
+
+    private void Start()
+    {
+        InitializeVariables();
+        SetUIState(State.Closed);
+    }
+
+    private void InitializeButtonsListeners()
+    {
+        closeButton.onClick.AddListener(CloseUI);
+    }
+    private void InitializeVariables()
+    {
+        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
+    }
+
+    public void OpenUI()
+    {
+        if (state != State.Closed) return;
+
+        SetUIState(State.Open);
+
+        AddToUILayersList();
+
+        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 1f);
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
+
+        UpdateSymbols();
+    }
+
+    private void UpdateSymbols()
+    {
+        foreach(Transform child in symbolsContainer)
+        {
+            if(child.TryGetComponent(out DictionarySymbolSlotUI dictionarySymbolSlotUI))
+            {
+                
+
+                //dictionarySymbolSlotUI.SetMeaningImage
+            }
+        }
+    }
+
+    protected override void CloseUI()
+    {
+        if (state != State.Open) return;
+
+        SetUIState(State.Closed);
+
+        RemoveFromUILayersList();
+
+        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
     }
 }

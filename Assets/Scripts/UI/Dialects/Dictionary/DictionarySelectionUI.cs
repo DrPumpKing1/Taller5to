@@ -10,6 +10,9 @@ public class DictionarySelectionUI : BaseUI
     [SerializeField] private UIInput UIInput;
 
     [Header("UI Components")]
+    [SerializeField] private Button closeButton;
+
+    [Header("UI Components")]
     [SerializeField] private List<DictionaryButtonPanel> dictionaryButtonPanels;
 
     private CanvasGroup canvasGroup;
@@ -19,7 +22,7 @@ public class DictionarySelectionUI : BaseUI
     {
         public Dialect dialect;
         public Button dictionaryButton;
-        public Transform dictionaryPanel;
+        public SingleDictionaryUI singleDictionaryUI;
     }
 
     private bool DictionaryInput => UIInput.GetDictionaryDown();
@@ -57,9 +60,11 @@ public class DictionarySelectionUI : BaseUI
 
     private void InitializeButtonsListeners()
     {
+        closeButton.onClick.AddListener(CloseUI);
+
         foreach(DictionaryButtonPanel dictionaryButtonPanel in dictionaryButtonPanels)
         {
-            dictionaryButtonPanel.dictionaryButton.onClick.AddListener(() => OpenDictionary(dictionaryButtonPanel.dictionaryPanel));
+            dictionaryButtonPanel.dictionaryButton.onClick.AddListener(() => OpenDictionary(dictionaryButtonPanel.singleDictionaryUI));
         }
     }
 
@@ -70,9 +75,9 @@ public class DictionarySelectionUI : BaseUI
         canvasGroup.blocksRaycasts = false;
     }
 
-    private void OpenDictionary(Transform dictionaryPanel)
+    private void OpenDictionary(SingleDictionaryUI singleDictionaryUI)
     {
-        Debug.Log($"Open dictionary");
+        singleDictionaryUI.OpenUI();
     }
 
     private void CheckOpenClose()
@@ -86,8 +91,8 @@ public class DictionarySelectionUI : BaseUI
 
     private bool CheckOpen()
     {
-        if (!DictionaryInput) return false;
         if (UIManager.Instance.UIActive) return false;
+        if (!DictionaryInput) return false;
         if (state != State.Closed) return false;
 
         OpenUI();
@@ -97,6 +102,7 @@ public class DictionarySelectionUI : BaseUI
 
     private bool CheckClose()
     {
+        if (!UIManager.Instance.IsFirstOnList(this)) return false;
         if (!DictionaryInput) return false;
         if (state != State.Open) return false;
 
@@ -107,6 +113,8 @@ public class DictionarySelectionUI : BaseUI
 
     private void OpenUI()
     {
+        if (state != State.Closed) return;
+
         SetUIState(State.Open);
 
         AddToUILayersList();
@@ -153,7 +161,7 @@ public class DictionarySelectionUI : BaseUI
             return;
         }
 
-        OpenDictionary(dictionaryButtonPanel.dictionaryPanel);
+        OpenDictionary(dictionaryButtonPanel.singleDictionaryUI);
     }
     #endregion
 }

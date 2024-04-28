@@ -89,6 +89,12 @@ public class UIManager : MonoBehaviour
         previousUIActive = currentUIActive;
     }
 
+    public bool IsFirstOnList(BaseUI baseUI)
+    {
+        if (_UILayers.Count == 0) return false;
+        return baseUI == _UILayers[^1];
+    }
+
     public void AddToLayersList(BaseUI baseUI) => _UILayers.Add(baseUI);
     public void RemoveFromLayersList(BaseUI baseUI) => _UILayers.Remove(baseUI);
 }
