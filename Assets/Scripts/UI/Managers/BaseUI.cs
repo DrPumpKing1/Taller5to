@@ -4,21 +4,24 @@ using UnityEngine;
 
 public abstract class BaseUI : MonoBehaviour
 {
-    protected bool shouldClose = false;
+    protected enum State {Closed, Opening, Open, Closing}
+
+    protected State state;
+
     protected virtual void OnEnable()
     {
-        AddToUILayersList();
         UIManager.OnUIToCloseInput += UIManager_OnUIToCloseInput;
     }
 
     protected virtual void OnDisable()
     {
         UIManager.OnUIToCloseInput -= UIManager_OnUIToCloseInput;
-        RemoveFromUILayersList();
     }
 
     protected void AddToUILayersList() => UIManager.Instance.AddToLayersList(this);
     protected void RemoveFromUILayersList() => UIManager.Instance.RemoveFromLayersList(this);
+
+    protected void SetUIState(State state) => this.state = state;
 
     protected abstract void CloseUI();
 
@@ -26,9 +29,7 @@ public abstract class BaseUI : MonoBehaviour
     private void UIManager_OnUIToCloseInput(object sender, UIManager.OnUIToCloseInputEventArgs e)
     {
         if (e.UIToClose != this) return;
-        if (shouldClose) return;
-
-        shouldClose = true;
+        if (state != State.Open) return;
 
         CloseUI();
     }

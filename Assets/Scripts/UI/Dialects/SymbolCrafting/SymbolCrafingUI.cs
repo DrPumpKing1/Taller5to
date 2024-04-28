@@ -23,18 +23,25 @@ public class SymbolCrafingUI : BaseUI
     protected override void OnEnable()
     {
         base.OnEnable();
+        AddToUILayersList();
         OnAnySymbolCraftingUIOpen?.Invoke(this, EventArgs.Empty);
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
+        RemoveFromUILayersList();
         OnAnySymbolCraftingUIClose?.Invoke(this, EventArgs.Empty);
     }
 
     private void Awake()
     {
         InitializeButtonsListeners();
+    }
+
+    private void Start()
+    {
+        SetUIState(State.Open);
     }
 
     private void InitializeButtonsListeners()
@@ -55,6 +62,9 @@ public class SymbolCrafingUI : BaseUI
 
     protected override void CloseUI()
     {
+        if (state != State.Open) return;
+
+        SetUIState(State.Closed);
         Destroy(transform.parent.gameObject);
     }
 }
