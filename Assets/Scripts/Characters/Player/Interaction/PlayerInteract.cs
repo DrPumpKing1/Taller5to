@@ -16,9 +16,16 @@ public class PlayerInteract : MonoBehaviour
 
     [Header("Interaction Settings")]
     [SerializeField] private LayerMask interactionLayer;
+
+    [Header("Normal Interaction Settings")]
     [SerializeField, Range(0f, 2.5f)] private float interactionRayStartDistance = 1f;
     [SerializeField, Range(0.1f, 2.5f)] private float interactionRayLenght = 1f;
     [SerializeField, Range(0.1f, 1f)] private float interactionSphereRadius = 2f;
+
+    [Header("World Space InteractionSettings")]
+    [SerializeField, Range(1f, 100f)] private float maxDistanceFromPlayer; 
+    [SerializeField, Range(200f,350f)] private float maxDistanceFromCamera;
+
 
     [Header("Debug")]
     [SerializeField] private bool drawRaycasts;
@@ -28,8 +35,8 @@ public class PlayerInteract : MonoBehaviour
     public Vector3 InteractionDirection => playerRotationHandler.DesiredFacingDirection.normalized;
 
     public bool IsInteracting { get; private set; }
-
     public bool InteractionEnabled { get { return interactionEnabled; } }
+    public float MaxDistanceFromPlayer { get { return maxDistanceFromPlayer; } }
 
     private float holdTimer;
     private bool inputDownToHold;
@@ -85,7 +92,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void HandleInteractableSelections()
     {
-        IInteractable interactable = CheckForInteractable();
+        IInteractable interactable = CheckForInteractableWorldSpace();
 
         if (!checkGround.IsGrounded) interactable = null;
         if (!interactionEnabled) interactable = null;
@@ -108,9 +115,9 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 
-    private IInteractable CheckForInteractable()
+    private IInteractable CheckForInteractableNormal()
     {
-        RaycastHit[] hits = GetInteractableLayerHits();
+        RaycastHit[] hits = GetInteractableLayerHitsNormal();
 
         if (hits.Length == 0) return null;
 
@@ -138,6 +145,21 @@ public class PlayerInteract : MonoBehaviour
         }
 
         return interactable;
+    }
+
+    private IInteractable CheckForInteractableWorldSpace()
+    {
+        RaycastHit hit = GetInteractableLayerHitsWorldSpace();
+
+        if (hit.collider == null) return null;
+        if (Vector3.Distance(hit.collider.transform.position, transform.position) > maxDistanceFromPlayer) return null;
+
+        IInteractable potentialInteractable = CheckIfRayHitHasInteractable(hit);
+
+        if (potentialInteractable == null) return null;
+        if (!potentialInteractable.IsSelectable) return null;
+
+        return potentialInteractable;
     }
 
     private IInteractable CheckIfRayHitHasInteractable(RaycastHit hit)
@@ -259,13 +281,24 @@ public class PlayerInteract : MonoBehaviour
 
     private bool CanHoldInteract() => InteractionHoldInput && inputDownToHold; //&& !playerHorizontalMovement.HasMovementInput();
 
-    public RaycastHit[] GetInteractableLayerHits()
+    public RaycastHit[] GetInteractableLayerHitsNormal()
     {
         RaycastHit[] hits = Physics.SphereCastAll(GetRaycastOrigin(), interactionSphereRadius, InteractionDirection, interactionRayLenght, interactionLayer); ;
 
         if (drawRaycasts) Debug.DrawRay(GetRaycastOrigin(), InteractionDirection * interactionRayLenght, Color.yellow);
 
         return hits;
+    }
+
+    public RaycastHit GetInteractableLayerHitsWorldSpace()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        
+        if (drawRaycasts) Debug.DrawRay(ray.origin, ray.direction * maxDistanceFromCamera, Color.red);
+
+        bool hitInteractable = Physics.Raycast(ray, out RaycastHit hit, maxDistanceFromCamera, interactionLayer);
+
+        return hit;
     }
 
     public Vector3 GetRaycastOrigin() => transform.position + capsulleCollider.center + InteractionDirection * interactionRayStartDistance;

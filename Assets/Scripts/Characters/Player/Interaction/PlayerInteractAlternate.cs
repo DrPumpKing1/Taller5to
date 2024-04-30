@@ -61,7 +61,7 @@ public class PlayerInteractAlternate : MonoBehaviour
 
     private void HandleInteractableAlternateSelections()
     {
-        IInteractableAlternate interactableAlternate = CheckIfHoldInteractableAlternate();
+        IInteractableAlternate interactableAlternate = CheckForInteractableAlternateWorldSpace();
 
         CheckIfInteractableIsTheSame(ref interactableAlternate);
 
@@ -104,9 +104,9 @@ public class PlayerInteractAlternate : MonoBehaviour
         }
     }
 
-    private IInteractableAlternate CheckIfHoldInteractableAlternate()
+    private IInteractableAlternate CheckForInteractableAlternateNormal()
     {
-        RaycastHit[] hits = playerInteract.GetInteractableLayerHits();
+        RaycastHit[] hits = playerInteract.GetInteractableLayerHitsNormal();
 
         if (hits.Length == 0) return null;
 
@@ -134,6 +134,21 @@ public class PlayerInteractAlternate : MonoBehaviour
         }
 
         return interactableAlternate;
+    }
+
+    private IInteractableAlternate CheckForInteractableAlternateWorldSpace()
+    {
+        RaycastHit hit = playerInteract.GetInteractableLayerHitsWorldSpace();
+
+        if (hit.collider == null) return null;
+        if (Vector3.Distance(hit.collider.transform.position, transform.position) > playerInteract.MaxDistanceFromPlayer) return null;
+
+        IInteractableAlternate potentialInteractableAlternate = CheckIfRayHitHasInteractableAlternate(hit);
+
+        if (potentialInteractableAlternate == null) return null;
+        if (!potentialInteractableAlternate.IsSelectableAlternate) return null;
+
+        return potentialInteractableAlternate;
     }
 
     private IInteractableAlternate CheckIfRayHitHasInteractableAlternate(RaycastHit hit)
