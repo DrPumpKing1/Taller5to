@@ -15,14 +15,14 @@ public class LearningPlatformLearn : MonoBehaviour, IInteractable, IRequiresSymb
     [SerializeField] private bool hasAlreadyBeenInteracted;
     [SerializeField] private string tooltipMessage;
 
-    #region IHoldInteractableProperties
+    #region IInteractableProperties
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
     #endregion
 
-    #region IHoldInteractable Events
+    #region IInteractable Events
     public event EventHandler OnObjectSelected;
     public event EventHandler OnObjectDeselected;
     public event EventHandler OnObjectInteracted;
@@ -33,7 +33,17 @@ public class LearningPlatformLearn : MonoBehaviour, IInteractable, IRequiresSymb
 
     public event EventHandler OnOpenSymbolCraftingUI;
 
-    #region IInteractable
+    private void OnEnable()
+    {
+        symbolCrafting.OnSymbolCrafted += SymbolCrafting_OnSymbolCrafted;
+    }
+
+    private void OnDisable()
+    {
+        symbolCrafting.OnSymbolCrafted -= SymbolCrafting_OnSymbolCrafted;
+    }
+
+    #region IInteractable Methods
     public void Select()
     {
         OnObjectSelected?.Invoke(this, EventArgs.Empty);
@@ -83,5 +93,13 @@ public class LearningPlatformLearn : MonoBehaviour, IInteractable, IRequiresSymb
     }
 
     public Transform GetTransform() => transform;
+    #endregion
+
+    #region SymbolCrafting Subscriptions
+    private void SymbolCrafting_OnSymbolCrafted(object sender, EventArgs e)
+    {
+        canBeSelected = false;
+        isInteractable = false;
+    }
     #endregion
 }
