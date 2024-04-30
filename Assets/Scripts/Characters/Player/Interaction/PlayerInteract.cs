@@ -23,7 +23,8 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField, Range(0.1f, 1f)] private float interactionSphereRadius = 2f;
 
     [Header("World Space InteractionSettings")]
-    [SerializeField, Range(1f, 100f)] private float maxDistanceFromPlayer; 
+    [SerializeField, Range(1f, 100f)] private float maxHorizontalDistanceFromPlayer; 
+    [SerializeField, Range(1f, 100f)] private float maxVerticalDistanceFromPlayer;
     [SerializeField, Range(200f,350f)] private float maxDistanceFromCamera;
 
 
@@ -36,7 +37,8 @@ public class PlayerInteract : MonoBehaviour
 
     public bool IsInteracting { get; private set; }
     public bool InteractionEnabled { get { return interactionEnabled; } }
-    public float MaxDistanceFromPlayer { get { return maxDistanceFromPlayer; } }
+    public float MaxHorizontalDistanceFromPlayer { get { return maxHorizontalDistanceFromPlayer; } }
+    public float MaxVerticalDistanceFromPlayer { get { return maxVerticalDistanceFromPlayer; } }
 
     private float holdTimer;
     private bool inputDownToHold;
@@ -152,7 +154,8 @@ public class PlayerInteract : MonoBehaviour
         RaycastHit hit = GetInteractableLayerHitsWorldSpace();
 
         if (hit.collider == null) return null;
-        if (Vector3.Distance(hit.collider.transform.position, transform.position) > maxDistanceFromPlayer) return null;
+        if (Vector3.Distance(GeneralMethods.SupressYComponent(hit.collider.transform.position),GeneralMethods.SupressYComponent(transform.position)) > maxHorizontalDistanceFromPlayer) return null;
+        if (Mathf.Abs(hit.collider.transform.position.y - transform.position.y) > maxVerticalDistanceFromPlayer) return null;
 
         IInteractable potentialInteractable = CheckIfRayHitHasInteractable(hit);
 

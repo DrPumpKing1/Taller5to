@@ -141,7 +141,8 @@ public class PlayerInteractAlternate : MonoBehaviour
         RaycastHit hit = playerInteract.GetInteractableLayerHitsWorldSpace();
 
         if (hit.collider == null) return null;
-        if (Vector3.Distance(hit.collider.transform.position, transform.position) > playerInteract.MaxDistanceFromPlayer) return null;
+        if (Vector3.Distance(GeneralMethods.SupressYComponent(hit.collider.transform.position), GeneralMethods.SupressYComponent(transform.position)) > playerInteract.MaxHorizontalDistanceFromPlayer) return null;
+        if (Mathf.Abs(hit.collider.transform.position.y - transform.position.y) > playerInteract.MaxVerticalDistanceFromPlayer) return null;
 
         IInteractableAlternate potentialInteractableAlternate = CheckIfRayHitHasInteractableAlternate(hit);
 

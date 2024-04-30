@@ -33,6 +33,7 @@ public class ProjectableObjectSelectionUI : MonoBehaviour
     }
     private void InitializeUI()
     {
+        ClearProjectableObjectText();
         SetSelectionContents(ProjectableObjectsInventory);
         DeselectAllUI();
 
@@ -84,7 +85,7 @@ public class ProjectableObjectSelectionUI : MonoBehaviour
 
     private void SetProjectableObjectText(string objectName) => selectedProjectableObjectText.text = objectName;
 
-
+    private void ClearProjectableObjectText() => selectedProjectableObjectText.text = "";
     private void SelectProjectableObjectUIByIndex(int index)
     {
         foreach (Transform child in projectableObjectSelectionContainer)
