@@ -80,7 +80,17 @@ public class Circuit : IDisposable
         }
 
         ResolveWeghts();
+
+        nodes.Sort((a, b) => CompareWeightElectrode(a, b));
+
         PowerCircuit();
+    }
+
+    private int CompareWeightElectrode(Node nodeA, Node nodeB)
+    {
+        if(nodeA.Weight < nodeB.Weight ) return -1;
+        else if(nodeA.Weight > nodeB.Weight )return 1;
+        else return 0;
     }
 
     private async Task PropagateForward(Node startNode, PropagateAction action, bool debug, bool useEvaluation, List<Node> evaluatedNode) 
@@ -114,7 +124,7 @@ public class Circuit : IDisposable
                     continue;
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(.01f));
+                await Task.Delay(TimeSpan.FromSeconds(.001f));
 
                 await PropagateActionForward(nextNode, action, ++layer, cancel, debug);
             }
@@ -147,7 +157,7 @@ public class Circuit : IDisposable
                     continue;
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(.01f));
+                await Task.Delay(TimeSpan.FromSeconds(.001f));
 
                 await PropagateActionForward(nextNode, ++layer, cancel, debug);
             }
@@ -211,12 +221,11 @@ public class Circuit : IDisposable
     {
         List<Node> nodesCopy = new List<Node>(nodes);
 
+        nodesCopy.Reverse();
+
         foreach (Node node in nodesCopy)
         {
-            if (node.Component.Source)
-            {
-                node.Broadcast();
-            }
+            node.Broadcast();
         }
     }
 
