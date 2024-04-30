@@ -30,6 +30,7 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
     public event EventHandler OnObjectInteractedAlternate;
     public event EventHandler OnObjectFailInteractedAlternate;
     public event EventHandler OnObjectHasAlreadyBeenInteractedAlternate;
+    public event EventHandler OnUpdatedInteractableAlternateState;
     #endregion
 
     public Vector3 DesiredDirection { get; private set; }

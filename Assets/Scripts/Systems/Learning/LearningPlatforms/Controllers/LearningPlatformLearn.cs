@@ -28,6 +28,7 @@ public class LearningPlatformLearn : MonoBehaviour, IInteractable, IRequiresSymb
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
+    public event EventHandler OnUpdatedInteractableState;
     #endregion
 
     public event EventHandler OnOpenSymbolCraftingUI;

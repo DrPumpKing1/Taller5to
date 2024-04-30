@@ -30,6 +30,7 @@ public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
+    public event EventHandler OnUpdatedInteractableState;
     #endregion
 
     public event EventHandler<OnSymbolsAddedEventArgs> OnSymbolsAdded;

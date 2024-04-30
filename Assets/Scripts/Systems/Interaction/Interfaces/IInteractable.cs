@@ -11,6 +11,7 @@ public interface IInteractable
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
+    public event EventHandler OnUpdatedInteractableState;
 
     public bool IsSelectable { get; }
     public bool IsInteractable { get; }

@@ -16,11 +16,12 @@ public class TestInteractable : MonoBehaviour, IInteractable
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
 
+    public event EventHandler OnObjectSelected; 
+    public event EventHandler OnObjectDeselected;
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
-    public event EventHandler OnObjectSelected; 
-    public event EventHandler OnObjectDeselected;
+    public event EventHandler OnUpdatedInteractableState;
 
     #region IInteractable
     public void Select()

@@ -26,7 +26,9 @@ public class HoldInteractableAlternateSelectionUI : MonoBehaviour
 
         holdInteractableAlternate.OnHoldInteractionAlternateStart += HoldInteractableAlternate_OnHoldInteractionAlternateStart; ;
         holdInteractableAlternate.OnContinousHoldInteractionAlternate += HoldInteractableAlternate_OnContinousHoldInteractionAlternate;
-        holdInteractableAlternate.OnHoldInteractionAlternateEnd += HoldInteractableAlternate_OnHoldInteractionAlternateEnd; 
+        holdInteractableAlternate.OnHoldInteractionAlternateEnd += HoldInteractableAlternate_OnHoldInteractionAlternateEnd;
+
+        holdInteractableAlternate.OnUpdatedInteractableAlternateState += HoldInteractableAlternate_OnUpdatedInteractableAlternateState;
     }
 
     private void OnDisable()
@@ -34,6 +36,11 @@ public class HoldInteractableAlternateSelectionUI : MonoBehaviour
         holdInteractableAlternate.OnObjectSelectedAlternate -= HoldInteractableAlternate_OnObjectSelected;
         holdInteractableAlternate.OnObjectDeselectedAlternate -= HoldInteractableAlternate_OnObjectDeselected;
 
+        holdInteractableAlternate.OnHoldInteractionAlternateStart -= HoldInteractableAlternate_OnHoldInteractionAlternateStart; ;
+        holdInteractableAlternate.OnContinousHoldInteractionAlternate -= HoldInteractableAlternate_OnContinousHoldInteractionAlternate;
+        holdInteractableAlternate.OnHoldInteractionAlternateEnd -= HoldInteractableAlternate_OnHoldInteractionAlternateEnd;
+
+        holdInteractableAlternate.OnUpdatedInteractableAlternateState -= HoldInteractableAlternate_OnUpdatedInteractableAlternateState;
     }
 
     private void Awake()
@@ -112,6 +119,12 @@ public class HoldInteractableAlternateSelectionUI : MonoBehaviour
         HideHoldUI();
         ShowSelectionUI();
 
+        SetInteractableAlternateSelectionText();
+        SetInteractableAlternateHoldText();
+    }
+
+    private void HoldInteractableAlternate_OnUpdatedInteractableAlternateState(object sender, System.EventArgs e)
+    {
         SetInteractableAlternateSelectionText();
         SetInteractableAlternateHoldText();
     }

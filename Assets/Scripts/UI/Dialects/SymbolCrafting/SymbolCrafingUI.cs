@@ -44,6 +44,8 @@ public class SymbolCrafingUI : BaseUI
         base.OnDisable();
         RemoveFromUILayersList();
         OnAnySymbolCraftingUIClose?.Invoke(this, EventArgs.Empty);
+
+        symbolCrafting.ResetSymbolCraftingUIRefference();
     }
 
     private void Awake()
@@ -90,8 +92,6 @@ public class SymbolCrafingUI : BaseUI
     protected override void CloseUI()
     {
         if (state != State.Open) return;
-
-        symbolCrafting.ResetSymbolCraftingUIRefference();
 
         SetUIState(State.Closed);
         Destroy(transform.parent.gameObject);

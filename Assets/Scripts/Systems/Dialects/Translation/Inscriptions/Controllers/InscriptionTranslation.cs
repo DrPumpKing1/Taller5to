@@ -16,7 +16,8 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
-    [SerializeField] private string tooltipMessage;
+    private string tooltipMessage => $"{(!inscriptionTranslated? "Translate Insription" : "Read Inscription")}";
+    private bool inscriptionTranslated;
 
     #region IInteractable Properties
     public bool IsSelectable => canBeSelected;
@@ -31,10 +32,21 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
+    public event EventHandler OnUpdatedInteractableState;
     #endregion
 
     public event EventHandler OnOpenSymbolCraftingUI;
     public event EventHandler OnOpenTranslationUI;
+
+    private void OnEnable()
+    {
+        symbolCrafting.OnSymbolCrafted += SymbolCrafting_OnSymbolCrafted;
+    }
+
+    private void OnDisable()
+    {
+        symbolCrafting.OnSymbolCrafted -= SymbolCrafting_OnSymbolCrafted;
+    }
 
     #region  IInteractable Methods
     public void Select()
@@ -73,7 +85,7 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
         //Debug.Log(gameObject.name + " Interacted");
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
-        if (!symbolCrafting.SymbolCrafted)
+        if (!inscriptionTranslated)
         {
             OnOpenSymbolCraftingUI?.Invoke(this, EventArgs.Empty);
         }
@@ -97,5 +109,13 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
 
     public Transform GetTransform() => transform;
 
+    #endregion
+
+    #region SymbolCrafting Subscriptions
+    private void SymbolCrafting_OnSymbolCrafted(object sender, EventArgs e)
+    {
+        inscriptionTranslated = true;
+        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
+    }
     #endregion
 }

@@ -27,6 +27,8 @@ public class HoldInteractableSelectionUI : MonoBehaviour
         holdInteractable.OnHoldInteractionStart += HoldInteractable_OnHoldInteractionStart;
         holdInteractable.OnContinousHoldInteraction += HoldInteractable_OnContinousHoldInteraction;
         holdInteractable.OnHoldInteractionEnd += HoldInteractable_OnHoldInteractionEnd;
+
+        holdInteractable.OnUpdatedInteractableState += HoldInteractable_OnUpdatedInteractableState;
     }
 
     private void OnDisable()
@@ -37,6 +39,8 @@ public class HoldInteractableSelectionUI : MonoBehaviour
         holdInteractable.OnHoldInteractionStart -= HoldInteractable_OnHoldInteractionStart;
         holdInteractable.OnContinousHoldInteraction -= HoldInteractable_OnContinousHoldInteraction;
         holdInteractable.OnHoldInteractionEnd -= HoldInteractable_OnHoldInteractionEnd;
+
+        holdInteractable.OnUpdatedInteractableState -= HoldInteractable_OnUpdatedInteractableState;
     }
 
     private void Awake()
@@ -115,6 +119,12 @@ public class HoldInteractableSelectionUI : MonoBehaviour
         HideHoldUI();
         ShowSelectionUI();
 
+        SetInteractableSelectionText();
+        SetInteractableHoldText();
+    }
+
+    private void HoldInteractable_OnUpdatedInteractableState(object sender, System.EventArgs e)
+    {
         SetInteractableSelectionText();
         SetInteractableHoldText();
     }

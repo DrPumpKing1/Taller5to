@@ -10,6 +10,7 @@ public interface IInteractableAlternate
     public event EventHandler OnObjectInteractedAlternate;
     public event EventHandler OnObjectFailInteractedAlternate;
     public event EventHandler OnObjectHasAlreadyBeenInteractedAlternate;
+    public event EventHandler OnUpdatedInteractableAlternateState;
 
     public bool IsSelectableAlternate { get; }
     public bool IsInteractableAlternate { get; }

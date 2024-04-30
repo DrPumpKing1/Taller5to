@@ -29,6 +29,7 @@ public class ElectricalSwitchInteraction : MonoBehaviour, IHoldInteractable
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
+    public event EventHandler OnUpdatedInteractableState;
 
     public event EventHandler OnHoldInteractionStart;
     public event EventHandler OnHoldInteractionEnd;
