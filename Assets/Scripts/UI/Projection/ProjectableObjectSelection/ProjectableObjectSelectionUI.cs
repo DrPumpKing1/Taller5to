@@ -11,25 +11,25 @@ public class ProjectableObjectSelectionUI : MonoBehaviour
     [SerializeField] private Transform projectableObjectSelectionContainer;
     [SerializeField] private Transform projectableObjectSelectionSingleUIPrefab;
 
-    private List<ProjectableObjectSO> ProjectableObjectsInventory => ProjectionManager.Instance.ProjectableObjectsInventory;
-    private int CurrentSelectionIndex => ProjectionManager.Instance.CurrentSelectionIndex;
+    private List<ProjectableObjectSO> ProjectableObjectsInventory => ProjectableObjectSelectionManager.Instance.ProjectableObjectsInventory;
+    private int CurrentSelectionIndex => ProjectableObjectSelectionManager.Instance.CurrentSelectionIndex;
 
     private void OnEnable()
     {
-        ProjectionManager.OnProjectionManagerInitialized += ProjectionManager_OnProjectionManagerInitialized;
+        ProjectableObjectSelectionManager.OnProjectableObjectSelectionManagerInitialized += ProjectionManager_OnProjectionManagerInitialized;
 
-        ProjectionManager.OnObjectAddedToInventory += ProjectionManager_OnObjectAddedToInventory;
-        ProjectionManager.OnProjectableObjectSelected += ProjectionManager_OnProjectableObjectSelected;
-        ProjectionManager.OnProjectableObjectDeselected += ProjectionManager_OnProjectableObjectDeselected;
+        ProjectableObjectSelectionManager.OnObjectAddedToInventory += ProjectionManager_OnObjectAddedToInventory;
+        ProjectableObjectSelectionManager.OnProjectableObjectSelected += ProjectionManager_OnProjectableObjectSelected;
+        ProjectableObjectSelectionManager.OnProjectableObjectDeselected += ProjectionManager_OnProjectableObjectDeselected;
     }
 
     private void OnDisable()
     {
-        ProjectionManager.OnProjectionManagerInitialized -= ProjectionManager_OnProjectionManagerInitialized;
+        ProjectableObjectSelectionManager.OnProjectableObjectSelectionManagerInitialized -= ProjectionManager_OnProjectionManagerInitialized;
 
-        ProjectionManager.OnObjectAddedToInventory -= ProjectionManager_OnObjectAddedToInventory;
-        ProjectionManager.OnProjectableObjectSelected -= ProjectionManager_OnProjectableObjectSelected;
-        ProjectionManager.OnProjectableObjectDeselected -= ProjectionManager_OnProjectableObjectDeselected;
+        ProjectableObjectSelectionManager.OnObjectAddedToInventory -= ProjectionManager_OnObjectAddedToInventory;
+        ProjectableObjectSelectionManager.OnProjectableObjectSelected -= ProjectionManager_OnProjectableObjectSelected;
+        ProjectableObjectSelectionManager.OnProjectableObjectDeselected -= ProjectionManager_OnProjectableObjectDeselected;
     }
     private void InitializeUI()
     {
@@ -148,18 +148,18 @@ public class ProjectableObjectSelectionUI : MonoBehaviour
         InitializeUI();     
     }
 
-    private void ProjectionManager_OnObjectAddedToInventory(object sender, ProjectionManager.OnObjectAddedToInventoryEventArgs e)
+    private void ProjectionManager_OnObjectAddedToInventory(object sender, ProjectableObjectSelectionManager.OnObjectAddedToInventoryEventArgs e)
     {
         AddProjectableObjectToUI(e.projectableObjectSO, ProjectableObjectsInventory.Count - 1);
     }
 
-    private void ProjectionManager_OnProjectableObjectSelected(object sender, ProjectionManager.OnSelectionEventArgs e)
+    private void ProjectionManager_OnProjectableObjectSelected(object sender, ProjectableObjectSelectionManager.OnSelectionEventArgs e)
     {
         SetProjectableObjectText(e.projectableObjectSO.name);
         SelectProjectableObjectUIByIndex(e.index);
     }
 
-    private void ProjectionManager_OnProjectableObjectDeselected(object sender, ProjectionManager.OnSelectionEventArgs e)
+    private void ProjectionManager_OnProjectableObjectDeselected(object sender, ProjectableObjectSelectionManager.OnSelectionEventArgs e)
     {
         DeselectProjectableObjectUIByIndex(e.index);
     }

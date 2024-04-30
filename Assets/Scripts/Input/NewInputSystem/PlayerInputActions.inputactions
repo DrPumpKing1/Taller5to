@@ -230,6 +230,51 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "_1stProjectableIObject",
+                    "type": "Button",
+                    "id": "1debcc65-1952-435e-88af-8d2d78ae95fd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "_2ndProjectableObject",
+                    "type": "Button",
+                    "id": "1a049169-f83a-43e5-ae50-ff6707cabfe3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "_3rdProjectableObject",
+                    "type": "Button",
+                    "id": "d0088746-bbf8-45f6-b031-b5df1909b021",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "_4thProjectableObject",
+                    "type": "Button",
+                    "id": "abd3dd7a-a156-4b78-9986-ffd711c64b07",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "_5thProjectableObject",
+                    "type": "Button",
+                    "id": "0ba5210c-4603-469c-8c78-2f166d51034d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -252,6 +297,61 @@
                     "processors": "",
                     "groups": "",
                     "action": "PreviousProjectableObject",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f93d076d-796d-4982-9a7d-a18d592dd95c",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "_1stProjectableIObject",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a3e382b2-534b-432c-8282-8b9bc6b79b32",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "_2ndProjectableObject",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0bf92ddc-1719-4043-82bd-21392be5a517",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "_3rdProjectableObject",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "09a14990-44ce-42db-a6de-9daaad02cb35",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "_4thProjectableObject",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "09f85acc-9610-4e81-94d0-d2e6b7e3a97f",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "_5thProjectableObject",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -252,6 +252,51 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""_1stProjectableIObject"",
+                    ""type"": ""Button"",
+                    ""id"": ""1debcc65-1952-435e-88af-8d2d78ae95fd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""_2ndProjectableObject"",
+                    ""type"": ""Button"",
+                    ""id"": ""1a049169-f83a-43e5-ae50-ff6707cabfe3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""_3rdProjectableObject"",
+                    ""type"": ""Button"",
+                    ""id"": ""d0088746-bbf8-45f6-b031-b5df1909b021"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""_4thProjectableObject"",
+                    ""type"": ""Button"",
+                    ""id"": ""abd3dd7a-a156-4b78-9986-ffd711c64b07"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""_5thProjectableObject"",
+                    ""type"": ""Button"",
+                    ""id"": ""0ba5210c-4603-469c-8c78-2f166d51034d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -274,6 +319,61 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""PreviousProjectableObject"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f93d076d-796d-4982-9a7d-a18d592dd95c"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""_1stProjectableIObject"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a3e382b2-534b-432c-8282-8b9bc6b79b32"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""_2ndProjectableObject"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0bf92ddc-1719-4043-82bd-21392be5a517"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""_3rdProjectableObject"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""09a14990-44ce-42db-a6de-9daaad02cb35"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""_4thProjectableObject"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""09f85acc-9610-4e81-94d0-d2e6b7e3a97f"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""_5thProjectableObject"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -347,6 +447,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Projection = asset.FindActionMap("Projection", throwIfNotFound: true);
         m_Projection_NextProjectableObject = m_Projection.FindAction("NextProjectableObject", throwIfNotFound: true);
         m_Projection_PreviousProjectableObject = m_Projection.FindAction("PreviousProjectableObject", throwIfNotFound: true);
+        m_Projection__1stProjectableIObject = m_Projection.FindAction("_1stProjectableIObject", throwIfNotFound: true);
+        m_Projection__2ndProjectableObject = m_Projection.FindAction("_2ndProjectableObject", throwIfNotFound: true);
+        m_Projection__3rdProjectableObject = m_Projection.FindAction("_3rdProjectableObject", throwIfNotFound: true);
+        m_Projection__4thProjectableObject = m_Projection.FindAction("_4thProjectableObject", throwIfNotFound: true);
+        m_Projection__5thProjectableObject = m_Projection.FindAction("_5thProjectableObject", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
@@ -584,12 +689,22 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IProjectionActions> m_ProjectionActionsCallbackInterfaces = new List<IProjectionActions>();
     private readonly InputAction m_Projection_NextProjectableObject;
     private readonly InputAction m_Projection_PreviousProjectableObject;
+    private readonly InputAction m_Projection__1stProjectableIObject;
+    private readonly InputAction m_Projection__2ndProjectableObject;
+    private readonly InputAction m_Projection__3rdProjectableObject;
+    private readonly InputAction m_Projection__4thProjectableObject;
+    private readonly InputAction m_Projection__5thProjectableObject;
     public struct ProjectionActions
     {
         private @PlayerInputActions m_Wrapper;
         public ProjectionActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @NextProjectableObject => m_Wrapper.m_Projection_NextProjectableObject;
         public InputAction @PreviousProjectableObject => m_Wrapper.m_Projection_PreviousProjectableObject;
+        public InputAction @_1stProjectableIObject => m_Wrapper.m_Projection__1stProjectableIObject;
+        public InputAction @_2ndProjectableObject => m_Wrapper.m_Projection__2ndProjectableObject;
+        public InputAction @_3rdProjectableObject => m_Wrapper.m_Projection__3rdProjectableObject;
+        public InputAction @_4thProjectableObject => m_Wrapper.m_Projection__4thProjectableObject;
+        public InputAction @_5thProjectableObject => m_Wrapper.m_Projection__5thProjectableObject;
         public InputActionMap Get() { return m_Wrapper.m_Projection; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -605,6 +720,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @PreviousProjectableObject.started += instance.OnPreviousProjectableObject;
             @PreviousProjectableObject.performed += instance.OnPreviousProjectableObject;
             @PreviousProjectableObject.canceled += instance.OnPreviousProjectableObject;
+            @_1stProjectableIObject.started += instance.On_1stProjectableIObject;
+            @_1stProjectableIObject.performed += instance.On_1stProjectableIObject;
+            @_1stProjectableIObject.canceled += instance.On_1stProjectableIObject;
+            @_2ndProjectableObject.started += instance.On_2ndProjectableObject;
+            @_2ndProjectableObject.performed += instance.On_2ndProjectableObject;
+            @_2ndProjectableObject.canceled += instance.On_2ndProjectableObject;
+            @_3rdProjectableObject.started += instance.On_3rdProjectableObject;
+            @_3rdProjectableObject.performed += instance.On_3rdProjectableObject;
+            @_3rdProjectableObject.canceled += instance.On_3rdProjectableObject;
+            @_4thProjectableObject.started += instance.On_4thProjectableObject;
+            @_4thProjectableObject.performed += instance.On_4thProjectableObject;
+            @_4thProjectableObject.canceled += instance.On_4thProjectableObject;
+            @_5thProjectableObject.started += instance.On_5thProjectableObject;
+            @_5thProjectableObject.performed += instance.On_5thProjectableObject;
+            @_5thProjectableObject.canceled += instance.On_5thProjectableObject;
         }
 
         private void UnregisterCallbacks(IProjectionActions instance)
@@ -615,6 +745,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @PreviousProjectableObject.started -= instance.OnPreviousProjectableObject;
             @PreviousProjectableObject.performed -= instance.OnPreviousProjectableObject;
             @PreviousProjectableObject.canceled -= instance.OnPreviousProjectableObject;
+            @_1stProjectableIObject.started -= instance.On_1stProjectableIObject;
+            @_1stProjectableIObject.performed -= instance.On_1stProjectableIObject;
+            @_1stProjectableIObject.canceled -= instance.On_1stProjectableIObject;
+            @_2ndProjectableObject.started -= instance.On_2ndProjectableObject;
+            @_2ndProjectableObject.performed -= instance.On_2ndProjectableObject;
+            @_2ndProjectableObject.canceled -= instance.On_2ndProjectableObject;
+            @_3rdProjectableObject.started -= instance.On_3rdProjectableObject;
+            @_3rdProjectableObject.performed -= instance.On_3rdProjectableObject;
+            @_3rdProjectableObject.canceled -= instance.On_3rdProjectableObject;
+            @_4thProjectableObject.started -= instance.On_4thProjectableObject;
+            @_4thProjectableObject.performed -= instance.On_4thProjectableObject;
+            @_4thProjectableObject.canceled -= instance.On_4thProjectableObject;
+            @_5thProjectableObject.started -= instance.On_5thProjectableObject;
+            @_5thProjectableObject.performed -= instance.On_5thProjectableObject;
+            @_5thProjectableObject.canceled -= instance.On_5thProjectableObject;
         }
 
         public void RemoveCallbacks(IProjectionActions instance)
@@ -706,6 +851,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnNextProjectableObject(InputAction.CallbackContext context);
         void OnPreviousProjectableObject(InputAction.CallbackContext context);
+        void On_1stProjectableIObject(InputAction.CallbackContext context);
+        void On_2ndProjectableObject(InputAction.CallbackContext context);
+        void On_3rdProjectableObject(InputAction.CallbackContext context);
+        void On_4thProjectableObject(InputAction.CallbackContext context);
+        void On_5thProjectableObject(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

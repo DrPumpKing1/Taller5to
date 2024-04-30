@@ -17,7 +17,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     [SerializeField] private float holdDuration;
 
     #region IHoldInteractable Properties
-    public bool IsSelectable => canBeSelected && !projectionPlatform.ObjectAbove && ProjectionManager.Instance.SelectedProjectableObjectSO != null;
+    public bool IsSelectable => canBeSelected && !projectionPlatform.ObjectAbove && ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO != null;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
@@ -82,13 +82,13 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
 
         if (projectionPlatform.CurrentProjectedObject != null)
         {
-            FailObjectProjection(ProjectionManager.Instance.SelectedProjectableObjectSO);
+            FailObjectProjection(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO);
             return;
         }
 
-        if (!ProjectionManager.Instance.CanProjectObject(ProjectionManager.Instance.SelectedProjectableObjectSO))
+        if (!ProjectionManager.Instance.CanProjectObject(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO))
         {
-            FailObjectProjectionInsuficientGems(ProjectionManager.Instance.SelectedProjectableObjectSO);
+            FailObjectProjectionInsuficientGems(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO);
             return;
         }
 
@@ -97,7 +97,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
 
     public void Interact()
     {
-        ProjectObject(ProjectionManager.Instance.SelectedProjectableObjectSO);
+        ProjectObject(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO);
 
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
@@ -131,13 +131,13 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
 
         if (projectionPlatform.CurrentProjectedObject != null && !projectionPlatform.ObjectAbove)
         {
-            FailObjectProjection(ProjectionManager.Instance.SelectedProjectableObjectSO);
+            FailObjectProjection(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO);
             return false;
         }
 
-        if (!ProjectionManager.Instance.CanProjectObject(ProjectionManager.Instance.SelectedProjectableObjectSO))
+        if (!ProjectionManager.Instance.CanProjectObject(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO))
         {
-            FailObjectProjectionInsuficientGems(ProjectionManager.Instance.SelectedProjectableObjectSO);
+            FailObjectProjectionInsuficientGems(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO);
             return false;
         }
 

@@ -25,4 +25,10 @@ public abstract class ProjectionInput : MonoBehaviour, IProjectionInput
 
     public abstract bool GetNextProjectableObjectDown();
     public abstract bool GetPreviousProjectableObjectDown();
+
+    public abstract bool Get1stProjectableObjectDown();
+    public abstract bool Get2ndProjectableObjectDown();
+    public abstract bool Get3rdProjectableObjectDown();
+    public abstract bool Get4thProjectableObjectDown();
+    public abstract bool Get5thProjectableObjectDown();
 }

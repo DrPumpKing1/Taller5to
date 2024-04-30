@@ -35,4 +35,44 @@ public class NewProjectionInput : ProjectionInput
         bool projectionInput = playerInputActions.Projection.PreviousProjectableObject.WasPerformedThisFrame();
         return projectionInput;
     }
+
+    public override bool Get1stProjectableObjectDown()
+    {
+        if (!CanProcessProjectionInput()) return false;
+
+        bool projectionInput = playerInputActions.Projection._1stProjectableIObject.WasPerformedThisFrame();
+        return projectionInput;
+    }
+
+    public override bool Get2ndProjectableObjectDown()
+    {
+        if (!CanProcessProjectionInput()) return false;
+
+        bool projectionInput = playerInputActions.Projection._2ndProjectableObject.WasPerformedThisFrame();
+        return projectionInput;
+    }
+
+    public override bool Get3rdProjectableObjectDown()
+    {
+        if (!CanProcessProjectionInput()) return false;
+
+        bool projectionInput = playerInputActions.Projection._3rdProjectableObject.WasPerformedThisFrame();
+        return projectionInput;
+    }
+
+    public override bool Get4thProjectableObjectDown()
+    {
+        if (!CanProcessProjectionInput()) return false;
+
+        bool projectionInput = playerInputActions.Projection._4thProjectableObject.WasPerformedThisFrame();
+        return projectionInput;
+    }
+
+    public override bool Get5thProjectableObjectDown()
+    {
+        if (!CanProcessProjectionInput()) return false;
+
+        bool projectionInput = playerInputActions.Projection._5thProjectableObject.WasPerformedThisFrame();
+        return projectionInput;
+    }
 }

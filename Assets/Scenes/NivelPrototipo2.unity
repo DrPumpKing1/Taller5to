@@ -10948,6 +10948,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 423502452}
+  - component: {fileID: 423502454}
   - component: {fileID: 423502453}
   m_Layer: 0
   m_Name: ProjectionManager
@@ -10987,8 +10988,20 @@ MonoBehaviour:
   playerInteractAlternate: {fileID: 1959078827}
   projectionInput: {fileID: 1815255652}
   selectedProjectableObjectSO: {fileID: 0}
-  currentProjectedObjects: []
   InitialSelectionIndex: 0
+--- !u!114 &423502454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423502451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a5949b7076800c4d9e924c13b669a27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentProjectedObjects: []
 --- !u!1001 &427245756
 PrefabInstance:
   m_ObjectHideFlags: 0
