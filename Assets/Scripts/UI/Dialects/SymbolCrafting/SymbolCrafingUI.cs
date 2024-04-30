@@ -7,6 +7,9 @@ using TMPro;
 
 public class SymbolCrafingUI : BaseUI
 {
+    [Header("Components")]
+    [SerializeField] private SymbolCrafting symbolCrafting;
+
     [Header("UI Components")]
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private Image imageToTranslate;
@@ -22,6 +25,7 @@ public class SymbolCrafingUI : BaseUI
     public IRequiresSymbolCrafting iRequiresSymbolCrafting;
 
     public static event EventHandler<OnSymbolCraftingOpenDictionaryEventArgs> OnSymbolCraftingUIOpenDIctionary;
+    public event EventHandler OnSymbolDrawnCorrectely;
 
     public class OnSymbolCraftingOpenDictionaryEventArgs : EventArgs
     {
@@ -52,15 +56,24 @@ public class SymbolCrafingUI : BaseUI
         SetUIState(State.Open);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            OnSymbolDrawnCorrectely?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
     private void InitializeButtonsListeners()
     {
         closeButton.onClick.AddListener(CloseUI);
         openDictionaryButton.onClick.AddListener(OpenDictionary);
     }
 
-    public void SetUI(SymbolCraftingSO symbolCraftingSO)
+    public void SetUI(SymbolCrafting symbolCrafting)
     {
-        this.symbolCraftingSO = symbolCraftingSO;
+        this.symbolCrafting = symbolCrafting;
+        symbolCraftingSO = symbolCrafting.SymbolCraftingSO;
 
         SetTitleText(symbolCraftingSO.symbolToCraft.dialect);
         SetImageToTranslate(symbolCraftingSO.imageToTranslateSprite);
@@ -77,6 +90,8 @@ public class SymbolCrafingUI : BaseUI
     protected override void CloseUI()
     {
         if (state != State.Open) return;
+
+        symbolCrafting.ResetSymbolCraftingUIRefference();
 
         SetUIState(State.Closed);
         Destroy(transform.parent.gameObject);
