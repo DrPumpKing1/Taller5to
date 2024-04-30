@@ -7,11 +7,11 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    [Header("UI Layers")]
-    [SerializeField] private List<BaseUI> _UILayers;
-
     [Header("Components")]
     [SerializeField] private UIInput UIInput;
+
+    [Header("UI Layers")]
+    [SerializeField] private List<BaseUI> _UILayers;
 
     public List<BaseUI> UILayers { get { return _UILayers; } }
     private bool CloseInput => UIInput.GetPauseDown();
@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
         InitializeVariables();
     }
 
-    public void Update()
+    public void LateUpdate()
     {
         CheckUIToClose();
         CheckUIActive();
@@ -65,6 +65,7 @@ public class UIManager : MonoBehaviour
 
     public void CheckUIToClose()
     {
+        if (PauseManager.Instance.GamePausedThisFrame) return;
         if (!CloseInput) return;
         if (!UIActive) return;
 

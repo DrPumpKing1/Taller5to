@@ -24,7 +24,7 @@ public class SymbolCrafingUI : BaseUI
 
     public IRequiresSymbolCrafting iRequiresSymbolCrafting;
 
-    public static event EventHandler<OnSymbolCraftingOpenDictionaryEventArgs> OnSymbolCraftingUIOpenDIctionary;
+    public static event EventHandler<OnSymbolCraftingOpenDictionaryEventArgs> OnSymbolCraftingUIOpenDictionary;
     public event EventHandler OnSymbolDrawnCorrectely;
 
     public class OnSymbolCraftingOpenDictionaryEventArgs : EventArgs
@@ -86,7 +86,7 @@ public class SymbolCrafingUI : BaseUI
 
     private void OpenDictionary()
     {
-        OnSymbolCraftingUIOpenDIctionary?.Invoke(this, new OnSymbolCraftingOpenDictionaryEventArgs { dialect = symbolCraftingSO.symbolToCraft.dialect });
+        OnSymbolCraftingUIOpenDictionary?.Invoke(this, new OnSymbolCraftingOpenDictionaryEventArgs { dialect = symbolCraftingSO.symbolToCraft.dialect });
     }
 
     protected override void CloseUI()

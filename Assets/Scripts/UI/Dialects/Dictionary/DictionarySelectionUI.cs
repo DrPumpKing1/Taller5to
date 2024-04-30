@@ -32,12 +32,12 @@ public class DictionarySelectionUI : BaseUI
     protected override void OnEnable()
     {
         base.OnEnable();
-        SymbolCrafingUI.OnSymbolCraftingUIOpenDIctionary += SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary;
+        SymbolCrafingUI.OnSymbolCraftingUIOpenDictionary += SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary;
     }
     protected override void OnDisable()
     {
         base.OnDisable();
-        SymbolCrafingUI.OnSymbolCraftingUIOpenDIctionary -= SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary;
+        SymbolCrafingUI.OnSymbolCraftingUIOpenDictionary -= SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary;
     }
 
     private void Awake()
@@ -81,33 +81,21 @@ public class DictionarySelectionUI : BaseUI
 
     private void CheckOpenClose()
     {
-        bool openThisFrame = CheckOpen();
+        if (!DictionaryInput) return;
 
-        if (openThisFrame) return;
+        if(state == State.Closed)
+        {
+            if (UIManager.Instance.UIActive) return;
+            OpenUI();
+            return;
+        }
 
-        CheckClose();
-    }
-
-    private bool CheckOpen()
-    {
-        if (UIManager.Instance.UIActive) return false;
-        if (!DictionaryInput) return false;
-        if (state != State.Closed) return false;
-
-        OpenUI();
-
-        return true;
-    }
-
-    private bool CheckClose()
-    {
-        if (!UIManager.Instance.IsFirstOnList(this)) return false;
-        if (!DictionaryInput) return false;
-        if (state != State.Open) return false;
-
-        CloseUI();
-
-        return true;
+        if (state == State.Open)
+        {
+            if (!UIManager.Instance.IsFirstOnList(this)) return;
+            CloseUI();
+            return;
+        }
     }
 
     private void OpenUI()
