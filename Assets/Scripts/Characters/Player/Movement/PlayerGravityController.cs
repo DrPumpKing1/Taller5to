@@ -19,7 +19,7 @@ public class PlayerGravityController : MonoBehaviour
     [SerializeField, Range(0.5f, 3f)] private float lowJumpMultiplier;
 
     [Header("Slope Stick Settings")]
-    [SerializeField, Range(0f, 20f)] private float stickToSlopeForce = 5f;
+    [SerializeField, Range(0f, 30f)] private float stickToSlopeForce = 5f;
 
     public float GravityMultiplier { get { return gravityMultiplier; } }
     public float FallMultiplier { get { return fallMultiplier; } }

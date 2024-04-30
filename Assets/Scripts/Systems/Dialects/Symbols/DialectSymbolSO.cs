@@ -10,9 +10,6 @@ public class DialectSymbolSO : ScriptableObject
     public Dialect dialect;
     public Sprite symbolImage;
     public Sprite meaningImage;
+    public string _name;
     public string meaning;
-    [Space]
-    public List<DialectSymbolSO> originators;
-
-    public bool IsPrimary() => originators.Count == 0;
 }

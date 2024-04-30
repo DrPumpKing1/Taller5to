@@ -37,33 +37,6 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     public event EventHandler OnOpenTranslationUI;
 
     #region  IInteractable Methods
-    public void Interact()
-    {
-        //Debug.Log(gameObject.name + " Interacted");
-        OnObjectInteracted?.Invoke(this, EventArgs.Empty);
-
-        if (!symbolCrafting.SymbolCrafted)
-        {
-            OnOpenSymbolCraftingUI?.Invoke(this, EventArgs.Empty);
-        }
-        else
-        {
-            OnOpenTranslationUI?.Invoke(this, EventArgs.Empty);
-        }
-    }
-
-    public void FailInteract()
-    {
-        Debug.Log(gameObject.name + " Fail Interacted");
-        OnObjectFailInteracted?.Invoke(this, EventArgs.Empty);
-    }
-
-    public void AlreadyInteracted()
-    {
-        Debug.Log(gameObject.name + " Has Already Been Interacted");
-        OnObjectHasAlreadyBeenInteracted?.Invoke(this, EventArgs.Empty);
-    }
-
     public void Select()
     {
         //Enable some UI feedback
@@ -93,6 +66,33 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
         }
 
         Interact();
+    }
+
+    public void Interact()
+    {
+        //Debug.Log(gameObject.name + " Interacted");
+        OnObjectInteracted?.Invoke(this, EventArgs.Empty);
+
+        if (!symbolCrafting.SymbolCrafted)
+        {
+            OnOpenSymbolCraftingUI?.Invoke(this, EventArgs.Empty);
+        }
+        else
+        {
+            OnOpenTranslationUI?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public void FailInteract()
+    {
+        Debug.Log(gameObject.name + " Fail Interacted");
+        OnObjectFailInteracted?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void AlreadyInteracted()
+    {
+        Debug.Log(gameObject.name + " Has Already Been Interacted");
+        OnObjectHasAlreadyBeenInteracted?.Invoke(this, EventArgs.Empty);
     }
 
     public Transform GetTransform() => transform;

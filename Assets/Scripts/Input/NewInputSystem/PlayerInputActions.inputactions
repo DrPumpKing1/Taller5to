@@ -188,7 +188,7 @@
                 {
                     "name": "",
                     "id": "50a1d4f1-9225-4a59-86af-604c915e3d1a",
-                    "path": "<Keyboard>/e",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -199,7 +199,7 @@
                 {
                     "name": "",
                     "id": "e29c5480-01ad-4bcf-afa8-1db63e3975b8",
-                    "path": "<Keyboard>/r",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -236,7 +236,7 @@
                 {
                     "name": "",
                     "id": "0c694681-bd41-4d3f-84fd-411a1a4dea61",
-                    "path": "<Keyboard>/2",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -247,11 +247,59 @@
                 {
                     "name": "",
                     "id": "1ab405e1-9a95-4271-b346-b228ac8aa88b",
-                    "path": "<Keyboard>/1",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "PreviousProjectableObject",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "badac12d-b3f8-4c8d-b173-4f5ccc7ca587",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "798178e4-781d-4050-9741-ae9d8db605cd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dictionary",
+                    "type": "Button",
+                    "id": "ae76292d-1cc5-4113-939e-68ecbac986d1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f0662a92-6a30-483f-a5ed-4d516a046948",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "44254351-e097-44b8-8056-22373fc3b9c6",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dictionary",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

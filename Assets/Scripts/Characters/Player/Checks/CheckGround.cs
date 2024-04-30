@@ -9,7 +9,7 @@ public class CheckGround : MonoBehaviour
 
     [Header("Check Ground Settings")]
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField, Range(-1f, 1f)] private float checkGoundRayLenght = 0.1f;
+    [SerializeField, Range(-1f, 1f)] private float checkGoundYOffset = 0.1f;
     [SerializeField, Range(0.01f, 1f)] private float raySphereRadius = 0.1f;
 
     [Header("Check Slope Settings")]
@@ -36,12 +36,9 @@ public class CheckGround : MonoBehaviour
 
     private bool CheckGrounded()
     {
-        Vector3 origin = transform.position + capsuleCollider.center;
-        float finalRayLength = checkGoundRayLenght + capsuleCollider.center.y;
+        Vector3 origin = transform.position + new Vector3(0f, checkGoundYOffset,0f);
 
-        bool isGrounded = Physics.SphereCast(origin, raySphereRadius, Vector3.down, out RaycastHit groundInfo, finalRayLength, groundLayer);
-
-        if(drawRaycasts) Debug.DrawRay(origin, Vector3.down * (finalRayLength), Color.red);
+        bool isGrounded = Physics.CheckSphere(origin, raySphereRadius, groundLayer);
 
         return isGrounded;
     }

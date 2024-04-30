@@ -16,14 +16,14 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        SymbolCrafingUI.OnAnySymbolCraftingUIOpen += SymbolCrafingUI_OnAnySymbolCraftingUIOpen;
-        SymbolCrafingUI.OnAnySymbolCraftingUIClose += SymbolCrafingUI_OnAnySymbolCraftingUIClose;
+        UIManager.OnUIActive += UIManager_OnUIActive;
+        UIManager.OnUIInactive += UIManager_OnUIInactive;
     }
 
     private void OnDisable()
     {
-        SymbolCrafingUI.OnAnySymbolCraftingUIOpen -= SymbolCrafingUI_OnAnySymbolCraftingUIOpen;
-        SymbolCrafingUI.OnAnySymbolCraftingUIClose -= SymbolCrafingUI_OnAnySymbolCraftingUIClose;
+        UIManager.OnUIActive -= UIManager_OnUIActive;
+        UIManager.OnUIInactive -= UIManager_OnUIInactive;
     }
 
     private void Awake()
@@ -57,13 +57,15 @@ public class GameManager : MonoBehaviour
     }
 
     #region SymbolCraftingUI Sumbcriptions
-    private void SymbolCrafingUI_OnAnySymbolCraftingUIOpen(object sender, System.EventArgs e)
+    private void UIManager_OnUIActive(object sender, System.EventArgs e)
     {
         SetGameState(State.OnUI);
     }
-    private void SymbolCrafingUI_OnAnySymbolCraftingUIClose(object sender, System.EventArgs e)
+
+    private void UIManager_OnUIInactive(object sender, System.EventArgs e)
     {
-        SetGameState(State.OnGameplay);
+        SetGameState(previousState);
     }
+
     #endregion
 }

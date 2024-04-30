@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 702f9302840d0874a9ea7e92c82833be, type: 3}
+  m_Name: XotarkBook
+  m_EditorClassIdentifier: 
+  _name: Libreto Xotark
+  dialectKnowledgeLevelChanges:
+  - dialect: 2
+    level: 1
+  dialectSymbolSOs:
+  - {fileID: 11400000, guid: 573619e9656b5e040a080e5b4b7cf356, type: 2}
+  - {fileID: 11400000, guid: 58893effc9e1d3f4d99475f98810bbfe, type: 2}

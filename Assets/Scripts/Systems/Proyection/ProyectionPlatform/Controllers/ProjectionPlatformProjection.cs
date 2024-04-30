@@ -99,7 +99,6 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
         ProjectObject(ProjectionManager.Instance.SelectedProjectableObjectSO);
 
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
-        Debug.Log("Interact");
 
         canBeSelected = false; //Can´t be selected until is Platform is Reseted (clearing the projected object resets it)
     }
@@ -175,8 +174,6 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
 
         ProjectionManager.Instance.SuccessObjectProjection(projectableObjectSO, projectionPlatform);
         OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO });
-
-        Debug.Log("Object Projected");
     }
 
     private void ProjectionPlatform_OnProjectionPlatformClear(object sender, EventArgs e)

@@ -15,10 +15,13 @@ public class SymbolCrafting : MonoBehaviour
     [SerializeField] private Transform symbolCraftingUIPrefab;
     [SerializeField] private bool symbolCrafted;
 
+    public event EventHandler OnSymbolCrafted;
+
     public SymbolCraftingSO SymbolCraftingSO { get { return symbolCraftingSO; } }
     public bool SymbolCrafted { get { return symbolCrafted; } }
 
     private IRequiresSymbolCrafting iRequiresSymbolCrafting;
+    private SymbolCrafingUI currentSymbolCraftingUI;
 
     private void OnEnable()
     {
@@ -52,7 +55,15 @@ public class SymbolCrafting : MonoBehaviour
             return;
         }
 
-        symbolCraftingUI.SetUI(SymbolCraftingSO);
+        currentSymbolCraftingUI = symbolCraftingUI;
+        currentSymbolCraftingUI.SetUI(this);
+        currentSymbolCraftingUI.OnSymbolDrawnCorrectely += SymbolCraftingUI_OnSymbolDrawnCorrectely;
+    }
+
+    public void ResetSymbolCraftingUIRefference()
+    {
+        currentSymbolCraftingUI.OnSymbolDrawnCorrectely -= SymbolCraftingUI_OnSymbolDrawnCorrectely;
+        currentSymbolCraftingUI = null;
     }
 
     public void CraftSymbol() => symbolCrafted = true;
@@ -60,7 +71,18 @@ public class SymbolCrafting : MonoBehaviour
     #region IRequiresSymbolCrafting Subscriptions
     private void IRequiresSymbolCrafting_OnOpenSymbolCraftingUI(object sender, EventArgs e)
     {
+        if (UIManager.Instance.UIActive) return;
+
         OpenSymbolCraftingUI();
+    }
+    #endregion
+
+    #region SymbolCraftingUI Subscriptions
+
+    private void SymbolCraftingUI_OnSymbolDrawnCorrectely(object sender, EventArgs e)
+    {
+        symbolCrafted = true;
+        OnSymbolCrafted?.Invoke(this, EventArgs.Empty);
     }
     #endregion
 }

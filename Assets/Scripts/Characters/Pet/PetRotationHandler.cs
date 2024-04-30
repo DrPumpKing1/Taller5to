@@ -109,7 +109,7 @@ public class PetRotationHandler : MonoBehaviour
         if (e.interactable.GetTransform().GetComponent<ProjectableObject>()) return;
         if (e.interactable.GetTransform().GetComponent<ProjectionPlatform>()) return;
         if (e.interactable.GetTransform().GetComponent<LearningPlatform>()) return;
-        if (e.interactable.GetTransform().GetComponent<DialectKnowledgeSource>()) return;
+        if (e.interactable.GetTransform().GetComponent<DialectSymbolSource>()) return;
 
         curentInteractingTransform = null;
     }
@@ -129,7 +129,7 @@ public class PetRotationHandler : MonoBehaviour
         if (e.interactableAlternate.GetTransform().GetComponent<ProjectableObject>()) return;
         if (e.interactableAlternate.GetTransform().GetComponent<ProjectionPlatform>()) return;
         if (e.interactableAlternate.GetTransform().GetComponent<LearningPlatform>()) return;
-        if (e.interactableAlternate.GetTransform().GetComponent<DialectKnowledgeSource>()) return;
+        if (e.interactableAlternate.GetTransform().GetComponent<DialectSymbolSource>()) return;
 
         curentInteractingTransform = null;
     }

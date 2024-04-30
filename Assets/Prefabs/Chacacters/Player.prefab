@@ -50,8 +50,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 129
-  checkGoundRayLenght: -0.4
-  raySphereRadius: 0.5
+  checkGoundYOffset: -0.05
+  raySphereRadius: 0.25
   checkSlopeRayLength: 0.1
   checkDistanceGroundRayLenght: 1
   drawRaycasts: 0
@@ -67,14 +67,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5e30251e7da1e4483b99e10c0b1820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capsulleCollider: {fileID: 4813907677414057247}
+  capsuleCollider: {fileID: 4813907677414057247}
   playerHorizontalMovement: {fileID: 1658583223491952907}
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 1
-  rayLength: 0.2
+  rayLength: -0.1
   raySphereRadius: 0.2
-  lowRayLenght: 0.3
+  lowRayLenght: 0
   lowRaySphereRadius: 0.01
   diagonalRayLength: 0.5
   drawRaycasts: 1
@@ -471,8 +471,6 @@ MonoBehaviour:
   movementEnabled: 1
   movementInput: {fileID: 0}
   playerCrouch: {fileID: 6106714240860128082}
-  playerJump: {fileID: 5416400497481260393}
-  playerFall: {fileID: 2984513525385847362}
   playerLand: {fileID: 545511874797415526}
   playerInteract: {fileID: 4536946071876244043}
   playerInteractAlternate: {fileID: 907748609654045023}
@@ -497,7 +495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89dd2049e1b430d4e95d0eab7f11dd7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpEnabled: 0
+  jumpEnabled: 1
   movementInput: {fileID: 0}
   playerGravityController: {fileID: 2300728550411198240}
   playerHorizontalMovement: {fileID: 1658583223491952907}
@@ -505,8 +503,8 @@ MonoBehaviour:
   playerInteractAlternate: {fileID: 907748609654045023}
   checkGround: {fileID: 2176356878162520009}
   playerCrouch: {fileID: 6106714240860128082}
-  jumpHeight: 1.35
-  jumpHeightError: 0.05
+  jumpHeight: 1.25
+  jumpHeightError: -0.12
   impulseTime: 0
   jumpCooldown: 0.75
   forwardImpulse: 1.5
@@ -562,7 +560,7 @@ MonoBehaviour:
   gravityMultiplier: 1
   fallMultiplier: 2
   lowJumpMultiplier: 2
-  stickToSlopeForce: 10
+  stickToSlopeForce: 20
 --- !u!114 &6106714240860128082
 MonoBehaviour:
   m_ObjectHideFlags: 0

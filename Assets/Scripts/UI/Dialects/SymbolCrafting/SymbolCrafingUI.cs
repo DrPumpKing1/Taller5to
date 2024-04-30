@@ -5,13 +5,15 @@ using System;
 using UnityEngine.UI;
 using TMPro;
 
-public class SymbolCrafingUI : MonoBehaviour
+public class SymbolCrafingUI : BaseUI
 {
+    [Header("Components")]
+    [SerializeField] private SymbolCrafting symbolCrafting;
+
     [Header("UI Components")]
-    [SerializeField] private Transform availableSymbolsContainer;
-    [SerializeField] private Transform availableSymbolTemplate;
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private Image imageToTranslate;
+    [SerializeField] private Button openDictionaryButton;
     [SerializeField] private Button closeButton;
 
     [Header("Settings")]
@@ -22,13 +24,25 @@ public class SymbolCrafingUI : MonoBehaviour
 
     public IRequiresSymbolCrafting iRequiresSymbolCrafting;
 
-    private void OnEnable()
+    public static event EventHandler<OnSymbolCraftingOpenDictionaryEventArgs> OnSymbolCraftingUIOpenDIctionary;
+    public event EventHandler OnSymbolDrawnCorrectely;
+
+    public class OnSymbolCraftingOpenDictionaryEventArgs : EventArgs
     {
+        public Dialect dialect;
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        AddToUILayersList();
         OnAnySymbolCraftingUIOpen?.Invoke(this, EventArgs.Empty);
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
+        RemoveFromUILayersList();
         OnAnySymbolCraftingUIClose?.Invoke(this, EventArgs.Empty);
     }
 
@@ -39,54 +53,47 @@ public class SymbolCrafingUI : MonoBehaviour
 
     private void Start()
     {
-        availableSymbolTemplate.gameObject.SetActive(false);
+        SetUIState(State.Open);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            OnSymbolDrawnCorrectely?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     private void InitializeButtonsListeners()
     {
         closeButton.onClick.AddListener(CloseUI);
+        openDictionaryButton.onClick.AddListener(OpenDictionary);
     }
 
-    public void SetUI(SymbolCraftingSO symbolCraftingSO)
+    public void SetUI(SymbolCrafting symbolCrafting)
     {
-        this.symbolCraftingSO = symbolCraftingSO;
+        this.symbolCrafting = symbolCrafting;
+        symbolCraftingSO = symbolCrafting.SymbolCraftingSO;
 
         SetTitleText(symbolCraftingSO.symbolToCraft.dialect);
         SetImageToTranslate(symbolCraftingSO.imageToTranslateSprite);
-        SetAvailableSymbolsUI(symbolCraftingSO.symbolToCraft.dialect);
     }
 
     private void SetTitleText(Dialect dialect) => titleText.text = $"Translate to dialect {dialect}";
     private void SetImageToTranslate(Sprite sprite) => imageToTranslate.sprite = sprite;
-    private void SetAvailableSymbolsUI(Dialect dialect)
+
+    private void OpenDictionary()
     {
-        foreach(DialectDictionary dialectDictionary in DictionaryManager.Instance.Dictionary)
-        {
-            if(dialectDictionary.dialect == dialect)
-            {
-                foreach (DialectSymbolSO dialectSymbolSO in dialectDictionary.dialectSymbolsSOs)
-                {
-                    GameObject availableSymbolUIGameObject = Instantiate(availableSymbolTemplate.gameObject, availableSymbolsContainer);
-                    availableSymbolUIGameObject.SetActive(true);
-
-                    AvailableSymbolSingleUI availableSymbolSingleUI = availableSymbolUIGameObject.GetComponent<AvailableSymbolSingleUI>();
-
-                    if (!availableSymbolSingleUI)
-                    {
-                        Debug.LogWarning("There's not a AvailableSymbolSingleUI attached to instantiated prefab");
-                        continue;
-                    }
-
-                    availableSymbolSingleUI.SetSymbolImage(dialectSymbolSO.symbolImage);
-                }
-
-                return;
-            }
-        }     
+        OnSymbolCraftingUIOpenDIctionary?.Invoke(this, new OnSymbolCraftingOpenDictionaryEventArgs { dialect = symbolCraftingSO.symbolToCraft.dialect });
     }
 
-    private void CloseUI()
+    protected override void CloseUI()
     {
-        Destroy(gameObject);
+        if (state != State.Open) return;
+
+        symbolCrafting.ResetSymbolCraftingUIRefference();
+
+        SetUIState(State.Closed);
+        Destroy(transform.parent.gameObject);
     }
 }

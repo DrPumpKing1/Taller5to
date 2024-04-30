@@ -12,8 +12,6 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [SerializeField] private MovementInput movementInput;
     [Space]
     [SerializeField] private PlayerCrouch playerCrouch;
-    [SerializeField] private PlayerJump playerJump;
-    [SerializeField] private PlayerFall playerFall;
     [SerializeField] private PlayerLand playerLand;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
@@ -48,26 +46,9 @@ public class PlayerHorizontalMovement : MonoBehaviour
     public Vector3 FinalMoveVector { get; private set; }
     public bool MovementEnabled { get { return movementEnabled; } }
 
-    private bool processMoveDueToOnAir;
-
-    private void OnEnable()
-    {
-        playerJump.OnPlayerJump += PlayerJump_OnPlayerJump;
-    }
-
-    private void OnDisable()
-    {
-        playerJump.OnPlayerJump -= PlayerJump_OnPlayerJump;
-    }
-
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-    }
-
-    private void Start()
-    {
-        InitializeVariables();
     }
 
     private void Update()
@@ -95,11 +76,6 @@ public class PlayerHorizontalMovement : MonoBehaviour
         SmoothDirectionVector();
 
         CalculateFinalMovement();
-    }
-
-    private void InitializeVariables()
-    {
-        processMoveDueToOnAir = true;
     }
 
     private void CalculateDesiredSpeed()
@@ -190,11 +166,4 @@ public class PlayerHorizontalMovement : MonoBehaviour
     }
 
     public bool HasMovementInput() => DirectionInputVector != Vector2.zero;
-
-    #region Event Subscriptions
-    private void PlayerJump_OnPlayerJump(object sender, EventArgs e)
-    {
-        processMoveDueToOnAir = false;
-    }
-    #endregion
 }
