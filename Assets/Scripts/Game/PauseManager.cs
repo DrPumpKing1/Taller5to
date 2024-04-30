@@ -15,8 +15,9 @@ public class PauseManager : MonoBehaviour
 
     private bool PauseInput => UIInput.GetPauseDown();
     public bool GamePaused { get; private set; }
-
-    public bool GamePausedThisFrame { get; private set; }
+    public bool GamePausedThisFrame { get; private set; } 
+    //Used to check if UIManager should ignore the CheckClose that frame, because both Pause and CheckClose use the GetPauseDown() input
+    //It could happen that when the game is paused, PauseUI is opened and inmediately closed
 
     private void Awake()
     {
@@ -65,6 +66,7 @@ public class PauseManager : MonoBehaviour
         }
         else
         {
+            if(UIManager.Instance.GetUILayersCount() == 1) //If count is 1, the active layer is the PauseUI
             ResumeGame();
         }
     }

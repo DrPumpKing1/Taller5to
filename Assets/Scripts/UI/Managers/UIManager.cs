@@ -95,6 +95,8 @@ public class UIManager : MonoBehaviour
         return baseUI == _UILayers[^1];
     }
 
+    public int GetUILayersCount() => _UILayers.Count;
+
     public void AddToLayersList(BaseUI baseUI) => _UILayers.Add(baseUI);
     public void RemoveFromLayersList(BaseUI baseUI) => _UILayers.Remove(baseUI);
 }

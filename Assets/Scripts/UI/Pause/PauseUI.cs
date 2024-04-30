@@ -47,8 +47,6 @@ public class PauseUI : BaseUI
         GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 1f);
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
-
-        Debug.Log("Open");
     }
 
     protected override void CloseUI()
@@ -62,8 +60,6 @@ public class PauseUI : BaseUI
         GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
-
-        Debug.Log("Close");
     }
 
     private void PauseManager_OnGamePaused(object sender, System.EventArgs e)
