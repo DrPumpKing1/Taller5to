@@ -13,6 +13,8 @@ public class PlayerInteractAlternate : MonoBehaviour
     private bool InteractionAlternateDownInput => interactionInput.GetInteractionAlternateDown();
     private bool InteractionAlternateHoldInput => interactionInput.GetInteractionAlternateHold();
 
+    private bool CanProcessInteractionInput => interactionInput.CanProcessInteractionInput();
+
     public bool IsInteractingAlternate { get; private set; }
 
     private float holdTimer;
@@ -51,6 +53,8 @@ public class PlayerInteractAlternate : MonoBehaviour
     }
     private void Update()
     {
+        if (!CanProcessInteractionInput) return;
+
         HandleInteractableAlternateSelections();
 
         if (!playerInteract.InteractionEnabled) return;

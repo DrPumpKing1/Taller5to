@@ -17,6 +17,12 @@ public class DictionarySelectionUI : BaseUI
     public static event EventHandler OnCloseFromUI;
     public static event EventHandler OnDictionarySelectionUIOpen;
     public static event EventHandler OnDictionarySelectionUIClose;
+    public static event EventHandler<OnOpenSingleDictionaryUIEventArgs> OnOpenSingleDictionaryUI;
+
+    public class OnOpenSingleDictionaryUIEventArgs
+    {
+        public SingleDictionaryUI singleDictionaryUI;
+    }
 
     [Serializable]
     private class DictionaryButtonPanel
@@ -74,7 +80,7 @@ public class DictionarySelectionUI : BaseUI
 
     private void OpenSingleDictionary(SingleDictionaryUI singleDictionaryUI)
     {
-        singleDictionaryUI.OpenUI();
+        OnOpenSingleDictionaryUI?.Invoke(this, new OnOpenSingleDictionaryUIEventArgs { singleDictionaryUI = singleDictionaryUI });
     }
 
     private void OpenUI()

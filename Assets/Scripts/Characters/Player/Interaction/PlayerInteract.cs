@@ -27,12 +27,12 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField, Range(1f, 100f)] private float maxVerticalDistanceFromPlayer;
     [SerializeField, Range(200f,350f)] private float maxDistanceFromCamera;
 
-
     [Header("Debug")]
     [SerializeField] private bool drawRaycasts;
 
     private bool InteractionDownInput => interactionInput.GetInteractionDown();
     private bool InteractionHoldInput => interactionInput.GetInteractionHold();
+    private bool CanProcessInteractionInput => interactionInput.CanProcessInteractionInput();
     public Vector3 InteractionDirection => playerRotationHandler.DesiredFacingDirection.normalized;
 
     public bool IsInteracting { get; private set; }
@@ -84,6 +84,8 @@ public class PlayerInteract : MonoBehaviour
     }
     private void Update()
     {
+        if (!CanProcessInteractionInput) return;
+
         HandleInteractableSelections();
 
         if (!checkGround.IsGrounded) return;
