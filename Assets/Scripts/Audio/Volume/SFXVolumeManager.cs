@@ -2,25 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using System;
 
-public class SFXVolumeManager : MonoBehaviour
+public class SFXVolumeManager : VolumeManager
 {
     public static SFXVolumeManager Instance { get; private set; }
 
-    [Header("SFX Settings")]
-    [SerializeField] private AudioMixer masterAudioMixer;
-    [SerializeField, Range(0f, 1f)] private float initialSFXVolume;
-
     private const string SFX_VOLUME = "SFXVolume";
+
+    public static event EventHandler OnSFXVolumeManagerInitialized;
 
     private void Awake()
     {
         SetSingleton();
-    }
-
-    private void Start()
-    {
-        InitializeSFXVolume();
     }
 
     private void SetSingleton()
@@ -36,6 +30,25 @@ public class SFXVolumeManager : MonoBehaviour
         }
     }
 
-    private void InitializeSFXVolume() => ChangeSFXVolume(initialSFXVolume);
-    public void ChangeSFXVolume(float volume) => masterAudioMixer.SetFloat(SFX_VOLUME, Mathf.Log10(volume) * 20);
+    protected override void InitializeVolume()
+    {
+        base.InitializeVolume();
+        OnSFXVolumeManagerInitialized?.Invoke(this, EventArgs.Empty);
+    }
+
+    public override void ChangeVolume(float volume)
+    {
+        volume = volume < GetMinVolume() ? GetMinVolume() : volume;
+        volume = volume > GetMaxVolume() ? GetMaxVolume() : volume;
+
+        masterAudioMixer.SetFloat(SFX_VOLUME, Mathf.Log10(volume) * 20);
+    }
+
+    public override float GetVolume()
+    {
+        masterAudioMixer.GetFloat(SFX_VOLUME, out float logarithmicVolume);
+        float linearVolume = Mathf.Pow(10f, logarithmicVolume / 20f);
+        return linearVolume;
+    }
+
 }
