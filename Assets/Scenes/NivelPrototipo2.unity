@@ -30054,6 +30054,7 @@ Transform:
   - {fileID: 602175761}
   - {fileID: 1886552040}
   - {fileID: 999906385}
+  - {fileID: 2064238294}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1112545579
@@ -58899,6 +58900,51 @@ MonoBehaviour:
   meshRenderer: {fileID: 1368331988}
   on: {fileID: 2100000, guid: 597a51f2af022aa409ab9ddced6bf6f8, type: 2}
   off: {fileID: 2100000, guid: 9f4851daa70292b4aae4e2d0da23e2d3, type: 2}
+--- !u!1 &2064238293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2064238294}
+  - component: {fileID: 2064238295}
+  m_Layer: 0
+  m_Name: DictionaryOpeningManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2064238294
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064238293}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1112293146}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2064238295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064238293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 803fa45faac4ea54ca7079e19d3f0acc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIInput: {fileID: 1806641814}
 --- !u!1 &2079099971
 GameObject:
   m_ObjectHideFlags: 0
@@ -59663,7 +59709,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 311f04d39cb7bde4c980f2cc99aed867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIInput: {fileID: 1806641814}
   closeButton: {fileID: 1687192376}
   dictionaryButtonPanels:
   - dialect: 0

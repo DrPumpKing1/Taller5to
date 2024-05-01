@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PauseUI : BaseUI
 {
     private CanvasGroup canvasGroup;
+
+    public static event EventHandler OnPauseUIOpen;
+    public static event EventHandler OnPauseUIClose;
 
     protected override void OnEnable()
     {
@@ -47,6 +51,8 @@ public class PauseUI : BaseUI
         GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 1f);
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
+
+        OnPauseUIOpen?.Invoke(this, EventArgs.Empty);
     }
 
     protected override void CloseUI()
@@ -60,8 +66,11 @@ public class PauseUI : BaseUI
         GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
+
+        OnPauseUIClose?.Invoke(this, EventArgs.Empty);
     }
 
+    #region PauseManager Subscriptions
     private void PauseManager_OnGamePaused(object sender, System.EventArgs e)
     {
         OpenUI();
@@ -71,5 +80,5 @@ public class PauseUI : BaseUI
     {
         CloseUI();
     }
-
+    #endregion
 }

@@ -6,16 +6,12 @@ using System;
 
 public class DictionarySelectionUI : BaseUI
 {
-    [Header("Components")]
-    [SerializeField] private UIInput UIInput;
-
     [Header("UI Components")]
     [SerializeField] private Button closeButton;
 
-    [Header("UI Components")]
+    [Header("Dictionary Button Panels")]
     [SerializeField] private List<DictionaryButtonPanel> dictionaryButtonPanels;
 
-    private bool DictionaryInput => UIInput.GetDictionaryDown();
     private CanvasGroup canvasGroup;
 
     public static event EventHandler OnDictionarySelectionUIOpen;
@@ -32,8 +28,12 @@ public class DictionarySelectionUI : BaseUI
     protected override void OnEnable()
     {
         base.OnEnable();
+        DictionarySelectionOpeningManager.OnDictionarySelectionOpen += DictionarySelectionOpeningManager_OnDictionarySelectionOpen;
+        DictionarySelectionOpeningManager.OnDictionarySelectionClose += DictionarySelectionOpeningManager_OnDictionarySelectionClose;
         SymbolCrafingUI.OnSymbolCraftingUIOpenDictionary += SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary;
     }
+
+
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -52,18 +52,13 @@ public class DictionarySelectionUI : BaseUI
         SetUIState(State.Closed);
     }
 
-    private void Update()
-    {
-        CheckOpenClose();
-    }
-
     private void InitializeButtonsListeners()
     {
         closeButton.onClick.AddListener(CloseUI);
 
         foreach(DictionaryButtonPanel dictionaryButtonPanel in dictionaryButtonPanels)
         {
-            dictionaryButtonPanel.dictionaryButton.onClick.AddListener(() => OpenDictionary(dictionaryButtonPanel.singleDictionaryUI));
+            dictionaryButtonPanel.dictionaryButton.onClick.AddListener(() => OpenSingleDictionary(dictionaryButtonPanel.singleDictionaryUI));
         }
     }
 
@@ -74,28 +69,9 @@ public class DictionarySelectionUI : BaseUI
         canvasGroup.blocksRaycasts = false;
     }
 
-    private void OpenDictionary(SingleDictionaryUI singleDictionaryUI)
+    private void OpenSingleDictionary(SingleDictionaryUI singleDictionaryUI)
     {
         singleDictionaryUI.OpenUI();
-    }
-
-    private void CheckOpenClose()
-    {
-        if (!DictionaryInput) return;
-
-        if(state == State.Closed)
-        {
-            if (UIManager.Instance.UIActive) return;
-            OpenUI();
-            return;
-        }
-
-        if (state == State.Open)
-        {
-            if (!UIManager.Instance.IsFirstOnList(this)) return;
-            CloseUI();
-            return;
-        }
     }
 
     private void OpenUI()
@@ -141,6 +117,18 @@ public class DictionarySelectionUI : BaseUI
         return null;
     }
 
+    #region DictionarySelectionOpeningManager Subscriptions
+    private void DictionarySelectionOpeningManager_OnDictionarySelectionOpen(object sender, EventArgs e)
+    {
+        OpenUI();
+    }
+
+    private void DictionarySelectionOpeningManager_OnDictionarySelectionClose(object sender, EventArgs e)
+    {
+        CloseUI();
+    }
+    #endregion
+
     #region SymbolCraftingUI Subscriptions
     private void SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary(object sender, SymbolCrafingUI.OnSymbolCraftingOpenDictionaryEventArgs e)
     {
@@ -152,7 +140,7 @@ public class DictionarySelectionUI : BaseUI
             return;
         }
 
-        OpenDictionary(dictionaryButtonPanel.singleDictionaryUI);
+        OpenSingleDictionary(dictionaryButtonPanel.singleDictionaryUI);
     }
     #endregion
 }

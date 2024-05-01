@@ -15,9 +15,14 @@ public class PauseManager : MonoBehaviour
 
     private bool PauseInput => UIInput.GetPauseDown();
     public bool GamePaused { get; private set; }
-    public bool GamePausedThisFrame { get; private set; } 
+    public bool GamePausedThisFrame { get; private set; }
     //Used to check if UIManager should ignore the CheckClose that frame, because both Pause and CheckClose use the GetPauseDown() input
     //It could happen that when the game is paused, PauseUI is opened and inmediately closed
+
+    private void OnDisable()
+    {
+        SetResumeTimeScale();
+    }
 
     private void Awake()
     {
@@ -74,14 +79,17 @@ public class PauseManager : MonoBehaviour
     private void PauseGame()
     {
         OnGamePaused?.Invoke(this, EventArgs.Empty);
-        Time.timeScale = 0f;
+        SetPauseTimeScale();
         GamePaused = true;
     }
 
     private void ResumeGame()
     {
         OnGameResumed?.Invoke(this, EventArgs.Empty);
-        Time.timeScale = 1f;
+        SetResumeTimeScale();
         GamePaused = false;
     }
+
+    private void SetPauseTimeScale() => Time.timeScale = 0f;
+    private void SetResumeTimeScale() => Time.timeScale = 1f;
 }
