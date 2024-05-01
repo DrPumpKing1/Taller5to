@@ -20,13 +20,12 @@ public class DictionarySelectionOpeningManager : MonoBehaviour
 
     private void OnEnable()
     {
-        DictionarySelectionUI.OnDictionarySelectionUIOpen -= DictionarySelectionUI_OnDictionarySelectionUIOpen;
-        DictionarySelectionUI.OnDictionarySelectionUIClose -= DictionarySelectionUI_OnDictionarySelectionUIClose;
+        DictionarySelectionUI.OnCloseFromUI += DictionarySelectionUI_OnCloseFromUI;
     }
+
     private void OnDisable()
     {
-        DictionarySelectionUI.OnDictionarySelectionUIOpen -= DictionarySelectionUI_OnDictionarySelectionUIOpen;
-        DictionarySelectionUI.OnDictionarySelectionUIClose -= DictionarySelectionUI_OnDictionarySelectionUIClose;
+        DictionarySelectionUI.OnCloseFromUI -= DictionarySelectionUI_OnCloseFromUI;
     }
 
     private void Awake()
@@ -85,22 +84,20 @@ public class DictionarySelectionOpeningManager : MonoBehaviour
     private void OpenDictionarySelection()
     {
         OnDictionarySelectionOpen?.Invoke(this, EventArgs.Empty);
+        DictionarySelectionOpen = true;
     }
 
     private void CloseDictionarySelection()
     {
         OnDictionarySelectionClose?.Invoke(this, EventArgs.Empty);
+        DictionarySelectionOpen = false;
     }
 
     #region DictionarySelectionUI Subscriptions
-    private void DictionarySelectionUI_OnDictionarySelectionUIOpen(object sender, EventArgs e)
-    {
-        DictionarySelectionOpen = true;
-    }
 
-    private void DictionarySelectionUI_OnDictionarySelectionUIClose(object sender, EventArgs e)
+    private void DictionarySelectionUI_OnCloseFromUI(object sender, EventArgs e)
     {
-        DictionarySelectionOpen = false;
+        CloseDictionarySelection();
     }
     #endregion
 }

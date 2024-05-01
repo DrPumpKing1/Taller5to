@@ -55,7 +55,7 @@ public class SingleDictionaryUI : BaseUI
 
     private void InitializeButtonsListeners()
     {
-        closeButton.onClick.AddListener(CloseUI);
+        closeButton.onClick.AddListener(CloseFromUI);
     }
     private void InitializeVariables()
     {
@@ -81,6 +81,35 @@ public class SingleDictionaryUI : BaseUI
         OnSingleDictionaryUIOpen?.Invoke(this, new OnSingleDiccionaryUIEventArgs { dialect = dialect });
     }
 
+    public void CloseUI()
+    {
+        if (state != State.Open) return;
+
+        SetUIState(State.Closed);
+
+        RemoveFromUILayersList();
+
+        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
+
+        OnSingleDictionaryUIClose?.Invoke(this, new OnSingleDiccionaryUIEventArgs { dialect = dialect });
+    }
+
+    protected override void CloseFromUI()
+    {
+        CloseUI();
+    }
+
+    private void CheckClose()
+    {
+        if (!UIManager.Instance.IsFirstOnList(this)) return;
+        if (!DictionaryInput) return;
+        if (state != State.Open) return;
+
+        CloseFromUI();
+    }
+
     private void UpdateSymbols()
     {
         foreach(Transform child in symbolsContainer)
@@ -95,29 +124,5 @@ public class SingleDictionaryUI : BaseUI
                 }           
             }
         }
-    }
-
-    private void CheckClose()
-    {
-        if (!UIManager.Instance.IsFirstOnList(this)) return;
-        if (!DictionaryInput) return;
-        if (state != State.Open) return;
-
-        CloseUI();
-    }
-
-    protected override void CloseUI()
-    {
-        if (state != State.Open) return;
-
-        SetUIState(State.Closed);
-
-        RemoveFromUILayersList();
-
-        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
-        canvasGroup.interactable = false;
-        canvasGroup.blocksRaycasts = false;
-
-        OnSingleDictionaryUIClose?.Invoke(this, new OnSingleDiccionaryUIEventArgs { dialect = dialect });
     }
 }

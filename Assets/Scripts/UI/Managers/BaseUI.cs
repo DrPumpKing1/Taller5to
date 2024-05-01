@@ -23,7 +23,7 @@ public abstract class BaseUI : MonoBehaviour
 
     protected void SetUIState(State state) => this.state = state;
 
-    protected abstract void CloseUI();
+    protected abstract void CloseFromUI();
 
     #region UIManager Subscriptions
     private void UIManager_OnUIToCloseInput(object sender, UIManager.OnUIToCloseInputEventArgs e)
@@ -31,7 +31,7 @@ public abstract class BaseUI : MonoBehaviour
         if (e.UIToClose != this) return;
         if (state != State.Open) return;
 
-        CloseUI();
+        CloseFromUI();
     }
     #endregion
 

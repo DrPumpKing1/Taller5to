@@ -60,7 +60,7 @@ public class SymbolCrafingUI : BaseUI
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P)) //TestToCraftSymbol
         {
             OnSymbolDrawnCorrectely?.Invoke(this, EventArgs.Empty);
         }
@@ -68,8 +68,21 @@ public class SymbolCrafingUI : BaseUI
 
     private void InitializeButtonsListeners()
     {
-        closeButton.onClick.AddListener(CloseUI);
+        closeButton.onClick.AddListener(CloseFromUI);
         openDictionaryButton.onClick.AddListener(OpenDictionary);
+    }
+
+    private void CloseUI()
+    {
+        if (state != State.Open) return;
+
+        SetUIState(State.Closed);
+        Destroy(transform.parent.gameObject);
+    }
+
+    protected override void CloseFromUI()
+    {
+        CloseUI();
     }
 
     public void SetUI(SymbolCrafting symbolCrafting)
@@ -87,13 +100,5 @@ public class SymbolCrafingUI : BaseUI
     private void OpenDictionary()
     {
         OnSymbolCraftingUIOpenDictionary?.Invoke(this, new OnSymbolCraftingOpenDictionaryEventArgs { dialect = symbolCraftingSO.symbolToCraft.dialect });
-    }
-
-    protected override void CloseUI()
-    {
-        if (state != State.Open) return;
-
-        SetUIState(State.Closed);
-        Destroy(transform.parent.gameObject);
     }
 }

@@ -19,8 +19,14 @@ public class PauseManager : MonoBehaviour
     //Used to check if UIManager should ignore the CheckClose that frame, because both Pause and CheckClose use the GetPauseDown() input
     //It could happen that when the game is paused, PauseUI is opened and inmediately closed
 
+    private void OnEnable()
+    {
+        PauseUI.OnCloseFromUI += PauseUI_OnCloseFromUI;
+    }
+
     private void OnDisable()
     {
+        PauseUI.OnCloseFromUI -= PauseUI_OnCloseFromUI;
         SetResumeTimeScale();
     }
 
@@ -92,4 +98,12 @@ public class PauseManager : MonoBehaviour
 
     private void SetPauseTimeScale() => Time.timeScale = 0f;
     private void SetResumeTimeScale() => Time.timeScale = 1f;
+
+    #region PauseUI Subscriptions
+    private void PauseUI_OnCloseFromUI(object sender, EventArgs e)
+    {
+        ResumeGame();
+    }
+    #endregion
+
 }

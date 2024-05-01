@@ -14,6 +14,7 @@ public class DictionarySelectionUI : BaseUI
 
     private CanvasGroup canvasGroup;
 
+    public static event EventHandler OnCloseFromUI;
     public static event EventHandler OnDictionarySelectionUIOpen;
     public static event EventHandler OnDictionarySelectionUIClose;
 
@@ -37,6 +38,8 @@ public class DictionarySelectionUI : BaseUI
     protected override void OnDisable()
     {
         base.OnDisable();
+        DictionarySelectionOpeningManager.OnDictionarySelectionOpen -= DictionarySelectionOpeningManager_OnDictionarySelectionOpen;
+        DictionarySelectionOpeningManager.OnDictionarySelectionClose -= DictionarySelectionOpeningManager_OnDictionarySelectionClose;
         SymbolCrafingUI.OnSymbolCraftingUIOpenDictionary -= SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary;
     }
 
@@ -54,7 +57,7 @@ public class DictionarySelectionUI : BaseUI
 
     private void InitializeButtonsListeners()
     {
-        closeButton.onClick.AddListener(CloseUI);
+        closeButton.onClick.AddListener(CloseFromUI);
 
         foreach(DictionaryButtonPanel dictionaryButtonPanel in dictionaryButtonPanels)
         {
@@ -89,7 +92,7 @@ public class DictionarySelectionUI : BaseUI
         OnDictionarySelectionUIOpen?.Invoke(this, EventArgs.Empty);
     }
 
-    protected override void CloseUI()
+    private void CloseUI()
     {
         if (state != State.Open) return;
 
@@ -102,6 +105,11 @@ public class DictionarySelectionUI : BaseUI
         canvasGroup.blocksRaycasts = false;
 
         OnDictionarySelectionUIClose?.Invoke(this, EventArgs.Empty);
+    }
+
+    protected override void CloseFromUI()
+    {
+        OnCloseFromUI?.Invoke(this, EventArgs.Empty);
     }
 
     private DictionaryButtonPanel GetDictionaryButtonPanelByDialect(Dialect dialect)

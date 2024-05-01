@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class PauseUI : BaseUI
 {
+    [Header("UI Components")]
+    [SerializeField] private Button resumeButton;
+    [SerializeField] private Button inGameOptionsButton;
+
     private CanvasGroup canvasGroup;
 
+    public static event EventHandler OnCloseFromUI;
     public static event EventHandler OnPauseUIOpen;
     public static event EventHandler OnPauseUIClose;
 
@@ -27,6 +33,7 @@ public class PauseUI : BaseUI
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+        InitializeButtonsListeners();
     }
 
     private void Start()
@@ -34,6 +41,12 @@ public class PauseUI : BaseUI
         InitializeVariables();
         SetUIState(State.Closed);
     }
+    private void InitializeButtonsListeners()
+    {
+        resumeButton.onClick.AddListener(CloseFromUI);
+        inGameOptionsButton.onClick.AddListener(OpenInGameOptionsUI);
+    }
+
     private void InitializeVariables()
     {
         GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
@@ -55,7 +68,7 @@ public class PauseUI : BaseUI
         OnPauseUIOpen?.Invoke(this, EventArgs.Empty);
     }
 
-    protected override void CloseUI()
+    private void CloseUI()
     {
         if (state != State.Open) return;
 
@@ -68,6 +81,16 @@ public class PauseUI : BaseUI
         canvasGroup.blocksRaycasts = false;
 
         OnPauseUIClose?.Invoke(this, EventArgs.Empty);
+    }
+
+    protected override void CloseFromUI()
+    {
+        OnCloseFromUI?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OpenInGameOptionsUI()
+    {
+        Debug.Log("InGameOptionsOpened");
     }
 
     #region PauseManager Subscriptions
