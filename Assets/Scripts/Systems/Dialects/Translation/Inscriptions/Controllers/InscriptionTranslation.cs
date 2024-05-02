@@ -40,12 +40,12 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
 
     private void OnEnable()
     {
-        symbolCrafting.OnSymbolCrafted += SymbolCrafting_OnSymbolCrafted;
+        symbolCrafting.OnSymbolsCrafted += SymbolCrafting_OnSymbolsCrafted;
     }
 
     private void OnDisable()
     {
-        symbolCrafting.OnSymbolCrafted -= SymbolCrafting_OnSymbolCrafted;
+        symbolCrafting.OnSymbolsCrafted -= SymbolCrafting_OnSymbolsCrafted;
     }
 
     #region  IInteractable Methods
@@ -112,7 +112,7 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     #endregion
 
     #region SymbolCrafting Subscriptions
-    private void SymbolCrafting_OnSymbolCrafted(object sender, EventArgs e)
+    private void SymbolCrafting_OnSymbolsCrafted(object sender, EventArgs e)
     {
         inscriptionTranslated = true;
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);

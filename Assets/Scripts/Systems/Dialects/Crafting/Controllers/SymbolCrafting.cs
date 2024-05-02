@@ -14,13 +14,13 @@ public class SymbolCrafting : MonoBehaviour
 
     [Header("SymbolCraftingSettings")]
     [SerializeField] private Transform symbolCraftingUIPrefab;
-    [SerializeField] private bool symbolCrafted;
+    [SerializeField] private bool symbolsCrafted;
 
-    public event EventHandler OnSymbolCrafted;
+    public event EventHandler OnSymbolsCrafted;
 
     public Dialect Dialect { get { return dialect; } }
     public List<SymbolCraftingSO> SymbolCraftingSOs { get { return symbolCraftingSOs; } }
-    public bool SymbolCrafted { get { return symbolCrafted; } }
+    public bool SymbolsCrafted { get { return symbolsCrafted; } }
 
     private IRequiresSymbolCrafting iRequiresSymbolCrafting;
     private SymbolCrafingUI currentSymbolCraftingUI;
@@ -68,7 +68,7 @@ public class SymbolCrafting : MonoBehaviour
         currentSymbolCraftingUI = null;
     }
 
-    public void CraftSymbol() => symbolCrafted = true;
+    public void CraftSymbol() => symbolsCrafted = true;
 
     #region IRequiresSymbolCrafting Subscriptions
     private void IRequiresSymbolCrafting_OnOpenSymbolCraftingUI(object sender, EventArgs e)
@@ -83,8 +83,8 @@ public class SymbolCrafting : MonoBehaviour
 
     private void SymbolCraftingUI_OnSymbolDrawnCorrectely(object sender, EventArgs e)
     {
-        symbolCrafted = true;
-        OnSymbolCrafted?.Invoke(this, EventArgs.Empty);
+        symbolsCrafted = true;
+        OnSymbolsCrafted?.Invoke(this, EventArgs.Empty);
     }
     #endregion
 }

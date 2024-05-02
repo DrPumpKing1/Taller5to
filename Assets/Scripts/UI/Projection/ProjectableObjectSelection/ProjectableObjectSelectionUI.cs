@@ -49,9 +49,9 @@ public class ProjectableObjectSelectionUI : MonoBehaviour
 
         foreach (ProjectableObjectSO projectableObjectSO in projectableObjectsSOs)
         {
-            Transform projectableObjectSelectionSingleUIGameObject = Instantiate(projectableObjectSelectionSingleUIPrefab, projectableObjectSelectionContainer);
+            Transform projectableObjectSelectionSingleUITransform = Instantiate(projectableObjectSelectionSingleUIPrefab, projectableObjectSelectionContainer);
 
-            ProjectableObjectSelectionSingleUI projectableObjectSelectionUI = projectableObjectSelectionSingleUIGameObject.GetComponent<ProjectableObjectSelectionSingleUI>();
+            ProjectableObjectSelectionSingleUI projectableObjectSelectionUI = projectableObjectSelectionSingleUITransform.GetComponent<ProjectableObjectSelectionSingleUI>();
 
             if (!projectableObjectSelectionUI)
             {

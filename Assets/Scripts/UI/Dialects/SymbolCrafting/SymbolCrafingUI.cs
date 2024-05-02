@@ -11,13 +11,15 @@ public class SymbolCrafingUI : BaseUI
     [SerializeField] private SymbolCrafting symbolCrafting;
 
     [Header("UI Components")]
+    [SerializeField] private Transform symbolCraftingSingleUIContainer;
+    [SerializeField] private Transform symbolCraftingSingleUIPrefab;
+    [Space]
     [SerializeField] private TextMeshProUGUI titleText;
-    [SerializeField] private Image imageToTranslate;
     [SerializeField] private Button openDictionaryButton;
     [SerializeField] private Button closeButton;
 
-    [Header("Settings")]
-    [SerializeField] private List<SymbolCraftingSO> symbolCraftingSOs;
+    private List<SymbolCraftingSO> symbolCraftingSOs;
+    private List<SymbolCraftingSingleUI> symbolCraftingSingleUIs = new List<SymbolCraftingSingleUI>();
 
     public static event EventHandler OnAnySymbolCraftingUIOpen;
     public static event EventHandler OnAnySymbolCraftingUIClose;
@@ -91,11 +93,36 @@ public class SymbolCrafingUI : BaseUI
         symbolCraftingSOs = symbolCrafting.SymbolCraftingSOs;
 
         SetTitleText(symbolCrafting.Dialect);
-        //SetImageToTranslate(symbolCraftingSO.imageToTranslateSprite);
+        SetSingleUIs(symbolCraftingSOs);
+    }
+    private void SetTitleText(Dialect dialect) => titleText.text = $"Translate to dialect {dialect}";
+
+    private void SetSingleUIs(List<SymbolCraftingSO> symbolCraftingSOs)
+    {
+        foreach(SymbolCraftingSO symbolCraftingSO in symbolCraftingSOs)
+        {
+            Transform symbolCraftingSingleUITransform = Instantiate(symbolCraftingSingleUIPrefab, symbolCraftingSingleUIContainer);
+            SymbolCraftingSingleUI symbolCratingSingleUI = symbolCraftingSingleUITransform.GetComponentInChildren<SymbolCraftingSingleUI>();
+
+            if (!symbolCratingSingleUI)
+            {
+                Debug.LogWarning("The instantiated prefab does not have a SymbolCraftingSingleUI component");
+            }
+
+            symbolCraftingSingleUIs.Add(symbolCratingSingleUI);
+            symbolCratingSingleUI.SetSymbolCraftingSingleUI(symbolCraftingSO);
+        }
     }
 
-    private void SetTitleText(Dialect dialect) => titleText.text = $"Translate to dialect {dialect}";
-    private void SetImageToTranslate(Sprite sprite) => imageToTranslate.sprite = sprite;
+    private bool CheckAllSymbolsCrafted()
+    {
+        foreach(SymbolCraftingSingleUI symbolCraftingSingleUI in symbolCraftingSingleUIs)
+        {
+            if (!symbolCraftingSingleUI.IsCrafted) return false;
+        }
+
+        return true;
+    }
 
     private void OpenDictionary()
     {

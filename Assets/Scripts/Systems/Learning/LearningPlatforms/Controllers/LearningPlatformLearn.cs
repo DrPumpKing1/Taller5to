@@ -35,12 +35,12 @@ public class LearningPlatformLearn : MonoBehaviour, IInteractable, IRequiresSymb
 
     private void OnEnable()
     {
-        symbolCrafting.OnSymbolCrafted += SymbolCrafting_OnSymbolCrafted;
+        symbolCrafting.OnSymbolsCrafted += SymbolCrafting_OnSymbolCrafted;
     }
 
     private void OnDisable()
     {
-        symbolCrafting.OnSymbolCrafted -= SymbolCrafting_OnSymbolCrafted;
+        symbolCrafting.OnSymbolsCrafted -= SymbolCrafting_OnSymbolCrafted;
     }
 
     #region IInteractable Methods
@@ -75,7 +75,7 @@ public class LearningPlatformLearn : MonoBehaviour, IInteractable, IRequiresSymb
     {
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
-        if (!symbolCrafting.SymbolCrafted)
+        if (!symbolCrafting.SymbolsCrafted)
         {
             OnOpenSymbolCraftingUI?.Invoke(this, EventArgs.Empty);
         }

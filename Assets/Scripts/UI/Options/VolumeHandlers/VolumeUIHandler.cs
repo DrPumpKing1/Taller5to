@@ -9,7 +9,7 @@ public abstract class VolumeUIHandler : MonoBehaviour
     [SerializeField] protected Button increaseVolumeButton;
     [SerializeField] protected Button decreaseVolumeButton;
     [SerializeField] protected Transform volumeBarsContainer;
-    [SerializeField] protected Transform volumeBarTemplate;
+    [SerializeField] protected Transform volumeBarSingleUIPrefab;
 
     protected VolumeManager volumeManager;
 
@@ -20,20 +20,10 @@ public abstract class VolumeUIHandler : MonoBehaviour
         InitializeButtonsListeners();
     }
 
-    private void Start()
-    {
-        InitializeVariables();
-    }
-
     private void InitializeButtonsListeners()
     {
         increaseVolumeButton.onClick.AddListener(IncreaseVolumeByButton);
         decreaseVolumeButton.onClick.AddListener(DecreaseVolumeByButton);
-    }
-
-    private void InitializeVariables()
-    {
-        volumeBarTemplate.gameObject.SetActive(false);
     }
 
     protected abstract void SetVolumeManager();
@@ -68,8 +58,6 @@ public abstract class VolumeUIHandler : MonoBehaviour
     {
         foreach (Transform child in volumeBarsContainer)
         {
-            if (child == volumeBarTemplate) continue;
-
             Destroy(child.gameObject);
         }
 
@@ -78,8 +66,7 @@ public abstract class VolumeUIHandler : MonoBehaviour
 
         for (int i = 0; i < totalBars; i++)
         {
-            Transform volumeBarTransform = Instantiate(volumeBarTemplate, volumeBarsContainer);
-            volumeBarTransform.gameObject.SetActive(true);
+            Transform volumeBarTransform = Instantiate(volumeBarSingleUIPrefab, volumeBarsContainer);
 
             VolumeBarSingleUI volumeBarSingleUI = volumeBarTransform.GetComponent<VolumeBarSingleUI>();
 
