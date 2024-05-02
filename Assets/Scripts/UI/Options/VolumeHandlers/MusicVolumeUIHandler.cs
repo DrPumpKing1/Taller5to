@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MusicVolumeUIHandler : VolumeUIHandler
 {
-    protected override void SetVolumeManager() => volumeManager = MusicVolumeManager.Instance;
-
     private void OnEnable()
     {
         MusicVolumeManager.OnMusicVolumeManagerInitialized += MusicVolumeManager_OnMusicVolumeManagerInitialized;
@@ -15,8 +13,10 @@ public class MusicVolumeUIHandler : VolumeUIHandler
         MusicVolumeManager.OnMusicVolumeManagerInitialized += MusicVolumeManager_OnMusicVolumeManagerInitialized;
     }
 
+    protected override void SetVolumeManager() => volumeManager = MusicVolumeManager.Instance;
     private void MusicVolumeManager_OnMusicVolumeManagerInitialized(object sender, System.EventArgs e)
     {
+        SetVolumeManager();
         UpdateVisual();
     }
 }

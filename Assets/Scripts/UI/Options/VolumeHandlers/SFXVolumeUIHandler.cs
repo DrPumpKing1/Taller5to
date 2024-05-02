@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SFXVolumeUIHandler : VolumeUIHandler
 {
-    protected override void SetVolumeManager() => volumeManager = SFXVolumeManager.Instance;
-
     private void OnEnable()
     {
         SFXVolumeManager.OnSFXVolumeManagerInitialized += SFXVolumeManager_OnSFXVolumeManagerInitialized;
@@ -13,11 +11,12 @@ public class SFXVolumeUIHandler : VolumeUIHandler
     private void OnDisable()
     {
         SFXVolumeManager.OnSFXVolumeManagerInitialized -= SFXVolumeManager_OnSFXVolumeManagerInitialized;
-
     }
 
+    protected override void SetVolumeManager() => volumeManager = SFXVolumeManager.Instance;
     private void SFXVolumeManager_OnSFXVolumeManagerInitialized(object sender, System.EventArgs e)
     {
+        SetVolumeManager();
         UpdateVisual();
     }
 }

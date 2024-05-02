@@ -1,12 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MasterVolumeUIHandler : VolumeUIHandler
 {
-    protected override void SetVolumeManager() => volumeManager = MasterVolumeManager.Instance;
-
     private void OnEnable()
     {
         MasterVolumeManager.OnMasterVolumeManagerInitialized += MasterVolumeManager_OnMasterVolumeManagerInitialized;
@@ -16,8 +13,10 @@ public class MasterVolumeUIHandler : VolumeUIHandler
         MasterVolumeManager.OnMasterVolumeManagerInitialized -= MasterVolumeManager_OnMasterVolumeManagerInitialized;
     }
 
+    protected override void SetVolumeManager() => volumeManager = MasterVolumeManager.Instance;
     private void MasterVolumeManager_OnMasterVolumeManagerInitialized(object sender, System.EventArgs e)
     {
+        SetVolumeManager();
         UpdateVisual();
     }
 }

@@ -11,6 +11,7 @@ public class MasterVolumeManager : VolumeManager
     private const string MASTER_VOLUME = "MasterVolume";
 
     public static event EventHandler OnMasterVolumeManagerInitialized;
+    public static event EventHandler<OnVolumeChangedEventArgs> OnMasterVolumeChanged;
 
     private void Awake()
     {
@@ -41,11 +42,19 @@ public class MasterVolumeManager : VolumeManager
         volume = volume > GetMaxVolume() ? GetMaxVolume() : volume;
 
         masterAudioMixer.SetFloat(MASTER_VOLUME, Mathf.Log10(volume) * 20);
+
+        OnMasterVolumeChanged?.Invoke(this, new OnVolumeChangedEventArgs { newVolume = volume });
     }
 
-    public override float GetVolume()
+    public override float GetLogarithmicVolume()
     {
         masterAudioMixer.GetFloat(MASTER_VOLUME, out float logarithmicVolume);
+        return logarithmicVolume;
+    }
+
+    public override float GetLinearVolume()
+    {
+        float logarithmicVolume = GetLogarithmicVolume();
         float linearVolume = Mathf.Pow(10f, logarithmicVolume / 20f);
         return linearVolume;
     }

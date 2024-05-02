@@ -12,6 +12,7 @@ public class MusicVolumeManager : VolumeManager
 
     public static event EventHandler OnMusicVolumeManagerInitialized;
 
+    public static event EventHandler<OnVolumeChangedEventArgs> OnMusicVolumeChanged;
     private void Awake()
     {
         SetSingleton();
@@ -41,11 +42,20 @@ public class MusicVolumeManager : VolumeManager
         volume = volume > GetMaxVolume() ? GetMaxVolume() : volume;
 
         masterAudioMixer.SetFloat(MUSIC_VOLUME, Mathf.Log10(volume) * 20);
+
+        OnMusicVolumeChanged?.Invoke(this, new OnVolumeChangedEventArgs { newVolume = volume });
     }
 
-    public override float GetVolume()
+    public override float GetLogarithmicVolume()
     {
         masterAudioMixer.GetFloat(MUSIC_VOLUME, out float logarithmicVolume);
+        return logarithmicVolume;
+    }
+
+
+    public override float GetLinearVolume()
+    {
+        float logarithmicVolume = GetLogarithmicVolume();
         float linearVolume = Mathf.Pow(10f, logarithmicVolume / 20f);
         return linearVolume;
     }

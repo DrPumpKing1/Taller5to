@@ -33,7 +33,6 @@ public abstract class VolumeUIHandler : MonoBehaviour
 
     private void InitializeVariables()
     {
-        SetVolumeManager();
         volumeBarTemplate.gameObject.SetActive(false);
     }
 
@@ -41,7 +40,7 @@ public abstract class VolumeUIHandler : MonoBehaviour
 
     private void IncreaseVolumeByButton()
     {
-        float currentVolume = volumeManager.GetVolume();
+        float currentVolume = volumeManager.GetLinearVolume();
         float desiredVolume = currentVolume + VOLUME_BUTTON_CHANGE;
 
         if (desiredVolume > volumeManager.GetMaxVolume()) return;
@@ -54,7 +53,7 @@ public abstract class VolumeUIHandler : MonoBehaviour
 
     private void DecreaseVolumeByButton()
     {
-        float currentVolume = volumeManager.GetVolume();
+        float currentVolume = volumeManager.GetLinearVolume();
         float desiredVolume = currentVolume - VOLUME_BUTTON_CHANGE;
 
         if (desiredVolume < 0f) return;
@@ -75,7 +74,7 @@ public abstract class VolumeUIHandler : MonoBehaviour
         }
 
         int totalBars = Mathf.RoundToInt(volumeManager.GetMaxVolume() * 10f);
-        int activeBars = Mathf.RoundToInt(volumeManager.GetVolume() * 10f);
+        int activeBars = Mathf.RoundToInt(volumeManager.GetLinearVolume() * 10f);
 
         for (int i = 0; i < totalBars; i++)
         {
