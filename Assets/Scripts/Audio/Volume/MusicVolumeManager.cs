@@ -52,7 +52,6 @@ public class MusicVolumeManager : VolumeManager
         return logarithmicVolume;
     }
 
-
     public override float GetLinearVolume()
     {
         float logarithmicVolume = GetLogarithmicVolume();
