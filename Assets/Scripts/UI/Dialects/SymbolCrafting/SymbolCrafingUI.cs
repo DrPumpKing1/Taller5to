@@ -17,7 +17,7 @@ public class SymbolCrafingUI : BaseUI
     [SerializeField] private Button closeButton;
 
     [Header("Settings")]
-    [SerializeField] private SymbolCraftingSO symbolCraftingSO;
+    [SerializeField] private List<SymbolCraftingSO> symbolCraftingSOs;
 
     public static event EventHandler OnAnySymbolCraftingUIOpen;
     public static event EventHandler OnAnySymbolCraftingUIClose;
@@ -88,10 +88,10 @@ public class SymbolCrafingUI : BaseUI
     public void SetUI(SymbolCrafting symbolCrafting)
     {
         this.symbolCrafting = symbolCrafting;
-        symbolCraftingSO = symbolCrafting.SymbolCraftingSO;
+        symbolCraftingSOs = symbolCrafting.SymbolCraftingSOs;
 
-        SetTitleText(symbolCraftingSO.symbolToCraft.dialect);
-        SetImageToTranslate(symbolCraftingSO.imageToTranslateSprite);
+        SetTitleText(symbolCrafting.Dialect);
+        //SetImageToTranslate(symbolCraftingSO.imageToTranslateSprite);
     }
 
     private void SetTitleText(Dialect dialect) => titleText.text = $"Translate to dialect {dialect}";
@@ -99,6 +99,6 @@ public class SymbolCrafingUI : BaseUI
 
     private void OpenDictionary()
     {
-        OnSymbolCraftingUIOpenDictionary?.Invoke(this, new OnSymbolCraftingOpenDictionaryEventArgs { dialect = symbolCraftingSO.symbolToCraft.dialect });
+        OnSymbolCraftingUIOpenDictionary?.Invoke(this, new OnSymbolCraftingOpenDictionaryEventArgs { dialect = symbolCrafting.Dialect });
     }
 }

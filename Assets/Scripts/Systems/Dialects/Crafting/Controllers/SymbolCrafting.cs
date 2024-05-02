@@ -9,7 +9,8 @@ public class SymbolCrafting : MonoBehaviour
     [SerializeField] private Component iRequiresSymbolCraftingComponent;
 
     [Header("Symbol Crafting Settings")]
-    [SerializeField] private SymbolCraftingSO symbolCraftingSO;
+    [SerializeField] private Dialect dialect;
+    [SerializeField] private List<SymbolCraftingSO> symbolCraftingSOs;
 
     [Header("SymbolCraftingSettings")]
     [SerializeField] private Transform symbolCraftingUIPrefab;
@@ -17,7 +18,8 @@ public class SymbolCrafting : MonoBehaviour
 
     public event EventHandler OnSymbolCrafted;
 
-    public SymbolCraftingSO SymbolCraftingSO { get { return symbolCraftingSO; } }
+    public Dialect Dialect { get { return dialect; } }
+    public List<SymbolCraftingSO> SymbolCraftingSOs { get { return symbolCraftingSOs; } }
     public bool SymbolCrafted { get { return symbolCrafted; } }
 
     private IRequiresSymbolCrafting iRequiresSymbolCrafting;
