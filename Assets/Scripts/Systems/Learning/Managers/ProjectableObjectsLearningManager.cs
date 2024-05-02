@@ -32,7 +32,7 @@ public class ProjectableObjectsLearningManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("There is more than one LearningManager instance, proceding to destroy duplicate");
+            Debug.LogWarning("There is more than one ProjectionLearningManager instance, proceding to destroy duplicate");
             Destroy(gameObject);
         }
     }

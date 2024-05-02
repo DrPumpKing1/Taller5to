@@ -34,7 +34,7 @@ public class SymbolsDictionaryManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("There is more than one InventoryManager instance, proceding to destroy duplicate");
+            Debug.LogWarning("There is more than one SymbolsDictionaryManager instance, proceding to destroy duplicate");
             Destroy(gameObject);
         }
     }
