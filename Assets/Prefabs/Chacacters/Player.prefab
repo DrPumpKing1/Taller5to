@@ -50,8 +50,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 129
-  checkGoundYOffset: -0.05
-  raySphereRadius: 0.25
+  checkGoundYOffset: -0.1
+  raySphereRadius: 0.15
   checkSlopeRayLength: 0.1
   checkDistanceGroundRayLenght: 1
   drawRaycasts: 0
@@ -498,6 +498,7 @@ MonoBehaviour:
   jumpEnabled: 1
   movementInput: {fileID: 0}
   playerGravityController: {fileID: 2300728550411198240}
+  playerLand: {fileID: 545511874797415526}
   playerHorizontalMovement: {fileID: 1658583223491952907}
   playerInteract: {fileID: 4536946071876244043}
   playerInteractAlternate: {fileID: 907748609654045023}
@@ -506,7 +507,7 @@ MonoBehaviour:
   jumpHeight: 1.25
   jumpHeightError: -0.12
   impulseTime: 0
-  jumpCooldown: 0.75
+  jumpCooldown: 0.65
   forwardImpulse: 1.5
 --- !u!114 &2984513525385847362
 MonoBehaviour:
@@ -536,10 +537,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerFall: {fileID: 2984513525385847362}
+  checkGround: {fileID: 2176356878162520009}
   playerGravityController: {fileID: 2300728550411198240}
-  landDetectionHeightThreshold: 0
+  landDetectionHeightThreshold: 0.001
+  softLandingThreshold: 0.001
+  normalLandingThreshold: 0.45
+  normalLandRecoveryTime: 0.5
   hardLandingThreshold: 1.5
-  landRecoveryTime: 0.5
   hardLandRecoveryTime: 0.5
 --- !u!114 &2300728550411198240
 MonoBehaviour:

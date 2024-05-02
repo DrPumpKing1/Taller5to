@@ -12,6 +12,7 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private MovementInput movementInput;
     [Space]
     [SerializeField] private PlayerGravityController playerGravityController;
+    [SerializeField] private PlayerLand playerLand;
     [SerializeField] private PlayerHorizontalMovement playerHorizontalMovement;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
@@ -77,6 +78,7 @@ public class PlayerJump : MonoBehaviour
         if (shouldJump) return;
         if (!checkGround.IsGrounded) return;
         if (playerCrouch.IsCrouching) return;
+        if (playerLand.IsRecoveringFromLanding) return;
         if (playerInteract.IsInteracting) return;
         if (playerInteractAlternate.IsInteractingAlternate) return;
         if (JumpOnCooldown()) return;
@@ -157,6 +159,8 @@ public class PlayerJump : MonoBehaviour
     private void HandleJumpCooldown()
     {
         if (!checkGround.IsGrounded) return;
+        if (playerLand.IsRecoveringFromLanding) return;
+
         jumpCooldownTime = jumpCooldownTime > 0f ? jumpCooldownTime -= Time.deltaTime : 0f;
     }
 

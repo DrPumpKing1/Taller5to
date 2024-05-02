@@ -7,25 +7,31 @@ public class PlayerLand : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private PlayerFall playerFall;
+    [SerializeField] private CheckGround checkGround;
     [SerializeField] private PlayerGravityController playerGravityController;
 
     [Header("Land Settings")]
     [SerializeField, Range(0f, 1.5f)] private float landDetectionHeightThreshold;
+    [Space]
+    [SerializeField, Range(0f, 1.5f)] private float softLandingThreshold;
+    [Space]
+    [SerializeField, Range(0f, 1.5f)] private float normalLandingThreshold;
+    [SerializeField, Range(0f, 0.5f)] private float normalLandRecoveryTime;
+    [Space]
     [SerializeField, Range(1.5f, 3f)] private float hardLandingThreshold;
-
-    [SerializeField, Range(0f, 0.5f)] private float landRecoveryTime;
     [SerializeField, Range(0f, 0.5f)] private float hardLandRecoveryTime;
 
     public bool IsRecoveringFromLanding { get; private set; }
 
-    private enum State {NotLanding, RegularLanding, HardLanding}
+    private enum State {NotLanding, SoftLanding, NormalLanding, HardLanding}
     private State state;
 
     private Rigidbody _rigidbody;
-    private bool previouslyFalling;
+    private bool previouslyGrounded;
     private float timer = 0f;
 
-    public event EventHandler OnPlayerRegularLand;
+    public event EventHandler OnPlayerSoftLand;
+    public event EventHandler OnPlayerNormalLand;
     public event EventHandler OnPlayerHardLand;
     public event EventHandler<OnPlayerLandEventArgs> OnPlayerLand;
 
@@ -51,7 +57,7 @@ public class PlayerLand : MonoBehaviour
 
     private void InitializeVariables()
     {
-        previouslyFalling = playerFall.IsFalling;
+        previouslyGrounded = checkGround.IsGrounded;
     }
 
     private void HandleLandStates()
@@ -61,15 +67,18 @@ public class PlayerLand : MonoBehaviour
             case State.NotLanding:
                 NotLandingLogic();
                 break;
-            case State.RegularLanding:
-                RegularLandingLogic();
+            case State.SoftLanding:
+                SoftLandingLogic();
+                break;
+            case State.NormalLanding:
+                NormalLandingLogic();
                 break;
             case State.HardLanding:
                 HardLandingLogic();
                 break;
         }
 
-        previouslyFalling = playerFall.IsFalling;
+        previouslyGrounded = checkGround.IsGrounded;
     }
 
     private void SetLandState(State state) { this.state = state; }
@@ -78,7 +87,7 @@ public class PlayerLand : MonoBehaviour
     {
         IsRecoveringFromLanding = false;
 
-        if (previouslyFalling && !playerFall.IsFalling)
+        if (!previouslyGrounded && checkGround.IsGrounded)
         {
             float landHeight = CalculateLandHeight(_rigidbody.velocity.y, Physics.gravity.y * playerGravityController.GravityMultiplier * playerGravityController. FallMultiplier);
 
@@ -91,21 +100,34 @@ public class PlayerLand : MonoBehaviour
                 OnPlayerHardLand?.Invoke(this, EventArgs.Empty);
                 SetLandState(State.HardLanding);
             }
-            else
+            else if(landHeight >= normalLandingThreshold)
             {
-                OnPlayerRegularLand?.Invoke(this, EventArgs.Empty);
-                SetLandState(State.RegularLanding);
+                OnPlayerNormalLand?.Invoke(this, EventArgs.Empty);
+                SetLandState(State.NormalLanding);
+            }
+            else if(landHeight >= softLandingThreshold)
+            {
+                OnPlayerSoftLand?.Invoke(this, EventArgs.Empty);
+                SetLandState(State.SoftLanding);
             }
         }
     }
 
-    private void RegularLandingLogic()
+    private void SoftLandingLogic()
+    {
+        IsRecoveringFromLanding = false;
+
+        ResetTimer();
+        SetLandState(State.NotLanding);
+    }
+
+    private void NormalLandingLogic()
     {
         IsRecoveringFromLanding = true;
 
         timer += Time.deltaTime;
 
-        if (timer >= landRecoveryTime)
+        if (timer >= normalLandRecoveryTime)
         {
             ResetTimer();
             SetLandState(State.NotLanding);

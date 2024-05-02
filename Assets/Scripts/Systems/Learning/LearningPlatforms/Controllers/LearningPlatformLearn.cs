@@ -3,45 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class LearningPlatformLearn : MonoBehaviour, IInteractable, IRequiresSymbolCrafting
+public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
 {
     [Header("Components")]
     [SerializeField] private LearningPlatform learningPlatform;
-    [SerializeField] private SymbolCrafting symbolCrafting;
 
     [Header("Interactable Settings")]
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
     [SerializeField] private string tooltipMessage;
+    [Space]
+    [SerializeField] private float holdDuration;
 
-    #region IInteractableProperties
+    #region IHoldInteractableProperties
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
+    public float HoldDuration => holdDuration;
     #endregion
 
-    #region IInteractable Events
+    #region IHoldInteractable Events
     public event EventHandler OnObjectSelected;
     public event EventHandler OnObjectDeselected;
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
     public event EventHandler OnUpdatedInteractableState;
+
+    public event EventHandler OnHoldInteractionStart;
+    public event EventHandler OnHoldInteractionEnd;
+    public event EventHandler<IHoldInteractable.OnHoldInteractionEventArgs> OnContinousHoldInteraction;
     #endregion
 
     public event EventHandler OnOpenSymbolCraftingUI;
-
-    private void OnEnable()
-    {
-        symbolCrafting.OnSymbolsCrafted += SymbolCrafting_OnSymbolCrafted;
-    }
-
-    private void OnDisable()
-    {
-        symbolCrafting.OnSymbolsCrafted -= SymbolCrafting_OnSymbolCrafted;
-    }
 
     #region IInteractable Methods
     public void Select()
@@ -75,10 +71,11 @@ public class LearningPlatformLearn : MonoBehaviour, IInteractable, IRequiresSymb
     {
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
-        if (!symbolCrafting.SymbolsCrafted)
-        {
-            OnOpenSymbolCraftingUI?.Invoke(this, EventArgs.Empty);
-        }
+        learningPlatform.LearnObject();
+
+        canBeSelected = false;
+        isInteractable = false;
+        hasAlreadyBeenInteracted = true;
     }
 
     public void FailInteract()
@@ -91,15 +88,27 @@ public class LearningPlatformLearn : MonoBehaviour, IInteractable, IRequiresSymb
         Debug.Log("Learning Platform has Already Been Interacted");
         OnObjectHasAlreadyBeenInteracted?.Invoke(this, EventArgs.Empty);
     }
+    public bool CheckSuccess()
+    {
+        if (!isInteractable)
+        {
+            FailInteract();
+            return false;
+        }
+
+        if (hasAlreadyBeenInteracted)
+        {
+            AlreadyInteracted();
+            return false;
+        }
+
+        return true;
+    }
+
+    public void HoldInteractionStart() => OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
+    public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
+    public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
 
     public Transform GetTransform() => transform;
-    #endregion
-
-    #region SymbolCrafting Subscriptions
-    private void SymbolCrafting_OnSymbolCrafted(object sender, EventArgs e)
-    {
-        canBeSelected = false;
-        isInteractable = false;
-    }
     #endregion
 }

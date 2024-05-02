@@ -66,15 +66,7 @@ public class ProjectableObjectSelectionUI : MonoBehaviour
             index++;
         }
 
-        RadialContainerUI radialContainerUI = projectableObjectSelectionContainer.GetComponent<RadialContainerUI>();
-
-        if (!radialContainerUI)
-        {
-            Debug.LogWarning("There's not a RadialContainerUI attached to instantiated prefab");
-            return;
-        }
-
-        radialContainerUI.OrganizeChildPositions();
+        OrganizeObjectUIsInContainer();
     }
 
     private void DeselectAllUI()
@@ -151,7 +143,23 @@ public class ProjectableObjectSelectionUI : MonoBehaviour
         projectableObjectSelectionUI.SetProyectableObjectImage(projectableObjectSO.sprite);
         projectableObjectSelectionUI.SetProyectableObjectCost(projectableObjectSO.projectionGemsCost);
         projectableObjectSelectionUI.SetLinkedIndex(indexToLink);
+
+        OrganizeObjectUIsInContainer();
     }
+
+    private void OrganizeObjectUIsInContainer()
+    {
+        RadialContainerUI radialContainerUI = projectableObjectSelectionContainer.GetComponent<RadialContainerUI>();
+
+        if (!radialContainerUI)
+        {
+            Debug.LogWarning("There's not a RadialContainerUI attached to instantiated prefab");
+            return;
+        }
+
+        radialContainerUI.OrganizeChildPositions();
+    }
+
 
     #region Events Subscriptions
     private void ProjectionManager_OnProjectionManagerInitialized(object sender, EventArgs e)
