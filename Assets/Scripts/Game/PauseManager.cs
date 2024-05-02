@@ -28,6 +28,7 @@ public class PauseManager : MonoBehaviour
     {
         PauseUI.OnCloseFromUI -= PauseUI_OnCloseFromUI;
         SetResumeTimeScale();
+        GamePaused = false;
     }
 
     private void Awake()

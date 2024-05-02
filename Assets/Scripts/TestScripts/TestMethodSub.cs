@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TestMethodSub : MonoBehaviour
 {
@@ -27,6 +28,14 @@ public class TestMethodSub : MonoBehaviour
         playerFall.OnPlayerFall -= PlayerFall_OnPlayerFall;
         playerLand.OnPlayerLand -= PlayerLand_OnPlayerLand;
 
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     private void PlayerCrouch_OnPlayerStandUp(object sender, System.EventArgs e)

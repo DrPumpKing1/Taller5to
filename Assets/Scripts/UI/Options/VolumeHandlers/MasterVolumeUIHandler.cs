@@ -16,7 +16,6 @@ public class MasterVolumeUIHandler : VolumeUIHandler
     protected override void SetVolumeManager() => volumeManager = MasterVolumeManager.Instance;
     private void MasterVolumeManager_OnMasterVolumeManagerInitialized(object sender, System.EventArgs e)
     {
-        SetVolumeManager();
-        UpdateVisual();
+        InitializeUI();
     }
 }

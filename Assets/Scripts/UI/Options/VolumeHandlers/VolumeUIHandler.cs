@@ -26,7 +26,21 @@ public abstract class VolumeUIHandler : MonoBehaviour
         decreaseVolumeButton.onClick.AddListener(DecreaseVolumeByButton);
     }
 
+    private void Start()
+    {
+        InitializeUI();
+    }
+
     protected abstract void SetVolumeManager();
+
+    protected void InitializeUI()
+    {
+        SetVolumeManager();
+
+        if (!volumeManager) return;
+
+        UpdateVisual();
+    }
 
     private void IncreaseVolumeByButton()
     {
