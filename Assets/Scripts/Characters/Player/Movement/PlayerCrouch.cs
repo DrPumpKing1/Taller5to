@@ -12,6 +12,7 @@ public class PlayerCrouch : MonoBehaviour
     [SerializeField] private MovementInput movementInput;
     [Space]
     [SerializeField] private PlayerJump playerJump;
+    [SerializeField] private PlayerLand playerLand;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
     [Space]
@@ -22,6 +23,7 @@ public class PlayerCrouch : MonoBehaviour
     [SerializeField, Range(0.2f, 0.9f)] private float crouchPercent = 0.6f;
     [SerializeField] private float crouchTransitionDuration = 1f;
     [SerializeField] private AnimationCurve crouchTransitionCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+    [SerializeField, Range(0f, 2f)] private float toggleCrouchCooldown;
 
     private CapsuleCollider capsuleCollider;
 
@@ -41,6 +43,7 @@ public class PlayerCrouch : MonoBehaviour
     private float crouchHeight;
     private float stateStartingHeight;
     private float timer = 0f;
+    private float toggleCrouchCooldownTime;
 
     public event EventHandler OnPlayerStandDown;
     public event EventHandler OnPlayerStandUp;
@@ -72,6 +75,7 @@ public class PlayerCrouch : MonoBehaviour
         crouchingActive = false;
 
         timer = 0f;
+        toggleCrouchCooldownTime = 0f;
     }
 
     private void SetCrouchState(State state) { this.state = state; }
@@ -94,20 +98,23 @@ public class PlayerCrouch : MonoBehaviour
     private void CheckToggleCrouch()
     {
         if (!checkGround.IsGrounded) return;
+        if (playerLand.IsRecoveringFromLanding) return;
 
-        if (CrouchInput)
-        {
-            if (IsCrouching && checkRoof.HitRoof) return;
-            if (!playerJump.NotJumping) return;
-            if (playerInteract.IsInteracting) return;
-            if (playerInteractAlternate.IsInteractingAlternate) return;
+        if (!CrouchInput) return;
+        if (IsCrouching && checkRoof.HitRoof) return;
+        if (!playerJump.NotJumping) return;
+        if (playerInteract.IsInteracting) return;
+        if (playerInteractAlternate.IsInteractingAlternate) return;
+        if (ToggleCrouchOnCooldown()) return;
 
-            shouldBeCrouching = !shouldBeCrouching;
-        }
+        shouldBeCrouching = !shouldBeCrouching;
+        toggleCrouchCooldownTime = toggleCrouchCooldown;   
     }
 
     private void NotCrouchingLogic()
     {
+        HandleToggleCrouchCooldown();
+
         if (shouldBeCrouching)
         {
             ResetTimer();
@@ -124,6 +131,7 @@ public class PlayerCrouch : MonoBehaviour
             if (capsuleCollider.height == crouchHeight)
             {
                 IsCrouchingTransitioning = false;
+                HandleToggleCrouchCooldown();
                 return;
             }
 
@@ -151,8 +159,8 @@ public class PlayerCrouch : MonoBehaviour
             if (capsuleCollider.height == normalHeight)
             {
                 ResetTimer();
-                SetCrouchState(State.NotCrouching);
                 IsCrouchingTransitioning = false;
+                SetCrouchState(State.NotCrouching);
                 return;
             }
 
@@ -181,6 +189,16 @@ public class PlayerCrouch : MonoBehaviour
         Vector3 newCharacterControllerCenter = new Vector3(capsuleCollider.center.x, capsuleCollider.height / 2, capsuleCollider.center.z);
         capsuleCollider.center = newCharacterControllerCenter;
     }
+
+    private void HandleToggleCrouchCooldown()
+    {
+        if (!checkGround.IsGrounded) return;
+        if (playerLand.IsRecoveringFromLanding) return;
+
+        toggleCrouchCooldownTime = toggleCrouchCooldownTime > 0f ? toggleCrouchCooldownTime -= Time.deltaTime : 0f;
+    }
+
+    private bool ToggleCrouchOnCooldown() => toggleCrouchCooldownTime > 0f;
 
     private void ResetTimer() => timer = 0f;
 }

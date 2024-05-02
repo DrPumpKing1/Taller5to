@@ -91,13 +91,14 @@ public class PlayerAnimationController : MonoBehaviour
         animator.ResetTrigger(JUMP_TRIGGER);
         animator.ResetTrigger(FALL_TRIGGER);
         ResetLandingTriggers();
-        //animator.ResetTrigger(STAND_DOWN_TRIGGER);
-        //animator.ResetTrigger(STAND_UP_TRIGGER);
+        animator.ResetTrigger(STAND_DOWN_TRIGGER);
+        animator.ResetTrigger(STAND_UP_TRIGGER);
     }
 
     private void ResetLandingTriggers()
     {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Fall")) return; //Hardcoded to prevent SoftLanding in Fall bug -> Not detecting SoftLanding trigger in Fall Animation
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump")) return; //Hardcoded to prevent SoftLanding in Jump bug -> Not detecting SoftLanding trigger in Jump Animation, sometimes
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Fall")) return; //Hardcoded to prevent SoftLanding in Fall bug -> Not detecting SoftLanding trigger in Fall Animation, sometimes
 
         animator.ResetTrigger(SOFT_LAND_TRIGGER);
         animator.ResetTrigger(NORMAL_LAND_TRIGGER);
