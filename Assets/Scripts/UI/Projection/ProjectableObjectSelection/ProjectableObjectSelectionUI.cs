@@ -65,6 +65,16 @@ public class ProjectableObjectSelectionUI : MonoBehaviour
 
             index++;
         }
+
+        RadialContainerUI radialContainerUI = projectableObjectSelectionContainer.GetComponent<RadialContainerUI>();
+
+        if (!radialContainerUI)
+        {
+            Debug.LogWarning("There's not a RadialContainerUI attached to instantiated prefab");
+            return;
+        }
+
+        radialContainerUI.OrganizeChildPositions();
     }
 
     private void DeselectAllUI()

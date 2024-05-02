@@ -157,7 +157,7 @@ public class ProjectableObjectSelectionManager : MonoBehaviour
     {
         if (!input) return;
         if (CurrentSelectionIndex == index) return;
-        if (ProjectableObjectsInventory.Count < index) return;
+        if (ProjectableObjectsInventory.Count <= index) return;
 
         int previousIndex = CurrentSelectionIndex;
         CurrentSelectionIndex = index;

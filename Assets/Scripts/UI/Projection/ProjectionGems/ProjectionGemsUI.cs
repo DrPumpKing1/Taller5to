@@ -6,10 +6,8 @@ using System;
 
 public class ProjectionGemsUI : MonoBehaviour
 {
-    [Header("UI Settings")]
+    [Header("UI Components")]
     [SerializeField] private TextMeshProUGUI projectionGemsText;
-    [SerializeField] private GameObject insuficientProjectionGemsText;
-    [SerializeField] private float insuficientProjectionGemsTextShowTime;
 
     private void OnEnable()
     {
@@ -18,7 +16,6 @@ public class ProjectionGemsUI : MonoBehaviour
         ProjectionGemsManager.OnProjectionGemsUsed += ProjectionGemsManager_OnProjectionGemsUsed;
         ProjectionGemsManager.OnProjectionGemsRefunded += ProjectionGemsManager_OnProjectionGemsRefunded;
         ProjectionGemsManager.OnTotalProjectionGemsIncreased += ProjectionGemsManager_OnTotalProjectionGemsIncreased;
-        ProjectionGemsManager.OnInsuficentProjectionGems += ProjectionGemsManager_OnInsuficientProjectionGems;
     }
 
     private void OnDisable()
@@ -28,7 +25,6 @@ public class ProjectionGemsUI : MonoBehaviour
         ProjectionGemsManager.OnProjectionGemsUsed -= ProjectionGemsManager_OnProjectionGemsUsed;
         ProjectionGemsManager.OnProjectionGemsRefunded -= ProjectionGemsManager_OnProjectionGemsRefunded;
         ProjectionGemsManager.OnTotalProjectionGemsIncreased -= ProjectionGemsManager_OnTotalProjectionGemsIncreased;
-        ProjectionGemsManager.OnInsuficentProjectionGems -= ProjectionGemsManager_OnInsuficientProjectionGems;
     }
 
     private void Start()
@@ -39,22 +35,11 @@ public class ProjectionGemsUI : MonoBehaviour
     private void InitializeUI()
     {
         UpdateProjectionGemsUI();
-        HideInsuficientGemsText();
     }
 
     private void UpdateProjectionGemsUI()
     {
-        projectionGemsText.text = ($"Gemas de Proyección: {ProjectionGemsManager.Instance.AvailableProyectionGems}/{ProjectionGemsManager.Instance.TotalProjectionGems}");
-    }
-
-    private void ShowInsuficientGemsText() => insuficientProjectionGemsText.SetActive(true);
-    private void HideInsuficientGemsText() => insuficientProjectionGemsText.SetActive(false);
-
-    private IEnumerator InsuficientProjectionGemsCoroutine()
-    {
-        ShowInsuficientGemsText();
-        yield return new WaitForSeconds(insuficientProjectionGemsTextShowTime);
-        HideInsuficientGemsText();
+        projectionGemsText.text = ($"{ProjectionGemsManager.Instance.AvailableProyectionGems}/{ProjectionGemsManager.Instance.TotalProjectionGems}");
     }
 
     #region ProjectionGemsManager Subscriptions
@@ -76,12 +61,6 @@ public class ProjectionGemsUI : MonoBehaviour
     private void ProjectionGemsManager_OnTotalProjectionGemsIncreased(object sender, ProjectionGemsManager.OnProjectionGemsEventArgs e)
     {
         UpdateProjectionGemsUI();
-    }
-
-    private void ProjectionGemsManager_OnInsuficientProjectionGems(object sender, ProjectionGemsManager.OnProjectionGemsEventArgs e)
-    {
-        //StopAllCoroutines();
-        //StartCoroutine(InsuficientProjectionGemsCoroutine());
     }
     #endregion
 }
