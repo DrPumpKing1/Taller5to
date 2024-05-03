@@ -8,15 +8,12 @@ public class PauseUI : BaseUI
 {
     [Header("UI Components")]
     [SerializeField] private Button resumeButton;
-    [SerializeField] private Button inGameOptionsButton;
 
     private CanvasGroup canvasGroup;
 
     public static event EventHandler OnCloseFromUI;
     public static event EventHandler OnPauseUIOpen;
     public static event EventHandler OnPauseUIClose;
-
-    public static event EventHandler OnOpenInGameOptionsUI;
 
     protected override void OnEnable()
     {
@@ -46,7 +43,6 @@ public class PauseUI : BaseUI
     private void InitializeButtonsListeners()
     {
         resumeButton.onClick.AddListener(CloseFromUI);
-        inGameOptionsButton.onClick.AddListener(OpenInGameOptionsUI);
     }
 
     private void InitializeVariables()
@@ -88,11 +84,6 @@ public class PauseUI : BaseUI
     protected override void CloseFromUI()
     {
         OnCloseFromUI?.Invoke(this, EventArgs.Empty);
-    }
-
-    private void OpenInGameOptionsUI()
-    {
-        OnOpenInGameOptionsUI?.Invoke(this, EventArgs.Empty);
     }
 
     #region PauseManager Subscriptions

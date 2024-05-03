@@ -17,13 +17,13 @@ public class InGameOptionsUI : BaseUI
     protected override void OnEnable()
     {
         base.OnEnable();
-        PauseUI.OnOpenInGameOptionsUI += PauseUI_OnOpenInGameOptionsUI;
+        PauseUIButtonsHandler.OnOpenInGameOptionsUI += PauseUI_OnOpenInGameOptionsUI;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        PauseUI.OnOpenInGameOptionsUI -= PauseUI_OnOpenInGameOptionsUI;
+        PauseUIButtonsHandler.OnOpenInGameOptionsUI -= PauseUI_OnOpenInGameOptionsUI;
     }
 
     private void Awake()

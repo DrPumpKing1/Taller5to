@@ -7597,7 +7597,7 @@ GameObject:
   - component: {fileID: 314926024}
   - component: {fileID: 314926022}
   m_Layer: 5
-  m_Name: RadialContainer
+  m_Name: ProjectableObjectsRadialContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59610,6 +59610,7 @@ GameObject:
   - component: {fileID: 1992146580}
   - component: {fileID: 1992146581}
   - component: {fileID: 1992146582}
+  - component: {fileID: 1992146583}
   m_Layer: 5
   m_Name: PauseUI
   m_TagString: Untagged
@@ -59662,6 +59663,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resumeButton: {fileID: 1262282240}
+--- !u!114 &1992146583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992146579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c42b8504809e9ec41bfca6968eeb03eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   inGameOptionsButton: {fileID: 2216459}
 --- !u!1 &1994411101
 GameObject:
@@ -63494,6 +63507,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2180816104826389166, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2180816104826389166, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2180816104826389166, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2180816104826389166, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2180816104826389166, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877477386857095386, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877477386857095386, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877477386857095386, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877477386857095386, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877477386857095386, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5317452787623605092, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4
