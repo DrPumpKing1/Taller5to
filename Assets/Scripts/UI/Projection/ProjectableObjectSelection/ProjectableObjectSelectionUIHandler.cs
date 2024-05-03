@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class ProjectableObjectSelectionUI : MonoBehaviour
+public class ProjectableObjectSelectionUIHandler : MonoBehaviour
 {
     [Header("UI Components)")]
     [SerializeField] private TextMeshProUGUI selectedProjectableObjectText;

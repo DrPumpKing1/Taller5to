@@ -30,13 +30,13 @@ public class SingleDictionaryUI : BaseUI
     protected override void OnEnable()
     {
         base.OnEnable();
-        DictionarySelectionUI.OnOpenSingleDictionaryUI += DictionarySelectionUI_OnOpenSingleDictionaryUI;
+        DictionaryOpeningUIHandler.OnOpenSingleDictionaryUI += DictionarySelectionUI_OnOpenSingleDictionaryUI;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        DictionarySelectionUI.OnOpenSingleDictionaryUI -= DictionarySelectionUI_OnOpenSingleDictionaryUI;
+        DictionaryOpeningUIHandler.OnOpenSingleDictionaryUI -= DictionarySelectionUI_OnOpenSingleDictionaryUI;
     }
 
     private void Awake()
@@ -130,7 +130,7 @@ public class SingleDictionaryUI : BaseUI
     }
 
     #region DictionarySelectionUI Subscriptions
-    private void DictionarySelectionUI_OnOpenSingleDictionaryUI(object sender, DictionarySelectionUI.OnOpenSingleDictionaryUIEventArgs e)
+    private void DictionarySelectionUI_OnOpenSingleDictionaryUI(object sender, DictionaryOpeningUIHandler.OnOpenSingleDictionaryUIEventArgs e)
     {
         if (e.singleDictionaryUI != this) return;
 

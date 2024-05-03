@@ -5,10 +5,11 @@ using System;
 using UnityEngine.UI;
 using TMPro;
 
-public class SymbolCrafingUI : BaseUI
+public class SymbolCrafingUIHandler : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private SymbolCrafting symbolCrafting;
+    [SerializeField] private SymbolCraftingUI symbolCraftingUI;
 
     [Header("UI Components")]
     [SerializeField] private Transform symbolCraftingSingleUIContainer;
@@ -16,15 +17,9 @@ public class SymbolCrafingUI : BaseUI
     [Space]
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private Button openDictionaryButton;
-    [SerializeField] private Button closeButton;
 
     private List<SymbolCraftingSO> symbolCraftingSOs;
     private List<SymbolCraftingSingleUI> symbolCraftingSingleUIs = new List<SymbolCraftingSingleUI>();
-
-    public static event EventHandler OnAnySymbolCraftingUIOpen;
-    public static event EventHandler OnAnySymbolCraftingUIClose;
-
-    public IRequiresSymbolCrafting iRequiresSymbolCrafting;
 
     public static event EventHandler<OnSymbolCraftingOpenDictionaryEventArgs> OnSymbolCraftingUIOpenDictionary;
     public event EventHandler OnSymbolDrawnCorrectely;
@@ -34,30 +29,14 @@ public class SymbolCrafingUI : BaseUI
         public Dialect dialect;
     }
 
-    protected override void OnEnable()
+    private void OnDisable()
     {
-        base.OnEnable();
-        AddToUILayersList();
-        OnAnySymbolCraftingUIOpen?.Invoke(this, EventArgs.Empty);
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-        RemoveFromUILayersList();
-        OnAnySymbolCraftingUIClose?.Invoke(this, EventArgs.Empty);
-
         symbolCrafting.ResetSymbolCraftingUIRefference();
     }
 
     private void Awake()
     {
         InitializeButtonsListeners();
-    }
-
-    private void Start()
-    {
-        SetUIState(State.Open);
     }
 
     private void Update()
@@ -70,21 +49,7 @@ public class SymbolCrafingUI : BaseUI
 
     private void InitializeButtonsListeners()
     {
-        closeButton.onClick.AddListener(CloseFromUI);
         openDictionaryButton.onClick.AddListener(OpenDictionary);
-    }
-
-    private void CloseUI()
-    {
-        if (state != State.Open) return;
-
-        SetUIState(State.Closed);
-        Destroy(transform.parent.gameObject);
-    }
-
-    protected override void CloseFromUI()
-    {
-        CloseUI();
     }
 
     public void SetUI(SymbolCrafting symbolCrafting)
@@ -95,6 +60,7 @@ public class SymbolCrafingUI : BaseUI
         SetTitleText(symbolCrafting.Dialect);
         SetSingleUIs(symbolCraftingSOs);
     }
+
     private void SetTitleText(Dialect dialect) => titleText.text = $"Translate to dialect {dialect}";
 
     private void SetSingleUIs(List<SymbolCraftingSO> symbolCraftingSOs)

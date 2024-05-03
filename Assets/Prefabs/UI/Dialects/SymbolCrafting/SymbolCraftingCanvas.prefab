@@ -641,6 +641,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2231401313115697464}
+  - component: {fileID: 2685076939361501904}
   - component: {fileID: 2587654392020289456}
   m_Layer: 5
   m_Name: SymbolCraftingUI
@@ -669,6 +670,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2685076939361501904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7590324354761696508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 058ae731888ef1c41b6e3870082090f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  symbolCrafingUIHandler: {fileID: 2587654392020289456}
+  closeButton: {fileID: 4381479965168851711}
 --- !u!114 &2587654392020289456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -682,11 +697,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   symbolCrafting: {fileID: 0}
+  symbolCraftingUI: {fileID: 2685076939361501904}
   symbolCraftingSingleUIContainer: {fileID: 6343054853468746934}
   symbolCraftingSingleUIPrefab: {fileID: 2728585650221941557, guid: d890c4c0d359cdc43b9a23a933fb3fb1, type: 3}
   titleText: {fileID: 2875652157269881887}
   openDictionaryButton: {fileID: 1644231182442913576}
-  closeButton: {fileID: 4381479965168851711}
 --- !u!1 &8908403884973136093
 GameObject:
   m_ObjectHideFlags: 0

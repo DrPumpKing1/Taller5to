@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 
-public class ProjectionGemsUI : MonoBehaviour
+public class ProjectionGemsUIHandler : MonoBehaviour
 {
     [Header("UI Components")]
     [SerializeField] private TextMeshProUGUI projectionGemsText;

@@ -23,7 +23,7 @@ public class SymbolCrafting : MonoBehaviour
     public bool SymbolsCrafted { get { return symbolsCrafted; } }
 
     private IRequiresSymbolCrafting iRequiresSymbolCrafting;
-    private SymbolCrafingUI currentSymbolCraftingUI;
+    private SymbolCrafingUIHandler currentSymbolCraftingUIHandler;
 
     private void OnEnable()
     {
@@ -49,7 +49,7 @@ public class SymbolCrafting : MonoBehaviour
     {
         GameObject symbolCraftingUIGameObject = Instantiate(symbolCraftingUIPrefab.gameObject);
 
-        SymbolCrafingUI symbolCraftingUI = symbolCraftingUIGameObject.GetComponentInChildren<SymbolCrafingUI>();
+        SymbolCrafingUIHandler symbolCraftingUI = symbolCraftingUIGameObject.GetComponentInChildren<SymbolCrafingUIHandler>();
 
         if (!symbolCraftingUI)
         {
@@ -57,15 +57,15 @@ public class SymbolCrafting : MonoBehaviour
             return;
         }
 
-        currentSymbolCraftingUI = symbolCraftingUI;
-        currentSymbolCraftingUI.SetUI(this);
-        currentSymbolCraftingUI.OnSymbolDrawnCorrectely += SymbolCraftingUI_OnSymbolDrawnCorrectely;
+        currentSymbolCraftingUIHandler = symbolCraftingUI;
+        currentSymbolCraftingUIHandler.SetUI(this);
+        currentSymbolCraftingUIHandler.OnSymbolDrawnCorrectely += SymbolCraftingUI_OnSymbolDrawnCorrectely;
     }
 
     public void ResetSymbolCraftingUIRefference()
     {
-        currentSymbolCraftingUI.OnSymbolDrawnCorrectely -= SymbolCraftingUI_OnSymbolDrawnCorrectely;
-        currentSymbolCraftingUI = null;
+        currentSymbolCraftingUIHandler.OnSymbolDrawnCorrectely -= SymbolCraftingUI_OnSymbolDrawnCorrectely;
+        currentSymbolCraftingUIHandler = null;
     }
 
     public void CraftSymbol() => symbolsCrafted = true;

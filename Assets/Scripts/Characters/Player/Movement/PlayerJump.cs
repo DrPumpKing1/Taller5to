@@ -106,8 +106,6 @@ public class PlayerJump : MonoBehaviour
 
     private void NotJumpingLogic() 
     {
-        HandleJumpCooldown();
-
         if (shouldJump)
         {
             _rigidbody.useGravity = false;
@@ -115,6 +113,10 @@ public class PlayerJump : MonoBehaviour
             SetJumpState(State.Impulsing);
             OnPlayerImpulsing?.Invoke(this, EventArgs.Empty);
         }
+
+        if (!checkGround.IsGrounded || playerLand.IsRecoveringFromLanding) ResetJumpCooldown();
+
+        HandleJumpCooldown();
     }
 
     private void ImpulsingLogic()
@@ -137,7 +139,7 @@ public class PlayerJump : MonoBehaviour
         _rigidbody.useGravity = true;
 
         Jump();
-        jumpCooldownTime = jumpCooldown;
+        ResetJumpCooldown();
 
         ResetTimer();
         SetJumpState(State.NotJumping);
@@ -179,6 +181,7 @@ public class PlayerJump : MonoBehaviour
     }
 
     private bool JumpOnCooldown() => jumpCooldownTime > 0f;
+    private void ResetJumpCooldown() => jumpCooldownTime = jumpCooldown;
     private void ResetTimer() => timer = 0f;
 
     public bool EnableJump() => jumpEnabled = true;

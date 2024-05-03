@@ -43,7 +43,7 @@ public class PlayerCrouch : MonoBehaviour
     private float crouchHeight;
     private float stateStartingHeight;
     private float timer = 0f;
-    private float toggleCrouchCooldownTime;
+    private float toggleCrouchCooldownTime = 0f;
 
     public event EventHandler OnPlayerStandDown;
     public event EventHandler OnPlayerStandUp;
@@ -108,7 +108,7 @@ public class PlayerCrouch : MonoBehaviour
         if (ToggleCrouchOnCooldown()) return;
 
         shouldBeCrouching = !shouldBeCrouching;
-        toggleCrouchCooldownTime = toggleCrouchCooldown;   
+        ResetToggleCrouchCooldown(); 
     }
 
     private void NotCrouchingLogic()
@@ -199,6 +199,7 @@ public class PlayerCrouch : MonoBehaviour
     }
 
     private bool ToggleCrouchOnCooldown() => toggleCrouchCooldownTime > 0f;
+    private void ResetToggleCrouchCooldown() => toggleCrouchCooldownTime = toggleCrouchCooldown;
 
     private void ResetTimer() => timer = 0f;
 }
