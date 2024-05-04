@@ -15,13 +15,19 @@ public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
+    [Space]
     [SerializeField] private string tooltipMessage;
+    [Space]
+    [SerializeField] private bool grabPetAttention;
+    [SerializeField] private bool grabPlayerAttention;
 
     #region IInteractable Properties
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
+    public bool GrabPetAttention => grabPetAttention;
+    public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
 
     #region IInteractableEvents

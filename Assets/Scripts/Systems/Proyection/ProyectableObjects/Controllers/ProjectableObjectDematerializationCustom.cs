@@ -16,6 +16,9 @@ public class ProjectableObjectDematerializationCustom : MonoBehaviour, IHoldInte
     [SerializeField] private string tooltipMessage;
     [Space]
     [SerializeField] private float holdDuration;
+    [Space]
+    [SerializeField] private bool grabPetAttention;
+    [SerializeField] private bool grabPlayerAttention;
 
     #region IHoldInteractable Properties
     public bool IsSelectable => canBeSelected;
@@ -23,6 +26,8 @@ public class ProjectableObjectDematerializationCustom : MonoBehaviour, IHoldInte
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
     public float HoldDuration => holdDuration;
+    public bool GrabPetAttention => grabPetAttention;
+    public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
 
     #region IHoldInteractable Events

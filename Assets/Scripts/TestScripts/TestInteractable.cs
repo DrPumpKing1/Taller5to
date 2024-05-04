@@ -10,20 +10,29 @@ public class TestInteractable : MonoBehaviour, IInteractable
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
     [SerializeField] private string tooltipMessage;
+    [Space]
+    [SerializeField] private bool grabPetAttention;
+    [SerializeField] private bool grabPlayerAttention;
 
+    #region IINteractable Properties
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
+    public bool GrabPetAttention => grabPetAttention;
+    public bool GrabPlayerAttention => grabPlayerAttention;
+    #endregion
 
+    #region IInteractable Events
     public event EventHandler OnObjectSelected; 
     public event EventHandler OnObjectDeselected;
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
     public event EventHandler OnUpdatedInteractableState;
+    #endregion
 
-    #region IInteractable
+    #region IInteractable Methods
     public void Select()
     {
         OnObjectSelected?.Invoke(this, EventArgs.Empty);

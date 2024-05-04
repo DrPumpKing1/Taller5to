@@ -10,9 +10,11 @@ public class TestHoldInteractable : MonoBehaviour, IHoldInteractable
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
     [SerializeField] private string tooltipMessage;
-
     [Space]
     [SerializeField] private float holdDuration;
+    [Space]
+    [SerializeField] private bool grabPetAttention;
+    [SerializeField] private bool grabPlayerAttention;
 
     #region IHoldInteractable Properties
     public bool IsSelectable => canBeSelected;
@@ -20,6 +22,8 @@ public class TestHoldInteractable : MonoBehaviour, IHoldInteractable
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
     public float HoldDuration => holdDuration;
+    public bool GrabPetAttention => grabPetAttention;
+    public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
 
     #region IHoldInteractable Events

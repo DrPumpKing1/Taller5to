@@ -16,12 +16,17 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
     [SerializeField] private bool isInteractableAlternate;
     [SerializeField] private bool hasAlreadyBeenInteractedAlternate;
     [SerializeField] private string tooltipMessageAlternate;
+    [Space]
+    [SerializeField] private bool grabPetAttention;
+    [SerializeField] private bool grabPlayerAttention;
 
     #region IInteractableAlternate Properties
     public bool IsSelectableAlternate => canBeSelectedAlternate;
     public bool IsInteractableAlternate => isInteractableAlternate;
     public bool HasAlreadyBeenInteractedAlternate => hasAlreadyBeenInteractedAlternate;
     public string TooltipMessageAlternate => tooltipMessageAlternate;
+    public bool GrabPetAttention => grabPetAttention;
+    public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
 
     #region IInteractableAlternate Events

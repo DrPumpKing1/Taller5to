@@ -16,6 +16,10 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
+    [Space]
+    [SerializeField] private bool grabPetAttention;
+    [SerializeField] private bool grabPlayerAttention;
+
     private string tooltipMessage => $"{(!inscriptionTranslated? "Translate Insription" : "Read Inscription")}";
     private bool inscriptionTranslated;
 
@@ -24,6 +28,8 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
+    public bool GrabPetAttention => grabPetAttention;
+    public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
 
     #region IInteractableEvents

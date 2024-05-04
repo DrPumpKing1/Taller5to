@@ -16,6 +16,8 @@ public interface IInteractableAlternate
     public bool IsInteractableAlternate { get; }
     public bool HasAlreadyBeenInteractedAlternate { get; }
     public string TooltipMessageAlternate { get; }
+    public bool GrabPetAttention { get; }
+    public bool GrabPlayerAttention { get; }
 
     public void SelectAlternate();
     public void DeselectAlternate();

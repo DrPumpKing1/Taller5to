@@ -104,14 +104,8 @@ public class PetRotationHandler : MonoBehaviour
     #region PlayerInteractionSubscriptions
     private void PlayerInteract_OnInteractionStarted(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
+        if (!e.interactable.GrabPetAttention) return;
         curentInteractingTransform = e.interactable.GetTransform();
-
-        if (e.interactable.GetTransform().GetComponent<ProjectableObject>()) return;
-        if (e.interactable.GetTransform().GetComponent<ProjectionPlatform>()) return;
-        if (e.interactable.GetTransform().GetComponent<LearningPlatform>()) return;
-        if (e.interactable.GetTransform().GetComponent<DialectSymbolSource>()) return;
-
-        curentInteractingTransform = null;
     }
 
     private void PlayerInteract_OnInteractionEnded(object sender, PlayerInteract.OnInteractionEventArgs e)
@@ -124,14 +118,8 @@ public class PetRotationHandler : MonoBehaviour
 
     private void PlayerInteractAlternate_OnInteractionAlternateStarted(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {
+        if (!e.interactableAlternate.GrabPetAttention) return;
         curentInteractingTransform = e.interactableAlternate.GetTransform();
-
-        if (e.interactableAlternate.GetTransform().GetComponent<ProjectableObject>()) return;
-        if (e.interactableAlternate.GetTransform().GetComponent<ProjectionPlatform>()) return;
-        if (e.interactableAlternate.GetTransform().GetComponent<LearningPlatform>()) return;
-        if (e.interactableAlternate.GetTransform().GetComponent<DialectSymbolSource>()) return;
-
-        curentInteractingTransform = null;
     }
     private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {

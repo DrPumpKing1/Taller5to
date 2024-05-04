@@ -30,6 +30,8 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private bool respondToMovement;
 
+    private Transform curentInteractingTransform;
+
     private void OnEnable()
     {
         playerInteract.OnInteractionStarted += PlayerInteract_OnInteractionStarted;
@@ -98,7 +100,16 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void DefineDesiredFacingDirection()
     {
-        if (CanChangeDirectionDueToMovement() && respondToMovement) DesiredFacingDirection = GeneralMethods.Vector2ToVector3(DirectionInput);
+        if (CanChangeDirectionDueToMovement())
+        {
+            DesiredFacingDirection = GeneralMethods.Vector2ToVector3(DirectionInput);
+        }
+
+        if (curentInteractingTransform)
+        {
+            Vector3 facingVectorRaw = (curentInteractingTransform.position - transform.position).normalized;
+            DesiredFacingDirection = GeneralMethods.SupressYComponent(facingVectorRaw);
+        }
     }
 
     private bool CanChangeDirectionDueToMovement() => directionHoldingTimer >= holdDirectionThresholdTime;
@@ -126,33 +137,25 @@ public class PlayerRotationHandler : MonoBehaviour
     #region PlayerInteractionSubscriptions
     private void PlayerInteract_OnInteractionStarted(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
-        Vector3 interactablePosition = e.interactable.GetTransform().position;
-        Vector3 facingVectorRaw = (interactablePosition - transform.position).normalized;
-
-        DesiredFacingDirection = GeneralMethods.SupressYComponent(facingVectorRaw);
-        respondToMovement = false;
+        if (!e.interactable.GrabPlayerAttention) return;
+        curentInteractingTransform = e.interactable.GetTransform();
     }
 
     private void PlayerInteract_OnInteractionEnded(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
-        respondToMovement = true;
+        curentInteractingTransform = null;
     }
-
     #endregion
 
     #region PlayerInteractionAlternateSubscriptions
-
     private void PlayerInteractAlternate_OnInteractionAlternateStarted(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {
-        Vector3 interactablePosition = e.interactableAlternate.GetTransform().position;
-        Vector3 facingVectorRaw = (interactablePosition - transform.position).normalized;
-
-        DesiredFacingDirection = GeneralMethods.SupressYComponent(facingVectorRaw);
-        respondToMovement = false;
+        if (!e.interactableAlternate.GrabPlayerAttention) return;
+        curentInteractingTransform = e.interactableAlternate.GetTransform();
     }
     private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {
-        respondToMovement = true;
+        curentInteractingTransform = null;
     }
     #endregion
 

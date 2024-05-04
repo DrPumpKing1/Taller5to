@@ -12,12 +12,17 @@ public class ElectricalAltSwitchInteraction : MonoBehaviour, IInteractableAltern
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
+    [Space]
+    [SerializeField] private bool grabPetAttention;
+    [SerializeField] private bool grabPlayerAttention;
 
     #region IHoldInteractable Properties
     public bool IsSelectableAlternate => canBeSelected;
     public bool IsInteractableAlternate => isInteractable;
     public bool HasAlreadyBeenInteractedAlternate => hasAlreadyBeenInteracted;
     public string TooltipMessageAlternate => $"{(!switchElectrode.SwitchOn ? "Encender Switch" : "Apagar Switch")}";
+    public bool GrabPetAttention => grabPetAttention;
+    public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
 
     #region IHoldInteractable Events

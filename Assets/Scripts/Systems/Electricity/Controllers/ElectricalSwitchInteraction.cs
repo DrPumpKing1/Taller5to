@@ -14,6 +14,9 @@ public class ElectricalSwitchInteraction : MonoBehaviour, IHoldInteractable
     [SerializeField] private bool hasAlreadyBeenInteracted;
     [Space]
     [SerializeField] private float holdDuration;
+    [Space]
+    [SerializeField] private bool grabPetAttention;
+    [SerializeField] private bool grabPlayerAttention;
 
     #region IHoldInteractable Properties
     public bool IsSelectable => canBeSelected;
@@ -21,6 +24,8 @@ public class ElectricalSwitchInteraction : MonoBehaviour, IHoldInteractable
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => $"{(!switchElectrode.SwitchOn ? "Encender Switch" : "Apagar Switch")}";
     public float HoldDuration => holdDuration;
+    public bool GrabPetAttention => grabPetAttention;
+    public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
 
     #region IHoldInteractable Events
