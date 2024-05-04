@@ -5761,18 +5761,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce6869504883a542a42d0ae3b18b14f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialectDictionaries:
-  - dialect: 0
-    dialectSymbolsSOs:
-    - {fileID: 11400000, guid: 03233d30ef93c564aa72d0982a47d9b2, type: 2}
-    - {fileID: 11400000, guid: 792565fe2aa2ea34699753eb227727f8, type: 2}
-    - {fileID: 11400000, guid: 35e28349522567b4a820d3cae8a8b124, type: 2}
-  - dialect: 1
-    dialectSymbolsSOs: []
-  - dialect: 2
-    dialectSymbolsSOs: []
-  - dialect: 3
-    dialectSymbolsSOs: []
+  symbolsDictionary:
+  - {fileID: 11400000, guid: 03233d30ef93c564aa72d0982a47d9b2, type: 2}
+  - {fileID: 11400000, guid: 792565fe2aa2ea34699753eb227727f8, type: 2}
+  - {fileID: 11400000, guid: 35e28349522567b4a820d3cae8a8b124, type: 2}
+  completeSymbolsPool:
+  - {fileID: 11400000, guid: 03233d30ef93c564aa72d0982a47d9b2, type: 2}
+  - {fileID: 11400000, guid: 792565fe2aa2ea34699753eb227727f8, type: 2}
+  - {fileID: 11400000, guid: 35e28349522567b4a820d3cae8a8b124, type: 2}
+  - {fileID: 11400000, guid: 1877b45f0800fcb40808807bc3eb3a8b, type: 2}
+  - {fileID: 11400000, guid: a8229218bc523144b9c0374eb4d3a607, type: 2}
+  - {fileID: 11400000, guid: 877b205954dae7646a68e1d3f65e9ed9, type: 2}
+  - {fileID: 11400000, guid: d45fa90eb3ff2914ea8ab497b36ee7c0, type: 2}
+  - {fileID: 11400000, guid: f179aa956bb490a499ecc35980f78dd8, type: 2}
+  - {fileID: 11400000, guid: 1521977ad19f6e54ea0fd77fc2d42e29, type: 2}
+  - {fileID: 11400000, guid: 31c5b4af593f2c8479311a2524583143, type: 2}
+  - {fileID: 11400000, guid: 0bb6da24f43e1094db2888e33afdf459, type: 2}
+  - {fileID: 11400000, guid: a456aed0d36ee51499b553594babb791, type: 2}
+  - {fileID: 11400000, guid: 407ec834aac76b04786f897407c7798c, type: 2}
+  - {fileID: 11400000, guid: c34621c88b4c3964e82d7107195152b3, type: 2}
+  - {fileID: 11400000, guid: 461a08f61bdf3404abeaf99264985351, type: 2}
+  - {fileID: 11400000, guid: d2f435a4316405c48bddd4ef801bf754, type: 2}
+  - {fileID: 11400000, guid: 37af02ae5fff47a4e81253378921e51c, type: 2}
+  - {fileID: 11400000, guid: b36ebbdce5d5b594b9d6364262258d0f, type: 2}
+  - {fileID: 11400000, guid: 573619e9656b5e040a080e5b4b7cf356, type: 2}
+  - {fileID: 11400000, guid: 58893effc9e1d3f4d99475f98810bbfe, type: 2}
+  - {fileID: 11400000, guid: dadadcd71f93548459978308a3cb4274, type: 2}
+  - {fileID: 11400000, guid: fb112b5c04af7be45adefaec8c12aaa8, type: 2}
+  - {fileID: 11400000, guid: 70953e4dd43a638438ce272cda1093a4, type: 2}
+  - {fileID: 11400000, guid: 1c4cb0c327d0bac40a4835f4b7bc400c, type: 2}
+  - {fileID: 11400000, guid: c2e5083218edc72409146165b37c311f, type: 2}
+  - {fileID: 11400000, guid: 84bd5f63db1837c47bcadb53e1d49fd4, type: 2}
+  - {fileID: 11400000, guid: 783b443c2888cf5409f82355c048fa89, type: 2}
+  - {fileID: 11400000, guid: 30ccf404fc51d85448f1c59f24a6fa62, type: 2}
+  - {fileID: 11400000, guid: 4cd43d457ca58e84b926f8ec06c11179, type: 2}
+  - {fileID: 11400000, guid: e589b3e920f1b7147a94f9316ffc37c4, type: 2}
+  - {fileID: 11400000, guid: f6bbbd50917059241a71a24e83405393, type: 2}
+  - {fileID: 11400000, guid: 78a115e079e231f41815b2d6f52f3117, type: 2}
+  - {fileID: 11400000, guid: 0faf457d926ef2241b6bab6c5651784a, type: 2}
+  - {fileID: 11400000, guid: 0023e7ea23e6db440888f5508647eaec, type: 2}
+  - {fileID: 11400000, guid: cb3331ce750b982469238030429384ec, type: 2}
+  - {fileID: 11400000, guid: 0cd431f1d95f30b46bac268c4a124e12, type: 2}
 --- !u!1 &227063175
 GameObject:
   m_ObjectHideFlags: 0
@@ -15946,7 +15975,7 @@ MonoBehaviour:
   playerInteractAlternate: {fileID: 1959078827}
   projectionInput: {fileID: 1815255652}
   selectedProjectableObjectSO: {fileID: 0}
-  InitialSelectionIndex: 0
+  InitialSelectionIndex: 132789
 --- !u!1 &609610364
 GameObject:
   m_ObjectHideFlags: 0

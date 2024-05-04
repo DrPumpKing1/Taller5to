@@ -7,6 +7,7 @@ public class ProjectionGemsManager : MonoBehaviour
 {
     public static ProjectionGemsManager Instance { get; private set; }
 
+    [Header ("Projection Gems Settings")]
     [SerializeField] private int totalProyectionGems;
     [SerializeField] private int availableProyectionGems;
 
@@ -72,6 +73,7 @@ public class ProjectionGemsManager : MonoBehaviour
     public void IncreaseTotalProjectionGems(int quantity)
     {
         totalProyectionGems += quantity;
+        availableProyectionGems += quantity;
         OnTotalProjectionGemsIncreased?.Invoke(this, new OnProjectionGemsEventArgs { projectionGems = quantity });
     }
 

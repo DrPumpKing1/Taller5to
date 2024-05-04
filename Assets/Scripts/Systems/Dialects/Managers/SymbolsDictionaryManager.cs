@@ -7,16 +7,17 @@ public class SymbolsDictionaryManager : MonoBehaviour
 {
     public static SymbolsDictionaryManager Instance { get; private set; }
 
-    [Header("Dialect Symbols Settings")]
-    [SerializeField] private List<DialectDictionary> dialectDictionaries;
+    [Header("Symbols Dictionary Settings")]
+    [SerializeField] private List<DialectSymbolSO> symbolsDictionary;
+    [SerializeField] private List<DialectSymbolSO> completeSymbolsPool;
 
-    public List<DialectDictionary> DialectDictionaries { get { return dialectDictionaries; } }
+    public List<DialectSymbolSO> SymbolsDictionary { get { return symbolsDictionary; } }
+    public List<DialectSymbolSO> CompleteSymbolsPool { get { return completeSymbolsPool; } }
 
     public static event EventHandler OnDialectSymbolAddedToDictionary;
 
     public class OnDialectSymbolAddedToDictionaryEventArgs : EventArgs
     {
-        public DialectDictionary dialectDictionary;
         public DialectSymbolSO dialectSymbolSO;
     }
 
@@ -41,30 +42,31 @@ public class SymbolsDictionaryManager : MonoBehaviour
 
     public void AddSymbolToDictionary(DialectSymbolSO dialectSymbolSO)
     {
-        foreach (DialectDictionary dialectDictionary in dialectDictionaries)
-        {
-            if (dialectDictionary.dialect == dialectSymbolSO.dialect)
-            {
-                if (dialectDictionary.dialectSymbolsSOs.Contains(dialectSymbolSO)) return;
+        if (symbolsDictionary.Contains(dialectSymbolSO)) return;
 
-                dialectDictionary.dialectSymbolsSOs.Add(dialectSymbolSO);
-                OnDialectSymbolAddedToDictionary?.Invoke(this, new OnDialectSymbolAddedToDictionaryEventArgs { dialectDictionary = dialectDictionary, dialectSymbolSO = dialectSymbolSO });
-                return;
-            }
-        }
+        symbolsDictionary.Add(dialectSymbolSO);
+        OnDialectSymbolAddedToDictionary?.Invoke(this, new OnDialectSymbolAddedToDictionaryEventArgs { dialectSymbolSO = dialectSymbolSO });
+        return;
     }
 
-    public DialectDictionary GetDialectDictionaryByDialect(Dialect dialect)
+    public DialectSymbolSO GetSymbolInCompletePoolById(int id)
     {
-        foreach (DialectDictionary dialectDictionary in dialectDictionaries)
+        foreach (DialectSymbolSO dialectSymbolSO in completeSymbolsPool)
         {
-            if (dialectDictionary.dialect == dialect)
-            {
-                return dialectDictionary;
-            }
+            if (dialectSymbolSO.id == id) return dialectSymbolSO;
         }
 
-        Debug.LogWarning($"The dialect {dialect} does not match any dictionary on DicionaryManager");
+        Debug.LogWarning($"Dialect Symbol with id {id} not found in completePool");
         return null;
     }
+
+    public DialectSymbolSO GetSymbolInDictionaryById(int id)
+    {
+        foreach (DialectSymbolSO dialectSymbolSO in symbolsDictionary)
+        {
+            if (dialectSymbolSO.id == id) return dialectSymbolSO;
+        }
+        return null;
+    }
+
 }

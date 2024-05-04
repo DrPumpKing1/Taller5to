@@ -117,15 +117,18 @@ public class SingleDictionaryUI : BaseUI
     {
         foreach(Transform child in symbolsContainer)
         {
-            if(child.TryGetComponent(out DictionarySymbolSlotUI dictionarySymbolSlotUI))
-            {
-                DialectDictionary dialectDictionary = SymbolsDictionaryManager.Instance.GetDialectDictionaryByDialect(dialect);
+            DictionarySymbolSlotUI dictionarySymbolSlotUI = child.GetComponent<DictionarySymbolSlotUI>();
 
-                if (dialectDictionary.dialectSymbolsSOs.Contains(dictionarySymbolSlotUI.DialectSymbolSO))
-                {
-                    dictionarySymbolSlotUI.ShowSymbol();
-                }           
+            if (!dictionarySymbolSlotUI)
+            {
+                Debug.LogWarning($"The child of symbolsContainer {child.name} does not have a DictionarySymbolSlotUI component");
+                continue;
             }
+
+            if (!SymbolsDictionaryManager.Instance.SymbolsDictionary.Contains(dictionarySymbolSlotUI.DialectSymbolSO)) continue;
+
+            dictionarySymbolSlotUI.ShowSymbol();
+
         }
     }
 

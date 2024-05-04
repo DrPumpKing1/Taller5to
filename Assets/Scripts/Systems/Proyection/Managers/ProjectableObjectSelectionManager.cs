@@ -87,16 +87,20 @@ public class ProjectableObjectSelectionManager : MonoBehaviour
 
     private void InitializeVariables()
     {
-        CurrentSelectionIndex = InitialSelectionIndex;
+        ClampInitialSelectionIndex();
 
-        if (ProjectableObjectsInventory.Count > InitialSelectionIndex)
-        {
-            SelectProjectableObject(ProjectableObjectsInventory[InitialSelectionIndex]);
-        }
+        if (ProjectableObjectsInventory.Count > 0) SelectProjectableObject(ProjectableObjectsInventory[InitialSelectionIndex]);
+
+        CurrentSelectionIndex = InitialSelectionIndex;
 
         OnProjectableObjectSelectionManagerInitialized?.Invoke(this, EventArgs.Empty);
     }
 
+    private void ClampInitialSelectionIndex()
+    {
+        InitialSelectionIndex = ProjectableObjectsInventory.Count <= InitialSelectionIndex ? ProjectableObjectsInventory.Count - 1 : InitialSelectionIndex;
+        InitialSelectionIndex = ProjectableObjectsInventory.Count == 0 ? 0 : InitialSelectionIndex;
+    }
 
     private void HandleProjectableObjectSelection()
     {
@@ -173,7 +177,6 @@ public class ProjectableObjectSelectionManager : MonoBehaviour
         if (!projectableObjectSO) return;
         selectedProjectableObjectSO = projectableObjectSO; 
     }
-
 
     #region ObjectLearned
     private void ProjectableObjectsLearningManager_OnProjectableObjectLearned(object sender, ProjectableObjectsLearningManager.OnProjectableObjectLearnedEventArgs e)

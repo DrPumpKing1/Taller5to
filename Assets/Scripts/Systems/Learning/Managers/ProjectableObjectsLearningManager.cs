@@ -7,6 +7,7 @@ public class ProjectableObjectsLearningManager : MonoBehaviour
 {
     public static ProjectableObjectsLearningManager Instance { get; private set; }
 
+    [Header("Projectable Objects Learned Settings")]
     [SerializeField] private List<ProjectableObjectSO> projectableObjectsLearned = new List<ProjectableObjectSO>();
 
     public static EventHandler<OnProjectableObjectLearnedEventArgs> OnProjectableObjectLearned;
