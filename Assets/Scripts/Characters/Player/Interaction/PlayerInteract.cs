@@ -22,9 +22,7 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField, Range(0.1f, 2.5f)] private float interactionRayLenght = 1f;
     [SerializeField, Range(0.1f, 1f)] private float interactionSphereRadius = 2f;
 
-    [Header("World Space InteractionSettings")]
-    [SerializeField, Range(1f, 100f)] private float maxHorizontalDistanceFromPlayer; 
-    [SerializeField, Range(1f, 100f)] private float maxVerticalDistanceFromPlayer;
+    [Header("World Space Interaction Settings")]
     [SerializeField, Range(200f,350f)] private float maxDistanceFromCamera;
 
     [Header("Debug")]
@@ -37,8 +35,6 @@ public class PlayerInteract : MonoBehaviour
 
     public bool IsInteracting { get; private set; }
     public bool InteractionEnabled { get { return interactionEnabled; } }
-    public float MaxHorizontalDistanceFromPlayer { get { return maxHorizontalDistanceFromPlayer; } }
-    public float MaxVerticalDistanceFromPlayer { get { return maxVerticalDistanceFromPlayer; } }
 
     private float holdTimer;
     private bool inputDownToHold;
@@ -156,13 +152,13 @@ public class PlayerInteract : MonoBehaviour
         RaycastHit hit = GetInteractableLayerHitsWorldSpace();
 
         if (hit.collider == null) return null;
-        if (Vector3.Distance(GeneralMethods.SupressYComponent(hit.collider.transform.position),GeneralMethods.SupressYComponent(transform.position)) > maxHorizontalDistanceFromPlayer) return null;
-        if (Mathf.Abs(hit.collider.transform.position.y - transform.position.y) > maxVerticalDistanceFromPlayer) return null;
+
 
         IInteractable potentialInteractable = CheckIfRayHitHasInteractable(hit);
 
         if (potentialInteractable == null) return null;
         if (!potentialInteractable.IsSelectable) return null;
+        if (!CheckInteractableInRange(potentialInteractable)) return null;
 
         return potentialInteractable;
     }
@@ -280,6 +276,14 @@ public class PlayerInteract : MonoBehaviour
         inputDownToHold = false;
 
         IsInteracting = false;
+    }
+
+    private bool CheckInteractableInRange(IInteractable interactable)
+    {
+        if (Vector3.Distance(GeneralMethods.SupressYComponent(interactable.GetTransform().position), GeneralMethods.SupressYComponent(transform.position)) > interactable.HorizontalInteractionRange) return false;
+        if (Mathf.Abs(interactable.GetTransform().position.y - transform.position.y) > interactable.VerticalInteractionRange) return false;
+
+        return true;
     }
 
     private bool CheckIfHoldInteractable(IInteractable interactable) => (interactable is IHoldInteractable);

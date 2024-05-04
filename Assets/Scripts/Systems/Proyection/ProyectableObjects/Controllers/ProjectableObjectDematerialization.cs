@@ -9,6 +9,9 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     [SerializeField] private ProjectableObject projectableObject;
 
     [Header("Interactable Settings")]
+    [SerializeField, Range(1f,100f)] private float horizontalInteractionRange;
+    [SerializeField, Range(1f, 100f)] private float verticalInteractionRange;
+    [Space]
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
@@ -20,6 +23,8 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     [SerializeField] private bool grabPlayerAttention;
 
     #region IHoldInteractable Properties
+    public float HorizontalInteractionRange => horizontalInteractionRange;
+    public float VerticalInteractionRange => verticalInteractionRange;
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;

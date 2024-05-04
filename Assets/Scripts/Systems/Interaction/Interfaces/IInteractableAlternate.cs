@@ -12,10 +12,14 @@ public interface IInteractableAlternate
     public event EventHandler OnObjectHasAlreadyBeenInteractedAlternate;
     public event EventHandler OnUpdatedInteractableAlternateState;
 
+    public float HorizontalInteractionRange { get; }
+    public float VerticalInteractionRange { get; }
+
     public bool IsSelectableAlternate { get; }
     public bool IsInteractableAlternate { get; }
     public bool HasAlreadyBeenInteractedAlternate { get; }
     public string TooltipMessageAlternate { get; }
+
     public bool GrabPetAttention { get; }
     public bool GrabPlayerAttention { get; }
 

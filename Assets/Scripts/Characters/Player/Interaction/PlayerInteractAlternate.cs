@@ -145,13 +145,12 @@ public class PlayerInteractAlternate : MonoBehaviour
         RaycastHit hit = playerInteract.GetInteractableLayerHitsWorldSpace();
 
         if (hit.collider == null) return null;
-        if (Vector3.Distance(GeneralMethods.SupressYComponent(hit.collider.transform.position), GeneralMethods.SupressYComponent(transform.position)) > playerInteract.MaxHorizontalDistanceFromPlayer) return null;
-        if (Mathf.Abs(hit.collider.transform.position.y - transform.position.y) > playerInteract.MaxVerticalDistanceFromPlayer) return null;
 
         IInteractableAlternate potentialInteractableAlternate = CheckIfRayHitHasInteractableAlternate(hit);
 
         if (potentialInteractableAlternate == null) return null;
         if (!potentialInteractableAlternate.IsSelectableAlternate) return null;
+        if (!CheckInteractableAlternateInRange(potentialInteractableAlternate)) return null;
 
         return potentialInteractableAlternate;
     }
@@ -273,6 +272,14 @@ public class PlayerInteractAlternate : MonoBehaviour
         holdTimer = 0f;
         inputDownToHold = false;
         IsInteractingAlternate = false;
+    }
+
+    private bool CheckInteractableAlternateInRange(IInteractableAlternate interactableAlternate)
+    {
+        if (Vector3.Distance(GeneralMethods.SupressYComponent(interactableAlternate.GetTransform().position), GeneralMethods.SupressYComponent(transform.position)) > interactableAlternate.HorizontalInteractionRange) return false;
+        if (Mathf.Abs(interactableAlternate.GetTransform().position.y - transform.position.y) > interactableAlternate.VerticalInteractionRange) return false;
+
+        return true;
     }
 
     private bool CheckIfHoldInteractableAlternate(IInteractableAlternate interactableAlternate) => (interactableAlternate is IHoldInteractableAlternate);

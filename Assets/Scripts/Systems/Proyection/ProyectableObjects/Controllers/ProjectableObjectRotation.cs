@@ -12,6 +12,9 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
     [SerializeField, Range(1f, 100f)] private float smoothRotateFactor;
 
     [Header("Interactable Alternate Settings")]
+    [SerializeField, Range(1f, 100f)] private float horizontalInteractionRange;
+    [SerializeField, Range(1f, 100f)] private float verticalInteractionRange;
+    [Space]
     [SerializeField] private bool canBeSelectedAlternate;
     [SerializeField] private bool isInteractableAlternate;
     [SerializeField] private bool hasAlreadyBeenInteractedAlternate;
@@ -21,6 +24,8 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
     [SerializeField] private bool grabPlayerAttention;
 
     #region IInteractableAlternate Properties
+    public float HorizontalInteractionRange => horizontalInteractionRange;
+    public float VerticalInteractionRange => verticalInteractionRange;
     public bool IsSelectableAlternate => canBeSelectedAlternate;
     public bool IsInteractableAlternate => isInteractableAlternate;
     public bool HasAlreadyBeenInteractedAlternate => hasAlreadyBeenInteractedAlternate;

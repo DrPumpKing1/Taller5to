@@ -9,6 +9,9 @@ public class ElectricalAltSwitchInteraction : MonoBehaviour, IInteractableAltern
     [SerializeField] private SwitchElectrode switchElectrode;
 
     [Header("Interactable Settings")]
+    [SerializeField, Range(1f, 100f)] private float horizontalInteractionRange;
+    [SerializeField, Range(1f, 100f)] private float verticalInteractionRange;
+    [Space]
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
@@ -17,6 +20,8 @@ public class ElectricalAltSwitchInteraction : MonoBehaviour, IInteractableAltern
     [SerializeField] private bool grabPlayerAttention;
 
     #region IHoldInteractable Properties
+    public float HorizontalInteractionRange => horizontalInteractionRange;
+    public float VerticalInteractionRange => verticalInteractionRange;
     public bool IsSelectableAlternate => canBeSelected;
     public bool IsInteractableAlternate => isInteractable;
     public bool HasAlreadyBeenInteractedAlternate => hasAlreadyBeenInteracted;

@@ -6,15 +6,21 @@ using UnityEngine;
 public class TestInteractable : MonoBehaviour, IInteractable
 {
     [Header("Interactable Settings")]
+    [SerializeField] private float horizontalInteractionRange;
+    [SerializeField] private float verticalInteractionRange;
+    [Space]
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
+    [Space]
     [SerializeField] private string tooltipMessage;
     [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
 
     #region IINteractable Properties
+    public float HorizontalInteractionRange => horizontalInteractionRange;
+    public float VerticalInteractionRange => verticalInteractionRange;
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;

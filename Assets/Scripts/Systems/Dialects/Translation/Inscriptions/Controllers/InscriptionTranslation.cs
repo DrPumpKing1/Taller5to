@@ -13,6 +13,9 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     [SerializeField] private Transform inscriptionTranslationUIPrefab;
 
     [Header("Interactable Settings")]
+    [SerializeField, Range(1f, 100f)] private float horizontalInteractionRange;
+    [SerializeField, Range(1f, 100f)] private float verticalInteractionRange;
+    [Space]
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
@@ -24,6 +27,8 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     private bool inscriptionTranslated;
 
     #region IInteractable Properties
+    public float HorizontalInteractionRange => horizontalInteractionRange;
+    public float VerticalInteractionRange => verticalInteractionRange;
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;

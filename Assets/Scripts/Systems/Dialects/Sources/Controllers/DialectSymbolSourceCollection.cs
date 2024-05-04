@@ -12,6 +12,9 @@ public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
     [SerializeField, Range(0f, 1f)] private float destroyTime;
 
     [Header("Interactable Settings")]
+    [SerializeField, Range(1f,100f)] private float horizontalInteractionRange;
+    [SerializeField, Range(1f,100f)] private float verticalInteractionRange;
+    [Space]
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
@@ -22,6 +25,8 @@ public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
     [SerializeField] private bool grabPlayerAttention;
 
     #region IInteractable Properties
+    public float HorizontalInteractionRange => horizontalInteractionRange;
+    public float VerticalInteractionRange => verticalInteractionRange;
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;

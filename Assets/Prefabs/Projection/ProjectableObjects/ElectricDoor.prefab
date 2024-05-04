@@ -88,10 +88,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   resistance: 10
   type: 01000000
-  node:
-    electrode: {fileID: 0}
-    weight: 0
-    contactElectrodes: []
   contacts: []
 --- !u!114 &5990904266948255538
 MonoBehaviour:
@@ -389,11 +385,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectableObject: {fileID: 2212840017335302867}
+  horizontalInteractionRange: 5
+  verticalInteractionRange: 2
   canBeSelected: 1
   isInteractable: 1
   hasAlreadyBeenInteracted: 0
   tooltipMessage: Desmaterializar
   holdDuration: 0.5
+  grabPetAttention: 1
+  grabPlayerAttention: 1
 --- !u!114 &8971957355950650021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,10 +410,14 @@ MonoBehaviour:
   clockwiseRotation: 1
   degreesPerTurn: 90
   smoothRotateFactor: 15
+  horizontalInteractionRange: 5
+  verticalInteractionRange: 2
   canBeSelectedAlternate: 1
   isInteractableAlternate: 1
   hasAlreadyBeenInteractedAlternate: 0
   tooltipMessageAlternate: Rotar
+  grabPetAttention: 0
+  grabPlayerAttention: 0
 --- !u!1 &8290119369691090758
 GameObject:
   m_ObjectHideFlags: 0

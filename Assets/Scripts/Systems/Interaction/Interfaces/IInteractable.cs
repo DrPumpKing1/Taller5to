@@ -13,6 +13,9 @@ public interface IInteractable
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
     public event EventHandler OnUpdatedInteractableState;
 
+    public float HorizontalInteractionRange { get; }
+    public float VerticalInteractionRange { get; }
+
     public bool IsSelectable { get; }
     public bool IsInteractable { get; }
     public bool HasAlreadyBeenInteracted { get; }
