@@ -15,7 +15,6 @@ public class DictionarySelectionUI : BaseUI
     public static event EventHandler OnDictionarySelectionUIOpen;
     public static event EventHandler OnDictionarySelectionUIClose;
 
-
     protected override void OnEnable()
     {
         base.OnEnable();

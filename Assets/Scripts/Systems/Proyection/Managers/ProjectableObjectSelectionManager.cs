@@ -89,7 +89,7 @@ public class ProjectableObjectSelectionManager : MonoBehaviour
     {
         CurrentSelectionIndex = InitialSelectionIndex;
 
-        if (ProjectableObjectsInventory.Count > 0)
+        if (ProjectableObjectsInventory.Count > InitialSelectionIndex)
         {
             SelectProjectableObject(ProjectableObjectsInventory[InitialSelectionIndex]);
         }

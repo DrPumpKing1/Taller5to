@@ -1,8 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class SymbolCraftingSingleUI : MonoBehaviour
 {
@@ -17,6 +17,8 @@ public class SymbolCraftingSingleUI : MonoBehaviour
 
     public bool IsCrafted { get { return isCrafted; } }
 
+    public event EventHandler OnSymbolCrafted;
+
     private void Start()
     {
         InitializeVariables();
@@ -27,6 +29,12 @@ public class SymbolCraftingSingleUI : MonoBehaviour
         isCrafted = false;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O)) CraftSymbol(); //TestToCraftSymbol
+    }
+    
+    #region SetUp Methods
     public void SetSymbolCraftingSingleUI(SymbolCraftingSO symbolCraftingSO)
     {
         this.symbolCraftingSO = symbolCraftingSO;
@@ -34,4 +42,12 @@ public class SymbolCraftingSingleUI : MonoBehaviour
     }
 
     private void SetImageToTranslate(Sprite sprite) => imageToTranslate.sprite = sprite;
+    #endregion
+
+    //Handle DrawingPointsLogic
+    private void CraftSymbol()
+    {
+        isCrafted = true;
+        OnSymbolCrafted?.Invoke(this, EventArgs.Empty);
+    }
 }

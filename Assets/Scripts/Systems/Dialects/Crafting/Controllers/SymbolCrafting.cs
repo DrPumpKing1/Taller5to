@@ -13,25 +13,27 @@ public class SymbolCrafting : MonoBehaviour
     [SerializeField] private List<SymbolCraftingSO> symbolCraftingSOs;
 
     [Header("SymbolCraftingSettings")]
-    [SerializeField] private Transform symbolCraftingUIPrefab;
-    [SerializeField] private bool symbolsCrafted;
+    [SerializeField] private bool allSymbolsCrafted;
 
+    public event EventHandler OnOpenSymbolCraftingUI;
     public event EventHandler OnSymbolsCrafted;
 
     public Dialect Dialect { get { return dialect; } }
     public List<SymbolCraftingSO> SymbolCraftingSOs { get { return symbolCraftingSOs; } }
-    public bool SymbolsCrafted { get { return symbolsCrafted; } }
+    public bool AllSymbolsCrafted { get { return allSymbolsCrafted; } }
 
     private IRequiresSymbolCrafting iRequiresSymbolCrafting;
-    private SymbolCrafingUIHandler currentSymbolCraftingUIHandler;
 
     private void OnEnable()
     {
         iRequiresSymbolCrafting.OnOpenSymbolCraftingUI += IRequiresSymbolCrafting_OnOpenSymbolCraftingUI;
+        SymbolCrafingUIHandler.OnAllSymbolsCrafted += SymbolCrafingUIHandler_OnAllSymbolsCrafted;
     }
+
     private void OnDisable()
     {
         iRequiresSymbolCrafting.OnOpenSymbolCraftingUI -= IRequiresSymbolCrafting_OnOpenSymbolCraftingUI;
+        SymbolCrafingUIHandler.OnAllSymbolsCrafted -= SymbolCrafingUIHandler_OnAllSymbolsCrafted;
     }
 
     private void Awake()
@@ -45,45 +47,20 @@ public class SymbolCrafting : MonoBehaviour
         if (iRequiresSymbolCrafting == null) Debug.LogError("The IRequiresSymbolCraftingComponent component does not implement IRequiresSymbolCrafting");      
     }
 
-    public void OpenSymbolCraftingUI()
-    {
-        GameObject symbolCraftingUIGameObject = Instantiate(symbolCraftingUIPrefab.gameObject);
-
-        SymbolCrafingUIHandler symbolCraftingUI = symbolCraftingUIGameObject.GetComponentInChildren<SymbolCrafingUIHandler>();
-
-        if (!symbolCraftingUI)
-        {
-            Debug.LogWarning("There's not a SymbolCrafingUI attached to instantiated prefab");
-            return;
-        }
-
-        currentSymbolCraftingUIHandler = symbolCraftingUI;
-        currentSymbolCraftingUIHandler.SetUI(this);
-        currentSymbolCraftingUIHandler.OnSymbolDrawnCorrectely += SymbolCraftingUI_OnSymbolDrawnCorrectely;
-    }
-
-    public void ResetSymbolCraftingUIRefference()
-    {
-        currentSymbolCraftingUIHandler.OnSymbolDrawnCorrectely -= SymbolCraftingUI_OnSymbolDrawnCorrectely;
-        currentSymbolCraftingUIHandler = null;
-    }
-
-    public void CraftSymbol() => symbolsCrafted = true;
+    public void CraftSymbol() => allSymbolsCrafted = true;
 
     #region IRequiresSymbolCrafting Subscriptions
     private void IRequiresSymbolCrafting_OnOpenSymbolCraftingUI(object sender, EventArgs e)
     {
-        if (UIManager.Instance.UIActive) return;
-
-        OpenSymbolCraftingUI();
+        OnOpenSymbolCraftingUI?.Invoke(this, EventArgs.Empty);
     }
     #endregion
 
-    #region SymbolCraftingUI Subscriptions
-
-    private void SymbolCraftingUI_OnSymbolDrawnCorrectely(object sender, EventArgs e)
+    #region SymbolCraftingUIHandler Subscriptions
+    private void SymbolCrafingUIHandler_OnAllSymbolsCrafted(object sender, SymbolCrafingUIHandler.OnAllSymbolsCraftedEventArgs e)
     {
-        symbolsCrafted = true;
+        if (e.symbolCrafting != this) return;
+        allSymbolsCrafted = true;
         OnSymbolsCrafted?.Invoke(this, EventArgs.Empty);
     }
     #endregion

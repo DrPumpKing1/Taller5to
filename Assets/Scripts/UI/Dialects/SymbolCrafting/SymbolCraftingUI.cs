@@ -7,36 +7,40 @@ using UnityEngine.UI;
 public class SymbolCraftingUI : BaseUI
 {
     [Header("Components")]
-    [SerializeField] private SymbolCrafingUIHandler symbolCrafingUIHandler;
+    [SerializeField] private SymbolCrafting symbolCrafting;
 
     [Header("UI Components")]
     [SerializeField] private Button closeButton;
 
+    public event EventHandler OnCloseFromUI;
+
     public static event EventHandler OnAnySymbolCraftingUIOpen;
     public static event EventHandler OnAnySymbolCraftingUIClose;
+
+    private CanvasGroup canvasGroup;
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        AddToUILayersList();
-        OnAnySymbolCraftingUIOpen?.Invoke(this, EventArgs.Empty);
+        symbolCrafting.OnOpenSymbolCraftingUI += SymbolCrafting_OnOpenSymbolCraftingUI;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        RemoveFromUILayersList();
-        OnAnySymbolCraftingUIClose?.Invoke(this, EventArgs.Empty);
+        symbolCrafting.OnOpenSymbolCraftingUI -= SymbolCrafting_OnOpenSymbolCraftingUI;
     }
 
     private void Awake()
     {
+        canvasGroup = GetComponent<CanvasGroup>();
         InitializeButtonsListeners();
     }
 
     private void Start()
     {
-        SetUIState(State.Open);
+        InitializeVariables();
+        SetUIState(State.Closed);
     }
 
     private void InitializeButtonsListeners()
@@ -44,16 +48,53 @@ public class SymbolCraftingUI : BaseUI
         closeButton.onClick.AddListener(CloseFromUI);
     }
 
+    private void InitializeVariables()
+    {
+        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
+    }
+
+    private void OpenUI()
+    {
+        if (state != State.Closed) return;
+
+        SetUIState(State.Open);
+
+        AddToUILayersList();
+
+        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 1f);
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
+
+        OnAnySymbolCraftingUIOpen?.Invoke(this, EventArgs.Empty);
+
+    }
+
     private void CloseUI()
     {
         if (state != State.Open) return;
 
         SetUIState(State.Closed);
-        Destroy(transform.parent.gameObject);
+
+        RemoveFromUILayersList();
+
+        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
+
+        OnAnySymbolCraftingUIClose?.Invoke(this, EventArgs.Empty);
     }
 
     protected override void CloseFromUI()
     {
         CloseUI();
     }
+
+    #region SymbolCraftingSubscriptions
+    private void SymbolCrafting_OnOpenSymbolCraftingUI(object sender, EventArgs e)
+    {
+        OpenUI();
+    }
+    #endregion
 }

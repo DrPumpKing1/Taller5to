@@ -26,12 +26,12 @@ public class DictionaryOpeningUIHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        SymbolCrafingUIHandler.OnSymbolCraftingUIOpenDictionary += SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary;
+        SymbolCraftingUIDialectSetUpHandler.OnSymbolCraftingUIOpenDictionary += SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary;
     }
 
     private void OnDisable()
     {
-        SymbolCrafingUIHandler.OnSymbolCraftingUIOpenDictionary -= SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary;
+        SymbolCraftingUIDialectSetUpHandler.OnSymbolCraftingUIOpenDictionary -= SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary;
     }
 
     private void Awake()
@@ -66,7 +66,7 @@ public class DictionaryOpeningUIHandler : MonoBehaviour
     }
 
     #region SymbolCraftingUI Subscriptions
-    private void SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary(object sender, SymbolCrafingUIHandler.OnSymbolCraftingOpenDictionaryEventArgs e)
+    private void SymbolCrafingUI_OnSymbolCraftingUIOpenDIctionary(object sender, SymbolCraftingUIDialectSetUpHandler.OnSymbolCraftingOpenDictionaryEventArgs e)
     {
         DictionaryButtonPanel dictionaryButtonPanel = GetDictionaryButtonPanelByDialect(e.dialect);
 

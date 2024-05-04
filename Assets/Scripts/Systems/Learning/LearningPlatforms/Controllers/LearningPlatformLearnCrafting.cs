@@ -86,7 +86,7 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
     {
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
-        if (!symbolCrafting.SymbolsCrafted)
+        if (!symbolCrafting.AllSymbolsCrafted)
         {
             OnOpenSymbolCraftingUI?.Invoke(this, EventArgs.Empty);
         }
@@ -109,8 +109,11 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
     #region SymbolCrafting Subscriptions
     private void SymbolCrafting_OnSymbolCrafted(object sender, EventArgs e)
     {
+        learningPlatform.LearnObject();
+
         canBeSelected = false;
         isInteractable = false;
+        hasAlreadyBeenInteracted = true;
     }
     #endregion
 }

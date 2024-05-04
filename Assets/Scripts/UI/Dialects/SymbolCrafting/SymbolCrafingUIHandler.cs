@@ -9,89 +9,83 @@ public class SymbolCrafingUIHandler : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private SymbolCrafting symbolCrafting;
-    [SerializeField] private SymbolCraftingUI symbolCraftingUI;
 
     [Header("UI Components")]
     [SerializeField] private Transform symbolCraftingSingleUIContainer;
     [SerializeField] private Transform symbolCraftingSingleUIPrefab;
-    [Space]
-    [SerializeField] private TextMeshProUGUI titleText;
-    [SerializeField] private Button openDictionaryButton;
 
-    private List<SymbolCraftingSO> symbolCraftingSOs;
+    private List<SymbolCraftingSO> symbolCraftingSOs => symbolCrafting.SymbolCraftingSOs;
     private List<SymbolCraftingSingleUI> symbolCraftingSingleUIs = new List<SymbolCraftingSingleUI>();
 
-    public static event EventHandler<OnSymbolCraftingOpenDictionaryEventArgs> OnSymbolCraftingUIOpenDictionary;
-    public event EventHandler OnSymbolDrawnCorrectely;
-
-    public class OnSymbolCraftingOpenDictionaryEventArgs : EventArgs
-    {
-        public Dialect dialect;
-    }
+    public static event EventHandler<OnAllSymbolsCraftedEventArgs> OnAllSymbolsCrafted;
 
     private void OnDisable()
     {
-        symbolCrafting.ResetSymbolCraftingUIRefference();
+        UnsubscribeToAllSymbolCraftingSingleUIs();
     }
 
-    private void Awake()
+    public class OnAllSymbolsCraftedEventArgs : EventArgs
     {
-        InitializeButtonsListeners();
+        public SymbolCrafting symbolCrafting;
     }
 
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.P)) //TestToCraftSymbol
-        {
-            OnSymbolDrawnCorrectely?.Invoke(this, EventArgs.Empty);
-        }
+        InstantiateSymbolCraftingSingleUIs();
     }
 
-    private void InitializeButtonsListeners()
-    {
-        openDictionaryButton.onClick.AddListener(OpenDictionary);
-    }
-
-    public void SetUI(SymbolCrafting symbolCrafting)
-    {
-        this.symbolCrafting = symbolCrafting;
-        symbolCraftingSOs = symbolCrafting.SymbolCraftingSOs;
-
-        SetTitleText(symbolCrafting.Dialect);
-        SetSingleUIs(symbolCraftingSOs);
-    }
-
-    private void SetTitleText(Dialect dialect) => titleText.text = $"Translate to dialect {dialect}";
-
-    private void SetSingleUIs(List<SymbolCraftingSO> symbolCraftingSOs)
+    private void InstantiateSymbolCraftingSingleUIs()
     {
         foreach(SymbolCraftingSO symbolCraftingSO in symbolCraftingSOs)
         {
             Transform symbolCraftingSingleUITransform = Instantiate(symbolCraftingSingleUIPrefab, symbolCraftingSingleUIContainer);
-            SymbolCraftingSingleUI symbolCratingSingleUI = symbolCraftingSingleUITransform.GetComponentInChildren<SymbolCraftingSingleUI>();
 
-            if (!symbolCratingSingleUI)
+            SymbolCraftingSingleUI symbolCraftingSingleUI = symbolCraftingSingleUITransform.GetComponentInChildren<SymbolCraftingSingleUI>();
+
+            if (!symbolCraftingSingleUI)
             {
-                Debug.LogWarning("The instantiated prefab does not have a SymbolCraftingSingleUI component");
+                Debug.LogWarning("The instantiated transform does not have a SymbolCraftingSingleUI component");
+                continue;
             }
 
-            symbolCraftingSingleUIs.Add(symbolCratingSingleUI);
-            symbolCratingSingleUI.SetSymbolCraftingSingleUI(symbolCraftingSO);
+            symbolCraftingSingleUI.SetSymbolCraftingSingleUI(symbolCraftingSO);
+            symbolCraftingSingleUIs.Add(symbolCraftingSingleUI);
+        }
+
+        SubscribeToAllSymbolCraftingSingleUIs();
+    }
+
+    private void SubscribeToAllSymbolCraftingSingleUIs()
+    {
+        foreach(SymbolCraftingSingleUI symbolAddedSingleUI in symbolCraftingSingleUIs)
+        {
+            symbolAddedSingleUI.OnSymbolCrafted += SymbolAddedSingleUI_OnSymbolCrafted;
         }
     }
 
-    private bool CheckAllSymbolsCrafted()
+    private void UnsubscribeToAllSymbolCraftingSingleUIs()
+    {
+        foreach (SymbolCraftingSingleUI symbolAddedSingleUI in symbolCraftingSingleUIs)
+        {
+            symbolAddedSingleUI.OnSymbolCrafted -= SymbolAddedSingleUI_OnSymbolCrafted;
+        }
+    }
+
+    private void CheckAllSymbolsCrafted()
     {
         foreach(SymbolCraftingSingleUI symbolCraftingSingleUI in symbolCraftingSingleUIs)
         {
-            if (!symbolCraftingSingleUI.IsCrafted) return false;
+            if (!symbolCraftingSingleUI.IsCrafted) return;
         }
 
-        return true;
+        OnAllSymbolsCrafted?.Invoke(this, new OnAllSymbolsCraftedEventArgs { symbolCrafting = symbolCrafting });
     }
 
-    private void OpenDictionary()
+    #region SymbolCraftingSingleUI Subscriptions
+    private void SymbolAddedSingleUI_OnSymbolCrafted(object sender, EventArgs e)
     {
-        OnSymbolCraftingUIOpenDictionary?.Invoke(this, new OnSymbolCraftingOpenDictionaryEventArgs { dialect = symbolCrafting.Dialect });
+        CheckAllSymbolsCrafted();
     }
+    #endregion
+
 }

@@ -9,9 +9,6 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     [SerializeField] private Inscription inscription;
     [SerializeField] private SymbolCrafting symbolCrafting;
 
-    [Header("TranslationSettings")]
-    [SerializeField] private Transform inscriptionTranslationUIPrefab;
-
     [Header("Interactable Settings")]
     [SerializeField, Range(1f, 100f)] private float horizontalInteractionRange;
     [SerializeField, Range(1f, 100f)] private float verticalInteractionRange;
@@ -59,6 +56,16 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
         symbolCrafting.OnSymbolsCrafted -= SymbolCrafting_OnSymbolsCrafted;
     }
 
+    private void Start()
+    {
+        CheckIfNoSymbolCraftingSOs();
+    }
+
+    private void CheckIfNoSymbolCraftingSOs()
+    {
+        if (symbolCrafting.SymbolCraftingSOs.Count == 0) inscriptionTranslated = true;
+    }
+
     #region  IInteractable Methods
     public void Select()
     {
@@ -93,16 +100,15 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
 
     public void Interact()
     {
-        //Debug.Log(gameObject.name + " Interacted");
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
         if (!inscriptionTranslated)
         {
-            OnOpenSymbolCraftingUI?.Invoke(this, EventArgs.Empty);
+            OpenSymbolCraftingUI();
         }
         else
         {
-            OnOpenTranslationUI?.Invoke(this, EventArgs.Empty);
+            OpenTranslationUI();
         }
     }
 
@@ -119,8 +125,10 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     }
 
     public Transform GetTransform() => transform;
-
     #endregion
+
+    private void OpenSymbolCraftingUI() => OnOpenSymbolCraftingUI?.Invoke(this, EventArgs.Empty);
+    private void OpenTranslationUI() => OnOpenTranslationUI?.Invoke(this, EventArgs.Empty);
 
     #region SymbolCrafting Subscriptions
     private void SymbolCrafting_OnSymbolsCrafted(object sender, EventArgs e)

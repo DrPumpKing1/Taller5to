@@ -37,7 +37,7 @@ public class ProjectableObjectSelectionUIHandler : MonoBehaviour
         SetSelectionContents(ProjectableObjectsInventory);
         DeselectAllUI();
 
-        if (ProjectableObjectsInventory.Count <= 0) return;
+        if (ProjectableObjectsInventory.Count <= CurrentSelectionIndex) return;
         
         SetProjectableObjectText(ProjectableObjectsInventory[CurrentSelectionIndex].name);
         SelectProjectableObjectUIByIndex(CurrentSelectionIndex);
