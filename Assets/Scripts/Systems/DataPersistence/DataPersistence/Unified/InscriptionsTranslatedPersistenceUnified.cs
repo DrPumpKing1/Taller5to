@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InscriptionsTranslatedData : MonoBehaviour, IDataPersistence<InscriptionsData>
+public class InscriptionsTranslatedPersistenceUnified : MonoBehaviour, IDataPersistence<GameData>
 {
-    public void LoadData(InscriptionsData data)
+    public void LoadData(GameData data)
     {
         Inscription[] inscriptions = FindObjectsOfType<Inscription>();
 
@@ -21,7 +21,7 @@ public class InscriptionsTranslatedData : MonoBehaviour, IDataPersistence<Inscri
         }
     }
 
-    public void SaveData(ref InscriptionsData data)
+    public void SaveData(ref GameData data)
     {
         Inscription[] inscriptions = FindObjectsOfType<Inscription>();
 
