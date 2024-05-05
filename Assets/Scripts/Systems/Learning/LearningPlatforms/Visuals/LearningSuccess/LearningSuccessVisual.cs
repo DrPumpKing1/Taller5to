@@ -22,9 +22,9 @@ public class LearningSuccessVisual : MonoBehaviour
 
     private void LearningPlatform_OnObjectLearned(object sender, LearningPlatformLearnCrafting.OnObjectLearnedEventArgs e)
     {
-        GameObject learningSuccessUIGameObject = Instantiate(learningSuccessUIPrefab.gameObject, transform.position + instantiationPositionOffset, transform.rotation);
+        Transform learningSuccessUITransform = Instantiate(learningSuccessUIPrefab, transform.position + instantiationPositionOffset, transform.rotation);
 
-        LearningSuccessUI learningSuccessUI = learningSuccessUIGameObject.GetComponentInChildren<LearningSuccessUI>();
+        LearningSuccessUI learningSuccessUI = learningSuccessUITransform.GetComponentInChildren<LearningSuccessUI>();
 
         if (!learningSuccessUI)
         {
@@ -32,7 +32,7 @@ public class LearningSuccessVisual : MonoBehaviour
             return;
         }
 
-        learningSuccessUI.SetLearningSuccessText(learningPlatformLearn.ProjectableObjectToLearn);
+        learningSuccessUI.SetLearningSuccessText(e.objectLearned);
     }
 
 }

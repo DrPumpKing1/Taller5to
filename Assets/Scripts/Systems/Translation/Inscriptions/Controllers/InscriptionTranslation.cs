@@ -45,7 +45,12 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
 
     public event EventHandler OnOpenSymbolCraftingUI;
     public event EventHandler OnOpenTranslationUI;
-    public event EventHandler OnInscriptionTranslated;
+    public event EventHandler<OnInsctiptionTranslatedEventArgs> OnInscriptionTranslated;
+
+    public class OnInsctiptionTranslatedEventArgs : EventArgs
+    {
+        public InscriptionSO inscriptionSO;
+    }
 
     private void OnEnable()
     {
@@ -136,7 +141,7 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
         inscription.SetTranslated();
 
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
-        OnInscriptionTranslated?.Invoke(this, EventArgs.Empty);
+        OnInscriptionTranslated?.Invoke(this, new OnInsctiptionTranslatedEventArgs { inscriptionSO = inscription.InscriptionSO });
     }
 
     private void OpenSymbolCraftingUI() => OnOpenSymbolCraftingUI?.Invoke(this, EventArgs.Empty);

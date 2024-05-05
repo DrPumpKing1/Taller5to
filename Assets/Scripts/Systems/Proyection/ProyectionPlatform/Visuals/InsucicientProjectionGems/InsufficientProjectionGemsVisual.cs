@@ -36,9 +36,9 @@ public class InsufficientProjectionGemsVisual : MonoBehaviour
     {
         if (cooldownTimer > 0) return;
 
-        GameObject insufficientProjectionGemsUIGameObject = Instantiate(insufficientProjectionGemsUIPrefab.gameObject, transform.position + instantiationPositionOffset, transform.rotation);
+        Transform insufficientProjectionGemsUITransform = Instantiate(insufficientProjectionGemsUIPrefab, transform.position + instantiationPositionOffset, transform.rotation);
 
-        InsufficientProjectionGemsUI insufficientProjectionGemsUI = insufficientProjectionGemsUIGameObject.GetComponentInChildren<InsufficientProjectionGemsUI>();
+        InsufficientProjectionGemsUI insufficientProjectionGemsUI = insufficientProjectionGemsUITransform.GetComponentInChildren<InsufficientProjectionGemsUI>();
 
         if (!insufficientProjectionGemsUI)
         {

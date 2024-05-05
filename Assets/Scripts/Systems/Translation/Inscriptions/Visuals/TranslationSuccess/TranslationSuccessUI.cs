@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class LearningSuccessUI : MonoBehaviour
+public class TranslationSuccessUI : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private TextMeshProUGUI learningSuccessText;
+    [SerializeField] private TextMeshProUGUI translationSuccessText;
 
     [Header("Settings")]
     [SerializeField] private float lifeTime;
@@ -16,9 +16,9 @@ public class LearningSuccessUI : MonoBehaviour
         DestroyAfterLifetime();
     }
 
-    public void SetLearningSuccessText(ProjectableObjectSO learnedObject)
+    public void SetLearningSuccessText(InscriptionSO inscription)
     {
-        learningSuccessText.text = $"{learnedObject.objectName} projection learned";
+        translationSuccessText.text = $"{inscription.dialect} inscription translated";
     }
 
     private void DestroyAfterLifetime() => Destroy(transform.parent.gameObject, lifeTime);

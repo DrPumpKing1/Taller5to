@@ -22,7 +22,7 @@ public class ProjectableObjectSelectionSingleUI : MonoBehaviour
     public bool IsSelected { get { return isSelected; } }
 
     public void SetProyectableObjectImage(Sprite sprite) => projectableObjectImage.sprite = sprite;
-    public void SetProyectableObjectCost(int cost) => costText.text = $"Coste: {cost}";
+    public void SetProyectableObjectCost(int cost) => costText.text = $"Cost: {cost}";
 
     public void SelectUI()
     {

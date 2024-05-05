@@ -33,8 +33,6 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
     public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
 
-    public ProjectableObjectSO ProjectableObjectToLearn => learningPlatform.ProjectableObjectToLearn;
-
     #region IInteractable Events
     public event EventHandler OnObjectSelected;
     public event EventHandler OnObjectDeselected;
@@ -129,7 +127,7 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
 
     public void LearnObject()
     {
-        ProjectableObjectsLearningManager.Instance.LearnProjectableObject(ProjectableObjectToLearn);
+        ProjectableObjectsLearningManager.Instance.LearnProjectableObject(learningPlatform.ProjectableObjectToLearn); ;
 
         learningPlatform.SetIsLearned();
 
@@ -137,7 +135,7 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
         isInteractable = false;
         hasAlreadyBeenInteracted = true;
 
-        OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { objectLearned = ProjectableObjectToLearn });
+        OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { objectLearned = learningPlatform.ProjectableObjectToLearn });
     }
 
     #region SymbolCrafting Subscriptions
