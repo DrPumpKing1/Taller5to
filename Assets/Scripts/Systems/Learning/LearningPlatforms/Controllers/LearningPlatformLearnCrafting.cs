@@ -33,6 +33,8 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
     public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
 
+    public ProjectableObjectSO ProjectableObjectToLearn => learningPlatform.ProjectableObjectToLearn;
+
     #region IInteractable Events
     public event EventHandler OnObjectSelected;
     public event EventHandler OnObjectDeselected;
@@ -43,6 +45,11 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
     #endregion
 
     public event EventHandler OnOpenSymbolCraftingUI;
+    public event EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
+    public class OnObjectLearnedEventArgs : EventArgs
+    {
+        public ProjectableObjectSO objectLearned;
+    }
 
     private void OnEnable()
     {
@@ -52,6 +59,20 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
     private void OnDisable()
     {
         symbolCrafting.OnSymbolsCrafted -= SymbolCrafting_OnSymbolCrafted;
+    }
+
+    private void Start()
+    {
+        CheckIsLearned();
+    }
+
+    private void CheckIsLearned()
+    {
+        if (!learningPlatform.IsLearned) return;
+        
+        canBeSelected = false;
+        isInteractable = false;
+        hasAlreadyBeenInteracted = true;  
     }
 
     #region IInteractable Methods
@@ -106,14 +127,23 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
     public Transform GetTransform() => transform;
     #endregion
 
-    #region SymbolCrafting Subscriptions
-    private void SymbolCrafting_OnSymbolCrafted(object sender, EventArgs e)
+    public void LearnObject()
     {
-        learningPlatform.LearnObject();
+        ProjectableObjectsLearningManager.Instance.LearnProjectableObject(ProjectableObjectToLearn);
+
+        learningPlatform.SetIsLearned();
 
         canBeSelected = false;
         isInteractable = false;
         hasAlreadyBeenInteracted = true;
+
+        OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { objectLearned = ProjectableObjectToLearn });
+    }
+
+    #region SymbolCrafting Subscriptions
+    private void SymbolCrafting_OnSymbolCrafted(object sender, EventArgs e)
+    {
+        LearnObject();
     }
     #endregion
 }

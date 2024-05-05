@@ -60,6 +60,7 @@ public class SymbolCrafting : MonoBehaviour
     private void SymbolCrafingUIHandler_OnAllSymbolsCrafted(object sender, SymbolCrafingUIHandler.OnAllSymbolsCraftedEventArgs e)
     {
         if (e.symbolCrafting != this) return;
+
         allSymbolsCrafted = true;
         OnSymbolsCrafted?.Invoke(this, EventArgs.Empty);
     }

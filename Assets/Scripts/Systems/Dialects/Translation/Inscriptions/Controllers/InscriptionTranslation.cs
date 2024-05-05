@@ -45,6 +45,7 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
 
     public event EventHandler OnOpenSymbolCraftingUI;
     public event EventHandler OnOpenTranslationUI;
+    public event EventHandler OnInscriptionTranslated;
 
     private void OnEnable()
     {
@@ -58,11 +59,12 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
 
     private void Start()
     {
-        CheckIfNoSymbolCraftingSOs();
+        CheckIsTranslated();
     }
 
-    private void CheckIfNoSymbolCraftingSOs()
+    private void CheckIsTranslated()
     {
+        if (inscription.IsTranslated) inscriptionTranslated = true;
         if (symbolCrafting.SymbolCraftingSOs.Count == 0) inscriptionTranslated = true;
     }
 
@@ -127,14 +129,23 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     public Transform GetTransform() => transform;
     #endregion
 
+    private void TranslateInscription()
+    {
+        inscriptionTranslated = true;
+
+        inscription.SetTranslated();
+
+        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
+        OnInscriptionTranslated?.Invoke(this, EventArgs.Empty);
+    }
+
     private void OpenSymbolCraftingUI() => OnOpenSymbolCraftingUI?.Invoke(this, EventArgs.Empty);
     private void OpenTranslationUI() => OnOpenTranslationUI?.Invoke(this, EventArgs.Empty);
 
     #region SymbolCrafting Subscriptions
     private void SymbolCrafting_OnSymbolsCrafted(object sender, EventArgs e)
     {
-        inscriptionTranslated = true;
-        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
+        TranslateInscription();
     }
     #endregion
 }

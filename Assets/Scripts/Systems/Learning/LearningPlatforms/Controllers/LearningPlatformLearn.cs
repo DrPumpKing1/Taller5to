@@ -34,6 +34,8 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
 
+    public ProjectableObjectSO ProjectableObjectToLearn => learningPlatform.ProjectableObjectToLearn;
+
     #region IHoldInteractable Events
     public event EventHandler OnObjectSelected;
     public event EventHandler OnObjectDeselected;
@@ -48,8 +50,28 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     #endregion
 
     public event EventHandler OnOpenSymbolCraftingUI;
+    public event EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
 
-    #region IInteractable Methods
+    public class OnObjectLearnedEventArgs : EventArgs
+    {
+        public ProjectableObjectSO objectLearned;
+    }
+
+    private void Start()
+    {
+        CheckIsLearned();
+    }
+
+    private void CheckIsLearned()
+    {
+        if (!learningPlatform.IsLearned) return;
+
+        canBeSelected = false;
+        isInteractable = false;
+        hasAlreadyBeenInteracted = true;
+    }
+
+    #region IHoldInteractable Methods
     public void Select()
     {
         OnObjectSelected?.Invoke(this, EventArgs.Empty);
@@ -81,7 +103,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     {
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
-        learningPlatform.LearnObject();
+        LearnObject();
 
         canBeSelected = false;
         isInteractable = false;
@@ -121,4 +143,10 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
 
     public Transform GetTransform() => transform;
     #endregion
+
+    public void LearnObject()
+    {
+        ProjectableObjectsLearningManager.Instance.LearnProjectableObject(ProjectableObjectToLearn);
+        OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { objectLearned = ProjectableObjectToLearn });
+    }
 }

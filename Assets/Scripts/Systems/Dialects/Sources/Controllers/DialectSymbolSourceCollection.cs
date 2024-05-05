@@ -7,6 +7,7 @@ public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
 {
     [Header("Components")]
     [SerializeField] private DialectSymbolSource dialectSymbolSource;
+    [SerializeField] private Transform visual;
 
     [Header("Symbol Source Collection Settings")]
     [SerializeField, Range(0f, 1f)] private float destroyTime;
@@ -51,18 +52,28 @@ public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
         public DialectSymbolsSourceSO dialectSymbolSourceSO;
     }
 
+    private void Start()
+    {
+        CheckIsCollected();
+    }
+
+    private void CheckIsCollected()
+    {
+        if (!dialectSymbolSource.IsCollected) return;
+
+        DisableVisual();
+        canBeSelected = false;
+        isInteractable = false;
+        hasAlreadyBeenInteracted = true;
+    }
+
     #region  IInteractable Methods
     public void Interact()
     {
         //Debug.Log(gameObject.name + " Interacted");
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
-        hasAlreadyBeenInteracted = true;
-        isInteractable = false;
-        canBeSelected = false;
-
-        AddSymbolsToInventory();
-        DestroyDialectSymbolSource();
+        CollectSymbolSource();
     }
 
     public void FailInteract()
@@ -109,8 +120,22 @@ public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
     }
 
     public Transform GetTransform() => transform;
-
     #endregion
+
+    private void CollectSymbolSource()
+    {
+        AddSymbolsToInventory();
+        DisableVisual();
+
+        dialectSymbolSource.SetIsCollected();
+
+        canBeSelected = false;
+        isInteractable = false;
+        hasAlreadyBeenInteracted = true;
+    }
+
+    private void DisableVisual() => visual.gameObject.SetActive(false);
+
     private void AddSymbolsToInventory()
     {
         foreach (DialectSymbolSO dialectSymbolSO in dialectSymbolSource.DialectSymbolSourceSO.dialectSymbolSOs)
@@ -120,6 +145,4 @@ public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
 
         OnSymbolsAdded?.Invoke(this, new OnSymbolsAddedEventArgs { dialectSymbolSourceSO = dialectSymbolSource.DialectSymbolSourceSO });
     }
-
-    private void DestroyDialectSymbolSource() => Destroy(gameObject, destroyTime);
 }

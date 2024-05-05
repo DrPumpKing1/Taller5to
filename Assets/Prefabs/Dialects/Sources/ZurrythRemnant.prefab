@@ -51,7 +51,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -72,6 +72,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialectSymbolSourceSO: {fileID: 11400000, guid: 70be1bcf96291184c9ac5b42f74fc5ae, type: 2}
+  id: 0
+  isCollected: 0
 --- !u!114 &-8595223943152675280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,11 +87,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialectSymbolSource: {fileID: 4525547275011704725}
+  visual: {fileID: 4395639339420543338}
   destroyTime: 0.1
+  horizontalInteractionRange: 0
+  verticalInteractionRange: 0
   canBeSelected: 1
   isInteractable: 1
   hasAlreadyBeenInteracted: 0
   tooltipMessage: Collect Zurryth Remnant
+  grabPetAttention: 0
+  grabPlayerAttention: 0
 --- !u!1 &2611396686799872423
 GameObject:
   m_ObjectHideFlags: 0

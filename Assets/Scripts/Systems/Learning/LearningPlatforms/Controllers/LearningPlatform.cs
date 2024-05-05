@@ -8,19 +8,13 @@ public class LearningPlatform : MonoBehaviour
     [Header("Leraning Platform Settings")]
     [SerializeField] private ProjectableObjectSO projectableObjectToLearn;
 
-    public ProjectableObjectSO ProjectableObjectToLearn { get { return projectableObjectToLearn; } }
+    [Header("Identifiers")]
+    [SerializeField] private int id;
+    [SerializeField] private bool isLearned;
 
-    public event EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
+    public ProjectableObjectSO ProjectableObjectToLearn => projectableObjectToLearn;
+    public int ID => id;
+    public bool IsLearned => isLearned;
 
-    public class OnObjectLearnedEventArgs : EventArgs
-    {
-        public ProjectableObjectSO objectLearned;
-    }
-
-    public void LearnObject()
-    {
-        ProjectableObjectsLearningManager.Instance.LearnProjectableObject(projectableObjectToLearn);
-
-        OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { objectLearned = projectableObjectToLearn });
-    }
+    public void SetIsLearned() => isLearned = true;
 }

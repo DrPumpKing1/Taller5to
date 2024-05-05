@@ -9,10 +9,12 @@ public class ProjectableObjectsLearningManager : MonoBehaviour
 
     [Header("Projectable Objects Learned Settings")]
     [SerializeField] private List<ProjectableObjectSO> projectableObjectsLearned = new List<ProjectableObjectSO>();
+    [SerializeField] private List<ProjectableObjectSO> completeProjectableObjectsPool = new List<ProjectableObjectSO>();
 
     public static EventHandler<OnProjectableObjectLearnedEventArgs> OnProjectableObjectLearned;
 
-    public List<ProjectableObjectSO> ProjectableObjectsLearned {  get { return projectableObjectsLearned; } }
+    public List<ProjectableObjectSO> ProjectableObjectsLearned => projectableObjectsLearned;
+    public List<ProjectableObjectSO> CompleteProjectableObjectsPool => completeProjectableObjectsPool;
 
     public class OnProjectableObjectLearnedEventArgs : EventArgs
     {

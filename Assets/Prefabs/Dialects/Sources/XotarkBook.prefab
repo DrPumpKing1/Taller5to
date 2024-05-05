@@ -183,7 +183,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -204,6 +204,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialectSymbolSourceSO: {fileID: 11400000, guid: 546edd455afc7e145b0cd30826af6bde, type: 2}
+  id: 0
+  isCollected: 0
 --- !u!114 &1377952703454503788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,6 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialectSymbolSource: {fileID: 299158166783313229}
+  visual: {fileID: 8204107802474874703}
   destroyTime: 0.1
   horizontalInteractionRange: 3
   verticalInteractionRange: 2

@@ -5,7 +5,7 @@ using UnityEngine;
 public class LearningSuccessVisual : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private LearningPlatform learningPlatform;
+    [SerializeField] private LearningPlatformLearnCrafting learningPlatformLearn;
 
     [Header("Learning Success Settings")]
     [SerializeField] private Transform learningSuccessUIPrefab;
@@ -13,14 +13,14 @@ public class LearningSuccessVisual : MonoBehaviour
 
     private void OnEnable()
     {
-        learningPlatform.OnObjectLearned += LearningPlatform_OnObjectLearned;
+        learningPlatformLearn.OnObjectLearned += LearningPlatform_OnObjectLearned;
     }
     private void OnDisable()
     {
-        learningPlatform.OnObjectLearned -= LearningPlatform_OnObjectLearned;
+        learningPlatformLearn.OnObjectLearned -= LearningPlatform_OnObjectLearned;
     }
 
-    private void LearningPlatform_OnObjectLearned(object sender, LearningPlatform.OnObjectLearnedEventArgs e)
+    private void LearningPlatform_OnObjectLearned(object sender, LearningPlatformLearnCrafting.OnObjectLearnedEventArgs e)
     {
         GameObject learningSuccessUIGameObject = Instantiate(learningSuccessUIPrefab.gameObject, transform.position + instantiationPositionOffset, transform.rotation);
 
@@ -32,7 +32,7 @@ public class LearningSuccessVisual : MonoBehaviour
             return;
         }
 
-        learningSuccessUI.SetLearningSuccessText(learningPlatform.ProjectableObjectToLearn);
+        learningSuccessUI.SetLearningSuccessText(learningPlatformLearn.ProjectableObjectToLearn);
     }
 
 }

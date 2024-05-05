@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52f3e516458f9e24e9ce6424c41e7385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  learningPlatform: {fileID: 7187077217301300134}
+  learningPlatformLearn: {fileID: 878811824159526836}
   learningSuccessUIPrefab: {fileID: 2594671349859791423, guid: 7d3649409dd9fbb46b6d88b9a658433b, type: 3}
   instantiationPositionOffset: {x: 0, y: 0.75, z: 0}
 --- !u!1 &7088411223046487720
@@ -285,6 +285,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectableObjectToLearn: {fileID: 0}
+  id: 0
+  isLearned: 0
 --- !u!114 &878811824159526836
 MonoBehaviour:
   m_ObjectHideFlags: 0
