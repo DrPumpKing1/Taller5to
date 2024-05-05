@@ -15,7 +15,7 @@ public class SymbolsDictionaryPersistence : MonoBehaviour, IDataPersistence<Symb
         {
             if (symbolDictionaryData.Value)
             {
-                symbolsDictionaryManager.AddSymbolToDictionaryById(symbolDictionaryData.Key, false);
+                symbolsDictionaryManager.AddSymbolToDictionaryById(symbolDictionaryData.Key);
             }
         }
     }

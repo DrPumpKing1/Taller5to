@@ -140,7 +140,7 @@ public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
     {
         foreach (DialectSymbolSO dialectSymbolSO in dialectSymbolSource.DialectSymbolSourceSO.dialectSymbolSOs)
         {
-            SymbolsDictionaryManager.Instance.AddSymbolToDictionary(dialectSymbolSO, true);
+            SymbolsDictionaryManager.Instance.CollectSymbol(dialectSymbolSO);
         }
 
         OnSymbolsAdded?.Invoke(this, new OnSymbolsAddedEventArgs { dialectSymbolSourceSO = dialectSymbolSource.DialectSymbolSourceSO });

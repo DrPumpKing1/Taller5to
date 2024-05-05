@@ -6,15 +6,20 @@ using System.Linq;
 
 public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class, new()
 {
+    [Header("Enabler")]
+    [SerializeField] private bool enableDataPersistence;
+
     [Header("File Storage Config")]
     [SerializeField] private string fileName;
     [SerializeField] private bool useEncryption;
+
+    [Header("Debug")]
+    [SerializeField] private bool debug;
 
     private string dirPath;
     private IDataService dataService;
     private T persistentData;
     private List<IDataPersistence<T>> dataPersistenceObjects;
-
 
     protected void Awake()
     {
@@ -46,11 +51,14 @@ public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class,
 
     protected void LoadGameData()
     {
+        if (!enableDataPersistence) return;
+
         persistentData = dataService.LoadData<T>(); //Load data from file using data handler
 
         if (persistentData == default || persistentData == null)
         {
-            Debug.Log("No data was found. Initializing data to defaults");
+            if(debug) Debug.Log("No data was found. Initializing data to defaults");
+
             NewGameData();
         }
 
@@ -62,6 +70,8 @@ public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class,
 
     protected void SaveGameData()
     {
+        if (!enableDataPersistence) return;
+
         foreach (IDataPersistence<T> dataPersistenceObject in dataPersistenceObjects) //Pass data to other scripts so they can update it
         {
             dataPersistenceObject.SaveData(ref persistentData);

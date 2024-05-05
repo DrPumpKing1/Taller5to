@@ -147,6 +147,13 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     public void LearnObject()
     {
         ProjectableObjectsLearningManager.Instance.LearnProjectableObject(ProjectableObjectToLearn);
+
+        learningPlatform.SetIsLearned();
+
+        canBeSelected = false;
+        isInteractable = false;
+        hasAlreadyBeenInteracted = true;
+
         OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { objectLearned = ProjectableObjectToLearn });
     }
 }

@@ -14,11 +14,11 @@ public class SymbolsDictionaryManager : MonoBehaviour
     public List<DialectSymbolSO> SymbolsDictionary { get { return symbolsDictionary; } }
     public List<DialectSymbolSO> CompleteSymbolsPool { get { return completeSymbolsPool; } }
 
-    public static event EventHandler OnDialectSymbolAddedToDictionary;
+    public static event EventHandler OnDialectSymbolCollected;
 
-    public class OnDialectSymbolAddedToDictionaryEventArgs : EventArgs
+    public class OnDialectSymbolCollectedEventArgs : EventArgs
     {
-        public DialectSymbolSO dialectSymbolSO;
+        public DialectSymbolSO collectedSymbol;
     }
 
     private void Awake()
@@ -40,22 +40,24 @@ public class SymbolsDictionaryManager : MonoBehaviour
         }
     }
 
-    public void AddSymbolToDictionary(DialectSymbolSO symbolToAdd, bool invokeEvents)
+    public void CollectSymbol(DialectSymbolSO collectedSymbol)
+    {
+        AddSymbolToDictionary(collectedSymbol);
+        OnDialectSymbolCollected?.Invoke(this, new OnDialectSymbolCollectedEventArgs { collectedSymbol = collectedSymbol });
+    }
+
+    public void AddSymbolToDictionary(DialectSymbolSO symbolToAdd)
     {
         if (symbolsDictionary.Contains(symbolToAdd))
         {
-            Debug.Log($"Symbols Dictionary already contains symbolToAdd withg name: {symbolToAdd._name}");
+            Debug.Log($"Symbols Dictionary already contains symbolToAdd with name: {symbolToAdd._name}");
             return;
         }
 
-        symbolsDictionary.Add(symbolToAdd);
-
-        if (!invokeEvents) return;
-
-        OnDialectSymbolAddedToDictionary?.Invoke(this, new OnDialectSymbolAddedToDictionaryEventArgs { dialectSymbolSO = symbolToAdd });
+        symbolsDictionary.Add(symbolToAdd); 
     }
 
-    public void AddSymbolToDictionaryById(int id, bool invokeEvents)
+    public void AddSymbolToDictionaryById(int id)
     {
         DialectSymbolSO symbolToAdd = GetSymbolInCompletePoolById(id);
 
@@ -72,10 +74,6 @@ public class SymbolsDictionaryManager : MonoBehaviour
         }
 
         symbolsDictionary.Add(symbolToAdd);
-
-        if (!invokeEvents) return;
-
-        OnDialectSymbolAddedToDictionary?.Invoke(this, new OnDialectSymbolAddedToDictionaryEventArgs { dialectSymbolSO = symbolToAdd });
     }
 
     public bool CheckIfDictionaryContainsSymbol(DialectSymbolSO symbol) => symbolsDictionary.Contains(symbol);

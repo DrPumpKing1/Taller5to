@@ -42,9 +42,70 @@ public class ProjectableObjectsLearningManager : MonoBehaviour
 
     public void LearnProjectableObject(ProjectableObjectSO projectableObjectToLearn)
     {
-        if (projectableObjectsLearned.Contains(projectableObjectToLearn)) return;
-
-        projectableObjectsLearned.Add(projectableObjectToLearn);
+        AddProjectableObjectToLearnedList(projectableObjectToLearn);
         OnProjectableObjectLearned?.Invoke(this, new OnProjectableObjectLearnedEventArgs { projectableObjectLearned = projectableObjectToLearn });
+    }
+
+    public void AddProjectableObjectToLearnedList(ProjectableObjectSO objectToAdd)
+    {
+        if (projectableObjectsLearned.Contains(objectToAdd))
+        {
+            Debug.Log($"ProjectableObjectsLearned list already contains objectToAdd with name: {objectToAdd.objectName}");
+            return;
+        }
+
+        projectableObjectsLearned.Add(objectToAdd);
+    }
+
+    public void AddProjectableObjectToLearnedListById(int id)
+    {
+        ProjectableObjectSO projectableObjectToAdd = GetProjectableObjectInCompletePoolById(id);
+
+        if (!projectableObjectToAdd)
+        {
+            Debug.LogWarning("Addition will be ignored due to projectable object not found");
+            return;
+        }
+
+        if (CheckLearnedListContainsProjectableObject(projectableObjectToAdd))
+        {
+            Debug.Log($"Projectable Objects Learned List already contains objectToAdd with id: {projectableObjectToAdd.id}");
+            return;
+        }
+
+        projectableObjectsLearned.Add(projectableObjectToAdd);
+    }
+
+    public bool CheckLearnedListContainsProjectableObject(ProjectableObjectSO projectableObject) => projectableObjectsLearned.Contains(projectableObject);
+
+    public bool CheckLearnedListContainsProjectableObjectById(int id)
+    {
+        foreach (ProjectableObjectSO projectableObject in projectableObjectsLearned)
+        {
+            if (projectableObject.id == id) return true;
+        }
+
+        return false;
+    }
+
+    public ProjectableObjectSO GetProjectableObjectInCompletePoolById(int id)
+    {
+        foreach (ProjectableObjectSO projectableObjectSO in completeProjectableObjectsPool)
+        {
+            if (projectableObjectSO.id == id) return projectableObjectSO;
+        }
+
+        Debug.LogWarning($"Projectable Object with id {id} not found in completePool");
+        return null;
+    }
+
+    public ProjectableObjectSO GetProjectableObjectInLearnedListById(int id)
+    {
+        foreach (ProjectableObjectSO projectableObjectSO in completeProjectableObjectsPool)
+        {
+            if (projectableObjectSO.id == id) return projectableObjectSO;
+        }
+
+        return null;
     }
 }
