@@ -40,13 +40,54 @@ public class SymbolsDictionaryManager : MonoBehaviour
         }
     }
 
-    public void AddSymbolToDictionary(DialectSymbolSO dialectSymbolSO)
+    public void AddSymbolToDictionary(DialectSymbolSO symbolToAdd, bool invokeEvents)
     {
-        if (symbolsDictionary.Contains(dialectSymbolSO)) return;
+        if (symbolsDictionary.Contains(symbolToAdd))
+        {
+            Debug.Log($"Symbols Dictionary already contains symbolToAdd withg name: {symbolToAdd._name}");
+            return;
+        }
 
-        symbolsDictionary.Add(dialectSymbolSO);
-        OnDialectSymbolAddedToDictionary?.Invoke(this, new OnDialectSymbolAddedToDictionaryEventArgs { dialectSymbolSO = dialectSymbolSO });
-        return;
+        symbolsDictionary.Add(symbolToAdd);
+
+        if (!invokeEvents) return;
+
+        OnDialectSymbolAddedToDictionary?.Invoke(this, new OnDialectSymbolAddedToDictionaryEventArgs { dialectSymbolSO = symbolToAdd });
+    }
+
+    public void AddSymbolToDictionaryById(int id, bool invokeEvents)
+    {
+        DialectSymbolSO symbolToAdd = GetSymbolInCompletePoolById(id);
+
+        if (!symbolToAdd)
+        {
+            Debug.LogWarning("Addition will be ignored due to symbol not found");
+            return;
+        }
+
+        if (CheckIfDictionaryContainsSymbol(symbolToAdd))
+        {
+            Debug.Log($"Symbols Dictionary already contains symbolToAdd with id: {symbolToAdd.id}");
+            return;
+        }
+
+        symbolsDictionary.Add(symbolToAdd);
+
+        if (!invokeEvents) return;
+
+        OnDialectSymbolAddedToDictionary?.Invoke(this, new OnDialectSymbolAddedToDictionaryEventArgs { dialectSymbolSO = symbolToAdd });
+    }
+
+    public bool CheckIfDictionaryContainsSymbol(DialectSymbolSO symbol) => symbolsDictionary.Contains(symbol);
+
+    public bool CheckIfDictionaryContainsSymbolById(int id)
+    {
+        foreach(DialectSymbolSO symbol in symbolsDictionary)
+        {
+            if (symbol.id == id) return true;
+        }
+
+        return false;
     }
 
     public DialectSymbolSO GetSymbolInCompletePoolById(int id)

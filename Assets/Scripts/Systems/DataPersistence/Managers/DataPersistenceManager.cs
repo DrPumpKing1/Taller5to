@@ -18,7 +18,7 @@ public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class,
 
     protected void Awake()
     {
-        InitializeSingleton();
+        SetSingleton();
         InitializeDataPersistenceManager();
     }
 
@@ -26,7 +26,7 @@ public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class,
     {
         dirPath = Application.persistentDataPath;
 
-        if (useEncryption) dataService = new JSONUtilityDataServiceEncryption(dirPath, fileName);
+        if (useEncryption) dataService = new JSONNewtonSoftDataServiceEncryption(dirPath, fileName);
         else dataService = new JSONNewtonsoftDataServiceNoEncryption(dirPath, fileName);
 
         dataPersistenceObjects = FindAllDataPersistencesObjects();
@@ -42,7 +42,7 @@ public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class,
         return dataPersistenceObjectsList;
     }
 
-    protected virtual void InitializeSingleton() { }
+    protected virtual void SetSingleton() { }
 
     protected void LoadGameData()
     {
