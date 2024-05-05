@@ -4,30 +4,23 @@ using UnityEngine;
 
 public class ProjectableObjectsLearnedPersistence : MonoBehaviour, IDataPersistence<ProjectableObjectsLearnedData>
 {
-    [Header("Components")]
-    [SerializeField] private ProjectableObjectsLearningManager projectableObjectsLearningManager;
-    //Should be refferenced as loading will happen in Awake
-    //and ProjectableObjectsLearningManager SetSingleton() also happens on Awake
-
     public void LoadData(ProjectableObjectsLearnedData data)
     {
+        ProjectableObjectsLearningManager projectableObjectsLearningManager = FindObjectOfType<ProjectableObjectsLearningManager>();
+
         foreach (KeyValuePair<int, bool> projectableObjectLearnedData in data.projectableObjectsLearned)
         {
-            if (projectableObjectLearnedData.Value)
-            {
-                projectableObjectsLearningManager.AddProjectableObjectToLearnedListById(projectableObjectLearnedData.Key);
-            }
+            if (projectableObjectLearnedData.Value) projectableObjectsLearningManager.AddProjectableObjectToLearnedListById(projectableObjectLearnedData.Key);
         }
     }
 
     public void SaveData(ref ProjectableObjectsLearnedData data)
     {
+        ProjectableObjectsLearningManager projectableObjectsLearningManager = FindObjectOfType<ProjectableObjectsLearningManager>();
+
         foreach (ProjectableObjectSO projectableObject in projectableObjectsLearningManager.CompleteProjectableObjectsPool) //Clear all data in data
         {
-            if (data.projectableObjectsLearned.ContainsKey(projectableObject.id))
-            {
-                data.projectableObjectsLearned.Remove(projectableObject.id);
-            }
+            if (data.projectableObjectsLearned.ContainsKey(projectableObject.id)) data.projectableObjectsLearned.Remove(projectableObject.id);
         }
 
         foreach (ProjectableObjectSO projectableObject in projectableObjectsLearningManager.CompleteProjectableObjectsPool)

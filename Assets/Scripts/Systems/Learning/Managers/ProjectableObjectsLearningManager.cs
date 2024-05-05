@@ -11,6 +11,9 @@ public class ProjectableObjectsLearningManager : MonoBehaviour
     [SerializeField] private List<ProjectableObjectSO> projectableObjectsLearned = new List<ProjectableObjectSO>();
     [SerializeField] private List<ProjectableObjectSO> completeProjectableObjectsPool = new List<ProjectableObjectSO>();
 
+    [Header("Debug")]
+    [SerializeField] private bool debug;
+
     public static EventHandler<OnProjectableObjectLearnedEventArgs> OnProjectableObjectLearned;
 
     public List<ProjectableObjectSO> ProjectableObjectsLearned => projectableObjectsLearned;
@@ -50,7 +53,7 @@ public class ProjectableObjectsLearningManager : MonoBehaviour
     {
         if (projectableObjectsLearned.Contains(objectToAdd))
         {
-            Debug.Log($"ProjectableObjectsLearned list already contains objectToAdd with name: {objectToAdd.objectName}");
+            if(debug) Debug.Log($"ProjectableObjectsLearned list already contains objectToAdd with name: {objectToAdd.objectName}");
             return;
         }
 
@@ -63,13 +66,13 @@ public class ProjectableObjectsLearningManager : MonoBehaviour
 
         if (!projectableObjectToAdd)
         {
-            Debug.LogWarning("Addition will be ignored due to projectable object not found");
+            if (debug) Debug.LogWarning("Addition will be ignored due to projectable object not found");
             return;
         }
 
         if (CheckLearnedListContainsProjectableObject(projectableObjectToAdd))
         {
-            Debug.Log($"Projectable Objects Learned List already contains objectToAdd with id: {projectableObjectToAdd.id}");
+            if (debug) Debug.Log($"Projectable Objects Learned List already contains objectToAdd with id: {projectableObjectToAdd.id}");
             return;
         }
 
@@ -95,7 +98,7 @@ public class ProjectableObjectsLearningManager : MonoBehaviour
             if (projectableObjectSO.id == id) return projectableObjectSO;
         }
 
-        Debug.LogWarning($"Projectable Object with id {id} not found in completePool");
+        if (debug) Debug.LogWarning($"Projectable Object with id {id} not found in completePool");
         return null;
     }
 

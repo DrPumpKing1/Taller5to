@@ -11,6 +11,8 @@ public class SymbolsDictionaryManager : MonoBehaviour
     [SerializeField] private List<DialectSymbolSO> symbolsDictionary;
     [SerializeField] private List<DialectSymbolSO> completeSymbolsPool;
 
+    [Header("Debug")]
+    [SerializeField] private bool debug;
     public List<DialectSymbolSO> SymbolsDictionary { get { return symbolsDictionary; } }
     public List<DialectSymbolSO> CompleteSymbolsPool { get { return completeSymbolsPool; } }
 
@@ -50,7 +52,7 @@ public class SymbolsDictionaryManager : MonoBehaviour
     {
         if (symbolsDictionary.Contains(symbolToAdd))
         {
-            Debug.Log($"Symbols Dictionary already contains symbolToAdd with name: {symbolToAdd._name}");
+            if (debug) Debug.Log($"Symbols Dictionary already contains symbolToAdd with name: {symbolToAdd._name}");
             return;
         }
 
@@ -63,13 +65,13 @@ public class SymbolsDictionaryManager : MonoBehaviour
 
         if (!symbolToAdd)
         {
-            Debug.LogWarning("Addition will be ignored due to symbol not found");
+            if (debug) Debug.LogWarning("Addition will be ignored due to symbol not found");
             return;
         }
 
         if (CheckIfDictionaryContainsSymbol(symbolToAdd))
         {
-            Debug.Log($"Symbols Dictionary already contains symbolToAdd with id: {symbolToAdd.id}");
+            if (debug) Debug.Log($"Symbols Dictionary already contains symbolToAdd with id: {symbolToAdd.id}");
             return;
         }
 
@@ -95,7 +97,7 @@ public class SymbolsDictionaryManager : MonoBehaviour
             if (dialectSymbolSO.id == id) return dialectSymbolSO;
         }
 
-        Debug.LogWarning($"Dialect Symbol with id {id} not found in completePool");
+        if (debug) Debug.LogWarning($"Dialect Symbol with id {id} not found in completePool");
         return null;
     }
 
