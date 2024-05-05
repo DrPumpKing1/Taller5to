@@ -15,5 +15,5 @@ public class Inscription : MonoBehaviour
     public int ID => id;
     public bool IsTranslated => isTranslated;
 
-    public void SetTranslated() => isTranslated = true;
+    public void SetIsTranslated() => isTranslated = true;
 }

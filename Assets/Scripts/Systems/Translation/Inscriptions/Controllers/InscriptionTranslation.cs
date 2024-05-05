@@ -138,7 +138,7 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     {
         inscriptionTranslated = true;
 
-        inscription.SetTranslated();
+        inscription.SetIsTranslated();
 
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
         OnInscriptionTranslated?.Invoke(this, new OnInsctiptionTranslatedEventArgs { inscriptionSO = inscription.InscriptionSO });
