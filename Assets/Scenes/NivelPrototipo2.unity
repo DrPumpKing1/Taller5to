@@ -36967,6 +36967,7 @@ GameObject:
   - component: {fileID: 1271329008}
   - component: {fileID: 1271329009}
   - component: {fileID: 1271329010}
+  - component: {fileID: 1271329011}
   m_Layer: 0
   m_Name: DataPersistenceManager
   m_TagString: Untagged
@@ -37003,7 +37004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableDataPersistence: 1
   fileName: symbolsData.wwdata
-  useEncryption: 1
+  useEncryption: 0
   debug: 0
 --- !u!114 &1271329009
 MonoBehaviour:
@@ -37019,7 +37020,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableDataPersistence: 1
   fileName: projectableObjectsData.wwdata
-  useEncryption: 1
+  useEncryption: 0
   debug: 0
 --- !u!114 &1271329010
 MonoBehaviour:
@@ -37035,7 +37036,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableDataPersistence: 1
   fileName: symbolSourcesData.wwdata
-  useEncryption: 1
+  useEncryption: 0
+  debug: 0
+--- !u!114 &1271329011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271329006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 786e1c37ad9a5c046ba80528be7ec882, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableDataPersistence: 1
+  fileName: learningPlatformsData.wwdata
+  useEncryption: 0
   debug: 0
 --- !u!1 &1288666667
 GameObject:
@@ -39003,6 +39020,7 @@ GameObject:
   - component: {fileID: 1389888502}
   - component: {fileID: 1389888501}
   - component: {fileID: 1389888503}
+  - component: {fileID: 1389888504}
   m_Layer: 0
   m_Name: DataSaveLoadManager
   m_TagString: Untagged
@@ -39059,6 +39077,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df7a79f97fda58b409e85bbbba2648a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1389888504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389888499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8369b6e50411af40ac82af3b52521aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1396833281 stripped
@@ -64022,6 +64052,10 @@ PrefabInstance:
     - target: {fileID: 5317452787623605092, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7187077217301300134, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: id
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7187077217301300134, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
       propertyPath: projectableObjectToLearn

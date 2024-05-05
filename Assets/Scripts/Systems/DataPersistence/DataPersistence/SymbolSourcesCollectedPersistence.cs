@@ -14,8 +14,6 @@ public class SymbolSourcesCollectedPersistence : MonoBehaviour, IDataPersistence
             {
                 if(dialectSymbolSource.ID == symbolSourceCollected.Key)
                 {
-                    if (dialectSymbolSource.ID == 0) Debug.Log(dialectSymbolSource.name);
-
                     if (symbolSourceCollected.Value) dialectSymbolSource.SetIsCollected();
                     break;
                 }             
