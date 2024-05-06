@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ProjectableObjectsLearnedData
+public class PlayerData
 {
+    public SerializableDictionary<int, bool> symbolsCollected;
     public SerializableDictionary<int, bool> projectableObjectsLearned;
 
-    public ProjectableObjectsLearnedData()
+    public PlayerData()
     {
+        symbolsCollected = new SerializableDictionary<int, bool>(); //String -> id; bool -> isCollected
         projectableObjectsLearned = new SerializableDictionary<int, bool>(); //String -> id; bool -> isLearned
     }
 }

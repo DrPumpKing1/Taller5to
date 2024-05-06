@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SymbolsDictionaryPersistence : MonoBehaviour, IDataPersistence<SymbolsDictionaryData>
+public class SymbolsDictionaryPersistence : MonoBehaviour, IDataPersistence<PlayerData>
 {
-    public void LoadData(SymbolsDictionaryData data)
+    public void LoadData(PlayerData data)
     {
         SymbolsDictionaryManager symbolsDictionaryManager = FindObjectOfType<SymbolsDictionaryManager>();
 
@@ -14,7 +14,7 @@ public class SymbolsDictionaryPersistence : MonoBehaviour, IDataPersistence<Symb
         }
     }
 
-    public void SaveData(ref SymbolsDictionaryData data)
+    public void SaveData(ref PlayerData data)
     {
         SymbolsDictionaryManager symbolsDictionaryManager = FindObjectOfType<SymbolsDictionaryManager>();
 

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LearningPlatformsUsedPersistence : MonoBehaviour, IDataPersistence<LearningPlatformsData>
+public class LearningPlatformsUsedPersistence : MonoBehaviour, IDataPersistence<ObjectsData>
 {
-    public void LoadData(LearningPlatformsData data)
+    public void LoadData(ObjectsData data)
     {
         LearningPlatform[] learningPlatforms = FindObjectsOfType<LearningPlatform>();
 
@@ -21,7 +21,7 @@ public class LearningPlatformsUsedPersistence : MonoBehaviour, IDataPersistence<
         }
     }
 
-    public void SaveData(ref LearningPlatformsData data)
+    public void SaveData(ref ObjectsData data)
     {
         LearningPlatform[] learningPlatforms = FindObjectsOfType<LearningPlatform>();
 

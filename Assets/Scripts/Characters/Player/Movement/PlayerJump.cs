@@ -114,7 +114,7 @@ public class PlayerJump : MonoBehaviour
             OnPlayerImpulsing?.Invoke(this, EventArgs.Empty);
         }
 
-        if (!checkGround.IsGrounded || playerLand.IsRecoveringFromLanding) ResetJumpCooldown();
+        if (!checkGround.IsGrounded || playerLand.IsRecoveringFromLanding || playerCrouch.IsCrouching) ResetJumpCooldown();
 
         HandleJumpCooldown();
     }

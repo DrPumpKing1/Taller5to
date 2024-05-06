@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectableObjectsLearnedPersistence : MonoBehaviour, IDataPersistence<ProjectableObjectsLearnedData>
+public class ProjectableObjectsLearnedPersistence : MonoBehaviour, IDataPersistence<PlayerData>
 {
-    public void LoadData(ProjectableObjectsLearnedData data)
+    public void LoadData(PlayerData data)
     {
         ProjectableObjectsLearningManager projectableObjectsLearningManager = FindObjectOfType<ProjectableObjectsLearningManager>();
 
@@ -14,7 +14,7 @@ public class ProjectableObjectsLearnedPersistence : MonoBehaviour, IDataPersiste
         }
     }
 
-    public void SaveData(ref ProjectableObjectsLearnedData data)
+    public void SaveData(ref PlayerData data)
     {
         ProjectableObjectsLearningManager projectableObjectsLearningManager = FindObjectOfType<ProjectableObjectsLearningManager>();
 

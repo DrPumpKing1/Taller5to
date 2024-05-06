@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SymbolSourcesCollectedPersistence : MonoBehaviour, IDataPersistence<SymbolSourcesData>
+public class SymbolSourcesCollectedPersistence : MonoBehaviour, IDataPersistence<ObjectsData>
 {
-    public void LoadData(SymbolSourcesData data)
+    public void LoadData(ObjectsData data)
     {
         DialectSymbolSource[] dialectSymbolSources = FindObjectsOfType<DialectSymbolSource>();
 
@@ -21,7 +21,7 @@ public class SymbolSourcesCollectedPersistence : MonoBehaviour, IDataPersistence
         }   
     }
 
-    public void SaveData(ref SymbolSourcesData data)
+    public void SaveData(ref ObjectsData data)
     {
         DialectSymbolSource[] dialectSymbolSources = FindObjectsOfType<DialectSymbolSource>();
 
