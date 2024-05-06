@@ -23,7 +23,7 @@ public class JSONUtilityDataServiceNoEncryption : IDataService
         {
             Directory.CreateDirectory(Path.GetDirectoryName(path));
 
-            string dataToStore = JsonUtility.ToJson(data, false);
+            string dataToStore = JsonUtility.ToJson(data, true);
 
             using FileStream stream = new FileStream(path, FileMode.Create);
             using StreamWriter writer = new StreamWriter(stream);
