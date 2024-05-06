@@ -15,5 +15,7 @@ public class ObjectsDataPersistenceManager : DataPersistenceManager<ObjectsData>
 
         Instance = this;
     }
+
+    //Subscribe to Checkpoint Manager To SaveGameData();
 }
 

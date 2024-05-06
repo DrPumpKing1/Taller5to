@@ -7,6 +7,7 @@ public class InscriptionSO : ScriptableObject
 {
     public int id;
     public Dialect dialect;
+    public string title;
+    public string text;
     public Sprite image;
-    public string translation;
 }
