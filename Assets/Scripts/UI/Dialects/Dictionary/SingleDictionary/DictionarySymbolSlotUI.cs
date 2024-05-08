@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class DictionarySymbolSlotUI : MonoBehaviour
 {
     [Header("UI Components")]
     [SerializeField] private Image symbolImage;
     [SerializeField] private Image meaningImage;
+    [SerializeField] private Button discoverButton;
 
     [Header("Settings")]
     [SerializeField] private DialectSymbolSO dialectSymbolSO;
-    [SerializeField] private bool symbolShown;
+
+    [SerializeField] private bool symbolDiscovered;
 
     public DialectSymbolSO DialectSymbolSO { get { return dialectSymbolSO; } }
 
@@ -25,22 +28,30 @@ public class DictionarySymbolSlotUI : MonoBehaviour
         SymbolsDictionaryManager.OnDialectSymbolCollected += SymbolsDictionaryManager_OnDialectSymbolCollected;
     }
 
+    private void Awake()
+    {
+        InitializeButtonsListeners();
+    }
+
     private void Start()
     {
         CheckShowSymbol();
     }
 
+    private void InitializeButtonsListeners()
+    {
+        discoverButton.onClick.AddListener(CollectDiscoveredSymbol);
+    }
+
     private void CheckShowSymbol()
     {
-        if (!SymbolsDictionaryManager.Instance.SymbolsDictionary.Contains(dialectSymbolSO)) return;
-
-        if (!symbolShown)
-        {
-            EnableSymbolDiscovery();
-        }
-        else
+        if (SymbolsDictionaryManager.Instance.SymbolsDictionary.Contains(dialectSymbolSO))
         {
             ShowSymbol();
+        }
+        else if (symbolDiscovered)
+        {
+            EnableSymbolDiscoveryUI();
         }
     }
 
@@ -48,19 +59,25 @@ public class DictionarySymbolSlotUI : MonoBehaviour
     {
         ShowSymbolImage();
         ShowMeaningImage();
-
-        symbolShown = true;
     }
 
     private void ShowSymbolImage() => symbolImage.sprite = dialectSymbolSO.symbolImage;
     private void ShowMeaningImage() => meaningImage.sprite = dialectSymbolSO.meaningImage;
 
-    private void EnableSymbolDiscovery()
+    private void EnableSymbolDiscoveryUI()
     {
-        ShowSymbol();
+        discoverButton.gameObject.SetActive(true);
     }
 
-    public void SetSymbolShown() => symbolShown = true;
+    private void CollectDiscoveredSymbol()
+    {
+        discoverButton.gameObject.SetActive(false);
+
+        ShowSymbol();
+        SymbolsDictionaryManager.Instance.CollectSymbol(dialectSymbolSO);
+    }
+
+    public void SetSymbolDiscovered() => symbolDiscovered = true;
 
     private void CheckComposedSymbolFormed()
     {
@@ -72,7 +89,7 @@ public class DictionarySymbolSlotUI : MonoBehaviour
             if (!SymbolsDictionaryManager.Instance.SymbolsDictionary.Contains(originator)) return;
         }
 
-        EnableSymbolDiscovery();
+        EnableSymbolDiscoveryUI();
     }
 
     #region SymbolsDictionaryManager Subscriptions
