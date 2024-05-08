@@ -14,6 +14,8 @@ public class DictionarySymbolSlotUI : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private DialectSymbolSO dialectSymbolSO;
 
+    [Header("Identifiers")]
+    [SerializeField] private int id;
     [SerializeField] private bool symbolDiscovered;
 
     public DialectSymbolSO DialectSymbolSO { get { return dialectSymbolSO; } }
