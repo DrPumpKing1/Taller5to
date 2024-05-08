@@ -47,6 +47,8 @@ public class SymbolCraftingSingleUI : MonoBehaviour
     //Handle DrawingPointsLogic
     private void CraftSymbol()
     {
+        if (isCrafted) return;
+
         isCrafted = true;
         OnSymbolCrafted?.Invoke(this, EventArgs.Empty);
     }

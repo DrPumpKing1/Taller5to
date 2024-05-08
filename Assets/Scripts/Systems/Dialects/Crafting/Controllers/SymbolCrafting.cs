@@ -16,7 +16,7 @@ public class SymbolCrafting : MonoBehaviour
     [SerializeField] private bool allSymbolsCrafted;
 
     public event EventHandler OnOpenSymbolCraftingUI;
-    public event EventHandler OnSymbolsCrafted;
+    public event EventHandler OnAllSymbolsCrafted;
 
     public Dialect Dialect { get { return dialect; } }
     public List<SymbolCraftingSO> SymbolCraftingSOs { get { return symbolCraftingSOs; } }
@@ -62,7 +62,7 @@ public class SymbolCrafting : MonoBehaviour
         if (e.symbolCrafting != this) return;
 
         allSymbolsCrafted = true;
-        OnSymbolsCrafted?.Invoke(this, EventArgs.Empty);
+        OnAllSymbolsCrafted?.Invoke(this, EventArgs.Empty);
     }
     #endregion
 }

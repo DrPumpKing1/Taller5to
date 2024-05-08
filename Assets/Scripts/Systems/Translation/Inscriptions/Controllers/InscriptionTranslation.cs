@@ -54,12 +54,12 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
 
     private void OnEnable()
     {
-        symbolCrafting.OnSymbolsCrafted += SymbolCrafting_OnSymbolsCrafted;
+        symbolCrafting.OnAllSymbolsCrafted += SymbolCrafting_OnSymbolsCrafted;
     }
 
     private void OnDisable()
     {
-        symbolCrafting.OnSymbolsCrafted -= SymbolCrafting_OnSymbolsCrafted;
+        symbolCrafting.OnAllSymbolsCrafted -= SymbolCrafting_OnSymbolsCrafted;
     }
 
     private void Start()

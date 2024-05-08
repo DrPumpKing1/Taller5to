@@ -51,12 +51,12 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
 
     private void OnEnable()
     {
-        symbolCrafting.OnSymbolsCrafted += SymbolCrafting_OnSymbolCrafted;
+        symbolCrafting.OnAllSymbolsCrafted += SymbolCrafting_OnAllSymbolsCrafted;
     }
 
     private void OnDisable()
     {
-        symbolCrafting.OnSymbolsCrafted -= SymbolCrafting_OnSymbolCrafted;
+        symbolCrafting.OnAllSymbolsCrafted -= SymbolCrafting_OnAllSymbolsCrafted;
     }
 
     private void Start()
@@ -139,7 +139,7 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
     }
 
     #region SymbolCrafting Subscriptions
-    private void SymbolCrafting_OnSymbolCrafted(object sender, EventArgs e)
+    private void SymbolCrafting_OnAllSymbolsCrafted(object sender, EventArgs e)
     {
         LearnObject();
     }

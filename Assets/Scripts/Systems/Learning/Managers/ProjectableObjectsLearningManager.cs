@@ -45,13 +45,19 @@ public class ProjectableObjectsLearningManager : MonoBehaviour
 
     public void LearnProjectableObject(ProjectableObjectSO projectableObjectToLearn)
     {
+        if (CheckLearnedListContainsProjectableObject(projectableObjectToLearn))
+        {
+            if (debug) Debug.Log($"ProjectableObjectsLearned list already contains projectableObjectToLearn with name: {projectableObjectToLearn.objectName}");
+            return;
+        }
+
         AddProjectableObjectToLearnedList(projectableObjectToLearn);
         OnProjectableObjectLearned?.Invoke(this, new OnProjectableObjectLearnedEventArgs { projectableObjectLearned = projectableObjectToLearn });
     }
 
     public void AddProjectableObjectToLearnedList(ProjectableObjectSO objectToAdd)
     {
-        if (projectableObjectsLearned.Contains(objectToAdd))
+        if (CheckLearnedListContainsProjectableObject(objectToAdd))
         {
             if(debug) Debug.Log($"ProjectableObjectsLearned list already contains objectToAdd with name: {objectToAdd.objectName}");
             return;
