@@ -16,7 +16,7 @@ public class SymbolsDictionaryManager : MonoBehaviour
     public List<DialectSymbolSO> SymbolsDictionary { get { return symbolsDictionary; } }
     public List<DialectSymbolSO> CompleteSymbolsPool { get { return completeSymbolsPool; } }
 
-    public static event EventHandler OnDialectSymbolCollected;
+    public static event EventHandler<OnDialectSymbolCollectedEventArgs> OnDialectSymbolCollected;
 
     public class OnDialectSymbolCollectedEventArgs : EventArgs
     {

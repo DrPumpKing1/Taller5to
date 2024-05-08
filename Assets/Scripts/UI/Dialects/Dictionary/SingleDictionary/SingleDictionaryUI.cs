@@ -79,8 +79,6 @@ public class SingleDictionaryUI : BaseUI
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
 
-        UpdateSymbols();
-
         OnSingleDictionaryUIOpen?.Invoke(this, new OnSingleDiccionaryUIEventArgs { dialect = dialect });
     }
 
@@ -111,25 +109,6 @@ public class SingleDictionaryUI : BaseUI
         if (state != State.Open) return;
 
         CloseFromUI();
-    }
-
-    private void UpdateSymbols()
-    {
-        foreach(Transform child in symbolsContainer)
-        {
-            DictionarySymbolSlotUI dictionarySymbolSlotUI = child.GetComponent<DictionarySymbolSlotUI>();
-
-            if (!dictionarySymbolSlotUI)
-            {
-                Debug.LogWarning($"The child of symbolsContainer {child.name} does not have a DictionarySymbolSlotUI component");
-                continue;
-            }
-
-            if (!SymbolsDictionaryManager.Instance.SymbolsDictionary.Contains(dictionarySymbolSlotUI.DialectSymbolSO)) continue;
-
-            dictionarySymbolSlotUI.ShowSymbol();
-
-        }
     }
 
     #region DictionarySelectionUI Subscriptions
