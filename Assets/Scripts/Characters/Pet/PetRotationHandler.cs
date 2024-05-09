@@ -25,6 +25,7 @@ public class PetRotationHandler : MonoBehaviour
     private Vector3 desiredFacingDirection;
 
     private Transform curentInteractingTransform;
+    private bool interactingRotate;
 
     private void OnEnable()
     {
@@ -64,7 +65,9 @@ public class PetRotationHandler : MonoBehaviour
 
     private void InitializeVariables()
     {
+        interactingRotate = false;
         FacingDirection = transform.forward;
+
         if (applyStartingRotation) FacingDirection = startingFacingDirection;
 
         FacingDirection.Normalize();
@@ -74,16 +77,18 @@ public class PetRotationHandler : MonoBehaviour
 
     private void DefineDesiredFacingDirection()
     {
+        if (curentInteractingTransform)
+        {
+            desiredFacingDirection = (curentInteractingTransform.position - transform.position).normalized;
+
+            if(!interactingRotate) curentInteractingTransform = null;
+            return;
+        }
+
         if (playerRotationHandler) 
         {
             desiredFacingDirection = PlayerFacingDirection;
         }
-
-        if (curentInteractingTransform)
-        {
-            desiredFacingDirection = (curentInteractingTransform.position - transform.position).normalized;
-        }
-
     }
 
     private void ApplyRotation()
@@ -105,12 +110,14 @@ public class PetRotationHandler : MonoBehaviour
     private void PlayerInteract_OnInteractionStarted(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
         if (!e.interactable.GrabPetAttention) return;
+
         curentInteractingTransform = e.interactable.GetTransform();
+        interactingRotate = true;
     }
 
     private void PlayerInteract_OnInteractionEnded(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
-        curentInteractingTransform = null;
+        interactingRotate = false;
     }
     #endregion
 
@@ -119,11 +126,13 @@ public class PetRotationHandler : MonoBehaviour
     private void PlayerInteractAlternate_OnInteractionAlternateStarted(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {
         if (!e.interactableAlternate.GrabPetAttention) return;
+
         curentInteractingTransform = e.interactableAlternate.GetTransform();
+        interactingRotate = true;
     }
     private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {
-        curentInteractingTransform = null;
+        interactingRotate = false;
     }
     #endregion
 }

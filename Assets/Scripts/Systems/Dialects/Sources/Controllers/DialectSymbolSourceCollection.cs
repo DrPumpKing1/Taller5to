@@ -9,9 +9,6 @@ public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
     [SerializeField] private DialectSymbolSource dialectSymbolSource;
     [SerializeField] private Transform visual;
 
-    [Header("Symbol Source Collection Settings")]
-    [SerializeField, Range(0f, 1f)] private float destroyTime;
-
     [Header("Interactable Settings")]
     [SerializeField, Range(1f,100f)] private float horizontalInteractionRange;
     [SerializeField, Range(1f,100f)] private float verticalInteractionRange;
@@ -92,14 +89,12 @@ public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
     {
         //Enable some UI feedback
         OnObjectSelected?.Invoke(this, EventArgs.Empty);
-        Debug.Log(gameObject.name + " Selected");
     }
 
     public void Deselect()
     {
         //Disable some UI feedback
         OnObjectDeselected?.Invoke(this, EventArgs.Empty);
-        Debug.Log(gameObject.name + " Deselected");
     }
 
     public void TryInteract()

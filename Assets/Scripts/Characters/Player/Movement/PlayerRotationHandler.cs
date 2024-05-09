@@ -28,9 +28,8 @@ public class PlayerRotationHandler : MonoBehaviour
     private Vector2 previousDirectionInput;
     private float directionHoldingTimer = 0f;
 
-    private bool respondToMovement;
-
     private Transform curentInteractingTransform;
+    private bool interactingRotate;
 
     private void OnEnable()
     {
@@ -38,8 +37,7 @@ public class PlayerRotationHandler : MonoBehaviour
         playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;
 
         playerInteractAlternate.OnInteractionAlternateStarted += PlayerInteractAlternate_OnInteractionAlternateStarted;
-        playerInteractAlternate.OnInteractionAlternateEnded += PlayerInteractAlternate_OnInteractionAlternateEnded;
-        
+        playerInteractAlternate.OnInteractionAlternateEnded += PlayerInteractAlternate_OnInteractionAlternateEnded;   
     }
 
     private void OnDisable()
@@ -68,7 +66,7 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void InitializeVariables()
     {
-        respondToMovement = true;
+        interactingRotate = false;
         previousDirectionInput = DirectionInput;
 
         FacingDirection = playerHorizontalMovement.transform.forward;
@@ -100,19 +98,22 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void DefineDesiredFacingDirection()
     {
-        if (CanChangeDirectionDueToMovement())
-        {
-            DesiredFacingDirection = GeneralMethods.Vector2ToVector3(DirectionInput);
-        }
-
         if (curentInteractingTransform)
         {
             Vector3 facingVectorRaw = (curentInteractingTransform.position - transform.position).normalized;
             DesiredFacingDirection = GeneralMethods.SupressYComponent(facingVectorRaw);
+
+            if (!interactingRotate) curentInteractingTransform = null;
+            return;
+        }
+
+        if (CanChangeDirectionDueToMovement())
+        {
+            DesiredFacingDirection = GeneralMethods.Vector2ToVector3(DirectionInput);
         }
     }
 
-    private bool CanChangeDirectionDueToMovement() => directionHoldingTimer >= holdDirectionThresholdTime;
+    public bool CanChangeDirectionDueToMovement() => directionHoldingTimer >= holdDirectionThresholdTime;
 
     private void HandleRotation()
     {
@@ -124,8 +125,6 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void RotateTowardsDirection(Vector3 direction)
     {
-        //if (!checkGround.IsGrounded) return;
-
         FacingDirection = Vector3.Slerp(FacingDirection, direction, smoothRotateFactor * Time.deltaTime);
         FacingDirection.Normalize();
 
@@ -138,12 +137,14 @@ public class PlayerRotationHandler : MonoBehaviour
     private void PlayerInteract_OnInteractionStarted(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
         if (!e.interactable.GrabPlayerAttention) return;
+
         curentInteractingTransform = e.interactable.GetTransform();
+        interactingRotate = true;
     }
 
     private void PlayerInteract_OnInteractionEnded(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
-        curentInteractingTransform = null;
+        interactingRotate = false;
     }
     #endregion
 
@@ -151,11 +152,13 @@ public class PlayerRotationHandler : MonoBehaviour
     private void PlayerInteractAlternate_OnInteractionAlternateStarted(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {
         if (!e.interactableAlternate.GrabPlayerAttention) return;
+
         curentInteractingTransform = e.interactableAlternate.GetTransform();
+        interactingRotate = true;
     }
     private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {
-        curentInteractingTransform = null;
+        interactingRotate = false;
     }
     #endregion
 
