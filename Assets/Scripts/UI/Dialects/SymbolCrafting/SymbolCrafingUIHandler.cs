@@ -17,14 +17,15 @@ public class SymbolCrafingUIHandler : MonoBehaviour
     private List<SymbolCraftingSO> symbolCraftingSOs => symbolCrafting.SymbolCraftingSOs;
     private List<SymbolCraftingSingleUI> symbolCraftingSingleUIs = new List<SymbolCraftingSingleUI>();
 
-    public static event EventHandler<OnAllSymbolsCraftedEventArgs> OnAllSymbolsCrafted;
+    public static event EventHandler<OnAnyAllSymbolsCraftedEventArgs> OnAnyAllSymbolsCrafted;
+    public event EventHandler OnAllSymbolsCrafted;
 
     private void OnDisable()
     {
         UnsubscribeToAllSymbolCraftingSingleUIs();
     }
 
-    public class OnAllSymbolsCraftedEventArgs : EventArgs
+    public class OnAnyAllSymbolsCraftedEventArgs : EventArgs
     {
         public SymbolCrafting symbolCrafting;
     }
@@ -78,7 +79,8 @@ public class SymbolCrafingUIHandler : MonoBehaviour
             if (!symbolCraftingSingleUI.IsCrafted) return;
         }
 
-        OnAllSymbolsCrafted?.Invoke(this, new OnAllSymbolsCraftedEventArgs { symbolCrafting = symbolCrafting });
+        OnAllSymbolsCrafted?.Invoke(this, EventArgs.Empty);
+        OnAnyAllSymbolsCrafted?.Invoke(this, new OnAnyAllSymbolsCraftedEventArgs { symbolCrafting = symbolCrafting });
     }
 
     #region SymbolCraftingSingleUI Subscriptions

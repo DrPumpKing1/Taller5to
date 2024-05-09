@@ -8,6 +8,7 @@ public class SymbolCraftingUI : BaseUI
 {
     [Header("Components")]
     [SerializeField] private SymbolCrafting symbolCrafting;
+    [SerializeField] private SymbolCrafingUIHandler symbolCraftingUIHandler;
 
     [Header("UI Components")]
     [SerializeField] private Button closeButton;
@@ -23,12 +24,14 @@ public class SymbolCraftingUI : BaseUI
     {
         base.OnEnable();
         symbolCrafting.OnOpenSymbolCraftingUI += SymbolCrafting_OnOpenSymbolCraftingUI;
+        symbolCrafting.OnAllSymbolsCrafted += SymbolCrafting_OnAllSymbolsCrafted;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
         symbolCrafting.OnOpenSymbolCraftingUI -= SymbolCrafting_OnOpenSymbolCraftingUI;
+        symbolCrafting.OnAllSymbolsCrafted -= SymbolCrafting_OnAllSymbolsCrafted;
     }
 
     private void Awake()
@@ -96,5 +99,13 @@ public class SymbolCraftingUI : BaseUI
     {
         OpenUI();
     }
+    #endregion
+
+    #region SymbolCraftingUIHandler Subscriptions
+    private void SymbolCrafting_OnAllSymbolsCrafted(object sender, EventArgs e)
+    {
+        CloseUI();
+    }
+
     #endregion
 }

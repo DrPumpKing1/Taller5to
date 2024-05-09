@@ -27,13 +27,13 @@ public class SymbolCrafting : MonoBehaviour
     private void OnEnable()
     {
         iRequiresSymbolCrafting.OnOpenSymbolCraftingUI += IRequiresSymbolCrafting_OnOpenSymbolCraftingUI;
-        SymbolCrafingUIHandler.OnAllSymbolsCrafted += SymbolCrafingUIHandler_OnAllSymbolsCrafted;
+        SymbolCrafingUIHandler.OnAnyAllSymbolsCrafted += SymbolCrafingUIHandler_OnAllSymbolsCrafted;
     }
 
     private void OnDisable()
     {
         iRequiresSymbolCrafting.OnOpenSymbolCraftingUI -= IRequiresSymbolCrafting_OnOpenSymbolCraftingUI;
-        SymbolCrafingUIHandler.OnAllSymbolsCrafted -= SymbolCrafingUIHandler_OnAllSymbolsCrafted;
+        SymbolCrafingUIHandler.OnAnyAllSymbolsCrafted -= SymbolCrafingUIHandler_OnAllSymbolsCrafted;
     }
 
     private void Awake()
@@ -57,7 +57,7 @@ public class SymbolCrafting : MonoBehaviour
     #endregion
 
     #region SymbolCraftingUIHandler Subscriptions
-    private void SymbolCrafingUIHandler_OnAllSymbolsCrafted(object sender, SymbolCrafingUIHandler.OnAllSymbolsCraftedEventArgs e)
+    private void SymbolCrafingUIHandler_OnAllSymbolsCrafted(object sender, SymbolCrafingUIHandler.OnAnyAllSymbolsCraftedEventArgs e)
     {
         if (e.symbolCrafting != this) return;
 
