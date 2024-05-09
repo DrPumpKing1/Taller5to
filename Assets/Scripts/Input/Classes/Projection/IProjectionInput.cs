@@ -14,4 +14,6 @@ public interface IProjectionInput
     public bool Get3rdProjectableObjectDown();
     public bool Get4thProjectableObjectDown();
     public bool Get5thProjectableObjectDown();
+
+    public bool GetAllProjectableObjectsDematerializationDown();
 }

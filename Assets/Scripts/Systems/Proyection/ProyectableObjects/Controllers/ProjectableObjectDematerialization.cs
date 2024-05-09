@@ -49,6 +49,15 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
 
     public event EventHandler OnObjectDematerialized;
 
+    public void OnEnable()
+    {
+        ProjectionManager.OnAllObjectsDematerialized += ProjectionManager_OnAllObjectsDematerialized;
+    }
+    public void OnDisable()
+    {
+        ProjectionManager.OnAllObjectsDematerialized -= ProjectionManager_OnAllObjectsDematerialized;
+    }
+
     #region IHoldInteractable Methods
     public void Select()
     {
@@ -116,7 +125,7 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
 
     #endregion
 
-    public void DematerializeObject()
+    private void DematerializeObject()
     {
         if (projectableObject.ProjectionPlatform) projectableObject.ProjectionPlatform.ClearProjectionPlatform();
 
@@ -128,4 +137,12 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
         OnObjectDematerialized?.Invoke(this, EventArgs.Empty);
         ProjectionManager.Instance.ObjectDematerialized(projectableObject.ProjectableObjectSO, projectableObject.ProjectionPlatform);
     }
+
+    #region ProjectionManager Subscriptions
+
+    private void ProjectionManager_OnAllObjectsDematerialized(object sender, EventArgs e)
+    {
+        DematerializeObject();
+    }
+    #endregion
 }

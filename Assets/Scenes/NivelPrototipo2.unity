@@ -12632,6 +12632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a5949b7076800c4d9e924c13b669a27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectionInput: {fileID: 1815255652}
   currentProjectedObjects: []
 --- !u!1001 &427245756
 PrefabInstance:
@@ -59198,7 +59199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4271772831845090855, guid: cbee3ab86ab8bca41b482ab9f07bd8a4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 5.625
       objectReference: {fileID: 0}
     - target: {fileID: 4271772831845090855, guid: cbee3ab86ab8bca41b482ab9f07bd8a4, type: 3}
       propertyPath: m_AnchoredPosition.y

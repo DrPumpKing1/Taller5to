@@ -275,6 +275,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "AllProjectableObjectsDematerialization",
+                    "type": "Button",
+                    "id": "0a02e48d-dc35-4c3a-9bdb-7ff499757873",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -352,6 +361,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "_5thProjectableObject",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6562fefd-57b5-4841-afb7-a2bb75b29294",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AllProjectableObjectsDematerialization",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

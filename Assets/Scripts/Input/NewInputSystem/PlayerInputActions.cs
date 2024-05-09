@@ -297,6 +297,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AllProjectableObjectsDematerialization"",
+                    ""type"": ""Button"",
+                    ""id"": ""0a02e48d-dc35-4c3a-9bdb-7ff499757873"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -376,6 +385,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""_5thProjectableObject"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6562fefd-57b5-4841-afb7-a2bb75b29294"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AllProjectableObjectsDematerialization"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -452,6 +472,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Projection__3rdProjectableObject = m_Projection.FindAction("_3rdProjectableObject", throwIfNotFound: true);
         m_Projection__4thProjectableObject = m_Projection.FindAction("_4thProjectableObject", throwIfNotFound: true);
         m_Projection__5thProjectableObject = m_Projection.FindAction("_5thProjectableObject", throwIfNotFound: true);
+        m_Projection_AllProjectableObjectsDematerialization = m_Projection.FindAction("AllProjectableObjectsDematerialization", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
@@ -694,6 +715,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Projection__3rdProjectableObject;
     private readonly InputAction m_Projection__4thProjectableObject;
     private readonly InputAction m_Projection__5thProjectableObject;
+    private readonly InputAction m_Projection_AllProjectableObjectsDematerialization;
     public struct ProjectionActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -705,6 +727,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @_3rdProjectableObject => m_Wrapper.m_Projection__3rdProjectableObject;
         public InputAction @_4thProjectableObject => m_Wrapper.m_Projection__4thProjectableObject;
         public InputAction @_5thProjectableObject => m_Wrapper.m_Projection__5thProjectableObject;
+        public InputAction @AllProjectableObjectsDematerialization => m_Wrapper.m_Projection_AllProjectableObjectsDematerialization;
         public InputActionMap Get() { return m_Wrapper.m_Projection; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -735,6 +758,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @_5thProjectableObject.started += instance.On_5thProjectableObject;
             @_5thProjectableObject.performed += instance.On_5thProjectableObject;
             @_5thProjectableObject.canceled += instance.On_5thProjectableObject;
+            @AllProjectableObjectsDematerialization.started += instance.OnAllProjectableObjectsDematerialization;
+            @AllProjectableObjectsDematerialization.performed += instance.OnAllProjectableObjectsDematerialization;
+            @AllProjectableObjectsDematerialization.canceled += instance.OnAllProjectableObjectsDematerialization;
         }
 
         private void UnregisterCallbacks(IProjectionActions instance)
@@ -760,6 +786,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @_5thProjectableObject.started -= instance.On_5thProjectableObject;
             @_5thProjectableObject.performed -= instance.On_5thProjectableObject;
             @_5thProjectableObject.canceled -= instance.On_5thProjectableObject;
+            @AllProjectableObjectsDematerialization.started -= instance.OnAllProjectableObjectsDematerialization;
+            @AllProjectableObjectsDematerialization.performed -= instance.OnAllProjectableObjectsDematerialization;
+            @AllProjectableObjectsDematerialization.canceled -= instance.OnAllProjectableObjectsDematerialization;
         }
 
         public void RemoveCallbacks(IProjectionActions instance)
@@ -856,6 +885,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void On_3rdProjectableObject(InputAction.CallbackContext context);
         void On_4thProjectableObject(InputAction.CallbackContext context);
         void On_5thProjectableObject(InputAction.CallbackContext context);
+        void OnAllProjectableObjectsDematerialization(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

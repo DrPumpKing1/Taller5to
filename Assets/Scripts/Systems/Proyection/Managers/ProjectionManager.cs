@@ -7,12 +7,22 @@ public class ProjectionManager : MonoBehaviour
 {
     public static ProjectionManager Instance { get; private set; }
 
+    [Header("Components")]
+    [SerializeField] private ProjectionInput projectionInput;
+
     [Header("Projectable Object Settings")]
     [SerializeField] private List<ProjectableObjectSO> currentProjectedObjects = new List<ProjectableObjectSO>();
+
+    [Header("Debug")]
+    [SerializeField] private bool enableAllProjectableObjectsDematerialization;
+
+    public static event EventHandler OnAllObjectsDematerialized;
 
     public static event EventHandler<OnProjectionEventArgs> OnObjectProjectionSuccess;
     public static event EventHandler<OnProjectionEventArgs> OnObjectProjectionFailed;
     public static event EventHandler<OnProjectionEventArgs> OnObjectDematerialized;
+
+    public bool AllProjectableObjectDematerializationInput => projectionInput.GetAllProjectableObjectsDematerializationDown();
 
     public List<ProjectableObjectSO> CurrentProjectedObjects { get { return currentProjectedObjects; } }
 
@@ -27,6 +37,11 @@ public class ProjectionManager : MonoBehaviour
         SetSingleton();
     }
 
+    private void Update()
+    {
+        CheckAllObjectsDematerialized();
+    }
+
     private void SetSingleton()
     {
         if (Instance == null)
@@ -38,6 +53,14 @@ public class ProjectionManager : MonoBehaviour
             Debug.LogWarning("There is more than one ProjectionManager instance, proceding to destroy duplicate");
             Destroy(gameObject);
         }
+    }
+
+    private void CheckAllObjectsDematerialized()
+    {
+        if (!enableAllProjectableObjectsDematerialization) return;
+        if (!AllProjectableObjectDematerializationInput) return;
+
+        OnAllObjectsDematerialized?.Invoke(this, EventArgs.Empty);
     }
 
     public bool CanProjectObject(ProjectableObjectSO projectableObjectSO) => ProjectionGemsManager.Instance.CheckCanUseProjectionGems(projectableObjectSO.projectionGemsCost);

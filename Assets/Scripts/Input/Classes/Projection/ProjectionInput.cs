@@ -31,4 +31,6 @@ public abstract class ProjectionInput : MonoBehaviour, IProjectionInput
     public abstract bool Get3rdProjectableObjectDown();
     public abstract bool Get4thProjectableObjectDown();
     public abstract bool Get5thProjectableObjectDown();
+
+    public abstract bool GetAllProjectableObjectsDematerializationDown();
 }
