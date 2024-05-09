@@ -116,7 +116,7 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
 
     #endregion
 
-    private void DematerializeObject()
+    public void DematerializeObject()
     {
         if (projectableObject.ProjectionPlatform) projectableObject.ProjectionPlatform.ClearProjectionPlatform();
 
