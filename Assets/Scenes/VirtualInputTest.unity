@@ -878,11 +878,15 @@ MonoBehaviour:
   debug: 0
   sourcePower: 1000
   power: 1000
+  signals: []
+  powerCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  resistance: 0
   type: 00000000
-  node:
-    electrode: {fileID: 0}
-    weight: 0
-    contactElectrodes: []
   contacts: []
 --- !u!1 &94312959
 GameObject:
@@ -1249,12 +1253,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486d89bd812e2d341a3eb350d3eef2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knowledgeSourceSO: {fileID: 11400000, guid: 911513fdcd4b1094096b1c7f6720546c, type: 2}
-  destroyTime: 0
-  canBeSelected: 1
-  isInteractable: 1
-  hasAlreadyBeenInteracted: 0
-  tooltipMessage: 
+  dialectSymbolSourceSO: {fileID: 0}
+  id: 0
+  isCollected: 0
 --- !u!1 &189296847
 GameObject:
   m_ObjectHideFlags: 0
@@ -1429,10 +1430,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dadb109a8d8f60c478f55eb4b6e084a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knowledgeSource: {fileID: 1638634109}
-  knowledgeAddedUIPrefab: {fileID: 5842444769655504113, guid: 8237d20149646f6468d1c7e7301e85cd, type: 3}
-  instantiationPositionOffset: {x: 0, y: 0.5, z: 0}
-  offsetBetweenInstantiatedUIs: {x: 0, y: 0.57, z: 0}
+  dialectSymbolSourceCollection: {fileID: 0}
+  symbolsAddedUIPrefab: {fileID: 0}
+  symbolsInstantiationPositionOffset: {x: 0, y: 0, z: 0}
 --- !u!136 &204600293
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2339,10 +2339,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dadb109a8d8f60c478f55eb4b6e084a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knowledgeSource: {fileID: 920938134}
-  knowledgeAddedUIPrefab: {fileID: 5842444769655504113, guid: 8237d20149646f6468d1c7e7301e85cd, type: 3}
-  instantiationPositionOffset: {x: 0, y: 0.5, z: 0}
-  offsetBetweenInstantiatedUIs: {x: 0, y: 0.57, z: 0}
+  dialectSymbolSourceCollection: {fileID: 0}
+  symbolsAddedUIPrefab: {fileID: 0}
+  symbolsInstantiationPositionOffset: {x: 0, y: 0, z: 0}
 --- !u!136 &403411775
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2410,8 +2409,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea8275b92419804d85355dc7d71eaea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectedProjectableObjectSO: {fileID: 11400000, guid: a7ec37b997ae92f409ef433af1b0b518, type: 2}
-  currentProjectedObjects: []
+  playerInteract: {fileID: 0}
+  playerInteractAlternate: {fileID: 0}
+  projectionInput: {fileID: 0}
+  selectedProjectableObjectSO: {fileID: 0}
+  InitialSelectionIndex: 0
 --- !u!1 &450817350
 GameObject:
   m_ObjectHideFlags: 0
@@ -2651,11 +2653,15 @@ MonoBehaviour:
   debug: 0
   sourcePower: 1000
   power: 1000
+  signals: []
+  powerCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  resistance: 0
   type: 00000000
-  node:
-    electrode: {fileID: 0}
-    weight: 0
-    contactElectrodes: []
   contacts: []
 --- !u!54 &468467769
 Rigidbody:
@@ -3100,12 +3106,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486d89bd812e2d341a3eb350d3eef2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knowledgeSourceSO: {fileID: 11400000, guid: 94211d12bd66a474aba2a8eb45c034c4, type: 2}
-  destroyTime: 0.1
-  canBeSelected: 1
-  isInteractable: 1
-  hasAlreadyBeenInteracted: 0
-  tooltipMessage: "Recolectar C\xF3dice Vythanu"
+  dialectSymbolSourceSO: {fileID: 0}
+  id: 0
+  isCollected: 0
 --- !u!136 &549500745
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3834,8 +3837,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectionGemsText: {fileID: 927348402}
-  insuficientProjectionGemsText: {fileID: 1715959224}
-  insuficientProjectionGemsTextShowTime: 1.5
 --- !u!1 &605819773
 GameObject:
   m_ObjectHideFlags: 0
@@ -4087,6 +4088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f470ff018dfc5a4e82018e6fbf21775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementEnabled: 0
   movementInput: {fileID: 1936272247}
   playerCrouch: {fileID: 616693934}
   playerLand: {fileID: 616693938}
@@ -4113,8 +4115,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb355f145fc7bc4dbed136b1c50ed86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crouchEnabled: 0
   movementInput: {fileID: 1936272247}
   playerJump: {fileID: 616693936}
+  playerLand: {fileID: 0}
   playerInteract: {fileID: 616693939}
   playerInteractAlternate: {fileID: 616693941}
   checkGround: {fileID: 1380701025}
@@ -4145,6 +4149,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  toggleCrouchCooldown: 0
 --- !u!114 &616693936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4157,8 +4162,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89dd2049e1b430d4e95d0eab7f11dd7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpEnabled: 0
   movementInput: {fileID: 1936272247}
   playerGravityController: {fileID: 616693944}
+  playerLand: {fileID: 0}
+  playerHorizontalMovement: {fileID: 0}
   playerInteract: {fileID: 616693939}
   playerInteractAlternate: {fileID: 616693941}
   checkGround: {fileID: 1380701025}
@@ -4167,6 +4175,7 @@ MonoBehaviour:
   jumpHeightError: 0.05
   impulseTime: 0.5
   jumpCooldown: 0.5
+  forwardImpulse: 0
 --- !u!114 &616693938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4179,11 +4188,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da5b9fc5735807418b3e262cb2b0669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerFall: {fileID: 0}
   checkGround: {fileID: 1380701025}
   playerGravityController: {fileID: 616693944}
   landDetectionHeightThreshold: 0
+  softLandingThreshold: 0
+  normalLandingThreshold: 0
+  normalLandRecoveryTime: 0
   hardLandingThreshold: 1.5
-  landRecoveryTime: 0
   hardLandRecoveryTime: 0.5
 --- !u!114 &616693939
 MonoBehaviour:
@@ -4197,6 +4209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369fda25c566a034a93a425bba5d0235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionEnabled: 0
   interactionInput: {fileID: 1148618695}
   playerRotationHandler: {fileID: 1959200772}
   playerInteractAlternate: {fileID: 616693941}
@@ -4207,6 +4220,7 @@ MonoBehaviour:
   interactionRayStartDistance: 1.85
   interactionRayLenght: 1
   interactionSphereRadius: 0.8
+  maxDistanceFromCamera: 0
   drawRaycasts: 0
 --- !u!114 &616693940
 MonoBehaviour:
@@ -4221,6 +4235,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkGround: {fileID: 1380701025}
+  fallVelocityThreshold: 0
+  fallDistanceFromGroundThreshold: 0
 --- !u!114 &616693941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4299,13 +4315,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkGround: {fileID: 1380701025}
+  playerHorizontalMovement: {fileID: 0}
   frictionMaterial: {fileID: 13400000, guid: ef9e2b06b6f73ed40ba21c19e6ceb70f, type: 2}
   frictionlessMaterial: {fileID: 13400000, guid: 92654f77c75a30942b65fd0733755522, type: 2}
   gravityMultiplier: 1
   fallMultiplier: 2
   lowJumpMultiplier: 2
   stickToSlopeForce: 30
-  stickToSlopeFrames: 1
 --- !u!4 &670787726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3061237008394950533, guid: cbee3ab86ab8bca41b482ab9f07bd8a4, type: 3}
@@ -4358,11 +4374,15 @@ MonoBehaviour:
   debug: 0
   sourcePower: 0
   power: 0
+  signals: []
+  powerCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  resistance: 0
   type: 01000000
-  node:
-    electrode: {fileID: 0}
-    weight: 0
-    contactElectrodes: []
   contacts: []
   corners:
   - {fileID: 1586668196}
@@ -6945,12 +6965,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486d89bd812e2d341a3eb350d3eef2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knowledgeSourceSO: {fileID: 11400000, guid: a460d3f4380fd534a83415c868067a4f, type: 2}
-  destroyTime: 0.1
-  canBeSelected: 1
-  isInteractable: 1
-  hasAlreadyBeenInteracted: 0
-  tooltipMessage: Recolectar Pergamino Rakithu
+  dialectSymbolSourceSO: {fileID: 0}
+  id: 0
+  isCollected: 0
 --- !u!136 &920938135
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8080,10 +8097,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dadb109a8d8f60c478f55eb4b6e084a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knowledgeSource: {fileID: 549500744}
-  knowledgeAddedUIPrefab: {fileID: 5842444769655504113, guid: 8237d20149646f6468d1c7e7301e85cd, type: 3}
-  instantiationPositionOffset: {x: 0, y: 0.5, z: 0}
-  offsetBetweenInstantiatedUIs: {x: 0, y: 0.57, z: 0}
+  dialectSymbolSourceCollection: {fileID: 0}
+  symbolsAddedUIPrefab: {fileID: 0}
+  symbolsInstantiationPositionOffset: {x: 0, y: 0, z: 0}
 --- !u!136 &1083943342
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8457,12 +8473,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486d89bd812e2d341a3eb350d3eef2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knowledgeSourceSO: {fileID: 11400000, guid: 70be1bcf96291184c9ac5b42f74fc5ae, type: 2}
-  destroyTime: 0.1
-  canBeSelected: 1
-  isInteractable: 1
-  hasAlreadyBeenInteracted: 0
-  tooltipMessage: Recolectar Retazo Zurryth
+  dialectSymbolSourceSO: {fileID: 0}
+  id: 0
+  isCollected: 0
 --- !u!136 &1112608469
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8725,6 +8738,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   petPlayerAttachment: {fileID: 1177506241}
   orbitPoint: {fileID: 228814066}
+  playerInteract: {fileID: 0}
+  playerInteractAlternate: {fileID: 0}
   orbitRadius: 1.5
   smoothPositionSpeedFactor: 2.5
   smoothVectorSpeedFactor: 2.5
@@ -8747,6 +8762,8 @@ MonoBehaviour:
   - {x: 0.7, y: 0, z: 0.7}
   safeOrbitRadius: 1.25
   safePositionVector: {x: 0, y: 0, z: -1}
+  moveTowardsObject: 0
+  offsetFromInteractableObject: {x: 0, y: 0, z: 0}
   colisionDetectionRadius: 0.65
   collisionLayers:
     serializedVersion: 2
@@ -9238,11 +9255,15 @@ MonoBehaviour:
   debug: 0
   sourcePower: 0
   power: 0
+  signals: []
+  powerCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  resistance: 0
   type: 02000000
-  node:
-    electrode: {fileID: 0}
-    weight: 0
-    contactElectrodes: []
   contacts: []
 --- !u!1 &1247472987
 GameObject:
@@ -9805,11 +9826,15 @@ MonoBehaviour:
   debug: 0
   sourcePower: 0
   power: 0
+  signals: []
+  powerCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  resistance: 0
   type: 01000000
-  node:
-    electrode: {fileID: 0}
-    weight: 0
-    contactElectrodes: []
   contacts: []
 --- !u!1 &1375171516
 GameObject:
@@ -9901,13 +9926,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5e30251e7da1e4483b99e10c0b1820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capsulleCollider: {fileID: 616693942}
+  capsuleCollider: {fileID: 0}
   playerHorizontalMovement: {fileID: 616693933}
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 1
   rayLength: 0.125
   raySphereRadius: 0.2
+  lowRayLenght: 0.1
+  lowRaySphereRadius: 0.1
   diagonalRayLength: 0.5
   drawRaycasts: 1
 --- !u!114 &1380701024
@@ -9926,7 +9953,7 @@ MonoBehaviour:
   roofLayer:
     serializedVersion: 2
     m_Bits: 1
-  useCharacterControllerValues: 1
+  useCapsuleColliderValues: 0
   rayLength: 0.75
   raySphereRadius: 0.2
   drawRaycasts: 0
@@ -9946,9 +9973,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 129
-  checkGoundRayLenght: -0.4
+  checkGoundYOffset: 0.1
   raySphereRadius: 0.5
   checkSlopeRayLength: 0.1
+  checkDistanceGroundRayLenght: 0
   drawRaycasts: 0
 --- !u!1 &1390819690
 GameObject:
@@ -9997,11 +10025,15 @@ MonoBehaviour:
   debug: 0
   sourcePower: 0
   power: 0
+  signals: []
+  powerCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  resistance: 0
   type: 01000000
-  node:
-    electrode: {fileID: 0}
-    weight: 0
-    contactElectrodes: []
   contacts: []
   corners:
   - {fileID: 358563175}
@@ -10288,11 +10320,15 @@ MonoBehaviour:
   debug: 0
   sourcePower: 0
   power: 0
+  signals: []
+  powerCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  resistance: 0
   type: 01000000
-  node:
-    electrode: {fileID: 0}
-    weight: 0
-    contactElectrodes: []
   contacts: []
   switchOn: 0
 --- !u!1 &1489444293
@@ -10345,11 +10381,15 @@ MonoBehaviour:
   debug: 0
   sourcePower: 0
   power: 0
+  signals: []
+  powerCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  resistance: 0
   type: 02000000
-  node:
-    electrode: {fileID: 0}
-    weight: 0
-    contactElectrodes: []
   contacts: []
 --- !u!114 &1489444296
 MonoBehaviour:
@@ -10393,6 +10433,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  force: 0
   state: 0
 --- !u!1 &1519369983
 GameObject:
@@ -10475,11 +10516,15 @@ MonoBehaviour:
   debug: 0
   sourcePower: 0
   power: 0
+  signals: []
+  powerCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  resistance: 0
   type: 01000000
-  node:
-    electrode: {fileID: 0}
-    weight: 0
-    contactElectrodes: []
   contacts: []
   corners:
   - {fileID: 1434879147}
@@ -11150,12 +11195,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486d89bd812e2d341a3eb350d3eef2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knowledgeSourceSO: {fileID: 11400000, guid: 546edd455afc7e145b0cd30826af6bde, type: 2}
-  destroyTime: 0.1
-  canBeSelected: 1
-  isInteractable: 1
-  hasAlreadyBeenInteracted: 0
-  tooltipMessage: Recolectar Libreto Xotark
+  dialectSymbolSourceSO: {fileID: 0}
+  id: 0
+  isCollected: 0
 --- !u!136 &1638634110
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -12946,6 +12988,7 @@ MonoBehaviour:
   playerHorizontalMovement: {fileID: 616693933}
   playerInteract: {fileID: 616693939}
   playerInteractAlternate: {fileID: 616693941}
+  checkGround: {fileID: 0}
   smoothRotateFactor: 10
   applyStartingRotation: 1
   startingFacingDirection: {x: -1, y: -1}
@@ -13210,11 +13253,15 @@ MonoBehaviour:
   debug: 0
   sourcePower: 0
   power: 0
+  signals: []
+  powerCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  resistance: 0
   type: 01000000
-  node:
-    electrode: {fileID: 0}
-    weight: 0
-    contactElectrodes: []
   contacts: []
 --- !u!54 &1990023549
 Rigidbody:
@@ -13574,11 +13621,15 @@ MonoBehaviour:
   debug: 0
   sourcePower: 0
   power: 0
+  signals: []
+  powerCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  resistance: 0
   type: 01000000
-  node:
-    electrode: {fileID: 0}
-    weight: 0
-    contactElectrodes: []
   contacts: []
   corners:
   - {fileID: 382912680}
@@ -13694,10 +13745,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dadb109a8d8f60c478f55eb4b6e084a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knowledgeSource: {fileID: 1112608468}
-  knowledgeAddedUIPrefab: {fileID: 5842444769655504113, guid: 8237d20149646f6468d1c7e7301e85cd, type: 3}
-  instantiationPositionOffset: {x: 0, y: 0.5, z: 0}
-  offsetBetweenInstantiatedUIs: {x: 0, y: 0.57, z: 0}
+  dialectSymbolSourceCollection: {fileID: 0}
+  symbolsAddedUIPrefab: {fileID: 0}
+  symbolsInstantiationPositionOffset: {x: 0, y: 0, z: 0}
 --- !u!136 &2077354782
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -13765,7 +13815,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 082f4c2a627d1894a914b14d8459200a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectsLearned: []
+  projectableObjectsLearned: []
+  completeProjectableObjectsPool: []
+  debug: 0
 --- !u!1 &2080340013
 GameObject:
   m_ObjectHideFlags: 0
@@ -13963,11 +14015,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb73ec1ef83c177438703b9927f19af5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  horizontalInteractionRange: 0
+  verticalInteractionRange: 0
   canBeSelected: 1
   isInteractable: 1
   hasAlreadyBeenInteracted: 0
   tooltipMessage: 
   holdDuration: 1
+  grabPetAttention: 0
+  grabPlayerAttention: 0
 --- !u!1 &2100830948
 GameObject:
   m_ObjectHideFlags: 0
@@ -14134,10 +14190,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4260ee4419f9d7744b3abdf8a623e092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  horizontalInteractionRange: 0
+  verticalInteractionRange: 0
   canBeSelected: 1
   isInteractable: 1
   hasAlreadyBeenInteracted: 0
   tooltipMessage: 
+  grabPetAttention: 0
+  grabPlayerAttention: 0
 --- !u!1 &2107147897
 GameObject:
   m_ObjectHideFlags: 0
@@ -14303,10 +14363,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   switchElectrode: {fileID: 1470530535}
+  horizontalInteractionRange: 0
+  verticalInteractionRange: 0
   canBeSelected: 1
   isInteractable: 1
   hasAlreadyBeenInteracted: 0
   holdDuration: 0.25
+  grabPetAttention: 0
+  grabPlayerAttention: 0
 --- !u!1 &2119487649
 GameObject:
   m_ObjectHideFlags: 0
@@ -14594,6 +14658,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2180816104826389166, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2180816104826389166, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2180816104826389166, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2180816104826389166, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2180816104826389166, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2914174200934906608, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -14631,6 +14715,26 @@ PrefabInstance:
       value: 5.625
       objectReference: {fileID: 0}
     - target: {fileID: 2937719676028448180, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877477386857095386, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877477386857095386, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877477386857095386, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877477386857095386, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877477386857095386, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}

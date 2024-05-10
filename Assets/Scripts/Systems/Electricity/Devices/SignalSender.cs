@@ -47,6 +47,6 @@ public class SignalSender : MonoBehaviour
 
         Rigidbody rbProjectile = projectileGO.GetComponent<Rigidbody>();
 
-        rbProjectile?.AddForce(shootPosition.up.normalized * shootSpeed, ForceMode.Impulse);
+        rbProjectile?.AddForce(shootPosition.right.normalized * shootSpeed, ForceMode.Impulse);
     }
 }
