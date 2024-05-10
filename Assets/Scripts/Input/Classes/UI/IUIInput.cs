@@ -7,5 +7,5 @@ public interface IUIInput
     public bool CanProcessUIInput();
 
     public bool GetPauseDown();
-    public bool GetDictionaryDown();
+    public bool GetInventoryDown();
 }

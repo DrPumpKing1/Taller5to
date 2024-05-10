@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class DictionarySelectionUI : BaseUI
+public class InventoryUI : BaseUI
 {
     [Header("UI Components")]
     [SerializeField] private Button closeButton;
@@ -12,22 +12,22 @@ public class DictionarySelectionUI : BaseUI
     private CanvasGroup canvasGroup;
 
     public static event EventHandler OnCloseFromUI;
-    public static event EventHandler OnDictionarySelectionUIOpen;
-    public static event EventHandler OnDictionarySelectionUIClose;
+    public static event EventHandler OnInventoryUIOpen;
+    public static event EventHandler OnInventoryUIClose;
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        DictionarySelectionOpeningManager.OnDictionarySelectionOpen += DictionarySelectionOpeningManager_OnDictionarySelectionOpen;
-        DictionarySelectionOpeningManager.OnDictionarySelectionClose += DictionarySelectionOpeningManager_OnDictionarySelectionClose;
+        InventoryOpeningManager.OnInventoryOpen += DictionarySelectionOpeningManager_OnDictionarySelectionOpen;
+        InventoryOpeningManager.OnInventoryClose += DictionarySelectionOpeningManager_OnDictionarySelectionClose;
 
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        DictionarySelectionOpeningManager.OnDictionarySelectionOpen -= DictionarySelectionOpeningManager_OnDictionarySelectionOpen;
-        DictionarySelectionOpeningManager.OnDictionarySelectionClose -= DictionarySelectionOpeningManager_OnDictionarySelectionClose;
+        InventoryOpeningManager.OnInventoryOpen -= DictionarySelectionOpeningManager_OnDictionarySelectionOpen;
+        InventoryOpeningManager.OnInventoryClose -= DictionarySelectionOpeningManager_OnDictionarySelectionClose;
     }
 
     private void Awake()
@@ -66,7 +66,7 @@ public class DictionarySelectionUI : BaseUI
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
 
-        OnDictionarySelectionUIOpen?.Invoke(this, EventArgs.Empty);
+        OnInventoryUIOpen?.Invoke(this, EventArgs.Empty);
     }
 
     private void CloseUI()
@@ -81,7 +81,7 @@ public class DictionarySelectionUI : BaseUI
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
 
-        OnDictionarySelectionUIClose?.Invoke(this, EventArgs.Empty);
+        OnInventoryUIClose?.Invoke(this, EventArgs.Empty);
     }
 
     protected override void CloseFromUI()

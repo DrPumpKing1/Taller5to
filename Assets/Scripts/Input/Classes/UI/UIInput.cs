@@ -22,5 +22,5 @@ public abstract class UIInput : MonoBehaviour, IUIInput
     }
     public abstract bool CanProcessUIInput();
     public abstract bool GetPauseDown();
-    public abstract bool GetDictionaryDown();
+    public abstract bool GetInventoryDown();
 }

@@ -24,7 +24,7 @@ public class SingleDictionaryUI : BaseUI
         public Dialect dialect;
     }
 
-    private bool DictionaryInput => UIInput.GetDictionaryDown();
+    private bool DictionaryInput => UIInput.GetInventoryDown();
     private CanvasGroup canvasGroup;
 
     protected override void OnEnable()

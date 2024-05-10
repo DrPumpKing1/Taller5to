@@ -28,7 +28,7 @@ public class NewUIInput : UIInput
         return UIInput;
     }
 
-    public override bool GetDictionaryDown()
+    public override bool GetInventoryDown()
     {
         if (!CanProcessUIInput()) return false;
 
