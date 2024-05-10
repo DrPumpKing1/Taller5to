@@ -8796,8 +8796,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8509fbea6b419c24aa7b01448b8a298b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startAngle: 125
-  endAngle: -35
+  startAngle: 110
+  endAngle: -30
   radius: 225
 --- !u!222 &314926024
 CanvasRenderer:
@@ -64687,13 +64687,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a7ec37b997ae92f409ef433af1b0b518, type: 2}
   - {fileID: 11400000, guid: 9eb63b332a820ec458c942e4a68212e5, type: 2}
   - {fileID: 11400000, guid: 4a61262e6bd41594b87bc789059aae5e, type: 2}
-  - {fileID: 11400000, guid: 04145953fbcae254cb5461858c39d90e, type: 2}
   completeProjectableObjectsPool:
   - {fileID: 11400000, guid: ed5989b0e0432a24ea4bc2867aa81b86, type: 2}
   - {fileID: 11400000, guid: a7ec37b997ae92f409ef433af1b0b518, type: 2}
   - {fileID: 11400000, guid: 9eb63b332a820ec458c942e4a68212e5, type: 2}
   - {fileID: 11400000, guid: 4a61262e6bd41594b87bc789059aae5e, type: 2}
-  - {fileID: 11400000, guid: 04145953fbcae254cb5461858c39d90e, type: 2}
   debug: 0
 --- !u!1 &2084023724
 GameObject:
@@ -66533,7 +66531,7 @@ PrefabInstance:
     - target: {fileID: 7187077217301300134, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
       propertyPath: projectableObjectToLearn
       value: 
-      objectReference: {fileID: 11400000, guid: 04145953fbcae254cb5461858c39d90e, type: 2}
+      objectReference: {fileID: 11400000, guid: 4a61262e6bd41594b87bc789059aae5e, type: 2}
     - target: {fileID: 8345834152454049492, guid: 22d1ae386012b1144a5fbc6ff6397db8, type: 3}
       propertyPath: symbolCraftingSOs.Array.size
       value: 1
