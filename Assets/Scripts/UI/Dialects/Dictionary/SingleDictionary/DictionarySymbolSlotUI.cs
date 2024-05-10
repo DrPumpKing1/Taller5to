@@ -83,6 +83,7 @@ public class DictionarySymbolSlotUI : MonoBehaviour
 
     private void CheckComposedSymbolFormed()
     {
+        if (symbolDiscovered) return;
         if (SymbolsDictionaryManager.Instance.SymbolsDictionary.Contains(dialectSymbolSO)) return;
         if (dialectSymbolSO.IsPrimary()) return;
 
@@ -91,6 +92,7 @@ public class DictionarySymbolSlotUI : MonoBehaviour
             if (!SymbolsDictionaryManager.Instance.SymbolsDictionary.Contains(originator)) return;
         }
 
+        SetSymbolDiscovered();
         EnableSymbolDiscoveryUI();
     }
 
