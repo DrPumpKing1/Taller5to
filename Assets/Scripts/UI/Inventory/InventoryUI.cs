@@ -18,16 +18,16 @@ public class InventoryUI : BaseUI
     protected override void OnEnable()
     {
         base.OnEnable();
-        InventoryOpeningManager.OnInventoryOpen += DictionarySelectionOpeningManager_OnDictionarySelectionOpen;
-        InventoryOpeningManager.OnInventoryClose += DictionarySelectionOpeningManager_OnDictionarySelectionClose;
+        InventoryOpeningManager.OnInventoryOpen += InventoryOpeningManager_OnDictionarySelectionOpen;
+        InventoryOpeningManager.OnInventoryClose += InventoryOpeningManager_OnDictionarySelectionClose;
 
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        InventoryOpeningManager.OnInventoryOpen -= DictionarySelectionOpeningManager_OnDictionarySelectionOpen;
-        InventoryOpeningManager.OnInventoryClose -= DictionarySelectionOpeningManager_OnDictionarySelectionClose;
+        InventoryOpeningManager.OnInventoryOpen -= InventoryOpeningManager_OnDictionarySelectionOpen;
+        InventoryOpeningManager.OnInventoryClose -= InventoryOpeningManager_OnDictionarySelectionClose;
     }
 
     private void Awake()
@@ -90,13 +90,13 @@ public class InventoryUI : BaseUI
     }
 
 
-    #region DictionarySelectionOpeningManager Subscriptions
-    private void DictionarySelectionOpeningManager_OnDictionarySelectionOpen(object sender, EventArgs e)
+    #region InventoryOpeningManager Subscriptions
+    private void InventoryOpeningManager_OnDictionarySelectionOpen(object sender, EventArgs e)
     {
         OpenUI();
     }
 
-    private void DictionarySelectionOpeningManager_OnDictionarySelectionClose(object sender, EventArgs e)
+    private void InventoryOpeningManager_OnDictionarySelectionClose(object sender, EventArgs e)
     {
         CloseUI();
     }

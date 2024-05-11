@@ -1403,6 +1403,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 44855147}
+  - component: {fileID: 44855148}
   m_Layer: 5
   m_Name: DrainerButtonHolder
   m_TagString: Untagged
@@ -1430,6 +1431,20 @@ RectTransform:
   m_AnchoredPosition: {x: -25, y: 25}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 1, y: 0}
+--- !u!114 &44855148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44855146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76518c214c847cc448a1faf600cc9cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectableObjectSO: {fileID: 11400000, guid: 4a61262e6bd41594b87bc789059aae5e, type: 2}
+  projectableObjectButton: {fileID: 955291968}
 --- !u!1 &44993292
 GameObject:
   m_ObjectHideFlags: 0
@@ -2331,6 +2346,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 81357911}
+  - component: {fileID: 81357912}
   m_Layer: 5
   m_Name: SourceButtonHolder3
   m_TagString: Untagged
@@ -2358,6 +2374,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &81357912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81357910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699347709fc69994c886d78a5f1158fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialectSymbolSourceSO: {fileID: 11400000, guid: 87d9523dc0eedc24eab820ca54c49a4b, type: 2}
+  symbolSourceButton: {fileID: 922810927}
 --- !u!1 &86674511
 GameObject:
   m_ObjectHideFlags: 0
@@ -6815,6 +6845,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 211807283}
+  - component: {fileID: 211807284}
   m_Layer: 5
   m_Name: SourceButtonHolder1
   m_TagString: Untagged
@@ -6842,6 +6873,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &211807284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211807282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699347709fc69994c886d78a5f1158fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialectSymbolSourceSO: {fileID: 11400000, guid: a460d3f4380fd534a83415c868067a4f, type: 2}
+  symbolSourceButton: {fileID: 1691672182}
 --- !u!1 &212887174
 GameObject:
   m_ObjectHideFlags: 0
@@ -9084,6 +9129,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 298195258}
+  - component: {fileID: 298195259}
   m_Layer: 5
   m_Name: SourceButtonHolder3
   m_TagString: Untagged
@@ -9111,6 +9157,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &298195259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298195257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699347709fc69994c886d78a5f1158fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialectSymbolSourceSO: {fileID: 11400000, guid: 7a28d538bd437a04aa80a07f34025902, type: 2}
+  symbolSourceButton: {fileID: 693362558}
 --- !u!1 &299203022
 GameObject:
   m_ObjectHideFlags: 0
@@ -12367,6 +12427,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 387565554}
+  - component: {fileID: 387565555}
   m_Layer: 5
   m_Name: SourceButtonHolder4
   m_TagString: Untagged
@@ -12394,6 +12455,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &387565555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387565553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699347709fc69994c886d78a5f1158fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialectSymbolSourceSO: {fileID: 11400000, guid: d7a6d24350947a545bccf4e5c0bfac37, type: 2}
+  symbolSourceButton: {fileID: 1313211753}
 --- !u!1 &391412488
 GameObject:
   m_ObjectHideFlags: 0
@@ -14573,6 +14648,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 466354128}
+  - component: {fileID: 466354129}
   m_Layer: 5
   m_Name: SenderButtonHolder
   m_TagString: Untagged
@@ -14600,6 +14676,20 @@ RectTransform:
   m_AnchoredPosition: {x: 25, y: 25}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &466354129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466354127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76518c214c847cc448a1faf600cc9cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectableObjectSO: {fileID: 11400000, guid: 9eb63b332a820ec458c942e4a68212e5, type: 2}
+  projectableObjectButton: {fileID: 1448804810}
 --- !u!43 &469127014
 Mesh:
   m_ObjectHideFlags: 0
@@ -16533,6 +16623,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 538669144}
+  - component: {fileID: 538669145}
   m_Layer: 5
   m_Name: SourceButtonHolder1
   m_TagString: Untagged
@@ -16560,6 +16651,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &538669145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538669143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699347709fc69994c886d78a5f1158fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialectSymbolSourceSO: {fileID: 11400000, guid: 546edd455afc7e145b0cd30826af6bde, type: 2}
+  symbolSourceButton: {fileID: 20295323}
 --- !u!1 &542012958
 GameObject:
   m_ObjectHideFlags: 0
@@ -16975,6 +17080,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 557742537}
+  - component: {fileID: 557742538}
   m_Layer: 5
   m_Name: SourceButtonHolder3
   m_TagString: Untagged
@@ -17002,6 +17108,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &557742538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557742536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699347709fc69994c886d78a5f1158fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialectSymbolSourceSO: {fileID: 11400000, guid: 5d580ecb6c4676842916697645e0618d, type: 2}
+  symbolSourceButton: {fileID: 1835654657}
 --- !u!1001 &560704834
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17444,6 +17564,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 580835245}
+  - component: {fileID: 580835246}
   m_Layer: 5
   m_Name: SourceButtonHolder4
   m_TagString: Untagged
@@ -17471,6 +17592,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &580835246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 580835244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699347709fc69994c886d78a5f1158fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialectSymbolSourceSO: {fileID: 11400000, guid: 6445eb4f9a5a61044bc6b805f7154bb5, type: 2}
+  symbolSourceButton: {fileID: 1629717965}
 --- !u!1001 &581065367
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19004,6 +19139,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 658599118}
+  - component: {fileID: 658599119}
   m_Layer: 5
   m_Name: SourceButtonHolder1
   m_TagString: Untagged
@@ -19031,6 +19167,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &658599119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658599117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699347709fc69994c886d78a5f1158fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialectSymbolSourceSO: {fileID: 11400000, guid: 94211d12bd66a474aba2a8eb45c034c4, type: 2}
+  symbolSourceButton: {fileID: 1977854850}
 --- !u!4 &670787726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3061237008394950533, guid: cbee3ab86ab8bca41b482ab9f07bd8a4, type: 3}
@@ -23534,6 +23684,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 761149414}
+  - component: {fileID: 761149415}
   m_Layer: 5
   m_Name: SourceButtonHolder2
   m_TagString: Untagged
@@ -23561,6 +23712,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &761149415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761149413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699347709fc69994c886d78a5f1158fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialectSymbolSourceSO: {fileID: 11400000, guid: ed2e3da85347f7c4caa5446689f8c29e, type: 2}
+  symbolSourceButton: {fileID: 2032774365}
 --- !u!1001 &761942041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27309,6 +27474,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 908734240}
+  - component: {fileID: 908734241}
   m_Layer: 5
   m_Name: SourceButtonHolder2
   m_TagString: Untagged
@@ -27336,6 +27502,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &908734241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908734239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699347709fc69994c886d78a5f1158fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialectSymbolSourceSO: {fileID: 11400000, guid: 238fb9cbd0906df4f8927220db94c34a, type: 2}
+  symbolSourceButton: {fileID: 1876249437}
 --- !u!43 &910507899
 Mesh:
   m_ObjectHideFlags: 0
@@ -30800,6 +30980,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1009526016}
+  - component: {fileID: 1009526017}
   m_Layer: 5
   m_Name: CableButtonHolder
   m_TagString: Untagged
@@ -30827,6 +31008,20 @@ RectTransform:
   m_AnchoredPosition: {x: 25, y: -25}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &1009526017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009526015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76518c214c847cc448a1faf600cc9cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectableObjectSO: {fileID: 11400000, guid: ed5989b0e0432a24ea4bc2867aa81b86, type: 2}
+  projectableObjectButton: {fileID: 2019396030}
 --- !u!1 &1009776600
 GameObject:
   m_ObjectHideFlags: 0
@@ -45485,6 +45680,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1447428755}
+  - component: {fileID: 1447428756}
   m_Layer: 5
   m_Name: SourceButtonHolder2
   m_TagString: Untagged
@@ -45512,6 +45708,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1447428756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447428754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699347709fc69994c886d78a5f1158fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialectSymbolSourceSO: {fileID: 11400000, guid: ec0f50f803d47a84f854b0c0940506de, type: 2}
+  symbolSourceButton: {fileID: 776184610}
 --- !u!1 &1448804808
 GameObject:
   m_ObjectHideFlags: 0
@@ -65363,6 +65573,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1980138486}
+  - component: {fileID: 1980138487}
   m_Layer: 5
   m_Name: MagicBoxButtonHolder
   m_TagString: Untagged
@@ -65390,6 +65601,20 @@ RectTransform:
   m_AnchoredPosition: {x: -25, y: -25}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 1, y: 1}
+--- !u!114 &1980138487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980138485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76518c214c847cc448a1faf600cc9cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectableObjectSO: {fileID: 11400000, guid: a7ec37b997ae92f409ef433af1b0b518, type: 2}
+  projectableObjectButton: {fileID: 1841549902}
 --- !u!1 &1989554281
 GameObject:
   m_ObjectHideFlags: 0
@@ -69125,6 +69350,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2121318820}
+  - component: {fileID: 2121318821}
   m_Layer: 5
   m_Name: SourceButtonHolder4
   m_TagString: Untagged
@@ -69152,6 +69378,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2121318821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121318819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699347709fc69994c886d78a5f1158fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialectSymbolSourceSO: {fileID: 11400000, guid: b5705995db7dd29459f82a7c90d8d682, type: 2}
+  symbolSourceButton: {fileID: 584426741}
 --- !u!1 &2129450699
 GameObject:
   m_ObjectHideFlags: 0
