@@ -4,26 +4,26 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class InGameOptionsUI : BaseUI
+public class InGameAudioOptionsUI : BaseUI
 {
     [Header("UI Components")]
     [SerializeField] private Button closeButton;
 
     private CanvasGroup canvasGroup;
 
-    public static event EventHandler OnInGameOptionsUIOpen;
-    public static event EventHandler OnInGameOptionsUIClose;
+    public static event EventHandler OnInGameAudioOptionsUIOpen;
+    public static event EventHandler OnInGameAudioOptionsUIClose;
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        PauseUIButtonsHandler.OnOpenInGameOptionsUI += PauseUIButtonsHandler_OnOpenInGameOptionsUI;
+        InGameOptionsUIButtonsHandler.OnOpenInGameAudioOptionsUI += InGameOptionsUIButtonsHandler_OnOpenInGameAudioOptionsUI;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        PauseUIButtonsHandler.OnOpenInGameOptionsUI -= PauseUIButtonsHandler_OnOpenInGameOptionsUI;
+        InGameOptionsUIButtonsHandler.OnOpenInGameAudioOptionsUI -= InGameOptionsUIButtonsHandler_OnOpenInGameAudioOptionsUI;
     }
 
     private void Awake()
@@ -62,7 +62,7 @@ public class InGameOptionsUI : BaseUI
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
 
-        OnInGameOptionsUIOpen?.Invoke(this, EventArgs.Empty);
+        OnInGameAudioOptionsUIOpen?.Invoke(this, EventArgs.Empty);
     }
 
     private void CloseUI()
@@ -77,7 +77,7 @@ public class InGameOptionsUI : BaseUI
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
 
-        OnInGameOptionsUIClose?.Invoke(this, EventArgs.Empty);
+        OnInGameAudioOptionsUIClose?.Invoke(this, EventArgs.Empty);
     }
 
     protected override void CloseFromUI()
@@ -85,9 +85,9 @@ public class InGameOptionsUI : BaseUI
         CloseUI();
     }
 
-    #region PauseUI Subscriptions
+    #region InGameOptionsUI Subscriptions
 
-    private void PauseUIButtonsHandler_OnOpenInGameOptionsUI(object sender, EventArgs e)
+    private void InGameOptionsUIButtonsHandler_OnOpenInGameAudioOptionsUI(object sender, EventArgs e)
     {
         OpenUI();
     }
