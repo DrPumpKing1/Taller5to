@@ -2,43 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SymbolSourcesCollectedPersistence : MonoBehaviour, IDataPersistence<ObjectsData>
+public class SymbolSourcesCollectedPersistence : MonoBehaviour, IDataPersistence<PlayerData>
 {
-    public void LoadData(ObjectsData data)
+    public void LoadData(PlayerData data)
     {
         SymbolSourcesManager symbolSourcesManager = FindObjectOfType<SymbolSourcesManager>();
         DialectSymbolSource[] dialectSymbolSources = FindObjectsOfType<DialectSymbolSource>();
 
-        foreach (DialectSymbolSource dialectSymbolSource in dialectSymbolSources)
+        foreach (KeyValuePair<int, bool> symbolSourceData in data.symbolSourcesCollected)
         {
-            foreach (KeyValuePair<int, bool> symbolSourceCollected in data.symbolSourcesCollected)
+            if (symbolSourceData.Value) symbolSourcesManager.AddSourceToInventoryById(symbolSourceData.Key);
+
+            foreach (DialectSymbolSource dialectSymbolSource in dialectSymbolSources)
             {
-                if(dialectSymbolSource.ID == symbolSourceCollected.Key)
+                if (dialectSymbolSource.DialectSymbolSourceSO.id == symbolSourceData.Key)
                 {
-                    if (symbolSourceCollected.Value)
-                    {
-                        dialectSymbolSource.SetIsCollected();
-                    }
+                    if (symbolSourceData.Value) dialectSymbolSource.SetIsCollected();
                     break;
-                }             
-            }
-        }   
+                }
+            } 
+        }    
     }
 
-    public void SaveData(ref ObjectsData data)
+    public void SaveData(ref PlayerData data)
     {
-        DialectSymbolSource[] dialectSymbolSources = FindObjectsOfType<DialectSymbolSource>();
+        SymbolSourcesManager symbolSourcesManager = FindObjectOfType<SymbolSourcesManager>();
 
-        foreach (DialectSymbolSource dialectSymbolSource in dialectSymbolSources)
+        foreach (DialectSymbolSourceSO source in symbolSourcesManager.CompleteSymbolSourcesPool)
         {
-            if (data.symbolSourcesCollected.ContainsKey(dialectSymbolSource.ID)) data.symbolSourcesCollected.Remove(dialectSymbolSource.ID);
+            if (data.symbolSourcesCollected.ContainsKey(source.id)) data.symbolSourcesCollected.Remove(source.id);
         }
 
-        foreach (DialectSymbolSource dialectSymbolSource in dialectSymbolSources)
+        foreach (DialectSymbolSourceSO source in symbolSourcesManager.CompleteSymbolSourcesPool)
         {
-            bool collected = dialectSymbolSource.IsCollected;
+            bool collected = symbolSourcesManager.CheckIfInventoryContainsSource(source);
 
-            data.symbolSourcesCollected.Add(dialectSymbolSource.ID, collected);
+            data.symbolSourcesCollected.Add(source.id, collected);
         }
     }
 }
