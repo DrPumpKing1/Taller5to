@@ -46,7 +46,7 @@ public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
 
     public class OnSymbolsAddedEventArgs : EventArgs
     {
-        public DialectSymbolsSourceSO dialectSymbolSourceSO;
+        public DialectSymbolSourceSO dialectSymbolSourceSO;
     }
 
     private void Start()
@@ -119,7 +119,8 @@ public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
 
     private void CollectSymbolSource()
     {
-        AddSymbolsToInventory();
+        AddSourceToInventory();
+        AddSymbolsToDictionary();
         DisableVisual();
 
         dialectSymbolSource.SetIsCollected();
@@ -131,7 +132,12 @@ public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
 
     private void DisableVisual() => visual.gameObject.SetActive(false);
 
-    private void AddSymbolsToInventory()
+    private void AddSourceToInventory()
+    {
+        SymbolSourcesManager.Instance.CollectSource(dialectSymbolSource.DialectSymbolSourceSO);
+    }
+
+    private void AddSymbolsToDictionary()
     {
         foreach (DialectSymbolSO dialectSymbolSO in dialectSymbolSource.DialectSymbolSourceSO.dialectSymbolSOs)
         {

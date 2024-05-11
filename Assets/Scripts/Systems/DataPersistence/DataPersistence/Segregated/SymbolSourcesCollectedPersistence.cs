@@ -6,15 +6,19 @@ public class SymbolSourcesCollectedPersistence : MonoBehaviour, IDataPersistence
 {
     public void LoadData(ObjectsData data)
     {
+        SymbolSourcesManager symbolSourcesManager = FindObjectOfType<SymbolSourcesManager>();
         DialectSymbolSource[] dialectSymbolSources = FindObjectsOfType<DialectSymbolSource>();
 
-        foreach(DialectSymbolSource dialectSymbolSource in dialectSymbolSources)
+        foreach (DialectSymbolSource dialectSymbolSource in dialectSymbolSources)
         {
             foreach (KeyValuePair<int, bool> symbolSourceCollected in data.symbolSourcesCollected)
             {
                 if(dialectSymbolSource.ID == symbolSourceCollected.Key)
                 {
-                    if (symbolSourceCollected.Value) dialectSymbolSource.SetIsCollected();
+                    if (symbolSourceCollected.Value)
+                    {
+                        dialectSymbolSource.SetIsCollected();
+                    }
                     break;
                 }             
             }

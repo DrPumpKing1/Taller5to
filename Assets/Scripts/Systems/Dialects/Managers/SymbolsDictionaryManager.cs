@@ -48,7 +48,7 @@ public class SymbolsDictionaryManager : MonoBehaviour
         OnDialectSymbolCollected?.Invoke(this, new OnDialectSymbolCollectedEventArgs { collectedSymbol = collectedSymbol });
     }
 
-    public void AddSymbolToDictionary(DialectSymbolSO symbolToAdd)
+    private void AddSymbolToDictionary(DialectSymbolSO symbolToAdd)
     {
         if (symbolsDictionary.Contains(symbolToAdd))
         {
