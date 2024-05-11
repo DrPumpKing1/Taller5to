@@ -10,6 +10,9 @@ public class InventoryOpeningManager : MonoBehaviour
     [Header("Components")]
     [SerializeField] private UIInput UIInput;
 
+    [Header("Settings")]
+    [SerializeField] private bool canOpenInventory;
+
     public static event EventHandler OnInventoryOpen;
     public static event EventHandler OnInventoryClose;
 
@@ -61,6 +64,7 @@ public class InventoryOpeningManager : MonoBehaviour
     }
     private void CheckOpenCloseInventory()
     {
+        if (!canOpenInventory) return;
         if (!InventoryInput) return;
 
         if (!InventoryOpen)
@@ -86,6 +90,8 @@ public class InventoryOpeningManager : MonoBehaviour
         OnInventoryClose?.Invoke(this, EventArgs.Empty);
         InventoryOpen = false;
     }
+
+    public void SetCanOpenInventory() => canOpenInventory = true;
 
     #region DictionarySelectionUI Subscriptions
 
