@@ -23,16 +23,20 @@ public class ProjectableObjectInfoPanelUIHandler : InfoPanelUIHandler
         infoPanelsUIHandler.OnShowProjectableObjectInfoPanelUI -= InfoPanelsUIHandler_OnOpenProjectableObjectInfoPanelUI;
     }
 
+    private void UpdatePanel(ProjectableObjectSO projectableObjectSO)
+    {
+        SetProjectableObjectNameText(projectableObjectSO);
+        SetProjectableObjectDescriptionText(projectableObjectSO);
+        SetProjectableObjectCostText(projectableObjectSO);
+    }
+
     private void SetProjectableObjectNameText(ProjectableObjectSO projectableObjectSO) => projectableObjectNameText.text = projectableObjectSO.objectName;
     private void SetProjectableObjectDescriptionText(ProjectableObjectSO projectableObjectSO) => projectableObjectDescriptionText.text = projectableObjectSO.description;
     private void SetProjectableObjectCostText(ProjectableObjectSO projectableObjectSO) => projectableObjectCostText.text = $"Cost: {projectableObjectSO.projectionGemsCost} Projection Gems";
     
     private void InfoPanelsUIHandler_OnOpenProjectableObjectInfoPanelUI(object sender, InfoPanelsUIHandler.OnShowProjectableObjectInfoPanelUIEventArgs e)
     {
-        SetProjectableObjectNameText(e.projectableObjectSO);
-        SetProjectableObjectDescriptionText(e.projectableObjectSO);
-        SetProjectableObjectCostText(e.projectableObjectSO);
-
+        UpdatePanel(e.projectableObjectSO);
         ShowPanel();
     }
 }

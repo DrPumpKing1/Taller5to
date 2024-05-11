@@ -6,12 +6,11 @@ using UnityEngine.UI;
 
 public class InfoPanelsUIHandler : MonoBehaviour
 {
-    [Header("Panels")]
-    [SerializeField] private List<GameObject> infoPanels;
-
     public event EventHandler OnHideAllPanels;
+
     public event EventHandler<OnShowProjectableObjectInfoPanelUIEventArgs> OnShowProjectableObjectInfoPanelUI;
     public event EventHandler<OnShowProjectionGemsInfoPanelUIEventArgs> OnShowProjectionGemsInfoPanelUI;
+    public event EventHandler<OnShowSymbolSourceInfoPanelUIEventArgs> OnShowSymbolSourceInfoPanelUI;
 
     public class OnShowProjectableObjectInfoPanelUIEventArgs : EventArgs
     {
@@ -22,20 +21,25 @@ public class InfoPanelsUIHandler : MonoBehaviour
     {
         public int totalProjectionGems;
         public int availableProjectionGems;
+    }
 
+    public class OnShowSymbolSourceInfoPanelUIEventArgs : EventArgs
+    {
+        public DialectSymbolSourceSO dialectSymbolSourceSO;
     }
 
     private void OnEnable()
     {
         ProjectableObjectInventoryButtonHandler.OnProjectableObjectInventoryButtonClicked += ProjectableObjectInventoryButtonHandler_OnProjectableObjectInventoryButtonClicked;
         ProjectionGemsInventoryButtonHandler.OnProjectionGemsButtonClicked += ProjectionGemsInventoryButtonHandler_OnProjectionGemsButtonClicked;
+        SymbolSourceInventoryButtonHandler.OnSymbolSourceInventoryButtonClicked += SymbolSourceInventoryButtonHandler_OnSymbolSourceInventoryButtonClicked;
     }
 
     private void OnDisable()
     {
         ProjectableObjectInventoryButtonHandler.OnProjectableObjectInventoryButtonClicked -= ProjectableObjectInventoryButtonHandler_OnProjectableObjectInventoryButtonClicked;
-        ProjectionGemsInventoryButtonHandler.OnProjectionGemsButtonClicked += ProjectionGemsInventoryButtonHandler_OnProjectionGemsButtonClicked;
-
+        ProjectionGemsInventoryButtonHandler.OnProjectionGemsButtonClicked -= ProjectionGemsInventoryButtonHandler_OnProjectionGemsButtonClicked;
+        SymbolSourceInventoryButtonHandler.OnSymbolSourceInventoryButtonClicked -= SymbolSourceInventoryButtonHandler_OnSymbolSourceInventoryButtonClicked;
     }
 
     private void Start()
@@ -59,6 +63,12 @@ public class InfoPanelsUIHandler : MonoBehaviour
     {
         HideAllPanels();
         OnShowProjectionGemsInfoPanelUI?.Invoke(this, new OnShowProjectionGemsInfoPanelUIEventArgs { totalProjectionGems = e.totalProjectionGems, availableProjectionGems = e.availableProjectionGems });
+    }
+
+    private void SymbolSourceInventoryButtonHandler_OnSymbolSourceInventoryButtonClicked(object sender, SymbolSourceInventoryButtonHandler.OnSymbolSourceButtonUIClickedEventArgs e)
+    {
+        HideAllPanels();
+        OnShowSymbolSourceInfoPanelUI.Invoke(this, new OnShowSymbolSourceInfoPanelUIEventArgs { dialectSymbolSourceSO = e.dialectSymbolSourceSO });
     }
     #endregion
 }
