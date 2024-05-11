@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
-public class SymbolSourceButtonHandler : MonoBehaviour
+public class SymbolSourceInventoryButtonHandler : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private DialectSymbolSourceSO dialectSymbolSourceSO;

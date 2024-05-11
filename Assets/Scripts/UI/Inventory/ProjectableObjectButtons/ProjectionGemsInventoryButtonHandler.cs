@@ -1,17 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using System;
+using UnityEngine.UI;
+using TMPro;
 
-public class ProjectionGemsUIHandler : MonoBehaviour
+public class ProjectionGemsInventoryButtonHandler : MonoBehaviour
 {
     [Header("UI Components")]
+    [SerializeField] private Button projectionGemsButton;
     [SerializeField] private TextMeshProUGUI projectionGemsText;
 
+    public static event EventHandler<OnProjectionGemsButtonClickedEventArgs> OnProjectionGemsButtonClicked;
+
+    public class OnProjectionGemsButtonClickedEventArgs : EventArgs
+    {
+        public int totalProjectionGems;
+        public int availableProjectionGems;
+    }
     private void OnEnable()
     {
-        ProjectionGemsManager.OnProjectionGemsManagerInitialized += ProjectionGemsManager_OnProjectionGemsManagerInitialized;       
+        ProjectionGemsManager.OnProjectionGemsManagerInitialized += ProjectionGemsManager_OnProjectionGemsManagerInitialized;
 
         ProjectionGemsManager.OnProjectionGemsUsed += ProjectionGemsManager_OnProjectionGemsUsed;
         ProjectionGemsManager.OnProjectionGemsRefunded += ProjectionGemsManager_OnProjectionGemsRefunded;
@@ -27,9 +36,24 @@ public class ProjectionGemsUIHandler : MonoBehaviour
         ProjectionGemsManager.OnTotalProjectionGemsIncreased -= ProjectionGemsManager_OnTotalProjectionGemsIncreased;
     }
 
+    private void Awake()
+    {
+        InitializeButtonsListeners();
+    }
+
     private void Start()
     {
         InitializeUI();
+    }
+
+    private void InitializeButtonsListeners()
+    {
+        projectionGemsButton.onClick.AddListener(ClickButton);
+    }
+
+    private void ClickButton()
+    {
+        OnProjectionGemsButtonClicked?.Invoke(this, new OnProjectionGemsButtonClickedEventArgs { totalProjectionGems = ProjectionGemsManager.Instance.TotalProjectionGems, availableProjectionGems = ProjectionGemsManager.Instance.AvailableProjectionGems });
     }
 
     private void InitializeUI()

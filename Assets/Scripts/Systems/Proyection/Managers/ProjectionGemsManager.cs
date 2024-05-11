@@ -8,11 +8,11 @@ public class ProjectionGemsManager : MonoBehaviour
     public static ProjectionGemsManager Instance { get; private set; }
 
     [Header ("Projection Gems Settings")]
-    [SerializeField] private int totalProyectionGems;
-    [SerializeField] private int availableProyectionGems;
+    [SerializeField] private int totalProjectionGems;
+    [SerializeField] private int availableProjectionGems;
 
-    public int TotalProjectionGems => totalProyectionGems;
-    public int AvailableProyectionGems => availableProyectionGems;
+    public int TotalProjectionGems => totalProjectionGems;
+    public int AvailableProjectionGems => availableProjectionGems;
 
     public static EventHandler<OnProjectionGemsEventArgs> OnProjectionGemsUsed;
     public static EventHandler<OnProjectionGemsEventArgs> OnProjectionGemsRefunded;
@@ -52,30 +52,30 @@ public class ProjectionGemsManager : MonoBehaviour
 
     private void InitializeVariables()
     {
-        availableProyectionGems = totalProyectionGems;
+        availableProjectionGems = totalProjectionGems;
         OnProjectionGemsManagerInitialized?.Invoke(this, EventArgs.Empty);
     }
 
-    public void SetTotalProjectionGems(int quantity) => totalProyectionGems = quantity;
+    public void SetTotalProjectionGems(int quantity) => totalProjectionGems = quantity;
 
-    public bool CheckCanUseProjectionGems(int quantity) => availableProyectionGems >= quantity;
+    public bool CheckCanUseProjectionGems(int quantity) => availableProjectionGems >= quantity;
 
     public void UseProyectionGems(int quantity)
     {
-        availableProyectionGems = availableProyectionGems - quantity < 0 ? 0 : availableProyectionGems - quantity;
+        availableProjectionGems = availableProjectionGems - quantity < 0 ? 0 : availableProjectionGems - quantity;
         OnProjectionGemsUsed?.Invoke(this, new OnProjectionGemsEventArgs { projectionGems = quantity });
     }
 
     public void RefundProyectionGems(int quantity)
     {
-        availableProyectionGems = availableProyectionGems + quantity > totalProyectionGems ? totalProyectionGems : availableProyectionGems + quantity;
+        availableProjectionGems = availableProjectionGems + quantity > totalProjectionGems ? totalProjectionGems : availableProjectionGems + quantity;
         OnProjectionGemsRefunded?.Invoke(this, new OnProjectionGemsEventArgs { projectionGems = quantity });
     }
 
     public void IncreaseTotalProjectionGems(int quantity)
     {
-        totalProyectionGems += quantity;
-        availableProyectionGems += quantity;
+        totalProjectionGems += quantity;
+        availableProjectionGems += quantity;
         OnTotalProjectionGemsIncreased?.Invoke(this, new OnProjectionGemsEventArgs { projectionGems = quantity });
     }
 

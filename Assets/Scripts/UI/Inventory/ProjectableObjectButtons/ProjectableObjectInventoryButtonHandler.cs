@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
-public class ProjectableObjectButtonHandler : MonoBehaviour
+public class ProjectableObjectInventoryButtonHandler : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private ProjectableObjectSO projectableObjectSO;
