@@ -19,6 +19,7 @@ public class PlayerGravityController : MonoBehaviour
     [SerializeField, Range(0.5f, 3f)] private float lowJumpMultiplier;
 
     [Header("Slope Stick Settings")]
+    [SerializeField] private bool applyOnlyOnRunning;
     [SerializeField, Range(0f, 30f)] private float stickToSlopeForce = 5f;
 
     public float GravityMultiplier { get { return gravityMultiplier; } }
@@ -83,7 +84,7 @@ public class PlayerGravityController : MonoBehaviour
 
     private void StayOnSlope()
     {
-        if (!playerHorizontalMovement.IsRunning()) return;
+        if (!playerHorizontalMovement.IsRunning() && applyOnlyOnRunning) return;
         _rigidbody.AddForce(stickToSlopeForce * -checkGround.SlopeNormal, ForceMode.Force);
     }
 

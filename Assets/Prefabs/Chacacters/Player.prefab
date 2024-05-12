@@ -476,7 +476,7 @@ MonoBehaviour:
   playerInteractAlternate: {fileID: 907748609654045023}
   checkGround: {fileID: 2176356878162520009}
   checkWall: {fileID: 8413128526021734546}
-  walkSpeed: 2
+  walkSpeed: 2.5
   sprintSpeed: 5
   crouchSpeed: 1.5
   smoothDirectionInputFactor: 10
@@ -564,6 +564,7 @@ MonoBehaviour:
   gravityMultiplier: 1
   fallMultiplier: 2
   lowJumpMultiplier: 2
+  applyOnlyOnRunning: 0
   stickToSlopeForce: 20
 --- !u!114 &6106714240860128082
 MonoBehaviour:
@@ -635,8 +636,6 @@ MonoBehaviour:
   interactionRayStartDistance: 1
   interactionRayLenght: 2.5
   interactionSphereRadius: 0.8
-  maxHorizontalDistanceFromPlayer: 5
-  maxVerticalDistanceFromPlayer: 2
   maxDistanceFromCamera: 350
   drawRaycasts: 1
 --- !u!114 &907748609654045023

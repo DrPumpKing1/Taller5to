@@ -20,7 +20,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [SerializeField] private CheckWall checkWall;
 
     [Header("Speed Settings")]
-    [SerializeField, Range(1.5f,2.5f)] private float walkSpeed = 2f;
+    [SerializeField, Range(1.5f,5f)] private float walkSpeed = 2f;
     [SerializeField, Range(4f,6f)] private float sprintSpeed = 3f;
     [SerializeField, Range(0.75f, 1.5f)] private float crouchSpeed = 1f;
 
