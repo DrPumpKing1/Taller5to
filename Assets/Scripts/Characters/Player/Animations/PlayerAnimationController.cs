@@ -30,6 +30,7 @@ public class PlayerAnimationController : MonoBehaviour
     private const string INTERACT_TRIGGER = "Interact";
 
     private const string GROUNDED_BOOL = "Grounded";
+    private const string CROUCHING_BOOL = "Crouching";
 
 
     private void Awake()
@@ -82,6 +83,7 @@ public class PlayerAnimationController : MonoBehaviour
     private void UpdateBooleans()
     {
         animator.SetBool(GROUNDED_BOOL, checkGround.IsGrounded);
+        animator.SetBool(CROUCHING_BOOL, playerCrouch.IsCrouching);
     }
 
     private void HandleTriggerReset()
