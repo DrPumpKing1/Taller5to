@@ -5,6 +5,9 @@ using Cinemachine;
 
 public class CameraScroll : MonoBehaviour
 {
+    [Header("Enabler")]
+    [SerializeField] private bool enableCameraScroll;
+
     [Header("Components")]
     [SerializeField] private CameraInput cameraInput;
     [SerializeField] private CinemachineVirtualCamera CMVCam;
@@ -36,6 +39,7 @@ public class CameraScroll : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!enableCameraScroll) return;
         HandleDistance();
     }
 

@@ -97,10 +97,11 @@ public class PlayerCrouch : MonoBehaviour
 
     private void CheckToggleCrouch()
     {
+        if (!CrouchInput) return;
+
         if (!checkGround.IsGrounded) return;
         if (playerLand.IsRecoveringFromLanding) return;
 
-        if (!CrouchInput) return;
         if (IsCrouching && checkRoof.HitRoof) return;
         if (!playerJump.NotJumping) return;
         if (playerInteract.IsInteracting) return;
@@ -192,8 +193,17 @@ public class PlayerCrouch : MonoBehaviour
 
     private void HandleToggleCrouchCooldown()
     {
-        if (!checkGround.IsGrounded) return;
-        if (playerLand.IsRecoveringFromLanding) return;
+        if (!checkGround.IsGrounded)
+        {
+            ResetToggleCrouchCooldown();
+            return;
+        }
+
+        if (playerLand.IsRecoveringFromLanding)
+        {
+            ResetToggleCrouchCooldown();
+            return;
+        }
 
         toggleCrouchCooldownTime = toggleCrouchCooldownTime > 0f ? toggleCrouchCooldownTime -= Time.deltaTime : 0f;
     }
