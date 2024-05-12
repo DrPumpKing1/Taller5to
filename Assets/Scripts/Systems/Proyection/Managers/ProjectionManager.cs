@@ -63,6 +63,11 @@ public class ProjectionManager : MonoBehaviour
         OnAllObjectsDematerialized?.Invoke(this, EventArgs.Empty);
     }
 
+    public void DematerializeAllObjects()
+    {
+        OnAllObjectsDematerialized?.Invoke(this, EventArgs.Empty);
+    }
+
     public bool CanProjectObject(ProjectableObjectSO projectableObjectSO) => ProjectionGemsManager.Instance.CheckCanUseProjectionGems(projectableObjectSO.projectionGemsCost);
 
     public void FailObjectProjection(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform)
