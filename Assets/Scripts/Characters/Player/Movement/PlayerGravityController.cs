@@ -18,13 +18,16 @@ public class PlayerGravityController : MonoBehaviour
     [SerializeField, Range(0.5f, 3f)] private float fallMultiplier;
     [SerializeField, Range(0.5f, 3f)] private float lowJumpMultiplier;
 
-    [Header("Slope Stick Settings")]
-    [SerializeField] private bool applyOnlyOnRunning;
+    [Header("Stick To Slope Settings")]
+    [SerializeField] private bool enableStickToSlopeForce;
+    [SerializeField] private float stickToSlopeSpeedThreshold;
     [SerializeField, Range(0f, 30f)] private float stickToSlopeForce = 5f;
 
-    public float GravityMultiplier { get { return gravityMultiplier; } }
-    public float FallMultiplier { get { return fallMultiplier; } }
-    public float LowJumpMultiplier { get { return lowJumpMultiplier; } }
+    public float HorizontalSpeed => playerHorizontalMovement.FinalMoveVector.magnitude;
+
+    public float GravityMultiplier => gravityMultiplier;
+    public float FallMultiplier => fallMultiplier;
+    public float LowJumpMultiplier => lowJumpMultiplier;
 
     private Rigidbody _rigidbody;
     private CapsuleCollider capsulleCollider;
@@ -84,7 +87,9 @@ public class PlayerGravityController : MonoBehaviour
 
     private void StayOnSlope()
     {
-        if (!playerHorizontalMovement.IsRunning() && applyOnlyOnRunning) return;
+        if (!enableStickToSlopeForce) return;
+        if (HorizontalSpeed < stickToSlopeSpeedThreshold) return;
+
         _rigidbody.AddForce(stickToSlopeForce * -checkGround.SlopeNormal, ForceMode.Force);
     }
 

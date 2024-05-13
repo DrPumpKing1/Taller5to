@@ -16,18 +16,23 @@ public class PlayerAnimationController : MonoBehaviour
 
     private Animator animator;
 
-    public float horizontalSpeed => playerHorizontalMovement.FinalMoveVector.magnitude;
+    public float HorizontalSpeed => playerHorizontalMovement.FinalMoveVector.magnitude;
 
     private const string HORIZONTAL_SPEED_FLOAT = "HorizontalSpeed";
 
     private const string JUMP_TRIGGER = "Jump";
     private const string FALL_TRIGGER = "Fall";
+
     private const string SOFT_LAND_TRIGGER = "SoftLand";
     private const string NORMAL_LAND_TRIGGER = "NormalLand";
     private const string HARD_LAND_TRIGGER = "HardLand";
+
     private const string STAND_DOWN_TRIGGER = "StandDown";
     private const string STAND_UP_TRIGGER = "StandUp";
+
     private const string INTERACT_TRIGGER = "Interact";
+
+    private const string DEATH_TRIGGER = "Death";
 
     private const string GROUNDED_BOOL = "Grounded";
     private const string CROUCHING_BOOL = "Crouching";
@@ -49,6 +54,8 @@ public class PlayerAnimationController : MonoBehaviour
 
         playerCrouch.OnPlayerStandDown += PlayerCrouch_OnPlayerStandDown;
         playerCrouch.OnPlayerStandUp += PlayerCrouch_OnPlayerStandUp;
+
+        PlayerHealth.OnPlayerDeath += PlayerHealth_OnPlayerDeath;
     }
 
     private void OnDisable()
@@ -77,7 +84,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void HandleHorizontalSpeedBlend()
     {
-        animator.SetFloat(HORIZONTAL_SPEED_FLOAT, horizontalSpeed);
+        animator.SetFloat(HORIZONTAL_SPEED_FLOAT, HorizontalSpeed);
     }
 
     private void UpdateBooleans()
@@ -116,5 +123,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void PlayerCrouch_OnPlayerStandDown(object sender, EventArgs e) => animator.SetTrigger(STAND_DOWN_TRIGGER);
     private void PlayerCrouch_OnPlayerStandUp(object sender, EventArgs e) => animator.SetTrigger(STAND_UP_TRIGGER);
+
+    private void PlayerHealth_OnPlayerDeath(object sender, EventArgs e) => animator.SetTrigger(DEATH_TRIGGER);
 
 }

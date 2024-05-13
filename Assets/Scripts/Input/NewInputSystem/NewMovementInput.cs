@@ -20,7 +20,12 @@ public class NewMovementInput : MovementInput
         playerInputActions.Movement.Enable();
     }
 
-    public override bool CanProcessMovementInput() => GameManager.Instance.GameState == GameManager.State.OnGameplay;
+    public override bool CanProcessMovementInput()
+    {
+        if(GameManager.Instance.GameState != GameManager.State.OnGameplay) return false;
+
+        return true;
+    }
 
     public override Vector2 GetDirectionVectorNormalized()
     {

@@ -4956,8 +4956,8 @@ Transform:
   m_Children:
   - {fileID: 252042797}
   - {fileID: 1375171517}
-  - {fileID: 1464695154}
   - {fileID: 1815255651}
+  - {fileID: 1464695154}
   - {fileID: 1806641813}
   m_Father: {fileID: 44993293}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19823,6 +19823,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 617003490}
   m_CullTransparentMesh: 1
+--- !u!114 &621939261 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2176356878162520009, guid: 2a1ced1b267b282479cf946dc91e0a5b, type: 3}
+  m_PrefabInstance: {fileID: 8123412793189848860}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36aca7cd3b7a29448b6de55838817e11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &623110987
 GameObject:
   m_ObjectHideFlags: 0
@@ -60362,6 +60373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d7ecc36ebb337b4fbd01b66869674a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkGround: {fileID: 621939261}
 --- !u!1 &1806946837
 GameObject:
   m_ObjectHideFlags: 0

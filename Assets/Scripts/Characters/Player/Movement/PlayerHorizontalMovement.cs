@@ -23,6 +23,8 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [SerializeField, Range(1.5f,5f)] private float walkSpeed = 2f;
     [SerializeField, Range(4f,6f)] private float sprintSpeed = 3f;
     [SerializeField, Range(0.75f, 1.5f)] private float crouchSpeed = 1f;
+    [Space]
+    [SerializeField] private bool flattenSpeedOnSlopes;
 
     [Header("Smooth Settings")]
     [SerializeField, Range(1f, 100f)] private float smoothDirectionInputFactor = 5f;
@@ -144,8 +146,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     private Vector3 FlattenVectorOnSlopes(Vector3 vectorToFlat)
     {
-        if (checkGround.OnSlope) vectorToFlat = Vector3.ProjectOnPlane(vectorToFlat, checkGround.SlopeNormal);
-
+        if (checkGround.OnSlope && flattenSpeedOnSlopes) vectorToFlat = Vector3.ProjectOnPlane(vectorToFlat, checkGround.SlopeNormal);
         return vectorToFlat;
     }
 

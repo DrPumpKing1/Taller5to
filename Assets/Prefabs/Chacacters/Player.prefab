@@ -380,6 +380,7 @@ GameObject:
   - component: {fileID: 6106714240860128082}
   - component: {fileID: 4536946071876244043}
   - component: {fileID: 907748609654045023}
+  - component: {fileID: 4651765595413967932}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -479,6 +480,7 @@ MonoBehaviour:
   walkSpeed: 2.5
   sprintSpeed: 5
   crouchSpeed: 1.5
+  flattenSpeedOnSlopes: 1
   smoothDirectionInputFactor: 10
   smoothVelocityFactor: 5
   smoothSprintVelocityFactor: 1.5
@@ -523,7 +525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkGround: {fileID: 2176356878162520009}
   fallVelocityThreshold: -0.2
-  fallDistanceFromGroundThreshold: 0.45
+  fallDistanceFromGroundThreshold: 0.4
 --- !u!114 &545511874797415526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,7 +566,8 @@ MonoBehaviour:
   gravityMultiplier: 1
   fallMultiplier: 2
   lowJumpMultiplier: 2
-  applyOnlyOnRunning: 0
+  enableStickToSlopeForce: 1
+  stickToSlopeSpeedThreshold: 3.5
   stickToSlopeForce: 20
 --- !u!114 &6106714240860128082
 MonoBehaviour:
@@ -653,6 +656,18 @@ MonoBehaviour:
   interactionInput: {fileID: 0}
   playerInteract: {fileID: 4536946071876244043}
   checkGround: {fileID: 2176356878162520009}
+--- !u!114 &4651765595413967932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5674240081560327779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61295653af6d6634e87dd441e58ae546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6128308559999486290
 GameObject:
   m_ObjectHideFlags: 0

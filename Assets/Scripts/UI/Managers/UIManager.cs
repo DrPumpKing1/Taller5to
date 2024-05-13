@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     private bool CloseInput => UIInput.GetPauseDown();
 
     public static event EventHandler<OnUIToCloseInputEventArgs> OnUIToCloseInput;
+    public static event EventHandler OnCloseAllUIs;
 
     public static event EventHandler OnUIActive;
     public static event EventHandler OnUIInactive;
@@ -27,6 +28,16 @@ public class UIManager : MonoBehaviour
     public class OnUIToCloseInputEventArgs : EventArgs
     {
         public BaseUI UIToClose;
+    }
+
+    private void OnEnable()
+    {
+        PlayerHealth.OnPlayerDeath += PlayerHealth_OnPlayerDeath;
+    }
+
+    private void OnDisable()
+    {
+        PlayerHealth.OnPlayerDeath -= PlayerHealth_OnPlayerDeath;
     }
 
     private void Awake()
@@ -99,4 +110,11 @@ public class UIManager : MonoBehaviour
 
     public void AddToLayersList(BaseUI baseUI) => _UILayers.Add(baseUI);
     public void RemoveFromLayersList(BaseUI baseUI) => _UILayers.Remove(baseUI);
+
+    #region PlayerHealth Subscriptions
+    private void PlayerHealth_OnPlayerDeath(object sender, EventArgs e)
+    {
+        OnCloseAllUIs?.Invoke(this, EventArgs.Empty);
+    }
+    #endregion
 }

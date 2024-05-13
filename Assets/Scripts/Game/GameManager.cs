@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private State state;
     [SerializeField] private State previousState;
 
-    public enum State { OnGameplay, OnUI, OnDialog }
+    public enum State { OnGameplay, OnUI, OnDialog, OnDeath}
 
     public State GameState { get { return state; } }
 
@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     {
         UIManager.OnUIActive += UIManager_OnUIActive;
         UIManager.OnUIInactive += UIManager_OnUIInactive;
+
+        PlayerHealth.OnPlayerDeath += PlayerHealth_OnPlayerDeath;
     }
 
     private void OnDisable()
@@ -55,7 +57,7 @@ public class GameManager : MonoBehaviour
         this.state = state;
     }
 
-    #region SymbolCraftingUI Sumbcriptions
+    #region UIManager Subcriptions
     private void UIManager_OnUIActive(object sender, System.EventArgs e)
     {
         SetGameState(State.OnUI);
@@ -65,6 +67,12 @@ public class GameManager : MonoBehaviour
     {
         SetGameState(previousState);
     }
+    #endregion
 
+    #region PlayerHealth Subscriptions
+    private void PlayerHealth_OnPlayerDeath(object sender, System.EventArgs e)
+    {
+        SetGameState(State.OnDeath);
+    }
     #endregion
 }

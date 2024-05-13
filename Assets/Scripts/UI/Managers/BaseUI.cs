@@ -11,11 +11,13 @@ public abstract class BaseUI : MonoBehaviour
     protected virtual void OnEnable()
     {
         UIManager.OnUIToCloseInput += UIManager_OnUIToCloseInput;
+        UIManager.OnCloseAllUIs += UIManager_OnCloseAllUIs;
     }
 
     protected virtual void OnDisable()
     {
         UIManager.OnUIToCloseInput -= UIManager_OnUIToCloseInput;
+        UIManager.OnCloseAllUIs -= UIManager_OnCloseAllUIs;
     }
 
     protected void AddToUILayersList() => UIManager.Instance.AddToLayersList(this);
@@ -33,6 +35,12 @@ public abstract class BaseUI : MonoBehaviour
 
         CloseFromUI();
     }
+
+    private void UIManager_OnCloseAllUIs(object sender, System.EventArgs e)
+    {
+        CloseFromUI();
+    }
+
     #endregion
 
 }
