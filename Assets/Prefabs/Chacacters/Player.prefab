@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5105e3a0fd922014781141536a1e01a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
+  debug: 0
 --- !u!114 &1658583223491952907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,7 +491,7 @@ MonoBehaviour:
   playerInteractAlternate: {fileID: 907748609654045023}
   checkGround: {fileID: 2176356878162520009}
   checkWall: {fileID: 8413128526021734546}
-  walkSpeed: 2.5
+  walkSpeed: 2
   sprintSpeed: 5
   crouchSpeed: 1.5
   flattenSpeedOnSlopes: 1
@@ -521,7 +521,7 @@ MonoBehaviour:
   checkGround: {fileID: 2176356878162520009}
   playerCrouch: {fileID: 6106714240860128082}
   jumpHeight: 1.25
-  jumpHeightError: -0.12
+  jumpHeightError: -0.08
   impulseTime: 0
   jumpCooldown: 0.4
   forwardImpulse: 1.5
