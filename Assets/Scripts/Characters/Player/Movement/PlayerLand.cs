@@ -13,7 +13,7 @@ public class PlayerLand : MonoBehaviour
     [Header("Land Settings")]
     [SerializeField, Range(0f, 1.5f)] private float landDetectionHeightThreshold;
     [Space]
-    [SerializeField, Range(0f, 1.5f)] private float softLandingThreshold;
+    [SerializeField, Range(-1f, 1.5f)] private float softLandingThreshold;
     [Space]
     [SerializeField, Range(0f, 1.5f)] private float normalLandingThreshold;
     [SerializeField, Range(0f, 0.5f)] private float normalLandRecoveryTime;

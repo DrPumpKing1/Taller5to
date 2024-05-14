@@ -38,11 +38,11 @@ public class CheckWall : MonoBehaviour
 
     private bool CheckIfWall()
     {
-        bool checkWall15PercentBody = CheckIfWallAtPoint(transform.position + capsuleCollider.center + new Vector3(0f,capsuleCollider.height * -0.35f, 0f), capsuleCollider.radius + lowRayLenght, lowRaySphereRadius);
+        bool checkWall20PercentBody = CheckIfWallAtPoint(transform.position + capsuleCollider.center + new Vector3(0f,capsuleCollider.height * -0.3f, 0f), capsuleCollider.radius + lowRayLenght, lowRaySphereRadius);
         bool checkWallHalfBody = CheckIfWallAtPoint(transform.position + capsuleCollider.center,rayLength,raySphereRadius);
         bool checkWall95PercentBody = CheckIfWallAtPoint(transform.position + capsuleCollider.center + new Vector3(0f,capsuleCollider.height * 0.45f,0f), capsuleCollider.radius + rayLength, raySphereRadius);
 
-        return checkWall15PercentBody || checkWallHalfBody || checkWall95PercentBody;
+        return checkWall20PercentBody || checkWallHalfBody || checkWall95PercentBody;
     }
     private bool CheckIfDiagonalWall()
     {
