@@ -8,7 +8,7 @@ public class ProjectionGemsPersistence : MonoBehaviour, IDataPersistence<PlayerD
     {
         ProjectionGemsManager projectionGemsManager = FindObjectOfType<ProjectionGemsManager>();
 
-        if (data.totalProjectionGems == 0) return; //If its 0, it means PlayerData has been initialized as a new()
+        if (data.totalProjectionGems == 0) return; //If its 0, it means PlayerData has been initialized as a new(), should avoid SetTotalProjectionGems to use the totalProjectionGems set in the inspector of ProjectionGemsManager
 
         projectionGemsManager.SetTotalProjectionGems(data.totalProjectionGems);
     }

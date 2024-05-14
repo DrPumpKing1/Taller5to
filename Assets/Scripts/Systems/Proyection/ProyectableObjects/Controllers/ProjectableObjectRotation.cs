@@ -132,5 +132,7 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
     {
         float degreesToTurn = clockwiseRotation ? degreesPerTurn : -degreesPerTurn;
         DesiredDirection = (Quaternion.AngleAxis(degreesToTurn, Vector3.up) * DesiredDirection).normalized;
+
+        OnUpdatedInteractableAlternateState?.Invoke(this, EventArgs.Empty);
     }
 }

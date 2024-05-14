@@ -90,5 +90,6 @@ public class ElectricalAltSwitchInteraction : MonoBehaviour, IInteractableAltern
     private void SwitchComponent()
     {
         switchElectrode.SetSwitch(!switchElectrode.SwitchOn);
+        OnUpdatedInteractableAlternateState?.Invoke(this, EventArgs.Empty);
     }
 }

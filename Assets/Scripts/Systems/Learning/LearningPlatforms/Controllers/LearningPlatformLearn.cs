@@ -49,7 +49,6 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     public event EventHandler<IHoldInteractable.OnHoldInteractionEventArgs> OnContinousHoldInteraction;
     #endregion
 
-    public event EventHandler OnOpenSymbolCraftingUI;
     public event EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
 
     public class OnObjectLearnedEventArgs : EventArgs
@@ -155,5 +154,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
         hasAlreadyBeenInteracted = true;
 
         OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { objectLearned = ProjectableObjectToLearn });
+
+        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 }

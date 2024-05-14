@@ -136,8 +136,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   petPlayerAttachment: {fileID: 2838269271005741648}
   orbitPoint: {fileID: 0}
+  playerStartPositioning: {fileID: 0}
   playerInteract: {fileID: 0}
   playerInteractAlternate: {fileID: 0}
+  startPositionOffsetFromOrbitPoint: {x: 0, y: 1.5, z: 0}
   orbitRadius: 1.5
   smoothPositionSpeedFactor: 2.5
   smoothVectorSpeedFactor: 2.5

@@ -8,8 +8,12 @@ public class PetPositioningHandler : MonoBehaviour
     [Header("Components")]
     [SerializeField] private PetPlayerAttachment petPlayerAttachment;
     [SerializeField] private Transform orbitPoint;
+    [SerializeField] private PlayerStartPositioning playerStartPositioning;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
+
+    [Header("Initial Position Settings")]
+    [SerializeField] private Vector3 startPositionOffsetFromOrbitPoint;
 
     [Header("Orbit Positioning Settings")]
     [SerializeField, Range(1f, 5f)] private float orbitRadius;
@@ -41,6 +45,8 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void OnEnable()
     {
+        playerStartPositioning.OnPlayerStartPositioned += PlayerStartPositioning_OnPlayerStartPositioned;
+
         playerInteract.OnInteractionStarted += PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;
 
@@ -50,6 +56,8 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void OnDisable()
     {
+        playerStartPositioning.OnPlayerStartPositioned -= PlayerStartPositioning_OnPlayerStartPositioned;
+
         playerInteract.OnInteractionStarted -= PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded -= PlayerInteract_OnInteractionEnded;
 
@@ -76,14 +84,14 @@ public class PetPositioningHandler : MonoBehaviour
             desiredPosition = curentInteractingTransform.position + offsetFromInteractableObject;
         }
 
-        MoveToTargetPosition();
+        MoveToDesiredPosition();
     }
 
     private void HandleRegularPositioning()
     {
         DefineDesiredDirectionVectorAndRadius();
         CalculateTargetDirectionVector();
-        CalculateTargetPosition();
+        CalculateDesiredPosition();
     }
 
     private void DefineDesiredDirectionVectorAndRadius()
@@ -124,12 +132,26 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void CalculateTargetDirectionVector() => targetDirectionVector = Vector3.Slerp(targetDirectionVector, desiredDirectionVector, smoothVectorSpeedFactor * Time.deltaTime);
 
-    private void CalculateTargetPosition() => desiredPosition = CalculateOrbitPosition(orbitPoint, targetDirectionVector, targetRadius);
+    private void CalculateDesiredPosition() => desiredPosition = CalculateOrbitPosition(orbitPoint, targetDirectionVector, targetRadius);
 
-    private void MoveToTargetPosition() => transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothPositionSpeedFactor * Time.deltaTime);
+    private void MoveToDesiredPosition() => transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothPositionSpeedFactor * Time.deltaTime);
+    private void MoveInstantlyToDesiredPosition() => transform.position = desiredPosition;
 
+    private void StartPositionPet(Vector3 positionVector, float radius)
+    {
+        if (!petPlayerAttachment.AttachToPlayer) return;
 
-    #region PlayerInteractionSubscriptions
+        transform.position = orbitPoint.position + startPositionOffsetFromOrbitPoint;
+    }
+
+    #region PlayerStartPositioning Subscriptions
+    private void PlayerStartPositioning_OnPlayerStartPositioned(object sender, System.EventArgs e)
+    {
+        StartPositionPet(preferredDirectionVectors[0],orbitRadius);
+    }
+    #endregion
+
+    #region PlayerInteraction Subscriptions
     private void PlayerInteract_OnInteractionStarted(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
         if (!moveTowardsObject) return;
@@ -148,7 +170,7 @@ public class PetPositioningHandler : MonoBehaviour
     }
     #endregion
 
-    #region PlayerInteractionAlternateSubscriptions
+    #region PlayerInteractionAlternate Subscriptions
 
     private void PlayerInteractAlternate_OnInteractionAlternateStarted(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {

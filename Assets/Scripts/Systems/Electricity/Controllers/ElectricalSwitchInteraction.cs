@@ -110,5 +110,6 @@ public class ElectricalSwitchInteraction : MonoBehaviour, IHoldInteractable
     private void SwitchComponent()
     {
         switchElectrode.SetSwitch(!switchElectrode.SwitchOn);
+        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 }

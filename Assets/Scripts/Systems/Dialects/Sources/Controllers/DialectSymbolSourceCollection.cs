@@ -128,6 +128,8 @@ public class DialectSymbolSourceCollection : MonoBehaviour, IInteractable
         canBeSelected = false;
         isInteractable = false;
         hasAlreadyBeenInteracted = true;
+
+        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 
     private void DisableVisual() => visual.gameObject.SetActive(false);

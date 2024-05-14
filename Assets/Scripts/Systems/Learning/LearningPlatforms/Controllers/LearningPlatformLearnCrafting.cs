@@ -136,6 +136,8 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
         hasAlreadyBeenInteracted = true;
 
         OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { objectLearned = learningPlatform.ProjectableObjectToLearn });
+
+        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 
     #region SymbolCrafting Subscriptions

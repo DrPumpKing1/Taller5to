@@ -130,5 +130,7 @@ public class ProjectableObjectDematerializationCustom : MonoBehaviour, IHoldInte
         if (projectableObject.ProjectionPlatform) projectableObject.ProjectionPlatform.ClearProjectionPlatform();
 
         Destroy(customObject);
+
+        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 }

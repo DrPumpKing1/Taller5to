@@ -12,8 +12,6 @@ public class InscriptionTranslationUI : BaseUI
     [Header("UI Components")]
     [SerializeField] private Button closeButton;
 
-    public event EventHandler OnCloseFromUI;
-
     public static event EventHandler OnAnyInscriptionTranslationUIOpen;
     public static event EventHandler OnAnyInscriptionTranslationUIClose;
 

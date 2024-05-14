@@ -73,6 +73,8 @@ public class TestHoldInteractable : MonoBehaviour, IHoldInteractable
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
         hasAlreadyBeenInteracted = true;
+
+        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
     public void FailInteract()
     {

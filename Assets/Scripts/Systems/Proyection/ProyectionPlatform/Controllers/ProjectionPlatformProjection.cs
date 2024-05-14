@@ -185,6 +185,8 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
 
         ProjectionManager.Instance.SuccessObjectProjection(projectableObjectSO, projectionPlatform);
         OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO });
+
+        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 
     private void ProjectionPlatform_OnProjectionPlatformClear(object sender, EventArgs e)

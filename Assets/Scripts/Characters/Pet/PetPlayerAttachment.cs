@@ -16,4 +16,5 @@ public class PetPlayerAttachment : MonoBehaviour
 
     private void IgnorePetPlayerCollisions() => Physics.IgnoreLayerCollision(6, 8);
 
+    public void SetAttachToPlayer() => attachToPlayer = true;
 }

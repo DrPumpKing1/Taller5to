@@ -13,8 +13,6 @@ public class SymbolCraftingUI : BaseUI
     [Header("UI Components")]
     [SerializeField] private Button closeButton;
 
-    public event EventHandler OnCloseFromUI;
-
     public static event EventHandler OnAnySymbolCraftingUIOpen;
     public static event EventHandler OnAnySymbolCraftingUIClose;
 

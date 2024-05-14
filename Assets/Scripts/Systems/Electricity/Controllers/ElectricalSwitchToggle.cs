@@ -30,17 +30,13 @@ public class ElectricalSwitchToggle : MonoBehaviour, IInteractable
     public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
 
-    #region IHoldInteractable Events
+    #region IInteractable Events
     public event EventHandler OnObjectSelected;
     public event EventHandler OnObjectDeselected;
     public event EventHandler OnObjectInteracted;
     public event EventHandler OnObjectFailInteracted;
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
     public event EventHandler OnUpdatedInteractableState;
-
-    public event EventHandler OnHoldInteractionStart;
-    public event EventHandler OnHoldInteractionEnd;
-    public event EventHandler<IHoldInteractable.OnHoldInteractionEventArgs> OnContinousHoldInteraction;
     #endregion
 
     #region IInteractable Methods
@@ -94,5 +90,6 @@ public class ElectricalSwitchToggle : MonoBehaviour, IInteractable
     private void SwitchComponent()
     {
         switchElectrode.SetSwitch(!switchElectrode.SwitchOn);
+        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
+    public int checkpointID;
     public SerializableDictionary<int, bool> symbolsCollected;
     public SerializableDictionary<int, bool> symbolSourcesCollected;
     public SerializableDictionary<int, bool> projectableObjectsLearned;
@@ -12,6 +13,7 @@ public class PlayerData
 
     public PlayerData()
     {
+        checkpointID = 0;
         symbolsCollected = new SerializableDictionary<int, bool>(); //String -> id; bool -> isCollected
         symbolSourcesCollected = new SerializableDictionary<int, bool>(); //String -> id; bool -> isCollected
         projectableObjectsLearned = new SerializableDictionary<int, bool>(); //String -> id; bool -> isLearned
