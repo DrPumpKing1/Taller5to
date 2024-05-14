@@ -12,8 +12,6 @@ public class FadeBlockingObjects : MonoBehaviour
     [Header("Fade Object Settings")]
     [SerializeField] private LayerMask blockingLayer;
     [SerializeField, Range(1,15)] private int maxBlockingObjectsPerTarget = 10;
-    [SerializeField, Range(0, 1f)] private float fadeAlpha = 0.33f;
-    [SerializeField, Range(0.25f,3f)] private float fadeSpeed = 1;
     [SerializeField] private bool retainShadows = true;
     [SerializeField] private Vector3 targetPositionOffset = Vector3.zero;
 
@@ -121,9 +119,9 @@ public class FadeBlockingObjects : MonoBehaviour
         }
     }
 
-    private IEnumerator FadeObjectOut(FadingObject FadingObject)
+    private IEnumerator FadeObjectOut(FadingObject fadingObject)
     {
-        foreach (Material material in FadingObject.materials)
+        foreach (Material material in fadingObject.materials)
         {
             material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
             material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
@@ -142,11 +140,11 @@ public class FadeBlockingObjects : MonoBehaviour
         }
 
         float time = 0;
-        float startingAlpha = FadingObject.materials[0].color.a;
+        float startingAlpha = fadingObject.materials[0].color.a;
 
-        while (FadingObject.materials[0].color.a > fadeAlpha)
+        while (fadingObject.materials[0].color.a > fadingObject.FadeAlpha)
         {
-            foreach (Material material in FadingObject.materials)
+            foreach (Material material in fadingObject.materials)
             {
                 if (material.HasProperty("_Color"))
                 {
@@ -154,7 +152,7 @@ public class FadeBlockingObjects : MonoBehaviour
                         material.color.r,
                         material.color.g,
                         material.color.b,
-                        Mathf.Lerp(startingAlpha, fadeAlpha, time * 1/fadeSpeed)
+                        Mathf.Lerp(startingAlpha, fadingObject.FadeAlpha, time * 1/fadingObject.FadeTime)
                     );
                 }
             }
@@ -163,21 +161,21 @@ public class FadeBlockingObjects : MonoBehaviour
             yield return null;
         }
 
-        if (runningCoroutines.ContainsKey(FadingObject))
+        if (runningCoroutines.ContainsKey(fadingObject))
         {
-            StopCoroutine(runningCoroutines[FadingObject]);
-            runningCoroutines.Remove(FadingObject);
+            StopCoroutine(runningCoroutines[fadingObject]);
+            runningCoroutines.Remove(fadingObject);
         }
     }
 
-    private IEnumerator FadeObjectIn(FadingObject FadingObject)
+    private IEnumerator FadeObjectIn(FadingObject fadingObject)
     {
         float time = 0;
-        float startingAlpha = FadingObject.materials[0].color.a;
+        float startingAlpha = fadingObject.materials[0].color.a;
 
-        while (FadingObject.materials[0].color.a < FadingObject.InitialAlpha)
+        while (fadingObject.materials[0].color.a < fadingObject.InitialAlpha)
         {
-            foreach (Material material in FadingObject.materials)
+            foreach (Material material in fadingObject.materials)
             {
                 if (material.HasProperty("_Color"))
                 {
@@ -185,7 +183,7 @@ public class FadeBlockingObjects : MonoBehaviour
                         material.color.r,
                         material.color.g,
                         material.color.b,
-                        Mathf.Lerp(startingAlpha, FadingObject.InitialAlpha, time * 1 / fadeSpeed)
+                        Mathf.Lerp(startingAlpha, fadingObject.InitialAlpha, time * 1 / fadingObject.FadeTime)
                     );
                 }
             }
@@ -194,7 +192,7 @@ public class FadeBlockingObjects : MonoBehaviour
             yield return null;
         }
 
-        foreach (Material material in FadingObject.materials)
+        foreach (Material material in fadingObject.materials)
         {
             material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
             material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
@@ -212,10 +210,10 @@ public class FadeBlockingObjects : MonoBehaviour
             material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
         }
 
-        if (runningCoroutines.ContainsKey(FadingObject))
+        if (runningCoroutines.ContainsKey(fadingObject))
         {
-            StopCoroutine(runningCoroutines[FadingObject]);
-            runningCoroutines.Remove(FadingObject);
+            StopCoroutine(runningCoroutines[fadingObject]);
+            runningCoroutines.Remove(fadingObject);
         }
     }
 

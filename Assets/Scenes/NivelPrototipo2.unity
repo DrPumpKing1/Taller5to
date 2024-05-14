@@ -3443,6 +3443,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1 &94312959
 GameObject:
@@ -5339,6 +5341,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!64 &158304165
 MeshCollider:
@@ -12627,6 +12631,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1 &366891676
 GameObject:
@@ -12809,6 +12815,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0.3
+  fadeTime: 1
   materials: []
 --- !u!65 &369152176
 BoxCollider:
@@ -13396,6 +13404,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1 &382873988
 GameObject:
@@ -14382,6 +14392,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0.3
+  fadeTime: 1
   materials: []
 --- !u!65 &397994954
 BoxCollider:
@@ -15266,6 +15278,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!64 &440828089
 MeshCollider:
@@ -16774,6 +16788,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1 &475643357
 GameObject:
@@ -18294,6 +18310,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0.3
+  fadeTime: 1
   materials: []
 --- !u!65 &547326072
 BoxCollider:
@@ -19977,8 +19995,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   maxBlockingObjectsPerTarget: 15
-  fadeAlpha: 0.3
-  fadeSpeed: 1
   retainShadows: 1
   targetPositionOffset: {x: 0, y: 0, z: 0}
   objectsBlockingView: []
@@ -20175,6 +20191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0.3
+  fadeTime: 1
   materials: []
 --- !u!65 &623110990
 BoxCollider:
@@ -21838,6 +21856,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0.3
+  fadeTime: 1
   materials: []
 --- !u!64 &719907026
 MeshCollider:
@@ -25236,6 +25256,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1 &740808791
 GameObject:
@@ -25783,6 +25805,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0.3
+  fadeTime: 1
   materials: []
 --- !u!65 &769394138
 BoxCollider:
@@ -26780,6 +26804,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!4 &806833866 stripped
 Transform:
@@ -26833,6 +26859,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0.3
+  fadeTime: 1
   materials: []
 --- !u!65 &808017914
 BoxCollider:
@@ -29923,6 +29951,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0.3
+  fadeTime: 1
   materials: []
 --- !u!65 &919115789
 BoxCollider:
@@ -35049,6 +35079,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1001 &1079825212
 PrefabInstance:
@@ -35322,6 +35354,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1979815598}
     m_Modifications:
+    - target: {fileID: 838063661143434914, guid: 534bae75b17b3834ebffa2cde6e6ecd7, type: 3}
+      propertyPath: fadeTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1297629874349345335, guid: 534bae75b17b3834ebffa2cde6e6ecd7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -36773,6 +36809,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1 &1111458442
 GameObject:
@@ -37758,6 +37796,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1 &1134572784
 GameObject:
@@ -38644,6 +38684,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1 &1148618693
 GameObject:
@@ -40280,6 +40322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!64 &1223577838
 MeshCollider:
@@ -41879,6 +41923,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!64 &1271979573
 MeshCollider:
@@ -43697,6 +43743,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0.3
+  fadeTime: 1
   materials: []
 --- !u!65 &1356194909
 BoxCollider:
@@ -46877,6 +46925,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1 &1442488354
 GameObject:
@@ -47780,6 +47830,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1 &1447428754
 GameObject:
@@ -47999,6 +48051,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0.3
+  fadeTime: 1
   materials: []
 --- !u!65 &1455641083
 BoxCollider:
@@ -49316,6 +49370,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!4 &1475276504 stripped
 Transform:
@@ -50331,6 +50387,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!43 &1497742821
 Mesh:
@@ -51425,6 +51483,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1001 &1519186483
 PrefabInstance:
@@ -54602,6 +54662,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1 &1611224355
 GameObject:
@@ -55430,6 +55492,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0.3
+  fadeTime: 1
   materials: []
 --- !u!65 &1642716245
 BoxCollider:
@@ -57253,6 +57317,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1 &1691672180
 GameObject:
@@ -57423,6 +57489,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!64 &1692581431
 MeshCollider:
@@ -59497,6 +59565,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0.3
+  fadeTime: 1
   materials: []
 --- !u!65 &1769844219
 BoxCollider:
@@ -60367,6 +60437,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0.3
+  fadeTime: 1
   materials: []
 --- !u!65 &1804381850
 BoxCollider:
@@ -62169,6 +62241,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1 &1835654655
 GameObject:
@@ -62624,6 +62698,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!64 &1841797951
 MeshCollider:
@@ -64194,6 +64270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1001 &1871959147
 PrefabInstance:
@@ -65510,6 +65588,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1001 &1911244222
 PrefabInstance:
@@ -66821,6 +66901,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!1 &1925442247
 GameObject:
@@ -68739,6 +68821,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0
+  fadeTime: 0
   materials: []
 --- !u!43 &2002521869
 Mesh:
@@ -69478,6 +69562,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99448749949a5b34eaea45385774240c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeAlpha: 0.3
+  fadeTime: 1
   materials: []
 --- !u!65 &2015970375
 BoxCollider:
