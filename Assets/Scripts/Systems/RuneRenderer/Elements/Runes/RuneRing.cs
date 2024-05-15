@@ -60,6 +60,7 @@ public class RuneRing : MonoBehaviour
 
             Vector2 position = new Vector2(x, y) * radius + center.anchoredPosition;
 
+            dots[i].localPoint = position;
             child.anchoredPosition = position;
             lineRenderer.points[i] = position;
         }

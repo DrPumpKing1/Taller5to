@@ -156,11 +156,13 @@ MonoBehaviour:
   grid: {fileID: 0}
   isCenterDot: 0
   center: {fileID: 0}
+  localPoint: {x: 0, y: 0}
   lineRenderer: {fileID: 150871093263943830}
   image: {fileID: 986504582826575216}
   detectedColor: {r: 1, g: 0.6140031, b: 0.495283, a: 1}
   notDetectedColor: {r: 0.5764706, g: 0.84705883, b: 0.9607843, a: 1}
+  canvasRect: {fileID: 0}
   rect: {fileID: 0}
-  radius: 2
+  radius: 1
   detected: 0
   cells: []

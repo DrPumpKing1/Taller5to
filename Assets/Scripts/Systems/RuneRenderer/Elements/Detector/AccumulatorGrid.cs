@@ -6,6 +6,7 @@ using UnityEngine;
 public class AccumulatorGrid : MonoBehaviour
 {
     [Header("Grid Settings")]
+    [SerializeField] private RectTransform rootCanvas;
     [SerializeField] private RectTransform canvas;
     [SerializeField] private float cellSize;
     public float CellSize { get { return cellSize; } }
@@ -13,7 +14,9 @@ public class AccumulatorGrid : MonoBehaviour
 
     [Header("Grid Properties")]
     [SerializeField] private int width;
+    public int Width { get { return width; } }
     [SerializeField] private int height;
+    public int Height { get { return height; } }
     [SerializeField] private Vector2 offset;
 
     [Header("Grid")]
@@ -31,17 +34,36 @@ public class AccumulatorGrid : MonoBehaviour
     {
         setup = false;
         InitializeGrid();
+        rootCanvas = GetComponent<RectTransform>();
     }
 
     public void DetectPoints()
     {
+        Vector2 offset = Vector2.zero;
+
+        Canvas canvasUI = GetComponentInParent<Canvas>();
+
+        RectTransform transformTemp = canvas;
+
+        while (transformTemp != rootCanvas)
+        {
+            offset += (Vector2)transformTemp.anchoredPosition / 2;
+            transformTemp = transformTemp.parent.GetComponent<RectTransform>();
+        }
+
+        Debug.Log(offset);
+
         List<DrawSpot> points = new List<DrawSpot>(FindObjectsOfType<DrawSpot>());
 
         if (points.Count <= 0) return;
 
         foreach (DrawSpot point in points)
         {
-            Vector2 nearestCell = GetNearestCell(point.Position);
+            Vector2 positionMouse = point.Position;
+
+            Vector2 positionZeroBased = positionMouse - offset;
+
+            Vector2 nearestCell = GetNearestCell(positionZeroBased + new Vector2(width * cellSize, height * cellSize) / 2);
             VoteCell(nearestCell);
         }
     }
@@ -86,9 +108,9 @@ public class AccumulatorGrid : MonoBehaviour
         {
             width = Mathf.FloorToInt(canvas.rect.width / cellSize);
             height = Mathf.FloorToInt(canvas.rect.height / cellSize);
+            float widthExtra = canvas.rect.width % cellSize;
+            float heightExtra = canvas.rect.height % cellSize;
             offset = Vector2.zero;
-            offset = - new Vector2(canvas.rect.width, canvas.rect.height) / 2 - (Vector2)canvas.localPosition;
-            //offset = (Vector2)canvas.position - new Vector2(canvas.rect.width, canvas.rect.height) ;
 
             grid = new Dictionary<Vector2, int>();
         }
@@ -150,7 +172,7 @@ public class AccumulatorGrid : MonoBehaviour
         return grid[position] >= minVotes;
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         if (!debug) return;
 

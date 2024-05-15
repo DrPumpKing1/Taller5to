@@ -9,6 +9,7 @@ public class RuneDot : MonoBehaviour
     [SerializeField] private AccumulatorGrid grid;
     [SerializeField] private bool isCenterDot = false;
     [SerializeField] private RectTransform center;
+    public Vector2 localPoint;
 
     [Header("Render")]
     [SerializeField] private UILineRenderer lineRenderer;
@@ -17,6 +18,7 @@ public class RuneDot : MonoBehaviour
     [SerializeField] private Color notDetectedColor;
 
     [Header("Detection")]
+    [SerializeField] RectTransform canvasRect;
     [SerializeField] RectTransform rect;
     [SerializeField] private int radius;
     [SerializeField] private bool detected;
@@ -61,10 +63,8 @@ public class RuneDot : MonoBehaviour
 
     public void PopulateCells()
     {
-        Vector2 position = rect.anchoredPosition;
-
         cells = new List<Vector2>();
-        cells.Add(grid.GetNearestCell(position));
+        cells.Add(grid.GetNearestCell(localPoint + new Vector2(grid.Width * grid.CellSize, grid.Height * grid.CellSize) / 2));
 
         for(int i = 0; i < radius; i++) 
         {
@@ -116,13 +116,12 @@ public class RuneDot : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (Application.isPlaying)
+        if (cells == null) return;
+
+        foreach (Vector2 cell in cells)
         {
-            foreach(Vector2 cell in cells)
-            {
-                Gizmos.color = detected ? Color.green : Color.red;
-                Gizmos.DrawWireCube(cell + new Vector2(Screen.width, Screen.height) / 2 , Vector3.one * grid.CellSize);
-            }
+            Gizmos.color = detected ? detectedColor : notDetectedColor;
+            Gizmos.DrawCube(cell, Vector3.one * grid.CellSize);
         }
     }
 }

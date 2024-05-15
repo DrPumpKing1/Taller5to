@@ -49,7 +49,7 @@ public class RuneCanvas : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (drawing && overCanvas)
         {
             Vector2 mousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            Draw(mousePos);
+            Draw(mousePos - new Vector2(Screen.width / 2, Screen.height / 2));
         }
     }
 
@@ -58,16 +58,18 @@ public class RuneCanvas : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (timer >= 0) return;
         timer = drawInterval;
 
-        RectTransform rectTransform = GetComponent<RectTransform>();
+        RectTransform rectThis = GetComponent<RectTransform>();
 
         GameObject spotObj = Instantiate(spotPrefab, transform);
         RectTransform rect = spotObj.GetComponent<RectTransform>();
 
-        rect.position = position;
+        rect.position = position + new Vector2(Screen.width / 2, Screen.height / 2);
+
+        Vector2 positionProcessed = position;
 
         if (previousDrawSpot != null && rect != null)
         {
-            Vector3 dif = position - previousDrawSpot.Position;
+            Vector3 dif = positionProcessed - previousDrawSpot.Position;
 
             if(dif.magnitude > 0)
             {
@@ -77,7 +79,7 @@ public class RuneCanvas : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
 
         DrawSpot spot = spotObj.GetComponent<DrawSpot>();
-        spot?.SetSpotData(position);
+        spot?.SetSpotData(positionProcessed);
 
         previousDrawSpot = spot;
     }
