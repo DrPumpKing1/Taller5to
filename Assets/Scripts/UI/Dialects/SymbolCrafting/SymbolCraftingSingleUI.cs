@@ -31,7 +31,12 @@ public class SymbolCraftingSingleUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O)) CraftSymbol(); //TestToCraftSymbol
+        if (Input.GetKeyDown(KeyCode.O)) 
+        {
+            if (transform.parent.parent.parent.GetComponent<CanvasGroup>().alpha != 1) return;
+            CraftSymbol(); //TestToCraftSymbol
+        }
+
     }
     
     #region SetUp Methods
