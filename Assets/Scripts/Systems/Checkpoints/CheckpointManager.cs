@@ -22,6 +22,7 @@ public class CheckpointManager : MonoBehaviour
     {
         public int id;
         public Transform checkpointTransform;
+        public Vector2 checkpointDirection;
     }
 
     public class OnCheckpointReachedEventArgs : EventArgs
@@ -86,5 +87,18 @@ public class CheckpointManager : MonoBehaviour
         }
 
         return checkpoint.checkpointTransform.position;
+    }
+
+    public Vector2 GetCurrentCheckpointDirection()
+    {
+        Checkpoint checkpoint = GetCheckpointByCheckpointID(currentCheckpointID);
+
+        if (checkpoint == null)
+        {
+            if (debug) Debug.LogWarning("GetCheckpointDirection will be ignored due to checkpoint not found");
+            return Vector2.zero;
+        }
+
+        return checkpoint.checkpointDirection;
     }
 }

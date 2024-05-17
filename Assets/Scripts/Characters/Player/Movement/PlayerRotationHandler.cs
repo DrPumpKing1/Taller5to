@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerRotationHandler : MonoBehaviour
 {
     [Header("Components")]
+    [SerializeField] private PlayerStartDirection playerStartDirection;
     [SerializeField] private PlayerHorizontalMovement playerHorizontalMovement;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
@@ -13,10 +14,6 @@ public class PlayerRotationHandler : MonoBehaviour
 
     [Header("Rotation Settings")]
     [SerializeField, Range(1f, 100f)] private float smoothRotateFactor = 10f;
-
-    [Header("Starting Rotation Settings")]
-    [SerializeField] private bool applyStartingRotation;
-    [SerializeField] private Vector2 startingFacingDirection;
 
     [Header("Hold Settings")]
     [SerializeField, Range (0f, 0.1f)] private float holdDirectionThresholdTime;
@@ -33,6 +30,8 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void OnEnable()
     {
+        playerStartDirection.OnPlayerStartDirectioned += PlayerStartDirection_OnPlayerStartDirectioned;
+
         playerInteract.OnInteractionStarted += PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;
 
@@ -42,6 +41,8 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void OnDisable()
     {
+        playerStartDirection.OnPlayerStartDirectioned -= PlayerStartDirection_OnPlayerStartDirectioned;
+
         playerInteract.OnInteractionStarted -= PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded -= PlayerInteract_OnInteractionEnded;
 
@@ -68,18 +69,6 @@ public class PlayerRotationHandler : MonoBehaviour
     {
         interactingRotate = false;
         previousDirectionInput = DirectionInput;
-
-        FacingDirection = playerHorizontalMovement.transform.forward;
-
-        if (applyStartingRotation)
-        {
-            FacingDirection = GeneralMethods.Vector2ToVector3(startingFacingDirection);
-            FacingDirection = FacingDirection.magnitude == 0 ? playerHorizontalMovement.transform.forward : FacingDirection;
-        }
-
-        FacingDirection.Normalize();
-
-        transform.localRotation = Quaternion.LookRotation(FacingDirection);
     }
 
     private void HandleHoldDirection()
@@ -132,6 +121,13 @@ public class PlayerRotationHandler : MonoBehaviour
     }
 
     private void AvoidXZRotation() => transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
+
+    #region PlayerStartDirectioningSettings
+    private void PlayerStartDirection_OnPlayerStartDirectioned(object sender, PlayerStartDirection.OnPlayerStartDirectionedEventArgs e)
+    {
+        FacingDirection = e.startingFacingDirection;
+    }
+    #endregion
 
     #region PlayerInteractionSubscriptions
     private void PlayerInteract_OnInteractionStarted(object sender, PlayerInteract.OnInteractionEventArgs e)
