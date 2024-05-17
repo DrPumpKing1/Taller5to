@@ -71,7 +71,7 @@ MonoBehaviour:
   playerHorizontalMovement: {fileID: 1658583223491952907}
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 129
   rayLength: -0.1
   raySphereRadius: 0.2
   lowRayLenght: -0.1
@@ -93,7 +93,7 @@ MonoBehaviour:
   capsuleCollider: {fileID: 4813907677414057247}
   roofLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 129
   useCapsuleColliderValues: 1
   rayLength: 0.75
   raySphereRadius: 0.2
@@ -483,6 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5105e3a0fd922014781141536a1e01a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enablePositionToCheckpoint: 0
   debug: 0
 --- !u!114 &1658583223491952907
 MonoBehaviour:
