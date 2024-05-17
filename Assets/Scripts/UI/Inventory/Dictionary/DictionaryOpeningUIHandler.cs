@@ -17,7 +17,7 @@ public class DictionaryOpeningUIHandler : MonoBehaviour
     }
 
     [Serializable]
-    private class DictionaryButtonPanel
+    public class DictionaryButtonPanel
     {
         public Dialect dialect;
         public Button dictionaryButton;

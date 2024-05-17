@@ -8,7 +8,6 @@ public class PetPositioningHandler : MonoBehaviour
     [Header("Components")]
     [SerializeField] private PetPlayerAttachment petPlayerAttachment;
     [SerializeField] private Transform orbitPoint;
-    [SerializeField] private PlayerStartPositioning playerStartPositioning;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
 
@@ -45,7 +44,7 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        playerStartPositioning.OnPlayerStartPositioned += PlayerStartPositioning_OnPlayerStartPositioned;
+        PlayerStartPositioning.OnPlayerStartPositioned += PlayerStartPositioning_OnPlayerStartPositioned;
 
         playerInteract.OnInteractionStarted += PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;
@@ -56,7 +55,7 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        playerStartPositioning.OnPlayerStartPositioned -= PlayerStartPositioning_OnPlayerStartPositioned;
+        PlayerStartPositioning.OnPlayerStartPositioned -= PlayerStartPositioning_OnPlayerStartPositioned;
 
         playerInteract.OnInteractionStarted -= PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded -= PlayerInteract_OnInteractionEnded;

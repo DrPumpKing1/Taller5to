@@ -5,10 +5,13 @@ using System;
 
 public class PlayerStartPositioning : MonoBehaviour
 {
+    [Header("Enable Position To Checkpoint")]
+    [SerializeField] private bool enablePositionToCheckpoint;
+
     [Header("Debug")]
     [SerializeField] private bool debug;
 
-    public event EventHandler OnPlayerStartPositioned;
+    public static event EventHandler OnPlayerStartPositioned;
 
     public class OnPlayerStartPositionedEventArgs : EventArgs
     {
@@ -29,7 +32,8 @@ public class PlayerStartPositioning : MonoBehaviour
             if (debug) Debug.LogWarning("Positioning will be ignored due to Vector3.zero position");
         }
 
-        transform.position = position;
+        if (enablePositionToCheckpoint) transform.position = position;
+
         OnPlayerStartPositioned?.Invoke(this, new OnPlayerStartPositionedEventArgs { playerPosition = transform.position });
     }
 }
