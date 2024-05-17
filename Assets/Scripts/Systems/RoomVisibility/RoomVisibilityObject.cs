@@ -83,6 +83,7 @@ public class RoomVisibilityObject : MonoBehaviour
     {
         CheckStartVisibility(e.currentRoomVisibilityColliders);
     }
+
     private void RoomVisibilityManager_OnEnterBlockingViewColliders(object sender, RoomVisibilityManager.OnBlockingViewCollidersEnterEventArgs e)
     {
         CheckEnterVisibility(e.previousRoomVisibilityColliders,e.newRoomVisibilityColliders);
