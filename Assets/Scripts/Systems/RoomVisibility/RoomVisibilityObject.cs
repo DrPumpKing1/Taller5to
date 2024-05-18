@@ -27,11 +27,18 @@ public class RoomVisibilityObject : MonoBehaviour
 
     private void Awake()
     {
+        UpdateRenderersList();
+    }
+
+    private void UpdateRenderersList()
+    {
         renderers = GetComponentsInChildren<Renderer>().ToList();
     }
 
     private void EnableMeshRenderers()
     {
+        UpdateRenderersList();
+
         foreach(Renderer renderer in renderers)
         {
             renderer.enabled = true;
@@ -40,6 +47,8 @@ public class RoomVisibilityObject : MonoBehaviour
 
     private void DisableMeshRenderers()
     {
+        UpdateRenderersList();
+
         foreach (Renderer renderer in renderers)
         {
             renderer.enabled = false;
