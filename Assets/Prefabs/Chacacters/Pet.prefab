@@ -62,6 +62,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3347468614378750834}
   - component: {fileID: 5923628213344039110}
+  - component: {fileID: 2624488069321933222}
   - component: {fileID: 2838269271005741648}
   - component: {fileID: 5680990158484470575}
   m_Layer: 8
@@ -109,6 +110,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.25
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &2624488069321933222
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3043309969516445686}
+  serializedVersion: 4
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 2
 --- !u!114 &2838269271005741648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +164,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   petPlayerAttachment: {fileID: 2838269271005741648}
   orbitPoint: {fileID: 0}
-  playerStartPositioning: {fileID: 0}
   playerInteract: {fileID: 0}
   playerInteractAlternate: {fileID: 0}
   startPositionOffsetFromOrbitPoint: {x: 0, y: 1.5, z: 0}
