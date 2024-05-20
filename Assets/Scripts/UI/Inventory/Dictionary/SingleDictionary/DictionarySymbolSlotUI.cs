@@ -6,19 +6,16 @@ using System;
 
 public class DictionarySymbolSlotUI : MonoBehaviour
 {
+    [Header("Settings")]
+    [SerializeField] private DialectSymbolSO dialectSymbolSO;
+
     [Header("UI Components")]
     [SerializeField] private Image symbolImage;
     [SerializeField] private Image meaningImage;
     [SerializeField] private Button discoverButton;
 
-    [Header("Settings")]
-    [SerializeField] private DialectSymbolSO dialectSymbolSO;
-
-    [Header("Identifiers")]
-    [SerializeField] private int id;
-    [SerializeField] private bool symbolDiscovered;
-
-    public DialectSymbolSO DialectSymbolSO { get { return dialectSymbolSO; } }
+    public DialectSymbolSO DialectSymbolSO => dialectSymbolSO;
+    private bool symbolDiscoveryUIEnabled;
 
     private void OnEnable()
     {
@@ -27,7 +24,7 @@ public class DictionarySymbolSlotUI : MonoBehaviour
 
     private void OnDisable()
     {
-        SymbolsDictionaryManager.OnDialectSymbolCollected += SymbolsDictionaryManager_OnDialectSymbolCollected;
+        SymbolsDictionaryManager.OnDialectSymbolCollected -= SymbolsDictionaryManager_OnDialectSymbolCollected;
     }
 
     private void Awake()
@@ -37,6 +34,7 @@ public class DictionarySymbolSlotUI : MonoBehaviour
 
     private void Start()
     {
+        InitializeVariables();
         CheckShowSymbol();
     }
 
@@ -45,13 +43,18 @@ public class DictionarySymbolSlotUI : MonoBehaviour
         discoverButton.onClick.AddListener(CollectDiscoveredSymbol);
     }
 
+    private void InitializeVariables()
+    {
+        symbolDiscoveryUIEnabled = false;
+    }
+
     private void CheckShowSymbol()
     {
-        if (SymbolsDictionaryManager.Instance.SymbolsDictionary.Contains(dialectSymbolSO))
+        if (CheckSymbolInDictionary())
         {
             ShowSymbol();
         }
-        else if (symbolDiscovered)
+        else if (CheckOriginatorsInDictionary())
         {
             EnableSymbolDiscoveryUI();
         }
@@ -68,37 +71,53 @@ public class DictionarySymbolSlotUI : MonoBehaviour
 
     private void EnableSymbolDiscoveryUI()
     {
+        if (symbolDiscoveryUIEnabled) return;
+
         discoverButton.gameObject.SetActive(true);
+        symbolDiscoveryUIEnabled = true;
+    }
+
+    private void DisableSymbolDiscoveryUI()
+    {
+        if (!symbolDiscoveryUIEnabled) return;
+
+        discoverButton.gameObject.SetActive(false);
+        symbolDiscoveryUIEnabled = false;
     }
 
     private void CollectDiscoveredSymbol()
     {
-        discoverButton.gameObject.SetActive(false);
+        DisableSymbolDiscoveryUI();
 
-        ShowSymbol();
         SymbolsDictionaryManager.Instance.CollectSymbol(dialectSymbolSO);
+        ShowSymbol();
     }
 
-    public void SetSymbolDiscovered() => symbolDiscovered = true;
+    private bool CheckSymbolInDictionary() => SymbolsDictionaryManager.Instance.SymbolsDictionary.Contains(dialectSymbolSO);
+    private bool CheckOriginatorsInDictionary()
+    {
+        if (dialectSymbolSO.IsPrimary()) return false;
+
+        foreach (DialectSymbolSO originator in dialectSymbolSO.originators)
+        {
+            if (!SymbolsDictionaryManager.Instance.SymbolsDictionary.Contains(originator)) return false;
+        }
+
+        return true;
+    }
 
     private void CheckComposedSymbolFormed()
     {
-        if (symbolDiscovered) return;
-        if (SymbolsDictionaryManager.Instance.SymbolsDictionary.Contains(dialectSymbolSO)) return;
         if (dialectSymbolSO.IsPrimary()) return;
 
-        foreach(DialectSymbolSO originator in dialectSymbolSO.originators)
-        {
-            if (!SymbolsDictionaryManager.Instance.SymbolsDictionary.Contains(originator)) return;
-        }
-
-        SetSymbolDiscovered();
         EnableSymbolDiscoveryUI();
     }
 
     #region SymbolsDictionaryManager Subscriptions
     private void SymbolsDictionaryManager_OnDialectSymbolCollected(object sender, SymbolsDictionaryManager.OnDialectSymbolCollectedEventArgs e)
     {
+        if (CheckSymbolInDictionary()) return;
+
         if (dialectSymbolSO == e.collectedSymbol) ShowSymbol();
         else CheckComposedSymbolFormed();
     }
