@@ -96,4 +96,6 @@ public class ProjectionManager : MonoBehaviour
         ProjectionGemsManager.Instance.RefundProyectionGems(projectableObjectSO.projectionGemsCost);
         OnObjectDematerialized?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
     }
+
+    public bool AnyObjectsProjected() => currentProjectedObjects.Count > 0;
 }
