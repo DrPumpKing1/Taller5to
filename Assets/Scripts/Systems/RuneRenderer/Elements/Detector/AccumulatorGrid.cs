@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,6 +6,12 @@ using UnityEngine;
 
 public class AccumulatorGrid : MonoBehaviour
 {
+    public EventHandler<DetectionHandlerArgs> DetetectionHandler;
+    public class DetectionHandlerArgs: EventArgs
+    {
+        public List<int> detectedIds;
+    }
+
     [Header("Grid Settings")]
     [SerializeField] private RectTransform rootCanvas;
     [SerializeField] private RectTransform canvas;
@@ -26,12 +33,14 @@ public class AccumulatorGrid : MonoBehaviour
     [SerializeField] private int minVotes;
     [SerializeField] private bool debug;
     [SerializeField] private GameObject dotPrefab;
+    [SerializeField] private List<int> detectedIds;
 
     [Header("Rune Dots")]
     [SerializeField] private List<RuneDot> runeDots;
 
     private void Awake()
     {
+        detectedIds = new List<int>();
         setup = false;
         InitializeGrid();
         rootCanvas = GetComponent<RectTransform>();
@@ -72,6 +81,13 @@ public class AccumulatorGrid : MonoBehaviour
     {
         runeDots.ForEach(runeDot => runeDot.ListenResults());
 
+        runeDots.ForEach(runeDot =>
+        {
+            if (runeDot.GetDetected()) detectedIds.Add(runeDot.Id);
+        });
+
+        DetetectionHandler?.Invoke(this, new DetectionHandlerArgs { detectedIds = detectedIds });
+
         if (!debug) return;
 
         if(grid == null) return;
@@ -100,6 +116,8 @@ public class AccumulatorGrid : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+
+        detectedIds.Clear();
     }
 
     private void InitializeGrid()

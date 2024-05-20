@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using static AccumulatorGrid;
+using System.Linq;
 
 public class SymbolCraftingSingleUI : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private SymbolCraftingSO symbolCraftingSO;
+    [SerializeField] private AccumulatorGrid grid;
 
     [Header("UI Components")]
     [SerializeField] private Image imageToTranslate;
@@ -18,6 +21,16 @@ public class SymbolCraftingSingleUI : MonoBehaviour
     public bool IsCrafted { get { return isCrafted; } }
 
     public event EventHandler OnSymbolCrafted;
+
+    private void OnEnable()
+    {
+        grid.DetetectionHandler += OnSymbolCraftedHandler;
+    }
+
+    private void OnDisable()
+    {
+        grid.DetetectionHandler -= OnSymbolCraftedHandler;
+    }
 
     private void Start()
     {
@@ -31,11 +44,11 @@ public class SymbolCraftingSingleUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O)) 
-        {
-            if (transform.parent.parent.parent.GetComponent<CanvasGroup>().alpha != 1) return;
-            CraftSymbol(); //TestToCraftSymbol
-        }
+        //if (Input.GetKeyDown(KeyCode.O)) 
+        //{
+        //    if (transform.parent.parent.parent.GetComponent<CanvasGroup>().alpha != 1) return;
+        //    CraftSymbol(); //TestToCraftSymbol
+        //}
 
     }
     
@@ -56,5 +69,19 @@ public class SymbolCraftingSingleUI : MonoBehaviour
 
         isCrafted = true;
         OnSymbolCrafted?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OnSymbolCraftedHandler(object sender, DetectionHandlerArgs e)
+    {
+        var ids = e.detectedIds;
+        var idsToCraft = symbolCraftingSO.pointsIDs;
+
+        var substractList = ids.Except(idsToCraft).ToList();
+        var substractList2 = idsToCraft.Except(ids).ToList();
+
+        if(substractList.Count == 0 && substractList2.Count == 0)
+        {
+            CraftSymbol();
+        }
     }
 }

@@ -18,6 +18,8 @@ public class RuneDot : MonoBehaviour
     [SerializeField] private Color notDetectedColor;
 
     [Header("Detection")]
+    [SerializeField] private int id;
+    public int Id { get { return id; } }
     [SerializeField] RectTransform canvasRect;
     [SerializeField] RectTransform rect;
     [SerializeField] private int radius;
@@ -54,6 +56,11 @@ public class RuneDot : MonoBehaviour
         lineRenderer.points[0] = center.anchoredPosition - position;
         lineRenderer.points[1] = Vector2.zero;
         lineRenderer.SetAllDirty();
+    }
+
+    public bool GetDetected()
+    {
+        return detected;
     }
 
     private void RenderDetected()
