@@ -11,7 +11,7 @@ public class DialectSymbolSource : MonoBehaviour
     [Header("Identifiers")]
     [SerializeField] private bool isCollected;
 
-    public DialectSymbolSourceSO DialectSymbolSourceSO { get { return dialectSymbolSourceSO; } }
+    public DialectSymbolSourceSO DialectSymbolSourceSO => dialectSymbolSourceSO;
     public bool IsCollected => isCollected;
 
     public void SetIsCollected() => isCollected = true;

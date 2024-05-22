@@ -18,9 +18,9 @@ public class SymbolCrafting : MonoBehaviour
     public event EventHandler OnOpenSymbolCraftingUI;
     public event EventHandler OnAllSymbolsCrafted;
 
-    public Dialect Dialect { get { return dialect; } }
-    public List<SymbolCraftingSO> SymbolCraftingSOs { get { return symbolCraftingSOs; } }
-    public bool AllSymbolsCrafted { get { return allSymbolsCrafted; } }
+    public Dialect Dialect => dialect;
+    public List<SymbolCraftingSO> SymbolCraftingSOs => symbolCraftingSOs;
+    public bool AllSymbolsCrafted => allSymbolsCrafted;
 
     private IRequiresSymbolCrafting iRequiresSymbolCrafting;
 

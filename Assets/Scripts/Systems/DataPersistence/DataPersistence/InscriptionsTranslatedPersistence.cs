@@ -12,7 +12,7 @@ public class InscriptionsTranslatedPersistence : MonoBehaviour, IDataPersistence
         {
             foreach (KeyValuePair<int, bool> inscriptionTranslated in data.inscriptionsTranslated)
             {
-                if (inscription.ID == inscriptionTranslated.Key)
+                if (inscription.InscriptionSO.id == inscriptionTranslated.Key)
                 {
                     if (inscriptionTranslated.Value) inscription.SetIsTranslated();
                     break;
@@ -27,14 +27,14 @@ public class InscriptionsTranslatedPersistence : MonoBehaviour, IDataPersistence
 
         foreach (Inscription inscription in inscriptions)
         {
-            if (data.inscriptionsTranslated.ContainsKey(inscription.ID)) data.inscriptionsTranslated.Remove(inscription.ID);
+            if (data.inscriptionsTranslated.ContainsKey(inscription.InscriptionSO.id)) data.inscriptionsTranslated.Remove(inscription.InscriptionSO.id);
         }
 
         foreach (Inscription inscription in inscriptions)
         {
             bool translated = inscription.IsTranslated;
 
-            data.inscriptionsTranslated.Add(inscription.ID, translated);
+            data.inscriptionsTranslated.Add(inscription.InscriptionSO.id, translated);
         }
     }
 }
