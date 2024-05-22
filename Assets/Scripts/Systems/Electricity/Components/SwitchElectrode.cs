@@ -15,6 +15,8 @@ public class SwitchElectrode : Electrode
         base.ReceiveSignal(intensity);
     }
 
+    public void InitializeSwitch(bool switchOn) => this.switchOn = switchOn;
+
     public void SetSwitch(bool swichOn)
     {
         this.switchOn = swichOn;
