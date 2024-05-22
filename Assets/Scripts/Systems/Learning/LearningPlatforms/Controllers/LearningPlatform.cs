@@ -6,14 +6,12 @@ using System;
 public class LearningPlatform : MonoBehaviour
 {
     [Header("Leraning Platform Settings")]
-    [SerializeField] private ProjectableObjectSO projectableObjectToLearn;
+    [SerializeField] private LearningPlatformSO learningPlatformSO;
 
     [Header("Identifiers")]
-    [SerializeField] private int id;
     [SerializeField] private bool isLearned;
 
-    public ProjectableObjectSO ProjectableObjectToLearn => projectableObjectToLearn;
-    public int ID => id;
+    public LearningPlatformSO LearningPlatformSO => learningPlatformSO;
     public bool IsLearned => isLearned;
 
     public void SetIsLearned() => isLearned = true;

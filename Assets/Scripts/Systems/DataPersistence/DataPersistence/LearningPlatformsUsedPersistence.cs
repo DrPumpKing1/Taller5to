@@ -12,7 +12,7 @@ public class LearningPlatformsUsedPersistence : MonoBehaviour, IDataPersistence<
         {
             foreach (KeyValuePair<int, bool> learningPlatformUsed in data.learningPlatformsUsed)
             {
-                if (learningPlatform.ID == learningPlatformUsed.Key)
+                if (learningPlatform.LearningPlatformSO.id == learningPlatformUsed.Key)
                 {
                     if (learningPlatformUsed.Value) learningPlatform.SetIsLearned();
                     break;
@@ -27,14 +27,14 @@ public class LearningPlatformsUsedPersistence : MonoBehaviour, IDataPersistence<
 
         foreach (LearningPlatform learningPlatform in learningPlatforms)
         {
-            if (data.learningPlatformsUsed.ContainsKey(learningPlatform.ID)) data.learningPlatformsUsed.Remove(learningPlatform.ID);
+            if (data.learningPlatformsUsed.ContainsKey(learningPlatform.LearningPlatformSO.id)) data.learningPlatformsUsed.Remove(learningPlatform.LearningPlatformSO.id);
         }
 
         foreach (LearningPlatform learningPlatform in learningPlatforms)
         {
             bool learned = learningPlatform.IsLearned;
 
-            data.learningPlatformsUsed.Add(learningPlatform.ID, learned);
+            data.learningPlatformsUsed.Add(learningPlatform.LearningPlatformSO.id, learned);
         }
     }
 }

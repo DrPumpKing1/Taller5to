@@ -34,7 +34,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
 
-    public ProjectableObjectSO ProjectableObjectToLearn => learningPlatform.ProjectableObjectToLearn;
+    public ProjectableObjectSO ProjectableObjectToLearn => learningPlatform.LearningPlatformSO.projectableObjectToLearn;
 
     #region IHoldInteractable Events
     public event EventHandler OnObjectSelected;

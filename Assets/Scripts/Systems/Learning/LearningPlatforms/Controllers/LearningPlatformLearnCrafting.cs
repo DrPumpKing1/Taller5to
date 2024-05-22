@@ -127,7 +127,7 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
 
     public void LearnObject()
     {
-        ProjectableObjectsLearningManager.Instance.LearnProjectableObject(learningPlatform.ProjectableObjectToLearn); ;
+        ProjectableObjectsLearningManager.Instance.LearnProjectableObject(learningPlatform.LearningPlatformSO.projectableObjectToLearn); ;
 
         learningPlatform.SetIsLearned();
 
@@ -135,7 +135,7 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
         isInteractable = false;
         hasAlreadyBeenInteracted = true;
 
-        OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { objectLearned = learningPlatform.ProjectableObjectToLearn });
+        OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { objectLearned = learningPlatform.LearningPlatformSO.projectableObjectToLearn });
 
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
