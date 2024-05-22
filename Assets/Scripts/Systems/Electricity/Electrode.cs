@@ -10,7 +10,7 @@ public class Electrode : MonoBehaviour
     public event ReceiveSignalDel OnReceiveSignal; 
 
     protected const float MAX_POWER = 10000;
-    protected const float DECAY_MULTIPLIER = 50f;
+    protected const float DECAY_MULTIPLIER = 10f;
     public const float ACTIVATION_THRESHOLD = 20f;
     public const float ELECTRICITY_TICK_DURATION = 1f;
 
