@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.IO;
 
 public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class, new()
 {
@@ -81,6 +82,22 @@ public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class,
     }
 
     protected void NewGameData() => persistentData = new T();
+
+    public void DeleteGameData()
+    {
+        dirPath = Application.persistentDataPath;
+
+        string path = Path.Combine(dirPath, fileName);
+
+        if (!File.Exists(path))
+        {
+            Debug.Log("No data to delete");
+            return;
+        }
+
+        File.Delete(path);
+        Debug.Log("Data Deleted");
+    }
 
     private void OnApplicationQuit() => SaveGameData();
 
