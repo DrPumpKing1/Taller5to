@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 19
   dialect: 1
-  symbolImage: {fileID: 0}
+  symbolImage: {fileID: 21300000, guid: 0c38bdbdb3cac014aaf9d22e7bd8a44f, type: 3}
   meaningImage: {fileID: 0}
   _name: 
   meaning: 
-  originators: []
+  originators:
+  - {fileID: 11400000, guid: 31c5b4af593f2c8479311a2524583143, type: 2}
+  - {fileID: 11400000, guid: 0bb6da24f43e1094db2888e33afdf459, type: 2}

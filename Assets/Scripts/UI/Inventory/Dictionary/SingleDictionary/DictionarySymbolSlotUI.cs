@@ -68,6 +68,13 @@ public class DictionarySymbolSlotUI : MonoBehaviour
 
     private void ShowSymbolImage() => symbolImage.sprite = dialectSymbolSO.symbolImage;
     private void ShowMeaningImage() => meaningImage.sprite = dialectSymbolSO.meaningImage;
+    private void CollectDiscoveredSymbol()
+    {
+        DisableSymbolDiscoveryUI();
+
+        SymbolsDictionaryManager.Instance.CollectSymbol(dialectSymbolSO);
+        ShowSymbol();
+    }
 
     private void EnableSymbolDiscoveryUI()
     {
@@ -85,13 +92,6 @@ public class DictionarySymbolSlotUI : MonoBehaviour
         symbolDiscoveryUIEnabled = false;
     }
 
-    private void CollectDiscoveredSymbol()
-    {
-        DisableSymbolDiscoveryUI();
-
-        SymbolsDictionaryManager.Instance.CollectSymbol(dialectSymbolSO);
-        ShowSymbol();
-    }
 
     private bool CheckSymbolInDictionary() => SymbolsDictionaryManager.Instance.SymbolsDictionary.Contains(dialectSymbolSO);
     private bool CheckOriginatorsInDictionary()
@@ -108,7 +108,8 @@ public class DictionarySymbolSlotUI : MonoBehaviour
 
     private void CheckComposedSymbolFormed()
     {
-        if (dialectSymbolSO.IsPrimary()) return;
+        if (CheckSymbolInDictionary()) return;
+        if (!CheckOriginatorsInDictionary()) return;
 
         EnableSymbolDiscoveryUI();
     }
@@ -116,10 +117,14 @@ public class DictionarySymbolSlotUI : MonoBehaviour
     #region SymbolsDictionaryManager Subscriptions
     private void SymbolsDictionaryManager_OnDialectSymbolCollected(object sender, SymbolsDictionaryManager.OnDialectSymbolCollectedEventArgs e)
     {
-        if (CheckSymbolInDictionary()) return;
-
-        if (dialectSymbolSO == e.collectedSymbol) ShowSymbol();
-        else CheckComposedSymbolFormed();
+        if (dialectSymbolSO == e.collectedSymbol)
+        {
+            ShowSymbol();
+        }
+        else
+        {
+            CheckComposedSymbolFormed();
+        }
     }
 
     #endregion
