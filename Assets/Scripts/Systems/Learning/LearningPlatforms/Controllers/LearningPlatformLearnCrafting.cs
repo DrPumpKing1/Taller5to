@@ -128,6 +128,7 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
     public void LearnObject()
     {
         ProjectableObjectsLearningManager.Instance.LearnProjectableObject(learningPlatform.LearningPlatformSO.projectableObjectToLearn); ;
+        ProjectionGemsManager.Instance.IncreaseTotalProjectionGems(learningPlatform.LearningPlatformSO.projectionGemsToAdd);
 
         learningPlatform.SetIsLearned();
 
