@@ -15,6 +15,8 @@ public class ElectricalSwitchToggle : MonoBehaviour, IInteractable
     [SerializeField] private bool canBeSelected;
     [SerializeField] private bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
+    [SerializeField] private string tooltipMessageOff;
+    [SerializeField] private string tooltipMessageOn;
     [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
@@ -25,7 +27,7 @@ public class ElectricalSwitchToggle : MonoBehaviour, IInteractable
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
-    public string TooltipMessage => $"{(!switchElectrode.SwitchOn ? "Encender Switch" : "Apagar Switch")}";
+    public string TooltipMessage => $"{(!switchElectrode.SwitchOn ? tooltipMessageOff : tooltipMessageOn)}";
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
