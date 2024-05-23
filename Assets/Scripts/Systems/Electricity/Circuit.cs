@@ -75,7 +75,6 @@ public class Circuit : IDisposable
             {
                 evaluatedNode.Clear();
                 nodesCopy.ForEach(n => n.ResetWeight());
-                Debug.Log("A");
                 await PropagateRoutingForward(node, false, true, evaluatedNode);
                 FlattenWeights(sources);
                 sources++;
