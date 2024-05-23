@@ -77,10 +77,10 @@ public class CableElectrode : Electrode
         }
     }
 
-    public override bool CheckContact(Electrode other)
-    {
-        if (!other.Source && !other.Sender) return false;
-
-        return base.CheckContact(other);
-    }
+    //public override bool CheckContact(Electrode other)
+    //{
+    //    if (!other.Source && !other.Sender) return false;
+    //
+    //    return base.CheckContact(other);
+    //}
 }

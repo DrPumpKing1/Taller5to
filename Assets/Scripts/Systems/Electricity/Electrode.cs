@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -199,7 +200,12 @@ public class Electrode : MonoBehaviour
 
     public static int CompareElectrodes(Electrode a, Electrode b)
     {
-        return a.GetElectrodePriority() - b.GetElectrodePriority();
+        int aPriority = a.GetElectrodePriority();
+        int bPriority = b.GetElectrodePriority();
+        
+        if (aPriority != bPriority) return (int) Mathf.Sign(aPriority - bPriority);
+        
+        return 0;
     }
 
     private int GetElectrodePriority()
@@ -227,11 +233,14 @@ public class Electrode : MonoBehaviour
         Electricity.Instance.RemoveComponentFromList(this);
     }
 
-    /*
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
+        if(!Application.isPlaying) return;
+        
         Handles.Label(transform.position + new Vector3(0, 1, 0), $"Weight: {node.Weight}");
         Handles.Label(transform.position + new Vector3(0, 1.2f, 0), $"Voltage: {power}");
     }
-    */
+#endif
+    
 }

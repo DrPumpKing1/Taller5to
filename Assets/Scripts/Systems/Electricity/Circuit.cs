@@ -12,6 +12,8 @@ using UnityEngine;
 [System.Serializable]
 public class Circuit : IDisposable
 {
+    private readonly int START_COUNT = int.MaxValue;
+    
     delegate void PropagateAction(Node node, int layer, float elementCount, List<Node> nodesEvaluated);
 
     PropagateAction resetNodes = (Node node, int layer, float elementCount, List<Node> nodesEvaluated) => node.Component?.ResetPower();
@@ -54,7 +56,7 @@ public class Circuit : IDisposable
 
         weightsNodes.Clear();
 
-        nodes.Sort((a, b) => Electrode.CompareElectrodes(a.Component, b.Component));
+        nodes = SortNodes(nodes);
         nodes.ForEach(e => {
             e.ResetWeight();
             e.Component?.ResetPower();
@@ -73,6 +75,7 @@ public class Circuit : IDisposable
             {
                 evaluatedNode.Clear();
                 nodesCopy.ForEach(n => n.ResetWeight());
+                Debug.Log("A");
                 await PropagateRoutingForward(node, false, true, evaluatedNode);
                 FlattenWeights(sources);
                 sources++;
@@ -131,6 +134,50 @@ public class Circuit : IDisposable
         }
     }
 
+    private List<Node> SortNodes(List<Node> nodesList)
+    {
+        List<Node> openList = nodesList.FindAll(x => x.Component.Source);
+        List<Node> closedList = new List<Node>();
+        if (!openList.Any())
+        {
+            nodesList.Sort((a, b) => Electrode.CompareElectrodes(a.Component, b.Component));
+            return new List<Node>(nodesList);
+        }
+
+        openList.ForEach(node => node.Weight = START_COUNT);
+        
+        nodesList.ForEach(node => node.ResetWeight());
+
+        int maxIterations = 100;
+        int iter = 0;
+        var tagToAdd = new List<Node>();
+        
+        do
+        {
+            tagToAdd.Clear();
+            
+            foreach (var node in openList)
+            {
+                if(closedList.Contains(node)) continue;
+                else closedList.Add(node);
+                
+                node.ContactNodes.ForEach(contact => {
+                    if (node.Weight > contact.Weight)
+                    {
+                        contact.Weight = node.Weight - 1;
+                        if(!openList.Contains(contact)) tagToAdd.Add(contact);
+                    }
+                });
+            }
+            
+            openList.AddRange(tagToAdd);
+
+            iter++;
+        } while(closedList.Count < nodesList.Count && iter < maxIterations);
+
+        return closedList;
+    }
+
     private async Task PropagateRoutingForward(Node startNode, bool debug, bool useEvaluation, List<Node> evaluatedNode)
     {
         if (startNode == null) return;
@@ -149,7 +196,9 @@ public class Circuit : IDisposable
             evaluatedNode.Add(node);
 
             List<Node> nodes = new List<Node>(node.ContactNodes);
-
+            
+            if(node.Component.Device) return;
+            
             foreach (Node nextNode in nodes)
             {
                 if (evaluatedNode.Contains(nextNode) && useEvaluation)
@@ -294,7 +343,10 @@ public class Circuit : IDisposable
         float nextNodes = GetNextRoutingNodes(node, nodesAlreadyEvaluated);
         float contactNodePreviousNodes = GetPreviousRoutingNodes(contact, nodesAlreadyEvaluated);
 
-        return Mathf.Max(0f, (node.Weight - 1/circuitElementCount) / (nextNodes * contactNodePreviousNodes * sourceDecay));
+        var weightValue = (node.Weight - 1 / circuitElementCount) /
+                          (nextNodes * contactNodePreviousNodes * sourceDecay);
+        
+        return Mathf.Max(0f, weightValue);
     }
 
     public static float GetNextRoutingNodes(Node node, List<Node> nodesAlreadyEvaluated)
