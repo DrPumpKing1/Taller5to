@@ -25,7 +25,7 @@ public class MagicBoxDevice : MonoBehaviour
     [SerializeField] private bool state;
 
     private bool power => electrode.Power >= Electrode.ACTIVATION_THRESHOLD;
-    private bool coherence => state == power;
+    private bool coherence => state == (power && isActive);
     public bool IsActive => isActive;
 
     private void Start()
