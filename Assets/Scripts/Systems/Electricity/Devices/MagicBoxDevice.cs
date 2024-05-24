@@ -11,8 +11,11 @@ public class MagicBoxDevice : MonoBehaviour
     [Header("Device Settings")]
     [SerializeField] private Transform pistonHead;
     [SerializeField] private float extension;
-    Vector3 initialPosition;
-    Vector3 extendedPosition;
+    [SerializeField] private bool startActive;
+
+    private Vector3 initialPosition;
+    private Vector3 extendedPosition;
+    public bool isActive;
 
     [Header("Piston Head Movement")]
     [SerializeField] private float pistonHeadSpeed;
@@ -20,22 +23,27 @@ public class MagicBoxDevice : MonoBehaviour
 
     [Header("Device Control")]
     [SerializeField] private bool state;
+
     private bool power => electrode.Power >= Electrode.ACTIVATION_THRESHOLD;
     private bool coherence => state == power;
+    public bool IsActive => isActive;
 
     private void Start()
     {
         initialPosition = pistonHead.localPosition;
         extendedPosition = pistonHead.localPosition + Vector3.up * extension;
+        isActive = startActive;
     }
 
     private void Update()
     {
         if (coherence) return;
 
-        state = power;
+        state = power && isActive;
         TriggerMovement();
     }
+
+    public void SetMagicBoxActive(bool state) => isActive = state;
 
     private void TriggerMovement()
     {
