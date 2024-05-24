@@ -108,8 +108,8 @@ public class ProjectableObjectSelectionManager : MonoBehaviour
         if (playerInteract.IsInteracting) return;
         if (playerInteractAlternate.IsInteractingAlternate) return;
 
-        HandleProjectableObjectSelectionNext();
-        HandleProjectableObjectSelectionPrevious();
+        //HandleProjectableObjectSelectionNext();
+        //HandleProjectableObjectSelectionPrevious();
 
         HandleProjectableObjectExactSlotSelection();
     }
