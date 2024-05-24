@@ -52,6 +52,8 @@ public class CheckpointManager : MonoBehaviour
 
     public void ReachCheckpoint(int checkpointID)
     {
+        if (checkpointID < currentCheckpointID) return;
+
         Checkpoint checkpointReached = GetCheckpointByCheckpointID(checkpointID);
 
         if (checkpointReached == null)
