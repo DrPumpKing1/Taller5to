@@ -13,10 +13,15 @@ public class SymbolCraftingUI : BaseUI
     [Header("UI Components")]
     [SerializeField] private Button closeButton;
 
-    public static event EventHandler OnAnySymbolCraftingUIOpen;
-    public static event EventHandler OnAnySymbolCraftingUIClose;
+    public static event EventHandler<OnAnySymbolCraftingUIEventArgs> OnAnySymbolCraftingUIOpen;
+    public static event EventHandler<OnAnySymbolCraftingUIEventArgs> OnAnySymbolCraftingUIClose;
 
     private CanvasGroup canvasGroup;
+
+    public class OnAnySymbolCraftingUIEventArgs : EventArgs
+    {
+        public SymbolCraftingUI symbolCraftingUI;
+    }
 
     protected override void OnEnable()
     {
@@ -68,7 +73,7 @@ public class SymbolCraftingUI : BaseUI
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
 
-        OnAnySymbolCraftingUIOpen?.Invoke(this, EventArgs.Empty);
+        OnAnySymbolCraftingUIOpen?.Invoke(this, new OnAnySymbolCraftingUIEventArgs { symbolCraftingUI = this });
 
     }
 
@@ -84,7 +89,7 @@ public class SymbolCraftingUI : BaseUI
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
 
-        OnAnySymbolCraftingUIClose?.Invoke(this, EventArgs.Empty);
+        OnAnySymbolCraftingUIClose?.Invoke(this, new OnAnySymbolCraftingUIEventArgs { symbolCraftingUI = this });
     }
 
     protected override void CloseFromUI()
