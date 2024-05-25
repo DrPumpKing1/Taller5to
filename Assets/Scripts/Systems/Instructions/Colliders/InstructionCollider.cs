@@ -6,9 +6,12 @@ using System;
 public class InstructionCollider : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private int instructionsColliderID;
+    [SerializeField] private int id;
     [SerializeField] private bool hasBeenTriggered;
     [SerializeField,TextArea(3,10)] private string instruction;
+
+    public int ID => id;
+    public bool HasBeenTriggered => hasBeenTriggered;
 
     private const string PLAYER_TAG = "Player";
 
