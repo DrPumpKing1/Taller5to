@@ -44,9 +44,18 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
 
     public event EventHandler OnOpenSymbolCraftingUI;
     public event EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
+
+    public static event EventHandler<OnAnyObjectLearnedEventArgs> OnAnyObjectLearned;
+
     public class OnObjectLearnedEventArgs : EventArgs
     {
         public ProjectableObjectSO objectLearned;
+    }
+
+    public class OnAnyObjectLearnedEventArgs : EventArgs
+    {
+        public ProjectableObjectSO objectLearned;
+        public LearningPlatformLearnCrafting learningPlatformLearnCrafting;
     }
 
     private void OnEnable()
@@ -137,7 +146,7 @@ public class LearningPlatformLearnCrafting : MonoBehaviour, IInteractable, IRequ
         hasAlreadyBeenInteracted = true;
 
         OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { objectLearned = learningPlatform.LearningPlatformSO.projectableObjectToLearn });
-
+        OnAnyObjectLearned?.Invoke(this, new OnAnyObjectLearnedEventArgs { objectLearned = learningPlatform.LearningPlatformSO.projectableObjectToLearn, learningPlatformLearnCrafting = this });
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 

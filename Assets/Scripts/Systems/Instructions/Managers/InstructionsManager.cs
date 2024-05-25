@@ -11,7 +11,7 @@ public class InstructionsManager : MonoBehaviour
 
     private void OnEnable()
     {
-        InstructionCollider.OnInstructionColliderTriggered += InstructionCollider_OnInstructionColliderTriggered;
+        Instruction.OnInstructionTriggered += Instruction_OnInstructionTriggered; ;
     }
 
     private void Awake()
@@ -32,7 +32,7 @@ public class InstructionsManager : MonoBehaviour
         }
     }
 
-    private void ShowInstruction(string instruction)
+    private void ShowInstruction(string instruction, int canvasLayer)
     {
         Transform instructionsUITransform = Instantiate(intructionUIPrefab, null);
 
@@ -45,12 +45,13 @@ public class InstructionsManager : MonoBehaviour
         }
 
         instructionsUI.SetInstructionsText(instruction);
+        instructionsUI.SetCanvasLayer(canvasLayer);
     }
 
     #region InstructionCollider Subscriptions
-    private void InstructionCollider_OnInstructionColliderTriggered(object sender, InstructionCollider.OnInstructionColliderTriggeredEventArgs e)
+    private void Instruction_OnInstructionTriggered(object sender, Instruction.OnInstructionTriggeredEventArgs e)
     {
-        ShowInstruction(e.instruction);
+        ShowInstruction(e.instruction, e.canvasSortingLayer);
     }
 
     #endregion

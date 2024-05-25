@@ -18,6 +18,10 @@ public class InstructionsUI : MonoBehaviour
     }
 
     public void SetInstructionsText(string instruction) => instructionsText.text = instruction;
-
+    public void SetCanvasLayer(int layer)
+    {
+        Canvas canvas = transform.root.GetComponent<Canvas>();
+        canvas.sortingOrder = layer;
+    }
     private void DestroyRootAfterLifeTime() => Destroy(transform.root.gameObject, lifeTime);
 }
