@@ -73,7 +73,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inscriptionSO: {fileID: 0}
-  id: 1
   isTranslated: 0
 --- !u!114 &907053527920076682
 MonoBehaviour:
@@ -549,6 +548,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7625859073450321833, guid: 8581ecd2805570044b71c1fe77b989be, type: 3}
+      propertyPath: symbolCrafing
+      value: 
+      objectReference: {fileID: 4720400945071998134}
     - target: {fileID: 7625859073450321833, guid: 8581ecd2805570044b71c1fe77b989be, type: 3}
       propertyPath: inscriptionTranslation
       value: 

@@ -510,7 +510,7 @@ MonoBehaviour:
   crouchSpeed: 1.5
   flattenSpeedOnSlopes: 1
   smoothDirectionInputFactor: 10
-  smoothVelocityFactor: 5
+  smoothVelocityFactor: 20
   smoothSprintVelocityFactor: 1.5
   smoothFinalDirectionSpeed: 50
 --- !u!114 &5416400497481260393
@@ -537,7 +537,7 @@ MonoBehaviour:
   jumpHeight: 1.25
   jumpHeightError: -0.08
   impulseTime: 0
-  jumpCooldown: 0.4
+  jumpCooldown: 0
   forwardImpulse: 1.5
 --- !u!114 &2984513525385847362
 MonoBehaviour:

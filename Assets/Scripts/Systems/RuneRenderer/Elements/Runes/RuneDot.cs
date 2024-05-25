@@ -34,6 +34,8 @@ public class RuneDot : MonoBehaviour
     private void Start()
     {
         rect = GetComponent<RectTransform>();
+
+        if (isCenterDot) return;
         grid.AddRuneDot(this);
     }
 
