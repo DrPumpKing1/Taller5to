@@ -732,7 +732,7 @@ MonoBehaviour:
   width: 0
   height: 0
   offset: {x: 0, y: 0}
-  minVotes: 10
+  minVotes: 5
   debug: 0
   dotPrefab: {fileID: 5706680820937759466, guid: e7a890b500a31b647b4c7ee9e672b913, type: 3}
   detectedIds: 
@@ -3078,6 +3078,30 @@ PrefabInstance:
     - target: {fileID: 1220631742699215301, guid: 1edaf8706ae242e4594dc562061fe804, type: 3}
       propertyPath: isCenterDot
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1220631742699215301, guid: 1edaf8706ae242e4594dc562061fe804, type: 3}
+      propertyPath: detectedColor.b
+      value: 0.5512054
+      objectReference: {fileID: 0}
+    - target: {fileID: 1220631742699215301, guid: 1edaf8706ae242e4594dc562061fe804, type: 3}
+      propertyPath: detectedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1220631742699215301, guid: 1edaf8706ae242e4594dc562061fe804, type: 3}
+      propertyPath: detectedColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1220631742699215301, guid: 1edaf8706ae242e4594dc562061fe804, type: 3}
+      propertyPath: notDetectedColor.b
+      value: 0.5529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 1220631742699215301, guid: 1edaf8706ae242e4594dc562061fe804, type: 3}
+      propertyPath: notDetectedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1220631742699215301, guid: 1edaf8706ae242e4594dc562061fe804, type: 3}
+      propertyPath: notDetectedColor.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7409671278445195683, guid: 1edaf8706ae242e4594dc562061fe804, type: 3}
       propertyPath: m_Pivot.x
