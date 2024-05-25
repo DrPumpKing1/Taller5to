@@ -24,6 +24,14 @@ public class Instruction : MonoBehaviour
     public int ID => id;
     public bool HasBeenTriggered => hasBeenTriggered;
 
+    protected void HandleInstructionTrigger()
+    {
+        if (hasBeenTriggered) return;
+
+        TriggerInstruction();
+        hasBeenTriggered = true;
+    }
+
     protected void TriggerInstruction()
     {
         OnInstructionTriggered?.Invoke(this, new OnInstructionTriggeredEventArgs { instruction = instruction, canvasSortingLayer = canvasSortingLayer });
