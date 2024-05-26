@@ -51,9 +51,17 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
 
     public event EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
 
+    public static event EventHandler<OnAnyObjectLearnedEventArgs> OnAnyObjectLearned;
+
     public class OnObjectLearnedEventArgs : EventArgs
     {
         public ProjectableObjectSO objectLearned;
+    }
+
+    public class OnAnyObjectLearnedEventArgs : EventArgs
+    {
+        public ProjectableObjectSO objectLearned;
+        public LearningPlatformLearn learningPlatformLearn;
     }
 
     private void Start()
@@ -146,6 +154,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     public void LearnObject()
     {
         ProjectableObjectsLearningManager.Instance.LearnProjectableObject(ProjectableObjectToLearn);
+        ProjectionGemsManager.Instance.IncreaseTotalProjectionGems(learningPlatform.LearningPlatformSO.projectionGemsToAdd);
 
         learningPlatform.SetIsLearned();
 
@@ -154,7 +163,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
         hasAlreadyBeenInteracted = true;
 
         OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { objectLearned = ProjectableObjectToLearn });
-
+        OnAnyObjectLearned?.Invoke(this, new OnAnyObjectLearnedEventArgs { objectLearned = learningPlatform.LearningPlatformSO.projectableObjectToLearn, learningPlatformLearn = this });
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 }
