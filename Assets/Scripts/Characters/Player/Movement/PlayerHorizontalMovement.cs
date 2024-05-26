@@ -35,7 +35,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private Rigidbody _rigidbody;
 
     public Vector2 DirectionInputVector => movementInput.GetIsometricDirectionVectorNormalized();
-    private bool SprintInput => movementInput.GetSprintHold();
+    private bool SprintInput => false;
 
     private float desiredSpeed;
     private float smoothCurrentSpeed;
