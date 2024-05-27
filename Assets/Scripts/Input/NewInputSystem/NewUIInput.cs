@@ -47,7 +47,7 @@ public class NewUIInput : UIInput
         if (!CanProcessUIInput()) return false;
         if (!CanProcessInventoryInput()) return false;
 
-        bool UIInput = playerInputActions.UI.Dictionary.WasPerformedThisFrame();
+        bool UIInput = playerInputActions.UI.Inventory.WasPerformedThisFrame();
         return UIInput;
     }
 
