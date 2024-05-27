@@ -35,16 +35,16 @@ public class SymbolSourceInfoPanelUIHandler : InfoPanelUIHandler
         symbolProvidedTemplate.gameObject.SetActive(false);
     }
 
-    private void UpdatePanel(DialectSymbolSourceSO dialectSymbolSourceSO)
+    private void UpdatePanel(SymbolSourceSO symbolSourceSO)
     {
-        SetSymbolSourceNameText(dialectSymbolSourceSO);
-        SetSymbolSourceDescriptionText(dialectSymbolSourceSO);
-        SetProvidedSymbols(dialectSymbolSourceSO);
+        SetSymbolSourceNameText(symbolSourceSO);
+        SetSymbolSourceDescriptionText(symbolSourceSO);
+        SetProvidedSymbols(symbolSourceSO);
     }
 
-    private void SetSymbolSourceNameText(DialectSymbolSourceSO dialectSymbolSourceSO) => symbolSourceNameText.text = dialectSymbolSourceSO._name;
-    private void SetSymbolSourceDescriptionText(DialectSymbolSourceSO dialectSymbolSourceSO) => symbolSourceDesciptionText.text = dialectSymbolSourceSO.description;
-    private void SetProvidedSymbols(DialectSymbolSourceSO dialectSymbolSourceSO)
+    private void SetSymbolSourceNameText(SymbolSourceSO symbolSourceSO) => symbolSourceNameText.text = symbolSourceSO._name;
+    private void SetSymbolSourceDescriptionText(SymbolSourceSO symbolSourceSO) => symbolSourceDesciptionText.text = symbolSourceSO.description;
+    private void SetProvidedSymbols(SymbolSourceSO symbolSourceSO)
     {
         foreach (Transform child in symbolsProvidedContainer)
         {
@@ -53,18 +53,18 @@ public class SymbolSourceInfoPanelUIHandler : InfoPanelUIHandler
             Destroy(child.gameObject);
         }
 
-        foreach (DialectSymbolSO dialectSymbolSO in dialectSymbolSourceSO.dialectSymbolSOs)
+        foreach (SymbolSO symbolSO in symbolSourceSO.symbolSOs)
         {
             Transform symbolProvidedTranform = Instantiate(symbolProvidedTemplate, symbolsProvidedContainer);
             symbolProvidedTranform.gameObject.SetActive(true);
 
-            symbolProvidedTranform.GetComponent<Image>().sprite = dialectSymbolSO.symbolImage;
+            symbolProvidedTranform.GetComponent<Image>().sprite = symbolSO.symbolImage;
         }
     }
 
     private void InfoPanelsUIHandler_OnShowSymbolSourceInfoPanelUI(object sender, InfoPanelsUIHandler.OnShowSymbolSourceInfoPanelUIEventArgs e)
     {
-        UpdatePanel(e.dialectSymbolSourceSO);
+        UpdatePanel(e.symbolSourceSO);
         ShowPanel();
     }
 }

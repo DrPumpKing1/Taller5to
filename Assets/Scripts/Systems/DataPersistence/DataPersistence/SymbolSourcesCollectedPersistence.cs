@@ -7,17 +7,17 @@ public class SymbolSourcesCollectedPersistence : MonoBehaviour, IDataPersistence
     public void LoadData(PlayerData data)
     {
         SymbolSourcesManager symbolSourcesManager = FindObjectOfType<SymbolSourcesManager>();
-        DialectSymbolSource[] dialectSymbolSources = FindObjectsOfType<DialectSymbolSource>();
+        SymbolSource[] symbolSources = FindObjectsOfType<SymbolSource>();
 
         foreach (KeyValuePair<int, bool> symbolSourceData in data.symbolSourcesCollected)
         {
             if (symbolSourceData.Value) symbolSourcesManager.AddSourceToInventoryById(symbolSourceData.Key);
 
-            foreach (DialectSymbolSource dialectSymbolSource in dialectSymbolSources)
+            foreach (SymbolSource symbolSource in symbolSources)
             {
-                if (dialectSymbolSource.DialectSymbolSourceSO.id == symbolSourceData.Key)
+                if (symbolSource.SymbolSourceSO.id == symbolSourceData.Key)
                 {
-                    if (symbolSourceData.Value) dialectSymbolSource.SetIsCollected();
+                    if (symbolSourceData.Value) symbolSource.SetIsCollected();
                     break;
                 }
             } 
@@ -28,12 +28,12 @@ public class SymbolSourcesCollectedPersistence : MonoBehaviour, IDataPersistence
     {
         SymbolSourcesManager symbolSourcesManager = FindObjectOfType<SymbolSourcesManager>();
 
-        foreach (DialectSymbolSourceSO source in symbolSourcesManager.CompleteSymbolSourcesPool)
+        foreach (SymbolSourceSO source in symbolSourcesManager.CompleteSymbolSourcesPool)
         {
             if (data.symbolSourcesCollected.ContainsKey(source.id)) data.symbolSourcesCollected.Remove(source.id);
         }
 
-        foreach (DialectSymbolSourceSO source in symbolSourcesManager.CompleteSymbolSourcesPool)
+        foreach (SymbolSourceSO source in symbolSourcesManager.CompleteSymbolSourcesPool)
         {
             bool collected = symbolSourcesManager.CheckIfInventoryContainsSource(source);
 

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class SymbolSourceInventoryButtonHandler : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private DialectSymbolSourceSO dialectSymbolSourceSO;
+    [SerializeField] private SymbolSourceSO symbolSourceSO;
 
     [Header("UI Components")]
     [SerializeField] private Button symbolSourceButton;
@@ -16,17 +16,17 @@ public class SymbolSourceInventoryButtonHandler : MonoBehaviour
 
     public class OnSymbolSourceButtonUIClickedEventArgs : EventArgs
     {
-        public DialectSymbolSourceSO dialectSymbolSourceSO;
+        public SymbolSourceSO symbolSourceSO;
     }
 
     private void OnEnable()
     {
-        SymbolSourcesManager.OnDialectSymbolSourceCollected += SymbolSourcesManager_OnDialectSymbolSourceCollected;
+        SymbolSourcesManager.OnSymbolSourceCollected += SymbolSourcesManager_OnSymbolSourceCollected;
     }
 
     private void OnDisable()
     {
-        SymbolSourcesManager.OnDialectSymbolSourceCollected -= SymbolSourcesManager_OnDialectSymbolSourceCollected;
+        SymbolSourcesManager.OnSymbolSourceCollected -= SymbolSourcesManager_OnSymbolSourceCollected;
     }
 
     private void Awake()
@@ -46,12 +46,12 @@ public class SymbolSourceInventoryButtonHandler : MonoBehaviour
 
     private void ClickButton()
     {
-        OnSymbolSourceInventoryButtonClicked?.Invoke(this, new OnSymbolSourceButtonUIClickedEventArgs { dialectSymbolSourceSO = dialectSymbolSourceSO });
+        OnSymbolSourceInventoryButtonClicked?.Invoke(this, new OnSymbolSourceButtonUIClickedEventArgs { symbolSourceSO = symbolSourceSO });
     }
 
     private void CheckButtonState()
     {
-        if (SymbolSourcesManager.Instance.SymbolSourcesCollected.Contains(dialectSymbolSourceSO))
+        if (SymbolSourcesManager.Instance.SymbolSourcesCollected.Contains(symbolSourceSO))
         {
             ShowButton();
         }
@@ -65,7 +65,7 @@ public class SymbolSourceInventoryButtonHandler : MonoBehaviour
     private void HideButton() => symbolSourceButton.gameObject.SetActive(false);
 
     #region SymbolSourcesManager Subscriptions
-    private void SymbolSourcesManager_OnDialectSymbolSourceCollected(object sender, SymbolSourcesManager.OnDialectSymbolSourceCollectedEventArgs e)
+    private void SymbolSourcesManager_OnSymbolSourceCollected(object sender, SymbolSourcesManager.OnSymbolSourceCollectedEventArgs e)
     {
         CheckButtonState();
     }

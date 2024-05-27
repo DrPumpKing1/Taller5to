@@ -6,7 +6,7 @@ public class SymbolsDictionaryPersistence : MonoBehaviour, IDataPersistence<Play
 {
     public void LoadData(PlayerData data)
     {
-        SymbolsDictionaryManager symbolsDictionaryManager = FindObjectOfType<SymbolsDictionaryManager>();
+        SymbolsManager symbolsDictionaryManager = FindObjectOfType<SymbolsManager>();
 
         foreach (KeyValuePair<int,bool> symbolDictionaryData in data.symbolsCollected)
         {
@@ -16,14 +16,14 @@ public class SymbolsDictionaryPersistence : MonoBehaviour, IDataPersistence<Play
 
     public void SaveData(ref PlayerData data)
     {
-        SymbolsDictionaryManager symbolsDictionaryManager = FindObjectOfType<SymbolsDictionaryManager>();
+        SymbolsManager symbolsDictionaryManager = FindObjectOfType<SymbolsManager>();
 
-        foreach (DialectSymbolSO symbol in symbolsDictionaryManager.CompleteSymbolsPool) //Clear all data in data
+        foreach (SymbolSO symbol in symbolsDictionaryManager.CompleteSymbolsPool) //Clear all data in data
         {
             if (data.symbolsCollected.ContainsKey(symbol.id)) data.symbolsCollected.Remove(symbol.id);
         }
 
-        foreach (DialectSymbolSO symbol in symbolsDictionaryManager.CompleteSymbolsPool)
+        foreach (SymbolSO symbol in symbolsDictionaryManager.CompleteSymbolsPool)
         {
             bool collected = symbolsDictionaryManager.CheckIfDictionaryContainsSymbol(symbol);
 

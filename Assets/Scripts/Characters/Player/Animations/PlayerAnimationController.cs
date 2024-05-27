@@ -93,11 +93,8 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     private void PlayerFall_OnPlayerFall(object sender, EventArgs e) => animator.SetTrigger(FALL_TRIGGER);
-
     private void PlayerLand_OnPlayerSoftLand(object sender, EventArgs e) => animator.SetTrigger(SOFT_LAND_TRIGGER);
     private void PlayerLand_OnPlayerNormalLand(object sender, EventArgs e) => animator.SetTrigger(NORMAL_LAND_TRIGGER);
     private void PlayerLand_OnPlayerHardLand(object sender, EventArgs e) => animator.SetTrigger(HARD_LAND_TRIGGER);
-
     private void PlayerHealth_OnPlayerDeath(object sender, EventArgs e) => animator.SetTrigger(DEATH_TRIGGER);
-
 }

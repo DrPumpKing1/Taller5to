@@ -35,7 +35,6 @@ public class PlayerGravityController : MonoBehaviour
     private bool previousWasOnSlope;
     private bool currentIsOnSlope;
 
-    private Vector3 previousSlopeNormal;
     private Vector3 currentSlopeNormal;
 
     private void Awake()
@@ -50,7 +49,6 @@ public class PlayerGravityController : MonoBehaviour
         previousWasOnSlope = currentIsOnSlope;
 
         currentSlopeNormal = checkGround.SlopeNormal;
-        previousSlopeNormal = currentSlopeNormal;
     }
 
     private void FixedUpdate()

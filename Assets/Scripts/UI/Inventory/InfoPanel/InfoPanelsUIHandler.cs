@@ -25,7 +25,7 @@ public class InfoPanelsUIHandler : MonoBehaviour
 
     public class OnShowSymbolSourceInfoPanelUIEventArgs : EventArgs
     {
-        public DialectSymbolSourceSO dialectSymbolSourceSO;
+        public SymbolSourceSO symbolSourceSO;
     }
 
     private void OnEnable()
@@ -68,7 +68,7 @@ public class InfoPanelsUIHandler : MonoBehaviour
     private void SymbolSourceInventoryButtonHandler_OnSymbolSourceInventoryButtonClicked(object sender, SymbolSourceInventoryButtonHandler.OnSymbolSourceButtonUIClickedEventArgs e)
     {
         HideAllPanels();
-        OnShowSymbolSourceInfoPanelUI.Invoke(this, new OnShowSymbolSourceInfoPanelUIEventArgs { dialectSymbolSourceSO = e.dialectSymbolSourceSO });
+        OnShowSymbolSourceInfoPanelUI.Invoke(this, new OnShowSymbolSourceInfoPanelUIEventArgs { symbolSourceSO = e.symbolSourceSO });
     }
     #endregion
 }
