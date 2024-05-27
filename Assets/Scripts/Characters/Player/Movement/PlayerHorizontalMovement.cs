@@ -11,7 +11,6 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [Header("Components")]
     [SerializeField] private MovementInput movementInput;
     [Space]
-    [SerializeField] private PlayerCrouch playerCrouch;
     [SerializeField] private PlayerLand playerLand;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
@@ -20,22 +19,18 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [SerializeField] private CheckWall checkWall;
 
     [Header("Speed Settings")]
-    [SerializeField, Range(1.5f,5f)] private float walkSpeed = 2f;
-    [SerializeField, Range(4f,6f)] private float sprintSpeed = 3f;
-    [SerializeField, Range(0.75f, 1.5f)] private float crouchSpeed = 1f;
+    [SerializeField, Range(1.5f,5f)] private float moveSpeed = 2f;
     [Space]
     [SerializeField] private bool flattenSpeedOnSlopes;
 
     [Header("Smooth Settings")]
     [SerializeField, Range(1f, 100f)] private float smoothDirectionInputFactor = 5f;
     [SerializeField, Range(1f, 100f)] private float smoothVelocityFactor = 5f;
-    [SerializeField, Range(1f, 100f)] private float smoothSprintVelocityFactor = 5f;
     [SerializeField, Range(1f, 100f)] private float smoothFinalDirectionSpeed = 5f;
 
     private Rigidbody _rigidbody;
 
     public Vector2 DirectionInputVector => movementInput.GetIsometricDirectionVectorNormalized();
-    private bool SprintInput => false;
 
     private float desiredSpeed;
     private float smoothCurrentSpeed;
@@ -82,9 +77,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     private void CalculateDesiredSpeed()
     {
-        desiredSpeed = SprintInput && CanRun() ? sprintSpeed : walkSpeed;
-        desiredSpeed = playerCrouch.IsCrouching ? crouchSpeed : desiredSpeed;
-        desiredSpeed = CanMove()? desiredSpeed : 0f;
+        desiredSpeed = CanMove() ? moveSpeed : 0f;
     }
 
     private bool CanMove()
@@ -100,14 +93,9 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     private void SmoothSpeed()
     {
-        float smoothFactor = IsRunning() && smoothCurrentSpeed > walkSpeed ? smoothSprintVelocityFactor : smoothVelocityFactor;
-        smoothCurrentSpeed = Mathf.Lerp(smoothCurrentSpeed, desiredSpeed, Time.deltaTime * smoothFactor);
+        smoothCurrentSpeed = Mathf.Lerp(smoothCurrentSpeed, desiredSpeed, Time.deltaTime * smoothVelocityFactor);
     }
-        
-    private bool CanRun() => !checkWall.HitWall && !playerCrouch.IsCrouching;
-
-    public bool IsRunning() => SprintInput && CanRun() && CanMove();
-
+    
     private void CalculateLastNonZeroDirectionInput() => LastNonZeroInput = DirectionInputVector != Vector2.zero ? DirectionInputVector : LastNonZeroInput;
 
     private void FixDirectionVectorDueToWalls()

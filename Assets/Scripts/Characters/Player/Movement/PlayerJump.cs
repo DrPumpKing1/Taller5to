@@ -77,7 +77,6 @@ public class PlayerJump : MonoBehaviour
     {
         if (shouldJump) return;
         if (!checkGround.IsGrounded) return;
-        if (playerCrouch.IsCrouching) return;
         if (playerLand.IsRecoveringFromLanding) return;
         if (playerInteract.IsInteracting) return;
         if (playerInteractAlternate.IsInteractingAlternate) return;
