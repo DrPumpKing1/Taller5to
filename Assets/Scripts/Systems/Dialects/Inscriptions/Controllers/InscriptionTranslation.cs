@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSymbolCrafting
+public class InscriptionTranslation : MonoBehaviour, IInteractable
 {
     [Header("Components")]
     [SerializeField] private Inscription inscription;
-    [SerializeField] private SymbolCrafting symbolCrafting;
 
     [Header("Interactable Settings")]
     [SerializeField, Range(1f, 100f)] private float horizontalInteractionRange;
@@ -20,7 +19,6 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
 
-    private bool inscriptionTranslated;
     public Inscription Inscription => inscription;
 
     #region IInteractable Properties
@@ -29,7 +27,7 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
-    public string TooltipMessage => $"{(!inscriptionTranslated ? "Translate Insription" : "Read Inscription")}";
+    public string TooltipMessage => $"{(!inscription.IsTranslated ? "Translate Insription" : "Read Inscription")}";
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
@@ -43,7 +41,6 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     public event EventHandler OnUpdatedInteractableState;
     #endregion
 
-    public event EventHandler OnOpenSymbolCraftingUI;
     public event EventHandler OnOpenTranslationUI;
     public event EventHandler<OnInsctiptionTranslatedEventArgs> OnInscriptionTranslated;
 
@@ -57,27 +54,6 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     {
         public InscriptionSO inscriptionSO;
         public InscriptionTranslation inscriptionTranslation;
-    }
-
-    private void OnEnable()
-    {
-        symbolCrafting.OnAllSymbolsCrafted += SymbolCrafting_OnSymbolsCrafted;
-    }
-
-    private void OnDisable()
-    {
-        symbolCrafting.OnAllSymbolsCrafted -= SymbolCrafting_OnSymbolsCrafted;
-    }
-
-    private void Start()
-    {
-        CheckIsTranslated();
-    }
-
-    private void CheckIsTranslated()
-    {
-        if (inscription.IsTranslated) inscriptionTranslated = true;
-        if (symbolCrafting.SymbolCraftingSOs.Count == 0) inscriptionTranslated = true;
     }
 
     #region  IInteractable Methods
@@ -116,9 +92,9 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
     {
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
-        if (!inscriptionTranslated)
+        if (!inscription.IsTranslated)
         {
-            OpenSymbolCraftingUI();
+            OpenTranslationUI();
         }
         else
         {
@@ -143,7 +119,7 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
 
     private void TranslateInscription()
     {
-        inscriptionTranslated = true;
+        inscription.SetIsTranslated();
 
         inscription.SetIsTranslated();
 
@@ -152,13 +128,5 @@ public class InscriptionTranslation : MonoBehaviour, IInteractable, IRequiresSym
         OnAnyInscriptionTranslated?.Invoke(this, new OnAnyInsctiptionTranslatedEventArgs { inscriptionSO = inscription.InscriptionSO, inscriptionTranslation = this });
     }
 
-    private void OpenSymbolCraftingUI() => OnOpenSymbolCraftingUI?.Invoke(this, EventArgs.Empty);
     private void OpenTranslationUI() => OnOpenTranslationUI?.Invoke(this, EventArgs.Empty);
-
-    #region SymbolCrafting Subscriptions
-    private void SymbolCrafting_OnSymbolsCrafted(object sender, EventArgs e)
-    {
-        TranslateInscription();
-    }
-    #endregion
 }

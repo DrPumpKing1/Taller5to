@@ -8,7 +8,6 @@ public class InscriptionTranslationUI : BaseUI
 {
     [Header("Components")]
     [SerializeField] private InscriptionTranslation inscriptionTranslation;
-    [SerializeField] private SymbolCrafting symbolCrafing;
 
     [Header("UI Components")]
     [SerializeField] private Button closeButton;
@@ -22,14 +21,12 @@ public class InscriptionTranslationUI : BaseUI
     {
         base.OnEnable();
         inscriptionTranslation.OnOpenTranslationUI += InscriptionTranslation_OnOpenTranslationUI;
-        symbolCrafing.OnAllSymbolsCrafted += SymbolCrafing_OnAllSymbolsCrafted;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
         inscriptionTranslation.OnOpenTranslationUI -= InscriptionTranslation_OnOpenTranslationUI;
-        symbolCrafing.OnAllSymbolsCrafted -= SymbolCrafing_OnAllSymbolsCrafted;
     }
 
     private void Awake()
@@ -91,15 +88,6 @@ public class InscriptionTranslationUI : BaseUI
     {
         CloseUI();
     }
-
-    #region SymbolCraftingSubscriptions
-
-    private void SymbolCrafing_OnAllSymbolsCrafted(object sender, EventArgs e)
-    {
-        OpenUI();
-    }
-
-    #endregion
 
     #region InscriptionTranslation Subscriptions
     private void InscriptionTranslation_OnOpenTranslationUI(object sender, EventArgs e)
