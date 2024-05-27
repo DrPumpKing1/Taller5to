@@ -30,16 +30,6 @@ public class UIManager : MonoBehaviour
         public BaseUI UIToClose;
     }
 
-    private void OnEnable()
-    {
-        PlayerHealth.OnPlayerDeath += PlayerHealth_OnPlayerDeath;
-    }
-
-    private void OnDisable()
-    {
-        PlayerHealth.OnPlayerDeath -= PlayerHealth_OnPlayerDeath;
-    }
-
     private void Awake()
     {
         SetSingleton();

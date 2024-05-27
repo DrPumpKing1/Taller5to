@@ -42,8 +42,6 @@ public class PlayerAnimationController : MonoBehaviour
         playerLand.OnPlayerSoftLand += PlayerLand_OnPlayerSoftLand;
         playerLand.OnPlayerNormalLand += PlayerLand_OnPlayerNormalLand;
         playerLand.OnPlayerHardLand += PlayerLand_OnPlayerHardLand;
-
-        PlayerHealth.OnPlayerDeath += PlayerHealth_OnPlayerDeath;
     }
 
     private void OnDisable()

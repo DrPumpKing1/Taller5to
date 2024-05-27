@@ -26,13 +26,4 @@ public abstract class MovementInput : MonoBehaviour, IMovementInput
 
     public abstract Vector2 GetDirectionVectorNormalized();
     public abstract Vector2 GetIsometricDirectionVectorNormalized();
-    public abstract bool GetJump();
-
-    public abstract bool GetCrouchDown();
-    public abstract bool GetCrouchUp();
-    public abstract bool GetCrouchHold();
-
-    public abstract bool GetSprintDown();
-    public abstract bool GetSprintUp();
-    public abstract bool GetSprintHold();
 }

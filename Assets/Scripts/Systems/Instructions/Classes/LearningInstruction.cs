@@ -5,24 +5,24 @@ using UnityEngine;
 public class LearningInstruction : Instruction
 {
     [Header("Components")]
-    [SerializeField] private LearningPlatformLearnCrafting learningPlatformLearnCrafting;
+    [SerializeField] private LearningPlatformLearn learningPlatformLearn;
 
     [Header("Settings")]
     [SerializeField] private bool triggerOnAnyLearning;
 
     private void OnEnable()
     {
-        LearningPlatformLearnCrafting.OnAnyObjectLearned += LearningPlatformLearnCrafting_OnAnyObjectLearned; ;
+        LearningPlatformLearn.OnAnyObjectLearned += LearningPlatformLearnCrafting_OnAnyObjectLearned; ;
     }
     private void OnDisable()
     {
-        LearningPlatformLearnCrafting.OnAnyObjectLearned -= LearningPlatformLearnCrafting_OnAnyObjectLearned; 
+        LearningPlatformLearn.OnAnyObjectLearned -= LearningPlatformLearnCrafting_OnAnyObjectLearned; 
     }
 
     #region LerningPlatformLearn Subscriptions
-    private void LearningPlatformLearnCrafting_OnAnyObjectLearned(object sender, LearningPlatformLearnCrafting.OnAnyObjectLearnedEventArgs e)
+    private void LearningPlatformLearnCrafting_OnAnyObjectLearned(object sender, LearningPlatformLearn.OnAnyObjectLearnedEventArgs e)
     {
-        if (!triggerOnAnyLearning && e.learningPlatformLearnCrafting != learningPlatformLearnCrafting) return;
+        if (!triggerOnAnyLearning && e.learningPlatformLearn != learningPlatformLearn) return;
         HandleInstructionTrigger();
     }
     #endregion

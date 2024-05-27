@@ -18,8 +18,6 @@ public class GameManager : MonoBehaviour
     {
         UIManager.OnUIActive += UIManager_OnUIActive;
         UIManager.OnUIInactive += UIManager_OnUIInactive;
-
-        PlayerHealth.OnPlayerDeath += PlayerHealth_OnPlayerDeath;
     }
 
     private void OnDisable()
@@ -66,13 +64,6 @@ public class GameManager : MonoBehaviour
     private void UIManager_OnUIInactive(object sender, System.EventArgs e)
     {
         SetGameState(previousState);
-    }
-    #endregion
-
-    #region PlayerHealth Subscriptions
-    private void PlayerHealth_OnPlayerDeath(object sender, System.EventArgs e)
-    {
-        SetGameState(State.OnDeath);
     }
     #endregion
 }
