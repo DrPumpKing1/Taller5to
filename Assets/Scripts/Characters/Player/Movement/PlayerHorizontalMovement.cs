@@ -24,9 +24,9 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [SerializeField] private bool flattenSpeedOnSlopes;
 
     [Header("Smooth Settings")]
-    [SerializeField, Range(1f, 100f)] private float smoothDirectionInputFactor = 5f;
+    [SerializeField, Range(1f, 100f)] private float smoothInputFactor = 5f;
     [SerializeField, Range(1f, 100f)] private float smoothVelocityFactor = 5f;
-    [SerializeField, Range(1f, 100f)] private float smoothFinalDirectionSpeed = 5f;
+    [SerializeField, Range(1f, 100f)] private float smoothDirectionFactor = 5f;
 
     private Rigidbody _rigidbody;
 
@@ -120,7 +120,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
         FixedLastNonZeroInput = LastNonZeroInput;
     }
 
-    private void SmoothDirectionInputVector() => smoothDirectionInputVector = Vector2.Lerp(smoothDirectionInputVector, FixedLastNonZeroInput, Time.deltaTime * smoothDirectionInputFactor);
+    private void SmoothDirectionInputVector() => smoothDirectionInputVector = Vector2.Lerp(smoothDirectionInputVector, FixedLastNonZeroInput, Time.deltaTime * smoothInputFactor);
 
     private void CalculateDesiredMovementDirection()
     {
@@ -130,7 +130,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
         FinalMoveDir = flattenDir;
     }
 
-    private void SmoothDirectionVector() => SmoothFinalMoveDir = Vector3.Slerp(SmoothFinalMoveDir, FinalMoveDir, Time.deltaTime * smoothFinalDirectionSpeed);
+    private void SmoothDirectionVector() => SmoothFinalMoveDir = Vector3.Slerp(SmoothFinalMoveDir, FinalMoveDir, Time.deltaTime * smoothDirectionFactor);
 
     private Vector3 FlattenVectorOnSlopes(Vector3 vectorToFlat)
     {

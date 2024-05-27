@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6992617765600492767}
   - component: {fileID: 2176356878162520009}
   - component: {fileID: 8413128526021734546}
-  - component: {fileID: 6503560014877264206}
   m_Layer: 0
   m_Name: PlayerChecks
   m_TagString: Untagged
@@ -78,26 +77,6 @@ MonoBehaviour:
   lowRaySphereRadius: 0.2
   diagonalRayLength: 0.5
   drawRaycasts: 1
---- !u!114 &6503560014877264206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127769195692292522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71284ec6579df974a9760e353f47ecd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  capsuleCollider: {fileID: 4813907677414057247}
-  roofLayer:
-    serializedVersion: 2
-    m_Bits: 129
-  useCapsuleColliderValues: 1
-  rayLength: 0.75
-  raySphereRadius: 0.2
-  drawRaycasts: 0
 --- !u!1 &211851582990758971
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,9 +483,9 @@ MonoBehaviour:
   checkWall: {fileID: 8413128526021734546}
   moveSpeed: 5
   flattenSpeedOnSlopes: 1
-  smoothDirectionInputFactor: 10
+  smoothInputFactor: 10
   smoothVelocityFactor: 10
-  smoothFinalDirectionSpeed: 50
+  smoothDirectionFactor: 50
 --- !u!114 &2984513525385847362
 MonoBehaviour:
   m_ObjectHideFlags: 0
