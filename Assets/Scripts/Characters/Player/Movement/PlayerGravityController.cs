@@ -55,7 +55,24 @@ public class PlayerGravityController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        BetterFall();
         HandleSlopes();
+
+    }
+
+    private void BetterFall()
+    {
+        if (checkGround.IsGrounded) return;
+
+        if (_rigidbody.velocity.y < 0)
+        {
+            _rigidbody.velocity += Vector3.up * Physics.gravity.y * GravityMultiplier * (FallMultiplier - 1) * Time.fixedDeltaTime;
+        }
+
+        else if (_rigidbody.velocity.y > 0)
+        {
+            _rigidbody.velocity += Vector3.up * Physics.gravity.y * GravityMultiplier * (LowJumpMultiplier - 1) * Time.fixedDeltaTime;
+        }
     }
 
     private void HandleSlopes()

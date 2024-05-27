@@ -153,7 +153,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8673646757840816537}
-  - component: {fileID: 6548958364482888809}
   m_Layer: 0
   m_Name: PlayerCameraFollowPoint
   m_TagString: Untagged
@@ -176,20 +175,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 9134743098512851328}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6548958364482888809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 541895919520759199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c9d7968b52806e45858318399df766e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  capsulleCollider: {fileID: 4813907677414057247}
-  positionOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1024940307576714363
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,9 +301,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7358147075734090561}
-  - component: {fileID: 1386008716394603645}
   m_Layer: 0
-  m_Name: PlayerFadeObjectsPoint
+  m_Name: PlayerVisibilityPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -339,20 +323,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 9134743098512851328}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1386008716394603645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5502342138276800982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c9d7968b52806e45858318399df766e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  capsulleCollider: {fileID: 4813907677414057247}
-  positionOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &5674240081560327779
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,7 +414,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.4
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
@@ -606,7 +576,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 20508490176496764}
-  - component: {fileID: 4855135337924115770}
   m_Layer: 6
   m_Name: PetOrbitPoint
   m_TagString: Untagged
@@ -629,20 +598,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2797709050242605642}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4855135337924115770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6128308559999486290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c9d7968b52806e45858318399df766e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  capsulleCollider: {fileID: 4813907677414057247}
-  positionOffset: {x: 0, y: 0.2, z: 0}
 --- !u!1 &8472916652664651252
 GameObject:
   m_ObjectHideFlags: 0
