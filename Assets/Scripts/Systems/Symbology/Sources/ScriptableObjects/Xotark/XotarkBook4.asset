@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c92d2f43e9c9ba7498a4c1ae87ea0cd3, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f7b8dc0152e37549b3c59c1e6c63449, type: 3}
   m_Name: XotarkBook4
   m_EditorClassIdentifier: 
   id: 8
   _name: Xotark Book 4
   description: Description 8
   symbolSourceSprite: {fileID: 0}
-  dialectSymbolSOs:
-  - {fileID: 11400000, guid: 70953e4dd43a638438ce272cda1093a4, type: 2}
-  - {fileID: 11400000, guid: 1c4cb0c327d0bac40a4835f4b7bc400c, type: 2}
+  symbolSOs:
+  - {fileID: 11400000, guid: fb112b5c04af7be45adefaec8c12aaa8, type: 2}

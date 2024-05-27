@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dadb109a8d8f60c478f55eb4b6e084a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialectSymbolSourceCollection: {fileID: 8815451833297541153}
+  symbolSourceCollection: {fileID: 8815451833297541153}
   symbolsAddedUIPrefab: {fileID: 8143430161710958084, guid: 7fd28218d82fd4a489d8b4bee953f971, type: 3}
   symbolsInstantiationPositionOffset: {x: 0, y: 2, z: 0}
 --- !u!1 &3069232804800197350
@@ -175,8 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 486d89bd812e2d341a3eb350d3eef2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialectSymbolSourceSO: {fileID: 0}
-  id: 0
+  symbolSourceSO: {fileID: 0}
   isCollected: 0
 --- !u!114 &8815451833297541153
 MonoBehaviour:
@@ -190,9 +189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73aecc7226356bb44ad6dff15a79e50a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialectSymbolSource: {fileID: 3454005017562990542}
+  symbolSource: {fileID: 3454005017562990542}
   visual: {fileID: 1687527724471343706}
-  destroyTime: 0.1
   horizontalInteractionRange: 3
   verticalInteractionRange: 2
   canBeSelected: 1

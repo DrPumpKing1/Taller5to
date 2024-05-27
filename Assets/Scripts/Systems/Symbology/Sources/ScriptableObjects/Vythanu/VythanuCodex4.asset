@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c92d2f43e9c9ba7498a4c1ae87ea0cd3, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f7b8dc0152e37549b3c59c1e6c63449, type: 3}
   m_Name: VythanuCodex4
   m_EditorClassIdentifier: 
   id: 12
   _name: Vythanu Codex 4
   description: Description 12
   symbolSourceSprite: {fileID: 0}
-  dialectSymbolSOs:
-  - {fileID: 11400000, guid: 78a115e079e231f41815b2d6f52f3117, type: 2}
-  - {fileID: 11400000, guid: 0faf457d926ef2241b6bab6c5651784a, type: 2}
+  symbolSOs:
+  - {fileID: 11400000, guid: f6bbbd50917059241a71a24e83405393, type: 2}
