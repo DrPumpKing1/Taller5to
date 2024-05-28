@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b12f225ef2ebb024ebcff6bd7e1cb645, type: 3}
+  m_Name: Sender
+  m_EditorClassIdentifier: 
+  id: 3
+  prefab: {fileID: 7028397045733667877, guid: 91338034ee260664e9901ca72cecb40f, type: 3}
+  projectionGemsCost: 3
+  objectName: Signal Sender
+  description: 'Signal Sender Description
+
+'
+  sprite: {fileID: 21300000, guid: d7076e60986a16b4fb976282077ff1f7, type: 3}
+  visualPrefab: {fileID: 0}
