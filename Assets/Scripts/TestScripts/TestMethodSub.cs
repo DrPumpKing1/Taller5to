@@ -8,6 +8,7 @@ public class TestMethodSub : MonoBehaviour
     [SerializeField] private PlayerLand playerLand;
     [SerializeField] private PlayerFall playerFall;
 
+    [SerializeField] private DialogueSO dialog1;
     private void OnEnable()
     {
         playerFall.OnPlayerFall += PlayerFall_OnPlayerFall;
@@ -25,7 +26,7 @@ public class TestMethodSub : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.O))
         {
-            SceneManager.LoadScene(0);
+            DialogueManager.Instance.StartDialogue(dialog1);
         }
     }
     private void PlayerFall_OnPlayerFall(object sender, System.EventArgs e)
@@ -35,7 +36,7 @@ public class TestMethodSub : MonoBehaviour
 
     private void PlayerLand_OnPlayerLand(object sender, PlayerLand.OnPlayerLandEventArgs e)
     {
-        if (e.landHeight <= 0) return;
+        if (e.landHeight <= 0.01f) return;
 
         Debug.Log("Land");
         Debug.Log(e.landHeight);

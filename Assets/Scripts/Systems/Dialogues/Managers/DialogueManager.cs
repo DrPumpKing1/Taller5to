@@ -176,16 +176,14 @@ public class DialogueManager : MonoBehaviour
 
     private void PlayingSentenceLogic()
     {
-        if (timer < timeToEndDialogue)
+        if (timer < timeToPlaySentence)
         {
             timer += Time.deltaTime;
         }
         else
         {
             ResetTimer();
-            OnDialogueEnd?.Invoke(this, new OnDialogueEventArgs { dialogueSO = currentDialogueSO });
-            ClearVariables();
-            SetDialogueState(State.NotOnDialogue);
+            SetDialogueState(State.OnSentence);
         }
     }
 
@@ -204,7 +202,10 @@ public class DialogueManager : MonoBehaviour
 
     private bool CheckSkipSentence()
     {
-        if (SkipInput) return true;
+        if (SkipInput)
+        {
+            return true;
+        }
         return false;
     }
 

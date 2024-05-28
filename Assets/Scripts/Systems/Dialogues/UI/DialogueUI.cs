@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class DialogueUI : MonoBehaviour
 {
@@ -49,13 +50,15 @@ public class DialogueUI : MonoBehaviour
     private void SetDialogueUI(Sentence sentence)
     {
         SetSpeakerNameText(sentence.speaker.speakerName);
-        SetSentenceText(sentence.text);
+        SetSpeakerTextColor(sentence.speaker.nameColor);
         SetSpeakerImage(sentence.speaker.speakerImage);
+        SetSentenceText(sentence.text);
     }
 
     private void SetSpeakerNameText(string text) => speakerNameText.text = text;
-    private void SetSentenceText(string text) => sentenceText.text = text;
+    private void SetSpeakerTextColor(Color nameColor) => speakerNameText.color = nameColor;
     private void SetSpeakerImage(Sprite sprite) => speakerImage.sprite = sprite;
+    private void SetSentenceText(string text) => sentenceText.text = text;
 
     private void PlaySentence(Sentence sentence, bool isFirstSentence)
     {

@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     {
         UIManager.OnUIActive += UIManager_OnUIActive;
         UIManager.OnUIInactive += UIManager_OnUIInactive;
+
+        DialogueManager.OnDialogueStart += DialogueManager_OnDialogueStart;
+        DialogueManager.OnDialogueEnd += DialogueManager_OnDialogueEnd;
     }
 
     private void OnDisable()
@@ -64,6 +67,18 @@ public class GameManager : MonoBehaviour
     private void UIManager_OnUIInactive(object sender, System.EventArgs e)
     {
         SetGameState(previousState);
+    }
+    #endregion
+
+    #region DialogManagerSubscriptions
+    private void DialogueManager_OnDialogueStart(object sender, DialogueManager.OnDialogueEventArgs e)
+    {
+        SetGameState(State.OnDialogue);
+    }
+
+    private void DialogueManager_OnDialogueEnd(object sender, DialogueManager.OnDialogueEventArgs e)
+    {
+        SetGameState(State.OnGameplay);
     }
     #endregion
 }
