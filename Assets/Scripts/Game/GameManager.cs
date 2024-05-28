@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private State state;
     [SerializeField] private State previousState;
 
-    public enum State { OnGameplay, OnUI, OnDialog, OnDeath}
+    public enum State {OnGameplay, OnUI, OnDialogue}
 
     public State GameState { get { return state; } }
 

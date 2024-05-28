@@ -23,7 +23,7 @@ public class NewUIInput : UIInput
 
     public override bool CanProcessUIInput()
     {
-        if (GameManager.Instance.GameState == GameManager.State.OnDeath) return false;
+        if (GameManager.Instance.GameState == GameManager.State.OnDialogue) return false;
         return true;
     }
 

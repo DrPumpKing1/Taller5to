@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class SpeakerSO : ScriptableObject
 {
     public int id;
-    public string characterName;
-    public Sprite characterImage;
+    public string speakerName;
+    public Sprite speakerImage;
     public Color nameColor;
 }
