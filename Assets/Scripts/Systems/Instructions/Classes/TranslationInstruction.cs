@@ -5,25 +5,25 @@ using UnityEngine;
 public class TranslationInstruction : Instruction
 {
     [Header("Components")]
-    [SerializeField] private InscriptionTranslation inscriptionTranslation;
+    [SerializeField] private InscriptionRead inscriptionTranslation;
 
     [Header("Settings")]
     [SerializeField] private bool triggerOnAnyInscription;
 
     private void OnEnable()
     {
-        InscriptionTranslation.OnAnyInscriptionTranslated += InscriptionTranslation_OnAnyInscriptionTranslated;
+        InscriptionRead.OnAnyInscriptionTranslated += InscriptionTranslation_OnAnyInscriptionTranslated;
     }
 
     private void OnDisable()
     {
-        InscriptionTranslation.OnAnyInscriptionTranslated -= InscriptionTranslation_OnAnyInscriptionTranslated;
+        InscriptionRead.OnAnyInscriptionTranslated -= InscriptionTranslation_OnAnyInscriptionTranslated;
     }
 
     #region InscriptionTranslation Subscriptions
-    private void InscriptionTranslation_OnAnyInscriptionTranslated(object sender, InscriptionTranslation.OnAnyInsctiptionTranslatedEventArgs e)
+    private void InscriptionTranslation_OnAnyInscriptionTranslated(object sender, InscriptionRead.OnAnyInsctiptionTranslatedEventArgs e)
     {
-        if (!triggerOnAnyInscription && e.inscriptionTranslation != inscriptionTranslation) return;
+        if (!triggerOnAnyInscription && e.inscriptionRead != inscriptionTranslation) return;
         HandleInstructionTrigger();
     }
     #endregion

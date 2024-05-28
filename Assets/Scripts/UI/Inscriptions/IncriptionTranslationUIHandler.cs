@@ -7,7 +7,7 @@ using TMPro;
 public class IncriptionTranslationUIHandler : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private InscriptionTranslation inscriptionTranslation;
+    [SerializeField] private InscriptionRead inscriptionTranslation;
 
     [Header("UI Components")]
     [SerializeField] private TextMeshProUGUI inscriptionTitle;

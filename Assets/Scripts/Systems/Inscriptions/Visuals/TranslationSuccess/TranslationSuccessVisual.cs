@@ -5,7 +5,7 @@ using UnityEngine;
 public class TranslationSuccessVisual : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private InscriptionTranslation inscriptionTranslation;
+    [SerializeField] private InscriptionRead inscriptionTranslation;
 
     [Header("Learning Success Settings")]
     [SerializeField] private Transform translationSuccessUIPrefab;
@@ -20,7 +20,7 @@ public class TranslationSuccessVisual : MonoBehaviour
         inscriptionTranslation.OnInscriptionTranslated -= InscriptionTranslation_OnInscriptionTranslated;
     }
 
-    private void InscriptionTranslation_OnInscriptionTranslated(object sender, InscriptionTranslation.OnInsctiptionTranslatedEventArgs e)
+    private void InscriptionTranslation_OnInscriptionTranslated(object sender, InscriptionRead.OnInscriptionTranslatedEventArgs e)
     {
         Transform translationSuccessUITransform = Instantiate(translationSuccessUIPrefab, transform.position + instantiationPositionOffset, transform.rotation);
 

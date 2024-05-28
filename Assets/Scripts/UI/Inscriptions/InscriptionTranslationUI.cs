@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class InscriptionTranslationUI : BaseUI
 {
     [Header("Components")]
-    [SerializeField] private InscriptionTranslation inscriptionTranslation;
+    [SerializeField] private InscriptionRead inscriptionTranslation;
 
     [Header("UI Components")]
     [SerializeField] private Button closeButton;
