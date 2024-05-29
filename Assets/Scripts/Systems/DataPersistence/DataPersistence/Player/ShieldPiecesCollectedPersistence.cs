@@ -7,10 +7,43 @@ public class ShieldPiecesCollectedPersistence : MonoBehaviour, IDataPersistence<
     public void LoadData(PlayerData data)
     {
         ShieldPiecesManager shieldPiecesManager = FindObjectOfType<ShieldPiecesManager>();
+        Inscription[] inscriptions = FindObjectsOfType<Inscription>();
 
         foreach (KeyValuePair<int, bool> shieldPieceCollected in data.shieldPiecesCollected)
         {
-            if (shieldPieceCollected.Value) shieldPiecesManager.AddShieldPieceToInventoryByID(shieldPieceCollected.Key);
+            if (shieldPieceCollected.Value)
+            {
+                shieldPiecesManager.AddShieldPieceToInventoryByID(shieldPieceCollected.Key);
+            }
+
+            //For shield pieces in inscriptions
+
+            Inscription shieldPieceRelatedInscription = null;
+
+            foreach(Inscription inscription in inscriptions)
+            {
+                if(shieldPieceCollected.Key == inscription.ShieldPieceSO.id)
+                {
+                    shieldPieceRelatedInscription = inscription;
+                    break;
+                }
+            }
+
+            if (!shieldPieceRelatedInscription)
+            {
+                Debug.Log($"There is not an inscription with shield piece of ID: {shieldPieceCollected.Key}");
+                continue;
+            }
+
+            if (shieldPieceCollected.Value)
+            {
+                shieldPieceRelatedInscription.SetHasDroppedShieldPiece(true);
+            }
+            else
+            {
+                shieldPieceRelatedInscription.SetHasDroppedShieldPiece(false);
+            }
+
         }
     }
 

@@ -10,4 +10,6 @@ public class ShieldPieceSO : ScriptableObject
     public Dialect dialect;
     public string pieceName;
     public Sprite pieceImage;
+    [Space]
+    public Transform prefab;
 }

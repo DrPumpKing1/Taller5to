@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Inscription : MonoBehaviour
 {
-    [Header("Settings")]
+    [Header("Components")]
     [SerializeField] private InscriptionSO inscriptionSO;
+    [SerializeField] private ShieldPieceSO shieldPieceSO;
 
-    [Header("Identifiers")]
+    [Header("Settings")]
     [SerializeField] private bool hasBeenRead;
     [SerializeField] private bool hasDroppedShieldPiece;
 
     public InscriptionSO InscriptionSO => inscriptionSO;
+    public ShieldPieceSO ShieldPieceSO => shieldPieceSO;
+
     public bool HasBeenRead => hasBeenRead;
     public bool HasDroppedShieldPiece => hasDroppedShieldPiece;
 

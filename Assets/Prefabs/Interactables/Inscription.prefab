@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 270039651143634895}
   - component: {fileID: 6364795263637097267}
   - component: {fileID: 907053527920076682}
+  - component: {fileID: 3519084874819309974}
   m_Layer: 9
   m_Name: Inscription
   m_TagString: Untagged
@@ -34,6 +35,7 @@ Transform:
   m_Children:
   - {fileID: 881986812209646992}
   - {fileID: 6568379710750635791}
+  - {fileID: 667106886468200833}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &270039651143634895
@@ -72,6 +74,7 @@ MonoBehaviour:
   inscriptionSO: {fileID: 0}
   hasBeenRead: 0
   hasDroppedShieldPiece: 0
+  hasCollectedShieldPiece: 0
 --- !u!114 &907053527920076682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,6 +88,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inscription: {fileID: 6364795263637097267}
+  electrode: {fileID: 0}
   inscriptionDialogue: {fileID: 0}
   inscriptionMonologue: {fileID: 0}
   horizontalInteractionRange: 4
@@ -95,6 +99,23 @@ MonoBehaviour:
   grabPetAttention: 1
   grabPlayerAttention: 1
   tooltipMessage: Read Inscription
+--- !u!114 &3519084874819309974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592762897221079635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1565db65d62940640adb24fa8d491ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldPieceSO: {fileID: 0}
+  inscription: {fileID: 6364795263637097267}
+  electrode: {fileID: 0}
+  dropPoint: {fileID: 667106886468200833}
+  shieldDropForce: {x: 0, y: 0, z: 0}
 --- !u!1 &5907319829326030866
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,6 +323,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8648470420580606431
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 667106886468200833}
+  m_Layer: 9
+  m_Name: DropPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &667106886468200833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8648470420580606431}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.00000017881393, y: 0, z: -1.5000002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 383535065884112679}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5997741609712047709
 PrefabInstance:
   m_ObjectHideFlags: 0

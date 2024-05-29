@@ -7,6 +7,7 @@ public class InscriptionRead : MonoBehaviour, IInteractable
 {
     [Header("Components")]
     [SerializeField] private Inscription inscription;
+    [SerializeField] private Electrode electrode;
 
     [Header("Dialogues")]
     [SerializeField] private DialogueSO inscriptionDialogue;
@@ -25,7 +26,7 @@ public class InscriptionRead : MonoBehaviour, IInteractable
     [Space]
     [SerializeField] private string tooltipMessage;
 
-    public Inscription Inscription => inscription;
+    private bool Power => electrode.Power >= Electrode.ACTIVATION_THRESHOLD;
 
     #region IInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -100,6 +101,25 @@ public class InscriptionRead : MonoBehaviour, IInteractable
 
     public Transform GetTransform() => transform;
     #endregion
+
+    private void Update()
+    {
+        CheckCanBeRead();
+    }
+
+    private void CheckCanBeRead()
+    {
+        if (Power)
+        {
+            canBeSelected = true;
+            isInteractable = true;
+        }
+        else
+        {
+            canBeSelected = false;
+            isInteractable = false;
+        }
+    }
 
     private void ReadInscription()
     {

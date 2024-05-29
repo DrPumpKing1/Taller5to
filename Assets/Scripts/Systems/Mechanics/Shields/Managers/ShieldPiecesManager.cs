@@ -28,6 +28,14 @@ public class ShieldPiecesManager : MonoBehaviour
         SetSingleton();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            Debug.Log(HasCompletedShield(Dialect.Rakithu));
+        }
+    }
+
     private void SetSingleton()
     {
         if (Instance == null)
@@ -108,5 +116,16 @@ public class ShieldPiecesManager : MonoBehaviour
             if (shieldPiece.id == id) return shieldPiece;
         }
         return null;
+    }
+
+    public bool HasCompletedShield(Dialect dialect)
+    {
+        foreach(ShieldPieceSO shieldPieceSO in completeShieldPiecesPool)
+        {
+            if (dialect != shieldPieceSO.dialect) continue;
+            if (!shieldPiecesCollected.Contains(shieldPieceSO)) return false;
+        }
+
+        return true;
     }
 }
