@@ -225,6 +225,16 @@ public class DialogueManager : MonoBehaviour
         SetDialogueState(State.StartingDialogue);
     }
 
+    public void EndDialog()
+    {
+        if (state == State.NotOnDialogue) return;
+
+        ResetTimer();
+        OnDialogueEnd?.Invoke(this, new OnDialogueEventArgs { dialogueSO = currentDialogueSO });
+        ClearVariables();
+        SetDialogueState(State.NotOnDialogue);
+    }
+
     private void SetCurrentSentence(int index)
     {
         currentSentenceIndex = index;
