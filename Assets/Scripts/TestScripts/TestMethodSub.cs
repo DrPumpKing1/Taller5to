@@ -8,7 +8,7 @@ public class TestMethodSub : MonoBehaviour
     [SerializeField] private PlayerLand playerLand;
     [SerializeField] private PlayerFall playerFall;
 
-    [SerializeField] private DialogueSO dialog1;
+    [SerializeField] private DialogueSO dialogueSO;
     private void OnEnable()
     {
         playerFall.OnPlayerFall += PlayerFall_OnPlayerFall;
@@ -26,7 +26,12 @@ public class TestMethodSub : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.O))
         {
-            DialogueManager.Instance.StartDialogue(dialog1);
+            DialogueManager.Instance.StartDialogue(dialogueSO);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            DialogueManager.Instance.EndDialogue();
         }
     }
     private void PlayerFall_OnPlayerFall(object sender, System.EventArgs e)

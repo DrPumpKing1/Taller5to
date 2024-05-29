@@ -16,6 +16,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private float timeToEndDialogue;
     [SerializeField] private float timeToPlaySentence;
     [SerializeField] private float timeToSkipSentence;
+    [Space]
+    [SerializeField] private bool enableDialogueSkip;
+    [SerializeField] private bool enableDialoguesAutoSkipByTime;
 
     [Header("States")]
     [SerializeField] private State state;
@@ -115,8 +118,25 @@ public class DialogueManager : MonoBehaviour
 
     private void OnSentenceLogic()
     {
-        if (!CheckSkipSentence()) return;
+        if (timer < currentSentence.time)
+        {
+            timer += Time.deltaTime;
+        }
+        else if (enableDialoguesAutoSkipByTime)
+        {
+            SkipSentence();
+            return;
+        }
 
+        if (CheckSkipSentence() && enableDialogueSkip)
+        {
+            SkipSentence();
+            return;
+        }       
+    }
+
+    private void SkipSentence()
+    {
         ResetTimer();
 
         if (CheckCurrentSentenceIsLastSentence())
@@ -225,14 +245,14 @@ public class DialogueManager : MonoBehaviour
         SetDialogueState(State.StartingDialogue);
     }
 
-    public void EndDialog()
+    public void EndDialogue()
     {
         if (state == State.NotOnDialogue) return;
+        if (state == State.EndingDialogue) return;
 
         ResetTimer();
-        OnDialogueEnd?.Invoke(this, new OnDialogueEventArgs { dialogueSO = currentDialogueSO });
-        ClearVariables();
-        SetDialogueState(State.NotOnDialogue);
+        SetDialogueState(State.EndingDialogue);
+        OnSentenceSkip?.Invoke(this, new OnSentenceSkipEventArgs { sentence = currentSentence, isLastSentence = true });
     }
 
     private void SetCurrentSentence(int index)

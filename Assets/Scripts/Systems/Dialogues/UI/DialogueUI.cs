@@ -29,8 +29,14 @@ public class DialogueUI : MonoBehaviour
         DialogueManager.OnSentencePlay += DialogueManager_OnSentencePlay;
         DialogueManager.OnSentenceSkip += DialogueManager_OnSentenceSkip;
     }
+    private void OnDisable()
+    {
+        DialogueManager.OnDialogueStart -= DialogueManager_OnDialogueStart;
+        DialogueManager.OnDialogueEnd -= DialogueManager_OnDialogueEnd;
+        DialogueManager.OnSentencePlay -= DialogueManager_OnSentencePlay;
+        DialogueManager.OnSentenceSkip -= DialogueManager_OnSentenceSkip;
+    }
 
-    
 
     private void Awake()
     {
@@ -71,6 +77,14 @@ public class DialogueUI : MonoBehaviour
         animator.SetTrigger(isLastSentence ? CLOSE_TRIGGER : SKIP_TRIGGER);
     }
 
+    private void ResetAllTriggers()
+    {
+        animator.ResetTrigger(OPEN_TRIGGER);
+        animator.ResetTrigger(CLOSE_TRIGGER);
+        animator.ResetTrigger(PLAY_TRIGGER);
+        animator.ResetTrigger(SKIP_TRIGGER);
+    }
+
 
     #region DialogueManager Subscriptions
     private void DialogueManager_OnDialogueStart(object sender, DialogueManager.OnDialogueEventArgs e)
@@ -80,6 +94,7 @@ public class DialogueUI : MonoBehaviour
     private void DialogueManager_OnDialogueEnd(object sender, DialogueManager.OnDialogueEventArgs e)
     {
         DisableDialogueUI();
+        ResetAllTriggers();
     }
 
     private void DialogueManager_OnSentencePlay(object sender, DialogueManager.OnSentencePlayEventArgs e)
