@@ -19,7 +19,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [SerializeField] private CheckWall checkWall;
 
     [Header("Speed Settings")]
-    [SerializeField, Range(1.5f,5f)] private float moveSpeed = 2f;
+    [SerializeField, Range(1.5f,10f)] private float moveSpeed = 2f;
     [Space]
     [SerializeField] private bool flattenSpeedOnSlopes;
 

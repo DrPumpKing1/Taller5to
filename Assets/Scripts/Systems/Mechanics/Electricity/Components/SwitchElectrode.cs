@@ -30,6 +30,8 @@ public class SwitchElectrode : Electrode
     {
         this.switchOn = swichOn;
 
+        GameLog.Log($"Electrical/ToggleSwitch/{switchOn}");
+        
         Electricity.Instance.UpdateElectrode(this);
     }
 }

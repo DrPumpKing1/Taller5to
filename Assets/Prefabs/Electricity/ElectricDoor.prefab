@@ -41,8 +41,9 @@ GameObject:
   m_Component:
   - component: {fileID: 529833306073989837}
   - component: {fileID: 135983727060811256}
-  - component: {fileID: 7456278506692203395}
   - component: {fileID: 6943706257806782275}
+  - component: {fileID: 359482215416092172}
+  - component: {fileID: 294731243172023403}
   m_Layer: 0
   m_Name: ElectricDoor
   m_TagString: Untagged
@@ -119,7 +120,7 @@ MonoBehaviour:
   resistance: 10
   type: 02000000
   contacts: []
---- !u!114 &7456278506692203395
+--- !u!114 &6943706257806782275
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,10 +129,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 4103607261784727726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3aa5c9f14d2934f42ab88c8a1387f035, type: 3}
+  m_Script: {fileID: 11500000, guid: ae01ed82ce35b5c4dbb884d676616265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   electrode: {fileID: 135983727060811256}
+--- !u!114 &359482215416092172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4103607261784727726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60f9a407377b8934a893dd10358f0395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  electrode: {fileID: 135983727060811256}
+--- !u!114 &294731243172023403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4103607261784727726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22a0ef417f441ab4286040a09d94a1c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: {fileID: 359482215416092172}
   gateTransform: {fileID: 4110467250782593210}
   restPosition: {fileID: 2662760417373888125}
   powerPosition: {fileID: 5291824443398701166}
@@ -160,20 +187,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  doorCenter: {fileID: 529833306073989837}
+  proximityRadius: 1.5
   state: 0
---- !u!114 &6943706257806782275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4103607261784727726}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae01ed82ce35b5c4dbb884d676616265, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  electrode: {fileID: 135983727060811256}
 --- !u!1 &5147696442569790235
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +284,7 @@ GameObject:
   - component: {fileID: 4110467250782593210}
   - component: {fileID: 3232216301103355622}
   - component: {fileID: 168974323758594497}
-  - component: {fileID: 8861048090469147861}
+  - component: {fileID: 1466955105045589753}
   m_Layer: 0
   m_Name: DoorCollider
   m_TagString: Untagged
@@ -340,7 +356,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &8861048090469147861
+--- !u!114 &1466955105045589753
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
