@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InscriptionsTranslatedPersistence : MonoBehaviour, IDataPersistence<ObjectsData>
+public class InscriptionsReadPersistence : MonoBehaviour, IDataPersistence<ObjectsData>
 {
     public void LoadData(ObjectsData data)
     {
@@ -10,11 +10,12 @@ public class InscriptionsTranslatedPersistence : MonoBehaviour, IDataPersistence
 
         foreach (Inscription inscription in inscriptions)
         {
-            foreach (KeyValuePair<int, bool> inscriptionTranslated in data.inscriptionsTranslated)
+            foreach (KeyValuePair<int, bool> inscriptionRead in data.inscriptionsRead)
             {
-                if (inscription.InscriptionSO.id == inscriptionTranslated.Key)
+                if (inscription.InscriptionSO.id == inscriptionRead.Key)
                 {
-                    if (inscriptionTranslated.Value) inscription.SetIsTranslated();
+                    if (inscriptionRead.Value) inscription.SetHasBeenRead(true);
+                    else inscription.SetHasBeenRead(false);
                     break;
                 }
             }
@@ -27,14 +28,14 @@ public class InscriptionsTranslatedPersistence : MonoBehaviour, IDataPersistence
 
         foreach (Inscription inscription in inscriptions)
         {
-            if (data.inscriptionsTranslated.ContainsKey(inscription.InscriptionSO.id)) data.inscriptionsTranslated.Remove(inscription.InscriptionSO.id);
+            if (data.inscriptionsRead.ContainsKey(inscription.InscriptionSO.id)) data.inscriptionsRead.Remove(inscription.InscriptionSO.id);
         }
 
         foreach (Inscription inscription in inscriptions)
         {
-            bool translated = inscription.IsTranslated;
+            bool hasBeenRead = inscription.HasBeenRead;
 
-            data.inscriptionsTranslated.Add(inscription.InscriptionSO.id, translated);
+            data.inscriptionsRead.Add(inscription.InscriptionSO.id, hasBeenRead);
         }
     }
 }

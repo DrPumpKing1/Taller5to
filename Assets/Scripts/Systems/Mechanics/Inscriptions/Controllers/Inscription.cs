@@ -8,10 +8,13 @@ public class Inscription : MonoBehaviour
     [SerializeField] private InscriptionSO inscriptionSO;
 
     [Header("Identifiers")]
-    [SerializeField] private bool isTranslated;
+    [SerializeField] private bool hasBeenRead;
+    [SerializeField] private bool hasDroppedShieldPiece;
 
     public InscriptionSO InscriptionSO => inscriptionSO;
-    public bool IsTranslated => isTranslated;
+    public bool HasBeenRead => hasBeenRead;
+    public bool HasDroppedShieldPiece => hasDroppedShieldPiece;
 
-    public void SetIsTranslated() => isTranslated = true;
+    public void SetHasBeenRead(bool read) => hasBeenRead = read;
+    public void SetHasDroppedShieldPiece(bool dropped) => hasDroppedShieldPiece = dropped;
 }

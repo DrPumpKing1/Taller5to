@@ -8,6 +8,10 @@ public class InscriptionRead : MonoBehaviour, IInteractable
     [Header("Components")]
     [SerializeField] private Inscription inscription;
 
+    [Header("Dialogues")]
+    [SerializeField] private DialogueSO inscriptionDialogue;
+    [SerializeField] private MonologueSO inscriptionMonologue;
+
     [Header("Interactable Settings")]
     [SerializeField, Range(1f, 100f)] private float horizontalInteractionRange;
     [SerializeField, Range(1f, 100f)] private float verticalInteractionRange;
@@ -19,12 +23,9 @@ public class InscriptionRead : MonoBehaviour, IInteractable
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
     [Space]
-    [SerializeField] private string tooltipMessageOpen;
-    [SerializeField] private string tooltipMessageClose;
+    [SerializeField] private string tooltipMessage;
 
     public Inscription Inscription => inscription;
-
-    private bool isOpen;
 
     #region IInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -32,7 +33,7 @@ public class InscriptionRead : MonoBehaviour, IInteractable
     public bool IsSelectable => canBeSelected;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
-    public string TooltipMessage => $"{(!isOpen ? tooltipMessageOpen : tooltipMessageClose)}";
+    public string TooltipMessage => tooltipMessage;
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
@@ -45,23 +46,6 @@ public class InscriptionRead : MonoBehaviour, IInteractable
     public event EventHandler OnObjectHasAlreadyBeenInteracted;
     public event EventHandler OnUpdatedInteractableState;
     #endregion
-
-    public event EventHandler OnOpenTranslationUI;
-    public event EventHandler OnCloseTranslationUI;
-
-    public event EventHandler<OnInscriptionTranslatedEventArgs> OnInscriptionTranslated;
-
-    public static event EventHandler<OnAnyInsctiptionTranslatedEventArgs> OnAnyInscriptionTranslated;
-    public class OnInscriptionTranslatedEventArgs : EventArgs
-    {
-        public InscriptionSO inscriptionSO;
-    }
-
-    public class OnAnyInsctiptionTranslatedEventArgs : EventArgs
-    {
-        public InscriptionSO inscriptionSO;
-        public InscriptionRead inscriptionRead;
-    }
 
     #region  IInteractable Methods
     public void Select()
@@ -76,8 +60,6 @@ public class InscriptionRead : MonoBehaviour, IInteractable
         //Disable some UI feedback
         OnObjectDeselected?.Invoke(this, EventArgs.Empty);
         Debug.Log(gameObject.name + " Deselected");
-
-        CloseInscriptionUI();
     }
 
     public void TryInteract()
@@ -100,15 +82,8 @@ public class InscriptionRead : MonoBehaviour, IInteractable
     public void Interact()
     {
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
-
-        if (!isOpen)
-        {
-            OpenInscriptionUI();
-        }
-        else
-        {
-            CloseInscriptionUI();
-        }
+        ReadInscription();
+        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 
     public void FailInteract()
@@ -126,28 +101,18 @@ public class InscriptionRead : MonoBehaviour, IInteractable
     public Transform GetTransform() => transform;
     #endregion
 
-    private void TranslateInscription()
+    private void ReadInscription()
     {
-        inscription.SetIsTranslated();
+        if (!inscription.HasBeenRead)
+        {
+            DialogueManager.Instance.StartDialogue(inscriptionDialogue);
+            Deselect();
 
-        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
-        OnInscriptionTranslated?.Invoke(this, new OnInscriptionTranslatedEventArgs { inscriptionSO = inscription.InscriptionSO });
-        OnAnyInscriptionTranslated?.Invoke(this, new OnAnyInsctiptionTranslatedEventArgs { inscriptionSO = inscription.InscriptionSO, inscriptionRead = this });
-    }
-
-    private void OpenInscriptionUI()
-    {
-        OnOpenTranslationUI?.Invoke(this, EventArgs.Empty);
-        isOpen = true;
-
-        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
-    }
-
-    private void CloseInscriptionUI()
-    {
-        OnCloseTranslationUI?.Invoke(this, EventArgs.Empty);
-        isOpen = false;
-
-        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
+            inscription.SetHasBeenRead(true);
+        }
+        else
+        {
+            MonologueManager.Instance.StartMonologue(inscriptionMonologue);
+        }
     }
 }
