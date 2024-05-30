@@ -5,6 +5,9 @@ using System;
 
 public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
 {
+    [Header("Components")]
+    [SerializeField] private ProjectableObject projectableObject;
+
     [Header("Rotation Settings")]
     [SerializeField] private Vector2 startingDirection;
     [SerializeField] private bool clockwiseRotation;
@@ -22,6 +25,13 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
     [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
+
+    public static event EventHandler<OnAnyObjectRotatedEventArgs> OnAnyObjectRotated;
+
+    public class OnAnyObjectRotatedEventArgs : EventArgs
+    {
+        public ProjectableObjectSO projectableObjectSO;
+    }
 
     #region IInteractableAlternate Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -133,6 +143,7 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
         float degreesToTurn = clockwiseRotation ? degreesPerTurn : -degreesPerTurn;
         DesiredDirection = (Quaternion.AngleAxis(degreesToTurn, Vector3.up) * DesiredDirection).normalized;
 
+        OnAnyObjectRotated?.Invoke(this, new OnAnyObjectRotatedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
         OnUpdatedInteractableAlternateState?.Invoke(this, EventArgs.Empty);
     }
 }

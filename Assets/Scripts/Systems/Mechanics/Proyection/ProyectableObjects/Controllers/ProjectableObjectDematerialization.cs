@@ -89,7 +89,7 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     {
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
-        DematerializeObject();
+        DematerializeObject(true);
     }
 
     public void FailInteract()
@@ -125,11 +125,13 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
 
     #endregion
 
-    private void DematerializeObject()
+    private void DematerializeObject(bool triggerEvents)
     {
         if (projectableObject.ProjectionPlatform) projectableObject.ProjectionPlatform.ClearProjectionPlatform();
 
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
+
+        ProjectionManager.Instance.ObjectDematerialized(projectableObject.ProjectableObjectSO, projectableObject.ProjectionPlatform, triggerEvents);
 
         Destroy(gameObject);
     }
@@ -137,14 +139,13 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     private void OnDestroy()
     {
         OnObjectDematerialized?.Invoke(this, EventArgs.Empty);
-        ProjectionManager.Instance.ObjectDematerialized(projectableObject.ProjectableObjectSO, projectableObject.ProjectionPlatform);
     }
 
     #region ProjectionManager Subscriptions
 
-    private void ProjectionManager_OnAllObjectsDematerialized(object sender, EventArgs e)
+    private void ProjectionManager_OnAllObjectsDematerialized(object sender, ProjectionManager.OnAllObjectsDematerializedEventArgs e)
     {
-        DematerializeObject();
+        DematerializeObject(false);
     }
     #endregion
 }

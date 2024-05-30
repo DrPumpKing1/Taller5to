@@ -18,17 +18,9 @@ public class LearningPlatformLearn : MonoBehaviour
 
     public event EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
 
-    public static event EventHandler<OnAnyObjectLearnedEventArgs> OnAnyObjectLearned;
-
     public class OnObjectLearnedEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableOjectSO;
-    }
-
-    public class OnAnyObjectLearnedEventArgs : EventArgs
-    {
-        public ProjectableObjectSO projectableObjectSO;
-        public LearningPlatformSO learningPlatformSO;
     }
 
     private void Start()
@@ -65,6 +57,5 @@ public class LearningPlatformLearn : MonoBehaviour
         learningPlatform.SetIsLearned(true);
 
         OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { projectableOjectSO = ProjectableObjectToLearn });
-        OnAnyObjectLearned?.Invoke(this, new OnAnyObjectLearnedEventArgs { projectableObjectSO = ProjectableObjectToLearn, learningPlatformSO = learningPlatform.LearningPlatformSO });
     }
 }

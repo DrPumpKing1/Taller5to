@@ -14,33 +14,40 @@ public class LogListener : MonoBehaviour
         RoomManager.OnRoomExit += RoomManager_OnRoomExit;
 
         ShieldPieceCollection.OnShieldPieceCollected += ShieldPieceCollection_OnShieldPieceCollected;
-        LearningPlatformLearn.OnAnyObjectLearned += LearningPlatformLearn_OnAnyObjectLearned;
-        ProjectionGemsManager.OnTotalProjectionGemsIncreased += ProjectionGemsManager_OnTotalProjectionGemsIncreased;                    
+        ProjectableObjectsLearningManager.OnProjectableObjectLearned += ProjectableObjectsLearningManager_OnProjectableObjectLearned;
+        ProjectionGemsManager.OnTotalProjectionGemsIncreased += ProjectionGemsManager_OnTotalProjectionGemsIncreased;
+        ProjectableObjectRotation.OnAnyObjectRotated += ProjectableObjectRotation_OnAnyObjectRotated;
+
+        ProjectionManager.OnObjectProjectionSuccess += ProjectionManager_OnObjectProjectionSuccess;
+        ProjectionManager.OnObjectProjectionFailed += ProjectionManager_OnObjectProjectionFailed;
+        ProjectionManager.OnObjectDematerialized += ProjectionManager_OnObjectDematerialized;
+        ProjectionManager.OnAllObjectsDematerialized += ProjectionManager_OnAllObjectsDematerialized;
+
 
         ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
-
     }
-
-
 
     private void OnDisable()
     {
         ElectricalSwitchToggle.OnSwitchToggle -= ElectricalSwitchToggle_OnSwitchToggle;
-
-        ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
         ElectricalDoor.OnDoorPowered -= ElectricalDoor_OnDoorPowered;
+        InscriptionPowering.OnInscriptionPoweringFirstTime -= InscriptionPowering_OnInscriptionPoweringFirstTime;
 
         RoomManager.OnRoomEnter -= RoomManager_OnRoomEnter;
         RoomManager.OnRoomExit -= RoomManager_OnRoomExit;
 
-        InscriptionPowering.OnInscriptionPoweringFirstTime -= InscriptionPowering_OnInscriptionPoweringFirstTime;
         ShieldPieceCollection.OnShieldPieceCollected -= ShieldPieceCollection_OnShieldPieceCollected;
+        ProjectableObjectsLearningManager.OnProjectableObjectLearned -= ProjectableObjectsLearningManager_OnProjectableObjectLearned;
         ProjectionGemsManager.OnTotalProjectionGemsIncreased -= ProjectionGemsManager_OnTotalProjectionGemsIncreased;
+        ProjectableObjectRotation.OnAnyObjectRotated -= ProjectableObjectRotation_OnAnyObjectRotated;
 
-        LearningPlatformLearn.OnAnyObjectLearned += LearningPlatformLearn_OnAnyObjectLearned;
+        ProjectionManager.OnObjectProjectionSuccess -= ProjectionManager_OnObjectProjectionSuccess;
+        ProjectionManager.OnObjectProjectionFailed -= ProjectionManager_OnObjectProjectionFailed;
+        ProjectionManager.OnObjectDematerialized -= ProjectionManager_OnObjectDematerialized;
+        ProjectionManager.OnAllObjectsDematerialized -= ProjectionManager_OnAllObjectsDematerialized;
 
+        ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
     }
-
 
     private void ElectricalSwitchToggle_OnSwitchToggle(object sender, ElectricalSwitchToggle.OnSwitchToggleEventArgs e) => GameLog.Log($"Electrical/ToggleSwitch/{e.switchOn}/{e.id}");
     private void ElectricalDoor_OnDoorPowered(object sender, ElectricalDoor.OnDoowPoweredEventArgs e) => GameLog.Log($"Electrical/PowerDoor/{e.id}");
@@ -50,11 +57,14 @@ public class LogListener : MonoBehaviour
     private void RoomManager_OnRoomExit(object sender, RoomManager.OnRoomEventArgs e) => GameLog.Log($"Movement/ExitRoom/{e.roomName}");
 
     private void ShieldPieceCollection_OnShieldPieceCollected(object sender, ShieldPieceCollection.OnShieldPieceCollectedEventArgs e) => GameLog.Log($"Interaction/GrabShieldPiece/{e.shieldPieceSO.id}");
-    private void LearningPlatformLearn_OnAnyObjectLearned(object sender, LearningPlatformLearn.OnAnyObjectLearnedEventArgs e) => GameLog.Log($"Interaction/LearnObject/{e.projectableObjectSO.id}");
+    private void ProjectableObjectsLearningManager_OnProjectableObjectLearned(object sender, ProjectableObjectsLearningManager.OnProjectableObjectLearnedEventArgs e) => GameLog.Log($"Interaction/LearnObject/{e.projectableObjectLearned.id}");
     private void ProjectionGemsManager_OnTotalProjectionGemsIncreased(object sender, ProjectionGemsManager.OnProjectionGemsEventArgs e) => GameLog.Log($"Interaction/GrabGems/{e.projectionGems}");
+    private void ProjectableObjectRotation_OnAnyObjectRotated(object sender, ProjectableObjectRotation.OnAnyObjectRotatedEventArgs e) => GameLog.Log($"Interaction/RotateObject/{e.projectableObjectSO.id}");
+
+    private void ProjectionManager_OnObjectProjectionSuccess(object sender, ProjectionManager.OnProjectionEventArgs e) => GameLog.Log($"Projection/MaterializeObject/{e.projectableObjectSO.id}");
+    private void ProjectionManager_OnObjectProjectionFailed(object sender, ProjectionManager.OnProjectionEventArgs e) => GameLog.Log($"Projection/FailMaterializeObject/{e.projectableObjectSO.id}");
+    private void ProjectionManager_OnObjectDematerialized(object sender, ProjectionManager.OnProjectionEventArgs e) => GameLog.Log($"Projection/DematerializeObject/{e.projectableObjectSO.id}");
+    private void ProjectionManager_OnAllObjectsDematerialized(object sender, ProjectionManager.OnAllObjectsDematerializedEventArgs e) => GameLog.Log($"Projection/DematerializeAllObjects/{e.projectableObjectSOs.Count}");
 
     private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e) => GameLog.Log($"Worth/ShowDignity/{e.dialect}");
-
-
-
 }

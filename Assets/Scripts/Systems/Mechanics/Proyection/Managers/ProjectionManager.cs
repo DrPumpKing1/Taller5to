@@ -16,11 +16,10 @@ public class ProjectionManager : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool enableAllProjectableObjectsDematerialization;
 
-    public static event EventHandler OnAllObjectsDematerialized;
-
     public static event EventHandler<OnProjectionEventArgs> OnObjectProjectionSuccess;
     public static event EventHandler<OnProjectionEventArgs> OnObjectProjectionFailed;
     public static event EventHandler<OnProjectionEventArgs> OnObjectDematerialized;
+    public static event EventHandler<OnAllObjectsDematerializedEventArgs> OnAllObjectsDematerialized;
 
     public bool AllProjectableObjectDematerializationInput => projectionInput.GetAllProjectableObjectsDematerializationDown();
 
@@ -30,6 +29,11 @@ public class ProjectionManager : MonoBehaviour
     {
         public ProjectableObjectSO projectableObjectSO;
         public ProjectionPlatform projectionPlatform;
+    }
+
+    public class OnAllObjectsDematerializedEventArgs : EventArgs
+    {
+        public List<ProjectableObjectSO> projectableObjectSOs;
     }
 
     private void Awake()
@@ -60,12 +64,12 @@ public class ProjectionManager : MonoBehaviour
         if (!enableAllProjectableObjectsDematerialization) return;
         if (!AllProjectableObjectDematerializationInput) return;
 
-        OnAllObjectsDematerialized?.Invoke(this, EventArgs.Empty);
+        OnAllObjectsDematerialized?.Invoke(this,  new OnAllObjectsDematerializedEventArgs { projectableObjectSOs = currentProjectedObjects });
     }
 
     public void DematerializeAllObjects()
     {
-        OnAllObjectsDematerialized?.Invoke(this, EventArgs.Empty);
+        OnAllObjectsDematerialized?.Invoke(this, new OnAllObjectsDematerializedEventArgs { projectableObjectSOs = currentProjectedObjects });
     }
 
     public bool CanProjectObject(ProjectableObjectSO projectableObjectSO) => ProjectionGemsManager.Instance.CheckCanUseProjectionGems(projectableObjectSO.projectionGemsCost);
@@ -89,12 +93,12 @@ public class ProjectionManager : MonoBehaviour
         OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
     }
 
-    public void ObjectDematerialized(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform)
+    public void ObjectDematerialized(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform, bool triggerEvents)
     {
         currentProjectedObjects.Remove(projectableObjectSO);
 
         ProjectionGemsManager.Instance.RefundProyectionGems(projectableObjectSO.projectionGemsCost);
-        OnObjectDematerialized?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
+        if(triggerEvents) OnObjectDematerialized?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
     }
 
     public bool AnyObjectsProjected() => currentProjectedObjects.Count > 0;
