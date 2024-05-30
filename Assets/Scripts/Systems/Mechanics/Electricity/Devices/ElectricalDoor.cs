@@ -30,7 +30,7 @@ public class ElectricalDoor : MonoBehaviour
     private Coroutine doorMovement;
 
     private float notPoweredTimer;
-    private const float NOT_POWERED_TIME_THRESHOLD = 0.05f;
+    private const float NOT_POWERED_TIME_THRESHOLD = 0.5f;
 
     public static event EventHandler<OnDoowPoweredEventArgs> OnDoorPowered;
     public class OnDoowPoweredEventArgs : EventArgs

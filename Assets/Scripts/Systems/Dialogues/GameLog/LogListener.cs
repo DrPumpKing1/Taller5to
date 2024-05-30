@@ -10,6 +10,9 @@ public class LogListener : MonoBehaviour
 
         ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
         ElectricalDoor.OnDoorPowered += ElectricalDoor_OnDoorPowered;
+
+        RoomManager.OnRoomEnter += RoomManager_OnRoomEnter;
+        RoomManager.OnRoomExit += RoomManager_OnRoomExit;
     }
 
     private void OnDisable()
@@ -18,6 +21,9 @@ public class LogListener : MonoBehaviour
 
         ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
         ElectricalDoor.OnDoorPowered -= ElectricalDoor_OnDoorPowered;
+
+        RoomManager.OnRoomEnter -= RoomManager_OnRoomEnter;
+        RoomManager.OnRoomExit -= RoomManager_OnRoomExit;
     }
 
     private void ElectricalSwitchToggle_OnSwitchToggle(object sender, ElectricalSwitchToggle.OnSwitchToggleEventArgs e) => GameLog.Log($"Electrical/ToggleSwitch/{e.switchOn}/{e.id}");
@@ -25,5 +31,6 @@ public class LogListener : MonoBehaviour
     private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e) => GameLog.Log($"Worth/ShowDignity/{e.dialect}");
     private void ElectricalDoor_OnDoorPowered(object sender, ElectricalDoor.OnDoowPoweredEventArgs e) => GameLog.Log($"Electrical/PowerDoor/{e.id}");
 
-
+    private void RoomManager_OnRoomEnter(object sender, RoomManager.OnRoomEventArgs e) => GameLog.Log($"Movement/EnterRoom/{e.roomName}");
+    private void RoomManager_OnRoomExit(object sender, RoomManager.OnRoomEventArgs e) => GameLog.Log($"Movement/ExitRoom/{e.roomName}");
 }

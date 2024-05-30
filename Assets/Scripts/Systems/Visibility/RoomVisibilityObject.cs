@@ -7,22 +7,22 @@ using System.Linq;
 public class RoomVisibilityObject : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private List<RoomVisibilityCollider> controllingColliders;
+    [SerializeField] private List<RoomCollider> controllingColliders;
 
     private List<Renderer> renderers = new List<Renderer>();
 
     private void OnEnable()
     {
-        RoomVisibilityManager.OnStartBlockingViewColliders += RoomVisibilityManager_OnStartBlockingViewColliders;
-        RoomVisibilityManager.OnEnterBlockingViewColliders += RoomVisibilityManager_OnEnterBlockingViewColliders;
-        RoomVisibilityManager.OnExitBlockingViewColliders += RoomVisibilityManager_OnExitBlockingViewColliders;
+        RoomManager.OnStartBlockingViewColliders += RoomVisibilityManager_OnStartBlockingViewColliders;
+        RoomManager.OnEnterBlockingViewColliders += RoomVisibilityManager_OnEnterBlockingViewColliders;
+        RoomManager.OnExitBlockingViewColliders += RoomVisibilityManager_OnExitBlockingViewColliders;
     }
 
     private void OnDisable()
     {
-        RoomVisibilityManager.OnStartBlockingViewColliders -= RoomVisibilityManager_OnStartBlockingViewColliders;
-        RoomVisibilityManager.OnEnterBlockingViewColliders -= RoomVisibilityManager_OnEnterBlockingViewColliders;
-        RoomVisibilityManager.OnExitBlockingViewColliders -= RoomVisibilityManager_OnExitBlockingViewColliders;
+        RoomManager.OnStartBlockingViewColliders -= RoomVisibilityManager_OnStartBlockingViewColliders;
+        RoomManager.OnEnterBlockingViewColliders -= RoomVisibilityManager_OnEnterBlockingViewColliders;
+        RoomManager.OnExitBlockingViewColliders -= RoomVisibilityManager_OnExitBlockingViewColliders;
     }
 
     private void Awake()
@@ -55,7 +55,7 @@ public class RoomVisibilityObject : MonoBehaviour
         }
     }
 
-    private void CheckStartVisibility(List<RoomVisibilityCollider> currentCollidersBlockingView)
+    private void CheckStartVisibility(List<RoomCollider> currentCollidersBlockingView)
     {
         if (controllingColliders.Intersect(currentCollidersBlockingView).Any())
         {
@@ -67,7 +67,7 @@ public class RoomVisibilityObject : MonoBehaviour
         }
     }
 
-    private void CheckEnterVisibility(List<RoomVisibilityCollider> previousCollidersBlockingView, List<RoomVisibilityCollider> enterVisibilityColliders)
+    private void CheckEnterVisibility(List<RoomCollider> previousCollidersBlockingView, List<RoomCollider> enterVisibilityColliders)
     {
         if ((controllingColliders.Intersect(previousCollidersBlockingView).Any())) return; //A controllingCollider was already on the previous List
 
@@ -76,7 +76,7 @@ public class RoomVisibilityObject : MonoBehaviour
         EnableMeshRenderers();
     }
 
-    private void CheckExitVisibility(List<RoomVisibilityCollider> previousCollidersBlockingView, List<RoomVisibilityCollider> currentVisibilityColliders)
+    private void CheckExitVisibility(List<RoomCollider> previousCollidersBlockingView, List<RoomCollider> currentVisibilityColliders)
     {
         if (!(controllingColliders.Intersect(previousCollidersBlockingView).Any())) return; //There wasn't any controllingCollider on previous list (none o them was bocking view and this was already invisible)
         //At this point, there was at least one collider blocking view
@@ -88,17 +88,17 @@ public class RoomVisibilityObject : MonoBehaviour
     }
 
     #region RoomVisibilityManager Subscriptions
-    private void RoomVisibilityManager_OnStartBlockingViewColliders(object sender, RoomVisibilityManager.OnBlockingViewCollidersStartEventArgs e)
+    private void RoomVisibilityManager_OnStartBlockingViewColliders(object sender, RoomManager.OnBlockingViewCollidersStartEventArgs e)
     {
         CheckStartVisibility(e.currentRoomVisibilityColliders);
     }
 
-    private void RoomVisibilityManager_OnEnterBlockingViewColliders(object sender, RoomVisibilityManager.OnBlockingViewCollidersEnterEventArgs e)
+    private void RoomVisibilityManager_OnEnterBlockingViewColliders(object sender, RoomManager.OnBlockingViewCollidersEnterEventArgs e)
     {
         CheckEnterVisibility(e.previousRoomVisibilityColliders,e.newRoomVisibilityColliders);
     }
 
-    private void RoomVisibilityManager_OnExitBlockingViewColliders(object sender, RoomVisibilityManager.OnBlockingViewCollidersExitEventArgs e)
+    private void RoomVisibilityManager_OnExitBlockingViewColliders(object sender, RoomManager.OnBlockingViewCollidersExitEventArgs e)
     {
         CheckExitVisibility(e.previousRoomVisibilityColliders, e.currentRoomVisibilityColliders);
     }
