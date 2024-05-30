@@ -29,10 +29,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 409890906545315387, guid: 347f58362b888284b93c35830067cdfc, type: 3}
-      propertyPath: visual
-      value: 
-      objectReference: {fileID: 823870175226305847}
-    - target: {fileID: 409890906545315387, guid: 347f58362b888284b93c35830067cdfc, type: 3}
       propertyPath: tooltipMessage
       value: Collect Zurryth Piece
       objectReference: {fileID: 0}
@@ -122,8 +118,3 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 347f58362b888284b93c35830067cdfc, type: 3}
---- !u!4 &823870175226305847 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5721481470005318819, guid: 347f58362b888284b93c35830067cdfc, type: 3}
-  m_PrefabInstance: {fileID: 4902221634519337364}
-  m_PrefabAsset: {fileID: 0}
