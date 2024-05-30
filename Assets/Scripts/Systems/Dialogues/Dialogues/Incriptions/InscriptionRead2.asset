@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e856ab5a3a78154bb73c2f6d54e12fc, type: 3}
+  m_Name: InscriptionRead2
+  m_EditorClassIdentifier: 
+  id: 0
+  sentences:
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
+    text: "\u201CHeathens speak ill of our dogmas, but the preachings she entrusted
+      us are sacred\u201D."
+    time: 6
+  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
+    text: A cat that is some type of god? Jeez, now I have seen everything.
+    time: 5
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
+    text: "Watch your tone, old man. This is the house of my goddess, my \u201CKa'hoshita\u201D.\r\n"
+    time: 6
+  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
+    text: "From what I see, your \u201Cgoddess\u201D seems weak, the only power I
+      see here it's a huge building and fanaticism, as regular religions."
+    time: 9
+  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
+    text: I won't talk with an ignorant human, for what I know, your race destroys
+      each other, maybe that's why there isn't a planet to come back to, huh?
+    time: 10
+  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
+    text: "You little\u2026"
+    time: 3
