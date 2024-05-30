@@ -5,29 +5,35 @@ using UnityEngine;
 
 public class GameLog : MonoBehaviour
 {
+    public static GameLog Instance { get; private set; }
+
+    [Header("Log")] 
+    public List<GameplayAction> gameLog;
+
     [Serializable]
     public struct GameplayAction
     {
         public float time;
         public string log;
     }
-    
-    public static GameLog Instance;
-
-    [Header("Log")] 
-    public List<GameplayAction> gameLog;
-    
+     
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Debug.LogWarning("There are more than one Game Log in the Scene");
-            return;
-        }
-
-        Instance = this;
-        
+        SetSingleton();      
         InitializeLog();
+    }
+
+    private void SetSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("There is more than one GameLog instance, proceding to destroy duplicate");
+            Destroy(gameObject);
+        }
     }
 
     private void InitializeLog()

@@ -6,6 +6,7 @@ using System;
 public class ElectricalSwitchToggle : MonoBehaviour, IInteractable
 {
     [Header("Electrical Settings")]
+    [SerializeField] private ElectricalSwitch electricalSwitch;
     [SerializeField] private SwitchElectrode switchElectrode;
 
     [Header("Interactable Settings")]
@@ -20,6 +21,14 @@ public class ElectricalSwitchToggle : MonoBehaviour, IInteractable
     [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
+
+    public static event EventHandler<OnSwitchToggleEventArgs> OnSwitchToggle;
+
+    public class OnSwitchToggleEventArgs : EventArgs
+    {
+        public bool switchOn;
+        public int id;
+    }
 
     #region IHoldInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -92,6 +101,9 @@ public class ElectricalSwitchToggle : MonoBehaviour, IInteractable
     private void SwitchComponent()
     {
         switchElectrode.SetSwitch(!switchElectrode.SwitchOn);
+
+        OnSwitchToggle?.Invoke(this, new OnSwitchToggleEventArgs { switchOn = switchElectrode.SwitchOn, id = electricalSwitch.ID });
+
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class ElectricalDoor : MonoBehaviour
 {
+    [Header("Identifiers")]
+    [SerializeField] private int id;
+
     [Header("Electricity")] 
     public ElectricalDevice device;
     [SerializeField] private bool isPowered;
@@ -26,9 +29,13 @@ public class ElectricalDoor : MonoBehaviour
     private GameObject player;
     private Coroutine doorMovement;
 
-    private void Start()
+    private float notPoweredTimer;
+    private const float NOT_POWERED_TIME_THRESHOLD = 0.05f;
+
+    public static event EventHandler<OnDoowPoweredEventArgs> OnDoorPowered;
+    public class OnDoowPoweredEventArgs : EventArgs
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        public int id;
     }
 
     private void OnEnable()
@@ -41,28 +48,23 @@ public class ElectricalDoor : MonoBehaviour
         device.OnStateChange -= CheckPower;
     }
 
+    private void Start()
+    {
+        InitializeVariables();
+    }
+
+    private void InitializeVariables()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        notPoweredTimer = 0f;
+    }
+
     void Update()
     {
         CheckProximity();
         ManageState();
-    }
 
-    private void ManageState()
-    {
-        if(state == isPowered) return;
-        
-        if (state)
-        {
-            state = false;
-        } else if (!state)
-        {
-            if(isNextToPlayer) return;
-            
-            GameLog.Log("Electrical/PowerDoor");
-            state = true;
-        }
-        
-        TriggerMovement(state);
+        HandlePowered();
     }
     
     private void CheckProximity()
@@ -76,6 +78,36 @@ public class ElectricalDoor : MonoBehaviour
         isNextToPlayer = Vector3.Distance(doorCenter.position, player.transform.position) <= proximityRadius;
     }
 
+    private void ManageState()
+    {
+        if(state == isPowered) return;
+
+        if (state) state = false;
+        else 
+        { 
+            if (isNextToPlayer) return;
+
+            state = true;
+        }
+        
+
+        TriggerMovement(state);
+    }
+
+    private void HandlePowered()
+    {
+        if (!isPowered)
+        {
+            notPoweredTimer += Time.deltaTime;
+            return;
+        }
+
+        if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD)
+        {
+            notPoweredTimer = 0f;
+            OnDoorPowered?.Invoke(this, new OnDoowPoweredEventArgs { id = id });
+        }       
+    }
     private void CheckPower(bool isPowered)
     {
         this.isPowered = isPowered;

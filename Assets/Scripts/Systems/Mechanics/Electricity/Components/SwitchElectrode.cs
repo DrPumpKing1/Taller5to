@@ -29,9 +29,6 @@ public class SwitchElectrode : Electrode
     public void SetSwitch(bool swichOn)
     {
         this.switchOn = swichOn;
-
-        GameLog.Log($"Electrical/ToggleSwitch/{switchOn}");
-        
         Electricity.Instance.UpdateElectrode(this);
     }
 }
