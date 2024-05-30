@@ -14,9 +14,14 @@ public class LogListener : MonoBehaviour
         RoomManager.OnRoomExit += RoomManager_OnRoomExit;
 
         ShieldPieceCollection.OnShieldPieceCollected += ShieldPieceCollection_OnShieldPieceCollected;
+        LearningPlatformLearn.OnAnyObjectLearned += LearningPlatformLearn_OnAnyObjectLearned;
+        ProjectionGemsManager.OnTotalProjectionGemsIncreased += ProjectionGemsManager_OnTotalProjectionGemsIncreased;                    
 
         ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
+
     }
+
+
 
     private void OnDisable()
     {
@@ -30,6 +35,10 @@ public class LogListener : MonoBehaviour
 
         InscriptionPowering.OnInscriptionPoweringFirstTime -= InscriptionPowering_OnInscriptionPoweringFirstTime;
         ShieldPieceCollection.OnShieldPieceCollected -= ShieldPieceCollection_OnShieldPieceCollected;
+        ProjectionGemsManager.OnTotalProjectionGemsIncreased -= ProjectionGemsManager_OnTotalProjectionGemsIncreased;
+
+        LearningPlatformLearn.OnAnyObjectLearned += LearningPlatformLearn_OnAnyObjectLearned;
+
     }
 
 
@@ -41,7 +50,11 @@ public class LogListener : MonoBehaviour
     private void RoomManager_OnRoomExit(object sender, RoomManager.OnRoomEventArgs e) => GameLog.Log($"Movement/ExitRoom/{e.roomName}");
 
     private void ShieldPieceCollection_OnShieldPieceCollected(object sender, ShieldPieceCollection.OnShieldPieceCollectedEventArgs e) => GameLog.Log($"Interaction/GrabShieldPiece/{e.shieldPieceSO.id}");
+    private void LearningPlatformLearn_OnAnyObjectLearned(object sender, LearningPlatformLearn.OnAnyObjectLearnedEventArgs e) => GameLog.Log($"Interaction/LearnObject/{e.projectableObjectSO.id}");
+    private void ProjectionGemsManager_OnTotalProjectionGemsIncreased(object sender, ProjectionGemsManager.OnProjectionGemsEventArgs e) => GameLog.Log($"Interaction/GrabGems/{e.projectionGems}");
+
     private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e) => GameLog.Log($"Worth/ShowDignity/{e.dialect}");
+
 
 
 }

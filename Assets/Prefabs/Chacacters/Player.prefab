@@ -450,7 +450,7 @@ MonoBehaviour:
   playerInteractAlternate: {fileID: 907748609654045023}
   checkGround: {fileID: 2176356878162520009}
   checkWall: {fileID: 8413128526021734546}
-  moveSpeed: 5
+  moveSpeed: 6.5
   flattenSpeedOnSlopes: 1
   smoothInputFactor: 10
   smoothVelocityFactor: 10
@@ -512,7 +512,7 @@ MonoBehaviour:
   lowJumpMultiplier: 2
   enableStickToSlopeForce: 1
   stickToSlopeSpeedThreshold: 3.5
-  stickToSlopeForce: 20
+  stickToSlopeForce: 75
 --- !u!114 &4536946071876244043
 MonoBehaviour:
   m_ObjectHideFlags: 0

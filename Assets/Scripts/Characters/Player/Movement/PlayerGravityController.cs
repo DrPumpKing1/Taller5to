@@ -21,7 +21,7 @@ public class PlayerGravityController : MonoBehaviour
     [Header("Stick To Slope Settings")]
     [SerializeField] private bool enableStickToSlopeForce;
     [SerializeField] private float stickToSlopeSpeedThreshold;
-    [SerializeField, Range(0f, 30f)] private float stickToSlopeForce = 5f;
+    [SerializeField, Range(0f, 100f)] private float stickToSlopeForce = 5f;
 
     public float HorizontalSpeed => playerHorizontalMovement.FinalMoveVector.magnitude;
 

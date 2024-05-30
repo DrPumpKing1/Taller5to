@@ -14,7 +14,8 @@ public class LearningPlatformsUsedPersistence : MonoBehaviour, IDataPersistence<
             {
                 if (learningPlatform.LearningPlatformSO.id == learningPlatformUsed.Key)
                 {
-                    if (learningPlatformUsed.Value) learningPlatform.SetIsLearned();
+                    if (learningPlatformUsed.Value) learningPlatform.SetIsLearned(true);
+                    else learningPlatform.SetIsLearned(false);
                     break;
                 }
             }

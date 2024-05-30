@@ -32,7 +32,7 @@ public class LearningSuccessVisual : MonoBehaviour
             return;
         }
 
-        learningSuccessUI.SetLearningSuccessText(e.objectLearned);
+        learningSuccessUI.SetLearningSuccessText(e.projectableOjectSO);
     }
 
 }

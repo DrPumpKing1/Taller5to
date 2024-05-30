@@ -36,7 +36,7 @@ public class ShieldDoor : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        InitializeVariables();
     }
 
     void Update()
@@ -44,6 +44,11 @@ public class ShieldDoor : MonoBehaviour
         CheckVirtue();
         CheckProximity();
         ManageState();
+    }
+
+    private void InitializeVariables()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void ManageState()

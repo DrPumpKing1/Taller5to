@@ -14,5 +14,5 @@ public class LearningPlatform : MonoBehaviour
     public LearningPlatformSO LearningPlatformSO => learningPlatformSO;
     public bool IsLearned => isLearned;
 
-    public void SetIsLearned() => isLearned = true;
+    public void SetIsLearned(bool learned) => isLearned = learned;
 }
