@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InscriptionShieldPieceDrop : MonoBehaviour
+public class InscriptionPowering : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Inscription inscription;
@@ -12,10 +12,18 @@ public class InscriptionShieldPieceDrop : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private Vector3 shieldDropForce;
+    [SerializeField] private bool shieldParenting;
 
     private bool Power => electrode.Power >= Electrode.ACTIVATION_THRESHOLD;
 
     private bool previousPowered;
+
+    public static event EventHandler<OnInscriptionPoweringEventArgs> OnInscriptionPoweringFirstTime;
+
+    public class OnInscriptionPoweringEventArgs : EventArgs
+    {
+        public int id;
+    }
 
     private void Start()
     {
@@ -45,13 +53,17 @@ public class InscriptionShieldPieceDrop : MonoBehaviour
     private void CheckDropShield()
     {
         if (inscription.HasDroppedShieldPiece) return;
+
         DropShieldPiece();
+        OnInscriptionPoweringFirstTime?.Invoke(this, new OnInscriptionPoweringEventArgs { id = inscription.InscriptionSO.id });
     }
 
     private void DropShieldPiece()
     {
         Transform shieldPieceTransform = Instantiate(inscription.ShieldPieceSO.prefab, dropPoint.position, dropPoint.rotation);
         AddShieldPieceDropForce(shieldPieceTransform);
+
+        if (shieldParenting) shieldPieceTransform.SetParent(dropPoint);
 
         inscription.SetHasDroppedShieldPiece(true);
     }

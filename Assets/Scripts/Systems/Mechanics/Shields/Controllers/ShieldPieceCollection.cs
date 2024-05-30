@@ -11,6 +11,7 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
 
     [Header("Collection Settings")]
     [SerializeField] private bool enableTriggerCollection;
+    [SerializeField] private bool hasBeenCollected;
 
     [Header("Interactable Settings")]
     [SerializeField, Range(1f, 100f)] private float horizontalInteractionRange;
@@ -101,6 +102,11 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
             return;
         }
 
+        if (hasBeenCollected)
+        {
+            return;
+        }
+
         Interact();
     }
 
@@ -111,6 +117,8 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
     {
         AddShieldPieceToInventory();
         DisableVisual();
+
+        hasBeenCollected = true;
 
         canBeSelected = false;
         isInteractable = false;
@@ -126,6 +134,7 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
 
     private void OnTriggerEnter(Collider other)
     {
+        if (hasBeenCollected) return;
         if (!enableTriggerCollection) return;
         if (!other.CompareTag(PLAYER_TAG)) return;
 
