@@ -11,14 +11,14 @@ public class TestMethodSub : MonoBehaviour
     [SerializeField] private DialogueSO dialogueSO;
     private void OnEnable()
     {
-        playerFall.OnPlayerFall += PlayerFall_OnPlayerFall;
-        playerLand.OnPlayerLand += PlayerLand_OnPlayerLand;
+        //playerFall.OnPlayerFall += PlayerFall_OnPlayerFall;
+        //playerLand.OnPlayerLand += PlayerLand_OnPlayerLand;
     }
 
     private void OnDisable()
     {
-        playerFall.OnPlayerFall -= PlayerFall_OnPlayerFall;
-        playerLand.OnPlayerLand -= PlayerLand_OnPlayerLand;
+        //playerFall.OnPlayerFall -= PlayerFall_OnPlayerFall;
+        //playerLand.OnPlayerLand -= PlayerLand_OnPlayerLand;
 
     }
 
