@@ -10,7 +10,6 @@ public class InscriptionRead : MonoBehaviour, IInteractable
     [SerializeField] private Electrode electrode;
 
     [Header("Dialogues")]
-    [SerializeField] private DialogueSO inscriptionDialogue;
     [SerializeField] private MonologueSO inscriptionMonologue;
 
     [Header("Interactable Settings")]
@@ -30,6 +29,13 @@ public class InscriptionRead : MonoBehaviour, IInteractable
 
     private float notPoweredTimer = 0f;
     private const float NOT_POWERED_TIME_THRESHOLD = 0.5f;
+
+    public static event EventHandler<OnInscriptionReadEventArgs> OnInscriptionRead;
+
+    public class OnInscriptionReadEventArgs : EventArgs
+    {
+        public InscriptionSO inscriptionSO;
+    }
 
     #region IInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -132,17 +138,8 @@ public class InscriptionRead : MonoBehaviour, IInteractable
     }
 
     private void ReadInscription()
-    {
-        if (!inscription.HasBeenRead)
-        {
-            DialogueManager.Instance.StartDialogue(inscriptionDialogue);
-            Deselect();
-
-            inscription.SetHasBeenRead(true);
-        }
-        else
-        {
-            MonologueManager.Instance.StartMonologue(inscriptionMonologue);
-        }
+    {     
+        MonologueManager.Instance.StartMonologue(inscriptionMonologue);
+        OnInscriptionRead?.Invoke(this, new OnInscriptionReadEventArgs { inscriptionSO = inscription.InscriptionSO });
     }
 }
