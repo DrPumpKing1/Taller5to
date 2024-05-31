@@ -139,7 +139,6 @@ public class InscriptionRead : MonoBehaviour, IInteractable
 
     private void ReadInscription()
     {     
-        MonologueManager.Instance.StartMonologue(inscriptionMonologue);
         OnInscriptionRead?.Invoke(this, new OnInscriptionReadEventArgs { inscriptionSO = inscription.InscriptionSO });
     }
 }
