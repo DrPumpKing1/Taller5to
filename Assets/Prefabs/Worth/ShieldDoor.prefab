@@ -81,7 +81,7 @@ MonoBehaviour:
   gateTransform: {fileID: 4110467250782593210}
   restPosition: {fileID: 2662760417373888125}
   powerPosition: {fileID: 5291824443398701166}
-  moveSpeed: 2
+  moveSpeed: 1
   moveCurve:
     serializedVersion: 2
     m_Curve:
@@ -107,7 +107,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   doorCenter: {fileID: 529833306073989837}
-  proximityRadius: 5
+  proximityRadius: 6
   state: 0
 --- !u!1 &5147696442569790235
 GameObject:
