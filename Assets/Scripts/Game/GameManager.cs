@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     {
         UIManager.OnUIActive -= UIManager_OnUIActive;
         UIManager.OnUIInactive -= UIManager_OnUIInactive;
+
+        DialogueManager.OnDialogueStart -= DialogueManager_OnDialogueStart;
+        DialogueManager.OnDialogueEnd -= DialogueManager_OnDialogueEnd;
     }
 
     private void Awake()
@@ -73,11 +76,13 @@ public class GameManager : MonoBehaviour
     #region DialogManagerSubscriptions
     private void DialogueManager_OnDialogueStart(object sender, DialogueManager.OnDialogueEventArgs e)
     {
+        if (!e.limitMovement) return;
         SetGameState(State.OnDialogue);
     }
 
     private void DialogueManager_OnDialogueEnd(object sender, DialogueManager.OnDialogueEventArgs e)
     {
+        if (!e.limitMovement) return;
         SetGameState(State.OnGameplay);
     }
     #endregion

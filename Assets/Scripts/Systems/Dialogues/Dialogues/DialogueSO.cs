@@ -6,5 +6,6 @@ using UnityEngine;
 public class DialogueSO : ScriptableObject
 {
     public int id;
+    public bool limitMovement;
     public List<Sentence> sentences;
 }
