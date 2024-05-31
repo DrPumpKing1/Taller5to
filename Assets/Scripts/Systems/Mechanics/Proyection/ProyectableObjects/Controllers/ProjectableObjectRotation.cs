@@ -6,6 +6,7 @@ using System;
 public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
 {
     [Header("Components")]
+    [SerializeField] private Transform transformToRotate;
     [SerializeField] private ProjectableObject projectableObject;
 
     [Header("Rotation Settings")]
@@ -122,12 +123,12 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
     private void InitializeRotation()
     {
         Vector3 initialDirectionVector3 = GeneralMethods.Vector2ToVector3(startingDirection);
-        initialDirectionVector3 = initialDirectionVector3.magnitude == 0 ? transform.forward : initialDirectionVector3;
+        initialDirectionVector3 = initialDirectionVector3.magnitude == 0 ? transformToRotate.forward : initialDirectionVector3;
 
         DesiredDirection = initialDirectionVector3.normalized;
         CurrentDirection = DesiredDirection;
 
-        transform.localRotation = Quaternion.LookRotation(DesiredDirection);
+        transformToRotate.localRotation = Quaternion.LookRotation(DesiredDirection);
     }
 
     private void HandleRotation()
@@ -135,7 +136,7 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
         CurrentDirection = Vector3.Slerp(CurrentDirection, DesiredDirection, smoothRotateFactor * Time.deltaTime);
         CurrentDirection.Normalize();
 
-        transform.localRotation = Quaternion.LookRotation(CurrentDirection);
+        transformToRotate.localRotation = Quaternion.LookRotation(CurrentDirection);
     }
 
     private void RotateObject()

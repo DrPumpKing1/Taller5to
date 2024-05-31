@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 2234224886624068271}
   - component: {fileID: 8724558555367522007}
   m_Layer: 0
-  m_Name: ' Cable Electrode'
+  m_Name: Cable Electrode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -616,6 +616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b74f03ccdf53f44d9a4f132f29fe4ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transformToRotate: {fileID: 2234224886624068271}
   projectableObject: {fileID: 2212840017335302867}
   startingDirection: {x: 1, y: 0}
   clockwiseRotation: 1
