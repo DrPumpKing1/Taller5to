@@ -129,7 +129,7 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (CheckSkipSentence() && enableDialogueSkip)
+        if (CheckSkipSentence() && currentDialogueSO.allowSkip)
         {
             SkipSentence();
             return;

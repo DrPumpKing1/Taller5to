@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: FirstProjection
   m_EditorClassIdentifier: 
   id: 8
+  limitMovement: 0
+  allowSkip: 1
   sentences:
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
     text: Did you just make that appear out of nowhere?

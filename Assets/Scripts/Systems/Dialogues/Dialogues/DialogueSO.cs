@@ -7,5 +7,6 @@ public class DialogueSO : ScriptableObject
 {
     public int id;
     public bool limitMovement;
+    public bool allowSkip;
     public List<Sentence> sentences;
 }
