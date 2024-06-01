@@ -232,7 +232,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(DialogueSO dialogueSO)
     {
-        if (state != State.NotOnDialogue) return;
+        //if (state != State.NotOnDialogue) return;
         if (dialogueSO.sentences.Count == 0) return;
 
         ResetTimer();
@@ -241,6 +241,7 @@ public class DialogueManager : MonoBehaviour
         SetCurrentSentence(0);
 
         OnDialogueStart?.Invoke(this, new OnDialogueEventArgs { dialogueSO = currentDialogueSO, limitMovement = currentDialogueSO.limitMovement});
+
         OnSentencePlay?.Invoke(this, new OnSentencePlayEventArgs { sentence = currentSentence, isFirstSentence = true });
 
         SetDialogueState(State.StartingDialogue);
@@ -249,7 +250,7 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         if (state == State.NotOnDialogue) return;
-        if (state == State.EndingDialogue) return;
+        //if (state == State.EndingDialogue) return;
 
         ResetTimer();
         SetDialogueState(State.EndingDialogue);

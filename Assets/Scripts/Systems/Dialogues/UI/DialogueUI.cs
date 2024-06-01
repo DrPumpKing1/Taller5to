@@ -89,6 +89,7 @@ public class DialogueUI : MonoBehaviour
     #region DialogueManager Subscriptions
     private void DialogueManager_OnDialogueStart(object sender, DialogueManager.OnDialogueEventArgs e)
     {
+        ResetAllTriggers();
         EnableDialogueUI();
     }
     private void DialogueManager_OnDialogueEnd(object sender, DialogueManager.OnDialogueEventArgs e)

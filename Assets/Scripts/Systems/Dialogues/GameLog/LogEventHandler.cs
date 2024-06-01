@@ -39,13 +39,13 @@ public class LogEventHandler : MonoBehaviour
     [SerializeField] private List<MonologueReaction> monologues;
     private void OnEnable()
     {
-        GameLog.Instance.OnLogAdd += ReadLogDialogue;
+        GameLog.Instance.OnLogAdd += () => StartCoroutine(ReadLogDialogue());
         GameLog.Instance.OnLogAdd += ReadLogForMonologue;
     }
 
     private void OnDisable()
     {
-        GameLog.Instance.OnLogAdd -= ReadLogDialogue;
+        GameLog.Instance.OnLogAdd -= () => StartCoroutine(ReadLogDialogue());
         GameLog.Instance.OnLogAdd -= ReadLogForMonologue;
     }
 
@@ -63,18 +63,22 @@ public class LogEventHandler : MonoBehaviour
         if (reactionTimer > 0f) reactionTimer -= Time.deltaTime;
     }
 
-    private void ReadLogDialogue()
+    private IEnumerator ReadLogDialogue()
     {
         string lastLog = GameLog.Instance.gameLog[^1].log;
 
         var compatibleDialogues = dialogues.Where(x => x.eventCode == lastLog && !x.discovered);
         
-        if(!compatibleDialogues.Any()) return;
+        if(!compatibleDialogues.Any()) yield break;
 
         UniqueDialogueEvent dialogue = compatibleDialogues.First();
         
         DialogueManager.Instance.EndDialogue();
+
+        yield return new WaitForSeconds(0.5f);
+
         DialogueManager.Instance.StartDialogue(dialogue.dialogue);
+
         dialogue.discovered = true;
         lastDialogue = dialogue;
 
@@ -82,7 +86,7 @@ public class LogEventHandler : MonoBehaviour
         {
             hintWaitTimer = 0f;
             waintingHint = false;
-            return;
+            yield break;
         }
         
         hintWaitTimer = lastDialogue.hintTime;
