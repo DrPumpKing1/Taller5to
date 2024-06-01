@@ -207,7 +207,7 @@ public class MonologueManager : MonoBehaviour
 
     public void StartMonologue(MonologueSO monologueSO)
     {
-        if (state != State.NotOnMonologue) return;
+        //if (state != State.NotOnMonologue) return;
         if (monologueSO.sentences.Count == 0) return;
 
         ResetTimer();
@@ -224,7 +224,7 @@ public class MonologueManager : MonoBehaviour
     public void EndMonologue()
     {
         if (state == State.NotOnMonologue) return;
-        if (state == State.EndingMonologue) return;
+        //if (state == State.EndingMonologue) return;
 
         ResetTimer();
         SetMonologueState(State.EndingMonologue);

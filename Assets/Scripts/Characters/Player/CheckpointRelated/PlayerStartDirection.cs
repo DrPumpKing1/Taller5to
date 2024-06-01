@@ -5,6 +5,9 @@ using System;
 
 public class PlayerStartDirection : MonoBehaviour
 {
+    [Header("Enable Rotate To Checkpoint")]
+    [SerializeField] private bool enableRotateToCheckpoint;
+
     [Header("Debug")]
     [SerializeField] private bool debug;
 
@@ -22,16 +25,25 @@ public class PlayerStartDirection : MonoBehaviour
 
     private void DirectionToCheckpoint()
     {
-        Vector2 direction = CheckpointManager.Instance.GetCurrentCheckpointDirection();
-        Vector3 startingFacingDirection = GeneralMethods.Vector2ToVector3(direction);
+        Vector3 desiredFacingDirection = transform.forward;
 
-        if (direction == Vector2.zero)
+        if (enableRotateToCheckpoint)
         {
-            if (debug) Debug.LogWarning("Positioning will be ignored due to Vector3.zero position");
-            startingFacingDirection = transform.forward;
+            Vector2 checkpointDirection = CheckpointManager.Instance.GetCurrentCheckpointDirection();
+            Vector3 checkpointFacingDirection = GeneralMethods.Vector2ToVector3(checkpointDirection);
+
+            if(!(checkpointDirection == Vector2.zero))
+            {
+                desiredFacingDirection = checkpointFacingDirection;
+            }
+            else
+            {
+                if (debug) Debug.LogWarning("Rotation will be ignored due to checkpoint direction being Vector2.zero");
+            }
+
         }
 
-        transform.localRotation = Quaternion.LookRotation(startingFacingDirection);
-        OnPlayerStartDirectioned?.Invoke(this, new OnPlayerStartDirectionedEventArgs { startingFacingDirection = startingFacingDirection });
+        transform.localRotation = Quaternion.LookRotation(desiredFacingDirection);
+        OnPlayerStartDirectioned?.Invoke(this, new OnPlayerStartDirectionedEventArgs { startingFacingDirection = desiredFacingDirection });
     }
 }

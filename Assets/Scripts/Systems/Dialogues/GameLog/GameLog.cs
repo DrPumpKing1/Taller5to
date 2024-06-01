@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameLog : MonoBehaviour
 {
-    public event Action OnLogAdd;
+    public static event Action OnLogAdd;
 
     public static GameLog Instance { get; private set; }
 
@@ -56,6 +56,6 @@ public class GameLog : MonoBehaviour
             log = log
         });
         
-        Instance.OnLogAdd?.Invoke();
+        OnLogAdd?.Invoke();
     }
 }

@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class NewUIInput : UIInput
 {
-    [Header("Components")]
-    [SerializeField] private CheckGround checkGround;
-
     private PlayerInputActions playerInputActions;
 
     protected override void Awake()
@@ -29,7 +26,8 @@ public class NewUIInput : UIInput
     private bool CanProcessInventoryInput()
     {
         if (PauseManager.Instance.GamePaused) return false;
-        //if (!checkGround.IsGrounded) return false;
+        if (GameManager.Instance.GameState == GameManager.State.OnForcedDialogue) return false;
+
         return true;
     }
 

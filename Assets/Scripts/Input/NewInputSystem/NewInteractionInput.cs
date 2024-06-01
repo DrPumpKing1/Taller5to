@@ -20,9 +20,11 @@ public class NewInteractionInput : InteractionInput
 
     public override bool CanProcessInteractionInput()
     {
-        if (GameManager.Instance.GameState != GameManager.State.OnGameplay) return false;
+        if (GameManager.Instance.GameState == GameManager.State.OnGameplay) return true;
+        if (GameManager.Instance.GameState == GameManager.State.OnFreeDialogue) return true;
+        if (GameManager.Instance.GameState == GameManager.State.OnMonologue) return true;
 
-        return true;
+        return false;
     }
 
     public override bool GetInteractionDown()

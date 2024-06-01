@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private State state;
     [SerializeField] private State previousState;
 
-    public enum State {OnGameplay, OnUI, OnDialogue}
+    public enum State {OnGameplay, OnUI, OnForcedDialogue, OnFreeDialogue, OnMonologue}
 
     public State GameState { get { return state; } }
 
@@ -21,7 +21,11 @@ public class GameManager : MonoBehaviour
 
         DialogueManager.OnDialogueStart += DialogueManager_OnDialogueStart;
         DialogueManager.OnDialogueEnd += DialogueManager_OnDialogueEnd;
+
+        MonologueManager.OnMonologueStart += MonologueManager_OnMonologueStart;
+        MonologueManager.OnMonologueEnd += MonologueManager_OnMonologueEnd;
     }
+
 
     private void OnDisable()
     {
@@ -30,6 +34,9 @@ public class GameManager : MonoBehaviour
 
         DialogueManager.OnDialogueStart -= DialogueManager_OnDialogueStart;
         DialogueManager.OnDialogueEnd -= DialogueManager_OnDialogueEnd;
+
+        MonologueManager.OnMonologueStart -= MonologueManager_OnMonologueStart;
+        MonologueManager.OnMonologueEnd -= MonologueManager_OnMonologueEnd;
     }
 
     private void Awake()
@@ -76,13 +83,29 @@ public class GameManager : MonoBehaviour
     #region DialogManagerSubscriptions
     private void DialogueManager_OnDialogueStart(object sender, DialogueManager.OnDialogueEventArgs e)
     {
-        if (!e.limitMovement) return;
-        SetGameState(State.OnDialogue);
+        if (e.limitMovement)
+        {
+            SetGameState(State.OnForcedDialogue);
+        }
+        else
+        {
+            SetGameState(State.OnFreeDialogue);
+        }
     }
 
     private void DialogueManager_OnDialogueEnd(object sender, DialogueManager.OnDialogueEventArgs e)
     {
-        if (!e.limitMovement) return;
+        SetGameState(State.OnGameplay);
+    }
+    #endregion
+
+    #region MonologueManager Susbcriptions
+    private void MonologueManager_OnMonologueStart(object sender, MonologueManager.OnMonologueEventArgs e)
+    {
+        SetGameState(State.OnMonologue);
+    }
+    private void MonologueManager_OnMonologueEnd(object sender, MonologueManager.OnMonologueEventArgs e)
+    {
         SetGameState(State.OnGameplay);
     }
     #endregion

@@ -6,49 +6,64 @@ public class LogListener : MonoBehaviour
 {
     private void OnEnable()
     {
+        //ELECTRICAL
         ElectricalSwitchToggle.OnSwitchToggle += ElectricalSwitchToggle_OnSwitchToggle;
         ElectricalDoor.OnDoorPowered += ElectricalDoor_OnDoorPowered;
         InscriptionPowering.OnInscriptionPoweringFirstTime += InscriptionPowering_OnInscriptionPoweringFirstTime;
 
+        //ROOMS
         RoomManager.OnRoomEnter += RoomManager_OnRoomEnter;
         RoomManager.OnRoomExit += RoomManager_OnRoomExit;
 
+        //INTERACTION
         InscriptionRead.OnInscriptionRead += InscriptionRead_OnInscriptionRead;
         ShieldPieceCollection.OnShieldPieceCollected += ShieldPieceCollection_OnShieldPieceCollected;
         ProjectableObjectsLearningManager.OnProjectableObjectLearned += ProjectableObjectsLearningManager_OnProjectableObjectLearned;
         ProjectionGemsManager.OnTotalProjectionGemsIncreased += ProjectionGemsManager_OnTotalProjectionGemsIncreased;
         ProjectableObjectRotation.OnAnyObjectRotated += ProjectableObjectRotation_OnAnyObjectRotated;
 
+        //PROJECTION
         ProjectionManager.OnObjectProjectionSuccess += ProjectionManager_OnObjectProjectionSuccess;
         ProjectionManager.OnObjectProjectionFailed += ProjectionManager_OnObjectProjectionFailed;
         ProjectionManager.OnObjectDematerialized += ProjectionManager_OnObjectDematerialized;
         ProjectionManager.OnAllObjectsDematerialized += ProjectionManager_OnAllObjectsDematerialized;
 
-
+        //SHIELDS
         ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
+
+        //NARRATIVE
+        MeetVyrxCollider.OnMeetVyrx += MeetVyrxCollider_OnMeetVyrx;
     }
 
     private void OnDisable()
     {
+        //ELECTRICAL
         ElectricalSwitchToggle.OnSwitchToggle -= ElectricalSwitchToggle_OnSwitchToggle;
         ElectricalDoor.OnDoorPowered -= ElectricalDoor_OnDoorPowered;
         InscriptionPowering.OnInscriptionPoweringFirstTime -= InscriptionPowering_OnInscriptionPoweringFirstTime;
 
+        //INTERACTION
         RoomManager.OnRoomEnter -= RoomManager_OnRoomEnter;
         RoomManager.OnRoomExit -= RoomManager_OnRoomExit;
 
+        //PROJECTION
         InscriptionRead.OnInscriptionRead -= InscriptionRead_OnInscriptionRead;
         ShieldPieceCollection.OnShieldPieceCollected -= ShieldPieceCollection_OnShieldPieceCollected;
         ProjectableObjectsLearningManager.OnProjectableObjectLearned -= ProjectableObjectsLearningManager_OnProjectableObjectLearned;
         ProjectionGemsManager.OnTotalProjectionGemsIncreased -= ProjectionGemsManager_OnTotalProjectionGemsIncreased;
         ProjectableObjectRotation.OnAnyObjectRotated -= ProjectableObjectRotation_OnAnyObjectRotated;
 
+        //SHIELDS
         ProjectionManager.OnObjectProjectionSuccess -= ProjectionManager_OnObjectProjectionSuccess;
         ProjectionManager.OnObjectProjectionFailed -= ProjectionManager_OnObjectProjectionFailed;
         ProjectionManager.OnObjectDematerialized -= ProjectionManager_OnObjectDematerialized;
         ProjectionManager.OnAllObjectsDematerialized -= ProjectionManager_OnAllObjectsDematerialized;
 
-        ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
+        //SHIELDS
+        ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
+
+        //NARRATIVE
+        MeetVyrxCollider.OnMeetVyrx -= MeetVyrxCollider_OnMeetVyrx;
     }
 
     private void ElectricalSwitchToggle_OnSwitchToggle(object sender, ElectricalSwitchToggle.OnSwitchToggleEventArgs e) => GameLog.Log($"Electrical/ToggleSwitch/{e.switchOn}/{e.id}");
@@ -74,4 +89,6 @@ public class LogListener : MonoBehaviour
 
 
     private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e) => GameLog.Log($"Worth/ShowDignity/{e.dialect}");
+
+    private void MeetVyrxCollider_OnMeetVyrx(object sender, System.EventArgs e) => GameLog.Log("Narrative/MeetVyrx");
 }

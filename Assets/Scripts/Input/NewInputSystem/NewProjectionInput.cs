@@ -20,9 +20,11 @@ public class NewProjectionInput : ProjectionInput
 
     public override bool CanProcessProjectionInput()
     {
-        if (GameManager.Instance.GameState != GameManager.State.OnGameplay) return false;
+        if (GameManager.Instance.GameState == GameManager.State.OnGameplay) return true;
+        if (GameManager.Instance.GameState == GameManager.State.OnFreeDialogue) return true;
+        if (GameManager.Instance.GameState == GameManager.State.OnMonologue) return true;
 
-        return true;
+        return false;
     }
 
     public override bool GetNextProjectableObjectDown()

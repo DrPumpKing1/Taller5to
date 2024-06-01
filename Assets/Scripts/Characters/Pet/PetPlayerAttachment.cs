@@ -11,6 +11,16 @@ public class PetPlayerAttachment : MonoBehaviour
     [SerializeField] private bool attachToPlayer;
     public bool AttachToPlayer => attachToPlayer;
 
+    private void OnEnable()
+    {
+        MeetVyrxEnd.OnMeetVyrxEnd += MeetVyrxEnd_OnMeetVyrxEnd;
+    }
+
+    private void OnDisable()
+    {
+        MeetVyrxEnd.OnMeetVyrxEnd -= MeetVyrxEnd_OnMeetVyrxEnd;
+    }
+
     private void Awake()
     {
         IgnorePetPlayerCollisions();
@@ -33,7 +43,8 @@ public class PetPlayerAttachment : MonoBehaviour
 
     private void IgnorePetPlayerCollisions() => Physics.IgnoreLayerCollision(6, 8);
 
-    public void SetAttachToPlayer() => attachToPlayer = true;
+    public void SetAttachToPlayer(bool attach) => attachToPlayer = attach;
 
+    private void MeetVyrxEnd_OnMeetVyrxEnd(object sender, EventArgs e) => SetAttachToPlayer(true);
 
 }

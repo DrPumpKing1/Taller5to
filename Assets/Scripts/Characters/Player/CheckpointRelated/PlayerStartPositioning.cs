@@ -8,9 +8,6 @@ public class PlayerStartPositioning : MonoBehaviour
     [Header("Enable Position To Checkpoint")]
     [SerializeField] private bool enablePositionToCheckpoint;
 
-    [Header("Debug")]
-    [SerializeField] private bool debug;
-
     public static event EventHandler OnPlayerStartPositioned;
 
     public class OnPlayerStartPositionedEventArgs : EventArgs
@@ -20,20 +17,19 @@ public class PlayerStartPositioning : MonoBehaviour
 
     private void Start()
     {
-        PositionToCheckpoint();
+        StartPositionPlayer();
     }
 
-    private void PositionToCheckpoint()
+    private void StartPositionPlayer()
     {
-        Vector3 position = CheckpointManager.Instance.GetCurrentCheckpointPosition();
+        Vector3 desiredPosition = transform.position;
 
-        if(position == Vector3.zero)
+        if (enablePositionToCheckpoint)
         {
-            if (debug) Debug.LogWarning("Positioning will be ignored due to Vector3.zero position");
+            desiredPosition = CheckpointManager.Instance.GetCurrentCheckpointPosition();   
         }
-
-        if (enablePositionToCheckpoint) transform.position = position;
-
-        OnPlayerStartPositioned?.Invoke(this, new OnPlayerStartPositionedEventArgs { playerPosition = transform.position });
+        
+        transform.position = desiredPosition;
+        OnPlayerStartPositioned?.Invoke(this, new OnPlayerStartPositionedEventArgs { playerPosition = desiredPosition });
     }
 }
