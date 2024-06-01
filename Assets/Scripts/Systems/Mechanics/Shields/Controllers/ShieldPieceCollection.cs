@@ -7,7 +7,7 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
 {
     [Header("Components")]
     [SerializeField] private ShieldPiece shieldPiece;
-    [SerializeField] private Transform visual;
+    [SerializeField] private Transform model;
 
     [Header("Collection Settings")]
     [SerializeField] private bool enableTriggerCollection;
@@ -130,7 +130,7 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 
-    private void DisableVisual() => visual.gameObject.SetActive(false);
+    private void DisableVisual() => model.gameObject.SetActive(false);
 
     private void AddShieldPieceToInventory() => ShieldPiecesManager.Instance.CollectShieldPiece(shieldPiece.ShieldPieceSO);
 

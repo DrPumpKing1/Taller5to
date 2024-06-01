@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 4817313262813676012}
   - component: {fileID: 5773293257616416141}
   m_Layer: 0
-  m_Name: Visual
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 1652965854770463037}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 2613226187216661728}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 103.5, y: 3.5, z: 27}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -171,10 +171,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
-  m_Height: 1.25
+  m_Radius: 0.75
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!54 &7597666848152432790
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -228,8 +228,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldPiece: {fileID: 4180739616812719184}
-  visual: {fileID: 5721481470005318819}
-  enableTriggerCollection: 1
+  model: {fileID: 5721481470005318819}
+  enableTriggerCollection: 0
   hasBeenCollected: 0
   horizontalInteractionRange: 4
   verticalInteractionRange: 2
@@ -311,7 +311,7 @@ GameObject:
   - component: {fileID: 8403581381820892597}
   - component: {fileID: 6482042339865883496}
   m_Layer: 17
-  m_Name: VisualCollider
+  m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -355,7 +355,7 @@ CapsuleCollider:
   m_Radius: 0.25
   m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &6482042339865883496
 MonoBehaviour:
   m_ObjectHideFlags: 0
