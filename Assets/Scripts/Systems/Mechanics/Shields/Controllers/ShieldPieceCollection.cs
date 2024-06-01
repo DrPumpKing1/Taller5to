@@ -48,7 +48,8 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
     public event EventHandler OnUpdatedInteractableState;
     #endregion
 
-    public static event EventHandler<OnShieldPieceCollectedEventArgs> OnShieldPieceCollected;
+    public static event EventHandler<OnShieldPieceCollectedEventArgs> OnAnyShieldPieceCollected;
+    public event EventHandler<OnShieldPieceCollectedEventArgs> OnShieldPieceCollected;
 
     public class OnShieldPieceCollectedEventArgs : EventArgs
     {
@@ -125,6 +126,7 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
         hasAlreadyBeenInteracted = true;
 
         OnShieldPieceCollected?.Invoke(this, new OnShieldPieceCollectedEventArgs { shieldPieceSO = shieldPiece.ShieldPieceSO });
+        OnAnyShieldPieceCollected?.Invoke(this, new OnShieldPieceCollectedEventArgs { shieldPieceSO = shieldPiece.ShieldPieceSO });
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 

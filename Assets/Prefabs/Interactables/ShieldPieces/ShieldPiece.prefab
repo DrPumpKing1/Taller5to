@@ -236,7 +236,7 @@ MonoBehaviour:
   canBeSelected: 1
   isInteractable: 1
   hasAlreadyBeenInteracted: 0
-  tooltipMessage: Collect Piece
+  tooltipMessage: Collect Shield Piece
   grabPetAttention: 1
   grabPlayerAttention: 1
 --- !u!1 &7066122621920408571
@@ -309,6 +309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7235937744042499366}
   - component: {fileID: 8403581381820892597}
+  - component: {fileID: 6482042339865883496}
   m_Layer: 17
   m_Name: VisualCollider
   m_TagString: Untagged
@@ -355,6 +356,21 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6482042339865883496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7258372821036167672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caef89f9fc0ed2b418db09d2d5c00786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldPieceCollection: {fileID: 409890906545315387}
+  shieldPieceCollectionUIPrefab: {fileID: 2594671349859791423, guid: 5f9fafa843e7967488a1def2e0641979, type: 3}
+  instantiationPositionOffset: {x: 0, y: 0.75, z: 0}
 --- !u!1001 &7021178735806494849
 PrefabInstance:
   m_ObjectHideFlags: 0
