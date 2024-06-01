@@ -22,12 +22,12 @@ public class MonologueTriggerHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        GameLog.OnLogAdd += ReadLogForMonologue;
+        GameLogManager.OnLogAdd += ReadLogForMonologue;
     }
 
     private void OnDisable()
     {
-        GameLog.OnLogAdd -= ReadLogForMonologue;
+        GameLogManager.OnLogAdd -= ReadLogForMonologue;
     }
 
     private void Update()
@@ -44,7 +44,7 @@ public class MonologueTriggerHandler : MonoBehaviour
     {
         if (reactionTimer > 0) return;
 
-        var gameLog = GameLog.Instance.gameLog;
+        var gameLog = GameLogManager.Instance.GameLog;
 
         var compatibleMonologues = monologues.Where(x =>
         {

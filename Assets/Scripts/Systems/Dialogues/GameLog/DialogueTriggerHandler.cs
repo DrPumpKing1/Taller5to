@@ -30,12 +30,12 @@ public class DialogueTriggerHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        GameLog.OnLogAdd += () => StartCoroutine(ReadLogDialogue());
+        GameLogManager.OnLogAdd += () => StartCoroutine(ReadLogDialogue());
     }
 
     private void OnDisable()
     {
-        GameLog.OnLogAdd -= () => StartCoroutine(ReadLogDialogue());
+        GameLogManager.OnLogAdd -= () => StartCoroutine(ReadLogDialogue());
     }
 
     private void Update()
@@ -68,7 +68,7 @@ public class DialogueTriggerHandler : MonoBehaviour
 
     private IEnumerator ReadLogDialogue()
     {
-        string lastLog = GameLog.Instance.gameLog[^1].log;
+        string lastLog = GameLogManager.Instance.GameLog[^1].log;
 
         var compatibleDialogues = dialogues.Where(x => x.eventCode == lastLog && !x.discovered);
         
@@ -77,6 +77,7 @@ public class DialogueTriggerHandler : MonoBehaviour
         UniqueDialogueEvent dialogue = compatibleDialogues.First();
         
         DialogueManager.Instance.EndDialogue();
+        MonologueManager.Instance.EndMonologue();
 
         yield return new WaitForSeconds(dialogReplacementSafeTime);
 
