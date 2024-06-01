@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e856ab5a3a78154bb73c2f6d54e12fc, type: 3}
+  m_Name: PowerTutorialInscryption
+  m_EditorClassIdentifier: 
+  id: 1
+  limitMovement: 1
+  sentences:
+  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
+    text: What happen to the frame, Now have a text on it...
+    time: 4
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
+    text: "Wait, I think I can translate that text for you\u2026this says \u201CVyrxinha
+      Midrita built this temple from a single rock. In the <b>center</b> you'll find
+      <b>unity</b>\u201D "
+    time: 7
+  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
+    text: That thing in the floor, look like a <b>shield</b>
+    time: 5
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
+    text: The shield of the <b>Zurryth</b>... My tribe.
+    time: 5

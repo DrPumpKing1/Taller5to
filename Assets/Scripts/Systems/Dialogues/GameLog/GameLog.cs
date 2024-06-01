@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameLog : MonoBehaviour
 {
+    public event Action OnLogAdd;
+
     public static GameLog Instance { get; private set; }
 
     [Header("Log")] 
@@ -21,6 +23,11 @@ public class GameLog : MonoBehaviour
     {
         SetSingleton();      
         InitializeLog();
+    }
+
+    private void Start()
+    {
+        Log("GameFlow/Start");
     }
 
     private void SetSingleton()
@@ -48,5 +55,7 @@ public class GameLog : MonoBehaviour
             time = Time.time,
             log = log
         });
+        
+        Instance.OnLogAdd?.Invoke();
     }
 }

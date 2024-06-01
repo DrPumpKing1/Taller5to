@@ -85,8 +85,6 @@ public class ElectricalDoor : MonoBehaviour
         if (state) state = false;
         else 
         { 
-            if (isNextToPlayer) return;
-
             state = true;
         }
         

@@ -20,7 +20,8 @@ public class NewDialogueInput : DialogueInput
 
     public override bool CanProcessDialogueInput()
     {
-        if (GameManager.Instance.GameState != GameManager.State.OnDialogue) return false;
+        if (GameManager.Instance.GameState != GameManager.State.OnDialogue) return true;
+        if (GameManager.Instance.GameState != GameManager.State.OnGameplay) return true;
 
         return true;
     }

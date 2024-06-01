@@ -9,5 +9,6 @@ public class VyrxAttachmentCollider : EventCollider
     protected override void TriggerCollider()
     {
         PetPlayerAttachment.Instance.SetAttachToPlayer();
+        GameLog.Log("Narrative/MeetVyrx");
     }
 }
