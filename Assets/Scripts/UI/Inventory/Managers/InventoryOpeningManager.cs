@@ -23,11 +23,13 @@ public class InventoryOpeningManager : MonoBehaviour
     private void OnEnable()
     {
         InventoryUI.OnCloseFromUI += InventoryUI_OnCloseFromUI;
+        FirstShieldPieceCollectedEnd.OnFirstShieldPieceCollectedEnd += FirstShieldPieceCollectedEnd_OnFirstShieldPieceCollectedEnd;            
     }
 
     private void OnDisable()
     {
         InventoryUI.OnCloseFromUI -= InventoryUI_OnCloseFromUI;
+        FirstShieldPieceCollectedEnd.OnFirstShieldPieceCollectedEnd -= FirstShieldPieceCollectedEnd_OnFirstShieldPieceCollectedEnd;            
     }
 
     private void Awake()
@@ -91,7 +93,7 @@ public class InventoryOpeningManager : MonoBehaviour
         InventoryOpen = false;
     }
 
-    public void SetCanOpenInventory() => canOpenInventory = true;
+    public void SetCanOpenInventory(bool canOpen) => canOpenInventory = canOpen;
 
     #region DictionarySelectionUI Subscriptions
 
@@ -100,4 +102,9 @@ public class InventoryOpeningManager : MonoBehaviour
         CloseInventory();
     }
     #endregion
+
+    private void FirstShieldPieceCollectedEnd_OnFirstShieldPieceCollectedEnd(object sender, EventArgs e)
+    {
+        SetCanOpenInventory(true);
+    }
 }

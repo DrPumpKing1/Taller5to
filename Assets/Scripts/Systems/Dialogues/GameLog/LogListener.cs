@@ -39,6 +39,9 @@ public class LogListener : MonoBehaviour
         FirstKaerumSwitchEncounterCollider.OnFirstKaerumSwitchEncounter += FirstKaerumSwitchEncounterCollider_OnFirstKaerumSwitchEncounter;
         FirstKaerumRemoteSwitchEncounterCollider.OnFirstKaerumRemoteSwitchEncounter += FirstKaerumRemoteSwitchEncounterCollider_OnFirstKaerumRemoteSwitchEncounter;
         SecondKaerumEncounterCollider.OnSecondKaerumEncounter += SecondKaerumEncounterCollider_OnSecondKaerumEncounter;
+        FirstVirtueDoorEncounterCollider.OnFirstVirtueDoorEncounter += FirstVirtueDoorEncounterCollider_OnFirstVirtueDoorEncounter;
+        FirstInscriptionEncounterCollider.OnFirstInscriptionEncounter += FirstInscriptionEncounterCollider_OnFirstInscriptionEncounter;
+        FirstLearningPlatformEncounterCollider.OnFirstLearningPlatformEncounter += FirstLearningPlatformEncounterCollider_OnFirstLearningPlatformEncounter;
     }
 
     private void OnDisable()
@@ -76,6 +79,9 @@ public class LogListener : MonoBehaviour
         FirstKaerumSwitchEncounterCollider.OnFirstKaerumSwitchEncounter -= FirstKaerumSwitchEncounterCollider_OnFirstKaerumSwitchEncounter;
         FirstKaerumRemoteSwitchEncounterCollider.OnFirstKaerumRemoteSwitchEncounter -= FirstKaerumRemoteSwitchEncounterCollider_OnFirstKaerumRemoteSwitchEncounter;
         SecondKaerumEncounterCollider.OnSecondKaerumEncounter -= SecondKaerumEncounterCollider_OnSecondKaerumEncounter;
+        FirstVirtueDoorEncounterCollider.OnFirstVirtueDoorEncounter -= FirstVirtueDoorEncounterCollider_OnFirstVirtueDoorEncounter;
+        FirstInscriptionEncounterCollider.OnFirstInscriptionEncounter -= FirstInscriptionEncounterCollider_OnFirstInscriptionEncounter;
+        FirstLearningPlatformEncounterCollider.OnFirstLearningPlatformEncounter -= FirstLearningPlatformEncounterCollider_OnFirstLearningPlatformEncounter;
     }
 
     private void ElectricalSwitchToggle_OnSwitchToggle(object sender, ElectricalSwitchToggle.OnSwitchToggleEventArgs e) => GameLogManager.Instance.Log($"Electrical/ToggleSwitch/{e.switchOn}/{e.id}");
@@ -109,4 +115,7 @@ public class LogListener : MonoBehaviour
     private void FirstKaerumSwitchEncounterCollider_OnFirstKaerumSwitchEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstKaerumSwitchEncounter");
     private void FirstKaerumRemoteSwitchEncounterCollider_OnFirstKaerumRemoteSwitchEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstKaerumRemoteSwitchEncounter");
     private void SecondKaerumEncounterCollider_OnSecondKaerumEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/SecondKaerumSwitchEncounter");
+    private void FirstVirtueDoorEncounterCollider_OnFirstVirtueDoorEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstVirtueDoorEncounter");
+    private void FirstInscriptionEncounterCollider_OnFirstInscriptionEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstInscriptionEncounter");
+    private void FirstLearningPlatformEncounterCollider_OnFirstLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstLearningPlatformEncounter");
 }
