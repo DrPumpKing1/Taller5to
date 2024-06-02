@@ -8,6 +8,8 @@ public class HUDVisibilityHandler : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private bool isVisible;
 
+    public bool IsVisible => isVisible;
+
     private CanvasGroup canvasGroup;
 
     public event EventHandler OnShowHUD;

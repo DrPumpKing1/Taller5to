@@ -18,6 +18,7 @@ public class InventoryOpeningManager : MonoBehaviour
 
     private bool InventoryInput => UIInput.GetInventoryDown();
 
+    public bool CanOpenInventory => canOpenInventory;
     public bool InventoryOpen { get; private set; }
 
     private void OnEnable()
@@ -64,6 +65,7 @@ public class InventoryOpeningManager : MonoBehaviour
     {
         InventoryOpen = false;
     }
+    public void SetCanOpenInventory(bool canOpen) => canOpenInventory = canOpen;
     private void CheckOpenCloseInventory()
     {
         if (!canOpenInventory) return;
@@ -93,9 +95,8 @@ public class InventoryOpeningManager : MonoBehaviour
         InventoryOpen = false;
     }
 
-    public void SetCanOpenInventory(bool canOpen) => canOpenInventory = canOpen;
 
-    #region DictionarySelectionUI Subscriptions
+    #region InventoryUI Subscriptions
 
     private void InventoryUI_OnCloseFromUI(object sender, EventArgs e)
     {

@@ -9,6 +9,7 @@ public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class,
 {
     [Header("Enabler")]
     [SerializeField] private bool enableDataPersistence;
+    [SerializeField] private bool enableDataSaveOnQuit;
 
     [Header("File Storage Config")]
     [SerializeField] private string fileName;
@@ -99,6 +100,10 @@ public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class,
         Debug.Log("Data Deleted");
     }
 
-    private void OnApplicationQuit() => SaveGameData();
+    private void OnApplicationQuit() 
+    {
+        if (!enableDataSaveOnQuit) return;
+        SaveGameData();
+    }
 
 }
