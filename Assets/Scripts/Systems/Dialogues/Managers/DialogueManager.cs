@@ -280,8 +280,6 @@ public class DialogueManager : MonoBehaviour
     public bool PlayingDialogue()
     {
         if (state == State.NotOnDialogue) return false;
-        if (state == State.EndingDialogue) return false;
-
         return true;
     }
 }

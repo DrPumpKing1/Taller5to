@@ -254,8 +254,6 @@ public class MonologueManager : MonoBehaviour
     public bool PlayingMonologue()
     {
         if (state == State.NotOnMonologue) return false;
-        if (state == State.EndingMonologue) return false;
-
         return true;
     }
 }

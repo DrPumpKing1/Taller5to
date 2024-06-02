@@ -11,8 +11,6 @@ public class MonologueTriggerHandler : MonoBehaviour
     {
         public int id;
         public MonologueSO monologue;
-        public float hintTime;
-        public bool end;
         public string eventCode;
     }
 
@@ -47,6 +45,7 @@ public class MonologueTriggerHandler : MonoBehaviour
     private IEnumerator ReadLogMonologueCoroutine()
     {
         if (DialogueManager.Instance.PlayingDialogue()) yield break; //Dialogues have priority over monologues
+        if (MonologueManager.Instance.PlayingMonologue()) yield break; //Monologues can't play while another monologue is playing
 
         string lastLog = GameLogManager.Instance.GameLog[^1].log;
 
@@ -56,10 +55,17 @@ public class MonologueTriggerHandler : MonoBehaviour
 
         MonologueEvent monologueEvent = compatibleMonologues.First();
 
-        DialogueManager.Instance.EndDialogue();
-        MonologueManager.Instance.EndMonologue();
+        if (DialogueManager.Instance.PlayingDialogue())
+        {
+            DialogueManager.Instance.EndDialogue();
+            yield return new WaitForSeconds(monologueReplacementSafeTime);
+        }
 
-        yield return new WaitForSeconds(monologueReplacementSafeTime);
+        if (MonologueManager.Instance.PlayingMonologue())
+        {
+            MonologueManager.Instance.EndMonologue();
+            yield return new WaitForSeconds(monologueReplacementSafeTime);
+        }
 
         MonologueManager.Instance.StartMonologue(monologueEvent.monologue);
 

@@ -85,11 +85,18 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
         if(!compatibleDialogues.Any()) yield break;
 
         UniqueDialogueEvent dialogueEvent = compatibleDialogues.First();
-        
-        DialogueManager.Instance.EndDialogue();
-        MonologueManager.Instance.EndMonologue();
 
-        yield return new WaitForSeconds(dialogReplacementSafeTime);
+        if (MonologueManager.Instance.PlayingMonologue())
+        {
+            MonologueManager.Instance.EndMonologue();
+            yield return new WaitForSeconds(dialogReplacementSafeTime);
+        }
+
+        if (DialogueManager.Instance.PlayingDialogue())
+        {
+            DialogueManager.Instance.EndDialogue();
+            yield return new WaitForSeconds(dialogReplacementSafeTime);
+        }
 
         DialogueManager.Instance.StartDialogue(dialogueEvent.dialogue);
 
