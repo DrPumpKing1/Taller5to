@@ -276,4 +276,12 @@ public class DialogueManager : MonoBehaviour
         currentSentence = null;
         currentSentenceIndex = 0;
     }
+
+    public bool PlayingDialogue()
+    {
+        if (state == State.NotOnDialogue) return false;
+        if (state == State.EndingDialogue) return false;
+
+        return true;
+    }
 }

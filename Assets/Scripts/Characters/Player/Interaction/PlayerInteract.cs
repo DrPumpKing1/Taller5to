@@ -80,13 +80,7 @@ public class PlayerInteract : MonoBehaviour
     }
     private void Update()
     {
-        if (!CanProcessInteractionInput) return;
-
         HandleInteractableSelections();
-
-        if (!checkGround.IsGrounded) return;
-        if (!interactionEnabled) return;
-
         HandleInteractions();
     }
 
@@ -94,8 +88,7 @@ public class PlayerInteract : MonoBehaviour
     {
         IInteractable interactable = CheckForInteractableWorldSpace();
 
-        if (!checkGround.IsGrounded) interactable = null;
-        if (!interactionEnabled) interactable = null;
+        if (!CanInteract()) interactable = null;
 
         if (interactable != null)
         {
@@ -153,7 +146,6 @@ public class PlayerInteract : MonoBehaviour
 
         if (hit.collider == null) return null;
 
-
         IInteractable potentialInteractable = CheckIfRayHitHasInteractable(hit);
 
         if (potentialInteractable == null) return null;
@@ -198,6 +190,8 @@ public class PlayerInteract : MonoBehaviour
 
     private void HandleInteractions()
     {
+        if (!CanInteract()) return;
+
         if(playerInteractAlternate.IsInteractingAlternate) { ResetInteractions(); return; }
 
         if (currentInteractable == null) { ResetInteractions(); return; }
@@ -311,4 +305,13 @@ public class PlayerInteract : MonoBehaviour
     }
 
     public Vector3 GetRaycastOrigin() => transform.position + capsulleCollider.center + InteractionDirection * interactionRayStartDistance;
+
+    private bool CanInteract()
+    {
+        if (!CanProcessInteractionInput) return false;
+        if (!checkGround.IsGrounded) return false;
+        if (!interactionEnabled) return false;
+
+        return true;
+    }
 }

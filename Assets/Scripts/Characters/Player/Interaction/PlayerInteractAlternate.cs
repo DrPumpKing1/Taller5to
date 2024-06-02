@@ -53,13 +53,7 @@ public class PlayerInteractAlternate : MonoBehaviour
     }
     private void Update()
     {
-        if (!CanProcessInteractionInput) return;
-
         HandleInteractableAlternateSelections();
-
-        if (!playerInteract.InteractionEnabled) return;
-        if (!checkGround.IsGrounded) return;
-
         HandleInteractionsAlternate();
     }
 
@@ -69,8 +63,7 @@ public class PlayerInteractAlternate : MonoBehaviour
 
         CheckIfInteractableIsTheSame(ref interactableAlternate);
 
-        if (!playerInteract.InteractionEnabled) interactableAlternate = null;
-        if (!checkGround.IsGrounded) interactableAlternate = null;
+        if (!CanInteractAlternate()) interactableAlternate = null;
 
         if (interactableAlternate != null)
         {
@@ -194,6 +187,8 @@ public class PlayerInteractAlternate : MonoBehaviour
 
     private void HandleInteractionsAlternate()
     {
+        if (!CanInteractAlternate()) return;
+
         if(playerInteract.IsInteracting) { ResetInteractionsAlternate(); return; }
 
         if (curentInteractableAlternate == null) { ResetInteractionsAlternate(); return; }
@@ -285,4 +280,13 @@ public class PlayerInteractAlternate : MonoBehaviour
     private bool CheckIfHoldInteractableAlternate(IInteractableAlternate interactableAlternate) => (interactableAlternate is IHoldInteractableAlternate);
 
     private bool CanHoldInteractAlternate() => InteractionAlternateHoldInput && inputDownToHold; //&& !playerHorizontalMovement.HasMovementInput();
+
+    private bool CanInteractAlternate()
+    {
+        if (!CanProcessInteractionInput) return false;
+        if (!checkGround.IsGrounded) return false;
+        if (!playerInteract.InteractionEnabled) return false;
+
+        return true;
+    }
 }

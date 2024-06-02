@@ -250,4 +250,12 @@ public class MonologueManager : MonoBehaviour
         currentSentence = null;
         currentSentenceIndex = 0;
     }
+
+    public bool PlayingMonologue()
+    {
+        if (state == State.NotOnMonologue) return false;
+        if (state == State.EndingMonologue) return false;
+
+        return true;
+    }
 }
