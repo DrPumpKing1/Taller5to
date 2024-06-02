@@ -20,7 +20,7 @@ public class ShieldPiecesManager : MonoBehaviour
 
     public class OnShieldPieceCollectedEventArgs : EventArgs
     {
-        public ShieldPieceSO collectedPiece;
+        public ShieldPieceSO shieldPieceSO;
     }
 
     private void Awake()
@@ -53,7 +53,7 @@ public class ShieldPiecesManager : MonoBehaviour
     public void CollectShieldPiece(ShieldPieceSO collectedPiece)
     {
         AddPieceToInventory(collectedPiece);
-        OnShieldPieceCollected?.Invoke(this, new OnShieldPieceCollectedEventArgs { collectedPiece = collectedPiece });
+        OnShieldPieceCollected?.Invoke(this, new OnShieldPieceCollectedEventArgs { shieldPieceSO = collectedPiece });
     }
 
     private void AddPieceToInventory(ShieldPieceSO pieceToCollect)

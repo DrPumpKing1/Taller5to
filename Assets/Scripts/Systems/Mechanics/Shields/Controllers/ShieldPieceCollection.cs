@@ -9,10 +9,6 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
     [SerializeField] private ShieldPiece shieldPiece;
     [SerializeField] private Transform model;
 
-    [Header("Collection Settings")]
-    [SerializeField] private bool enableTriggerCollection;
-    [SerializeField] private bool hasBeenCollected;
-
     [Header("Interactable Settings")]
     [SerializeField, Range(1f, 100f)] private float horizontalInteractionRange;
     [SerializeField, Range(1f, 100f)] private float verticalInteractionRange;
@@ -26,6 +22,11 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
 
+    [Header("Proximity Collection")]
+    [SerializeField] private bool enableProximityCollection;
+    [SerializeField] private float proximityRadius;
+
+    private GameObject player;
     private const string PLAYER_TAG = "Player";
 
     #region IInteractable Properties
@@ -48,12 +49,34 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
     public event EventHandler OnUpdatedInteractableState;
     #endregion
 
-    public static event EventHandler<OnShieldPieceCollectedEventArgs> OnAnyShieldPieceCollected;
     public event EventHandler<OnShieldPieceCollectedEventArgs> OnShieldPieceCollected;
 
     public class OnShieldPieceCollectedEventArgs : EventArgs
     {
         public ShieldPieceSO shieldPieceSO;
+    }
+
+    private void Start()
+    {
+        InitializeVariables();
+    }
+    private void Update()
+    {
+        CheckProximityCollection();
+    }
+
+    private void InitializeVariables()
+    {
+        player = GameObject.FindGameObjectWithTag(PLAYER_TAG);
+    }
+
+    private void CheckProximityCollection()
+    {
+        if (!enableProximityCollection) return;
+        if (shieldPiece.IsCollected) return;
+        if (!(Vector3.Distance(transform.position, player.transform.position) <= proximityRadius)) return;
+
+        CollectShieldPiece();
     }
 
     #region  IInteractable Methods
@@ -103,11 +126,6 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
             return;
         }
 
-        if (hasBeenCollected)
-        {
-            return;
-        }
-
         Interact();
     }
 
@@ -116,30 +134,19 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
 
     private void CollectShieldPiece()
     {
-        AddShieldPieceToInventory();
-        DisableVisual();
-
-        hasBeenCollected = true;
-
         canBeSelected = false;
         isInteractable = false;
         hasAlreadyBeenInteracted = true;
 
+        AddShieldPieceToInventory();
+        DisableModel();
+
+        shieldPiece.SetIsCollected(true);
         OnShieldPieceCollected?.Invoke(this, new OnShieldPieceCollectedEventArgs { shieldPieceSO = shieldPiece.ShieldPieceSO });
-        OnAnyShieldPieceCollected?.Invoke(this, new OnShieldPieceCollectedEventArgs { shieldPieceSO = shieldPiece.ShieldPieceSO });
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 
-    private void DisableVisual() => model.gameObject.SetActive(false);
+    private void DisableModel() => model.gameObject.SetActive(false);
 
     private void AddShieldPieceToInventory() => ShieldPiecesManager.Instance.CollectShieldPiece(shieldPiece.ShieldPieceSO);
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (hasBeenCollected) return;
-        if (!enableTriggerCollection) return;
-        if (!other.CompareTag(PLAYER_TAG)) return;
-
-        CollectShieldPiece();
-    }
 }

@@ -17,7 +17,10 @@ public class DialogueTriggerHandler : MonoBehaviour
         public bool end;
         public string eventCode;
     }
-    
+
+    [Header("Enabler")]
+    [SerializeField] private bool enableTriggerDialogues;
+
     [Header("Dialogues")] 
     [SerializeField] private float hintWaitTimer = 0f;
     [SerializeField] private bool waintingHint = false;
@@ -30,12 +33,12 @@ public class DialogueTriggerHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        GameLogManager.OnLogAdd += () => StartCoroutine(ReadLogDialogue());
+        GameLogManager.OnLogAdd += ReadLogDialogue;
     }
 
     private void OnDisable()
     {
-        GameLogManager.OnLogAdd -= () => StartCoroutine(ReadLogDialogue());
+        GameLogManager.OnLogAdd -= ReadLogDialogue;
     }
 
     private void Update()
@@ -66,7 +69,14 @@ public class DialogueTriggerHandler : MonoBehaviour
         DialogueManager.Instance.StartDialogue(lastDialogue.dialogue);
     }
 
-    private IEnumerator ReadLogDialogue()
+    private void ReadLogDialogue()
+    {
+        if (!enableTriggerDialogues) return;
+
+        StartCoroutine(ReadLogDialogueCoroutine());
+    }
+
+    private IEnumerator ReadLogDialogueCoroutine()
     {
         string lastLog = GameLogManager.Instance.GameLog[^1].log;
 

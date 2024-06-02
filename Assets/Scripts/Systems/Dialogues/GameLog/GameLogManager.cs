@@ -28,11 +28,6 @@ public class GameLogManager : MonoBehaviour
         InitializeLog();
     }
 
-    private void Start()
-    {
-        Log("GameFlow/Start");
-    }
-
     private void SetSingleton()
     {
         if (Instance == null)

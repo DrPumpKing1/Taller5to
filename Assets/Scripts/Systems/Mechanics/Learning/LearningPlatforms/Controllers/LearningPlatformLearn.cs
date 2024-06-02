@@ -28,6 +28,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     [SerializeField] private float proximityRadius;
 
     private GameObject player;
+    private const string PLAYER_TAG = "Player";
 
     #region IHoldInteractableProperties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -75,7 +76,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
 
     private void InitializeVariables()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag(PLAYER_TAG);
     }
 
     private void CheckProximityLearn()
@@ -120,12 +121,6 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
         LearnObject();
-
-        canBeSelected = false;
-        isInteractable = false;
-        hasAlreadyBeenInteracted = true;
-
-        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 
     public void FailInteract()
@@ -161,16 +156,24 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
 
     public Transform GetTransform() => transform;
     #endregion
+
     private void DisableRotatingObject() => rotatingObject.gameObject.SetActive(false); 
 
     private void LearnObject()
     {
-        ProjectableObjectsLearningManager.Instance.LearnProjectableObject(ProjectableObjectToLearn);
-        ProjectionGemsManager.Instance.IncreaseTotalProjectionGems(learningPlatform.LearningPlatformSO.projectionGemsToAdd);
+        canBeSelected = false;
+        isInteractable = false;
+        hasAlreadyBeenInteracted = true;
+
+        DisableRotatingObject();
+        AddObjectToLearnedList();
+        AddProjectionGems();
 
         learningPlatform.SetIsLearned(true);
         OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { projectableOjectSO = ProjectableObjectToLearn });
-
-        DisableRotatingObject();
+        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
+
+    private void AddObjectToLearnedList() => ProjectableObjectsLearningManager.Instance.LearnProjectableObject(ProjectableObjectToLearn);
+    private void AddProjectionGems() => ProjectionGemsManager.Instance.IncreaseTotalProjectionGems(learningPlatform.LearningPlatformSO.projectionGemsToAdd);
 }

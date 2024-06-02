@@ -20,9 +20,11 @@ public class NewCameraInput : CameraInput
 
     public override bool CanProcessCameraInput()
     {
-        if (GameManager.Instance.GameState != GameManager.State.OnGameplay) return false;
+        if (GameManager.Instance.GameState == GameManager.State.OnGameplay) return true;
+        if (GameManager.Instance.GameState == GameManager.State.OnMonologue) return true;
+        if (GameManager.Instance.GameState == GameManager.State.OnFreeDialogue) return true;
 
-        return true;
+        return false;
     }
 
     public override float GetScroll()

@@ -17,7 +17,7 @@ public class LogListener : MonoBehaviour
 
         //INTERACTION
         InscriptionRead.OnInscriptionRead += InscriptionRead_OnInscriptionRead;
-        ShieldPieceCollection.OnAnyShieldPieceCollected += ShieldPieceCollection_OnAnyShieldPieceCollected;
+        ShieldPiecesManager.OnShieldPieceCollected += ShieldPiecesManager_OnShieldPieceCollected;
         ProjectableObjectsLearningManager.OnProjectableObjectLearned += ProjectableObjectsLearningManager_OnProjectableObjectLearned;
         ProjectionGemsManager.OnTotalProjectionGemsIncreased += ProjectionGemsManager_OnTotalProjectionGemsIncreased;
         ProjectableObjectRotation.OnAnyObjectRotated += ProjectableObjectRotation_OnAnyObjectRotated;
@@ -31,7 +31,8 @@ public class LogListener : MonoBehaviour
         //SHIELDS
         ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
 
-        //NARRATIVE
+        //EVENTS
+        GameStartEvent.OnGameStart += GameStartEvent_OnGameStart;
         MeetVyrxCollider.OnMeetVyrx += MeetVyrxCollider_OnMeetVyrx;
     }
 
@@ -48,7 +49,7 @@ public class LogListener : MonoBehaviour
 
         //PROJECTION
         InscriptionRead.OnInscriptionRead -= InscriptionRead_OnInscriptionRead;
-        ShieldPieceCollection.OnAnyShieldPieceCollected -= ShieldPieceCollection_OnAnyShieldPieceCollected;
+        ShieldPiecesManager.OnShieldPieceCollected += ShieldPiecesManager_OnShieldPieceCollected;
         ProjectableObjectsLearningManager.OnProjectableObjectLearned -= ProjectableObjectsLearningManager_OnProjectableObjectLearned;
         ProjectionGemsManager.OnTotalProjectionGemsIncreased -= ProjectionGemsManager_OnTotalProjectionGemsIncreased;
         ProjectableObjectRotation.OnAnyObjectRotated -= ProjectableObjectRotation_OnAnyObjectRotated;
@@ -62,7 +63,8 @@ public class LogListener : MonoBehaviour
         //SHIELDS
         ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
 
-        //NARRATIVE
+        //EVENTS
+        GameStartEvent.OnGameStart -= GameStartEvent_OnGameStart;
         MeetVyrxCollider.OnMeetVyrx -= MeetVyrxCollider_OnMeetVyrx;
     }
 
@@ -76,7 +78,7 @@ public class LogListener : MonoBehaviour
 
 
     private void InscriptionRead_OnInscriptionRead(object sender, InscriptionRead.OnInscriptionReadEventArgs e) => GameLogManager.Instance.Log($"Interaction/InscriptionRead/{e.inscriptionSO.id}");
-    private void ShieldPieceCollection_OnAnyShieldPieceCollected(object sender, ShieldPieceCollection.OnShieldPieceCollectedEventArgs e) => GameLogManager.Instance.Log($"Interaction/GrabShieldPiece/{e.shieldPieceSO.id}");
+    private void ShieldPiecesManager_OnShieldPieceCollected(object sender, ShieldPiecesManager.OnShieldPieceCollectedEventArgs e) => GameLogManager.Instance.Log($"Interaction/CollectShieldPiece/{e.shieldPieceSO.id}");
     private void ProjectableObjectsLearningManager_OnProjectableObjectLearned(object sender, ProjectableObjectsLearningManager.OnProjectableObjectLearnedEventArgs e) => GameLogManager.Instance.Log($"Interaction/LearnObject/{e.projectableObjectLearned.id}");
     private void ProjectionGemsManager_OnTotalProjectionGemsIncreased(object sender, ProjectionGemsManager.OnProjectionGemsEventArgs e) => GameLogManager.Instance.Log($"Interaction/GrabGems/{e.projectionGems}");
     private void ProjectableObjectRotation_OnAnyObjectRotated(object sender, ProjectableObjectRotation.OnAnyObjectRotatedEventArgs e) => GameLogManager.Instance.Log($"Interaction/RotateObject/{e.projectableObjectSO.id}");
@@ -90,5 +92,6 @@ public class LogListener : MonoBehaviour
 
     private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e) => GameLogManager.Instance.Log($"Worth/ShowDignity/{e.dialect}");
 
+    private void GameStartEvent_OnGameStart(object sender, System.EventArgs e) => GameLogManager.Instance.Log("GameFlow/Start");
     private void MeetVyrxCollider_OnMeetVyrx(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/MeetVyrx");
 }

@@ -12,12 +12,11 @@ public class HUDVisibilityHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        //Subscribe to event to showHud;
+        FirstObjectLearnedEnd.OnFirstObjectLearnedEnd += FirstObjectLearnedEnd_OnFirstObjectLearnedEnd;
     }
-
     private void OnDisable()
     {
-        //Unsubscribe to event to showHud;
+        FirstObjectLearnedEnd.OnFirstObjectLearnedEnd -= FirstObjectLearnedEnd_OnFirstObjectLearnedEnd;
     }
 
     private void Awake()
@@ -30,29 +29,46 @@ public class HUDVisibilityHandler : MonoBehaviour
         CheckIsVisible();
     }
 
-    private void SetIsVisible() => isVisible = true;
+    private void SetIsVisible(bool visible) => isVisible = visible;
+
+    private void ShowHUD()
+    {
+        ShowHUDInstantly();
+    }
+
+    private void HideHUD()
+    {
+        HideHUDInstantly();
+    }
 
     private void CheckIsVisible()
     {
         if (isVisible)
         {
-            ShowInstantly();
+            ShowHUDInstantly();
         }
         else
         {
-            HideInstantly();
+            HideHUDInstantly();
         }
     }
 
-    private void ShowInstantly()
+    private void ShowHUDInstantly()
     {
         GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 1f);
         canvasGroup.blocksRaycasts = true;
     }
 
-    private void HideInstantly()
+    private void HideHUDInstantly()
     {
         GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
         canvasGroup.blocksRaycasts = false;
+    }
+
+
+    private void FirstObjectLearnedEnd_OnFirstObjectLearnedEnd(object sender, EventArgs e)
+    {
+        ShowHUD();
+        SetIsVisible(true);
     }
 }
