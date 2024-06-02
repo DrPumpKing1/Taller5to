@@ -10,6 +10,10 @@ public class HUDVisibilityHandler : MonoBehaviour
 
     private CanvasGroup canvasGroup;
 
+    public event EventHandler OnShowHUD;
+    public event EventHandler OnHideHUD;
+    public event EventHandler OnShowHUDFirstTime;
+
     private void OnEnable()
     {
         FirstObjectLearnedEnd.OnFirstObjectLearnedEnd += FirstObjectLearnedEnd_OnFirstObjectLearnedEnd;
@@ -29,46 +33,27 @@ public class HUDVisibilityHandler : MonoBehaviour
         CheckIsVisible();
     }
 
-    private void SetIsVisible(bool visible) => isVisible = visible;
-
-    private void ShowHUD()
+    public void SetIsVisible(bool visible)
     {
-        ShowHUDInstantly();
-    }
-
-    private void HideHUD()
-    {
-        HideHUDInstantly();
+        isVisible = visible;
+        canvasGroup.blocksRaycasts = visible;
     }
 
     private void CheckIsVisible()
     {
         if (isVisible)
         {
-            ShowHUDInstantly();
+            OnShowHUD?.Invoke(this, EventArgs.Empty);
         }
         else
         {
-            HideHUDInstantly();
+            OnHideHUD?.Invoke(this, EventArgs.Empty);
         }
     }
 
-    private void ShowHUDInstantly()
-    {
-        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 1f);
-        canvasGroup.blocksRaycasts = true;
-    }
-
-    private void HideHUDInstantly()
-    {
-        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
-        canvasGroup.blocksRaycasts = false;
-    }
-
-
     private void FirstObjectLearnedEnd_OnFirstObjectLearnedEnd(object sender, EventArgs e)
     {
-        ShowHUD();
+        OnShowHUDFirstTime?.Invoke(this, EventArgs.Empty);
         SetIsVisible(true);
     }
 }

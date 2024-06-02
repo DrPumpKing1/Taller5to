@@ -23,6 +23,7 @@ public class NewCameraInput : CameraInput
         if (GameManager.Instance.GameState == GameManager.State.OnGameplay) return true;
         if (GameManager.Instance.GameState == GameManager.State.OnMonologue) return true;
         if (GameManager.Instance.GameState == GameManager.State.OnFreeDialogue) return true;
+        if (GameManager.Instance.GameState == GameManager.State.OnForcedDialogue) return true;
 
         return false;
     }
