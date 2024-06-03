@@ -11,7 +11,8 @@ public class ProjectionManager : MonoBehaviour
     [SerializeField] private ProjectionInput projectionInput;
 
     [Header("Projectable Object Settings")]
-    [SerializeField] private List<ProjectableObjectSO> currentProjectedObjects = new List<ProjectableObjectSO>();
+    [SerializeField] private List<ProjectableObjectSO> currentProjectedObjectsSOs = new List<ProjectableObjectSO>();
+    [SerializeField] private List<ProjectableObject> currentProjectedObjectsComponents = new List<ProjectableObject>();
 
     [Header("Debug")]
     [SerializeField] private bool enableAllProjectableObjectsDematerialization;
@@ -23,7 +24,8 @@ public class ProjectionManager : MonoBehaviour
 
     public bool AllProjectableObjectDematerializationInput => projectionInput.GetAllProjectableObjectsDematerializationDown();
 
-    public List<ProjectableObjectSO> CurrentProjectedObjects { get { return currentProjectedObjects; } }
+    public List<ProjectableObjectSO> CurrentProjectedObjectsSOs => currentProjectedObjectsSOs;
+    public List<ProjectableObject> CurrentProjectedObjectsComponents => currentProjectedObjectsComponents;
 
     public class OnProjectionEventArgs : EventArgs
     {
@@ -64,12 +66,12 @@ public class ProjectionManager : MonoBehaviour
         if (!enableAllProjectableObjectsDematerialization) return;
         if (!AllProjectableObjectDematerializationInput) return;
 
-        OnAllObjectsDematerialized?.Invoke(this,  new OnAllObjectsDematerializedEventArgs { projectableObjectSOs = currentProjectedObjects });
+        OnAllObjectsDematerialized?.Invoke(this,  new OnAllObjectsDematerializedEventArgs { projectableObjectSOs = currentProjectedObjectsSOs });
     }
 
     public void DematerializeAllObjects()
     {
-        OnAllObjectsDematerialized?.Invoke(this, new OnAllObjectsDematerializedEventArgs { projectableObjectSOs = currentProjectedObjects });
+        OnAllObjectsDematerialized?.Invoke(this, new OnAllObjectsDematerializedEventArgs { projectableObjectSOs = currentProjectedObjectsSOs });
     }
 
     public bool CanProjectObject(ProjectableObjectSO projectableObjectSO) => ProjectionGemsManager.Instance.CheckCanUseProjectionGems(projectableObjectSO.projectionGemsCost);
@@ -85,21 +87,24 @@ public class ProjectionManager : MonoBehaviour
         ProjectionGemsManager.Instance.InsuficientProjectionGems(projectableObjectSO.projectionGemsCost);
     }
 
-    public void SuccessObjectProjection(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform)
+    public void SuccessObjectProjection(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform, ProjectableObject projectableObject)
     {
-        currentProjectedObjects.Add(projectableObjectSO);
+        currentProjectedObjectsSOs.Add(projectableObjectSO);
+        currentProjectedObjectsComponents.Add(projectableObject);
 
         ProjectionGemsManager.Instance.UseProyectionGems(projectableObjectSO.projectionGemsCost);
         OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
     }
 
-    public void ObjectDematerialized(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform, bool triggerEvents)
+    public void ObjectDematerialized(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform, ProjectableObject projectableObject, bool triggerEvents)
     {
-        currentProjectedObjects.Remove(projectableObjectSO);
+        currentProjectedObjectsSOs.Remove(projectableObjectSO);
+        currentProjectedObjectsComponents.Remove(projectableObject);
 
         ProjectionGemsManager.Instance.RefundProyectionGems(projectableObjectSO.projectionGemsCost);
+
         if(triggerEvents) OnObjectDematerialized?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
     }
 
-    public bool AnyObjectsProjected() => currentProjectedObjects.Count > 0;
+    public bool AnyObjectsProjected() => currentProjectedObjectsSOs.Count > 0;
 }
