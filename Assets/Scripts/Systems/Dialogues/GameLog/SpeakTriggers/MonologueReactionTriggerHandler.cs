@@ -20,6 +20,8 @@ public class MonologueReactionTriggerHandler : MonoBehaviour
 
     [SerializeField] private List<MonologueReaction> monologues;
 
+    public List<string> storedLogPattern = new List<string>();
+
     private void OnEnable()
     {
         GameLogManager.OnLogAdd += ReadLogForMonologue;
@@ -44,16 +46,16 @@ public class MonologueReactionTriggerHandler : MonoBehaviour
     {
         if (reactionTimer > 0) return;
 
-        var gameLog = GameLogManager.Instance.GameLog;
+        storedLogPattern.Add(GameLogManager.Instance.GameLog[^1].log);
 
         var compatibleMonologues = monologues.Where(x =>
         {
-            if (gameLog.Count < x.logPattern.Count) return false;
+            if (storedLogPattern.Count < x.logPattern.Count) return false;
 
             for (int i = 0; i < x.logPattern.Count; i++)
             {
                 string toCompare = x.logPattern[i];
-                string pattern = gameLog[^(i + 1)].log;
+                string pattern = storedLogPattern[^(i + 1)];
 
                 if (!ComparePatterns(pattern, toCompare)) return false;
             }
@@ -66,7 +68,9 @@ public class MonologueReactionTriggerHandler : MonoBehaviour
         MonologueReaction monologue = compatibleMonologues.First();
 
         reactionTimer = reactionCooldown + monologue.reactionTime;
+
         MonologueManager.Instance.StartMonologue(monologue.monologue);
+        storedLogPattern.Clear();
     }
 
     private bool ComparePatterns(string pattern, string toCompare)

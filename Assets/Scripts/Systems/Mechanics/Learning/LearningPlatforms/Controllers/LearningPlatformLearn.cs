@@ -67,6 +67,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     private void Start()
     {
         InitializeVariables();
+        CheckIsLearned();
     }
 
     private void Update()
@@ -77,6 +78,18 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     private void InitializeVariables()
     {
         player = GameObject.FindGameObjectWithTag(PLAYER_TAG);
+    }
+
+    private void CheckIsLearned()
+    {
+        if (learningPlatform.IsLearned)
+        {
+            canBeSelected = false;
+            isInteractable = false;
+            hasAlreadyBeenInteracted = true;
+
+            DisableRotatingObject();
+        }
     }
 
     private void CheckProximityLearn()
@@ -92,12 +105,12 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     public void Select()
     {
         OnObjectSelected?.Invoke(this, EventArgs.Empty);
-        Debug.Log("Learning Platform Selected");
+        //Debug.Log("Learning Platform Selected");
     }
     public void Deselect()
     {
         OnObjectDeselected?.Invoke(this, EventArgs.Empty);
-        Debug.Log("Learning Platform Deselected");
+        //Debug.Log("Learning Platform Deselected");
     }
     public void TryInteract()
     {
