@@ -236,9 +236,9 @@ public class Electrode : MonoBehaviour
     private void OnDrawGizmos()
     {
         if(!Application.isPlaying) return;
-        
-        Handles.Label(transform.position + new Vector3(0, 1, 0), $"Weight: {node.Weight}");
-        Handles.Label(transform.position + new Vector3(0, 1.2f, 0), $"Voltage: {power}");
+
+        //Handles.Label(transform.position + new Vector3(0, 1, 0), $"Weight: {node.Weight}");
+        //Handles.Label(transform.position + new Vector3(0, 1.2f, 0), $"Voltage: {power}");
     }
 #endif
     
