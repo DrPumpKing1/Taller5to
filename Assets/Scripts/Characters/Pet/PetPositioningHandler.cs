@@ -64,7 +64,7 @@ public class PetPositioningHandler : MonoBehaviour
         playerInteractAlternate.OnInteractionAlternateEnded -= PlayerInteractAlternate_OnInteractionAlternateEnded;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         HandlePositioning();
     }
