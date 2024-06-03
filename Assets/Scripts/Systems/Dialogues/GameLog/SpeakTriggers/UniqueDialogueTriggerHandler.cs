@@ -12,7 +12,7 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
         public int id;
         public DialogueSO dialogue;
         public DialogueSO hint;
-        public bool discovered = false;
+        public bool triggered;
         public float hintTime;
         public bool end;
         public string eventCode;
@@ -29,7 +29,9 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
     [SerializeField] private float dialogReplacementSafeTime = 0.5f;
 
     [Header("Collections")]
-    [SerializeField] private List<UniqueDialogueEvent> dialogues;
+    [SerializeField] private List<UniqueDialogueEvent> uniqueDialogueEvents;
+
+    public List<UniqueDialogueEvent> UniqueDialogueEvents => uniqueDialogueEvents;
 
     private void OnEnable()
     {
@@ -80,7 +82,7 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
     {
         string lastLog = GameLogManager.Instance.GameLog[^1].log;
 
-        var compatibleDialogues = dialogues.Where(x => x.eventCode == lastLog && !x.discovered);
+        var compatibleDialogues = uniqueDialogueEvents.Where(x => x.eventCode == lastLog && !x.triggered);
         
         if(!compatibleDialogues.Any()) yield break;
 
@@ -100,7 +102,7 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
 
         DialogueManager.Instance.StartDialogue(dialogueEvent.dialogue);
 
-        dialogueEvent.discovered = true;
+        dialogueEvent.triggered = true;
         lastDialogueEvent = dialogueEvent;
 
         if (dialogueEvent.end)
@@ -112,5 +114,17 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
         
         hintWaitTimer = lastDialogueEvent.hintTime;
         waintingHint = true;
+    }
+
+    public void SetUniqueDialogueTriggered(int id, bool triggered)
+    {
+        foreach(UniqueDialogueEvent uniqueDialogueEvent in uniqueDialogueEvents)
+        {
+            if(id == uniqueDialogueEvent.id)
+            {
+                uniqueDialogueEvent.triggered = triggered;
+                return;
+            }
+        }
     }
 }

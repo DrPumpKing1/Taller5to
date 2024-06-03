@@ -52,7 +52,7 @@ public class CheckpointManager : MonoBehaviour
 
     public void ReachCheckpoint(int checkpointID)
     {
-        if (checkpointID < currentCheckpointID) return;
+        if (checkpointID <= currentCheckpointID) return;
 
         Checkpoint checkpointReached = GetCheckpointByCheckpointID(checkpointID);
 
@@ -63,8 +63,9 @@ public class CheckpointManager : MonoBehaviour
         }
 
         currentCheckpointID = checkpointID;
-
         OnCheckpointReached?.Invoke(this, new OnCheckpointReachedEventArgs { checkpoint = checkpointReached });
+
+        if (debug) Debug.Log($"Checkpoint reached , ID : {checkpointID}");
     }
 
     private Checkpoint GetCheckpointByCheckpointID(int checkpointID)

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: SecondKaerumSwitchEncounter
   m_EditorClassIdentifier: 
   id: 0
-  limitMovement: 1
+  limitMovement: 0
   allowSkip: 1
   sentences:
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
     text: There's the switch.
-    time: 3
+    time: 2.5
   - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
     text: It should work the same way as the first one.
-    time: 5
+    time: 4
