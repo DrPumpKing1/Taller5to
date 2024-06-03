@@ -91,7 +91,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inscription: {fileID: 6364795263637097267}
   electrode: {fileID: 5958592893050379361}
-  inscriptionDialogue: {fileID: 0}
   inscriptionMonologue: {fileID: 0}
   horizontalInteractionRange: 4
   verticalInteractionRange: 2
@@ -275,6 +274,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 881986812209646992}
+  - component: {fileID: 6726932469307737129}
   m_Layer: 9
   m_Name: Visual
   m_TagString: Untagged
@@ -298,6 +298,22 @@ Transform:
   - {fileID: 1464785909426063951}
   m_Father: {fileID: 383535065884112679}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6726932469307737129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6936205726695177582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1231e39815862d04eb5714c6cda99eed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  electrode: {fileID: 5958592893050379361}
+  meshRenderer: {fileID: 6598963198496327647}
+  on: {fileID: 2100000, guid: 597a51f2af022aa409ab9ddced6bf6f8, type: 2}
+  off: {fileID: 2100000, guid: 590b42eb7c79d164bbc570061d4d662a, type: 2}
 --- !u!1 &8533110241784678557
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +326,7 @@ GameObject:
   - component: {fileID: 3495545867768962271}
   - component: {fileID: 6598963198496327647}
   m_Layer: 9
-  m_Name: Plane
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
