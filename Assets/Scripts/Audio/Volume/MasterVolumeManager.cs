@@ -26,7 +26,7 @@ public class MasterVolumeManager : VolumeManager
         }
         else
         {
-            Debug.LogWarning("There is more than one MasterVolumeManager instance, proceding to destroy duplicate");
+            //Debug.LogWarning("There is more than one MasterVolumeManager instance, proceding to destroy duplicate");
             Destroy(gameObject);
         }
     }

@@ -6,9 +6,12 @@ using System;
 
 public class PauseUIButtonsHandler : MonoBehaviour
 {
-    [Header("UI Components")]
+    [Header("InGameOptions Button")]
     [SerializeField] private Button inGameOptionsButton;
+
+    [Header("BackToMenu Button")]
     [SerializeField] private Button backToMenuButton;
+    [SerializeField] private string mainMenuScene;
 
     public static event EventHandler OnOpenInGameOptionsUI;
 
@@ -30,7 +33,6 @@ public class PauseUIButtonsHandler : MonoBehaviour
 
     private void BackToMenu()
     {
-        Application.Quit();
+        ScenesManager.Instance.SimpleLoadTargetScene(mainMenuScene);
     }
-
 }

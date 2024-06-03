@@ -26,7 +26,7 @@ public class SFXVolumeManager : VolumeManager
         }
         else
         {
-            Debug.LogWarning("There is more than one SFXVolumeManager instance, proceding to destroy duplicate");
+            //Debug.LogWarning("There is more than one SFXVolumeManager instance, proceding to destroy duplicate");
             Destroy(gameObject);
         }
     }

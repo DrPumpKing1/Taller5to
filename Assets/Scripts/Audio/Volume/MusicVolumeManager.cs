@@ -26,7 +26,7 @@ public class MusicVolumeManager : VolumeManager
         }
         else
         {
-            Debug.LogWarning("There is more than one MusicVolumeManager instance, proceding to destroy duplicate");
+            //Debug.LogWarning("There is more than one MusicVolumeManager instance, proceding to destroy duplicate");
             Destroy(gameObject);
         }
     }
