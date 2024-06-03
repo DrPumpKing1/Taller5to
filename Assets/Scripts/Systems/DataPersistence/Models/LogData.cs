@@ -6,9 +6,11 @@ using UnityEngine;
 public class LogData
 {
     public SerializableDictionary<int, bool> uniqueDialoguesTriggered;
+    public SerializableDictionary<int, bool> uniqueMonologuesTriggered;
 
     public LogData()
     {
-        uniqueDialoguesTriggered = new SerializableDictionary<int, bool>(); //String -> id; bool -> isLearned
+        uniqueDialoguesTriggered = new SerializableDictionary<int, bool>(); //String -> id; bool -> isTriggered
+        uniqueMonologuesTriggered = new SerializableDictionary<int, bool>(); //String -> id; bool -> isTriggered
     }
 }
