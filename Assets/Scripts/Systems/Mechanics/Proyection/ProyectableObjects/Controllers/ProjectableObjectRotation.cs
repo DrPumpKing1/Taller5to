@@ -72,12 +72,12 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
     public void SelectAlternate()
     {
         OnObjectSelectedAlternate?.Invoke(this, EventArgs.Empty);
-        Debug.Log("ProjectableObject Selected Alternate");
+        //Debug.Log("ProjectableObject Selected Alternate");
     }
     public void DeselectAlternate()
     {
         OnObjectDeselectedAlternate?.Invoke(this, EventArgs.Empty);
-        Debug.Log("ProjectableObject Deselected Alternate");
+        //Debug.Log("ProjectableObject Deselected Alternate");
     }
 
     public void TryInteractAlternate()

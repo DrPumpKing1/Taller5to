@@ -54,12 +54,12 @@ public class ElectricalSwitchToggle : MonoBehaviour, IInteractable
     public void Select()
     {
         OnObjectSelected?.Invoke(this, EventArgs.Empty);
-        Debug.Log("Electrical Switch Selected");
+        //Debug.Log("Electrical Switch Selected");
     }
     public void Deselect()
     {
         OnObjectDeselected?.Invoke(this, EventArgs.Empty);
-        Debug.Log("Electrical Switch Deselected");
+        //Debug.Log("Electrical Switch Deselected");
     }
     public void TryInteract()
     {
@@ -81,7 +81,7 @@ public class ElectricalSwitchToggle : MonoBehaviour, IInteractable
     {
         SwitchComponent();
 
-        Debug.Log("Electrical Switch Interacted");
+        //Debug.Log("Electrical Switch Interacted");
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
     }
     public void FailInteract()

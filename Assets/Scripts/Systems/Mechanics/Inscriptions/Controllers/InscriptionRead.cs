@@ -62,14 +62,14 @@ public class InscriptionRead : MonoBehaviour, IInteractable
     {
         //Enable some UI feedback
         OnObjectSelected?.Invoke(this, EventArgs.Empty);
-        Debug.Log(gameObject.name + " Selected");
+        //Debug.Log(gameObject.name + " Selected");
     }
 
     public void Deselect()
     {
         //Disable some UI feedback
         OnObjectDeselected?.Invoke(this, EventArgs.Empty);
-        Debug.Log(gameObject.name + " Deselected");
+        //Debug.Log(gameObject.name + " Deselected");
     }
 
     public void TryInteract()
