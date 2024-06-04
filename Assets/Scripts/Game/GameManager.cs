@@ -68,6 +68,11 @@ public class GameManager : MonoBehaviour
         this.state = state;
     }
 
+    private void SetPreviousState(State state)
+    {
+        previousState = state;
+    }
+
     #region UIManager Subcriptions
     private void UIManager_OnUIActive(object sender, System.EventArgs e)
     {
@@ -95,7 +100,13 @@ public class GameManager : MonoBehaviour
 
     private void DialogueManager_OnDialogueEnd(object sender, DialogueManager.OnDialogueEventArgs e)
     {
-        SetGameState(State.OnGameplay);
+        if (state == State.OnUI)
+        {
+            SetPreviousState(State.OnGameplay);
+            return;
+        }
+
+        SetGameState(State.OnGameplay);       
     }
     #endregion
 
@@ -106,6 +117,12 @@ public class GameManager : MonoBehaviour
     }
     private void MonologueManager_OnMonologueEnd(object sender, MonologueManager.OnMonologueEventArgs e)
     {
+        if(state == State.OnUI)
+        {
+            SetPreviousState(State.OnGameplay);
+            return;
+        }
+
         SetGameState(State.OnGameplay);
     }
     #endregion
