@@ -5,6 +5,11 @@ using System;
 
 public class PlayerInteractAlternate : MonoBehaviour
 {
+    public static PlayerInteractAlternate Instance { get; private set; }
+
+    [Header("Enabler")]
+    [SerializeField] private bool interactionAlternateEnabled;
+
     [Header("Components")]
     [SerializeField] private InteractionInput interactionInput;
     [SerializeField] private PlayerInteract playerInteract;
@@ -16,6 +21,7 @@ public class PlayerInteractAlternate : MonoBehaviour
     private bool CanProcessInteractionInput => interactionInput.CanProcessInteractionInput();
 
     public bool IsInteractingAlternate { get; private set; }
+    public bool InteractionAlternateEnabled => interactionAlternateEnabled;
 
     private float holdTimer;
     private bool inputDownToHold;
@@ -47,6 +53,11 @@ public class PlayerInteractAlternate : MonoBehaviour
         public float holdTimer;
     }
 
+    private void Awake()
+    {
+        SetSingleton();
+    }
+
     private void Start()
     {
         ResetInteractionsAlternate();
@@ -55,6 +66,19 @@ public class PlayerInteractAlternate : MonoBehaviour
     {
         HandleInteractableAlternateSelections();
         HandleInteractionsAlternate();
+    }
+
+    private void SetSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("There is more than one PlayerInteractAlternate instance, proceding to destroy duplicate");
+            Destroy(gameObject);
+        }
     }
 
     private void HandleInteractableAlternateSelections()
@@ -286,6 +310,7 @@ public class PlayerInteractAlternate : MonoBehaviour
         if (!CanProcessInteractionInput) return false;
         if (!checkGround.IsGrounded) return false;
         if (!playerInteract.InteractionEnabled) return false;
+        if (!interactionAlternateEnabled) return false;
 
         return true;
     }

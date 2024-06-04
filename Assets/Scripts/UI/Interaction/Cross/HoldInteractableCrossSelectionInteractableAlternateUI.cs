@@ -43,6 +43,7 @@ public class HoldInteractableCrossSelectionInteractableAlternateUI : MonoBehavio
 
     private void HoldInteractable_OnHoldInteractionEnd(object sender, System.EventArgs e)
     {
+        if (!PlayerInteractAlternate.Instance.InteractionAlternateEnabled) return;
         interactableAlternateSelectionUI.ShowSelectionUI();
     }
     #endregion

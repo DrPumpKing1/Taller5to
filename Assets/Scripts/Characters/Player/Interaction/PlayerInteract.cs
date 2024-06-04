@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
+    public static PlayerInteract Instance { get; private set; }
+
     [Header("Enabler")]
     [SerializeField] private bool interactionEnabled;
 
@@ -72,6 +74,7 @@ public class PlayerInteract : MonoBehaviour
     private void Awake()
     {
         capsulleCollider = GetComponent<CapsuleCollider>();
+        SetSingleton();
     }
 
     private void Start()
@@ -82,6 +85,19 @@ public class PlayerInteract : MonoBehaviour
     {
         HandleInteractableSelections();
         HandleInteractions();
+    }
+
+    private void SetSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("There is more than one PlayerInteract instance, proceding to destroy duplicate");
+            Destroy(gameObject);
+        }
     }
 
     private void HandleInteractableSelections()
