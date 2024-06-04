@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
 
     private void DialogueManager_OnDialogueEnd(object sender, DialogueManager.OnDialogueEventArgs e)
     {
-        if (state == State.OnUI)
+        if (state != State.OnForcedDialogue && state != State.OnFreeDialogue)
         {
             SetPreviousState(State.OnGameplay);
             return;
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
     }
     private void MonologueManager_OnMonologueEnd(object sender, MonologueManager.OnMonologueEventArgs e)
     {
-        if(state == State.OnUI)
+        if(state != State.OnMonologue)
         {
             SetPreviousState(State.OnGameplay);
             return;
