@@ -9,6 +9,7 @@ public class CableElectrode : Electrode
     [SerializeField] private LineRenderer lineRenderer;
 
     [SerializeField] private float radius;
+    [SerializeField] private float thickness;
 
     protected override void Update()
     {
@@ -67,8 +68,8 @@ public class CableElectrode : Electrode
 
     private void LabelLineRenderer()
     {
-        lineRenderer.startWidth = radius;
-        lineRenderer.endWidth = radius;
+        lineRenderer.startWidth = thickness;
+        lineRenderer.endWidth = thickness;
         lineRenderer.positionCount = corners.Length;
 
         for (int i = 0; i < corners.Length; i++)
