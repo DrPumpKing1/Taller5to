@@ -98,7 +98,7 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
     }
     public void InteractAlternate()
     {
-        Debug.Log("ProjectableObject Interacted Alternate");
+        //Debug.Log("ProjectableObject Interacted Alternate");
         OnObjectInteractedAlternate?.Invoke(this, EventArgs.Empty);
 
         RotateObject();
