@@ -9,6 +9,9 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip[] objectFailedProjection;
 
     public AudioClip[] objectDematerialization;
+    public AudioClip[] projectionResetObjectUsed;
+
+    public AudioClip[] objectRotated;
 
     public AudioClip[] doorEnergized;
     public AudioClip[] doorDeEnergized;

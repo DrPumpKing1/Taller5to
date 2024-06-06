@@ -47,6 +47,8 @@ public class ProjectionResetObject : MonoBehaviour, IHoldInteractable
     public event EventHandler OnObjectsDematerialized;
     public event EventHandler OnNoObjectsToDematerialize;
 
+    public static event EventHandler OnAnyProjectionResetObjectUsed;
+
     #region IHoldInteractable Methods
     public void Select()
     {
@@ -132,5 +134,6 @@ public class ProjectionResetObject : MonoBehaviour, IHoldInteractable
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
 
         ProjectionManager.Instance.DematerializeAllObjects();
+        OnAnyProjectionResetObjectUsed?.Invoke(this, EventArgs.Empty);
     }
 }

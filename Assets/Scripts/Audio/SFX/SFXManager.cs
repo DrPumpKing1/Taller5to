@@ -28,6 +28,9 @@ public class SFXManager : MonoBehaviour
         ProjectionPlatformProjection.OnAnyObjectProjectionFailedInsuficientGems += ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems;
 
         ProjectableObjectDematerialization.OnAnyObjectDematerialized += ProjectableObjectDematerialization_OnAnyObjectDematerialized;
+        ProjectionResetObject.OnAnyProjectionResetObjectUsed += ProjectionResetObject_OnAnyProjectionResetObjectUsed;
+
+        ProjectableObjectRotation.OnAnyObjectRotated += ProjectableObjectRotation_OnAnyObjectRotated;
 
         ShieldPieceCollection.OnAnyShieldPieceCollected += ShieldPieceCollection_OnAnyShieldPieceCollected;
         ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
@@ -84,6 +87,19 @@ public class SFXManager : MonoBehaviour
         ProjectableObjectDematerialization projectableObjectDematerialization = sender as ProjectableObjectDematerialization;
         PlaySound(SFXPoolSO.objectDematerialization, projectableObjectDematerialization.transform.position);
     }
+
+    private void ProjectionResetObject_OnAnyProjectionResetObjectUsed(object sender, System.EventArgs e)
+    {
+        ProjectionResetObject projectionResetObject = sender as ProjectionResetObject;
+        PlaySound(SFXPoolSO.projectionResetObjectUsed, projectionResetObject.transform.position);
+    }
+
+    private void ProjectableObjectRotation_OnAnyObjectRotated(object sender, ProjectableObjectRotation.OnAnyObjectRotatedEventArgs e)
+    {
+        ProjectableObjectRotation projectableObjectRotation = sender as ProjectableObjectRotation;
+        PlaySound(SFXPoolSO.objectRotated, projectableObjectRotation.transform.position);
+    }
+
     private void ShieldPieceCollection_OnAnyShieldPieceCollected(object sender, ShieldPieceCollection.OnAnyShieldPieceCollectedEventArgs e)
     {
         ShieldPieceCollection shieldPieceCollection = sender as ShieldPieceCollection;
