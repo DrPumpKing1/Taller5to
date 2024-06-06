@@ -51,7 +51,16 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     public event EventHandler<OnProjectionEventArgs> OnObjectProjectionFailed;
     public event EventHandler<OnProjectionEventArgs> OnObjectProjectionFailedInsuficientGems;
 
+    public static event EventHandler<OnAnyProjectionEventArgs> OnAnyObjectProjectionSuccess;
+    public static event EventHandler<OnAnyProjectionEventArgs> OnAnyObjectProjectionFailed;
+    public static event EventHandler<OnAnyProjectionEventArgs> OnAnyObjectProjectionFailedInsuficientGems;
+
     public class OnProjectionEventArgs : EventArgs
+    {
+        public ProjectableObjectSO projectableObjectSO;
+    }
+
+    public class OnAnyProjectionEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectSO;
     }
@@ -165,6 +174,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     {
         ProjectionManager.Instance.FailObjectProjection(projectableObjectSO, projectionPlatform);
         OnObjectProjectionFailed?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO });
+        OnAnyObjectProjectionFailed?.Invoke(this, new OnAnyProjectionEventArgs { projectableObjectSO = projectableObjectSO });
         Debug.Log("Cant Project Object");
     }
 
@@ -172,6 +182,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     {
         ProjectionManager.Instance.FailObjectProjectionInsuficientGems(projectableObjectSO, projectionPlatform);
         OnObjectProjectionFailedInsuficientGems?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO });
+        OnAnyObjectProjectionFailedInsuficientGems?.Invoke(this, new OnAnyProjectionEventArgs { projectableObjectSO = projectableObjectSO });
         Debug.Log("Insuficient Projection Gems");
     }
 
@@ -187,6 +198,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
 
         ProjectionManager.Instance.SuccessObjectProjection(projectableObjectSO, projectionPlatform, projectableObject);
         OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO });
+        OnAnyObjectProjectionSuccess?.Invoke(this, new OnAnyProjectionEventArgs { projectableObjectSO = projectableObjectSO });
 
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }

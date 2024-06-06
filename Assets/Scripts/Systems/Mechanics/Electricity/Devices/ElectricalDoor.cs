@@ -32,7 +32,11 @@ public class ElectricalDoor : MonoBehaviour
     private float notPoweredTimer;
     private const float NOT_POWERED_TIME_THRESHOLD = 0.5f;
 
+    private bool previousPowered;
+
     public static event EventHandler<OnDoowPoweredEventArgs> OnDoorPowered;
+    public static event EventHandler<OnDoowPoweredEventArgs> OnDoorDePowered;
+
     public class OnDoowPoweredEventArgs : EventArgs
     {
         public int id;
@@ -57,6 +61,7 @@ public class ElectricalDoor : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         notPoweredTimer = 0f;
+        previousPowered = isPowered;
     }
 
     void Update()
@@ -96,16 +101,19 @@ public class ElectricalDoor : MonoBehaviour
     {
         if (!isPowered)
         {
-            notPoweredTimer += Time.deltaTime;
-            return;
-        }
+            if (previousPowered) OnDoorDePowered?.Invoke(this, new OnDoowPoweredEventArgs { id = id });
 
-        if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD)
+            notPoweredTimer += Time.deltaTime;
+        }
+        else if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD)
         {
             notPoweredTimer = 0f;
             OnDoorPowered?.Invoke(this, new OnDoowPoweredEventArgs { id = id });
-        }       
+        }
+
+        previousPowered = isPowered;
     }
+
     private void CheckPower(bool isPowered)
     {
         this.isPowered = isPowered;

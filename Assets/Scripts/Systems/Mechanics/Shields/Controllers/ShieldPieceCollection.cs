@@ -50,8 +50,14 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
     #endregion
 
     public event EventHandler<OnShieldPieceCollectedEventArgs> OnShieldPieceCollected;
+    public static event EventHandler<OnAnyShieldPieceCollectedEventArgs> OnAnyShieldPieceCollected;
 
     public class OnShieldPieceCollectedEventArgs : EventArgs
+    {
+        public ShieldPieceSO shieldPieceSO;
+    }
+
+    public class OnAnyShieldPieceCollectedEventArgs : EventArgs
     {
         public ShieldPieceSO shieldPieceSO;
     }
@@ -143,6 +149,7 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
 
         shieldPiece.SetIsCollected(true);
         OnShieldPieceCollected?.Invoke(this, new OnShieldPieceCollectedEventArgs { shieldPieceSO = shieldPiece.ShieldPieceSO });
+        OnAnyShieldPieceCollected.Invoke(this, new OnAnyShieldPieceCollectedEventArgs { shieldPieceSO = shieldPiece.ShieldPieceSO });
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 

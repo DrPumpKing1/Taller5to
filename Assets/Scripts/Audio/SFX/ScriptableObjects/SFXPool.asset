@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: SFXPool
   m_EditorClassIdentifier: 
   objectProjected: []
+  objectFailedProjection: []
+  objectDematerialization: []
   doorEnergized:
-  - {fileID: 8300000, guid: 6cbca72f526c5ff43bb05d250eefa5d7, type: 3}
+  - {fileID: 8300000, guid: a66b0f3ab55b0154294e29ced4954f85, type: 3}
   doorDeEnergized: []
-  shieldColledted: []
-  valueDoorOpened: []
   switchToggle: []
+  shieldCollected: []
+  valueDoorOpened: []

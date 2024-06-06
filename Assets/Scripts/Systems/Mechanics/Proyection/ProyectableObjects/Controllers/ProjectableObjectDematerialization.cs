@@ -48,6 +48,12 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     #endregion
 
     public event EventHandler OnObjectDematerialized;
+    public static event EventHandler<OnAnyObjectDematerializedEventArgs> OnAnyObjectDematerialized;
+
+    public class OnAnyObjectDematerializedEventArgs : EventArgs
+    {
+        public ProjectableObjectSO projectableObjectSO;
+    }
 
     public void OnEnable()
     {
@@ -139,6 +145,7 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     private void OnDestroy()
     {
         OnObjectDematerialized?.Invoke(this, EventArgs.Empty);
+        OnAnyObjectDematerialized?.Invoke(this, new OnAnyObjectDematerializedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
     }
 
     #region ProjectionManager Subscriptions

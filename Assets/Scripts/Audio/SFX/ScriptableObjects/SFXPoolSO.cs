@@ -6,9 +6,15 @@ using UnityEngine;
 public class SFXPoolSO : ScriptableObject
 {
     public AudioClip[] objectProjected;
+    public AudioClip[] objectFailedProjection;
+
+    public AudioClip[] objectDematerialization;
+
     public AudioClip[] doorEnergized;
     public AudioClip[] doorDeEnergized;
-    public AudioClip[] shieldColledted;
-    public AudioClip[] valueDoorOpened;
+
     public AudioClip[] switchToggle;
+
+    public AudioClip[] shieldCollected;
+    public AudioClip[] valueDoorOpened;
 }

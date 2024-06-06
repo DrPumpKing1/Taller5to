@@ -18,17 +18,82 @@ public class SFXManager : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool debug;
 
-
-
     private void OnEnable()
     {
         ElectricalDoor.OnDoorPowered += ElectricalDoor_OnDoorPowered;
+        ElectricalDoor.OnDoorDePowered += ElectricalDoor_OnDoorDePowered;
+        ElectricalSwitchToggle.OnSwitchToggle += ElectricalSwitchToggle_OnSwitchToggle;
+
+        ProjectionPlatformProjection.OnAnyObjectProjectionSuccess += ProjectionPlatformProjection_OnAnyObjectProjectionSuccess;
+        ProjectionPlatformProjection.OnAnyObjectProjectionFailedInsuficientGems += ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems;
+
+        ProjectableObjectDematerialization.OnAnyObjectDematerialized += ProjectableObjectDematerialization_OnAnyObjectDematerialized;
+
+        ShieldPieceCollection.OnAnyShieldPieceCollected += ShieldPieceCollection_OnAnyShieldPieceCollected;
+        ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
+    }
+
+    private void OnDisable()
+    {
+        ElectricalDoor.OnDoorPowered -= ElectricalDoor_OnDoorPowered;
+        ElectricalDoor.OnDoorDePowered -= ElectricalDoor_OnDoorDePowered;
+        ElectricalSwitchToggle.OnSwitchToggle -= ElectricalSwitchToggle_OnSwitchToggle;
+
+        ProjectionPlatformProjection.OnAnyObjectProjectionSuccess -= ProjectionPlatformProjection_OnAnyObjectProjectionSuccess;
+        ProjectionPlatformProjection.OnAnyObjectProjectionFailedInsuficientGems -= ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems;
+
+        ProjectableObjectDematerialization.OnAnyObjectDematerialized -= ProjectableObjectDematerialization_OnAnyObjectDematerialized;
+
+        ShieldPieceCollection.OnAnyShieldPieceCollected -= ShieldPieceCollection_OnAnyShieldPieceCollected;
+        ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
+    }
+
+    private void ElectricalSwitchToggle_OnSwitchToggle(object sender, ElectricalSwitchToggle.OnSwitchToggleEventArgs e)
+    {
+        ElectricalSwitchToggle electricalSwitchToggle = sender as ElectricalSwitchToggle;
+        PlaySound(SFXPoolSO.switchToggle, electricalSwitchToggle.transform.position);
     }
 
     private void ElectricalDoor_OnDoorPowered(object sender, ElectricalDoor.OnDoowPoweredEventArgs e)
     {
         ElectricalDoor electricalDoor = sender as ElectricalDoor;
         PlaySound(SFXPoolSO.doorEnergized, electricalDoor.transform.position);
+    }
+
+    private void ElectricalDoor_OnDoorDePowered(object sender, ElectricalDoor.OnDoowPoweredEventArgs e)
+    {
+        ElectricalDoor electricalDoor = sender as ElectricalDoor;
+        PlaySound(SFXPoolSO.doorDeEnergized, electricalDoor.transform.position);
+    }
+
+
+    private void ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems(object sender, ProjectionPlatformProjection.OnAnyProjectionEventArgs e)
+    {
+        ProjectionPlatformProjection projectionPlatformProjection = sender as ProjectionPlatformProjection;
+        PlaySound(SFXPoolSO.objectFailedProjection, projectionPlatformProjection.transform.position);
+    }
+
+    private void ProjectionPlatformProjection_OnAnyObjectProjectionSuccess(object sender, ProjectionPlatformProjection.OnAnyProjectionEventArgs e)
+    {
+        ProjectionPlatformProjection projectionPlatformProjection = sender as ProjectionPlatformProjection;
+        PlaySound(SFXPoolSO.objectProjected, projectionPlatformProjection.transform.position);
+    }
+
+    private void ProjectableObjectDematerialization_OnAnyObjectDematerialized(object sender, ProjectableObjectDematerialization.OnAnyObjectDematerializedEventArgs e)
+    {
+        ProjectableObjectDematerialization projectableObjectDematerialization = sender as ProjectableObjectDematerialization;
+        PlaySound(SFXPoolSO.objectDematerialization, projectableObjectDematerialization.transform.position);
+    }
+    private void ShieldPieceCollection_OnAnyShieldPieceCollected(object sender, ShieldPieceCollection.OnAnyShieldPieceCollectedEventArgs e)
+    {
+        ShieldPieceCollection shieldPieceCollection = sender as ShieldPieceCollection;
+        PlaySound(SFXPoolSO.shieldCollected, shieldPieceCollection.transform.position);
+    }
+
+    private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e)
+    {
+        ShieldDoor shieldDoor = sender as ShieldDoor;
+        PlaySound(SFXPoolSO.valueDoorOpened, shieldDoor.transform.position);
     }
 
     ///
@@ -49,6 +114,8 @@ public class SFXManager : MonoBehaviour
         sfxGameObject.transform.position = position;
 
         AudioSource tempAudioSource = sfxGameObject.AddComponent<AudioSource>();
+        TemporalSFXController temporalSFXController = sfxGameObject.AddComponent<TemporalSFXController>();
+
         tempAudioSource.clip = audioClip;
         tempAudioSource.outputAudioMixerGroup = audioMixerGroup;
 
