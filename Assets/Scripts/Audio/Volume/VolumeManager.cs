@@ -13,6 +13,9 @@ public abstract class VolumeManager : MonoBehaviour
     private const float MAX_VOLUME = 1f;
     private const float MIN_VOLUME = 0.0001f;
 
+    [Header("Load Settings")]
+    [SerializeField] private string playerPrefsKey;
+
     public class OnVolumeChangedEventArgs: EventArgs
     {
         public float newVolume;
@@ -20,7 +23,23 @@ public abstract class VolumeManager : MonoBehaviour
 
     private void Start()
     {
+        LoadVolumePlayerPrefs();
         InitializeVolume();
+    }
+
+    protected void LoadVolumePlayerPrefs()
+    {
+        if (!PlayerPrefs.HasKey(playerPrefsKey))
+        {
+            PlayerPrefs.SetFloat(playerPrefsKey, 1);
+        }
+
+        initialVolume = PlayerPrefs.GetFloat(playerPrefsKey);
+    }
+
+    protected void SaveVolumePlayerPrefs(float volume)
+    {
+        PlayerPrefs.SetFloat(playerPrefsKey, volume);
     }
 
     protected virtual void InitializeVolume() => ChangeVolume(initialVolume);

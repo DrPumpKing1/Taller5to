@@ -43,6 +43,7 @@ public class SFXVolumeManager : VolumeManager
         volume = volume > GetMaxVolume() ? GetMaxVolume() : volume;
 
         masterAudioMixer.SetFloat(SFX_VOLUME, Mathf.Log10(volume) * 20);
+        SaveVolumePlayerPrefs(volume);
 
         OnSFXVolumeChanged?.Invoke(this, new OnVolumeChangedEventArgs { newVolume = volume });
     }

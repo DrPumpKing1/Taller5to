@@ -42,6 +42,7 @@ public class MusicVolumeManager : VolumeManager
         volume = volume > GetMaxVolume() ? GetMaxVolume() : volume;
 
         masterAudioMixer.SetFloat(MUSIC_VOLUME, Mathf.Log10(volume) * 20);
+        SaveVolumePlayerPrefs(volume);
 
         OnMusicVolumeChanged?.Invoke(this, new OnVolumeChangedEventArgs { newVolume = volume });
     }
