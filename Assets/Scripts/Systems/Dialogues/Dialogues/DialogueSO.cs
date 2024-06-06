@@ -6,7 +6,9 @@ using UnityEngine;
 public class DialogueSO : ScriptableObject
 {
     public int id;
-    public bool limitMovement;
+    public MovementLimitType movementLimitType;
     public bool allowSkip;
     public List<Sentence> sentences;
 }
+
+public enum MovementLimitType {FreeMovement,RestrictedMovement,ZeroMovement}

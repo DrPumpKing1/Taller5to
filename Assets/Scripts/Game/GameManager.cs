@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private State state;
     [SerializeField] private State previousState;
 
-    public enum State {OnGameplay, OnUI, OnForcedDialogue, OnFreeDialogue, OnMonologue}
+    public enum State {OnGameplay, OnUI, OnForcedDialogue, OnRestrictedDialogue, OnFreeDialogue, OnMonologue}
 
     public State GameState { get { return state; } }
 
@@ -88,19 +88,23 @@ public class GameManager : MonoBehaviour
     #region DialogManagerSubscriptions
     private void DialogueManager_OnDialogueStart(object sender, DialogueManager.OnDialogueEventArgs e)
     {
-        if (e.limitMovement)
+        switch (e.movementLimitType)
         {
-            SetGameState(State.OnForcedDialogue);
-        }
-        else
-        {
-            SetGameState(State.OnFreeDialogue);
+            case MovementLimitType.FreeMovement:
+                SetGameState(State.OnFreeDialogue);
+                break;
+            case MovementLimitType.RestrictedMovement:
+                SetGameState(State.OnRestrictedDialogue);
+                break;
+            case MovementLimitType.ZeroMovement:
+                SetGameState(State.OnForcedDialogue);
+                break;
         }
     }
 
     private void DialogueManager_OnDialogueEnd(object sender, DialogueManager.OnDialogueEventArgs e)
     {
-        if (state != State.OnForcedDialogue && state != State.OnFreeDialogue)
+        if (state != State.OnForcedDialogue && state != State.OnFreeDialogue && state != State.OnRestrictedDialogue)
         {
             SetPreviousState(State.OnGameplay);
             return;

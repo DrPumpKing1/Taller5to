@@ -19,7 +19,8 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [SerializeField] private CheckWall checkWall;
 
     [Header("Speed Settings")]
-    [SerializeField, Range(1.5f,10f)] private float moveSpeed = 2f;
+    [SerializeField, Range(1.5f,10f)] private float sprintSpeed = 2f;
+    [SerializeField, Range(1.5f,10f)] private float walkSpeed = 2f;
     [Space]
     [SerializeField] private bool flattenSpeedOnSlopes;
 
@@ -77,6 +78,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     private void CalculateDesiredSpeed()
     {
+        float moveSpeed = RestrictedMovement() ? walkSpeed : sprintSpeed;
         desiredSpeed = CanMove() ? moveSpeed : 0f;
     }
 
@@ -90,6 +92,8 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
         return true;
     }
+
+    private bool RestrictedMovement() => GameManager.Instance.GameState == GameManager.State.OnRestrictedDialogue;
 
     private void SmoothSpeed()
     {

@@ -569,7 +569,8 @@ MonoBehaviour:
   playerInteractAlternate: {fileID: 907748609654045023}
   checkGround: {fileID: 2176356878162520009}
   checkWall: {fileID: 8413128526021734546}
-  moveSpeed: 7.5
+  sprintSpeed: 7
+  walkSpeed: 2
   flattenSpeedOnSlopes: 1
   smoothInputFactor: 10
   smoothVelocityFactor: 10

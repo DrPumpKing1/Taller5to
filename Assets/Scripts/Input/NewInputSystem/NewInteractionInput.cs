@@ -22,6 +22,7 @@ public class NewInteractionInput : InteractionInput
     {
         if (GameManager.Instance.GameState == GameManager.State.OnGameplay) return true;
         if (GameManager.Instance.GameState == GameManager.State.OnFreeDialogue) return true;
+        if (GameManager.Instance.GameState == GameManager.State.OnRestrictedDialogue) return true;
         if (GameManager.Instance.GameState == GameManager.State.OnMonologue) return true;
 
         return false;

@@ -42,7 +42,7 @@ public class DialogueManager : MonoBehaviour
     public class OnDialogueEventArgs : EventArgs
     {
         public DialogueSO dialogueSO;
-        public bool limitMovement;
+        public MovementLimitType movementLimitType;
     }
 
     public class OnSentencePlayEventArgs : EventArgs
@@ -189,7 +189,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             ResetTimer();
-            OnDialogueEnd?.Invoke(this, new OnDialogueEventArgs { dialogueSO = currentDialogueSO, limitMovement = currentDialogueSO.limitMovement });
+            OnDialogueEnd?.Invoke(this, new OnDialogueEventArgs { dialogueSO = currentDialogueSO, movementLimitType = currentDialogueSO.movementLimitType });
             ClearVariables();
             SetDialogueState(State.NotOnDialogue);
         }
@@ -240,7 +240,7 @@ public class DialogueManager : MonoBehaviour
         currentDialogueSO = dialogueSO;
         SetCurrentSentence(0);
 
-        OnDialogueStart?.Invoke(this, new OnDialogueEventArgs { dialogueSO = currentDialogueSO, limitMovement = currentDialogueSO.limitMovement});
+        OnDialogueStart?.Invoke(this, new OnDialogueEventArgs { dialogueSO = currentDialogueSO, movementLimitType = currentDialogueSO.movementLimitType});
 
         OnSentencePlay?.Invoke(this, new OnSentencePlayEventArgs { sentence = currentSentence, isFirstSentence = true });
 
