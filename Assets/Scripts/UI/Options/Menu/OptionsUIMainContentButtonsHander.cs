@@ -7,7 +7,7 @@ using System;
 public class OptionsUIMainContentButtonsHander : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private OptionsContentsHandler optionsContentsHandler;
+    [SerializeField] private OptionsUIContentsHandler optionsContentsHandler;
 
     [Header("AudioButton Button")]
     [SerializeField] private Button audioButton;

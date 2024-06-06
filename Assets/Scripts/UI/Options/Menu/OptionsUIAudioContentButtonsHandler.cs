@@ -7,7 +7,7 @@ using System;
 public class OptionsUIAudioContentButtonsHandler : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private OptionsContentsHandler optionsContentsHandler;
+    [SerializeField] private OptionsUIContentsHandler optionsUIContentsHandler;
 
     [Header("Back To Main Content Button")]
     [SerializeField] private Button backToMainContentButton;
@@ -22,5 +22,5 @@ public class OptionsUIAudioContentButtonsHandler : MonoBehaviour
         backToMainContentButton.onClick.AddListener(ShowMainContent);
     }
 
-    private void ShowMainContent() => optionsContentsHandler.ShowMainContent();
+    private void ShowMainContent() => optionsUIContentsHandler.ShowMainContent();
 }
