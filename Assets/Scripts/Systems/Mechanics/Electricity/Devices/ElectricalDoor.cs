@@ -101,7 +101,11 @@ public class ElectricalDoor : MonoBehaviour
     {
         if (!isPowered)
         {
-            if (previousPowered) OnDoorDePowered?.Invoke(this, new OnDoowPoweredEventArgs { id = id });
+            if (previousPowered)
+            {
+                OnDoorDePowered?.Invoke(this, new OnDoowPoweredEventArgs { id = id });
+                previousPowered = false;
+            }
 
             notPoweredTimer += Time.deltaTime;
         }
@@ -109,9 +113,9 @@ public class ElectricalDoor : MonoBehaviour
         {
             notPoweredTimer = 0f;
             OnDoorPowered?.Invoke(this, new OnDoowPoweredEventArgs { id = id });
-        }
 
-        previousPowered = isPowered;
+            previousPowered = true;
+        }
     }
 
     private void CheckPower(bool isPowered)

@@ -10,6 +10,8 @@ public class SFXPauseHandler : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool debug;
 
+    private AudioSource audioSource;
+
     private void OnEnable()
     {
         PauseManager.OnGamePaused += PauseManager_OnGamePaused;
@@ -20,6 +22,23 @@ public class SFXPauseHandler : MonoBehaviour
     {
         PauseManager.OnGamePaused += PauseManager_OnGamePaused;
         PauseManager.OnGameResumed += PauseManager_OnGameResumed;
+    }
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    private void PauseGlobalSFX()
+    {
+        if (!pauseSFXOnPause) return;
+        audioSource.Pause();
+    }
+
+    private void ResumeGlobalSFX()
+    {
+        if (!pauseSFXOnPause) return;
+        audioSource.UnPause();
     }
 
     private void PauseAllTemporalSFX()
@@ -63,11 +82,13 @@ public class SFXPauseHandler : MonoBehaviour
     }
     private void PauseManager_OnGamePaused(object sender, System.EventArgs e)
     {
+        PauseGlobalSFX();
         PauseAllTemporalSFX();
     }
 
     private void PauseManager_OnGameResumed(object sender, System.EventArgs e)
     {
+        ResumeGlobalSFX();
         ResumeAllTemporalSFX();
     }
 }

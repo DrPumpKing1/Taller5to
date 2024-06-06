@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewSFXPoolSO", menuName = "ScriptableObjects/SFXPool")]
+[CreateAssetMenu(fileName = "NewSFXPoolSO", menuName = "ScriptableObjects/Audio/SFXPool")]
 public class SFXPoolSO : ScriptableObject
 {
     public AudioClip[] objectProjected;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewDialogueSO", menuName = "ScriptableObjects/Dialogue")]
+[CreateAssetMenu(fileName = "NewDialogueSO", menuName = "ScriptableObjects/Dialogues/Dialogue")]
 public class DialogueSO : ScriptableObject
 {
     public int id;

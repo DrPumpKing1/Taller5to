@@ -7,9 +7,9 @@ public class SFXManager : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private SFXPoolSO SFXPoolSO;
-    [SerializeField] private AudioMixerGroup audioMixerGroup;
 
-    [Header("Settings")]
+    [Header("Temporal SFX AudioSource Settings")]
+    [SerializeField] private AudioMixerGroup audioMixerGroup;
     [SerializeField, Range(0f,100f)] private float minDistance = 1f;
     [SerializeField, Range(0f, 1000)] private float maxDistance = 500f;
     [SerializeField, Range(0f,1)] private float spatialBlendFactor;
@@ -17,6 +17,8 @@ public class SFXManager : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] private bool debug;
+
+    private AudioSource audioSource;
 
     private void OnEnable()
     {
@@ -51,69 +53,91 @@ public class SFXManager : MonoBehaviour
         ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
     }
 
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     private void ElectricalSwitchToggle_OnSwitchToggle(object sender, ElectricalSwitchToggle.OnSwitchToggleEventArgs e)
     {
         ElectricalSwitchToggle electricalSwitchToggle = sender as ElectricalSwitchToggle;
-        PlaySound(SFXPoolSO.switchToggle, electricalSwitchToggle.transform.position);
+        PlaySoundAtPoint(SFXPoolSO.switchToggle, electricalSwitchToggle.transform.position);
     }
 
     private void ElectricalDoor_OnDoorPowered(object sender, ElectricalDoor.OnDoowPoweredEventArgs e)
     {
         ElectricalDoor electricalDoor = sender as ElectricalDoor;
-        PlaySound(SFXPoolSO.doorEnergized, electricalDoor.transform.position);
+        PlaySoundAtPoint(SFXPoolSO.doorEnergized, electricalDoor.transform.position);
     }
 
     private void ElectricalDoor_OnDoorDePowered(object sender, ElectricalDoor.OnDoowPoweredEventArgs e)
     {
         ElectricalDoor electricalDoor = sender as ElectricalDoor;
-        PlaySound(SFXPoolSO.doorDeEnergized, electricalDoor.transform.position);
+        PlaySoundAtPoint(SFXPoolSO.doorDeEnergized, electricalDoor.transform.position);
     }
 
 
     private void ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems(object sender, ProjectionPlatformProjection.OnAnyProjectionEventArgs e)
     {
         ProjectionPlatformProjection projectionPlatformProjection = sender as ProjectionPlatformProjection;
-        PlaySound(SFXPoolSO.objectFailedProjection, projectionPlatformProjection.transform.position);
+        PlaySoundAtPoint(SFXPoolSO.objectFailedProjection, projectionPlatformProjection.transform.position);
     }
 
     private void ProjectionPlatformProjection_OnAnyObjectProjectionSuccess(object sender, ProjectionPlatformProjection.OnAnyProjectionEventArgs e)
     {
         ProjectionPlatformProjection projectionPlatformProjection = sender as ProjectionPlatformProjection;
-        PlaySound(SFXPoolSO.objectProjected, projectionPlatformProjection.transform.position);
+        PlaySoundAtPoint(SFXPoolSO.objectProjected, projectionPlatformProjection.transform.position);
     }
 
     private void ProjectableObjectDematerialization_OnAnyObjectDematerialized(object sender, ProjectableObjectDematerialization.OnAnyObjectDematerializedEventArgs e)
     {
         ProjectableObjectDematerialization projectableObjectDematerialization = sender as ProjectableObjectDematerialization;
-        PlaySound(SFXPoolSO.objectDematerialization, projectableObjectDematerialization.transform.position);
+        PlaySoundAtPoint(SFXPoolSO.objectDematerialization, projectableObjectDematerialization.transform.position);
     }
 
     private void ProjectionResetObject_OnAnyProjectionResetObjectUsed(object sender, System.EventArgs e)
     {
         ProjectionResetObject projectionResetObject = sender as ProjectionResetObject;
-        PlaySound(SFXPoolSO.projectionResetObjectUsed, projectionResetObject.transform.position);
+        PlaySoundAtPoint(SFXPoolSO.projectionResetObjectUsed, projectionResetObject.transform.position);
     }
 
     private void ProjectableObjectRotation_OnAnyObjectRotated(object sender, ProjectableObjectRotation.OnAnyObjectRotatedEventArgs e)
     {
         ProjectableObjectRotation projectableObjectRotation = sender as ProjectableObjectRotation;
-        PlaySound(SFXPoolSO.objectRotated, projectableObjectRotation.transform.position);
+        PlaySoundAtPoint(SFXPoolSO.objectRotated, projectableObjectRotation.transform.position);
     }
 
     private void ShieldPieceCollection_OnAnyShieldPieceCollected(object sender, ShieldPieceCollection.OnAnyShieldPieceCollectedEventArgs e)
     {
         ShieldPieceCollection shieldPieceCollection = sender as ShieldPieceCollection;
-        PlaySound(SFXPoolSO.shieldCollected, shieldPieceCollection.transform.position);
+        PlaySoundAtPoint(SFXPoolSO.shieldCollected, shieldPieceCollection.transform.position);
     }
 
     private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e)
     {
         ShieldDoor shieldDoor = sender as ShieldDoor;
-        PlaySound(SFXPoolSO.valueDoorOpened, shieldDoor.transform.position);
+        PlaySoundAtPoint(SFXPoolSO.valueDoorOpened, shieldDoor.transform.position);
     }
 
     ///
-    public void PlaySound(AudioClip[] audioClipArray, Vector3 position)
+    private void PlaySound(AudioClip[] audioClipArray)
+    {
+        if (audioClipArray.Length == 0)
+        {
+            if (debug) Debug.Log("SFX play will be ignored, audioClipArray lenght is 0!");
+            return;
+        }
+
+        AudioClip audioClip = audioClipArray[Random.Range(0, audioClipArray.Length)];
+        PlaySound(audioClip);
+    }
+
+    private void PlaySound(AudioClip audioClip)
+    {
+        audioSource.PlayOneShot(audioClip);
+    }
+
+    private void PlaySoundAtPoint(AudioClip[] audioClipArray, Vector3 position)
     {
         if(audioClipArray.Length == 0)
         {
@@ -122,9 +146,9 @@ public class SFXManager : MonoBehaviour
         }
 
         AudioClip audioClip = audioClipArray[Random.Range(0, audioClipArray.Length)];
-        PlaySound(audioClip, position);
+        PlaySoundAtPoint(audioClip, position);
     }
-    private void PlaySound(AudioClip audioClip, Vector3 position)
+    private void PlaySoundAtPoint(AudioClip audioClip, Vector3 position)
     {
         GameObject sfxGameObject = new GameObject("TempSFX");
         sfxGameObject.transform.position = position;
