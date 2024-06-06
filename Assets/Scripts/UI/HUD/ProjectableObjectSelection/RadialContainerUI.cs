@@ -8,6 +8,7 @@ public class RadialContainerUI : MonoBehaviour
     [SerializeField, Range(-360f,360f)] private float startAngle = 90f;
     [SerializeField, Range(-360f,360f)] private float endAngle = 0f;
     [SerializeField, Range(50f,400f)] private float radius = 100f;
+    [SerializeField] private float refferenceHeight = 1080;
 
     private RectTransform rectTransform;
 
@@ -33,7 +34,9 @@ public class RadialContainerUI : MonoBehaviour
             float x = Mathf.Cos(angle * Mathf.Deg2Rad);
             float y = Mathf.Sin(angle * Mathf.Deg2Rad);
 
-            child.position = new Vector3(x, y ,0f) * radius + rectTransform.position;
+            child.position = new Vector3(x, y ,0f) * radius * RadiusFactor() + rectTransform.position;
         }
     }
+
+    private float RadiusFactor() => Screen.height / refferenceHeight;
 }

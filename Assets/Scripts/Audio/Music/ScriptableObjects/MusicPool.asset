@@ -12,13 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ee4922e87a5fb94ab07e11b117c659b, type: 3}
   m_Name: MusicPool
   m_EditorClassIdentifier: 
-  objectProjected: []
-  objectFailedProjection: []
-  objectDematerialization: []
-  projectionResetObjectUsed: []
-  objectRotated: []
-  doorEnergized: []
-  doorDeEnergized: []
-  switchToggle: []
-  shieldCollected: []
-  valueDoorOpened: []
+  gamePlayMusic: {fileID: 0}
+  menuMusic: {fileID: 0}
+  creditsMusic: {fileID: 0}

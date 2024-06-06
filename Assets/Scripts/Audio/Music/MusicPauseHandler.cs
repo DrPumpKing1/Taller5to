@@ -20,8 +20,8 @@ public class MusicPauseHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        PauseManager.OnGamePaused += PauseManager_OnGamePaused;
-        PauseManager.OnGameResumed += PauseManager_OnGameResumed;
+        PauseManager.OnGamePaused -= PauseManager_OnGamePaused;
+        PauseManager.OnGameResumed -= PauseManager_OnGameResumed;
     }
 
     private void Awake()
