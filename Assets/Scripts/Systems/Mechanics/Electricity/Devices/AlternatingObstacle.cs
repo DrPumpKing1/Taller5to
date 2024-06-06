@@ -20,10 +20,16 @@ public class AlternatingObstacle : MonoBehaviour
     private bool power => electrode.Power >= Electrode.ACTIVATION_THRESHOLD;
     private bool coherence => state == power;
 
+    private Vector3 minPos;
+    private Vector3 maxPos;
+
     private void Start()
     {
         minScale = obstacle.localScale;
-        maxScale = new Vector3(obstacle.localScale.x, obstacle.localScale.y + extension, obstacle.localScale.z);
+        maxScale = new Vector3(obstacle.localScale.x, obstacle.localScale.y, obstacle.localScale.z + extension);
+
+        minPos = obstacle.localPosition;
+        maxPos = new Vector3(obstacle.localPosition.x, obstacle.localPosition.y, obstacle.localPosition.z + extension/2);
     }
 
     private void Update()
@@ -44,19 +50,23 @@ public class AlternatingObstacle : MonoBehaviour
     private void StopMovement()
     {
         StopAllCoroutines();
-        StartCoroutine(ScaleObstacle(minScale));
+        StartCoroutine(ScaleObstacle(minScale, minPos));
     }
 
     private void AlternatingMovement()
     {
         StopAllCoroutines();
-        StartCoroutine(ScaleObstacleEternal(maxScale));
+        StartCoroutine(ScaleObstacle(maxScale, maxPos));
     }
 
-    private IEnumerator ScaleObstacle(Vector3 scale)
+    private IEnumerator ScaleObstacle(Vector3 scale, Vector3 position)
     {
         Vector3 startScale = obstacle.localScale;
         Vector3 endScale = scale;
+
+        Vector3 startPos = obstacle.localPosition;
+        Vector3 endPos = position;
+
         float time = scalingTime;
         float t = 0f;
 
@@ -65,32 +75,12 @@ public class AlternatingObstacle : MonoBehaviour
             t += Time.deltaTime;
 
             obstacle.localScale = Vector3.Lerp(startScale, endScale, scalingCurve.Evaluate(t / time));
+            obstacle.localPosition = Vector3.Lerp(startPos, endPos, scalingCurve.Evaluate(t / time));
 
             yield return null;
         }
 
         obstacle.localScale = endScale;
-    }
-
-    private IEnumerator ScaleObstacleEternal(Vector3 scale)
-    {
-        Vector3 startScale = obstacle.localScale;
-        Vector3 endScale = scale;
-        float time = scalingTime;
-        float t = 0f;
-
-        while (t < time)
-        {
-            t += Time.deltaTime;
-
-            obstacle.localScale = Vector3.Lerp(startScale, endScale, scalingCurve.Evaluate(t / time));
-
-            yield return null;
-        }
-
-        obstacle.localScale = endScale;
-
-        if(scale == maxScale) StartCoroutine(ScaleObstacleEternal(minScale));
-        else if(scale == minScale) StartCoroutine(ScaleObstacleEternal(maxScale));
+        obstacle.localPosition = position;
     }
 }
