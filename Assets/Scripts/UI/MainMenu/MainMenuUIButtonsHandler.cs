@@ -37,7 +37,7 @@ public class MainMenuUIButtonsHandler : MonoBehaviour
 
     private void Options()
     {
-        //ScenesManager.Instance.SimpleLoadTargetScene(optionsScene);
+        ScenesManager.Instance.SimpleLoadTargetScene(optionsScene);
     }
 
     private void QuitGame() => ScenesManager.Instance.QuitGame();
