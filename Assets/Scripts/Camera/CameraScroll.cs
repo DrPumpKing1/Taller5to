@@ -17,7 +17,8 @@ public class CameraScroll : MonoBehaviour
     [SerializeField] private float maxDistance;
     [SerializeField] private float minDistance;
     [SerializeField, Range(0f, 1f)] private float startingDistancePercent;
-    [SerializeField, Range(0.01f, 0.05f)] private float smoothScrollSpeed;
+    [SerializeField, Range(0.01f, 0.1f)] private float smoothInputFactor;
+    [SerializeField, Range(0.01f, 0.1f)] private float smoothScrollFactor;
     [SerializeField] private bool invertScroll;
 
     public static float orthoSizeRefference;
@@ -26,6 +27,7 @@ public class CameraScroll : MonoBehaviour
     private float ScrollInput => cameraInput.GetScroll();
 
     private float desiredDistance;
+    private float smoothInput;
 
     private void Awake()
     {
@@ -40,6 +42,8 @@ public class CameraScroll : MonoBehaviour
     private void LateUpdate()
     {
         if (!enableCameraScroll) return;
+
+        SmoothInput();
         HandleDistance();
     }
 
@@ -51,14 +55,19 @@ public class CameraScroll : MonoBehaviour
         Distance = desiredDistance;
     }
 
+    private void SmoothInput()
+    {
+        smoothInput = Mathf.Lerp(smoothInput, ScrollInput, smoothInputFactor);
+    }
+
     private void HandleDistance()
     {
         //Handle Inversion
-        float processedScrollInput = invertScroll ? -ScrollInput : ScrollInput;
+        float processedScrollInput = invertScroll ? -smoothInput : smoothInput;
 
         //Set Distance
         desiredDistance = Mathf.Clamp(desiredDistance - scrollSensitivity * processedScrollInput, minDistance, maxDistance);
-        Distance = Mathf.Lerp(Distance, desiredDistance, smoothScrollSpeed);
+        Distance = Mathf.Lerp(Distance, desiredDistance, smoothScrollFactor);
 
         CMVCam.m_Lens.OrthographicSize = Distance;   
     }
