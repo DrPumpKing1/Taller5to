@@ -13,20 +13,13 @@ MonoBehaviour:
   m_Name: FirstVirtueDoorOpening
   m_EditorClassIdentifier: 
   id: 1
-  limitMovement: 1
+  movementLimitType: 1
   allowSkip: 1
   sentences:
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
     text: How did this shield made that door open?.
     time: 5
-  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
+  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: This is one of many trials, the shield of the Zurryth is showing its value
       and letting you pass.
     time: 7
-  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
-    text: Wouldn't it be easier to use some kind of key?
-    time: 5
-  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
-    text: We make sure only our people are capable to access the deeps of our temples.
-      This has kept strangers away from our most sacred places for millenniums.
-    time: 10

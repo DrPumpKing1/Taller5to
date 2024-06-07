@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: FirstVirtueDoorEncounter
   m_EditorClassIdentifier: 
   id: 0
-  limitMovement: 1
+  movementLimitType: 1
   allowSkip: 1
   sentences:
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
     text: "What\xB4s that big door. I don't see any switch to power it up."
     time: 6
-  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
+  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: This is some type of special door, my people call it <b><i>D'oah</i></b>,
       we need a piece of a valuable shield, this door has a Zurryth symbol, this
       means we need to find a Zurryth shield. The <b><i>Shirudok</i></b> Zurryth.

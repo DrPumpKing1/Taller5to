@@ -13,24 +13,14 @@ MonoBehaviour:
   m_Name: IntroduceVyrx
   m_EditorClassIdentifier: 
   id: 0
-  limitMovement: 1
+  movementLimitType: 0
   allowSkip: 1
   sentences:
-  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
-    text: My name is Vyrx, by the way.
-    time: 4.5
-  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
-    text: "And yours? Or will I spend all this time not knowing your name?\r"
-    time: 6
+  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+    text: This is the sacred house of Ka'hoshita, it's name is Katzilonhys, so I
+      can only ask you kindly, to show the respect my lady deserves.
+    time: 9
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
-    text: Probably
-    time: 3
-  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
-    text: Come on, just your name and then I will stop asking questions.
+    text: "I don't even know who your lady is, so I am afraid I can't disrespect
+      what I don\xB4t know, cat."
     time: 6
-  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
-    text: Ugh, fine, the name is Nikolas, but we are not friends, remember that.
-    time: 6.5
-  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
-    text: Whatever you say, Nikolas.
-    time: 3

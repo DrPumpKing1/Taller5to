@@ -13,34 +13,22 @@ MonoBehaviour:
   m_Name: FirstProjectableObjectLearn
   m_EditorClassIdentifier: 
   id: 1
-  limitMovement: 1
+  movementLimitType: 1
   allowSkip: 1
   sentences:
-  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
-    text: So did you learn an object? How does that help you?
-    time: 6
-  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
+  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: It seems I learned some kind of <b><i>K'aerum</i> conductor</b>. It will
       prove to be useful for completing circuits.
     time: 7
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
-    text: How can you make use of the object you learned? Don't waste my time, if
-      this isn't of any use, i will continue by my own.
+    text: How can you make use of the object you learned?
     time: 8
-  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
-    text: We learn objects in order to <b>project</b> them.
-    time: 7
-  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
-    text: To <b>project</b> objects, we use a special resource called <b>projection
-      gems</b>. Each object learning increases my <b>projection gems</b> pool by
-      one.
+  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+    text: To <b>project</b> objects, we use a special resource called <i>Kyosho</i>.
+      Each object learning increases my <i>Kyosho</i> pool by one.
     time: 10
-  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
-    text: What do <b>projection gems</b> mean. What even is <b>projection</b>, and
-      what is it used for?
-    time: 7
-  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
-    text: I will answer those questions when the time comes.
+  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+    text: I know you have many questions. I will answer them when the time comes.
     time: 6
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
     text: I despise mysteries.

@@ -13,23 +13,16 @@ MonoBehaviour:
   m_Name: FirstKaerumEncounter
   m_EditorClassIdentifier: 
   id: 2
-  limitMovement: 1
+  movementLimitType: 1
   allowSkip: 1
   sentences:
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
     text: Luminous water? This is definitely radioactive.
     time: 4
-  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
+  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: "That \u201Cluminous water\u201D is <b><i>K'aerum</i></b>, we use it as
       an energy source."
     time: 6
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
     text: So, it's electricity.
     time: 3
-  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
-    text: K'aerum doesn't hurt you when you touch it, much better than any energy
-      source in the universe.
-    time: 7
-  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
-    text: Mmm, I will be the judge of that.
-    time: 4

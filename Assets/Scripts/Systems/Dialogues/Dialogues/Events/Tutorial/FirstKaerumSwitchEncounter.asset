@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: FirstKaerumSwitchEncounter
   m_EditorClassIdentifier: 
   id: 1
-  limitMovement: 1
+  movementLimitType: 0
   allowSkip: 1
   sentences:
-  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
+  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: Everything around here needs to be connected to the <b><i>K'aerum</i></b>
       to function. Look at that cube, it is the switch to power up that door. Get
       close and click it.
