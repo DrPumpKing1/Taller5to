@@ -45,12 +45,10 @@ public class MagicBoxActivation : MonoBehaviour, IInteractableAlternate
     public void SelectAlternate()
     {
         OnObjectSelectedAlternate?.Invoke(this, EventArgs.Empty);
-        Debug.Log("Electrical Switch Selected");
     }
     public void DeselectAlternate()
     {
         OnObjectDeselectedAlternate?.Invoke(this, EventArgs.Empty);
-        Debug.Log("Electrical Switch Deselected");
     }
     public void TryInteractAlternate()
     {
