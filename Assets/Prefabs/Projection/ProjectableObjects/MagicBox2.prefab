@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 378302443464872152}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.3, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -50,11 +50,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.2, z: 1}
+  m_Size: {x: 2, y: 0.1, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8760202004214325047
 Rigidbody:
@@ -140,7 +140,6 @@ GameObject:
   - component: {fileID: 7351138780328761517}
   - component: {fileID: 200486169569721783}
   - component: {fileID: 1790670545532138970}
-  - component: {fileID: 502024945380370606}
   m_Layer: 0
   m_Name: Piston Head
   m_TagString: Untagged
@@ -157,7 +156,7 @@ Transform:
   m_GameObject: {fileID: 1063101873837184893}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.025, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -183,8 +182,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.19999999, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 0.01, z: 2}
+  m_Center: {x: 0, y: 0.005, z: 0}
 --- !u!54 &1790670545532138970
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -212,19 +211,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &502024945380370606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1063101873837184893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fdad1c4607a3a5408034ce54403d151, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  electrode: {fileID: 1606518582964483058}
 --- !u!1 &2500084292752823593
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +357,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   resistance: 10
-  type: 01000000
+  type: 02000000
   contacts: []
 --- !u!114 &7268323192429405270
 MonoBehaviour:
@@ -387,7 +373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   electrode: {fileID: 1606518582964483058}
   pistonHead: {fileID: 7351138780328761517}
-  extension: 1.1
+  extension: 1.975
   startActive: 0
   isActive: 0
   pistonHeadSpeed: 1
@@ -466,8 +452,8 @@ Transform:
   m_GameObject: {fileID: 5081494148340539735}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.22500001, z: 0}
-  m_LocalScale: {x: 1, y: 0.05, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.99, y: 0.045, z: 1.99}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8010787385010044853}
@@ -536,8 +522,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   electrode: {fileID: 1606518582964483058}
   meshRenderer: {fileID: 7514098275869349398}
-  on: {fileID: 2100000, guid: 597a51f2af022aa409ab9ddced6bf6f8, type: 2}
-  off: {fileID: 2100000, guid: 9f4851daa70292b4aae4e2d0da23e2d3, type: 2}
+  on: {fileID: 2100000, guid: 3e2bc03c424a5424b825898dd737074e, type: 2}
+  off: {fileID: 2100000, guid: 3e2bc03c424a5424b825898dd737074e, type: 2}
 --- !u!1 &5877701047061574778
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,6 +535,7 @@ GameObject:
   - component: {fileID: 7571150361944261040}
   - component: {fileID: 8101433148229108916}
   - component: {fileID: 349580937351127115}
+  - component: {fileID: 2704164027720844486}
   m_Layer: 0
   m_Name: PistonHeadVisual
   m_TagString: Untagged
@@ -566,7 +553,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.05, z: 1}
+  m_LocalScale: {x: 2, y: 0.05, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7351138780328761517}
@@ -621,6 +608,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2704164027720844486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5877701047061574778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1231e39815862d04eb5714c6cda99eed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  electrode: {fileID: 1606518582964483058}
+  meshRenderer: {fileID: 349580937351127115}
+  on: {fileID: 2100000, guid: 597a51f2af022aa409ab9ddced6bf6f8, type: 2}
+  off: {fileID: 2100000, guid: 3e2bc03c424a5424b825898dd737074e, type: 2}
 --- !u!1 &6238248665042677862
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,8 +712,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1, y: 1.1, z: 1.1}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Size: {x: 1.1, y: 2.5, z: 1.1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &2212840017335302867
 MonoBehaviour:
   m_ObjectHideFlags: 0
