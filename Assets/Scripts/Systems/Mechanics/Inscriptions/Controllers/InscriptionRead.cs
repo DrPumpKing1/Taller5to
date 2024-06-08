@@ -9,9 +9,6 @@ public class InscriptionRead : MonoBehaviour, IInteractable
     [SerializeField] private Inscription inscription;
     [SerializeField] private Electrode electrode;
 
-    [Header("Dialogues")]
-    [SerializeField] private MonologueSO inscriptionMonologue;
-
     [Header("Interactable Settings")]
     [SerializeField, Range(1f, 100f)] private float horizontalInteractionRange;
     [SerializeField, Range(1f, 100f)] private float verticalInteractionRange;
