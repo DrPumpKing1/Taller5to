@@ -8,6 +8,7 @@ public class LogListenerEvents : MonoBehaviour
     {
         //EVENTS
         GameStartEvent.OnGameStart += GameStartEvent_OnGameStart;
+        BackToShipCollider.OnBackToShip += BackToShipCollider_OnBackToShip;
         MeetVyrxCollider.OnMeetVyrx += MeetVyrxCollider_OnMeetVyrx;
         IntroduceVyrxCollider.OnIntroduceVyrx += IntroduceVyrxCollider_OnIntroduceVyrx;
         FirstKaerumEncounterCollider.OnFirstKaerumEncounter += FirstKaerumEncounterCollider_OnFirstKaerumEncounter;
@@ -27,12 +28,11 @@ public class LogListenerEvents : MonoBehaviour
         SecondLearningPlatformEncounterCollider.OnSecondLearningPlatformEncounter += SecondLearningPlatformEncounterCollider_OnSecondLearningPlatformEncounter;
     }
 
-
-
     private void OnDisable()
     {
         //EVENTS
         GameStartEvent.OnGameStart -= GameStartEvent_OnGameStart;
+        BackToShipCollider.OnBackToShip -= BackToShipCollider_OnBackToShip;
         MeetVyrxCollider.OnMeetVyrx -= MeetVyrxCollider_OnMeetVyrx;
         IntroduceVyrxCollider.OnIntroduceVyrx -= IntroduceVyrxCollider_OnIntroduceVyrx;
         FirstKaerumEncounterCollider.OnFirstKaerumEncounter -= FirstKaerumEncounterCollider_OnFirstKaerumEncounter;
@@ -53,6 +53,7 @@ public class LogListenerEvents : MonoBehaviour
     }
 
     private void GameStartEvent_OnGameStart(object sender, System.EventArgs e) => GameLogManager.Instance.Log("GameFlow/Start");
+    private void BackToShipCollider_OnBackToShip(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/BackToShip");
     private void MeetVyrxCollider_OnMeetVyrx(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/MeetVyrx");
     private void IntroduceVyrxCollider_OnIntroduceVyrx(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/IntroduceVyrx");
     private void FirstKaerumEncounterCollider_OnFirstKaerumEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstKaerumEncounter");
