@@ -12,7 +12,31 @@ public class ElectricalSwitch : MonoBehaviour
 
     public int ID => id;
     public SwitchElectrode SwitchElectrode => switchElectrode;
+    public bool IsOn => switchElectrode.SwitchOn;
 
-    public void SetSwitchOn() => switchElectrode.InitializeSwitch(true);
-    public void SetSwitchOff() => switchElectrode.InitializeSwitch(false);
+    private bool hasBeenInitialized = false;
+    private bool shouldInitialize;
+
+    private bool initialState;
+
+    private void Update()
+    {
+        InitializeOnFirstFrame();
+    }
+
+    private void InitializeOnFirstFrame()
+    {
+        if (!shouldInitialize) return;
+        if (hasBeenInitialized) return;
+
+        switchElectrode.InitializeSwitch(initialState);
+        hasBeenInitialized = true;
+
+    }
+
+    public void InitializeSwitch(bool isOn)
+    {
+        shouldInitialize = true;
+        initialState = isOn;
+    }
 }

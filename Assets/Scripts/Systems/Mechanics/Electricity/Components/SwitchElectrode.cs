@@ -6,7 +6,7 @@ public class SwitchElectrode : Electrode
 {
     [Header("Switch Specific")]
     [SerializeField] private bool switchOn;
-    public bool SwitchOn { get { return switchOn; } }
+    public bool SwitchOn => switchOn;
 
     public override void ReceiveSignal(float intensity)
     {
