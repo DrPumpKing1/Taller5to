@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: SecondVirtueDoorEncounter
   m_EditorClassIdentifier: 
   id: 0
-  limitMovement: 0
+  movementLimitType: 1
   allowSkip: 1
   sentences:
-  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
-    text: Test1
-    time: 4
+  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
+    text: Another <i>D'oah</i> we need to find another shield to open it.
+    time: 5
+  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+    text: This D'oah seems to require a shield split in four pieces.
+    time: 6

@@ -5,10 +5,10 @@ using System;
 
 public class FirstDematerializationTowerEncounterCollider : EventCollider
 {
-    public static event EventHandler OnFirstDematerializationTowerEncounter;
+    public static event EventHandler OnFirstDematerializationTowenEncounter;
 
     protected override void TriggerCollider()
     {
-        OnFirstDematerializationTowerEncounter?.Invoke(this, EventArgs.Empty);
+        OnFirstDematerializationTowenEncounter?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -21,10 +21,10 @@ public class LogListenerEvents : MonoBehaviour
         FirstLearningPlatformEncounterCollider.OnFirstLearningPlatformEncounter += FirstLearningPlatformEncounterCollider_OnFirstLearningPlatformEncounter;
 
         SecondVirtueDoorEncounterCollider.OnSecondVirtueDoorEncounter += SecondVirtueDoorEncounterCollider_OnSecondVirtueDoorEncounter;
-        FirstBackTrackInscriptionEncounterCollider.OnFirstBackTrackInscriptionEncounter += FirstBackTrackInscriptionEncounterCollider_OnFirstBackTrackInscriptionEncounter;
         FirstProjectionPlatformEncounterCollider.OnFirstProjectionPlatformEncounter += FirstProjectionPlatformEncounterCollider_OnFirstProjectionPlatformEncounter;
-        FirstDematerializationTowerEncounterCollider.OnFirstDematerializationTowerEncounter += FirstDematerializationTowerEncounterCollider_OnFirstDematerializationTowerEncounter;
+        FirstBacktrackSwitchEncounter.OnFirstBacktrackSwitchEncounter += FirstBacktrackSwitchEncounterCollider_OnFirstBacktrackSwitchEncounter;
         FirstCableRotationEncounterCollider.OnFirstCableRotationEncounter += FirstCableRotationEncounterCollider_OnFirstCableRotationEncounter;
+        FirstDematerializationTowerEncounterCollider.OnFirstDematerializationTowenEncounter += FirstDematerializationTowerEncounterCollider_OnFirstDematerializationTowerEncounter;
         SecondLearningPlatformEncounterCollider.OnSecondLearningPlatformEncounter += SecondLearningPlatformEncounterCollider_OnSecondLearningPlatformEncounter;
     }
 
@@ -45,10 +45,10 @@ public class LogListenerEvents : MonoBehaviour
         FirstLearningPlatformEncounterCollider.OnFirstLearningPlatformEncounter -= FirstLearningPlatformEncounterCollider_OnFirstLearningPlatformEncounter;
 
         SecondVirtueDoorEncounterCollider.OnSecondVirtueDoorEncounter -= SecondVirtueDoorEncounterCollider_OnSecondVirtueDoorEncounter;
-        FirstBackTrackInscriptionEncounterCollider.OnFirstBackTrackInscriptionEncounter -= FirstBackTrackInscriptionEncounterCollider_OnFirstBackTrackInscriptionEncounter;
         FirstProjectionPlatformEncounterCollider.OnFirstProjectionPlatformEncounter -= FirstProjectionPlatformEncounterCollider_OnFirstProjectionPlatformEncounter;
-        FirstDematerializationTowerEncounterCollider.OnFirstDematerializationTowerEncounter -= FirstDematerializationTowerEncounterCollider_OnFirstDematerializationTowerEncounter;
+        FirstBacktrackSwitchEncounter.OnFirstBacktrackSwitchEncounter -= FirstBacktrackSwitchEncounterCollider_OnFirstBacktrackSwitchEncounter;
         FirstCableRotationEncounterCollider.OnFirstCableRotationEncounter -= FirstCableRotationEncounterCollider_OnFirstCableRotationEncounter;
+        FirstDematerializationTowerEncounterCollider.OnFirstDematerializationTowenEncounter -= FirstDematerializationTowerEncounterCollider_OnFirstDematerializationTowerEncounter;
         SecondLearningPlatformEncounterCollider.OnSecondLearningPlatformEncounter -= SecondLearningPlatformEncounterCollider_OnSecondLearningPlatformEncounter;
     }
 
@@ -66,10 +66,10 @@ public class LogListenerEvents : MonoBehaviour
     private void FirstLearningPlatformEncounterCollider_OnFirstLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstLearningPlatformEncounter");
 
     private void SecondVirtueDoorEncounterCollider_OnSecondVirtueDoorEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/SecondVirtueDoorEncounter");
-    private void FirstBackTrackInscriptionEncounterCollider_OnFirstBackTrackInscriptionEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstBacktrackInscriptionEncounter");
     private void FirstProjectionPlatformEncounterCollider_OnFirstProjectionPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstProjectionPlatformEncounter");
-    private void FirstDematerializationTowerEncounterCollider_OnFirstDematerializationTowerEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstDematerializationTowerEncounter");
+    private void FirstBacktrackSwitchEncounterCollider_OnFirstBacktrackSwitchEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstBacktrackSwitchEncounter");
     private void FirstCableRotationEncounterCollider_OnFirstCableRotationEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstCableRotationEncounter");
+    private void FirstDematerializationTowerEncounterCollider_OnFirstDematerializationTowerEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstDematerializationTowerEncounter");
     private void SecondLearningPlatformEncounterCollider_OnSecondLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/SecondLearningPlatformEncounter");
 
 }
