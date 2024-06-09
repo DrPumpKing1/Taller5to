@@ -13,6 +13,12 @@ public class MagicBoxDevice : ActivableDevice
     [SerializeField] private float pistonHeadSpeed;
     [SerializeField] private AnimationCurve movementCurve;
 
+    [Header("Object Avobe Check Settings")]
+    [SerializeField] private bool useObjectAvobe;
+    [SerializeField] private LayerMask objectAvobeLayers;
+    [SerializeField] private Vector3 checkBoxCenter;
+    [SerializeField] private Vector3 checkBoxHalfExtends;
+
     private Vector3 initialPosition;
     private Vector3 extendedPosition;
 
@@ -21,6 +27,29 @@ public class MagicBoxDevice : ActivableDevice
         base.Start();
         initialPosition = pistonHead.localPosition;
         extendedPosition = pistonHead.localPosition + Vector3.up * extension;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        CheckCanBeActivated();
+    }
+
+    protected override void CheckCanBeActivated()
+    {
+        if (!IsActive)
+        {
+            canBeActivated = true;
+        }
+        else
+        {
+            canBeActivated = !CheckObjectAbove() || !useObjectAvobe;
+        }
+    }
+    private bool CheckObjectAbove()
+    {
+        bool objectAbove = Physics.CheckBox(transform.position + transform.TransformDirection(checkBoxCenter), checkBoxHalfExtends, transform.rotation, objectAvobeLayers);
+        return objectAbove;
     }
 
     protected override void ToggleActivation()

@@ -52,6 +52,8 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
     public static event EventHandler<OnAnyObjectActivatedEventArgs> OnAnyObjectDeactivated;
     public event EventHandler OnProjectableObjectActivated;
 
+
+
     public class OnAnyObjectActivatedEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectSO;
@@ -109,7 +111,7 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
 
     private void HandlePowered()
     {
-        if (Power)
+        if (Power && activableDevice.canBeActivated)
         {
             notPoweredTimer = 0f;
 
@@ -121,7 +123,7 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
             notPoweredTimer += Time.deltaTime;
         }
 
-        if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD)
+        if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD || !activableDevice.canBeActivated)
         {
             canBeSelectedAlternate = false;
             isInteractableAlternate = false;

@@ -377,6 +377,7 @@ MonoBehaviour:
   isActive: 0
   startActive: 0
   state: 0
+  canBeActivated: 0
   pistonHead: {fileID: 7351138780328761517}
   extension: 1.975
   pistonHeadSpeed: 1
@@ -404,6 +405,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  useObjectAvobe: 1
+  objectAvobeLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  checkBoxCenter: {x: 0, y: 0.05, z: 0}
+  checkBoxHalfExtends: {x: 1, y: 0.04, z: 1}
 --- !u!114 &5874877184078574468
 MonoBehaviour:
   m_ObjectHideFlags: 0

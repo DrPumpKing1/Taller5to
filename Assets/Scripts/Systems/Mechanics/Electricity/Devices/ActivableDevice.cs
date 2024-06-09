@@ -15,6 +15,8 @@ public abstract class ActivableDevice : MonoBehaviour
     [Header("Device Control")]
     [SerializeField] protected bool state;
 
+    public bool canBeActivated;
+
     public bool Power => electrode.Power >= Electrode.ACTIVATION_THRESHOLD;
     private bool coherence => state == (Power && isActive);
     public bool IsActive => isActive;
@@ -34,7 +36,7 @@ public abstract class ActivableDevice : MonoBehaviour
         isActive = startActive;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (coherence) return;
 
@@ -45,6 +47,7 @@ public abstract class ActivableDevice : MonoBehaviour
     public void SetDeviceActive(bool state) => isActive = state;
 
     protected abstract void ToggleActivation();
+    protected abstract void CheckCanBeActivated();
 
     private void ProjectableObjectActivation_OnProjectableObjectActivated(object sender, System.EventArgs e)
     {
