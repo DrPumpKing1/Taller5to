@@ -15,8 +15,8 @@ public abstract class ActivableDevice : MonoBehaviour
     [Header("Device Control")]
     [SerializeField] protected bool state;
 
-    private bool power => electrode.Power >= Electrode.ACTIVATION_THRESHOLD;
-    private bool coherence => state == (power && isActive);
+    public bool Power => electrode.Power >= Electrode.ACTIVATION_THRESHOLD;
+    private bool coherence => state == (Power && isActive);
     public bool IsActive => isActive;
 
     private void OnEnable()
@@ -38,7 +38,7 @@ public abstract class ActivableDevice : MonoBehaviour
     {
         if (coherence) return;
 
-        state = power && isActive;
+        state = Power && isActive;
         ToggleActivation();
     }
 

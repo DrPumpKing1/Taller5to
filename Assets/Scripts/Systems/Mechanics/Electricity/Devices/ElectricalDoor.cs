@@ -30,11 +30,11 @@ public class ElectricalDoor : MonoBehaviour
     private Coroutine doorMovement;
 
     private float notPoweredTimer;
-    private const float NOT_POWERED_TIME_THRESHOLD = 0.5f;
+    private const float NOT_POWERED_TIME_THRESHOLD = 0.1f;
 
     private bool previousPowered;
 
-    public static event EventHandler<OnDoowPoweredEventArgs> OnDoorPowered;
+    public static event EventHandler<OnDoowPoweredEventArgs> OnDoorPowe;
     public static event EventHandler<OnDoowPoweredEventArgs> OnDoorDePowered;
 
     public class OnDoowPoweredEventArgs : EventArgs
@@ -101,19 +101,22 @@ public class ElectricalDoor : MonoBehaviour
     {
         if (!isPowered)
         {
-            if (previousPowered)
+            notPoweredTimer += Time.deltaTime;
+
+            if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD && previousPowered)
             {
                 OnDoorDePowered?.Invoke(this, new OnDoowPoweredEventArgs { id = id });
                 previousPowered = false;
             }
-
-            notPoweredTimer += Time.deltaTime;
         }
-        else if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD)
+        else
         {
-            notPoweredTimer = 0f;
-            OnDoorPowered?.Invoke(this, new OnDoowPoweredEventArgs { id = id });
+            if (!previousPowered)
+            {
+                OnDoorPowe?.Invoke(this, new OnDoowPoweredEventArgs { id = id });
+            }
 
+            notPoweredTimer = 0;
             previousPowered = true;
         }
     }

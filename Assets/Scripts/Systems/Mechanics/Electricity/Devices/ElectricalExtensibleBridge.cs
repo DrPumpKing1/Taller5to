@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class ElectricalBridge : MonoBehaviour
+public class ElectricalExtensibleBridge : MonoBehaviour
 {
+    [Header("Identifiers")]
+    [SerializeField] private int id;
+
     [Header("Electrical Component")]
     [SerializeField] private Electrode electrode;
 
@@ -18,11 +22,23 @@ public class ElectricalBridge : MonoBehaviour
 
     [Header("Device Control")]
     [SerializeField] private bool state;
-    private bool power => electrode.Power >= Electrode.ACTIVATION_THRESHOLD;
-    private bool coherence => state == power;
+    private bool IsPowered => electrode.Power >= Electrode.ACTIVATION_THRESHOLD;
+
+    private const float NOT_POWERED_TIME_THRESHOLD = 0.2f;
+    private float notPoweredTimer;
+    private bool previousPowered;
+    private bool coherence => state == IsPowered;
 
     private Vector3 minPos;
     private Vector3 maxPos;
+
+    public static event EventHandler<OnExtensibleBridgePowerEventArgs> OnExtensibleBridgePower;
+    public static event EventHandler<OnExtensibleBridgePowerEventArgs> OnExtensibleBridgeDePower;
+
+    public class OnExtensibleBridgePowerEventArgs : EventArgs
+    {
+        public int id;
+    }
 
     private void Start()
     {
@@ -35,26 +51,55 @@ public class ElectricalBridge : MonoBehaviour
 
     private void Update()
     {
+        HandlePowered();
+
         if (coherence) return;
 
-        state = power;
+        state = IsPowered;
 
-        if (!power)
+        if (!IsPowered)
         {
-            StopMovement();
+            Contract();
         } else
         {
-            AlternatingMovement();
+            Extend();
         }
     }
 
-    private void StopMovement()
+    private void HandlePowered()
+    {
+        if (!IsPowered)
+        {
+            notPoweredTimer += Time.deltaTime;
+
+            if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD && previousPowered)
+            {
+                OnExtensibleBridgeDePower?.Invoke(this, new OnExtensibleBridgePowerEventArgs { id = id });
+                previousPowered = false;
+
+                Debug.Log("Depower");
+            }
+        }
+        else
+        {
+            if (!previousPowered)
+            {
+                OnExtensibleBridgePower?.Invoke(this, new OnExtensibleBridgePowerEventArgs { id = id });
+                Debug.Log("Power");
+            }
+
+            notPoweredTimer = 0;
+            previousPowered = true;
+        }
+    }
+
+    private void Contract()
     {
         StopAllCoroutines();
         StartCoroutine(ScaleObstacle(minScale, minPos));
     }
 
-    private void AlternatingMovement()
+    private void Extend()
     {
         StopAllCoroutines();
         StartCoroutine(ScaleObstacle(maxScale, maxPos));

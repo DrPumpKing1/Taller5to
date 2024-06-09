@@ -22,35 +22,55 @@ public class SFXManager : MonoBehaviour
 
     private void OnEnable()
     {
-        ElectricalDoor.OnDoorPowered += ElectricalDoor_OnDoorPowered;
-        ElectricalDoor.OnDoorDePowered += ElectricalDoor_OnDoorDePowered;
         ElectricalSwitchToggle.OnSwitchToggle += ElectricalSwitchToggle_OnSwitchToggle;
+
+        ElectricalDoor.OnDoorPowe += ElectricalDoor_OnDoorPowered;
+        ElectricalDoor.OnDoorDePowered += ElectricalDoor_OnDoorDePowered;
+        ElectricalDrawbridge.OnDrawbridgePower += ElectricalDrawbridge_OnDrawbridgePower;
+        ElectricalDrawbridge.OnDrawbridgeDePower += ElectricalDrawbridge_OnDrawbridgeDePower;
+        ElectricalExtensibleBridge.OnExtensibleBridgePower += ElectricalExtensibleBridge_OnExtensibleBridgePower;
+        ElectricalExtensibleBridge.OnExtensibleBridgeDePower += ElectricalExtensibleBridge_OnExtensibleBridgeDePower;
+
+        InscriptionPowering.OnInscriptionPower += InscriptionPowering_OnInscriptionPower;
+        InscriptionPowering.OnInscriptionDePower += InscriptionPowering_OnInscriptionDePower;
+
+        ShieldPieceCollection.OnAnyShieldPieceCollected += ShieldPieceCollection_OnAnyShieldPieceCollected;
+        ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
 
         ProjectionPlatformProjection.OnAnyObjectProjectionSuccess += ProjectionPlatformProjection_OnAnyObjectProjectionSuccess;
         ProjectionPlatformProjection.OnAnyObjectProjectionFailedInsuficientGems += ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems;
-
         ProjectableObjectDematerialization.OnAnyObjectDematerialized += ProjectableObjectDematerialization_OnAnyObjectDematerialized;
         ProjectionResetObject.OnAnyProjectionResetObjectUsed += ProjectionResetObject_OnAnyProjectionResetObjectUsed;
 
         ProjectableObjectRotation.OnAnyObjectRotated += ProjectableObjectRotation_OnAnyObjectRotated;
-
-        ShieldPieceCollection.OnAnyShieldPieceCollected += ShieldPieceCollection_OnAnyShieldPieceCollected;
-        ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
+        ProjectableObjectActivation.OnAnyObjectActivated += ProjectableObjectActivation_OnAnyObjectActivated;
+        ProjectableObjectActivation.OnAnyObjectDeactivated += ProjectableObjectActivation_OnAnyObjectDeativated;
     }
+
+
 
     private void OnDisable()
     {
-        ElectricalDoor.OnDoorPowered -= ElectricalDoor_OnDoorPowered;
-        ElectricalDoor.OnDoorDePowered -= ElectricalDoor_OnDoorDePowered;
         ElectricalSwitchToggle.OnSwitchToggle -= ElectricalSwitchToggle_OnSwitchToggle;
 
-        ProjectionPlatformProjection.OnAnyObjectProjectionSuccess -= ProjectionPlatformProjection_OnAnyObjectProjectionSuccess;
-        ProjectionPlatformProjection.OnAnyObjectProjectionFailedInsuficientGems -= ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems;
-
-        ProjectableObjectDematerialization.OnAnyObjectDematerialized -= ProjectableObjectDematerialization_OnAnyObjectDematerialized;
+        ElectricalDoor.OnDoorPowe -= ElectricalDoor_OnDoorPowered;
+        ElectricalDoor.OnDoorDePowered -= ElectricalDoor_OnDoorDePowered;
+        ElectricalDrawbridge.OnDrawbridgePower -= ElectricalDrawbridge_OnDrawbridgePower;
+        ElectricalDrawbridge.OnDrawbridgeDePower -= ElectricalDrawbridge_OnDrawbridgeDePower;
+        ElectricalExtensibleBridge.OnExtensibleBridgePower -= ElectricalExtensibleBridge_OnExtensibleBridgePower;
+        ElectricalExtensibleBridge.OnExtensibleBridgeDePower -= ElectricalExtensibleBridge_OnExtensibleBridgeDePower;
 
         ShieldPieceCollection.OnAnyShieldPieceCollected -= ShieldPieceCollection_OnAnyShieldPieceCollected;
         ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
+
+        ProjectionPlatformProjection.OnAnyObjectProjectionSuccess -= ProjectionPlatformProjection_OnAnyObjectProjectionSuccess;
+        ProjectionPlatformProjection.OnAnyObjectProjectionFailedInsuficientGems -= ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems;
+        ProjectableObjectDematerialization.OnAnyObjectDematerialized -= ProjectableObjectDematerialization_OnAnyObjectDematerialized;
+        ProjectionResetObject.OnAnyProjectionResetObjectUsed -= ProjectionResetObject_OnAnyProjectionResetObjectUsed;
+
+        ProjectableObjectRotation.OnAnyObjectRotated -= ProjectableObjectRotation_OnAnyObjectRotated;
+        ProjectableObjectActivation.OnAnyObjectActivated -= ProjectableObjectActivation_OnAnyObjectActivated;
+        ProjectableObjectActivation.OnAnyObjectDeactivated -= ProjectableObjectActivation_OnAnyObjectDeativated;
     }
 
     private void Awake()
@@ -58,6 +78,7 @@ public class SFXManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    #region Electrical
     private void ElectricalSwitchToggle_OnSwitchToggle(object sender, ElectricalSwitchToggle.OnSwitchToggleEventArgs e)
     {
         ElectricalSwitchToggle electricalSwitchToggle = sender as ElectricalSwitchToggle;
@@ -67,16 +88,52 @@ public class SFXManager : MonoBehaviour
     private void ElectricalDoor_OnDoorPowered(object sender, ElectricalDoor.OnDoowPoweredEventArgs e)
     {
         ElectricalDoor electricalDoor = sender as ElectricalDoor;
-        PlaySoundAtPoint(SFXPoolSO.doorEnergized, electricalDoor.transform.position);
+        PlaySoundAtPoint(SFXPoolSO.doorPowered, electricalDoor.transform.position);
     }
 
     private void ElectricalDoor_OnDoorDePowered(object sender, ElectricalDoor.OnDoowPoweredEventArgs e)
     {
         ElectricalDoor electricalDoor = sender as ElectricalDoor;
-        PlaySoundAtPoint(SFXPoolSO.doorDeEnergized, electricalDoor.transform.position);
+        PlaySoundAtPoint(SFXPoolSO.doorDePowered, electricalDoor.transform.position);
     }
 
+    private void ElectricalDrawbridge_OnDrawbridgePower(object sender, ElectricalDrawbridge.OnDrawbridgePoweredEventArgs e)
+    {
+        ElectricalDrawbridge electricalDrawbridge = sender as ElectricalDrawbridge;
+        PlaySoundAtPoint(SFXPoolSO.drawbridgePowered, electricalDrawbridge.transform.position);
+    }
 
+    private void ElectricalDrawbridge_OnDrawbridgeDePower(object sender, ElectricalDrawbridge.OnDrawbridgePoweredEventArgs e)
+    {
+        ElectricalDrawbridge electricalDrawbridge = sender as ElectricalDrawbridge;
+        PlaySoundAtPoint(SFXPoolSO.drawbridgeDePowered, electricalDrawbridge.transform.position);
+    }
+
+    private void ElectricalExtensibleBridge_OnExtensibleBridgePower(object sender, ElectricalExtensibleBridge.OnExtensibleBridgePowerEventArgs e)
+    {
+        ElectricalExtensibleBridge extensibleBridge = sender as ElectricalExtensibleBridge;
+        PlaySoundAtPoint(SFXPoolSO.extensibleBridgePowered, extensibleBridge.transform.position);
+    }
+
+    private void ElectricalExtensibleBridge_OnExtensibleBridgeDePower(object sender, ElectricalExtensibleBridge.OnExtensibleBridgePowerEventArgs e)
+    {
+        ElectricalExtensibleBridge extensibleBridge = sender as ElectricalExtensibleBridge;
+        PlaySoundAtPoint(SFXPoolSO.extensibleBridgeDePowered, extensibleBridge.transform.position);
+    }
+
+    private void InscriptionPowering_OnInscriptionPower(object sender, InscriptionPowering.OnInscriptionPoweringEventArgs e)
+    {
+        InscriptionPowering inscriptionPowering = sender as InscriptionPowering;
+        PlaySoundAtPoint(SFXPoolSO.inscriptionPowered, inscriptionPowering.transform.position);
+    }
+    private void InscriptionPowering_OnInscriptionDePower(object sender, InscriptionPowering.OnInscriptionPoweringEventArgs e)
+    {
+        InscriptionPowering inscriptionPowering = sender as InscriptionPowering;
+        PlaySoundAtPoint(SFXPoolSO.inscriptionDePowered, inscriptionPowering.transform.position);
+    }
+    #endregion
+
+    #region Projection
     private void ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems(object sender, ProjectionPlatformProjection.OnAnyProjectionEventArgs e)
     {
         ProjectionPlatformProjection projectionPlatformProjection = sender as ProjectionPlatformProjection;
@@ -100,13 +157,28 @@ public class SFXManager : MonoBehaviour
         ProjectionResetObject projectionResetObject = sender as ProjectionResetObject;
         PlaySoundAtPoint(SFXPoolSO.projectionResetObjectUsed, projectionResetObject.transform.position);
     }
+    #endregion
 
+    #region Projection Alternate
     private void ProjectableObjectRotation_OnAnyObjectRotated(object sender, ProjectableObjectRotation.OnAnyObjectRotatedEventArgs e)
     {
         ProjectableObjectRotation projectableObjectRotation = sender as ProjectableObjectRotation;
         PlaySoundAtPoint(SFXPoolSO.objectRotated, projectableObjectRotation.transform.position);
     }
+    private void ProjectableObjectActivation_OnAnyObjectDeativated(object sender, ProjectableObjectActivation.OnAnyObjectActivatedEventArgs e)
+    {
+        ProjectableObjectActivation projectableObjectActivation = sender as ProjectableObjectActivation;
+        PlaySoundAtPoint(SFXPoolSO.objectActivation, projectableObjectActivation.transform.position);
+    }
 
+    private void ProjectableObjectActivation_OnAnyObjectActivated(object sender, ProjectableObjectActivation.OnAnyObjectActivatedEventArgs e)
+    {
+        ProjectableObjectActivation projectableObjectActivation = sender as ProjectableObjectActivation;
+        PlaySoundAtPoint(SFXPoolSO.objectDeactivation, projectableObjectActivation.transform.position);
+    }
+    #endregion
+
+    #region Shields
     private void ShieldPieceCollection_OnAnyShieldPieceCollected(object sender, ShieldPieceCollection.OnAnyShieldPieceCollectedEventArgs e)
     {
         ShieldPieceCollection shieldPieceCollection = sender as ShieldPieceCollection;
@@ -118,6 +190,7 @@ public class SFXManager : MonoBehaviour
         ShieldDoor shieldDoor = sender as ShieldDoor;
         PlaySoundAtPoint(SFXPoolSO.valueDoorOpened, shieldDoor.transform.position);
     }
+    #endregion
 
     ///
     private void PlaySound(AudioClip[] audioClipArray)
@@ -131,7 +204,6 @@ public class SFXManager : MonoBehaviour
         AudioClip audioClip = audioClipArray[Random.Range(0, audioClipArray.Length)];
         PlaySound(audioClip);
     }
-
     private void PlaySound(AudioClip audioClip)
     {
         audioSource.PlayOneShot(audioClip);

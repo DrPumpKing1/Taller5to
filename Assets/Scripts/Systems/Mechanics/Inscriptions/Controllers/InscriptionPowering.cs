@@ -14,11 +14,18 @@ public class InscriptionPowering : MonoBehaviour
     [SerializeField] private Vector3 shieldDropForce;
     [SerializeField] private bool shieldParenting;
 
-    private bool Power => electrode.Power >= Electrode.ACTIVATION_THRESHOLD;
+    [Header("State")]
+    [SerializeField] private bool state;
 
+    private bool IsPowered => electrode.Power >= Electrode.ACTIVATION_THRESHOLD;
+    private float notPoweredTimer;
     private bool previousPowered;
+    private const float NOT_POWERED_TIME_THRESHOLD = 0.2f;
 
     public static event EventHandler<OnInscriptionPoweringEventArgs> OnInscriptionPoweringFirstTime;
+
+    public static event EventHandler<OnInscriptionPoweringEventArgs> OnInscriptionPower;
+    public static event EventHandler<OnInscriptionPoweringEventArgs> OnInscriptionDePower;
 
     public class OnInscriptionPoweringEventArgs : EventArgs
     {
@@ -32,22 +39,50 @@ public class InscriptionPowering : MonoBehaviour
 
     private void Update()
     {
-        CheckHasBeenPowered();
+        ManageState();
+        HandlePowered();
     }
 
     private void InitializeVariables()
     {
-        previousPowered = Power;
+        previousPowered = IsPowered;
     }
 
-    private void CheckHasBeenPowered()
-    {
-        if(Power && !previousPowered)
-        {
-            CheckDropShield();
-        }
 
-        previousPowered = Power;
+    private void ManageState()
+    {
+        if (state == IsPowered) return;
+
+        if (state) state = false;
+        else
+        {
+            state = true;
+        }
+    }
+
+    private void HandlePowered()
+    {
+        if (!IsPowered)
+        {
+            notPoweredTimer += Time.deltaTime;
+            
+            if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD && previousPowered)
+            {
+                OnInscriptionDePower?.Invoke(this, new OnInscriptionPoweringEventArgs { id = inscription.InscriptionSO.id });
+                previousPowered = false;
+            }
+        }
+        else
+        {
+            if (!previousPowered)
+            {
+                OnInscriptionPower?.Invoke(this, new OnInscriptionPoweringEventArgs { id = inscription.InscriptionSO.id });
+                CheckDropShield();
+            }
+
+            notPoweredTimer = 0;
+            previousPowered = true;
+        }
     }
 
     private void CheckDropShield()

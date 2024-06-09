@@ -5,6 +5,9 @@ using System;
 
 public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
 {
+    [Header("Components")]
+    [SerializeField] private ProjectableObject projectableObject;
+
     [Header("Electrical Settings")]
     [SerializeField] private ActivableDevice activableDevice;
 
@@ -32,6 +35,10 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
     public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
 
+    private bool Power => activableDevice.Power;
+    private float notPoweredTimer = 0f;
+    private const float NOT_POWERED_TIME_THRESHOLD = 0.5f;
+
     #region IInteractable Events
     public event EventHandler OnObjectSelectedAlternate;
     public event EventHandler OnObjectDeselectedAlternate;
@@ -41,7 +48,14 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
     public event EventHandler OnUpdatedInteractableAlternateState;
     #endregion
 
+    public static event EventHandler<OnAnyObjectActivatedEventArgs> OnAnyObjectActivated;
+    public static event EventHandler<OnAnyObjectActivatedEventArgs> OnAnyObjectDeactivated;
     public event EventHandler OnProjectableObjectActivated;
+
+    public class OnAnyObjectActivatedEventArgs : EventArgs
+    {
+        public ProjectableObjectSO projectableObjectSO;
+    }
 
     #region IInteractable Methods
     public void SelectAlternate()
@@ -72,7 +86,6 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
     {
         ToggleActivation();
 
-        Debug.Log("Electrical Switch Interacted");
         OnObjectInteractedAlternate?.Invoke(this, EventArgs.Empty);
     }
     public void FailInteractAlternate()
@@ -89,8 +102,43 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
     public Transform GetTransform() => transform;
     #endregion
 
+    private void Update()
+    {
+        HandlePowered();
+    }
+
+    private void HandlePowered()
+    {
+        if (Power)
+        {
+            notPoweredTimer = 0f;
+
+            canBeSelectedAlternate = true;
+            isInteractableAlternate = true;
+        }
+        else
+        {
+            notPoweredTimer += Time.deltaTime;
+        }
+
+        if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD)
+        {
+            canBeSelectedAlternate = false;
+            isInteractableAlternate = false;
+        }
+    }
+
     private void ToggleActivation()
     {
+        if (activableDevice.IsActive)
+        {
+            OnAnyObjectDeactivated?.Invoke(this, new OnAnyObjectActivatedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
+        }
+        else
+        {
+            OnAnyObjectActivated?.Invoke(this, new OnAnyObjectActivatedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
+        }
+
         OnProjectableObjectActivated?.Invoke(this, EventArgs.Empty);
         OnUpdatedInteractableAlternateState?.Invoke(this, EventArgs.Empty);
     }

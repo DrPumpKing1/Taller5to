@@ -29,13 +29,12 @@ public class ElectricalDrawbridge : MonoBehaviour
     private GameObject player;
     private Coroutine bridgeMovementMovement;
 
+    private const float NOT_POWERED_TIME_THRESHOLD = 0.2f;
     private float notPoweredTimer;
-    private const float NOT_POWERED_TIME_THRESHOLD = 0.5f;
-
     private bool previousPowered;
 
-    public static event EventHandler<OnDrawbridgePoweredEventArgs> OnDrawbridgePowered;
-    public static event EventHandler<OnDrawbridgePoweredEventArgs> OnDrawbridgeDePowered;
+    public static event EventHandler<OnDrawbridgePoweredEventArgs> OnDrawbridgePower;
+    public static event EventHandler<OnDrawbridgePoweredEventArgs> OnDrawbridgeDePower;
 
     public class OnDrawbridgePoweredEventArgs : EventArgs
     {
@@ -101,19 +100,22 @@ public class ElectricalDrawbridge : MonoBehaviour
     {
         if (!isPowered)
         {
-            if (previousPowered)
+            notPoweredTimer += Time.deltaTime;
+
+            if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD && previousPowered)
             {
-                OnDrawbridgeDePowered?.Invoke(this, new OnDrawbridgePoweredEventArgs { id = id });
+                OnDrawbridgeDePower?.Invoke(this, new OnDrawbridgePoweredEventArgs { id = id });
                 previousPowered = false;
             }
-
-            notPoweredTimer += Time.deltaTime;
         }
-        else if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD)
+        else
         {
-            notPoweredTimer = 0f;
-            OnDrawbridgePowered?.Invoke(this, new OnDrawbridgePoweredEventArgs { id = id });
+            if (!previousPowered)
+            {
+                OnDrawbridgePower?.Invoke(this, new OnDrawbridgePoweredEventArgs { id = id });
+            }
 
+            notPoweredTimer = 0;
             previousPowered = true;
         }
     }

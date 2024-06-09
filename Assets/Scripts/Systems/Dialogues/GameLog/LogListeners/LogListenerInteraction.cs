@@ -10,9 +10,13 @@ public class LogListenerInteraction : MonoBehaviour
         InscriptionRead.OnInscriptionRead += InscriptionRead_OnInscriptionRead;
         VisualInteractableElement.OnVisualInteractableElementInteracted += VisualInteractableElement_OnVisualInteractableElementInteracted;
         ShieldPiecesManager.OnShieldPieceCollected += ShieldPiecesManager_OnShieldPieceCollected;
+
         ProjectableObjectsLearningManager.OnProjectableObjectLearned += ProjectableObjectsLearningManager_OnProjectableObjectLearned;
         ProjectionGemsManager.OnTotalProjectionGemsIncreased += ProjectionGemsManager_OnTotalProjectionGemsIncreased;
+
         ProjectableObjectRotation.OnAnyObjectRotated += ProjectableObjectRotation_OnAnyObjectRotated;
+        ProjectableObjectActivation.OnAnyObjectActivated += ProjectableObjectActivation_OnAnyObjectActivated;
+        ProjectableObjectActivation.OnAnyObjectDeactivated += ProjectableObjectActivation_OnAnyObjectDeactivated;
     }
 
     private void OnDisable()
@@ -21,9 +25,13 @@ public class LogListenerInteraction : MonoBehaviour
         InscriptionRead.OnInscriptionRead -= InscriptionRead_OnInscriptionRead;
         VisualInteractableElement.OnVisualInteractableElementInteracted -= VisualInteractableElement_OnVisualInteractableElementInteracted;
         ShieldPiecesManager.OnShieldPieceCollected -= ShieldPiecesManager_OnShieldPieceCollected;
+
         ProjectableObjectsLearningManager.OnProjectableObjectLearned -= ProjectableObjectsLearningManager_OnProjectableObjectLearned;
         ProjectionGemsManager.OnTotalProjectionGemsIncreased -= ProjectionGemsManager_OnTotalProjectionGemsIncreased;
+
         ProjectableObjectRotation.OnAnyObjectRotated -= ProjectableObjectRotation_OnAnyObjectRotated;
+        ProjectableObjectActivation.OnAnyObjectActivated -= ProjectableObjectActivation_OnAnyObjectActivated;
+        ProjectableObjectActivation.OnAnyObjectDeactivated -= ProjectableObjectActivation_OnAnyObjectDeactivated;
     }
 
     private void InscriptionRead_OnInscriptionRead(object sender, InscriptionRead.OnInscriptionReadEventArgs e) => GameLogManager.Instance.Log($"Interaction/InscriptionRead/{e.inscriptionSO.id}");
@@ -31,5 +39,9 @@ public class LogListenerInteraction : MonoBehaviour
     private void ShieldPiecesManager_OnShieldPieceCollected(object sender, ShieldPiecesManager.OnShieldPieceCollectedEventArgs e) => GameLogManager.Instance.Log($"Interaction/CollectShieldPiece/{e.shieldPieceSO.id}");
     private void ProjectableObjectsLearningManager_OnProjectableObjectLearned(object sender, ProjectableObjectsLearningManager.OnProjectableObjectLearnedEventArgs e) => GameLogManager.Instance.Log($"Interaction/LearnObject/{e.projectableObjectLearned.id}");
     private void ProjectionGemsManager_OnTotalProjectionGemsIncreased(object sender, ProjectionGemsManager.OnProjectionGemsEventArgs e) => GameLogManager.Instance.Log($"Interaction/GrabGems/{e.projectionGems}");
+    
     private void ProjectableObjectRotation_OnAnyObjectRotated(object sender, ProjectableObjectRotation.OnAnyObjectRotatedEventArgs e) => GameLogManager.Instance.Log($"Interaction/RotateObject/{e.projectableObjectSO.id}");
+
+    private void ProjectableObjectActivation_OnAnyObjectDeactivated(object sender, ProjectableObjectActivation.OnAnyObjectActivatedEventArgs e) => GameLogManager.Instance.Log($"Interaction/ActivateObject/{e.projectableObjectSO.id}");
+    private void ProjectableObjectActivation_OnAnyObjectActivated(object sender, ProjectableObjectActivation.OnAnyObjectActivatedEventArgs e) => GameLogManager.Instance.Log($"Interaction/DeactivateObject/{e.projectableObjectSO.id}");
 }

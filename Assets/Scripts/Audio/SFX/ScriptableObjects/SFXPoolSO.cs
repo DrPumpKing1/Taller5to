@@ -13,11 +13,23 @@ public class SFXPoolSO : ScriptableObject
 
     public AudioClip[] objectRotated;
 
-    public AudioClip[] doorEnergized;
-    public AudioClip[] doorDeEnergized;
-
-    public AudioClip[] switchToggle;
+    public AudioClip[] objectActivation;
+    public AudioClip[] objectDeactivation;
 
     public AudioClip[] shieldCollected;
     public AudioClip[] valueDoorOpened;
+
+    public AudioClip[] switchToggle;
+
+    public AudioClip[] doorPowered;
+    public AudioClip[] doorDePowered;
+
+    public AudioClip[] drawbridgePowered;
+    public AudioClip[] drawbridgeDePowered;
+
+    public AudioClip[] extensibleBridgePowered;
+    public AudioClip[] extensibleBridgeDePowered;
+
+    public AudioClip[] inscriptionPowered;
+    public AudioClip[] inscriptionDePowered;
 }
