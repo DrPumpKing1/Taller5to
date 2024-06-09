@@ -3,49 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
-public class MagicBoxDevice : MonoBehaviour
+public class MagicBoxDevice : ActivableDevice
 {
-    [Header("Electrical Component")]
-    [SerializeField] private Electrode electrode;
-
     [Header("Device Settings")]
     [SerializeField] private Transform pistonHead;
     [SerializeField] private float extension;
-    [SerializeField] private bool startActive;
-
-    private Vector3 initialPosition;
-    private Vector3 extendedPosition;
-    public bool isActive;
 
     [Header("Piston Head Movement")]
     [SerializeField] private float pistonHeadSpeed;
     [SerializeField] private AnimationCurve movementCurve;
 
-    [Header("Device Control")]
-    [SerializeField] private bool state;
+    private Vector3 initialPosition;
+    private Vector3 extendedPosition;
 
-    private bool power => electrode.Power >= Electrode.ACTIVATION_THRESHOLD;
-    private bool coherence => state == (power && isActive);
-    public bool IsActive => isActive;
-
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         initialPosition = pistonHead.localPosition;
         extendedPosition = pistonHead.localPosition + Vector3.up * extension;
-        isActive = startActive;
     }
 
-    private void Update()
-    {
-        if (coherence) return;
-
-        state = power && isActive;
-        TriggerMovement();
-    }
-
-    public void SetMagicBoxActive(bool state) => isActive = state;
-
-    private void TriggerMovement()
+    protected override void ToggleActivation()
     {
         StopAllCoroutines();
         StartCoroutine(MovePistonHeadToPosition(state ? extendedPosition : initialPosition));

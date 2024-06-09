@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class MagicBoxActivation : MonoBehaviour, IInteractableAlternate
+public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
 {
     [Header("Electrical Settings")]
-    [SerializeField] private MagicBoxDevice magicBoxDevice;
+    [SerializeField] private ActivableDevice activableDevice;
 
     [Header("Interactable Settings")]
     [SerializeField, Range(1f, 100f)] private float horizontalInteractionRange;
@@ -27,7 +27,7 @@ public class MagicBoxActivation : MonoBehaviour, IInteractableAlternate
     public bool IsSelectableAlternate => canBeSelectedAlternate;
     public bool IsInteractableAlternate => isInteractableAlternate;
     public bool HasAlreadyBeenInteractedAlternate => hasAlreadyBeenInteractedAlternate;
-    public string TooltipMessageAlternate => $"{(!magicBoxDevice.IsActive ? tooltipMessageInactive : tooltipMessageActive)}";
+    public string TooltipMessageAlternate => $"{(!activableDevice.IsActive ? tooltipMessageInactive : tooltipMessageActive)}";
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
     #endregion
@@ -40,6 +40,8 @@ public class MagicBoxActivation : MonoBehaviour, IInteractableAlternate
     public event EventHandler OnObjectHasAlreadyBeenInteractedAlternate;
     public event EventHandler OnUpdatedInteractableAlternateState;
     #endregion
+
+    public event EventHandler OnProjectableObjectActivated;
 
     #region IInteractable Methods
     public void SelectAlternate()
@@ -68,7 +70,7 @@ public class MagicBoxActivation : MonoBehaviour, IInteractableAlternate
     }
     public void InteractAlternate()
     {
-        ToggleMagicBoxActivation();
+        ToggleActivation();
 
         Debug.Log("Electrical Switch Interacted");
         OnObjectInteractedAlternate?.Invoke(this, EventArgs.Empty);
@@ -87,9 +89,9 @@ public class MagicBoxActivation : MonoBehaviour, IInteractableAlternate
     public Transform GetTransform() => transform;
     #endregion
 
-    private void ToggleMagicBoxActivation()
+    private void ToggleActivation()
     {
-        magicBoxDevice.SetMagicBoxActive(!magicBoxDevice.IsActive);
+        OnProjectableObjectActivated?.Invoke(this, EventArgs.Empty);
         OnUpdatedInteractableAlternateState?.Invoke(this, EventArgs.Empty);
     }
 }
