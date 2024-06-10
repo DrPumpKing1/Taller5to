@@ -152,7 +152,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7241893024611916115}
-  - component: {fileID: 6887134875370197208}
+  - component: {fileID: 4488717288278399911}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -175,7 +175,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3608811624515334212}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6887134875370197208
+--- !u!114 &4488717288278399911
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,13 +184,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5446160555924555520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f64d4971c35f4d54cbbd43b5c9eb4da6, type: 3}
+  m_Script: {fileID: 11500000, guid: db806b947cd4c9c44bb3f4bf365fe7c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   electrode: {fileID: 194657519123227021}
-  lineRenderer: {fileID: 1554422161426382643}
-  on: {fileID: 2100000, guid: 597a51f2af022aa409ab9ddced6bf6f8, type: 2}
-  off: {fileID: 2100000, guid: 9f4851daa70292b4aae4e2d0da23e2d3, type: 2}
+  _renderer: {fileID: 1554422161426382643}
 --- !u!1 &6632250981056134581
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,7 +200,7 @@ GameObject:
   - component: {fileID: 2879118328387797021}
   - component: {fileID: 194657519123227021}
   m_Layer: 0
-  m_Name: Model
+  m_Name: CableElectrode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -335,7 +333,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: f791916f839a18543acb5a6949eca78e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
