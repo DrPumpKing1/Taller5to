@@ -9,7 +9,7 @@ public class NewUIInput : UIInput
     [Header("Settings")]
     [SerializeField] private float inputCooldown;
 
-    public float inputCooldownTimer;
+    private float inputCooldownTimer;
 
     protected override void Awake()
     {
@@ -53,8 +53,6 @@ public class NewUIInput : UIInput
 
         bool UIInput = playerInputActions.UI.Pause.WasPerformedThisFrame();
 
-        if (UIInput) MaxInputCooldownTimer();
-
         return UIInput;
     }
 
@@ -66,16 +64,16 @@ public class NewUIInput : UIInput
 
         bool UIInput = playerInputActions.UI.Inventory.WasPerformedThisFrame();
 
-        if (UIInput) MaxInputCooldownTimer();
-
         return UIInput;
     }
+
+    public override void UseInput() => MaxInputCooldownTimer();
+
 
     private void HandleInputCooldown()
     {
         if (inputCooldownTimer > 0f) inputCooldownTimer -= Time.unscaledDeltaTime;
     }
-
     private void MaxInputCooldownTimer() => inputCooldownTimer = inputCooldown;
     private void ResetInputCooldownTimer() => inputCooldownTimer = 0f;
     private bool InputOnCooldown() => inputCooldownTimer > 0f;

@@ -73,13 +73,18 @@ public class PauseManager : MonoBehaviour
         if (!GamePaused)
         {
             if (UIManager.Instance.UIActive) return;
+
             PauseGame();
             GamePausedThisFrame = true;
+
+            UIInput.UseInput();
         }
         else
         {
             if(UIManager.Instance.GetUILayersCount() == 1) //If count is 1, the active layer is the PauseUI
             ResumeGame();
+
+            UIInput.UseInput();
         }
     }
 
