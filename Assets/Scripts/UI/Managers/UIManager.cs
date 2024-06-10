@@ -40,7 +40,7 @@ public class UIManager : MonoBehaviour
         InitializeVariables();
     }
 
-    public void LateUpdate()
+    private void Update()
     {
         CheckUIToClose();
         CheckUIActive();
@@ -66,9 +66,9 @@ public class UIManager : MonoBehaviour
 
     public void CheckUIToClose()
     {
-        if (PauseManager.Instance.GamePausedThisFrame) return;
         if (!CloseInput) return;
         if (!UIActive) return;
+        if (PauseManager.Instance.GamePausedThisFrame) return;
 
         OnUIToCloseInput?.Invoke(this, new OnUIToCloseInputEventArgs { UIToClose = _UILayers[^1] });
     }

@@ -80,8 +80,6 @@ public class PauseUI : BaseUI
         OnPauseUIClose?.Invoke(this, EventArgs.Empty);
     }
 
-
-
     protected override void CloseFromUI()
     {
         OnCloseFromUI?.Invoke(this, EventArgs.Empty);

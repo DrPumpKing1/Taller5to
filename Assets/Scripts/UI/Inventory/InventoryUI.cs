@@ -6,6 +6,9 @@ using System;
 
 public class InventoryUI : BaseUI
 {
+    [Header("Components")]
+    [SerializeField] private Animator inventoryUIAnimator;
+
     [Header("UI Components")]
     [SerializeField] private Button closeButton;
 
@@ -15,6 +18,8 @@ public class InventoryUI : BaseUI
     public static event EventHandler OnInventoryUIOpen;
     public static event EventHandler OnInventoryUIClose;
 
+    private const string SHOW_TRIGGER = "Show";
+    private const string HIDE_TRIGGER = "Hide";
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -62,9 +67,7 @@ public class InventoryUI : BaseUI
 
         AddToUILayersList();
 
-        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 1f);
-        canvasGroup.interactable = true;
-        canvasGroup.blocksRaycasts = true;
+        ShowInventoryUI();
 
         OnInventoryUIOpen?.Invoke(this, EventArgs.Empty);
     }
@@ -77,9 +80,7 @@ public class InventoryUI : BaseUI
 
         RemoveFromUILayersList();
 
-        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
-        canvasGroup.interactable = false;
-        canvasGroup.blocksRaycasts = false;
+        HideInventoryUI();
 
         OnInventoryUIClose?.Invoke(this, EventArgs.Empty);
     }
@@ -87,6 +88,18 @@ public class InventoryUI : BaseUI
     protected override void CloseFromUI()
     {
         OnCloseFromUI?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void ShowInventoryUI()
+    {
+        inventoryUIAnimator.ResetTrigger(HIDE_TRIGGER);
+        inventoryUIAnimator.SetTrigger(SHOW_TRIGGER);
+    }
+
+    public void HideInventoryUI()
+    {
+        inventoryUIAnimator.ResetTrigger(SHOW_TRIGGER);
+        inventoryUIAnimator.SetTrigger(HIDE_TRIGGER);
     }
 
 
