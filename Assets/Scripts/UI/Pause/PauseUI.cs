@@ -5,7 +5,10 @@ using System;
 using UnityEngine.UI;
 
 public class PauseUI : BaseUI
-{
+{   
+    [Header("Components")]
+    [SerializeField] private Animator pauseUIAnimator;
+
     [Header("UI Components")]
     [SerializeField] private Button resumeButton;
 
@@ -14,6 +17,9 @@ public class PauseUI : BaseUI
     public static event EventHandler OnCloseFromUI;
     public static event EventHandler OnPauseUIOpen;
     public static event EventHandler OnPauseUIClose;
+
+    private const string SHOW_TRIGGER = "Show";
+    private const string HIDE_TRIGGER = "Hide";
 
     protected override void OnEnable()
     {
@@ -56,13 +62,9 @@ public class PauseUI : BaseUI
         if (state != State.Closed) return;
 
         SetUIState(State.Open);
-
         AddToUILayersList();
 
-        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 1f);
-        canvasGroup.interactable = true;
-        canvasGroup.blocksRaycasts = true;
-
+        ShowPauseUI();
         OnPauseUIOpen?.Invoke(this, EventArgs.Empty);
     }
 
@@ -73,17 +75,28 @@ public class PauseUI : BaseUI
         SetUIState(State.Closed);
 
         RemoveFromUILayersList();
-
-        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
-        canvasGroup.interactable = false;
-        canvasGroup.blocksRaycasts = false;
+        HidePauseUI();
 
         OnPauseUIClose?.Invoke(this, EventArgs.Empty);
     }
 
+
+
     protected override void CloseFromUI()
     {
         OnCloseFromUI?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void ShowPauseUI()
+    {
+        pauseUIAnimator.ResetTrigger(HIDE_TRIGGER);
+        pauseUIAnimator.SetTrigger(SHOW_TRIGGER);
+    }
+
+    public void HidePauseUI()
+    {
+        pauseUIAnimator.ResetTrigger(SHOW_TRIGGER);
+        pauseUIAnimator.SetTrigger(HIDE_TRIGGER);
     }
 
     #region PauseManager Subscriptions

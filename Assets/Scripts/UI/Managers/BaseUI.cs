@@ -6,7 +6,7 @@ public abstract class BaseUI : MonoBehaviour
 {
     protected enum State {Closed, Opening, Open, Closing}
 
-    protected State state;
+    [SerializeField] protected State state;
 
     protected virtual void OnEnable()
     {
