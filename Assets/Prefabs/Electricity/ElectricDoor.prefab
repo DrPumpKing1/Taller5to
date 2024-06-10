@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a0ef417f441ab4286040a09d94a1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 1
   device: {fileID: 359482215416092172}
   isPowered: 0
   gateTransform: {fileID: 4110467250782593210}
@@ -253,7 +253,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bfeccc593415a9d48a9511bfd7f2e4ee, type: 2}
+  - {fileID: 2100000, guid: 50f2644f913d56a48b6989465d7e2df0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -284,7 +284,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4430932799444874151}
-  - component: {fileID: 8789560173754044216}
+  - component: {fileID: 1038195759753626738}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -308,7 +308,7 @@ Transform:
   - {fileID: 7965449172434267014}
   m_Father: {fileID: 4110467250782593210}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8789560173754044216
+--- !u!114 &1038195759753626738
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -317,13 +317,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5485211273459723315}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1231e39815862d04eb5714c6cda99eed, type: 3}
+  m_Script: {fileID: 11500000, guid: db806b947cd4c9c44bb3f4bf365fe7c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   electrode: {fileID: 135983727060811256}
-  meshRenderer: {fileID: 4767944791196707858}
-  on: {fileID: 2100000, guid: 597a51f2af022aa409ab9ddced6bf6f8, type: 2}
-  off: {fileID: 2100000, guid: bfeccc593415a9d48a9511bfd7f2e4ee, type: 2}
+  _renderer: {fileID: 4767944791196707858}
 --- !u!1 &7951648243721335665
 GameObject:
   m_ObjectHideFlags: 0

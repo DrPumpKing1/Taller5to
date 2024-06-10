@@ -76,8 +76,6 @@ public class ElectricalExtensibleBridge : MonoBehaviour
             {
                 OnExtensibleBridgeDePower?.Invoke(this, new OnExtensibleBridgePowerEventArgs { id = id });
                 previousPowered = false;
-
-                Debug.Log("Depower");
             }
         }
         else
@@ -85,7 +83,6 @@ public class ElectricalExtensibleBridge : MonoBehaviour
             if (!previousPowered)
             {
                 OnExtensibleBridgePower?.Invoke(this, new OnExtensibleBridgePowerEventArgs { id = id });
-                Debug.Log("Power");
             }
 
             notPoweredTimer = 0;
