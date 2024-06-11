@@ -71,5 +71,4 @@ public class LogListenerEvents : MonoBehaviour
     private void FirstCableRotationEncounterCollider_OnFirstCableRotationEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstCableRotationEncounter");
     private void FirstDematerializationTowerEncounterCollider_OnFirstDematerializationTowerEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstDematerializationTowerEncounter");
     private void SecondLearningPlatformEncounterCollider_OnSecondLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/SecondLearningPlatformEncounter");
-
 }

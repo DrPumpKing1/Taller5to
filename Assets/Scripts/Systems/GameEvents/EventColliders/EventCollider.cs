@@ -7,6 +7,7 @@ public abstract class EventCollider : MonoBehaviour
     private const string PLAYER_TAG = "Player";
 
     [Header("Settings")]
+    [SerializeField] protected bool multipleTriggers;
     [SerializeField] protected bool hasBeenTriggered;
 
     private void OnTriggerEnter(Collider other)
@@ -18,7 +19,7 @@ public abstract class EventCollider : MonoBehaviour
 
     protected virtual void HandleColliderTrigger()
     {
-        if (hasBeenTriggered) return;
+        if (hasBeenTriggered && !multipleTriggers) return;
 
         TriggerCollider();
         hasBeenTriggered = true;

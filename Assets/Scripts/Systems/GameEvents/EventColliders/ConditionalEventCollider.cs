@@ -6,11 +6,8 @@ public abstract class ConditionalEventCollider : EventCollider
 {
     protected override void HandleColliderTrigger()
     {
-        if (hasBeenTriggered) return;
         if (!MeetsCondition()) return;
-
-        TriggerCollider();
-        hasBeenTriggered = true;
+        base.HandleColliderTrigger();
     }
 
     protected abstract bool MeetsCondition();
