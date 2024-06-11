@@ -93,7 +93,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2a5f34b17abc625429ee7856c6860762, type: 2}
+  - {fileID: 2100000, guid: 2d2031ce899a30146ae2a83f188e3f98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -142,7 +142,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3215707027779807743}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7, y: 0, z: 7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   switchElectrode: {fileID: 5242777094007922750}
-  id: 0
+  id: 1
 --- !u!114 &1947271519810927818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +218,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7472932401397595962}
-  - component: {fileID: 7170158653410929465}
+  - component: {fileID: 1397287231054735057}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -242,7 +242,7 @@ Transform:
   - {fileID: 4062668349862921360}
   m_Father: {fileID: 7759499385202903705}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7170158653410929465
+--- !u!114 &1397287231054735057
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -251,13 +251,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4951630828617947725}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f40aa7d25e042243bf941ad4cca15ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d874d5714ed11c4099361d19935e263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   switchElectrode: {fileID: 5242777094007922750}
-  meshRenderer: {fileID: 1627029662304716633}
-  on: {fileID: 2100000, guid: 597a51f2af022aa409ab9ddced6bf6f8, type: 2}
-  off: {fileID: 2100000, guid: 2fb3519bd1eb4774bb9089ab9e00c753, type: 2}
+  _renderer: {fileID: 1627029662304716633}
+  onMaterial: {fileID: 2100000, guid: d688e2b6441e03547b98925fd9cb71d5, type: 2}
+  offMaterial: {fileID: 2100000, guid: 2d2031ce899a30146ae2a83f188e3f98, type: 2}
 --- !u!1 &6928582541249714540
 GameObject:
   m_ObjectHideFlags: 0
