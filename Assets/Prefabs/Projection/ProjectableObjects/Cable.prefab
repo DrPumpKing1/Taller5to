@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &33950270367367232
+--- !u!1 &999622082736919883
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,37 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9166499918384443057}
-  - component: {fileID: 594482067358739770}
+  - component: {fileID: 2234224886624068271}
+  - component: {fileID: 747415706526001642}
+  - component: {fileID: 8724558555367522007}
   m_Layer: 0
-  m_Name: Model
+  m_Name: Cable Electrode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9166499918384443057
+--- !u!4 &2234224886624068271
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 33950270367367232}
+  m_GameObject: {fileID: 999622082736919883}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2234224886624068271}
+  m_Children:
+  - {fileID: 5914065945423667599}
+  - {fileID: 4684692817500151216}
+  m_Father: {fileID: 7028397045733667877}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &594482067358739770
+--- !u!114 &747415706526001642
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 33950270367367232}
+  m_GameObject: {fileID: 999622082736919883}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebc2d2a4a9a75c24389e3839c91875a8, type: 3}
@@ -90,41 +93,6 @@ MonoBehaviour:
   lineRenderer: {fileID: 3421862277282758282}
   radius: 0.1
   thickness: 0.2
---- !u!1 &999622082736919883
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2234224886624068271}
-  - component: {fileID: 8724558555367522007}
-  m_Layer: 0
-  m_Name: Cable Electrode
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2234224886624068271
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 999622082736919883}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 9166499918384443057}
-  - {fileID: 5914065945423667599}
-  - {fileID: 4684692817500151216}
-  m_Father: {fileID: 7028397045733667877}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8724558555367522007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae01ed82ce35b5c4dbb884d676616265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  electrode: {fileID: 594482067358739770}
+  electrode: {fileID: 747415706526001642}
 --- !u!1 &1315932197866948010
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +191,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: f791916f839a18543acb5a6949eca78e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -380,7 +348,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4684692817500151216}
-  - component: {fileID: 307972689896978925}
+  - component: {fileID: 3998486072196730682}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -403,7 +371,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2234224886624068271}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &307972689896978925
+--- !u!114 &3998486072196730682
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -412,13 +380,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5892851123687239070}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f64d4971c35f4d54cbbd43b5c9eb4da6, type: 3}
+  m_Script: {fileID: 11500000, guid: db806b947cd4c9c44bb3f4bf365fe7c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  electrode: {fileID: 594482067358739770}
-  lineRenderer: {fileID: 3421862277282758282}
-  on: {fileID: 2100000, guid: 597a51f2af022aa409ab9ddced6bf6f8, type: 2}
-  off: {fileID: 2100000, guid: 9f4851daa70292b4aae4e2d0da23e2d3, type: 2}
+  electrode: {fileID: 747415706526001642}
+  _renderer: {fileID: 3421862277282758282}
 --- !u!1 &6950353597203410895
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,7 +932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 5.625
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.y
