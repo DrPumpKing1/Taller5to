@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class ScaleToCamera : MonoBehaviour
 {
+    [Header("Settings")]
     [SerializeField] private Mode mode;
 
-    private enum Mode { ConstantScale }
+    private enum Mode { ConstantScale}
 
     private void LateUpdate()
     {
@@ -18,16 +19,8 @@ public class ScaleToCamera : MonoBehaviour
         switch (mode)
         {
             case Mode.ConstantScale:
-                transform.localScale = CalculateScale();
+                transform.localScale = CameraScrollWorldSpaceUIHandler.Instance.WorldSpaceUIScaleFactor;
                 break;
         }
-    }
-
-    private Vector3 CalculateScale()
-    {
-        float orthographicSize = Camera.main.orthographicSize;
-        float scaleFactor = orthographicSize / CameraScroll.orthoSizeRefference;
-
-        return Vector3.one * scaleFactor;
     }
 }

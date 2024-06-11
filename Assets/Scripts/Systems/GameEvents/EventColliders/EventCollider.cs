@@ -16,7 +16,7 @@ public abstract class EventCollider : MonoBehaviour
         HandleColliderTrigger();
     }
 
-    protected void HandleColliderTrigger()
+    protected virtual void HandleColliderTrigger()
     {
         if (hasBeenTriggered) return;
 
