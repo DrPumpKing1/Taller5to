@@ -396,8 +396,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectableObject: {fileID: 2212840017335302867}
-  horizontalInteractionRange: 5
-  verticalInteractionRange: 2
+  horizontalInteractionRange: 3
+  verticalInteractionRange: 1
   canBeSelected: 1
   isInteractable: 1
   hasAlreadyBeenInteracted: 0
@@ -418,13 +418,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   switchElectrode: {fileID: 4088398877955987260}
-  horizontalInteractionRange: 5
-  verticalInteractionRange: 2
+  horizontalInteractionRange: 3
+  verticalInteractionRange: 1
   canBeSelected: 1
   isInteractable: 1
   hasAlreadyBeenInteracted: 0
-  grabPetAttention: 0
-  grabPlayerAttention: 0
+  grabPetAttention: 1
+  grabPlayerAttention: 1
 --- !u!1001 &4653054588438980331
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -562,8 +562,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectableObject: {fileID: 2212840017335302867}
-  horizontalInteractionRange: 4
-  verticalInteractionRange: 2
+  horizontalInteractionRange: 3
+  verticalInteractionRange: 1
   canBeSelected: 1
   isInteractable: 1
   hasAlreadyBeenInteracted: 0
@@ -589,14 +589,14 @@ MonoBehaviour:
   clockwiseRotation: 1
   degreesPerTurn: 90
   smoothRotateFactor: 15
-  horizontalInteractionRange: 4
-  verticalInteractionRange: 2
+  horizontalInteractionRange: 3
+  verticalInteractionRange: 1
   canBeSelectedAlternate: 1
   isInteractableAlternate: 1
   hasAlreadyBeenInteractedAlternate: 0
   tooltipMessageAlternate: Rotate C'ibla
-  grabPetAttention: 0
-  grabPlayerAttention: 0
+  grabPetAttention: 1
+  grabPlayerAttention: 1
 --- !u!1001 &6724889919926528138
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -932,7 +932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 5.625
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.y
