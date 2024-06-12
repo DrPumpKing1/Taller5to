@@ -10,7 +10,6 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
     [SerializeField] private ProjectableObject projectableObject;
 
     [Header("Rotation Settings")]
-    [SerializeField] private Vector2 startingDirection;
     [SerializeField] private bool clockwiseRotation;
     [SerializeField] private int degreesPerTurn;
     [SerializeField, Range(1f, 100f)] private float smoothRotateFactor;
@@ -57,9 +56,14 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
     public Vector3 DesiredDirection { get; private set; }
     public Vector3 CurrentDirection { get; private set; }
 
-    protected virtual void Start()
+    private void OnEnable()
     {
-        InitializeRotation();
+        projectableObject.OnProjectionPlatformSet += ProjectableObject_OnProjectionPlatformSet;
+    }
+
+    private void OnDisable()
+    {
+        projectableObject.OnProjectionPlatformSet -= ProjectableObject_OnProjectionPlatformSet;
     }
 
     protected virtual void Update()
@@ -120,7 +124,7 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
 
     #endregion
 
-    private void InitializeRotation()
+    private void InitializeRotation(Vector2 startingDirection)
     {
         Vector3 initialDirectionVector3 = GeneralMethods.Vector2ToVector3(startingDirection);
         initialDirectionVector3 = initialDirectionVector3.magnitude == 0 ? transformToRotate.forward : initialDirectionVector3;
@@ -147,4 +151,11 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
         OnAnyObjectRotated?.Invoke(this, new OnAnyObjectRotatedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
         OnUpdatedInteractableAlternateState?.Invoke(this, EventArgs.Empty);
     }
+
+    #region ProjectableObject Subscriptions
+    private void ProjectableObject_OnProjectionPlatformSet(object sender, ProjectableObject.OnProjectionPlatformSetEventArgs e)
+    {
+        InitializeRotation(e.projectionPlatform.StartingDirection);
+    }
+    #endregion
 }

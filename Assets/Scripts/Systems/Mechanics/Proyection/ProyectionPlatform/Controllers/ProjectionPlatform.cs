@@ -9,13 +9,18 @@ public class ProjectionPlatform : MonoBehaviour
     [SerializeField] private Transform projectionPoint;
     [SerializeField] private ProjectableObjectSO currentProjectedObject;
 
+    [Header("Projectable Object Rotation Settings")]
+    [SerializeField] private Vector2 startingDirection;
+
     [Header("Object Avobe Check Settings")]
     [SerializeField] private LayerMask objectAvobeLayers;
     [SerializeField] private Vector3 checkBoxCenter;
     [SerializeField] private Vector3 checkBoxHalfExtends;
 
-    public Transform ProjectionPoint { get { return projectionPoint; } }
-    public ProjectableObjectSO CurrentProjectedObject { get { return currentProjectedObject; } }
+    public Transform ProjectionPoint => projectionPoint;
+    public ProjectableObjectSO CurrentProjectedObject => currentProjectedObject;
+    public Vector2 StartingDirection => startingDirection;
+
     public bool ObjectAbove;
     public bool useObjectAbove;
 

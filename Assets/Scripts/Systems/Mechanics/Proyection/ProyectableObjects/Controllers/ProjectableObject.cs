@@ -9,8 +9,19 @@ public class ProjectableObject : MonoBehaviour
     [SerializeField] private ProjectableObjectSO projectableObjectSO;
     [SerializeField] private ProjectionPlatform projectionPlatform;
 
-    public ProjectableObjectSO ProjectableObjectSO { get { return projectableObjectSO ; } }
-    public ProjectionPlatform ProjectionPlatform { get { return projectionPlatform; } }  
+    public event EventHandler<OnProjectionPlatformSetEventArgs> OnProjectionPlatformSet;
 
-    public void SetProjectionPlatform(ProjectionPlatform projectionPlatform) => this.projectionPlatform = projectionPlatform;
+    public class OnProjectionPlatformSetEventArgs : EventArgs
+    {
+        public ProjectionPlatform projectionPlatform;
+    }
+
+    public ProjectableObjectSO ProjectableObjectSO { get { return projectableObjectSO ; } }
+    public ProjectionPlatform ProjectionPlatform { get { return projectionPlatform; } }
+
+    public void SetProjectionPlatform(ProjectionPlatform projectionPlatform)
+    {
+        this.projectionPlatform = projectionPlatform;
+        OnProjectionPlatformSet?.Invoke(this, new OnProjectionPlatformSetEventArgs { projectionPlatform = projectionPlatform });
+    }
 }
