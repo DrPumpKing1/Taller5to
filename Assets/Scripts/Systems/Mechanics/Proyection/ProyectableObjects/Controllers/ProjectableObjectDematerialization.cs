@@ -22,6 +22,8 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
 
+    private bool triggerDematerializationEvents = false;
+
     #region IHoldInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
     public float VerticalInteractionRange => verticalInteractionRange;
@@ -137,13 +139,14 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
 
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
 
-        ProjectionManager.Instance.ObjectDematerialized(projectableObject.ProjectableObjectSO, projectableObject.ProjectionPlatform, projectableObject, triggerEvents);
+        triggerDematerializationEvents = triggerEvents;
 
         Destroy(gameObject);
     }
 
     private void OnDestroy()
     {
+        ProjectionManager.Instance.ObjectDematerialized(projectableObject.ProjectableObjectSO, projectableObject.ProjectionPlatform, projectableObject, triggerDematerializationEvents);
         OnObjectDematerialized?.Invoke(this, EventArgs.Empty);
         OnAnyObjectDematerialized?.Invoke(this, new OnAnyObjectDematerializedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
     }

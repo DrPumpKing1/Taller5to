@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SignalProjectile : MonoBehaviour
 {
-    private const float LIFETIME = 3f;
+    private const float LIFETIME = 4f;
 
     [SerializeField] private GameObject sender;
     [SerializeField] private float intensity;
