@@ -33,6 +33,8 @@ public class CameraScroll : MonoBehaviour
     private float desiredDistance;
     private float smoothInput;
 
+    private float refVelocity;
+
     public float ScrollFactor { get; private set; }
 
     private void Awake()
@@ -46,14 +48,20 @@ public class CameraScroll : MonoBehaviour
         InitializeSettings();
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         if (!enableCameraScroll) return;
 
         SmoothInput();
-        HandleDistance();
+        CalculateDesiredDistance();
+        SmoothDistance();
 
         CalculateCurrentScrollFactor();
+    }
+
+    private void LateUpdate()
+    {
+        ApplyDistance();
     }
 
     private void SetSingleton()
@@ -82,23 +90,17 @@ public class CameraScroll : MonoBehaviour
         Distance = desiredDistance;
     }
 
-    private void SmoothInput()
-    {
-        smoothInput = Mathf.MoveTowards(smoothInput, ScrollInput, smoothInputFactor * Time.deltaTime);
-    }
+    private void SmoothInput() => smoothInput = Mathf.Lerp(smoothInput, ScrollInput, smoothInputFactor * Time.deltaTime);
 
-    private void HandleDistance()
+    private void CalculateDesiredDistance()
     {
-        //Handle Inversion
         float processedScrollInput = invertScroll ? -smoothInput : smoothInput;
-
-        //Set Distance
-        desiredDistance = Mathf.Clamp(desiredDistance - scrollSensitivity * processedScrollInput, minDistance, maxDistance);
-        Distance = Mathf.Lerp(Distance, desiredDistance, smoothScrollFactor * Time.deltaTime);
-
-        CMVCam.m_Lens.OrthographicSize = Distance;   
+        desiredDistance = Mathf.Clamp(desiredDistance - scrollSensitivity * processedScrollInput, minDistance, maxDistance);   
     }
 
+    private void SmoothDistance() => Distance = Mathf.SmoothDamp(Distance, desiredDistance, ref refVelocity, smoothScrollFactor * Time.deltaTime);
+
+    private void ApplyDistance() => CMVCam.m_Lens.OrthographicSize = Distance;
     private void CalculateCurrentScrollFactor()
     {
         float orthographicSize = Camera.main.orthographicSize;
