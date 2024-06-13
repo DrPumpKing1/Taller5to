@@ -11,6 +11,17 @@ public class CableElectrode : Electrode
     [SerializeField] private float radius;
     [SerializeField] private float thickness;
 
+    private GameObject player;
+
+    private const string PLAYER_TAG = "PlayerTag";
+    private const float DISTANCE_TO_UPDATE = 20f;
+
+    protected override void Start()
+    {
+        base.Start();
+        //player = GameObject.FindGameObjectWithTag(PLAYER_TAG);
+    }
+
     protected override void Update()
     {
         base.Update(); 
@@ -24,6 +35,8 @@ public class CableElectrode : Electrode
 
     private void FindNearElectricalComponents()
     {
+        //if (!CheckPlayerClose()) return;
+
         for (int i = 0; i < corners.Length - 1; i++)
         {
             Vector3 direction = (corners[i + 1].position - corners[i].position).normalized;
@@ -84,4 +97,12 @@ public class CableElectrode : Electrode
     //
     //    return base.CheckContact(other);
     //}
+
+    private bool CheckPlayerClose()
+    {
+        if (!player) return true;
+        if (Vector3.Distance(transform.position, player.transform.position) <= DISTANCE_TO_UPDATE) return true;
+
+        return false;
+    }
 }
