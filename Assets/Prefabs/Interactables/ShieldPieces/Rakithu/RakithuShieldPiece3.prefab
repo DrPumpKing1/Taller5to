@@ -100,6 +100,10 @@ PrefabInstance:
       propertyPath: shieldPieceSO
       value: 
       objectReference: {fileID: 11400000, guid: 95d5fcacfec33e14799221eb03843d0a, type: 2}
+    - target: {fileID: 5773293257616416141, guid: 347f58362b888284b93c35830067cdfc, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: abccc0d8e5334564caf94afe2337029e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
