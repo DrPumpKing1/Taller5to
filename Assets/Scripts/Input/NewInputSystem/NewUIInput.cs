@@ -35,7 +35,14 @@ public class NewUIInput : UIInput
 
     public override bool CanProcessUIInput()
     {
-        return true;
+        if (GameManager.Instance.GameState == GameManager.State.OnUI) return true;
+        if (GameManager.Instance.GameState == GameManager.State.OnGameplay) return true;
+        if (GameManager.Instance.GameState == GameManager.State.OnMonologue) return true;
+        if (GameManager.Instance.GameState == GameManager.State.OnFreeDialogue) return true;
+        if (GameManager.Instance.GameState == GameManager.State.OnRestrictedDialogue) return true;
+        if (GameManager.Instance.GameState == GameManager.State.OnForcedDialogue) return true;
+
+        return false;
     }
 
     private bool CanProcessInventoryInput()

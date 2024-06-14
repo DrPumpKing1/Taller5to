@@ -10,9 +10,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private State state;
     [SerializeField] private State previousState;
 
-    public enum State {OnGameplay, OnUI, OnForcedDialogue, OnRestrictedDialogue, OnFreeDialogue, OnMonologue}
+    public enum State {OnGameplay, OnUI, OnForcedDialogue, OnRestrictedDialogue, OnFreeDialogue, OnMonologue, OnLost}
 
-    public State GameState { get { return state; } }
+    public State GameState => state;
 
     private void OnEnable()
     {
