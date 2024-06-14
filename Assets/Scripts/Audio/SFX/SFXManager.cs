@@ -30,6 +30,8 @@ public class SFXManager : MonoBehaviour
         ElectricalDrawbridge.OnDrawbridgeDePower += ElectricalDrawbridge_OnDrawbridgeDePower;
         ElectricalExtensibleBridge.OnExtensibleBridgePower += ElectricalExtensibleBridge_OnExtensibleBridgePower;
         ElectricalExtensibleBridge.OnExtensibleBridgeDePower += ElectricalExtensibleBridge_OnExtensibleBridgeDePower;
+        HiddenSourceReceiver.OnAnyHiddenSourceReceiverPower += HiddenSourceReceiver_OnAnyHiddenSourceReceiverPower;
+        HiddenSourceReceiver.OnAnyHiddenSourceReceiverDePower += HiddenSourceReceiver_OnAnyHiddenSourceReceiverDePower;
 
         InscriptionPowering.OnInscriptionPower += InscriptionPowering_OnInscriptionPower;
         InscriptionPowering.OnInscriptionDePower += InscriptionPowering_OnInscriptionDePower;
@@ -47,8 +49,6 @@ public class SFXManager : MonoBehaviour
         ProjectableObjectActivation.OnAnyObjectDeactivated += ProjectableObjectActivation_OnAnyObjectDeativated;
     }
 
-
-
     private void OnDisable()
     {
         ElectricalSwitchToggle.OnSwitchToggle -= ElectricalSwitchToggle_OnSwitchToggle;
@@ -59,6 +59,8 @@ public class SFXManager : MonoBehaviour
         ElectricalDrawbridge.OnDrawbridgeDePower -= ElectricalDrawbridge_OnDrawbridgeDePower;
         ElectricalExtensibleBridge.OnExtensibleBridgePower -= ElectricalExtensibleBridge_OnExtensibleBridgePower;
         ElectricalExtensibleBridge.OnExtensibleBridgeDePower -= ElectricalExtensibleBridge_OnExtensibleBridgeDePower;
+        HiddenSourceReceiver.OnAnyHiddenSourceReceiverPower -= HiddenSourceReceiver_OnAnyHiddenSourceReceiverPower;
+        HiddenSourceReceiver.OnAnyHiddenSourceReceiverDePower -= HiddenSourceReceiver_OnAnyHiddenSourceReceiverDePower;
 
         ShieldPieceCollection.OnAnyShieldPieceCollected -= ShieldPieceCollection_OnAnyShieldPieceCollected;
         ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
@@ -131,6 +133,18 @@ public class SFXManager : MonoBehaviour
         InscriptionPowering inscriptionPowering = sender as InscriptionPowering;
         PlaySoundAtPoint(SFXPoolSO.inscriptionDePowered, inscriptionPowering.transform.position);
     }
+    private void HiddenSourceReceiver_OnAnyHiddenSourceReceiverPower(object sender, HiddenSourceReceiver.OnHiddenSourcePowerEventArgs e)
+    {
+        HiddenSourceReceiver hiddenSourceReceiver = sender as HiddenSourceReceiver;
+        PlaySoundAtPoint(SFXPoolSO.receiverPowered, hiddenSourceReceiver.transform.position);
+    }
+
+    private void HiddenSourceReceiver_OnAnyHiddenSourceReceiverDePower(object sender, HiddenSourceReceiver.OnHiddenSourcePowerEventArgs e)
+    {
+        HiddenSourceReceiver hiddenSourceReceiver = sender as HiddenSourceReceiver;
+        PlaySoundAtPoint(SFXPoolSO.receiverDePowered, hiddenSourceReceiver.transform.position);
+    }
+
     #endregion
 
     #region Projection

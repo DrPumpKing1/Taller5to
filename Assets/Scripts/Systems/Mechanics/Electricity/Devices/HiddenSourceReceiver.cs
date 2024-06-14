@@ -19,8 +19,8 @@ public class HiddenSourceReceiver : MonoBehaviour
     private bool isEnergyzed;
     private float energyzedTimer;
 
-    public static event EventHandler OnAnyHiddenSourceReceiverPower;
-    public static event EventHandler OnAnyHiddenSourceReceiverDePower;
+    public static event EventHandler<OnHiddenSourcePowerEventArgs> OnAnyHiddenSourceReceiverPower;
+    public static event EventHandler<OnHiddenSourcePowerEventArgs> OnAnyHiddenSourceReceiverDePower;
 
     public event EventHandler OnHiddenSourceReceiverPower;
     public event EventHandler OnHiddenSourceReceiverDePower;

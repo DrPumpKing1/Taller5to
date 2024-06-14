@@ -32,4 +32,7 @@ public class SFXPoolSO : ScriptableObject
 
     public AudioClip[] inscriptionPowered;
     public AudioClip[] inscriptionDePowered;
+
+    public AudioClip[] receiverPowered;
+    public AudioClip[] receiverDePowered;
 }
