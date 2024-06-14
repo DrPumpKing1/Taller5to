@@ -6,7 +6,7 @@ public class LogListenerEvents : MonoBehaviour
 {
     private void OnEnable()
     {
-        //EVENTS
+        //TUTORIAL
         GameStartEvent.OnGameStart += GameStartEvent_OnGameStart;
         BackToShipCollider.OnBackToShip += BackToShipCollider_OnBackToShip;
         MeetVyrxCollider.OnMeetVyrx += MeetVyrxCollider_OnMeetVyrx;
@@ -20,17 +20,21 @@ public class LogListenerEvents : MonoBehaviour
         FirstInscriptionEncounterCollider.OnFirstInscriptionEncounter += FirstInscriptionEncounterCollider_OnFirstInscriptionEncounter;
         FirstLearningPlatformEncounterCollider.OnFirstLearningPlatformEncounter += FirstLearningPlatformEncounterCollider_OnFirstLearningPlatformEncounter;
 
+        //LEVEL1
         SecondVirtueDoorEncounterCollider.OnSecondVirtueDoorEncounter += SecondVirtueDoorEncounterCollider_OnSecondVirtueDoorEncounter;
         FirstProjectionPlatformEncounterCollider.OnFirstProjectionPlatformEncounter += FirstProjectionPlatformEncounterCollider_OnFirstProjectionPlatformEncounter;
         FirstBacktrackSwitchEncounter.OnFirstBacktrackSwitchEncounter += FirstBacktrackSwitchEncounterCollider_OnFirstBacktrackSwitchEncounter;
         FirstCableRotationEncounterCollider.OnFirstCableRotationEncounter += FirstCableRotationEncounterCollider_OnFirstCableRotationEncounter;
         FirstDematerializationTowerEncounterCollider.OnFirstDematerializationTowenEncounter += FirstDematerializationTowerEncounterCollider_OnFirstDematerializationTowerEncounter;
         SecondLearningPlatformEncounterCollider.OnSecondLearningPlatformEncounter += SecondLearningPlatformEncounterCollider_OnSecondLearningPlatformEncounter;
+
+        //LEVEL2
+        FirstProjectionMagicBoxEncounterCollider.OnFirstProjectionMagicBoxEncounter += FirstProjectionMagicBoxEncounterCollider_OnFirstProjectionMagicBoxEncounter;
     }
 
     private void OnDisable()
     {
-        //EVENTS
+        //TUTORIAL
         GameStartEvent.OnGameStart -= GameStartEvent_OnGameStart;
         BackToShipCollider.OnBackToShip -= BackToShipCollider_OnBackToShip;
         MeetVyrxCollider.OnMeetVyrx -= MeetVyrxCollider_OnMeetVyrx;
@@ -44,14 +48,19 @@ public class LogListenerEvents : MonoBehaviour
         FirstInscriptionEncounterCollider.OnFirstInscriptionEncounter -= FirstInscriptionEncounterCollider_OnFirstInscriptionEncounter;
         FirstLearningPlatformEncounterCollider.OnFirstLearningPlatformEncounter -= FirstLearningPlatformEncounterCollider_OnFirstLearningPlatformEncounter;
 
+        //LEVEL1
         SecondVirtueDoorEncounterCollider.OnSecondVirtueDoorEncounter -= SecondVirtueDoorEncounterCollider_OnSecondVirtueDoorEncounter;
         FirstProjectionPlatformEncounterCollider.OnFirstProjectionPlatformEncounter -= FirstProjectionPlatformEncounterCollider_OnFirstProjectionPlatformEncounter;
         FirstBacktrackSwitchEncounter.OnFirstBacktrackSwitchEncounter -= FirstBacktrackSwitchEncounterCollider_OnFirstBacktrackSwitchEncounter;
         FirstCableRotationEncounterCollider.OnFirstCableRotationEncounter -= FirstCableRotationEncounterCollider_OnFirstCableRotationEncounter;
         FirstDematerializationTowerEncounterCollider.OnFirstDematerializationTowenEncounter -= FirstDematerializationTowerEncounterCollider_OnFirstDematerializationTowerEncounter;
         SecondLearningPlatformEncounterCollider.OnSecondLearningPlatformEncounter -= SecondLearningPlatformEncounterCollider_OnSecondLearningPlatformEncounter;
+
+        //LEVEL2
+        FirstProjectionMagicBoxEncounterCollider.OnFirstProjectionMagicBoxEncounter -= FirstProjectionMagicBoxEncounterCollider_OnFirstProjectionMagicBoxEncounter;
     }
 
+    //TUTORIAL
     private void GameStartEvent_OnGameStart(object sender, System.EventArgs e) => GameLogManager.Instance.Log("GameFlow/Start");
     private void BackToShipCollider_OnBackToShip(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/BackToShip");
     private void MeetVyrxCollider_OnMeetVyrx(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/MeetVyrx");
@@ -65,10 +74,16 @@ public class LogListenerEvents : MonoBehaviour
     private void FirstInscriptionEncounterCollider_OnFirstInscriptionEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstInscriptionEncounter");
     private void FirstLearningPlatformEncounterCollider_OnFirstLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstLearningPlatformEncounter");
 
+
+    //LEVEL1
     private void SecondVirtueDoorEncounterCollider_OnSecondVirtueDoorEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/SecondVirtueDoorEncounter");
     private void FirstProjectionPlatformEncounterCollider_OnFirstProjectionPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstProjectionPlatformEncounter");
     private void FirstBacktrackSwitchEncounterCollider_OnFirstBacktrackSwitchEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstBacktrackSwitchEncounter");
     private void FirstCableRotationEncounterCollider_OnFirstCableRotationEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstCableRotationEncounter");
     private void FirstDematerializationTowerEncounterCollider_OnFirstDematerializationTowerEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstDematerializationTowerEncounter");
     private void SecondLearningPlatformEncounterCollider_OnSecondLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/SecondLearningPlatformEncounter");
+
+    //LEVEL2
+    private void FirstProjectionMagicBoxEncounterCollider_OnFirstProjectionMagicBoxEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstProjectionMagicBoxEncounter");
+
 }
