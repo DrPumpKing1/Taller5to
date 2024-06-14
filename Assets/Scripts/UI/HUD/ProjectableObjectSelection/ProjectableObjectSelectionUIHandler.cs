@@ -39,7 +39,7 @@ public class ProjectableObjectSelectionUIHandler : MonoBehaviour
 
         if (ProjectableObjectsInventory.Count <= CurrentSelectionIndex) return;
         
-        SetProjectableObjectText(ProjectableObjectsInventory[CurrentSelectionIndex].name);
+        SetProjectableObjectText(ProjectableObjectsInventory[CurrentSelectionIndex].objectName);
         SelectProjectableObjectUIByIndex(CurrentSelectionIndex);
     }
 
@@ -174,7 +174,7 @@ public class ProjectableObjectSelectionUIHandler : MonoBehaviour
 
     private void ProjectionManager_OnProjectableObjectSelected(object sender, ProjectableObjectSelectionManager.OnSelectionEventArgs e)
     {
-        SetProjectableObjectText(e.projectableObjectSO.name);
+        SetProjectableObjectText(e.projectableObjectSO.objectName);
         SelectProjectableObjectUIByIndex(e.index);
     }
 

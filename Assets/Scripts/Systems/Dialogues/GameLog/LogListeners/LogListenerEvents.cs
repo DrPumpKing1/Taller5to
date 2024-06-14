@@ -29,7 +29,14 @@ public class LogListenerEvents : MonoBehaviour
         SecondLearningPlatformEncounterCollider.OnSecondLearningPlatformEncounter += SecondLearningPlatformEncounterCollider_OnSecondLearningPlatformEncounter;
 
         //LEVEL2
+        ThirdVirtueDoorEncounterCollider.OnThirdVirtueDoorEncounter += ThirdVirtueDoorEncounterCollider_OnThirdVirtueDoorEncounter;
         FirstProjectionMagicBoxEncounterCollider.OnFirstProjectionMagicBoxEncounter += FirstProjectionMagicBoxEncounterCollider_OnFirstProjectionMagicBoxEncounter;
+        ThirdLearningPlatformEncounterCollider.OnThirdLearningPlatformEncounter += ThirdLearningPlatformEncounterCollider_OnThirdLearningPlatformEncounter;
+
+        //LEVEL3
+        FourthVirtueDoorEncounterCollider.OnFourthVirtueDoorEncounter += FourthVirtueDoorEncounterCollider_OnFourthVirtueDoorEncounter;
+        FirstProjectionSenderEncounterCollider.OnFirstProjectionSenderEncounter += FirstProjectionSenderEncounterCollider_OnFirstProjectionSenderEncounter;
+        MissingLearningPlatformEncounterCollider.OnMissingLearningPlatformEncounter += MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter;
     }
 
     private void OnDisable()
@@ -57,7 +64,14 @@ public class LogListenerEvents : MonoBehaviour
         SecondLearningPlatformEncounterCollider.OnSecondLearningPlatformEncounter -= SecondLearningPlatformEncounterCollider_OnSecondLearningPlatformEncounter;
 
         //LEVEL2
+        ThirdVirtueDoorEncounterCollider.OnThirdVirtueDoorEncounter -= ThirdVirtueDoorEncounterCollider_OnThirdVirtueDoorEncounter;
         FirstProjectionMagicBoxEncounterCollider.OnFirstProjectionMagicBoxEncounter -= FirstProjectionMagicBoxEncounterCollider_OnFirstProjectionMagicBoxEncounter;
+        ThirdLearningPlatformEncounterCollider.OnThirdLearningPlatformEncounter -= ThirdLearningPlatformEncounterCollider_OnThirdLearningPlatformEncounter;
+
+        //LEVEL3
+        FourthVirtueDoorEncounterCollider.OnFourthVirtueDoorEncounter -= FourthVirtueDoorEncounterCollider_OnFourthVirtueDoorEncounter;
+        FirstProjectionSenderEncounterCollider.OnFirstProjectionSenderEncounter -= FirstProjectionSenderEncounterCollider_OnFirstProjectionSenderEncounter;
+        MissingLearningPlatformEncounterCollider.OnMissingLearningPlatformEncounter -= MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter;
     }
 
     //TUTORIAL
@@ -84,6 +98,12 @@ public class LogListenerEvents : MonoBehaviour
     private void SecondLearningPlatformEncounterCollider_OnSecondLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/SecondLearningPlatformEncounter");
 
     //LEVEL2
+    private void ThirdVirtueDoorEncounterCollider_OnThirdVirtueDoorEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/ThirdVirtueDoorEncounter");
     private void FirstProjectionMagicBoxEncounterCollider_OnFirstProjectionMagicBoxEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstProjectionMagicBoxEncounter");
+    private void ThirdLearningPlatformEncounterCollider_OnThirdLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/ThirdLearningPlatformEncounter");
 
+    //LEVEL3
+    private void FourthVirtueDoorEncounterCollider_OnFourthVirtueDoorEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FourthVirtueDoorEncounter");
+    private void FirstProjectionSenderEncounterCollider_OnFirstProjectionSenderEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstProjectionSenderEncounter");
+    private void MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/MissingLearningPlatformEncounter");
 }
