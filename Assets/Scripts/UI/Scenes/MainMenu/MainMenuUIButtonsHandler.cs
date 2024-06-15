@@ -31,6 +31,7 @@ public class MainMenuUIButtonsHandler : MonoBehaviour
     {
         playButton.onClick.AddListener(PlayGame);
         optionsButton.onClick.AddListener(Options);
+        creditsButton.onClick.AddListener(Credits);
         quitButton.onClick.AddListener(QuitGame);
     }
 
@@ -42,6 +43,11 @@ public class MainMenuUIButtonsHandler : MonoBehaviour
     private void Options()
     {
         ScenesManager.Instance.FadeLoadTargetScene(optionsScene);
+    }
+
+    private void Credits()
+    {
+        ScenesManager.Instance.FadeLoadTargetScene(creditsScene);
     }
 
     private void QuitGame() => ScenesManager.Instance.QuitGame();
