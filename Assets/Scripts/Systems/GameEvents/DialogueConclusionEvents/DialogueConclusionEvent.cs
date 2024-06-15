@@ -14,7 +14,7 @@ public abstract class DialogueConclusionEvent : MonoBehaviour
 
     private void OnDisable()
     {
-        DialogueManager.OnDialogueEnd += DialogueManager_OnDialogueEnd;
+        DialogueManager.OnDialogueEnd -= DialogueManager_OnDialogueEnd;
     }
 
     private void DialogueManager_OnDialogueEnd(object sender, DialogueManager.OnDialogueEventArgs e)
