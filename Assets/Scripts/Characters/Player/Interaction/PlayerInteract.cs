@@ -36,7 +36,7 @@ public class PlayerInteract : MonoBehaviour
     public Vector3 InteractionDirection => playerRotationHandler.DesiredFacingDirection.normalized;
 
     public bool IsInteracting { get; private set; }
-    public bool InteractionEnabled { get { return interactionEnabled; } }
+    public bool InteractionEnabled => interactionEnabled;
 
     private float holdTimer;
     private bool inputDownToHold;
@@ -47,7 +47,7 @@ public class PlayerInteract : MonoBehaviour
     private CapsuleCollider capsulleCollider;
 
     private IInteractable currentInteractable;
-    public IInteractable CurrentInteractable { get { return currentInteractable; } }
+    public IInteractable CurrentInteractable => currentInteractable;
 
     public event EventHandler<OnInteractionEventArgs> OnInteractableSelected;
     public event EventHandler<OnInteractionEventArgs> OnInteractableDeselected;
@@ -325,7 +325,7 @@ public class PlayerInteract : MonoBehaviour
     private bool CanInteract()
     {
         if (!CanProcessInteractionInput) return false;
-        if (!checkGround.IsGrounded) return false;
+        //if (!checkGround.IsGrounded) return false;
         if (!interactionEnabled) return false;
 
         return true;

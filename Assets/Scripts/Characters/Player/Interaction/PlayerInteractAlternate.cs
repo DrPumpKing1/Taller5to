@@ -308,7 +308,7 @@ public class PlayerInteractAlternate : MonoBehaviour
     private bool CanInteractAlternate()
     {
         if (!CanProcessInteractionInput) return false;
-        if (!checkGround.IsGrounded) return false;
+        //if (!checkGround.IsGrounded) return false;
         if (!playerInteract.InteractionEnabled) return false;
         if (!interactionAlternateEnabled) return false;
 
