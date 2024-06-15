@@ -32,6 +32,6 @@ public class PauseUIMainContentButtonsHandler : MonoBehaviour
 
     private void BackToMenu()
     {
-        ScenesManager.Instance.SimpleLoadTargetScene(mainMenuScene);
+        ScenesManager.Instance.FadeLoadTargetScene(mainMenuScene);
     }
 }

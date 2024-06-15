@@ -31,6 +31,6 @@ public class OptionsUIMainContentButtonsHander : MonoBehaviour
 
     private void BackToMenu()
     {
-        ScenesManager.Instance.SimpleLoadTargetScene(menuScene);
+        ScenesManager.Instance.FadeLoadTargetScene(menuScene);
     }
 }

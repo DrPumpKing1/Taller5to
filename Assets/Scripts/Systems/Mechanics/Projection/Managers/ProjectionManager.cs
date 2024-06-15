@@ -30,7 +30,7 @@ public class ProjectionManager : MonoBehaviour
     public class OnProjectionEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectSO;
-        public ProjectionPlatform projectionPlatform;
+        public int projectionPlatformID;
     }
 
     public class OnAllObjectsDematerializedEventArgs : EventArgs
@@ -78,12 +78,12 @@ public class ProjectionManager : MonoBehaviour
 
     public void FailObjectProjection(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform)
     {
-        OnObjectProjectionFailed?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
+        OnObjectProjectionFailed?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatformID = projectionPlatform.ID });
     }
 
     public void FailObjectProjectionInsuficientGems(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform)
     {
-        OnObjectProjectionFailed?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
+        OnObjectProjectionFailed?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatformID = projectionPlatform.ID });
         ProjectionGemsManager.Instance.InsuficientProjectionGems(projectableObjectSO.projectionGemsCost);
     }
 
@@ -93,7 +93,7 @@ public class ProjectionManager : MonoBehaviour
         currentProjectedObjectsComponents.Add(projectableObject);
 
         ProjectionGemsManager.Instance.UseProyectionGems(projectableObjectSO.projectionGemsCost);
-        OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
+        OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatformID = projectionPlatform.ID });
     }
 
     public void ObjectDematerialized(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform, ProjectableObject projectableObject, bool triggerEvents)
@@ -103,7 +103,7 @@ public class ProjectionManager : MonoBehaviour
 
         ProjectionGemsManager.Instance.RefundProyectionGems(projectableObjectSO.projectionGemsCost);
 
-        if(triggerEvents) OnObjectDematerialized?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatform = projectionPlatform });
+        if(triggerEvents) OnObjectDematerialized?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatformID = projectionPlatform.ID });
     }
 
     public bool AnyObjectsProjected() => currentProjectedObjectsSOs.Count > 0;

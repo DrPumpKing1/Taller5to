@@ -11,13 +11,34 @@ public class ScenesManager : MonoBehaviour
 
     [Header("States")]
     [SerializeField] private State state;
-    private enum State { Idle, TransitionIn, TransitionOut }
+    public enum State {Idle, TransitionOut, FullBlack, TransitionIn }
 
+    public State SceneState => state;
+
+    [Header("Settings")]
+    [SerializeField,Range(0.1f,0.5f)] private float fadeInInterval;
+
+    public static event EventHandler<OnSceneLoadEventArgs> OnSceneTransition;
+    public static event EventHandler<OnSceneLoadEventArgs> OnSceneTransitionLoad;
     public static event EventHandler<OnSceneLoadEventArgs> OnSceneLoad;
+
+    private string sceneToLoad;
 
     public class OnSceneLoadEventArgs : EventArgs
     {
         public string sceneName;
+    }
+
+    private void OnEnable()
+    {
+        TransitionUIHandler.OnFadeOutEnd += TransitionUIHandler_OnFadeOutEnd;
+        TransitionUIHandler.OnFadeInEnd += TransitionUIHandler_OnFadeInEnd;
+    }
+
+    private void OnDisable()
+    {
+        TransitionUIHandler.OnFadeOutEnd -= TransitionUIHandler_OnFadeOutEnd;
+        TransitionUIHandler.OnFadeInEnd -= TransitionUIHandler_OnFadeInEnd;
     }
 
     private void Awake()
@@ -41,12 +62,15 @@ public class ScenesManager : MonoBehaviour
     private void Start()
     {
         OnSceneLoad?.Invoke(this, new OnSceneLoadEventArgs { sceneName = SceneManager.GetActiveScene().name });
+        OnSceneTransitionLoad.Invoke(this, new OnSceneLoadEventArgs { sceneName = SceneManager.GetActiveScene().name });
+        SetSceneState(State.TransitionIn);
     }
 
     private void SetSceneState(State state) => this.state = state;
 
     private bool CanChangeScene() => state == State.Idle;
 
+    #region SimpleLoad
     public void SimpleReloadCurrentScene()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
@@ -56,8 +80,34 @@ public class ScenesManager : MonoBehaviour
     public void SimpleLoadTargetScene(string sceneName)
     {
         if (!CanChangeScene()) return;
-        LoadScene(sceneName);
+        StartCoroutine(LoadSceneCoroutine(sceneName));
     }
+    #endregion
+
+    #region FadeLoad
+
+    public void FadeLoadTargetScene(string sceneName)
+    {
+        if (!CanChangeScene()) return;
+
+        SetSceneState(State.TransitionOut);
+        OnSceneTransition?.Invoke(this, new OnSceneLoadEventArgs { sceneName = sceneName });
+        sceneToLoad = sceneName;
+    }
+
+    private IEnumerator LoadSceneTransitionCoroutine(string sceneName)
+    {
+        yield return StartCoroutine(LoadSceneCoroutine(sceneName));
+
+        yield return new WaitForSeconds(0.1f);
+        OnSceneTransitionLoad?.Invoke(this, new OnSceneLoadEventArgs { sceneName = sceneName });
+
+        SetSceneState(State.TransitionIn);
+
+        sceneToLoad = "";
+    }
+
+    #endregion
 
     public void LoadScene(string sceneName)
     {
@@ -65,5 +115,30 @@ public class ScenesManager : MonoBehaviour
         OnSceneLoad?.Invoke(this, new OnSceneLoadEventArgs { sceneName = sceneName });
     }
 
+    private IEnumerator LoadSceneCoroutine(string sceneName)
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        OnSceneLoad?.Invoke(this, new OnSceneLoadEventArgs { sceneName = sceneName });
+    }
+
     public void QuitGame() => Application.Quit();
+
+    #region TransitionUIHandler Subscriptions
+    private void TransitionUIHandler_OnFadeOutEnd(object sender, EventArgs e)
+    {
+        SetSceneState(State.FullBlack);
+        StartCoroutine(LoadSceneTransitionCoroutine(sceneToLoad));
+    }
+    private void TransitionUIHandler_OnFadeInEnd(object sender, EventArgs e)
+    {
+        SetSceneState(State.Idle);
+    }
+    #endregion
+
 }

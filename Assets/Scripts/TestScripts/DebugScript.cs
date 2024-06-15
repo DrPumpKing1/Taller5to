@@ -23,7 +23,7 @@ public class DebugScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+            ScenesManager.Instance.SimpleReloadCurrentScene();
         }
     }
 }

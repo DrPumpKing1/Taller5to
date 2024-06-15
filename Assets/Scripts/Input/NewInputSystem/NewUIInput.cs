@@ -35,6 +35,8 @@ public class NewUIInput : UIInput
 
     public override bool CanProcessUIInput()
     {
+        if (ScenesManager.Instance.SceneState != ScenesManager.State.Idle) return false;
+
         if (GameManager.Instance.GameState == GameManager.State.OnUI) return true;
         if (GameManager.Instance.GameState == GameManager.State.OnGameplay) return true;
         if (GameManager.Instance.GameState == GameManager.State.OnMonologue) return true;

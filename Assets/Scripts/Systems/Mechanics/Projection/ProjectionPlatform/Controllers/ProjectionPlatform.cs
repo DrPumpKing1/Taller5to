@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class ProjectionPlatform : MonoBehaviour
 {
+    [Header("Identifiers")]
+    [SerializeField] private int id;
+
     [Header("Projection Platform Settings")]
     [SerializeField] private Transform projectionPoint;
     [SerializeField] private ProjectableObjectSO currentProjectedObject;
@@ -20,6 +23,7 @@ public class ProjectionPlatform : MonoBehaviour
     public Transform ProjectionPoint => projectionPoint;
     public ProjectableObjectSO CurrentProjectedObject => currentProjectedObject;
     public Vector2 StartingDirection => startingDirection;
+    public int ID => id;
 
     public bool ObjectAbove;
     public bool useObjectAbove;

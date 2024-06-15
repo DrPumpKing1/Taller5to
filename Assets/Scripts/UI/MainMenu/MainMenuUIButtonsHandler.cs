@@ -32,12 +32,12 @@ public class MainMenuUIButtonsHandler : MonoBehaviour
 
     private void PlayGame()
     {
-        ScenesManager.Instance.SimpleLoadTargetScene(gameplayScene);
+        ScenesManager.Instance.FadeLoadTargetScene(gameplayScene);
     }
 
     private void Options()
     {
-        ScenesManager.Instance.SimpleLoadTargetScene(optionsScene);
+        ScenesManager.Instance.FadeLoadTargetScene(optionsScene);
     }
 
     private void QuitGame() => ScenesManager.Instance.QuitGame();
