@@ -23,7 +23,7 @@ public class DebugScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            ScenesManager.Instance.SimpleReloadCurrentScene();
+            ScenesManager.Instance.FadeReloadCurrentScene();
         }
     }
 }

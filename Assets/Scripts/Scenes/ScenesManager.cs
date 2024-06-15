@@ -95,6 +95,12 @@ public class ScenesManager : MonoBehaviour
         sceneToLoad = sceneName;
     }
 
+    public void FadeReloadCurrentScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        FadeLoadTargetScene(currentSceneName);
+    }
+
     private IEnumerator LoadSceneTransitionCoroutine(string sceneName)
     {
         yield return StartCoroutine(LoadSceneCoroutine(sceneName));
