@@ -35,7 +35,7 @@ public class LogListenerEvents : MonoBehaviour
 
         //LEVEL3
         FourthVirtueDoorEncounterCollider.OnFourthVirtueDoorEncounter += FourthVirtueDoorEncounterCollider_OnFourthVirtueDoorEncounter;
-        FirstProjectionSenderEncounterCollider.OnFirstProjectionSenderEncounter += FirstProjectionSenderEncounterCollider_OnFirstProjectionSenderEncounter;
+        FirstSenderProjectionEncounterCollider.OnFirstSenderProjectionEncounter += FirstSenderProjectionEncounterCollider_OnFirstSenderProjectionEncounter;
         MissingLearningPlatformEncounterCollider.OnMissingLearningPlatformEncounter += MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter;
     }
 
@@ -70,7 +70,7 @@ public class LogListenerEvents : MonoBehaviour
 
         //LEVEL3
         FourthVirtueDoorEncounterCollider.OnFourthVirtueDoorEncounter -= FourthVirtueDoorEncounterCollider_OnFourthVirtueDoorEncounter;
-        FirstProjectionSenderEncounterCollider.OnFirstProjectionSenderEncounter -= FirstProjectionSenderEncounterCollider_OnFirstProjectionSenderEncounter;
+        FirstSenderProjectionEncounterCollider.OnFirstSenderProjectionEncounter -= FirstSenderProjectionEncounterCollider_OnFirstSenderProjectionEncounter;
         MissingLearningPlatformEncounterCollider.OnMissingLearningPlatformEncounter -= MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter;
     }
 
@@ -104,6 +104,6 @@ public class LogListenerEvents : MonoBehaviour
 
     //LEVEL3
     private void FourthVirtueDoorEncounterCollider_OnFourthVirtueDoorEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FourthVirtueDoorEncounter");
-    private void FirstProjectionSenderEncounterCollider_OnFirstProjectionSenderEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstProjectionSenderEncounter");
+    private void FirstSenderProjectionEncounterCollider_OnFirstSenderProjectionEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstSenderProjectionEncounter");
     private void MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/MissingLearningPlatformEncounter");
 }

@@ -21,6 +21,9 @@ public class LogListenerElectrical : MonoBehaviour
 
         ElectricalExtensibleBridge.OnExtensibleBridgePower += ElectricalExtensibleBridge_OnExtensibleBridgePower;
         ElectricalExtensibleBridge.OnExtensibleBridgeDePower += ElectricalExtensibleBridge_OnExtensibleBridgeDePower;
+
+        HiddenSourceReceiver.OnAnyHiddenSourceReceiverPower += HiddenSourceReceiver_OnAnyHiddenSourceReceiverPower;
+        HiddenSourceReceiver.OnAnyHiddenSourceReceiverDePower += HiddenSourceReceiver_OnAnyHiddenSourceReceiverDePower;
     }
 
     private void OnDisable()
@@ -40,6 +43,9 @@ public class LogListenerElectrical : MonoBehaviour
 
         ElectricalExtensibleBridge.OnExtensibleBridgePower -= ElectricalExtensibleBridge_OnExtensibleBridgePower;
         ElectricalExtensibleBridge.OnExtensibleBridgeDePower -= ElectricalExtensibleBridge_OnExtensibleBridgeDePower;
+
+        HiddenSourceReceiver.OnAnyHiddenSourceReceiverPower -= HiddenSourceReceiver_OnAnyHiddenSourceReceiverPower;
+        HiddenSourceReceiver.OnAnyHiddenSourceReceiverDePower -= HiddenSourceReceiver_OnAnyHiddenSourceReceiverDePower;
     }
 
     private void ElectricalSwitchToggle_OnSwitchToggle(object sender, ElectricalSwitchToggle.OnSwitchToggleEventArgs e) => GameLogManager.Instance.Log($"Electrical/ToggleSwitch/{e.switchOn}/{e.id}");
@@ -56,6 +62,9 @@ public class LogListenerElectrical : MonoBehaviour
 
     private void ElectricalExtensibleBridge_OnExtensibleBridgePower(object sender, ElectricalExtensibleBridge.OnExtensibleBridgePowerEventArgs e) => GameLogManager.Instance.Log($"Electrical/PowerExtensibleBridge/{e.id}");
     private void ElectricalExtensibleBridge_OnExtensibleBridgeDePower(object sender, ElectricalExtensibleBridge.OnExtensibleBridgePowerEventArgs e) => GameLogManager.Instance.Log($"Electrical/DePowerExtensibleBridge/{e.id}");
+
+    private void HiddenSourceReceiver_OnAnyHiddenSourceReceiverPower(object sender, HiddenSourceReceiver.OnHiddenSourcePowerEventArgs e) => GameLogManager.Instance.Log($"Electrical/PowerReceiver/{e.id}");
+    private void HiddenSourceReceiver_OnAnyHiddenSourceReceiverDePower(object sender, HiddenSourceReceiver.OnHiddenSourcePowerEventArgs e) => GameLogManager.Instance.Log($"Electrical/DePowerReceiver/{e.id}");
 }
 
 

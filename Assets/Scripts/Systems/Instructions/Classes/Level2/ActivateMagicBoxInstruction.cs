@@ -13,7 +13,7 @@ public class ActivateMagicBoxInstruction : LogAcomplishedInstruction
     protected override void OnDisable()
     {
         base.OnDisable();
-        FirstMagicBoxProjectionEnd.OnFirstMagicBoxProjectionEnd += FirstMagicBoxProjectionEnd_OnFirstMagicBoxProjectionEnd; ;
+        FirstMagicBoxProjectionEnd.OnFirstMagicBoxProjectionEnd -= FirstMagicBoxProjectionEnd_OnFirstMagicBoxProjectionEnd; ;
     }
 
     private void FirstMagicBoxProjectionEnd_OnFirstMagicBoxProjectionEnd(object sender, System.EventArgs e)
