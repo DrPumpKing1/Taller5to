@@ -9,6 +9,7 @@ public class DebugScript : MonoBehaviour
     {
         CheckSkipDialogue();
         CheckReloadScene();
+        CheckHideInstruction();
     }
 
     private void CheckSkipDialogue()
@@ -24,6 +25,14 @@ public class DebugScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             ScenesManager.Instance.FadeReloadCurrentScene();
+        }
+    }
+
+    private void CheckHideInstruction()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            InstructionsManager.Instance.HideInstruction();
         }
     }
 }

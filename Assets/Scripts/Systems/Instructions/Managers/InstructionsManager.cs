@@ -119,6 +119,8 @@ public class InstructionsManager : MonoBehaviour
 
     private void CheckInstructionToHide(Instruction instruction)
     {
+        if (!showingInstruction) return;
+
         foreach (UniqueInstruction uniqueInstruction in uniqueInstructions)
         {
             if (uniqueInstruction.instruction != instruction) continue;
@@ -136,6 +138,16 @@ public class InstructionsManager : MonoBehaviour
         }
 
         if (debug) Debug.Log("No instruction in UniqueInstructionsList matches instruction");
+    }
+
+    public void HideInstruction()
+    {
+        if (!showingInstruction) return;
+
+        OnInstructionHide?.Invoke(this, new OnInstructionEventArgs { uniqueInstruction = currentInstruction });
+        currentInstruction = null;
+        showingInstruction = false;
+        return;
     }
 
     #region InstructionSubscriptions

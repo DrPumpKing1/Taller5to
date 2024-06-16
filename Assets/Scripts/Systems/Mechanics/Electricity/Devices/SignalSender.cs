@@ -13,6 +13,7 @@ public class SignalSender : MonoBehaviour
     [SerializeField] private float shootSpeed;
     [SerializeField] private float shootCooldown;
     [SerializeField] private float shootTimer;
+    [SerializeField] private bool parentProjectiles;
 
     private void OnEnable()
     {
@@ -48,5 +49,7 @@ public class SignalSender : MonoBehaviour
         Rigidbody rbProjectile = projectileGO.GetComponent<Rigidbody>();
 
         rbProjectile?.AddForce(shootPosition.right.normalized * shootSpeed, ForceMode.VelocityChange);
+
+        if (parentProjectiles) projectileGO.transform.SetParent(transform);
     }
 }
