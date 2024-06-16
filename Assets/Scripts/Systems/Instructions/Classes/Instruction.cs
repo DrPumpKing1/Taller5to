@@ -6,9 +6,6 @@ using System.Linq;
 
 public abstract class Instruction : MonoBehaviour
 {
-    [Header("Log")]
-    [SerializeField] protected string logToAcomplish;
-
     [Header("Booleans")]
     [SerializeField] protected bool hasBeenAcomplished;
     [SerializeField] protected bool isShowing;

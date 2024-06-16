@@ -5,6 +5,8 @@ using System.Linq;
 
 public class LogAcomplishedInstruction : Instruction
 {
+    [Header("Log")]
+    [SerializeField] protected string logToAcomplish;
     protected virtual void OnEnable()
     {
         GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
