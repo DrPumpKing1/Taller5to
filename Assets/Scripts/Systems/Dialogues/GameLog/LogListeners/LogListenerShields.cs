@@ -18,7 +18,11 @@ public class LogListenerShields : MonoBehaviour
         NotEnoughShieldsCollider.OnNotEnoughShieldsCollider -= NotEnoughShieldsCollider_OnNotEnoughShieldsCollider;
     }
 
-    private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e) => GameLogManager.Instance.Log($"Worth/ShowDignity/{e.dialect}");
+    private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e)
+    {
+        GameLogManager.Instance.Log($"Worth/ShowDignity/{e.dialect}");
+        GameLogManager.Instance.Log($"Worth/ShowDignityExact/{e.dialect}/{e.id}");
+    }
 
     private void NotEnoughShieldsCollider_OnNotEnoughShieldsCollider(object sender, NotEnoughShieldsCollider.OnNotEnoughShieldsColliderEventArgs e) => GameLogManager.Instance.Log($"Worth/NotEnoughShields/{e.dialect}");
 }

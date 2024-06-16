@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class ShieldDoor : MonoBehaviour
 {
-    [Header("Dialect")]
+    [Header("Identifiers")]
+    [SerializeField] private int id;
     [SerializeField] private Dialect dialect;
     
     [Header("Device Settings")]
@@ -32,6 +33,7 @@ public class ShieldDoor : MonoBehaviour
     public class OnShieldDoorOpenEventArgs : EventArgs
     {
         public Dialect dialect;
+        public int id;
     }
 
     private void Start()
@@ -61,7 +63,7 @@ public class ShieldDoor : MonoBehaviour
 
         if (state) 
         {
-            OnShieldDoorOpen?.Invoke(this, new OnShieldDoorOpenEventArgs { dialect = dialect });
+            OnShieldDoorOpen?.Invoke(this, new OnShieldDoorOpenEventArgs { dialect = dialect, id = id });
         }
         
         TriggerMovement(state);

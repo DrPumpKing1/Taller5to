@@ -22,7 +22,11 @@ public class LogListenerProjection : MonoBehaviour
         ProjectionManager.OnAllObjectsDematerialized -= ProjectionManager_OnAllObjectsDematerialized;
     }
 
-    private void ProjectionManager_OnObjectProjectionSuccess(object sender, ProjectionManager.OnProjectionEventArgs e) => GameLogManager.Instance.Log($"Projection/MaterializeObject/{e.projectableObjectSO.id}");
+    private void ProjectionManager_OnObjectProjectionSuccess(object sender, ProjectionManager.OnProjectionEventArgs e)
+    {
+        GameLogManager.Instance.Log($"Projection/MaterializeObject/{e.projectableObjectSO.id}");
+        GameLogManager.Instance.Log($"Projection/MaterializeObjectExact/{e.projectableObjectSO.id}/{e.projectionPlatformID}");
+    }
     private void ProjectionManager_OnObjectProjectionFailed(object sender, ProjectionManager.OnProjectionEventArgs e) => GameLogManager.Instance.Log($"Projection/FailMaterializeObject/{e.projectableObjectSO.id}");
     private void ProjectionManager_OnObjectDematerialized(object sender, ProjectionManager.OnProjectionEventArgs e) => GameLogManager.Instance.Log($"Projection/DematerializeObject/{e.projectableObjectSO.id}");
     private void ProjectionManager_OnAllObjectsDematerialized(object sender, ProjectionManager.OnAllObjectsDematerializedEventArgs e) => GameLogManager.Instance.Log($"Projection/DematerializeAllObjects/{e.projectableObjectSOs.Count}");
