@@ -12,6 +12,8 @@ public class InstructionsManager : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] private bool debug;
+    [SerializeField] private bool showingInstruction;
+    [SerializeField] private UniqueInstruction currentInstruction = null;
 
     [Serializable]
     public class UniqueInstruction
@@ -22,7 +24,6 @@ public class InstructionsManager : MonoBehaviour
         public Transform instructionUIPrefab;
     }
 
-    private UniqueInstruction currentInstruction;
 
     public static event EventHandler<OnInstructionEventArgs> OnInstructionShow;
     public static event EventHandler<OnInstructionEventArgs> OnInstructionReplace;
@@ -50,6 +51,11 @@ public class InstructionsManager : MonoBehaviour
         SetSingleton();
     }
 
+    private void Start()
+    {
+        InitializeVariables();
+    }
+
     private void SetSingleton()
     {
         if (Instance == null)
@@ -63,9 +69,14 @@ public class InstructionsManager : MonoBehaviour
         }
     }
 
+    private void InitializeVariables()
+    {
+        showingInstruction = false;
+    }
+
     private void CheckInstructionToShow(Instruction instruction)
     {
-        if (currentInstruction != null)
+        if (showingInstruction)
         {
             ReplaceInstruction(instruction);
             return;
@@ -83,6 +94,7 @@ public class InstructionsManager : MonoBehaviour
             OnInstructionShow?.Invoke(this, new OnInstructionEventArgs { uniqueInstruction = uniqueInstruction });
             currentInstruction = uniqueInstruction;
             uniqueInstruction.hasBeenShown = true;
+            showingInstruction = true;
             return;
         }
 
@@ -98,6 +110,7 @@ public class InstructionsManager : MonoBehaviour
             OnInstructionReplace?.Invoke(this, new OnInstructionEventArgs { uniqueInstruction = uniqueInstruction });
             currentInstruction = uniqueInstruction;
             uniqueInstruction.hasBeenShown = true;
+            showingInstruction = true;
             return;
         }
 
@@ -117,6 +130,8 @@ public class InstructionsManager : MonoBehaviour
             }
 
             OnInstructionHide?.Invoke(this, new OnInstructionEventArgs { uniqueInstruction = uniqueInstruction });
+            currentInstruction = null;
+            showingInstruction = false;
             return;
         }
 
