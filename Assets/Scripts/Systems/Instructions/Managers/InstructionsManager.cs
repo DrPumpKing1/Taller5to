@@ -25,6 +25,7 @@ public class InstructionsManager : MonoBehaviour
     private UniqueInstruction currentInstruction;
 
     public static event EventHandler<OnInstructionEventArgs> OnInstructionShow;
+    public static event EventHandler<OnInstructionEventArgs> OnInstructionReplace;
     public static event EventHandler<OnInstructionEventArgs> OnInstructionHide;
 
     public class OnInstructionEventArgs : EventArgs
@@ -64,14 +65,40 @@ public class InstructionsManager : MonoBehaviour
 
     private void CheckInstructionToShow(Instruction instruction)
     {
-        foreach(UniqueInstruction uniqueInstruction in uniqueInstructions)
+        if (currentInstruction != null)
+        {
+            ReplaceInstruction(instruction);
+            return;
+        }
+
+        ShowInstruction(instruction);
+    }
+
+    private void ShowInstruction(Instruction instruction)
+    {
+        foreach (UniqueInstruction uniqueInstruction in uniqueInstructions)
         {
             if (uniqueInstruction.instruction != instruction) continue;
-            
+
             OnInstructionShow?.Invoke(this, new OnInstructionEventArgs { uniqueInstruction = uniqueInstruction });
             currentInstruction = uniqueInstruction;
             uniqueInstruction.hasBeenShown = true;
-            return;            
+            return;
+        }
+
+        if (debug) Debug.Log("No instruction in UniqueInstructionsList matches instruction");
+    }
+
+    private void ReplaceInstruction(Instruction instruction)
+    {
+        foreach (UniqueInstruction uniqueInstruction in uniqueInstructions)
+        {
+            if (uniqueInstruction.instruction != instruction) continue;
+
+            OnInstructionReplace?.Invoke(this, new OnInstructionEventArgs { uniqueInstruction = uniqueInstruction });
+            currentInstruction = uniqueInstruction;
+            uniqueInstruction.hasBeenShown = true;
+            return;
         }
 
         if (debug) Debug.Log("No instruction in UniqueInstructionsList matches instruction");

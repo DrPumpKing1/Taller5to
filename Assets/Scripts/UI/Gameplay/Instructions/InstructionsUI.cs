@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,9 @@ public class InstructionsUI : MonoBehaviour
     [Header("UI Components")]
     [SerializeField] private Transform instructionsContainer;
 
+    [Header("Settings")]
+    [SerializeField,Range(0.5f,1f)] private float timeToReplaceInstruction;
+
     private const string SHOW_TRIGGER = "Show";
     private const string HIDE_TRIGGER = "Hide";
 
@@ -17,12 +21,15 @@ public class InstructionsUI : MonoBehaviour
     {
         InstructionsManager.OnInstructionShow += InstructionsManager_OnInstructionShow;
         InstructionsManager.OnInstructionHide += InstructionsManager_OnInstructionHide;
+        InstructionsManager.OnInstructionReplace += InstructionsManager_OnInstructionReplace;
     }
 
     private void OnDisable()
     {
         InstructionsManager.OnInstructionShow -= InstructionsManager_OnInstructionShow;
         InstructionsManager.OnInstructionHide -= InstructionsManager_OnInstructionHide;
+        InstructionsManager.OnInstructionReplace -= InstructionsManager_OnInstructionReplace;
+
     }
 
     private void ShowInstruction(InstructionsManager.UniqueInstruction uniqueInstruction)
@@ -37,6 +44,13 @@ public class InstructionsUI : MonoBehaviour
     {
         instructionsUIAnimator.ResetTrigger(SHOW_TRIGGER);
         instructionsUIAnimator.SetTrigger(HIDE_TRIGGER);
+    }
+
+    private IEnumerator ReplaceInstructionCoroutine(InstructionsManager.UniqueInstruction uniqueInstruction)
+    {
+        HideInstruction();
+        yield return new WaitForSeconds(timeToReplaceInstruction);
+        ShowInstruction(uniqueInstruction);
     }
 
     private void CreateInstruction(InstructionsManager.UniqueInstruction uniqueInstruction)
@@ -60,5 +74,9 @@ public class InstructionsUI : MonoBehaviour
     private void InstructionsManager_OnInstructionHide(object sender, InstructionsManager.OnInstructionEventArgs e)
     {
         HideInstruction();
+    }
+    private void InstructionsManager_OnInstructionReplace(object sender, InstructionsManager.OnInstructionEventArgs e)
+    {
+        StartCoroutine(ReplaceInstructionCoroutine(e.uniqueInstruction));
     }
 }
