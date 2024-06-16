@@ -23,7 +23,7 @@ public class LogListenerEvents : MonoBehaviour
         //LEVEL1
         SecondVirtueDoorEncounterCollider.OnSecondVirtueDoorEncounter += SecondVirtueDoorEncounterCollider_OnSecondVirtueDoorEncounter;
         FirstProjectionPlatformEncounterCollider.OnFirstProjectionPlatformEncounter += FirstProjectionPlatformEncounterCollider_OnFirstProjectionPlatformEncounter;
-        FirstBacktrackSwitchEncounter.OnFirstBacktrackSwitchEncounter += FirstBacktrackSwitchEncounterCollider_OnFirstBacktrackSwitchEncounter;
+        FirstBacktrackSwitchEncounterCollider.OnFirstBacktrackSwitchEncounter += FirstBacktrackSwitchEncounterCollider_OnFirstBacktrackSwitchEncounter;
         FirstCableRotationEncounterCollider.OnFirstCableRotationEncounter += FirstCableRotationEncounterCollider_OnFirstCableRotationEncounter;
         FirstDematerializationTowerEncounterCollider.OnFirstDematerializationTowenEncounter += FirstDematerializationTowerEncounterCollider_OnFirstDematerializationTowerEncounter;
         SecondLearningPlatformEncounterCollider.OnSecondLearningPlatformEncounter += SecondLearningPlatformEncounterCollider_OnSecondLearningPlatformEncounter;
@@ -58,7 +58,7 @@ public class LogListenerEvents : MonoBehaviour
         //LEVEL1
         SecondVirtueDoorEncounterCollider.OnSecondVirtueDoorEncounter -= SecondVirtueDoorEncounterCollider_OnSecondVirtueDoorEncounter;
         FirstProjectionPlatformEncounterCollider.OnFirstProjectionPlatformEncounter -= FirstProjectionPlatformEncounterCollider_OnFirstProjectionPlatformEncounter;
-        FirstBacktrackSwitchEncounter.OnFirstBacktrackSwitchEncounter -= FirstBacktrackSwitchEncounterCollider_OnFirstBacktrackSwitchEncounter;
+        FirstBacktrackSwitchEncounterCollider.OnFirstBacktrackSwitchEncounter -= FirstBacktrackSwitchEncounterCollider_OnFirstBacktrackSwitchEncounter;
         FirstCableRotationEncounterCollider.OnFirstCableRotationEncounter -= FirstCableRotationEncounterCollider_OnFirstCableRotationEncounter;
         FirstDematerializationTowerEncounterCollider.OnFirstDematerializationTowenEncounter -= FirstDematerializationTowerEncounterCollider_OnFirstDematerializationTowerEncounter;
         SecondLearningPlatformEncounterCollider.OnSecondLearningPlatformEncounter -= SecondLearningPlatformEncounterCollider_OnSecondLearningPlatformEncounter;
