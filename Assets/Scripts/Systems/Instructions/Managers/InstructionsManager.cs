@@ -1,17 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class InstructionsManager : MonoBehaviour
 {
     public static InstructionsManager Instance { get; private set; }
 
-    [Header("Settings")]
-    [SerializeField] private Transform intructionUIPrefab;
+    public class UniqueInstruction
+    {
+        public int id;
+        public Instruction instruction;
+        public bool hasBeenTriggered;
+        public Transform instructionUIPrefab;
+    }
+
+    private UniqueInstruction currentInstruction;
+
+    public static event EventHandler<OnInstructionEventArgs> OnInstructionShow;
+    public static event EventHandler<OnInstructionEventArgs> OnInstructionHide;
+
+    public class OnInstructionEventArgs : EventArgs
+    {
+        public UniqueInstruction uniqueInstruction;
+    }
 
     private void OnEnable()
     {
-        Instruction.OnInstructionTriggered += Instruction_OnInstructionTriggered; ;
+        Instruction.OnInstructionShow += Instruction_OnInstructionShow;
+        Instruction.OnInstructionHide += Instruction_OnInstructionHide;       
     }
 
     private void Awake()
@@ -32,27 +49,15 @@ public class InstructionsManager : MonoBehaviour
         }
     }
 
-    private void ShowInstruction(string instruction, int canvasLayer)
+    #region InstructionSubscriptions
+    private void Instruction_OnInstructionShow(object sender, Instruction.OnInstructionEventArgs e)
     {
-        Transform instructionsUITransform = Instantiate(intructionUIPrefab, null);
-
-        InstructionsUI instructionsUI = instructionsUITransform.GetComponentInChildren<InstructionsUI>();
-
-        if (!instructionsUI)
-        {
-            Debug.LogWarning("There's not a InstructionsUI attached to instantiated prefab");
-            return;
-        }
-
-        instructionsUI.SetInstructionsText(instruction);
-        instructionsUI.SetCanvasLayer(canvasLayer);
+        throw new NotImplementedException();
     }
 
-    #region InstructionCollider Subscriptions
-    private void Instruction_OnInstructionTriggered(object sender, Instruction.OnInstructionTriggeredEventArgs e)
+    private void Instruction_OnInstructionHide(object sender, Instruction.OnInstructionEventArgs e)
     {
-        ShowInstruction(e.instruction, e.canvasSortingLayer);
+        throw new NotImplementedException();
     }
-
     #endregion
 }

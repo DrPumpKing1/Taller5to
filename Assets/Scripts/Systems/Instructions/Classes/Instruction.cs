@@ -2,38 +2,101 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
-public class Instruction : MonoBehaviour
+public abstract class Instruction : MonoBehaviour
 {
-    [Header("Settings")]
-    [SerializeField] protected int id;
-    [SerializeField] protected bool hasBeenTriggered;
-    [SerializeField, TextArea(3, 10)] protected string instruction;
-    [SerializeField] protected int canvasSortingLayer;
+    [Header("Log")]
+    [SerializeField] protected string logToAcomplish;
 
-    public void SetHasBeenTriggered() => hasBeenTriggered = true;
+    protected bool hasBeenAcomplished;
+    protected bool isShowing;
 
-    public static event EventHandler<OnInstructionTriggeredEventArgs> OnInstructionTriggered;
+    public static event EventHandler<OnInstructionEventArgs> OnInstructionShow;
+    public static event EventHandler<OnInstructionEventArgs> OnInstructionHide;
 
-    public class OnInstructionTriggeredEventArgs : EventArgs
+    public class OnInstructionEventArgs
     {
-        public string instruction;
-        public int canvasSortingLayer;
+        public Instruction instruction;
     }
 
-    public int ID => id;
-    public bool HasBeenTriggered => hasBeenTriggered;
-
-    protected void HandleInstructionTrigger()
+    protected virtual void OnEnable()
     {
-        if (hasBeenTriggered) return;
-
-        TriggerInstruction();
-        hasBeenTriggered = true;
+        GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
+    }
+    protected virtual void OnDisable()
+    {
+        GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
     }
 
-    protected void TriggerInstruction()
+    private void Start()
     {
-        OnInstructionTriggered?.Invoke(this, new OnInstructionTriggeredEventArgs { instruction = instruction, canvasSortingLayer = canvasSortingLayer });
+        InitializeVariables();
+    }
+
+    private void Update()
+    {
+        CheckShouldHide();
+    }
+
+    private void InitializeVariables()
+    {
+        hasBeenAcomplished = false;
+        isShowing = false;
+    }
+
+    protected void ShowInstruction()
+    {
+        OnInstructionShow?.Invoke(this, new OnInstructionEventArgs { instruction = this });
+        isShowing = true;
+    }
+    protected void HideInstruction()
+    {
+        OnInstructionHide?.Invoke(this, new OnInstructionEventArgs { instruction = this });
+        isShowing = false;
+    }
+
+    protected void CheckShouldHide()
+    {
+        if (!isShowing) return;
+        if (!hasBeenAcomplished) return;
+
+        HideInstruction();
+    }
+
+    protected bool LogContainsLogToAcomplish()
+    {
+        foreach (GameLogManager.GameplayAction gameplayAction in GameLogManager.Instance.GameLog)
+        {
+            if (ComparePatterns(gameplayAction.log, logToAcomplish))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool ComparePatterns(string pattern, string toCompare)
+    {
+        List<string> patternSplitted = pattern.Split("/").ToList();
+        List<string> toCompareSplitted = toCompare.Split("/").ToList();
+
+        if (patternSplitted.Count < toCompareSplitted.Count) return false;
+
+        for (int i = 0; i < toCompareSplitted.Count; i++)
+        {
+            if (patternSplitted[i] != toCompareSplitted[i]) return false;
+        }
+
+        return true;
+    }
+
+    private void GameLogManager_OnLogAdd()
+    {
+        if (hasBeenAcomplished) return;
+        if (!LogContainsLogToAcomplish()) return;
+
+        hasBeenAcomplished = true;
     }
 }
