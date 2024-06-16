@@ -31,6 +31,7 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
     public class OnAnyObjectRotatedEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectSO;
+        public int projectionPlatformID;
     }
 
     #region IInteractableAlternate Properties
@@ -148,7 +149,7 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
         float degreesToTurn = clockwiseRotation ? degreesPerTurn : -degreesPerTurn;
         DesiredDirection = (Quaternion.AngleAxis(degreesToTurn, Vector3.up) * DesiredDirection).normalized;
 
-        OnAnyObjectRotated?.Invoke(this, new OnAnyObjectRotatedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
+        OnAnyObjectRotated?.Invoke(this, new OnAnyObjectRotatedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO , projectionPlatformID = projectableObject.ProjectionPlatform.ID});
         OnUpdatedInteractableAlternateState?.Invoke(this, EventArgs.Empty);
     }
 

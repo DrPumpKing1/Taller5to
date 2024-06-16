@@ -57,6 +57,7 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
     public class OnAnyObjectActivatedEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectSO;
+        public int projectionPlatformID;
     }
 
     #region IInteractable Methods
@@ -134,11 +135,11 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
     {
         if (activableDevice.IsActive)
         {
-            OnAnyObjectDeactivated?.Invoke(this, new OnAnyObjectActivatedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
+            OnAnyObjectDeactivated?.Invoke(this, new OnAnyObjectActivatedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO , projectionPlatformID = projectableObject.ProjectionPlatform.ID});
         }
         else
         {
-            OnAnyObjectActivated?.Invoke(this, new OnAnyObjectActivatedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
+            OnAnyObjectActivated?.Invoke(this, new OnAnyObjectActivatedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO, projectionPlatformID = projectableObject.ProjectionPlatform.ID });
         }
 
         OnProjectableObjectActivated?.Invoke(this, EventArgs.Empty);
