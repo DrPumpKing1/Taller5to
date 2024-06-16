@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FirstClickSwitchInstruction : Instruction
+public class FirstClickSwitchInstruction : LogAcomplishedInstruction
 {
     protected override void OnEnable()
     {
