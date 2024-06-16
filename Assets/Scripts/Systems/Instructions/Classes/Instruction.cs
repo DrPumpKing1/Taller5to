@@ -26,7 +26,7 @@ public abstract class Instruction : MonoBehaviour
         InitializeVariables();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         CheckShouldHide();
     }
@@ -46,6 +46,14 @@ public abstract class Instruction : MonoBehaviour
     {
         OnInstructionHide?.Invoke(this, new OnInstructionEventArgs { instruction = this });
         isShowing = false;
+    }
+
+    protected void CheckShouldShow()
+    {
+        if (hasBeenAcomplished) return;
+        if (isShowing) return;
+
+        ShowInstruction();
     }
 
     protected void CheckShouldHide()

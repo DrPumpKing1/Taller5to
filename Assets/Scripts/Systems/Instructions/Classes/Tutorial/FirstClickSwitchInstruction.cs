@@ -17,9 +17,6 @@ public class FirstClickSwitchInstruction : LogAcomplishedInstruction
 
     private void FirstKaerumSwitchEncounterEnd_OnFirstKaerumSwitchEncounterEnd(object sender, System.EventArgs e)
     {
-        if (hasBeenAcomplished) return;
-        if (isShowing) return;
-
-        ShowInstruction();
+        CheckShouldShow();
     }
 }

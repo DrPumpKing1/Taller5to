@@ -7,7 +7,7 @@ public class LogListenerEvents : MonoBehaviour
     private void OnEnable()
     {
         //TUTORIAL
-        GameStartEvent.OnGameStart += GameStartEvent_OnGameStart;
+        GameStartCollider.OnGameStart += GameStartCollider_OnGameStart;
         BackToShipCollider.OnBackToShip += BackToShipCollider_OnBackToShip;
         MeetVyrxCollider.OnMeetVyrx += MeetVyrxCollider_OnMeetVyrx;
         IntroduceVyrxCollider.OnIntroduceVyrx += IntroduceVyrxCollider_OnIntroduceVyrx;
@@ -42,7 +42,7 @@ public class LogListenerEvents : MonoBehaviour
     private void OnDisable()
     {
         //TUTORIAL
-        GameStartEvent.OnGameStart -= GameStartEvent_OnGameStart;
+        GameStartCollider.OnGameStart -= GameStartCollider_OnGameStart;
         BackToShipCollider.OnBackToShip -= BackToShipCollider_OnBackToShip;
         MeetVyrxCollider.OnMeetVyrx -= MeetVyrxCollider_OnMeetVyrx;
         IntroduceVyrxCollider.OnIntroduceVyrx -= IntroduceVyrxCollider_OnIntroduceVyrx;
@@ -75,7 +75,7 @@ public class LogListenerEvents : MonoBehaviour
     }
 
     //TUTORIAL
-    private void GameStartEvent_OnGameStart(object sender, System.EventArgs e) => GameLogManager.Instance.Log("GameFlow/Start");
+    private void GameStartCollider_OnGameStart(object sender, System.EventArgs e) => GameLogManager.Instance.Log("GameFlow/Start");
     private void BackToShipCollider_OnBackToShip(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/BackToShip");
     private void MeetVyrxCollider_OnMeetVyrx(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/MeetVyrx");
     private void IntroduceVyrxCollider_OnIntroduceVyrx(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/IntroduceVyrx");
