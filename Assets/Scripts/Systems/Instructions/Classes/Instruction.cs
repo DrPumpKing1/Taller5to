@@ -9,8 +9,9 @@ public abstract class Instruction : MonoBehaviour
     [Header("Log")]
     [SerializeField] protected string logToAcomplish;
 
-    protected bool hasBeenAcomplished;
-    protected bool isShowing;
+    [Header("Booleans")]
+    [SerializeField] protected bool hasBeenAcomplished;
+    [SerializeField] protected bool isShowing;
 
     public static event EventHandler<OnInstructionEventArgs> OnInstructionShow;
     public static event EventHandler<OnInstructionEventArgs> OnInstructionHide;

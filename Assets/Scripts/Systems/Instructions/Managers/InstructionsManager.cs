@@ -7,11 +7,18 @@ public class InstructionsManager : MonoBehaviour
 {
     public static InstructionsManager Instance { get; private set; }
 
+    [Header("Unique Instructions")]
+    [SerializeField] private List<UniqueInstruction> uniqueInstructions = new List<UniqueInstruction>();
+
+    [Header("Debug")]
+    [SerializeField] private bool debug;
+
+    [Serializable]
     public class UniqueInstruction
     {
         public int id;
         public Instruction instruction;
-        public bool hasBeenTriggered;
+        public bool hasBeenShown;
         public Transform instructionUIPrefab;
     }
 
@@ -29,6 +36,12 @@ public class InstructionsManager : MonoBehaviour
     {
         Instruction.OnInstructionShow += Instruction_OnInstructionShow;
         Instruction.OnInstructionHide += Instruction_OnInstructionHide;       
+    }
+
+    private void OnDisable()
+    {
+        Instruction.OnInstructionShow -= Instruction_OnInstructionShow;
+        Instruction.OnInstructionHide -= Instruction_OnInstructionHide;
     }
 
     private void Awake()
@@ -49,15 +62,49 @@ public class InstructionsManager : MonoBehaviour
         }
     }
 
+    private void CheckInstructionToShow(Instruction instruction)
+    {
+        foreach(UniqueInstruction uniqueInstruction in uniqueInstructions)
+        {
+            if (uniqueInstruction.instruction != instruction) continue;
+            
+            OnInstructionShow?.Invoke(this, new OnInstructionEventArgs { uniqueInstruction = uniqueInstruction });
+            currentInstruction = uniqueInstruction;
+            uniqueInstruction.hasBeenShown = true;
+            return;            
+        }
+
+        if (debug) Debug.Log("No instruction in UniqueInstructionsList matches instruction");
+    }
+
+    private void CheckInstructionToHide(Instruction instruction)
+    {
+        foreach (UniqueInstruction uniqueInstruction in uniqueInstructions)
+        {
+            if (uniqueInstruction.instruction != instruction) continue;
+
+            if (uniqueInstruction != currentInstruction)
+            {
+                if (debug) Debug.Log("Instruction to hide is not current instruction");
+                return;
+            }
+
+            OnInstructionHide?.Invoke(this, new OnInstructionEventArgs { uniqueInstruction = uniqueInstruction });
+            return;
+        }
+
+        if (debug) Debug.Log("No instruction in UniqueInstructionsList matches instruction");
+    }
+
     #region InstructionSubscriptions
     private void Instruction_OnInstructionShow(object sender, Instruction.OnInstructionEventArgs e)
     {
-        throw new NotImplementedException();
+        CheckInstructionToShow(e.instruction);
     }
 
     private void Instruction_OnInstructionHide(object sender, Instruction.OnInstructionEventArgs e)
     {
-        throw new NotImplementedException();
+        CheckInstructionToHide(e.instruction);
     }
     #endregion
 }

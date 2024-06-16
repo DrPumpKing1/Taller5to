@@ -48,7 +48,7 @@ public class InstructionsUI : MonoBehaviour
     {
         foreach (Transform child in instructionsContainer)
         {
-            Destroy(child);
+            Destroy(child.gameObject);
         }
     }
 
