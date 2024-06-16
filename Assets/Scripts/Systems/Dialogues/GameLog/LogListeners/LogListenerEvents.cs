@@ -30,7 +30,7 @@ public class LogListenerEvents : MonoBehaviour
 
         //LEVEL2
         ThirdVirtueDoorEncounterCollider.OnThirdVirtueDoorEncounter += ThirdVirtueDoorEncounterCollider_OnThirdVirtueDoorEncounter;
-        FirstProjectionMagicBoxEncounterCollider.OnFirstProjectionMagicBoxEncounter += FirstProjectionMagicBoxEncounterCollider_OnFirstProjectionMagicBoxEncounter;
+        FirstMagicBoxProjectionEncounterCollider.OnFirstMagicBoxProjectionEncounter += FirstMagicBoxProjectionEncounterCollider_OnFirstMagicBoxProjectionEncounter;
         ThirdLearningPlatformEncounterCollider.OnThirdLearningPlatformEncounter += ThirdLearningPlatformEncounterCollider_OnThirdLearningPlatformEncounter;
 
         //LEVEL3
@@ -65,7 +65,7 @@ public class LogListenerEvents : MonoBehaviour
 
         //LEVEL2
         ThirdVirtueDoorEncounterCollider.OnThirdVirtueDoorEncounter -= ThirdVirtueDoorEncounterCollider_OnThirdVirtueDoorEncounter;
-        FirstProjectionMagicBoxEncounterCollider.OnFirstProjectionMagicBoxEncounter -= FirstProjectionMagicBoxEncounterCollider_OnFirstProjectionMagicBoxEncounter;
+        FirstMagicBoxProjectionEncounterCollider.OnFirstMagicBoxProjectionEncounter -= FirstMagicBoxProjectionEncounterCollider_OnFirstMagicBoxProjectionEncounter;
         ThirdLearningPlatformEncounterCollider.OnThirdLearningPlatformEncounter -= ThirdLearningPlatformEncounterCollider_OnThirdLearningPlatformEncounter;
 
         //LEVEL3
@@ -99,7 +99,7 @@ public class LogListenerEvents : MonoBehaviour
 
     //LEVEL2
     private void ThirdVirtueDoorEncounterCollider_OnThirdVirtueDoorEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/ThirdVirtueDoorEncounter");
-    private void FirstProjectionMagicBoxEncounterCollider_OnFirstProjectionMagicBoxEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstProjectionMagicBoxEncounter");
+    private void FirstMagicBoxProjectionEncounterCollider_OnFirstMagicBoxProjectionEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstMagicBoxProjectionEncounter");
     private void ThirdLearningPlatformEncounterCollider_OnThirdLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/ThirdLearningPlatformEncounter");
 
     //LEVEL3

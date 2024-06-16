@@ -45,12 +45,12 @@ public class LogListenerInteraction : MonoBehaviour
         GameLogManager.Instance.Log($"Interaction/RotateObject/{e.projectableObjectSO.id}");
         GameLogManager.Instance.Log($"Interaction/RotateObjectExact/{e.projectableObjectSO.id}/{e.projectionPlatformID}");
     }
-    private void ProjectableObjectActivation_OnAnyObjectDeactivated(object sender, ProjectableObjectActivation.OnAnyObjectActivatedEventArgs e)
+    private void ProjectableObjectActivation_OnAnyObjectActivated(object sender, ProjectableObjectActivation.OnAnyObjectActivatedEventArgs e)
     {
         GameLogManager.Instance.Log($"Interaction/ActivateObject/{e.projectableObjectSO.id}");
         GameLogManager.Instance.Log($"Interaction/ActivateObjectExact/{e.projectableObjectSO.id}/{e.projectionPlatformID}");
     }
-    private void ProjectableObjectActivation_OnAnyObjectActivated(object sender, ProjectableObjectActivation.OnAnyObjectActivatedEventArgs e)
+    private void ProjectableObjectActivation_OnAnyObjectDeactivated(object sender, ProjectableObjectActivation.OnAnyObjectActivatedEventArgs e)
     {
         GameLogManager.Instance.Log($"Interaction/DeactivateObject/{e.projectableObjectSO.id}");
         GameLogManager.Instance.Log($"Interaction/DeactivateObjectExact/{e.projectableObjectSO.id}/{e.projectionPlatformID}");
