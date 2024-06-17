@@ -9,7 +9,7 @@ public class ProjectableObjectSelectionSingleUI : MonoBehaviour
     [Header("UI Components")]
     [SerializeField] private Image projectableObjectImage;
     [SerializeField] private Image border;
-    [SerializeField] private TextMeshProUGUI costText;
+    [SerializeField] private TextMeshProUGUI keybindText;
 
     [Header("Colors")]
     [SerializeField] private Color selectedColor;
@@ -21,8 +21,8 @@ public class ProjectableObjectSelectionSingleUI : MonoBehaviour
 
     public bool IsSelected { get { return isSelected; } }
 
-    public void SetProyectableObjectImage(Sprite sprite) => projectableObjectImage.sprite = sprite;
-    public void SetProyectableObjectCost(int cost) => costText.text = $"Cost: {cost}";
+    public void SetProjectableObjectImage(Sprite sprite) => projectableObjectImage.sprite = sprite;
+    public void SetProjectableObjectKeybind(int keybind) => keybindText.text = $"{keybind}";
 
     public void SelectUI()
     {

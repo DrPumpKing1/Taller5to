@@ -7,6 +7,7 @@ public class ProjectableObjectSO : ScriptableObject
 {
     [Header("Scriptable Object Settings")]
     public int id;
+    public int keyBind;
     public Transform prefab;
     public int projectionGemsCost;
     public string objectName;
