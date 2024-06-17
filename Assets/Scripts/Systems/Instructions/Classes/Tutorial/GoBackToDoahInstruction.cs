@@ -7,16 +7,16 @@ public class GoBackToDoahInstruction : LogAcomplishedInstruction
     protected override void OnEnable()
     {
         base.OnEnable();
-        FirstShieldPieceCollectedEnd.OnFirstShieldPieceCollectedEnd += FirstShieldPieceCollectedEnd_OnFirstShieldPieceCollectedEnd;
+        InventoryOpeningManager.OnInventoryClose += InventoryOpeningManager_OnInventoryClose;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        FirstShieldPieceCollectedEnd.OnFirstShieldPieceCollectedEnd -= FirstShieldPieceCollectedEnd_OnFirstShieldPieceCollectedEnd;
+        InventoryOpeningManager.OnInventoryClose -= InventoryOpeningManager_OnInventoryClose;
     }
 
-    private void FirstShieldPieceCollectedEnd_OnFirstShieldPieceCollectedEnd(object sender, System.EventArgs e)
+    private void InventoryOpeningManager_OnInventoryClose(object sender, System.EventArgs e)
     {
         CheckShouldShow();
     }
