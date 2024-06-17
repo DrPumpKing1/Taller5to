@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e856ab5a3a78154bb73c2f6d54e12fc, type: 3}
+  m_Name: FirstCableProjection
+  m_EditorClassIdentifier: 
+  id: 8
+  movementLimitType: 1
+  allowSkip: 1
+  sentences:
+  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+    text: I spent my only <i>Kyosho</i> to project that <i>C'ibla</i>
+    time: 5
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
+    text: You can see your available <i>Kyoshos</i> in the <b>HUD</b>
+    time: 6
