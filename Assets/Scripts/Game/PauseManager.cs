@@ -62,6 +62,7 @@ public class PauseManager : MonoBehaviour
     {
         GamePaused = false;
         GamePausedThisFrame = false;
+        AudioListener.pause = false;
     }
 
     private void CheckPauseResumeGame()
@@ -93,6 +94,7 @@ public class PauseManager : MonoBehaviour
         OnGamePaused?.Invoke(this, EventArgs.Empty);
         SetPauseTimeScale();
         GamePaused = true;
+        AudioListener.pause = false;
     }
 
     private void ResumeGame()
@@ -100,6 +102,7 @@ public class PauseManager : MonoBehaviour
         OnGameResumed?.Invoke(this, EventArgs.Empty);
         SetResumeTimeScale();
         GamePaused = false;
+        AudioListener.pause = false;
     }
 
     private void SetPauseTimeScale() => Time.timeScale = 0f;
