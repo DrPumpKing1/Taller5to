@@ -46,7 +46,7 @@ public class SFXManager : MonoBehaviour
 
         ProjectableObjectRotation.OnAnyObjectRotated += ProjectableObjectRotation_OnAnyObjectRotated;
         ProjectableObjectActivation.OnAnyObjectActivated += ProjectableObjectActivation_OnAnyObjectActivated;
-        ProjectableObjectActivation.OnAnyObjectDeactivated += ProjectableObjectActivation_OnAnyObjectDeativated;
+        ProjectableObjectActivation.OnAnyObjectDeactivated += ProjectableObjectActivation_OnAnyObjectDeactivated;
     }
 
     private void OnDisable()
@@ -72,7 +72,7 @@ public class SFXManager : MonoBehaviour
 
         ProjectableObjectRotation.OnAnyObjectRotated -= ProjectableObjectRotation_OnAnyObjectRotated;
         ProjectableObjectActivation.OnAnyObjectActivated -= ProjectableObjectActivation_OnAnyObjectActivated;
-        ProjectableObjectActivation.OnAnyObjectDeactivated -= ProjectableObjectActivation_OnAnyObjectDeativated;
+        ProjectableObjectActivation.OnAnyObjectDeactivated -= ProjectableObjectActivation_OnAnyObjectDeactivated;
     }
 
     private void Awake()
@@ -158,12 +158,44 @@ public class SFXManager : MonoBehaviour
     {
         ProjectionPlatformProjection projectionPlatformProjection = sender as ProjectionPlatformProjection;
         PlaySoundAtPoint(SFXPoolSO.objectProjected, projectionPlatformProjection.transform.position);
+
+        switch (e.projectableObjectSO.id)
+        {
+            case 1:
+                PlaySoundAtPoint(SFXPoolSO.cableProjected, projectionPlatformProjection.transform.position);
+                break;
+            case 2:
+                PlaySoundAtPoint(SFXPoolSO.magicBoxProjected, projectionPlatformProjection.transform.position);
+                break;
+            case 3:
+                PlaySoundAtPoint(SFXPoolSO.senderProjected, projectionPlatformProjection.transform.position);
+                break;
+            case 4:
+                PlaySoundAtPoint(SFXPoolSO.drainerProjected, projectionPlatformProjection.transform.position);
+                break;
+        }
     }
 
     private void ProjectableObjectDematerialization_OnAnyObjectDematerialized(object sender, ProjectableObjectDematerialization.OnAnyObjectDematerializedEventArgs e)
     {
         ProjectableObjectDematerialization projectableObjectDematerialization = sender as ProjectableObjectDematerialization;
         PlaySoundAtPoint(SFXPoolSO.objectDematerialization, projectableObjectDematerialization.transform.position);
+
+        switch (e.projectableObjectSO.id)
+        {
+            case 1:
+                PlaySoundAtPoint(SFXPoolSO.cableDematerialized, projectableObjectDematerialization.transform.position);
+                break;
+            case 2:
+                PlaySoundAtPoint(SFXPoolSO.magicBoxDematerialized, projectableObjectDematerialization.transform.position);
+                break;
+            case 3:
+                PlaySoundAtPoint(SFXPoolSO.senderDematerialized, projectableObjectDematerialization.transform.position);
+                break;
+            case 4:
+                PlaySoundAtPoint(SFXPoolSO.drainerDematerialized, projectableObjectDematerialization.transform.position);
+                break;
+        }
     }
 
     private void ProjectionResetObject_OnAnyProjectionResetObjectUsed(object sender, System.EventArgs e)
@@ -178,18 +210,43 @@ public class SFXManager : MonoBehaviour
     {
         ProjectableObjectRotation projectableObjectRotation = sender as ProjectableObjectRotation;
         PlaySoundAtPoint(SFXPoolSO.objectRotated, projectableObjectRotation.transform.position);
-    }
-    private void ProjectableObjectActivation_OnAnyObjectDeativated(object sender, ProjectableObjectActivation.OnAnyObjectActivatedEventArgs e)
-    {
-        ProjectableObjectActivation projectableObjectActivation = sender as ProjectableObjectActivation;
-        PlaySoundAtPoint(SFXPoolSO.objectActivation, projectableObjectActivation.transform.position);
-    }
 
+        switch (e.projectableObjectSO.id)
+        {
+            case 1:
+                PlaySoundAtPoint(SFXPoolSO.cableRotated, projectableObjectRotation.transform.position);
+                break;
+            case 3:
+                PlaySoundAtPoint(SFXPoolSO.senderRotated, projectableObjectRotation.transform.position);
+                break;
+        }
+    }
     private void ProjectableObjectActivation_OnAnyObjectActivated(object sender, ProjectableObjectActivation.OnAnyObjectActivatedEventArgs e)
     {
         ProjectableObjectActivation projectableObjectActivation = sender as ProjectableObjectActivation;
-        PlaySoundAtPoint(SFXPoolSO.objectDeactivation, projectableObjectActivation.transform.position);
+        PlaySoundAtPoint(SFXPoolSO.objectActivation, projectableObjectActivation.transform.position);
+
+        switch (e.projectableObjectSO.id)
+        {
+            case 2:
+                PlaySoundAtPoint(SFXPoolSO.magicBoxActivated, projectableObjectActivation.transform.position);
+                break;
+        }
     }
+
+    private void ProjectableObjectActivation_OnAnyObjectDeactivated(object sender, ProjectableObjectActivation.OnAnyObjectActivatedEventArgs e)
+    {
+        ProjectableObjectActivation projectableObjectActivation = sender as ProjectableObjectActivation;
+        PlaySoundAtPoint(SFXPoolSO.objectDeactivation, projectableObjectActivation.transform.position);
+
+        switch (e.projectableObjectSO.id)
+        {
+            case 2:
+                PlaySoundAtPoint(SFXPoolSO.magicBoxDeactivated, projectableObjectActivation.transform.position);
+                break;
+        }
+    }
+
     #endregion
 
     #region Shields
@@ -197,12 +254,44 @@ public class SFXManager : MonoBehaviour
     {
         ShieldPieceCollection shieldPieceCollection = sender as ShieldPieceCollection;
         PlaySoundAtPoint(SFXPoolSO.shieldCollected, shieldPieceCollection.transform.position);
+
+        switch (e.shieldPieceSO.dialect)
+        {
+            case Dialect.Zurryth:
+                PlaySoundAtPoint(SFXPoolSO.zurrythShieldCollected, shieldPieceCollection.transform.position);
+                break;
+            case Dialect.Rakithu:
+                PlaySoundAtPoint(SFXPoolSO.rakithuShieldCollected, shieldPieceCollection.transform.position);
+                break;
+            case Dialect.Xotark:
+                PlaySoundAtPoint(SFXPoolSO.xotarkShieldCollected, shieldPieceCollection.transform.position);
+                break;
+            case Dialect.Vythanu:
+                PlaySoundAtPoint(SFXPoolSO.vythanuShieldCollected, shieldPieceCollection.transform.position);
+                break;
+        }
     }
 
     private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e)
     {
         ShieldDoor shieldDoor = sender as ShieldDoor;
         PlaySoundAtPoint(SFXPoolSO.valueDoorOpened, shieldDoor.transform.position);
+
+        switch (e.dialect)
+        {
+            case Dialect.Zurryth:
+                PlaySoundAtPoint(SFXPoolSO.zurrythValueDoorOpened, shieldDoor.transform.position);
+                break;
+            case Dialect.Rakithu:
+                PlaySoundAtPoint(SFXPoolSO.rakithuValueDoorOpened, shieldDoor.transform.position);
+                break;
+            case Dialect.Xotark:
+                PlaySoundAtPoint(SFXPoolSO.xotarkValueDoorOpened, shieldDoor.transform.position);
+                break;
+            case Dialect.Vythanu:
+                PlaySoundAtPoint(SFXPoolSO.vythanuValueDoorOpened, shieldDoor.transform.position);
+                break;
+        }
     }
     #endregion
 

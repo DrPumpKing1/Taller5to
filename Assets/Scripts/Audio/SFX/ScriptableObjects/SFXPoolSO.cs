@@ -5,20 +5,52 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewSFXPoolSO", menuName = "ScriptableObjects/Audio/SFXPool")]
 public class SFXPoolSO : ScriptableObject
 {
+    [Header("Projection")]
     public AudioClip[] objectProjected;
     public AudioClip[] objectFailedProjection;
-
     public AudioClip[] objectDematerialization;
     public AudioClip[] projectionResetObjectUsed;
 
-    public AudioClip[] objectRotated;
+    [Header("Exact Object Projection")]
+    public AudioClip[] cableProjected;
+    public AudioClip[] magicBoxProjected;
+    public AudioClip[] senderProjected;
+    public AudioClip[] drainerProjected;
 
+    [Header("Exact Object Dematerialization")]
+    public AudioClip[] cableDematerialized;
+    public AudioClip[] magicBoxDematerialized;
+    public AudioClip[] senderDematerialized;
+    public AudioClip[] drainerDematerialized;
+
+    [Header("Object Interaction")]
+    public AudioClip[] objectRotated;
     public AudioClip[] objectActivation;
     public AudioClip[] objectDeactivation;
 
+    [Header("Exact Object Interaction")]
+    public AudioClip[] cableRotated;
+    public AudioClip[] senderRotated;
+    public AudioClip[] magicBoxActivated;
+    public AudioClip[] magicBoxDeactivated;
+
+    [Header("Shields")]
     public AudioClip[] shieldCollected;
     public AudioClip[] valueDoorOpened;
 
+    [Header("Exact Shields")]
+    public AudioClip[] zurrythShieldCollected;
+    public AudioClip[] rakithuShieldCollected;
+    public AudioClip[] xotarkShieldCollected;
+    public AudioClip[] vythanuShieldCollected;
+
+    [Header("Exact Value Doors")]
+    public AudioClip[] zurrythValueDoorOpened;
+    public AudioClip[] rakithuValueDoorOpened;
+    public AudioClip[] xotarkValueDoorOpened;
+    public AudioClip[] vythanuValueDoorOpened;
+
+    [Header("Electrical")]
     public AudioClip[] switchToggle;
 
     public AudioClip[] doorPowered;
