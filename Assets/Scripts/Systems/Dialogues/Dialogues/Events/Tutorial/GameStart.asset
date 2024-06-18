@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: GameStart
   m_EditorClassIdentifier: 
   id: 1
-  limitMovement: 0
+  movementLimitType: 0
   allowSkip: 0
   sentences:
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
-    text: 'Let''s get this over with. WASD to move inside that temple is the first
-      thing I should do.
+    text: 'Let''s get this over with. Moving inside that temple is the first thing
+      I should do.
 
 '
     time: 5

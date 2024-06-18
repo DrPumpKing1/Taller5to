@@ -38,5 +38,9 @@ public class LogListenerProjection : MonoBehaviour
         GameLogManager.Instance.Log($"Projection/DematerializeObject/{e.projectableObjectSO.id}");
         GameLogManager.Instance.Log($"Projection/DematerializeObjectExact/{e.projectableObjectSO.id}/{e.projectionPlatformID}");
     }
-    private void ProjectionManager_OnAllObjectsDematerialized(object sender, ProjectionManager.OnAllObjectsDematerializedEventArgs e) => GameLogManager.Instance.Log($"Projection/DematerializeAllObjects/{e.projectableObjectSOs.Count}");
+    private void ProjectionManager_OnAllObjectsDematerialized(object sender, ProjectionManager.OnAllObjectsDematerializedEventArgs e)
+    {
+        GameLogManager.Instance.Log($"Projection/DematerializeAllObjects");
+        GameLogManager.Instance.Log($"Projection/DematerializeAllObjectsCount/{e.projectableObjectSOs.Count}");
+    }
 }
