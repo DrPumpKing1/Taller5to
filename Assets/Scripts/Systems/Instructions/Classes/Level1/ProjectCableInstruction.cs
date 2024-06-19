@@ -12,7 +12,7 @@ public class ProjectCableInstruction : LogAcomplishedInstruction
     protected override void OnDisable()
     {
         base.OnDisable();
-        FirstProjectionPlatformEncounterEnd.OnFirstProjectionPlatformEncounterEnd += FirstProjectionPlatformEncounterEnd_OnFirstProjectionPlatformEncounterEnd; ;
+        FirstProjectionPlatformEncounterEnd.OnFirstProjectionPlatformEncounterEnd -= FirstProjectionPlatformEncounterEnd_OnFirstProjectionPlatformEncounterEnd; ;
     }
 
     private void FirstProjectionPlatformEncounterEnd_OnFirstProjectionPlatformEncounterEnd(object sender, System.EventArgs e)

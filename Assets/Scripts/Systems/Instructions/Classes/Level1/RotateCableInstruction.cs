@@ -12,7 +12,7 @@ public class RotateCableInstruction : LogAcomplishedInstruction
     protected override void OnDisable()
     {
         base.OnDisable();
-        FirstCableRotationEncounterEnd.OnFirstCableRotationEncounterEnd += FirstCableRotationEncounterEnd_OnFirstCableRotationEncounterEnd;
+        FirstCableRotationEncounterEnd.OnFirstCableRotationEncounterEnd -= FirstCableRotationEncounterEnd_OnFirstCableRotationEncounterEnd;
     }
 
     private void FirstCableRotationEncounterEnd_OnFirstCableRotationEncounterEnd(object sender, System.EventArgs e)
