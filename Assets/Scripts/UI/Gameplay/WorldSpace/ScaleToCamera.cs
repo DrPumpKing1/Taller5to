@@ -7,7 +7,7 @@ public class ScaleToCamera : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private Mode mode;
 
-    private enum Mode { ConstantScale}
+    private enum Mode {ConstantScale}
 
     private void LateUpdate()
     {

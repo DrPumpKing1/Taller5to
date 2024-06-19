@@ -8,7 +8,7 @@ public class LookAtCamera : MonoBehaviour
 
     private enum Mode { LookAt, LookAtInverted, CameraForward, CameraForwardInverted }
 
-    private void LateUpdate()
+    private void Start()
     {
         LookAtLogic();
     }
