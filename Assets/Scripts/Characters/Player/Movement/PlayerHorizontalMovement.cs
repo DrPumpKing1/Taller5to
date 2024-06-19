@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerHorizontalMovement : MonoBehaviour
 {
+    public static PlayerHorizontalMovement Instance { get; private set; }
+
     [Header("Enabler")]
     [SerializeField] private bool movementEnabled;
 
@@ -30,6 +32,10 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [SerializeField, Range(1f, 100f)] private float smoothVelocityFactor = 5f;
     [SerializeField, Range(1f, 100f)] private float smoothDirectionFactor = 5f;
 
+    [Header("State")]
+    [SerializeField] private State state;
+    private enum State {NotMoving, Walking, Sprinting}
+
     private Rigidbody _rigidbody;
 
     public Vector2 DirectionInputVector => movementInput.GetIsometricDirectionVectorNormalized();
@@ -43,21 +49,45 @@ public class PlayerHorizontalMovement : MonoBehaviour
     public Vector3 FinalMoveDir { get; private set; }
     public Vector3 SmoothFinalMoveDir { get; private set; }
     public Vector3 FinalMoveVector { get; private set; }
-    public bool MovementEnabled { get { return movementEnabled; } }
+    public bool MovementEnabled => movementEnabled;
+
+    public static event EventHandler OnPlayerStopMoving;
+    public static event EventHandler OnPlayerStartSprinting;
+    public static event EventHandler OnPlayerStartWalking;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        SetSingleton();
+    }
+
+    private void Start()
+    {
+        SetMovementState(State.NotMoving);
     }
 
     private void Update()
     {
         HandleMovement();
+        HandleMovementState();
     }
 
     private void FixedUpdate()
     {
         ApplyHorizontalMovement();
+    }
+
+    private void SetSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("There is more than one PlayerHorizontalMovement instance, proceding to destroy duplicate");
+            Destroy(gameObject);
+        }
     }
 
     private void HandleMovement()
@@ -164,4 +194,73 @@ public class PlayerHorizontalMovement : MonoBehaviour
     }
 
     public bool HasMovementInput() => DirectionInputVector != Vector2.zero;
+
+    private void HandleMovementState()
+    {
+        switch (state)
+        {
+            case State.NotMoving:
+                NotMovingLogic();
+                break;
+            case State.Walking:
+                WalkingLogic();
+                break;
+            case State.Sprinting:
+                SprintingLogic();
+                break;
+        }
+    }
+
+    private void NotMovingLogic()
+    {
+        if (!checkGround.IsGrounded) return;
+
+        if(desiredSpeed == walkSpeed)
+        {
+            SetMovementState(State.Walking);
+            OnPlayerStartWalking?.Invoke(this, EventArgs.Empty);
+            return;
+        }
+
+        if (desiredSpeed == sprintSpeed)
+        {
+            SetMovementState(State.Sprinting);
+            OnPlayerStartSprinting?.Invoke(this, EventArgs.Empty);
+            return;
+        }
+    }
+
+    private void WalkingLogic()
+    {
+        if (!checkGround.IsGrounded || desiredSpeed == 0f)
+        {
+            SetMovementState(State.NotMoving);
+            OnPlayerStopMoving?.Invoke(this, EventArgs.Empty);
+        }
+
+        if (desiredSpeed == sprintSpeed)
+        {
+            SetMovementState(State.Sprinting);
+            OnPlayerStartSprinting?.Invoke(this, EventArgs.Empty);
+            return;
+        }
+    }
+
+    private void SprintingLogic()
+    {
+        if (!checkGround.IsGrounded || desiredSpeed == 0f)
+        {
+            SetMovementState(State.NotMoving);
+            OnPlayerStopMoving?.Invoke(this, EventArgs.Empty);
+        }
+
+        if (desiredSpeed == walkSpeed)
+        {
+            SetMovementState(State.Walking);
+            OnPlayerStartWalking?.Invoke(this, EventArgs.Empty);
+            return;
+        }
+    }
+
+    private void SetMovementState(State state) => this.state = state;
 }
