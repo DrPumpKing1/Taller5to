@@ -67,7 +67,7 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
         projectableObject.OnProjectionPlatformSet -= ProjectableObject_OnProjectionPlatformSet;
     }
 
-    protected virtual void Update()
+    private void Update()
     {
         HandleRotation();
     }

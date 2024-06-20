@@ -13,7 +13,6 @@ public class BossPlatformDestruction : MonoBehaviour
     [Space]
     [SerializeField] private float timer;
 
-    private bool allPlatformsDestroyed;
     private bool onGraceTime;
 
     public static event EventHandler OnBossDestroyProjectionPlatform;
@@ -24,6 +23,7 @@ public class BossPlatformDestruction : MonoBehaviour
         BossStateHandler.OnBossActiveStart += BossStateHandler_OnBossActiveStart;
         BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
+        BossStateHandler.OnPlayerDefeated += BossStateHandler_OnPlayerDefeated;
     }
 
     private void OnDisable()
@@ -31,6 +31,7 @@ public class BossPlatformDestruction : MonoBehaviour
         BossStateHandler.OnBossActiveStart -= BossStateHandler_OnBossActiveStart;
         BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
+        BossStateHandler.OnPlayerDefeated -= BossStateHandler_OnPlayerDefeated;
     }
 
     private void Start()
@@ -45,14 +46,12 @@ public class BossPlatformDestruction : MonoBehaviour
     private void InitializeVariables()
     {
         ResetTimer();
-        allPlatformsDestroyed = false;
         onGraceTime = false;
     }
 
     private void HandleProjectionPlatformDestruction()
     {
         if (BossStateHandler.Instance.BossState != BossStateHandler.State.OnPhase) return;
-        if (allPlatformsDestroyed) return;
         if (onGraceTime) return;
 
         if (timer > 0) timer -= Time.deltaTime;
@@ -94,10 +93,7 @@ public class BossPlatformDestruction : MonoBehaviour
     {
         if (projectionPlatforms.Count != 0) return;
 
-        allPlatformsDestroyed = true;
         OnBossDestroyAllProjectionPlatforms?.Invoke(this, EventArgs.Empty);
-
-        Debug.Log("gg");
     }
 
     private IEnumerator GraceTimeCoroutine()
@@ -125,6 +121,10 @@ public class BossPlatformDestruction : MonoBehaviour
         ResetTimer();
     }
     private void BossStateHandler_OnBossDefeated(object sender, EventArgs e)
+    {
+        ResetTimer();
+    }
+    private void BossStateHandler_OnPlayerDefeated(object sender, EventArgs e)
     {
         ResetTimer();
     }

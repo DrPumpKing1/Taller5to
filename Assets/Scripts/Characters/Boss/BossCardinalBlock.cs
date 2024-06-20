@@ -5,14 +5,25 @@ using System;
 
 public class BossCardinalBlock : MonoBehaviour
 {
-    [Header("Settings")]
+    [Header("Directions")]
     [SerializeField] private List<Direction> availableDirections;
     [SerializeField] private bool randomizeDirection;
+
+    [Header("Direction Blocks")]
+    [SerializeField] private List<DirectionBlock> directionBlocks;
     [Space]
     [SerializeField] private List<Direction> currentBlockingDirections;
+
     public enum Direction {Front, Back, Left, Right}
 
     public static event EventHandler<OnBossBlockEventArgs> OnBossBlock;
+
+    [Serializable]
+    public class DirectionBlock
+    {
+        public Direction direction;
+        public Transform block;
+    }
 
     public class OnBossBlockEventArgs : EventArgs
     {
@@ -22,11 +33,13 @@ public class BossCardinalBlock : MonoBehaviour
     private void OnEnable()
     {
         BossPhaseHandler.OnPhaseChange += BossPhaseHandler_OnPhaseChange;
+        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
     }
 
     private void OnDisable()
     {
         BossPhaseHandler.OnPhaseChange -= BossPhaseHandler_OnPhaseChange;
+        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
     }
 
     private void BlockInDirection()
@@ -39,6 +52,8 @@ public class BossCardinalBlock : MonoBehaviour
         availableDirections.Remove(newBlockingDirection);
         currentBlockingDirections.Add(newBlockingDirection);
 
+        EnableDirectionBlock(newBlockingDirection);
+
         OnBossBlock?.Invoke(this, new OnBossBlockEventArgs { direction = newBlockingDirection });
     }
 
@@ -50,11 +65,37 @@ public class BossCardinalBlock : MonoBehaviour
 
     private Direction ChooseFirstDirection() => availableDirections[0];
 
+    private void EnableDirectionBlock(Direction direction)
+    {
+        foreach(DirectionBlock directionBlock in directionBlocks)
+        {
+            if (directionBlock.direction == direction)
+            {
+                directionBlock.block.gameObject.SetActive(true);
+                return;
+            }
+        }
+    }
+
+    private void DisableAllDirectionBlocks()
+    {
+        foreach (DirectionBlock directionBlock in directionBlocks)
+        {
+            directionBlock.block.gameObject.SetActive(false);
+        }
+    }
 
     #region BossPhaseHandler Subsctiptions
     private void BossPhaseHandler_OnPhaseChange(object sender, BossPhaseHandler.OnPhaseChangeEventArgs e)
     {
         BlockInDirection();
+    }
+    #endregion
+
+    #region BossStateHandler Subscriptions
+    private void BossStateHandler_OnBossDefeated(object sender, EventArgs e)
+    {
+        DisableAllDirectionBlocks();
     }
     #endregion
 }

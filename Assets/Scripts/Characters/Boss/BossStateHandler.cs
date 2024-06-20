@@ -14,7 +14,10 @@ public class BossStateHandler : MonoBehaviour
     [SerializeField] private float timeActivating;
     [SerializeField] private float timeChangingPhase;
 
-    public enum State { Rest, Activating, PhaseChange, OnPhase, Defeated }
+    [Header("Debug")]
+    [SerializeField] private bool debug;
+
+    public enum State { Rest, Activating, PhaseChange, OnPhase, BossDefeated, PlayerDefeated}
     public State BossState => state;
 
     public static event EventHandler OnBossActiveStart;
@@ -23,12 +26,15 @@ public class BossStateHandler : MonoBehaviour
     public static event EventHandler OnBossPhaseChangeStart;
     public static event EventHandler OnBossPhaseChangeEnd;
     public static event EventHandler OnBossDefeated;
+    public static event EventHandler OnPlayerDefeated;
 
     private void OnEnable()
     {
         BossPhaseHandler.OnFirstPhaseStart += BossPhaseHandler_OnFirstPhaseStart;
         BossPhaseHandler.OnPhaseChange += BossPhaseHandler_OnPhaseChange;
-        BossPhaseHandler.OnLastPhaseEnded += BossPhaseHandler_OnLastPhaseEnded;      
+        BossPhaseHandler.OnLastPhaseEnded += BossPhaseHandler_OnLastPhaseEnded;
+
+        BossPlatformDestruction.OnBossDestroyAllProjectionPlatforms += BossPlatformDestruction_OnBossDestroyAllProjectionPlatforms;
     }
 
     private void OnDisable()
@@ -92,8 +98,18 @@ public class BossStateHandler : MonoBehaviour
 
     private void DefeatBoss()
     {
-        SetBossState(State.Defeated);
+        SetBossState(State.BossDefeated);
         OnBossDefeated?.Invoke(this, EventArgs.Empty);
+
+        if (debug) Debug.Log("Boss Defeated");
+    }
+
+    private void DefeatPlayer()
+    {
+        SetBossState(State.PlayerDefeated);
+        OnPlayerDefeated?.Invoke(this, EventArgs.Empty);
+
+        if (debug) Debug.Log("Player Defeated");
     }
 
     #region BossPhaseHandlerSubscriptions
@@ -109,6 +125,13 @@ public class BossStateHandler : MonoBehaviour
     private void BossPhaseHandler_OnLastPhaseEnded(object sender, EventArgs e)
     {
         DefeatBoss();
+    }
+    #endregion
+
+    #region BossPlatformDestruction Subriptions
+    private void BossPlatformDestruction_OnBossDestroyAllProjectionPlatforms(object sender, EventArgs e)
+    {
+        DefeatPlayer();
     }
     #endregion
 }
