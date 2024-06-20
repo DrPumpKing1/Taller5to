@@ -1,25 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BossStateHandler : MonoBehaviour
 {
     public static BossStateHandler Instance;
 
     [Header("States")]
-    [SerializeField] private State bossState;
-    public  enum State { Rest, StartingPhase, OnPhase, Defeated }
+    [SerializeField] private State state;
 
-    public State BossState => bossState;
+    [Header("Settings")]
+    [SerializeField] private float timeActivating;
+    [SerializeField] private float timeChangingPhase;
+
+    public enum State { Rest, PhaseChange, OnPhase, Defeated }
+    public State BossState => state;
+
+    public static event EventHandler OnBossActiveStart;
+    public static event EventHandler OnBossActiveEnd;
+
+    public static event EventHandler OnBossPhaseChangeStart;
+    public static event EventHandler OnBossPhaseChangeEnd;
+    public static event EventHandler OnBossDefeated;
+
+    private void OnEnable()
+    {
+        BossPhaseHandler.OnFirstPhaseStart += BossPhaseHandler_OnFirstPhaseStart;
+        BossPhaseHandler.OnPhaseChange += BossPhaseHandler_OnPhaseChange;
+        BossPhaseHandler.OnLastPhaseEnded += BossPhaseHandler_OnLastPhaseEnded;      
+    }
+
+    private void OnDisable()
+    {
+        BossPhaseHandler.OnFirstPhaseStart -= BossPhaseHandler_OnFirstPhaseStart;
+        BossPhaseHandler.OnPhaseChange -= BossPhaseHandler_OnPhaseChange;
+        BossPhaseHandler.OnLastPhaseEnded -= BossPhaseHandler_OnLastPhaseEnded;
+    }
 
     private void Awake()
     {
         SetSingleton();
     }
 
-    private void Update()
+    private void Start()
     {
-        HandleBossState();
+        SetBossState(State.Rest);
     }
 
     private void SetSingleton()
@@ -35,8 +61,54 @@ public class BossStateHandler : MonoBehaviour
         }
     }
 
-    private void HandleBossState()
-    {
+    private void SetBossState(State state) => this.state = state;
 
+
+    private IEnumerator ActivateBossCoroutine()
+    {
+        SetBossState(State.PhaseChange);
+
+        OnBossActiveStart?.Invoke(this, EventArgs.Empty);
+
+        yield return new WaitForSeconds(timeActivating);
+
+        OnBossActiveEnd?.Invoke(this, EventArgs.Empty);
+
+        SetBossState(State.OnPhase);
     }
+
+    private IEnumerator ChangePhaseCoroutine()
+    {
+        SetBossState(State.PhaseChange);
+
+        OnBossPhaseChangeStart?.Invoke(this, EventArgs.Empty);
+
+        yield return new WaitForSeconds(timeChangingPhase);
+
+        OnBossPhaseChangeEnd?.Invoke(this, EventArgs.Empty);
+
+        SetBossState(State.OnPhase);
+    }
+
+    private void DefeatBoss()
+    {
+        SetBossState(State.Defeated);
+        OnBossDefeated?.Invoke(this, EventArgs.Empty);
+    }
+
+    #region BossPhaseHandlerSubscriptions
+    private void BossPhaseHandler_OnFirstPhaseStart(object sender, EventArgs e)
+    {
+        StartCoroutine(ActivateBossCoroutine());
+    }
+    private void BossPhaseHandler_OnPhaseChange(object sender, BossPhaseHandler.OnPhaseChangeEventArgs e)
+    {
+        StartCoroutine(ChangePhaseCoroutine());
+    }
+
+    private void BossPhaseHandler_OnLastPhaseEnded(object sender, EventArgs e)
+    {
+        DefeatBoss();
+    }
+    #endregion
 }
