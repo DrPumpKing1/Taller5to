@@ -7,12 +7,13 @@ using System;
 
 public class DialogueUI : MonoBehaviour
 {
+    [Header("Components")]
+    [SerializeField] private Animator animator;
+
     [Header("UI Components")]
     [SerializeField] private TextMeshProUGUI speakerNameText;
     [SerializeField] private TextMeshProUGUI sentenceText;
     [SerializeField] private Image speakerImage;
-
-    private Animator animator;
 
     private const string OPEN_TRIGGER = "Open";
     private const string CLOSE_TRIGGER = "Close";
@@ -40,9 +41,7 @@ public class DialogueUI : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
         canvasGroup = GetComponent<CanvasGroup>();
-
     }
 
     private void Start()

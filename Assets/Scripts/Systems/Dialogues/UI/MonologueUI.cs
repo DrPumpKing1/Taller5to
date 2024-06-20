@@ -6,10 +6,11 @@ using TMPro;
 
 public class MonologueUI : MonoBehaviour
 {
+    [Header("Components")]
+    [SerializeField] private Animator animator;
+
     [Header("UI Components")]
     [SerializeField] private TextMeshProUGUI monologueText;
-
-    private Animator animator;
 
     private const string OPEN_TRIGGER = "Open";
     private const string CLOSE_TRIGGER = "Close";
@@ -37,9 +38,7 @@ public class MonologueUI : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
         canvasGroup = GetComponent<CanvasGroup>();
-
     }
 
     private void Start()

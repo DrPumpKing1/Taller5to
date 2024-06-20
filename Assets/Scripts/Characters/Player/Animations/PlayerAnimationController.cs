@@ -6,13 +6,13 @@ using UnityEngine;
 public class PlayerAnimationController : MonoBehaviour
 {
     [Header("Components")]
+    [SerializeField] private Animator animator;
+    [Space]
     [SerializeField] private PlayerHorizontalMovement playerHorizontalMovement;
     [SerializeField] private PlayerFall playerFall;
     [SerializeField] private PlayerLand playerLand;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private CheckGround checkGround;
-
-    private Animator animator;
 
     public float HorizontalSpeed => playerHorizontalMovement.FinalMoveVector.magnitude;
 
@@ -29,11 +29,6 @@ public class PlayerAnimationController : MonoBehaviour
     private const string DEATH_TRIGGER = "Death";
 
     private const string GROUNDED_BOOL = "Grounded";
-
-    private void Awake()
-    {
-        animator = GetComponent<Animator>();
-    }
 
     private void OnEnable()
     {
