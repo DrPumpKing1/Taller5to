@@ -11,8 +11,9 @@ public class BossPhaseHandler : MonoBehaviour
     [SerializeField] private int phaseNumber;
     [SerializeField] private int lastPhase;
 
-    [Header("Invulnerability")]
+    [Header("Booleans")]
     public bool isInvulnerable;
+    public bool isDefeated;
 
     public static event EventHandler OnFirstPhaseStart;
     public static event EventHandler<OnPhaseChangeEventArgs> OnPhaseChange;
@@ -30,9 +31,12 @@ public class BossPhaseHandler : MonoBehaviour
         BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
         BossStateHandler.OnBossPhaseChangeEnd += BossStateHandler_OnBossPhaseChangeEnd;
 
+        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
+
         BossKaerumOvercharge.OnBossHit += BossKaerumOvercharge_OnBossHit;
         BossKaerumOvercharge.OnBossOvercharge += BossKaerumOvercharge_OnBossOvercharge;
     }
+
 
     private void OnDisable()
     {
@@ -57,7 +61,8 @@ public class BossPhaseHandler : MonoBehaviour
     
     private void InitializeVariables()
     {
-        isInvulnerable = true;
+        SetInvulverability(true);
+        SetDefeated(false);
         phaseNumber = 0;
     }
 
@@ -95,12 +100,14 @@ public class BossPhaseHandler : MonoBehaviour
     }
 
     private void SetInvulverability(bool invulnerable) => isInvulnerable = invulnerable;
+    private void SetDefeated(bool defeated) => isDefeated = defeated;
 
     #region BossStateHandler Subscriptions
     private void BossStateHandler_OnBossActiveStart(object sender, EventArgs e) => SetInvulverability(true);
     private void BossStateHandler_OnBossActiveEnd(object sender, EventArgs e) => SetInvulverability(false);
     private void BossStateHandler_OnBossPhaseChangeStart(object sender, EventArgs e) => SetInvulverability(true);
     private void BossStateHandler_OnBossPhaseChangeEnd(object sender, EventArgs e) => SetInvulverability(false);
+    private void BossStateHandler_OnBossDefeated(object sender, EventArgs e) => SetDefeated(true);
     #endregion
 
     #region BossKaerumOvercharge Subscriptions

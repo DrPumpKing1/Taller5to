@@ -30,6 +30,7 @@ public class ProjectionPlatform : MonoBehaviour
 
     public event EventHandler OnProjectionPlatformClear;
     public event EventHandler<OnProjectionEventArgs> OnProjectionPlatformSet;
+    public event EventHandler OnProjectionPlatformDestroyed;
 
     public class OnProjectionEventArgs : EventArgs
     {
@@ -57,5 +58,11 @@ public class ProjectionPlatform : MonoBehaviour
     {
         currentProjectedObject = projectableObjectSO;
         OnProjectionPlatformSet?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO });
+    }
+
+    public void DestroyProjectionPlatform()
+    {
+        OnProjectionPlatformDestroyed?.Invoke(this, EventArgs.Empty);
+        Destroy(gameObject);
     }
 }

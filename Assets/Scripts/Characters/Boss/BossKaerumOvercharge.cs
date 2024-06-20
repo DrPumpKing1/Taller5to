@@ -10,8 +10,6 @@ public class BossKaerumOvercharge : MonoBehaviour
 
     [SerializeField] private int currentHitsInPhase;
 
-
-
     public static event EventHandler OnBossOvercharge;
     public static event EventHandler<OnBossHitEventArgs> OnBossHit;
 
@@ -32,6 +30,8 @@ public class BossKaerumOvercharge : MonoBehaviour
 
     private void CheckHit()
     {
+        if (BossPhaseHandler.Instance.isDefeated) return;
+
         OnBossHit?.Invoke(this, new OnBossHitEventArgs { isInvulnerable = BossPhaseHandler.Instance.isInvulnerable });
 
         if (!BossPhaseHandler.Instance.isInvulnerable) currentHitsInPhase++;

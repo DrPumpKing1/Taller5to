@@ -14,7 +14,7 @@ public class BossStateHandler : MonoBehaviour
     [SerializeField] private float timeActivating;
     [SerializeField] private float timeChangingPhase;
 
-    public enum State { Rest, PhaseChange, OnPhase, Defeated }
+    public enum State { Rest, Activating, PhaseChange, OnPhase, Defeated }
     public State BossState => state;
 
     public static event EventHandler OnBossActiveStart;
@@ -66,7 +66,7 @@ public class BossStateHandler : MonoBehaviour
 
     private IEnumerator ActivateBossCoroutine()
     {
-        SetBossState(State.PhaseChange);
+        SetBossState(State.Activating);
 
         OnBossActiveStart?.Invoke(this, EventArgs.Empty);
 
