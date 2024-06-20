@@ -14,6 +14,9 @@ public class BossCardinalBlock : MonoBehaviour
     [Space]
     [SerializeField] private List<Direction> currentBlockingDirections;
 
+    [Header("Block Since Start")]
+    [SerializeField] private bool blockSinceStart;
+
     public enum Direction {Front, Back, Left, Right}
 
     public static event EventHandler<OnBossBlockEventArgs> OnBossBlock;
@@ -32,13 +35,15 @@ public class BossCardinalBlock : MonoBehaviour
 
     private void OnEnable()
     {
-        BossPhaseHandler.OnPhaseChange += BossPhaseHandler_OnPhaseChange;
+        BossStateHandler.OnBossActiveEnd += BossStateHandler_OnBossActiveEnd;
+        BossStateHandler.OnBossPhaseChangeEnd += BossStateHandler_OnBossPhaseChangeEnd;
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
     }
 
     private void OnDisable()
     {
-        BossPhaseHandler.OnPhaseChange -= BossPhaseHandler_OnPhaseChange;
+        BossStateHandler.OnBossActiveEnd -= BossStateHandler_OnBossActiveEnd;
+        BossStateHandler.OnBossPhaseChangeEnd -= BossStateHandler_OnBossPhaseChangeEnd;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
     }
 
@@ -86,7 +91,12 @@ public class BossCardinalBlock : MonoBehaviour
     }
 
     #region BossPhaseHandler Subsctiptions
-    private void BossPhaseHandler_OnPhaseChange(object sender, BossPhaseHandler.OnPhaseChangeEventArgs e)
+    private void BossStateHandler_OnBossActiveEnd(object sender, EventArgs e)
+    {
+        if (!blockSinceStart) return;
+        BlockInDirection();
+    }
+    private void BossStateHandler_OnBossPhaseChangeEnd(object sender, EventArgs e)
     {
         BlockInDirection();
     }
