@@ -742,6 +742,7 @@ MonoBehaviour:
   - direction: 3
     block: {fileID: 8809075865082167730}
   currentBlockingDirections: 
+  blockSinceStart: 0
 --- !u!114 &1005285739392142598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -754,7 +755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e9972d2011f774398d67e716901b24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToDestroyPlatform: 10
+  timeToDestroyPlatform: 5
   graceTimeAfterPlatformDestruction: 3
   projectionPlatforms:
   - {fileID: 0}
