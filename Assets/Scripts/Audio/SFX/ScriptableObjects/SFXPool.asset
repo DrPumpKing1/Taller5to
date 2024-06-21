@@ -18,9 +18,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 15e4972130844994eb710fa3a6ab8d09, type: 3}
   objectProjected: []
   objectFailedProjection: []
-  objectDematerialization: []
+  objectDematerialization:
+  - {fileID: 8300000, guid: b3497d3286d89ff4591ddcd4b40243f5, type: 3}
   projectionResetObjectUsed: []
-  cableProjected: []
+  cableProjected:
+  - {fileID: 8300000, guid: e29884a5dba5f13478c219fd73e30ecc, type: 3}
   magicBoxProjected: []
   senderProjected: []
   drainerProjected: []
