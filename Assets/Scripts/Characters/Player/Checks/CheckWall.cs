@@ -18,8 +18,11 @@ public class CheckWall : MonoBehaviour
     [SerializeField, Range(-0.2f, 1f)] private float lowRayLenght = 0.1f;
     [SerializeField, Range(0.01f, 1f)] private float lowRaySphereRadius = 0.1f;
 
-    [Header("Forward Wall Detection Settings")]
+    [Header("Diagonal Wall Detection Settings")]
     [SerializeField, Range(0f, 1f)] private float diagonalRayLength = 0.1f;
+
+    [Header("Corner Detection Settings")]
+    [SerializeField, Range(0f, 1f)] private float cornerRayLength = 0.1f;
 
     [Header("Debug")]
     [SerializeField] private bool drawRaycasts;
@@ -30,10 +33,13 @@ public class CheckWall : MonoBehaviour
     public bool HitWall { get; private set; }
     public bool HitDiagonalWall { get; private set; }
 
+    public bool HitCorner;
+
     private void FixedUpdate()
     {
         HitWall = CheckIfWall();
         HitDiagonalWall = CheckIfDiagonalWall();
+        HitCorner = CheckIfCorner();
     }
 
     private bool CheckIfWall()
@@ -51,6 +57,15 @@ public class CheckWall : MonoBehaviour
         bool checkDiagonalWall95PercentBody = CheckIfWallAtPoint(transform.position + capsuleCollider.center + new Vector3(0f, capsuleCollider.height * 0.45f, 0f), diagonalRayLength);
 
         return checkDiagonalWallHalfBody|| checkDiagonalWall5PercentBody || checkDiagonalWall95PercentBody;
+    }
+
+    private bool CheckIfCorner()
+    {
+        bool checkCorner25PercentBody = CheckIfCornerAtPoint(transform.position + capsuleCollider.center + new Vector3(0f, capsuleCollider.height * -0.25f, 0f), cornerRayLength);
+        bool checkCornerHalfBody = CheckIfCornerAtPoint(transform.position + capsuleCollider.center, cornerRayLength);
+        bool checkCorner95PercentBody = CheckIfCornerAtPoint(transform.position + capsuleCollider.center + new Vector3(0f, capsuleCollider.height * 0.45f, 0f), cornerRayLength);
+
+        return checkCorner25PercentBody || checkCornerHalfBody || checkCorner95PercentBody;
     }
 
     private bool CheckIfWallAtPoint(Vector3 origin, float rayLength, float raySphereRadius)
@@ -84,6 +99,27 @@ public class CheckWall : MonoBehaviour
 
         return hitWall;
     }
+
+    private bool CheckIfCornerAtPoint(Vector3 origin, float rayLenght)
+    {
+        bool hitCorner1 = false;
+        bool hitCorner2 = false;
+
+        Quaternion rotation1 = Quaternion.Euler(0, 90, 0);
+        Quaternion rotation2 = Quaternion.Euler(0, -90, 0);
+
+        if (MoveDirection != Vector3.zero)
+        {
+            hitCorner1 = Physics.Raycast(origin, rotation1 * MoveDirection , out RaycastHit info1, rayLenght, obstacleLayer);
+            hitCorner2 = Physics.Raycast(origin, rotation2 * MoveDirection , out RaycastHit info2, rayLenght, obstacleLayer);
+        }
+
+        if (drawRaycasts) Debug.DrawRay(origin, rotation1 * MoveDirection * rayLenght, Color.blue);
+        if (drawRaycasts) Debug.DrawRay(origin, rotation2 * MoveDirection * rayLenght, Color.blue);
+
+        return hitCorner1 && hitCorner2;
+    }
+
 
     public RaycastHit GetWallInfo() => wallInfo;
     public RaycastHit GetDiagonalWallInfo() => diagonalWallInfo;

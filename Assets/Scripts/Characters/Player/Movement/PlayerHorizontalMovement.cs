@@ -43,7 +43,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private float desiredSpeed;
     private float smoothCurrentSpeed;
 
-    private bool movementOposingToWall;
+    private bool movementTowardsWall;
 
     private Vector2 smoothDirectionInputVector;
     public Vector2 LastNonZeroInput { get; private set; }
@@ -118,7 +118,8 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private bool CanMove()
     {
         if (DirectionInputVector == Vector2.zero) return false;
-        if (movementOposingToWall) return false;
+        if (checkWall.HitCorner) return false;
+        if (movementTowardsWall) return false;
         if (playerLand.IsRecoveringFromLanding) return false;
         if (playerInteract.IsInteracting) return false;
         if (playerInteractAlternate.IsInteractingAlternate) return false;
@@ -146,11 +147,11 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
             if (vector3LastNonZeroInput.normalized == -wallNormal.normalized)
             {
-                movementOposingToWall = true;
+                movementTowardsWall = true;
             }
             else
             {
-                movementOposingToWall = false;
+                movementTowardsWall = false;
             }
 
             Vector3 perpendicularProyection = vector3LastNonZeroInput - projection;
@@ -163,7 +164,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
         }
         
         FixedLastNonZeroInput = LastNonZeroInput;
-        movementOposingToWall = false;
+        movementTowardsWall = false;
     }
 
     private void SmoothDirectionInputVector() => smoothDirectionInputVector = Vector2.Lerp(smoothDirectionInputVector, FixedLastNonZeroInput, Time.deltaTime * smoothInputFactor);

@@ -75,8 +75,10 @@ MonoBehaviour:
   raySphereRadius: 0.2
   lowRayLenght: -0.1
   lowRaySphereRadius: 0.2
-  diagonalRayLength: 0.6
+  diagonalRayLength: 0.75
+  cornerRayLength: 0.75
   drawRaycasts: 1
+  HitCorner: 0
 --- !u!1 &211851582990758971
 GameObject:
   m_ObjectHideFlags: 0
