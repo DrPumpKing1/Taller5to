@@ -46,9 +46,11 @@ public class CheckWall : MonoBehaviour
     }
     private bool CheckIfDiagonalWall()
     {
-        bool checkWallHalfBody = CheckIfWallAtPoint(transform.position + capsuleCollider.center, diagonalRayLength);
+        bool checkDiagonalWall5PercentBody = CheckIfWallAtPoint(transform.position + capsuleCollider.center + new Vector3(0f, capsuleCollider.height * -0.45f, 0f), diagonalRayLength);
+        bool checkDiagonalWallHalfBody = CheckIfWallAtPoint(transform.position + capsuleCollider.center, diagonalRayLength);
+        bool checkDiagonalWall95PercentBody = CheckIfWallAtPoint(transform.position + capsuleCollider.center + new Vector3(0f, capsuleCollider.height * 0.45f, 0f), diagonalRayLength);
 
-        return checkWallHalfBody;
+        return checkDiagonalWallHalfBody|| checkDiagonalWall5PercentBody || checkDiagonalWall95PercentBody;
     }
 
     private bool CheckIfWallAtPoint(Vector3 origin, float rayLength, float raySphereRadius)
@@ -57,10 +59,12 @@ public class CheckWall : MonoBehaviour
 
         if (MoveDirection != Vector3.zero)
         {
-            hitWall = Physics.SphereCast(origin, raySphereRadius, MoveDirection, out wallInfo, rayLength, obstacleLayer);
+            hitWall = Physics.SphereCast(origin, raySphereRadius, MoveDirection, out RaycastHit info, rayLength, obstacleLayer);
+
+            if (info.collider) wallInfo = info;
         }
 
-        if(drawRaycasts) Debug.DrawRay(origin, MoveDirection * rayLength, Color.blue);
+        if (drawRaycasts) Debug.DrawRay(origin, MoveDirection * rayLength, Color.blue);
 
         return hitWall;
     }
@@ -71,7 +75,9 @@ public class CheckWall : MonoBehaviour
 
         if (MoveDirection != Vector3.zero)
         {
-            hitWall = Physics.Raycast(origin, MoveDirection, out diagonalWallInfo, rayLenght, obstacleLayer);
+            hitWall = Physics.Raycast(origin, MoveDirection, out RaycastHit info, rayLenght, obstacleLayer);
+
+            if (info.collider) diagonalWallInfo = info;
         }
 
         if (drawRaycasts) Debug.DrawRay(origin, MoveDirection * rayLenght, Color.white);

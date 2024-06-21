@@ -134,7 +134,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private void CalculateLastNonZeroDirectionInput() => LastNonZeroInput = DirectionInputVector != Vector2.zero ? DirectionInputVector : LastNonZeroInput;
 
     private void FixDirectionVectorDueToWalls()
-    {
+    {  
         /*
         if (checkWall.HitDiagonalWall)
         {
@@ -142,6 +142,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
             Vector3 vector3LastNonZeroInput = GeneralMethods.Vector2ToVector3(LastNonZeroInput);
             Vector3 proyection = Vector3.Project(vector3LastNonZeroInput, wallNormal);
+
             Vector3 perpendicularProyection = vector3LastNonZeroInput - proyection;
 
             Vector2 vector2PerpendicularProyection = GeneralMethods.Vector3ToVector2(perpendicularProyection);
@@ -151,7 +152,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
             return;
         }
         */
-
+        
         FixedLastNonZeroInput = LastNonZeroInput;
     }
 
@@ -226,6 +227,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
         {
             SetMovementState(State.Sprinting);
             OnPlayerStartSprinting?.Invoke(this, EventArgs.Empty);
+            Debug.Log("StartSprinting");
             return;
         }
     }
@@ -236,6 +238,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
         {
             SetMovementState(State.NotMoving);
             OnPlayerStopMoving?.Invoke(this, EventArgs.Empty);
+            return;
         }
 
         if (desiredSpeed == sprintSpeed)
@@ -252,6 +255,8 @@ public class PlayerHorizontalMovement : MonoBehaviour
         {
             SetMovementState(State.NotMoving);
             OnPlayerStopMoving?.Invoke(this, EventArgs.Empty);
+            Debug.Log("StopMoving");
+            return;
         }
 
         if (desiredSpeed == walkSpeed)
