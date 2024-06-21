@@ -17,7 +17,7 @@ public class PlayerFall : MonoBehaviour
     public bool IsFalling { get; private set; }
     public bool PreviouslyFalling { get; private set; }
 
-    public event EventHandler OnPlayerFall;
+    public static event EventHandler OnPlayerFall;
 
     private void Awake()
     {

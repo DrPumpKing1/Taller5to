@@ -11,6 +11,8 @@ public class PetPlayerAttachment : MonoBehaviour
     [SerializeField] private bool attachToPlayer;
     public bool AttachToPlayer => attachToPlayer;
 
+    public static event EventHandler OnVyrxAttachToPlayer;
+
     private void OnEnable()
     {
         MeetVyrxEnd.OnMeetVyrxEnd += MeetVyrxEnd_OnMeetVyrxEnd;
@@ -45,6 +47,9 @@ public class PetPlayerAttachment : MonoBehaviour
 
     public void SetAttachToPlayer(bool attach) => attachToPlayer = attach;
 
-    private void MeetVyrxEnd_OnMeetVyrxEnd(object sender, EventArgs e) => SetAttachToPlayer(true);
-
+    private void MeetVyrxEnd_OnMeetVyrxEnd(object sender, EventArgs e)
+    {
+        SetAttachToPlayer(true);
+        OnVyrxAttachToPlayer?.Invoke(this, EventArgs.Empty);
+    }
 }

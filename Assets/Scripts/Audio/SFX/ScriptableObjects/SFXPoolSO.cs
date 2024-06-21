@@ -5,6 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewSFXPoolSO", menuName = "ScriptableObjects/Audio/SFXPool")]
 public class SFXPoolSO : ScriptableObject
 {
+    [Header("Player")]
+    public AudioClip[] playerLand;
+    public AudioClip[] vyrxAttach;
+
     [Header("Projection")]
     public AudioClip[] objectProjected;
     public AudioClip[] objectFailedProjection;

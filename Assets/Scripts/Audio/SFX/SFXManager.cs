@@ -22,6 +22,11 @@ public class SFXManager : MonoBehaviour
 
     private void OnEnable()
     {
+        PlayerLand.OnPlayerNormalLand += PlayerLand_OnPlayerNormalLand;
+        PlayerLand.OnPlayerHardLand += PlayerLand_OnPlayerHardLand;
+        PetPlayerAttachment.OnVyrxAttachToPlayer += PetPlayerAttachment_OnVyrxAttachToPlayer;
+
+
         ElectricalSwitchToggle.OnSwitchToggle += ElectricalSwitchToggle_OnSwitchToggle;
 
         ElectricalDoor.OnDoorPowe += ElectricalDoor_OnDoorPowered;
@@ -79,6 +84,23 @@ public class SFXManager : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
     }
+
+    #region Player
+    private void PlayerLand_OnPlayerNormalLand(object sender, System.EventArgs e)
+    {
+        PlaySound(SFXPoolSO.playerLand);
+    }
+
+    private void PlayerLand_OnPlayerHardLand(object sender, System.EventArgs e)
+    {
+        PlaySound(SFXPoolSO.playerLand);
+    }
+    private void PetPlayerAttachment_OnVyrxAttachToPlayer(object sender, System.EventArgs e)
+    {
+        PlaySound(SFXPoolSO.vyrxAttach);
+    }
+
+    #endregion
 
     #region Electrical
     private void ElectricalSwitchToggle_OnSwitchToggle(object sender, ElectricalSwitchToggle.OnSwitchToggleEventArgs e)

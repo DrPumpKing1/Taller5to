@@ -32,20 +32,20 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void OnEnable()
     {
-        playerFall.OnPlayerFall += PlayerFall_OnPlayerFall;
+        PlayerFall.OnPlayerFall += PlayerFall_OnPlayerFall;
 
-        playerLand.OnPlayerSoftLand += PlayerLand_OnPlayerSoftLand;
-        playerLand.OnPlayerNormalLand += PlayerLand_OnPlayerNormalLand;
-        playerLand.OnPlayerHardLand += PlayerLand_OnPlayerHardLand;
+        PlayerLand.OnPlayerSoftLand += PlayerLand_OnPlayerSoftLand;
+        PlayerLand.OnPlayerNormalLand += PlayerLand_OnPlayerNormalLand;
+        PlayerLand.OnPlayerHardLand += PlayerLand_OnPlayerHardLand;
     }
 
     private void OnDisable()
     {
-        playerFall.OnPlayerFall -= PlayerFall_OnPlayerFall;
+        PlayerFall.OnPlayerFall -= PlayerFall_OnPlayerFall;
 
-        playerLand.OnPlayerSoftLand -= PlayerLand_OnPlayerSoftLand;
-        playerLand.OnPlayerNormalLand -= PlayerLand_OnPlayerNormalLand;
-        playerLand.OnPlayerHardLand -= PlayerLand_OnPlayerHardLand;
+        PlayerLand.OnPlayerSoftLand -= PlayerLand_OnPlayerSoftLand;
+        PlayerLand.OnPlayerNormalLand -= PlayerLand_OnPlayerNormalLand;
+        PlayerLand.OnPlayerHardLand -= PlayerLand_OnPlayerHardLand;
     }
 
     private void Update()

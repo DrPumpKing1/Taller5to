@@ -30,10 +30,10 @@ public class PlayerLand : MonoBehaviour
     private bool previouslyGrounded;
     private float timer = 0f;
 
-    public event EventHandler OnPlayerSoftLand;
-    public event EventHandler OnPlayerNormalLand;
-    public event EventHandler OnPlayerHardLand;
-    public event EventHandler<OnPlayerLandEventArgs> OnPlayerLand;
+    public static event EventHandler OnPlayerSoftLand;
+    public static event EventHandler OnPlayerNormalLand;
+    public static event EventHandler OnPlayerHardLand;
+    public static event EventHandler<OnPlayerLandEventArgs> OnPlayerLand;
 
     public class OnPlayerLandEventArgs : EventArgs
     {

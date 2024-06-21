@@ -12,13 +12,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb42b6e38c3327249bb9a94c6266b715, type: 3}
   m_Name: SFXPool
   m_EditorClassIdentifier: 
+  playerLand:
+  - {fileID: 8300000, guid: 127ddd3bad7132e4397e4e2c4a6389cc, type: 3}
+  vyrxAttach:
+  - {fileID: 8300000, guid: 15e4972130844994eb710fa3a6ab8d09, type: 3}
   objectProjected: []
   objectFailedProjection: []
   objectDematerialization: []
   projectionResetObjectUsed: []
+  cableProjected: []
+  magicBoxProjected: []
+  senderProjected: []
+  drainerProjected: []
+  cableDematerialized: []
+  magicBoxDematerialized: []
+  senderDematerialized: []
+  drainerDematerialized: []
   objectRotated: []
-  doorEnergized: []
-  doorDeEnergized: []
-  switchToggle: []
-  shieldCollected: []
+  objectActivation: []
+  objectDeactivation: []
+  cableRotated: []
+  senderRotated: []
+  magicBoxActivated: []
+  magicBoxDeactivated: []
+  shieldCollected:
+  - {fileID: 8300000, guid: 181759695c16f4a4a81fbc96a4251d4b, type: 3}
   valueDoorOpened: []
+  zurrythShieldCollected: []
+  rakithuShieldCollected: []
+  xotarkShieldCollected: []
+  vythanuShieldCollected: []
+  zurrythValueDoorOpened: []
+  rakithuValueDoorOpened: []
+  xotarkValueDoorOpened: []
+  vythanuValueDoorOpened: []
+  switchToggle: []
+  doorPowered: []
+  doorDePowered: []
+  drawbridgePowered: []
+  drawbridgeDePowered: []
+  extensibleBridgePowered: []
+  extensibleBridgeDePowered: []
+  inscriptionPowered: []
+  inscriptionDePowered: []
+  receiverPowered: []
+  receiverDePowered: []
