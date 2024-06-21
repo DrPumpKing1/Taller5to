@@ -43,6 +43,8 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private float desiredSpeed;
     private float smoothCurrentSpeed;
 
+    private bool movementOposingToWall;
+
     private Vector2 smoothDirectionInputVector;
     public Vector2 LastNonZeroInput { get; private set; }
     public Vector2 FixedLastNonZeroInput { get; private set; }
@@ -116,7 +118,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private bool CanMove()
     {
         if (DirectionInputVector == Vector2.zero) return false;
-        if (checkWall.HitWall) return false;
+        if (movementOposingToWall) return false;
         if (playerLand.IsRecoveringFromLanding) return false;
         if (playerInteract.IsInteracting) return false;
         if (playerInteractAlternate.IsInteractingAlternate) return false;
@@ -134,16 +136,24 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private void CalculateLastNonZeroDirectionInput() => LastNonZeroInput = DirectionInputVector != Vector2.zero ? DirectionInputVector : LastNonZeroInput;
 
     private void FixDirectionVectorDueToWalls()
-    {  
-        /*
+    {        
         if (checkWall.HitDiagonalWall)
         {
             Vector3 wallNormal = checkWall.GetDiagonalWallInfo().normal;
 
             Vector3 vector3LastNonZeroInput = GeneralMethods.Vector2ToVector3(LastNonZeroInput);
-            Vector3 proyection = Vector3.Project(vector3LastNonZeroInput, wallNormal);
+            Vector3 projection = Vector3.Project(vector3LastNonZeroInput, wallNormal);
 
-            Vector3 perpendicularProyection = vector3LastNonZeroInput - proyection;
+            if (vector3LastNonZeroInput.normalized == -wallNormal.normalized)
+            {
+                movementOposingToWall = true;
+            }
+            else
+            {
+                movementOposingToWall = false;
+            }
+
+            Vector3 perpendicularProyection = vector3LastNonZeroInput - projection;
 
             Vector2 vector2PerpendicularProyection = GeneralMethods.Vector3ToVector2(perpendicularProyection);
 
@@ -151,9 +161,9 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
             return;
         }
-        */
         
         FixedLastNonZeroInput = LastNonZeroInput;
+        movementOposingToWall = false;
     }
 
     private void SmoothDirectionInputVector() => smoothDirectionInputVector = Vector2.Lerp(smoothDirectionInputVector, FixedLastNonZeroInput, Time.deltaTime * smoothInputFactor);
@@ -227,7 +237,6 @@ public class PlayerHorizontalMovement : MonoBehaviour
         {
             SetMovementState(State.Sprinting);
             OnPlayerStartSprinting?.Invoke(this, EventArgs.Empty);
-            Debug.Log("StartSprinting");
             return;
         }
     }
@@ -255,7 +264,6 @@ public class PlayerHorizontalMovement : MonoBehaviour
         {
             SetMovementState(State.NotMoving);
             OnPlayerStopMoving?.Invoke(this, EventArgs.Empty);
-            Debug.Log("StopMoving");
             return;
         }
 
