@@ -118,7 +118,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private bool CanMove()
     {
         if (DirectionInputVector == Vector2.zero) return false;
-        if (checkWall.HitCorner) return false;
+        if (checkWall.HitCorner && checkWall.HitDiagonalWall) return false;
         if (movementTowardsWall) return false;
         if (playerLand.IsRecoveringFromLanding) return false;
         if (playerInteract.IsInteracting) return false;
