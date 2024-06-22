@@ -107,6 +107,15 @@ public class SFXManager : MonoBehaviour
     {
         ElectricalSwitchToggle electricalSwitchToggle = sender as ElectricalSwitchToggle;
         PlaySoundAtPoint(SFXPoolSO.switchToggle, electricalSwitchToggle.transform.position);
+
+        if (e.switchOn)
+        {
+            PlaySoundAtPoint(SFXPoolSO.switchOn, electricalSwitchToggle.transform.position);
+        }
+        else
+        {
+            PlaySoundAtPoint(SFXPoolSO.switchOff, electricalSwitchToggle.transform.position);
+        }
     }
 
     private void ElectricalDoor_OnDoorPowered(object sender, ElectricalDoor.OnDoowPoweredEventArgs e)

@@ -56,6 +56,8 @@ public class SFXPoolSO : ScriptableObject
 
     [Header("Electrical")]
     public AudioClip[] switchToggle;
+    public AudioClip[] switchOn;
+    public AudioClip[] switchOff;
 
     public AudioClip[] doorPowered;
     public AudioClip[] doorDePowered;
