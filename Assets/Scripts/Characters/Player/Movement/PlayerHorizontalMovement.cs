@@ -43,8 +43,6 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private float desiredSpeed;
     private float smoothCurrentSpeed;
 
-    private bool movementTowardsWall;
-
     private Vector2 smoothDirectionInputVector;
     public Vector2 LastNonZeroInput { get; private set; }
     public Vector2 FixedLastNonZeroInput { get; private set; }
@@ -119,7 +117,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
     {
         if (DirectionInputVector == Vector2.zero) return false;
         if (checkWall.HitCorner && checkWall.HitDiagonalWall) return false;
-        if (movementTowardsWall) return false;
+        if (checkWall.MovementTowardsWall && checkWall.HitDiagonalWall) return false;
         if (playerLand.IsRecoveringFromLanding) return false;
         if (playerInteract.IsInteracting) return false;
         if (playerInteractAlternate.IsInteractingAlternate) return false;
@@ -145,15 +143,6 @@ public class PlayerHorizontalMovement : MonoBehaviour
             Vector3 vector3LastNonZeroInput = GeneralMethods.Vector2ToVector3(LastNonZeroInput);
             Vector3 projection = Vector3.Project(vector3LastNonZeroInput, wallNormal);
 
-            if (vector3LastNonZeroInput.normalized == -wallNormal.normalized)
-            {
-                movementTowardsWall = true;
-            }
-            else
-            {
-                movementTowardsWall = false;
-            }
-
             Vector3 perpendicularProyection = vector3LastNonZeroInput - projection;
 
             Vector2 vector2PerpendicularProyection = GeneralMethods.Vector3ToVector2(perpendicularProyection);
@@ -164,7 +153,6 @@ public class PlayerHorizontalMovement : MonoBehaviour
         }
         
         FixedLastNonZeroInput = LastNonZeroInput;
-        movementTowardsWall = false;
     }
 
     private void SmoothDirectionInputVector() => smoothDirectionInputVector = Vector2.Lerp(smoothDirectionInputVector, FixedLastNonZeroInput, Time.deltaTime * smoothInputFactor);

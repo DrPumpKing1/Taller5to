@@ -12,17 +12,18 @@ public class CheckWall : MonoBehaviour
     [SerializeField] private LayerMask obstacleLayer;
 
     [Header("Wall Detection Settings")]
-    [SerializeField, Range(-0.2f, 1f)] private float rayLength = 0.1f;
-    [SerializeField, Range(0.01f, 1f)] private float raySphereRadius = 0.1f;
+    [SerializeField, Range(-0.2f, 1f)] private float wallRayLength = 0.1f;
+    [SerializeField, Range(0.01f, 1f)] private float wallSphereRadius = 0.1f;
     [Space]
-    [SerializeField, Range(-0.2f, 1f)] private float lowRayLenght = 0.1f;
-    [SerializeField, Range(0.01f, 1f)] private float lowRaySphereRadius = 0.1f;
+    [SerializeField, Range(0f, 1f)] private List<float> wallDetectionPoints;
 
     [Header("Diagonal Wall Detection Settings")]
     [SerializeField, Range(0f, 1f)] private float diagonalRayLength = 0.1f;
+    [SerializeField, Range(0f, 1f)] private List<float> diagonalWallDetectionPoints;
 
     [Header("Corner Detection Settings")]
     [SerializeField, Range(0f, 1f)] private float cornerRayLength = 0.1f;
+    [SerializeField, Range(0f, 1f)] private List<float> cornerDetectionPoints;
 
     [Header("Debug")]
     [SerializeField] private bool drawRaycasts;
@@ -30,42 +31,47 @@ public class CheckWall : MonoBehaviour
     private Vector3 MoveDirection => GeneralMethods.Vector2ToVector3(playerHorizontalMovement.LastNonZeroInput);
     private RaycastHit wallInfo;
     private RaycastHit diagonalWallInfo;
+
     public bool HitWall { get; private set; }
     public bool HitDiagonalWall { get; private set; }
-
-    public bool HitCorner;
+    public bool HitCorner { get; private set; }
+    public bool MovementTowardsWall { get; private set; }
 
     private void FixedUpdate()
     {
         HitWall = CheckIfWall();
         HitDiagonalWall = CheckIfDiagonalWall();
         HitCorner = CheckIfCorner();
+        MovementTowardsWall = CheckMovementTowardsWall();
     }
 
     private bool CheckIfWall()
     {
-        bool checkWall20PercentBody = CheckIfWallAtPoint(transform.position + capsuleCollider.center + new Vector3(0f,capsuleCollider.height * -0.3f, 0f), capsuleCollider.radius + lowRayLenght, lowRaySphereRadius);
-        bool checkWallHalfBody = CheckIfWallAtPoint(transform.position + capsuleCollider.center,rayLength,raySphereRadius);
-        bool checkWall95PercentBody = CheckIfWallAtPoint(transform.position + capsuleCollider.center + new Vector3(0f,capsuleCollider.height * 0.45f,0f), capsuleCollider.radius + rayLength, raySphereRadius);
+        foreach(float wallDetectionPoint in wallDetectionPoints)
+        {
+            if (CheckIfWallAtPoint(transform.position + new Vector3(0f, capsuleCollider.height * wallDetectionPoint, 0f), capsuleCollider.radius + wallRayLength, wallSphereRadius)) return true;
+        }
 
-        return checkWall20PercentBody || checkWallHalfBody || checkWall95PercentBody;
+        return false;
     }
     private bool CheckIfDiagonalWall()
     {
-        bool checkDiagonalWall5PercentBody = CheckIfWallAtPoint(transform.position + capsuleCollider.center + new Vector3(0f, capsuleCollider.height * -0.45f, 0f), diagonalRayLength);
-        bool checkDiagonalWallHalfBody = CheckIfWallAtPoint(transform.position + capsuleCollider.center, diagonalRayLength);
-        bool checkDiagonalWall95PercentBody = CheckIfWallAtPoint(transform.position + capsuleCollider.center + new Vector3(0f, capsuleCollider.height * 0.45f, 0f), diagonalRayLength);
+        foreach (float diagonalWallDetectionPoint in diagonalWallDetectionPoints)
+        {
+            if (CheckIfWallAtPoint(transform.position + new Vector3(0f, capsuleCollider.height * diagonalWallDetectionPoint, 0f), capsuleCollider.radius + diagonalRayLength)) return true;
+        }
 
-        return checkDiagonalWallHalfBody|| checkDiagonalWall5PercentBody || checkDiagonalWall95PercentBody;
+        return false;
     }
 
     private bool CheckIfCorner()
     {
-        bool checkCorner25PercentBody = CheckIfCornerAtPoint(transform.position + capsuleCollider.center + new Vector3(0f, capsuleCollider.height * -0.25f, 0f), cornerRayLength);
-        bool checkCornerHalfBody = CheckIfCornerAtPoint(transform.position + capsuleCollider.center, cornerRayLength);
-        bool checkCorner95PercentBody = CheckIfCornerAtPoint(transform.position + capsuleCollider.center + new Vector3(0f, capsuleCollider.height * 0.45f, 0f), cornerRayLength);
+        foreach (float cornerDetectionPoint in cornerDetectionPoints)
+        {
+            if (CheckIfCornerAtPoint(transform.position + new Vector3(0f, capsuleCollider.height * cornerDetectionPoint, 0f), capsuleCollider.radius + cornerRayLength)) return true;
+        }
 
-        return checkCorner25PercentBody || checkCornerHalfBody || checkCorner95PercentBody;
+        return false;
     }
 
     private bool CheckIfWallAtPoint(Vector3 origin, float rayLength, float raySphereRadius)
@@ -120,7 +126,7 @@ public class CheckWall : MonoBehaviour
         return hitCorner1 && hitCorner2;
     }
 
-
+    public bool CheckMovementTowardsWall() => MoveDirection.normalized == -wallInfo.normal.normalized;
     public RaycastHit GetWallInfo() => wallInfo;
     public RaycastHit GetDiagonalWallInfo() => diagonalWallInfo;
 }
