@@ -23,7 +23,8 @@ MonoBehaviour:
   projectionResetObjectUsed: []
   cableProjected:
   - {fileID: 8300000, guid: e29884a5dba5f13478c219fd73e30ecc, type: 3}
-  magicBoxProjected: []
+  magicBoxProjected:
+  - {fileID: 8300000, guid: 131f53ab24256c348b3154c90e8773de, type: 3}
   senderProjected: []
   drainerProjected: []
   cableDematerialized: []
@@ -36,8 +37,10 @@ MonoBehaviour:
   cableRotated:
   - {fileID: 8300000, guid: 0114498cba173b446ac797d7eeea2854, type: 3}
   senderRotated: []
-  magicBoxActivated: []
-  magicBoxDeactivated: []
+  magicBoxActivated:
+  - {fileID: 8300000, guid: ab4932b311f2d874682505e0dc7be05b, type: 3}
+  magicBoxDeactivated:
+  - {fileID: 8300000, guid: 0ece942b974e2b34bbf7cfe15884a1b5, type: 3}
   shieldCollected:
   - {fileID: 8300000, guid: 181759695c16f4a4a81fbc96a4251d4b, type: 3}
   valueDoorOpened: []

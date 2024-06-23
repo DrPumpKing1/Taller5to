@@ -9,8 +9,11 @@ public class SwitchElectrodeEmissionVisual : MonoBehaviour
     [SerializeField] private Renderer _renderer;
 
     [Header("Materials")]
-    [SerializeField] private Material onMaterial;
-    [SerializeField] private Material offMaterial;
+    [SerializeField] private Material energizedOnMaterial;
+    [SerializeField] private Material deEnergyzedOnMaterial;
+    [Space]
+    [SerializeField] private Material energyzedOffMaterial;
+    [SerializeField] private Material deEnergyzedOffMaterial;
 
     private bool IsPowered => switchElectrode.Power >= Electrode.ACTIVATION_THRESHOLD;
 
@@ -18,8 +21,7 @@ public class SwitchElectrodeEmissionVisual : MonoBehaviour
     private float notPoweredTimer;
     private bool previousPowered;
 
-    private Material material;
-    private bool emmissionOn;
+    private bool switchPowered;
 
 
     private void OnEnable()
@@ -34,10 +36,8 @@ public class SwitchElectrodeEmissionVisual : MonoBehaviour
 
     private void Awake()
     {
-        material = _renderer.material;
-
-        GeneralRenderingMethods.SetMaterialEmission(material, false);
-        emmissionOn = false;
+        switchPowered = false;
+        HandleSwitchStateChange();
     }
 
     private void LateUpdate()
@@ -53,17 +53,19 @@ public class SwitchElectrodeEmissionVisual : MonoBehaviour
 
             if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD && previousPowered)
             {
-                GeneralRenderingMethods.SetMaterialEmission(material, false);
-                emmissionOn = false;
+                switchPowered = false;
                 previousPowered = false;
+
+                HandleSwitchStateChange();
             }
         }
         else
         {
             if (!previousPowered)
             {
-                GeneralRenderingMethods.SetMaterialEmission(material, true);
-                emmissionOn = true;
+                switchPowered = true;
+
+                HandleSwitchStateChange();
             }
 
             notPoweredTimer = 0;
@@ -72,32 +74,35 @@ public class SwitchElectrodeEmissionVisual : MonoBehaviour
 
     }
 
-    private void HandleSwitchOn()
+    private void HandleSwitchStateChange()
     {
         if (switchElectrode.SwitchOn)
         {
-            _renderer.material = onMaterial;
+            if (switchPowered)
+            {
+                GeneralRenderingMethods.SetRendererMaterial(_renderer, energizedOnMaterial);
+            }
+            else
+            {
+                GeneralRenderingMethods.SetRendererMaterial(_renderer, deEnergyzedOnMaterial);
+            }
         }
         else
         {
-            _renderer.material = offMaterial;
-        }
-
-        material = _renderer.material;
-
-        if (emmissionOn)
-        {
-            GeneralRenderingMethods.SetMaterialEmission(material, true);
-        }
-        else
-        {
-            GeneralRenderingMethods.SetMaterialEmission(material, false);
+            if (switchPowered)
+            {
+                GeneralRenderingMethods.SetRendererMaterial(_renderer, energyzedOffMaterial);
+            }
+            else
+            {
+                GeneralRenderingMethods.SetRendererMaterial(_renderer, deEnergyzedOffMaterial);
+            }
         }
     }
 
 
     private void SwitchElectrode_OnSwitchSet(object sender, SwitchElectrode.OnSwitchSetEventArgs e)
     {
-        HandleSwitchOn();
+        HandleSwitchStateChange();
     }
 }
