@@ -473,6 +473,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4521459802438627879}
+  - component: {fileID: 3736885125591156705}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -497,6 +498,20 @@ Transform:
   - {fileID: 2221860310201238597}
   m_Father: {fileID: 4233435990086893953}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3736885125591156705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7769144334727807604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db806b947cd4c9c44bb3f4bf365fe7c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  electrode: {fileID: 750605459082898045}
+  _renderer: {fileID: 5793366837231443588}
 --- !u!1 &7846699443738207763
 GameObject:
   m_ObjectHideFlags: 0
@@ -899,6 +914,11 @@ PrefabInstance:
 --- !u!4 &4624353135654774251 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81c5dfe6902646f41a7795057dd2c0d1, type: 3}
+  m_PrefabInstance: {fileID: 5163299802688504320}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5793366837231443588 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 81c5dfe6902646f41a7795057dd2c0d1, type: 3}
   m_PrefabInstance: {fileID: 5163299802688504320}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6408300566021369077

@@ -47,6 +47,7 @@ public class Electrode : MonoBehaviour
     public bool Sender { get { return sender; } }
     private bool device;
     public bool Device { get { return device; } }
+    public ComponentType[] Type => type;
 
     [Header("Circuit Representation")]
     [SerializeField] protected Node node;
