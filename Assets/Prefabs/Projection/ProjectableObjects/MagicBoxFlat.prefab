@@ -424,7 +424,6 @@ MonoBehaviour:
   isActive: 0
   startActive: 0
   state: 0
-  canBeActivated: 0
   pistonHead: {fileID: 7351138780328761517}
   extension: 1.975
   pistonHeadSpeed: 2
@@ -1473,7 +1472,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 5.625
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.y

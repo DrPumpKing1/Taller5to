@@ -20,6 +20,7 @@ public class ScenesManager : MonoBehaviour
 
     public static event EventHandler<OnSceneLoadEventArgs> OnSceneTransition;
     public static event EventHandler<OnSceneLoadEventArgs> OnSceneTransitionLoad;
+    public static event EventHandler<OnSceneLoadEventArgs> OnSceneLoadStart;
     public static event EventHandler<OnSceneLoadEventArgs> OnSceneLoad;
 
     private string sceneToLoad;
@@ -124,6 +125,8 @@ public class ScenesManager : MonoBehaviour
     private IEnumerator LoadSceneCoroutine(string sceneName)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+
+        OnSceneLoadStart?.Invoke(this, new OnSceneLoadEventArgs { sceneName = sceneName });
 
         while (!asyncLoad.isDone)
         {

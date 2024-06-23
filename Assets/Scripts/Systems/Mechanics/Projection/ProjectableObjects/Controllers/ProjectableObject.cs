@@ -16,8 +16,8 @@ public class ProjectableObject : MonoBehaviour
         public ProjectionPlatform projectionPlatform;
     }
 
-    public ProjectableObjectSO ProjectableObjectSO { get { return projectableObjectSO ; } }
-    public ProjectionPlatform ProjectionPlatform { get { return projectionPlatform; } }
+    public ProjectableObjectSO ProjectableObjectSO => projectableObjectSO;
+    public ProjectionPlatform ProjectionPlatform => projectionPlatform;
 
     public void SetProjectionPlatform(ProjectionPlatform projectionPlatform)
     {

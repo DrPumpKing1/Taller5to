@@ -22,7 +22,6 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
 
-    private bool triggerDematerializationEvents = false;
 
     #region IHoldInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -60,10 +59,14 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     public void OnEnable()
     {
         ProjectionManager.OnAllObjectsDematerialized += ProjectionManager_OnAllObjectsDematerialized;
+        projectableObject.OnProjectionPlatformSet += ProjectableObject_OnProjectionPlatformSet;
     }
+
     public void OnDisable()
     {
         ProjectionManager.OnAllObjectsDematerialized -= ProjectionManager_OnAllObjectsDematerialized;
+        projectableObject.OnProjectionPlatformSet -= ProjectableObject_OnProjectionPlatformSet;
+        projectableObject.ProjectionPlatform.OnProjectionPlatformDestroyed -= ProjectionPlatform_OnProjectionPlatformDestroyed;
     }
 
     #region IHoldInteractable Methods
@@ -139,16 +142,11 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
 
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
 
-        triggerDematerializationEvents = triggerEvents;
-
-        Destroy(gameObject);
-    }
-
-    private void OnDestroy()
-    {
-        ProjectionManager.Instance.ObjectDematerialized(projectableObject.ProjectableObjectSO, projectableObject.ProjectionPlatform, projectableObject, triggerDematerializationEvents);
+        ProjectionManager.Instance.ObjectDematerialized(projectableObject.ProjectableObjectSO, projectableObject.ProjectionPlatform, projectableObject, triggerEvents);
         OnObjectDematerialized?.Invoke(this, EventArgs.Empty);
         OnAnyObjectDematerialized?.Invoke(this, new OnAnyObjectDematerializedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
+
+        Destroy(gameObject);
     }
 
     #region ProjectionManager Subscriptions
@@ -158,4 +156,19 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
         DematerializeObject(false);
     }
     #endregion
+
+    #region ProjectableObjectSubscriptions
+    private void ProjectableObject_OnProjectionPlatformSet(object sender, ProjectableObject.OnProjectionPlatformSetEventArgs e)
+    {
+        projectableObject.ProjectionPlatform.OnProjectionPlatformDestroyed += ProjectionPlatform_OnProjectionPlatformDestroyed;
+    }
+    #endregion
+
+    #region ProjectionPlatform Subscriptions
+    private void ProjectionPlatform_OnProjectionPlatformDestroyed(object sender, EventArgs e)
+    {
+        DematerializeObject(true);
+    }
+    #endregion
+
 }

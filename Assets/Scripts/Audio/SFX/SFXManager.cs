@@ -20,6 +20,8 @@ public class SFXManager : MonoBehaviour
 
     private AudioSource audioSource;
 
+    private bool beingDestroyed = false;
+
     private void OnEnable()
     {
         PlayerLand.OnPlayerNormalLand += PlayerLand_OnPlayerNormalLand;
@@ -356,6 +358,8 @@ public class SFXManager : MonoBehaviour
     }
     private void PlaySoundAtPoint(AudioClip audioClip, Vector3 position)
     {
+        if (beingDestroyed) return;
+
         GameObject sfxGameObject = new GameObject("TempSFX");
         sfxGameObject.transform.position = position;
 
@@ -374,4 +378,6 @@ public class SFXManager : MonoBehaviour
 
         Destroy(sfxGameObject, audioClip.length);
     }
+
+    private void OnDestroy() => beingDestroyed = true;
 }
