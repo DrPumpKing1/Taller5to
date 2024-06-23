@@ -404,8 +404,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""56c85f9c-7bfd-461f-88e7-e3c10e50b630"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""id"": ""a3dad10a-3151-4194-9dda-edba69339a76"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -415,8 +415,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a3dad10a-3151-4194-9dda-edba69339a76"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""82f4a2aa-4e1b-4c5d-8811-2a88bfce405a"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
