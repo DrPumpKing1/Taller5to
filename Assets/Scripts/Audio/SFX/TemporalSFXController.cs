@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class TemporalSFXController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnApplicationQuit()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Destroy(gameObject);
     }
 }

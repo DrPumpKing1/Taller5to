@@ -15,7 +15,7 @@ public abstract class ActivableDevice : MonoBehaviour
     [Header("Device Control")]
     [SerializeField] protected bool state;
 
-    public bool canBeActivated;
+    public bool canBeActivated { get; protected set; }
 
     public bool Power => electrode.Power >= Electrode.ACTIVATION_THRESHOLD;
     private bool coherence => state == (Power && isActive);

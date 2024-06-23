@@ -37,7 +37,9 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
 
     private bool Power => activableDevice.Power;
     private float notPoweredTimer = 0f;
-    private const float NOT_POWERED_TIME_THRESHOLD = 0.5f;
+    private const float NOT_POWERED_TIME_THRESHOLD = 0.25f;
+
+    private bool previousPowered;
 
     #region IInteractable Events
     public event EventHandler OnObjectSelectedAlternate;
@@ -51,8 +53,6 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
     public static event EventHandler<OnAnyObjectActivatedEventArgs> OnAnyObjectActivated;
     public static event EventHandler<OnAnyObjectActivatedEventArgs> OnAnyObjectDeactivated;
     public event EventHandler OnProjectableObjectActivated;
-
-
 
     public class OnAnyObjectActivatedEventArgs : EventArgs
     {
@@ -105,6 +105,16 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
     public Transform GetTransform() => transform;
     #endregion
 
+    private void Start()
+    {
+        InitializeVariables();
+    }
+
+    private void InitializeVariables()
+    {
+        previousPowered = Power;
+    }
+
     private void Update()
     {
         HandlePowered();
@@ -118,6 +128,13 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
 
             canBeSelectedAlternate = true;
             isInteractableAlternate = true;
+
+            if(!previousPowered && activableDevice.IsActive)
+            {
+                OnAnyObjectActivated?.Invoke(this, new OnAnyObjectActivatedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO, projectionPlatformID = projectableObject.ProjectionPlatform.ID });
+            }
+
+            previousPowered = true;
         }
         else
         {
@@ -128,6 +145,13 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
         {
             canBeSelectedAlternate = false;
             isInteractableAlternate = false;
+
+            if (previousPowered && activableDevice.IsActive)
+            {
+                OnAnyObjectDeactivated?.Invoke(this, new OnAnyObjectActivatedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO, projectionPlatformID = projectableObject.ProjectionPlatform.ID });
+            }
+
+            previousPowered = false;
         }
     }
 
