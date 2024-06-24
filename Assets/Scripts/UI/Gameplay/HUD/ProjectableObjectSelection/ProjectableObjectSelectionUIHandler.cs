@@ -60,7 +60,7 @@ public class ProjectableObjectSelectionUIHandler : MonoBehaviour
             }
 
             projectableObjectSelectionUI.SetProjectableObjectImage(projectableObjectSO.sprite);
-            projectableObjectSelectionUI.SetProjectableObjectKeybind(projectableObjectSO.keyBind);
+            projectableObjectSelectionUI.SetProjectableObjectKeybindImage(projectableObjectSO.keyBindSprite);
             projectableObjectSelectionUI.SetLinkedIndex(index);
 
             index++;
@@ -141,7 +141,7 @@ public class ProjectableObjectSelectionUIHandler : MonoBehaviour
         }
 
         projectableObjectSelectionUI.SetProjectableObjectImage(projectableObjectSO.sprite);
-        projectableObjectSelectionUI.SetProjectableObjectKeybind(projectableObjectSO.keyBind);
+        projectableObjectSelectionUI.SetProjectableObjectKeybindImage(projectableObjectSO.keyBindSprite);
         projectableObjectSelectionUI.SetLinkedIndex(indexToLink);
 
         OrganizeObjectUIsInContainer();
