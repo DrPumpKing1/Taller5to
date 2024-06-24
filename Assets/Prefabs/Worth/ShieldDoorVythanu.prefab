@@ -403,6 +403,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ae0e81962dee0f44db19e46b0399df6b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 047c9f6395bc9a747a34dc2ccf57ce47, type: 2}
     - target: {fileID: 919132149155446097, guid: ae0e81962dee0f44db19e46b0399df6b, type: 3}
       propertyPath: m_Name
       value: VythanuSymbol
