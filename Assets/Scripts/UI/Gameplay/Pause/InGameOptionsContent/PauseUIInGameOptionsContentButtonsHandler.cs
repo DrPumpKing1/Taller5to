@@ -11,6 +11,7 @@ public class PauseUIInGameOptionsContentButtonsHandler : MonoBehaviour
 
     [Header("UI Components")]
     [SerializeField] private Button inGameAudioOptionsButton;
+    [SerializeField] private Button inGameGraphicsOptionsButton;
     [SerializeField] private Button backButton;
 
     private void Awake()
@@ -21,9 +22,11 @@ public class PauseUIInGameOptionsContentButtonsHandler : MonoBehaviour
     private void InitializeButtonsListeners()
     {
         inGameAudioOptionsButton.onClick.AddListener(ShowInGameOptionsAudioContent);
+        inGameGraphicsOptionsButton.onClick.AddListener(ShowInGameOptionsGraphicsContent);
         backButton.onClick.AddListener(ShowMainContent);
     }
 
     private void ShowInGameOptionsAudioContent() => pauseUIContentsHandler.ShowInGameAudioOptionsContent();
+    private void ShowInGameOptionsGraphicsContent() => pauseUIContentsHandler.ShowInGameGraphicsOptionsContent();
     private void ShowMainContent() => pauseUIContentsHandler.ShowMainContent();
 }

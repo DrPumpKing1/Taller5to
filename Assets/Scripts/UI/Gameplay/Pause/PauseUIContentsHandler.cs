@@ -8,6 +8,7 @@ public class PauseUIContentsHandler : MonoBehaviour
     [SerializeField] private Animator mainContentAnimator;
     [SerializeField] private Animator inGameOptionsContentAnimator;
     [SerializeField] private Animator inGameAudioOptionsContentAnimator;
+    [SerializeField] private Animator inGameGraphicsOptionsContentAnimator;
 
     private const string SHOW_TRIGGER = "Show";
     private const string HIDE_TRIGGER = "Hide";
@@ -15,6 +16,7 @@ public class PauseUIContentsHandler : MonoBehaviour
     private const string IDLE_MAIN_CONTENT_ANIMATION = "PauseMainContentIdle";
     private const string HIDDEN_OPTIONS_CONTENT_ANIMATION = "InGameOptionsContentHidden";
     private const string HIDDEN_AUDIO_CONTENT_ANIMATION = "InGameAudioOptionsContentHidden";
+    private const string HIDDEN_GRAPHICS_CONTENT_ANIMATION = "InGameGraphicsOptionsContentHidden";
 
     public void ShowMainContent()
     {
@@ -23,6 +25,7 @@ public class PauseUIContentsHandler : MonoBehaviour
         mainContentAnimator.SetTrigger(SHOW_TRIGGER);
         inGameOptionsContentAnimator.SetTrigger(HIDE_TRIGGER);
         inGameAudioOptionsContentAnimator.SetTrigger(HIDE_TRIGGER);
+        inGameGraphicsOptionsContentAnimator.SetTrigger(HIDE_TRIGGER);
     }
 
     public void ShowInGameOptionsContent()
@@ -32,6 +35,8 @@ public class PauseUIContentsHandler : MonoBehaviour
         inGameOptionsContentAnimator.SetTrigger(SHOW_TRIGGER);
         mainContentAnimator.SetTrigger(HIDE_TRIGGER);
         inGameAudioOptionsContentAnimator.SetTrigger(HIDE_TRIGGER);
+        inGameGraphicsOptionsContentAnimator.SetTrigger(HIDE_TRIGGER);
+
     }
 
     public void ShowInGameAudioOptionsContent()
@@ -41,6 +46,17 @@ public class PauseUIContentsHandler : MonoBehaviour
         inGameAudioOptionsContentAnimator.SetTrigger(SHOW_TRIGGER);
         mainContentAnimator.SetTrigger(HIDE_TRIGGER);
         inGameOptionsContentAnimator.SetTrigger(HIDE_TRIGGER);
+        inGameGraphicsOptionsContentAnimator.SetTrigger(HIDE_TRIGGER);
+    }
+
+    public void ShowInGameGraphicsOptionsContent()
+    {
+        inGameGraphicsOptionsContentAnimator.ResetTrigger(HIDE_TRIGGER);
+
+        inGameGraphicsOptionsContentAnimator.SetTrigger(SHOW_TRIGGER);
+        mainContentAnimator.SetTrigger(HIDE_TRIGGER);
+        inGameOptionsContentAnimator.SetTrigger(HIDE_TRIGGER);
+        inGameAudioOptionsContentAnimator.SetTrigger(HIDE_TRIGGER);
     }
 
     public void ResetContents()
@@ -48,9 +64,11 @@ public class PauseUIContentsHandler : MonoBehaviour
         mainContentAnimator.ResetTrigger(HIDE_TRIGGER);
         inGameOptionsContentAnimator.ResetTrigger(HIDE_TRIGGER);
         inGameAudioOptionsContentAnimator.ResetTrigger(HIDE_TRIGGER);
+        inGameGraphicsOptionsContentAnimator.ResetTrigger(HIDE_TRIGGER);
 
         mainContentAnimator.Play(IDLE_MAIN_CONTENT_ANIMATION);
         inGameOptionsContentAnimator.Play(HIDDEN_OPTIONS_CONTENT_ANIMATION);
         inGameAudioOptionsContentAnimator.Play(HIDDEN_AUDIO_CONTENT_ANIMATION);
+        inGameGraphicsOptionsContentAnimator.Play(HIDDEN_GRAPHICS_CONTENT_ANIMATION);
     }
 }
