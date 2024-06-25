@@ -128,4 +128,16 @@ public class ShieldPiecesManager : MonoBehaviour
 
         return true;
     }
+
+    public int GetNumberOfPiecesByDialect(Dialect dialect)
+    {
+        int count = 0;
+
+        foreach(ShieldPieceSO shieldPieceSO in shieldPiecesCollected)
+        {
+            if (shieldPieceSO.dialect == dialect) count++;
+        }
+
+        return count;
+    }
 }
