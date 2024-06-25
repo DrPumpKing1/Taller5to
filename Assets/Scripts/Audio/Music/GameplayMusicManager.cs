@@ -19,12 +19,16 @@ public class GameplayMusicManager : MonoBehaviour
     private void OnEnable()
     {
         RoomManager.OnStartBlockingViewColliders += RoomManager_OnStartBlockingViewColliders;
+        RoomManager.OnEnterBlockingViewColliders += RoomManager_OnEnterBlockingViewColliders;
+
         ShieldPiecesManager.OnShieldPieceCollected += ShieldPiecesManager_OnShieldPieceCollected;
     }
 
     private void OnDisable()
     {
         RoomManager.OnStartBlockingViewColliders -= RoomManager_OnStartBlockingViewColliders;
+        RoomManager.OnEnterBlockingViewColliders -= RoomManager_OnEnterBlockingViewColliders;
+
         ShieldPiecesManager.OnShieldPieceCollected -= ShieldPiecesManager_OnShieldPieceCollected;
     }
 
@@ -57,6 +61,37 @@ public class GameplayMusicManager : MonoBehaviour
         }
 
         PlayGameplayMusic(musicToPlay);
+    }
+
+    private void CheckRoomChangeMusicToPlay(Level level)
+    {
+        AudioClip musicToPlay = musicPoolSO.zurryth0;
+
+        switch (level)
+        {
+            case Level.Tutorial:
+                musicToPlay = CheckZurrythMusicToPlay();
+                break;
+            case Level.Lobby:
+                musicToPlay = CheckLobbyMusicToPlay();
+                break;
+            case Level.Level1:
+                musicToPlay = CheckRakithuMusicToPlay();
+                break;
+            case Level.Level2:
+                musicToPlay = CheckXotarkMusicToPlay();
+                break;
+            case Level.Level3:
+                musicToPlay = CheckVyhtanuMusicToPlay();
+                break;
+            case Level.Boss:
+                musicToPlay = CheckBossMusicToPlay();
+                break;
+            default:
+                break;
+        }
+
+        FadeTransitionGameplayMusic(musicToPlay);
     }
 
     private void CheckShieldCollectedMusicToPlay(Dialect dialect)
@@ -94,8 +129,6 @@ public class GameplayMusicManager : MonoBehaviour
 
     private void FadeTransitionGameplayMusic(AudioClip gameplayMusic)
     {
-        if (currentGameplayMusic == gameplayMusic) return;
-
         StopAllCoroutines();
         StartCoroutine(FadeTransitionGameplayMusicCoroutine(gameplayMusic));
     }
@@ -106,9 +139,7 @@ public class GameplayMusicManager : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(muteTime);
 
-        MusicManager.Instance.PlayMusic(gameplayMusic);
-        currentGameplayMusic = gameplayMusic;
-        Debug.Log($"GameplayMusicPlay : {gameplayMusic}");
+        PlayGameplayMusic(gameplayMusic);
 
         yield return StartCoroutine(MusicFadeManager.Instance.FadeInMusicCoroutine(fadeInTime));
 
@@ -221,6 +252,15 @@ public class GameplayMusicManager : MonoBehaviour
 
         CheckStartMusicToPlay(e.currentRoomVisibilityColliders[0].Level);
     }
+
+    private void RoomManager_OnEnterBlockingViewColliders(object sender, RoomManager.OnBlockingViewCollidersEnterEventArgs e)
+    {
+        if (e.newRoomVisibilityColliders.Count == 0) return;
+        if (e.previousRoomVisibilityColliders[0].Level == e.newRoomVisibilityColliders[0].Level) return;
+
+        CheckRoomChangeMusicToPlay(e.newRoomVisibilityColliders[0].Level);
+    }
+
     private void ShieldPiecesManager_OnShieldPieceCollected(object sender, ShieldPiecesManager.OnShieldPieceCollectedEventArgs e)
     {
         CheckShieldCollectedMusicToPlay(e.shieldPieceSO.dialect);
