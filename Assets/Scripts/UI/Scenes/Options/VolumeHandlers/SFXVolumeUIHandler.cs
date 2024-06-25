@@ -19,8 +19,7 @@ public class SFXVolumeUIHandler : VolumeUIHandler
     protected override void SetVolumeManager() => volumeManager = SFXVolumeManager.Instance;
     private void SFXVolumeManager_OnSFXVolumeManagerInitialized(object sender, System.EventArgs e)
     {
-        SetVolumeManager();
-        UpdateVisual();
+        InitializeUI();
     }
     private void SFXVolumeManager_OnSFXVolumeChanged(object sender, VolumeManager.OnVolumeChangedEventArgs e)
     {

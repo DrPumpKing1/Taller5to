@@ -66,6 +66,8 @@ public abstract class VolumeUIHandler : MonoBehaviour
 
     protected void UpdateVisual()
     {
+        if (!volumeManager) return;
+
         foreach (Transform child in volumeBarsContainer)
         {
             Destroy(child.gameObject);
