@@ -8,17 +8,24 @@ public class GameplayMusicManager : MonoBehaviour
     [Header("Components")]
     [SerializeField] private MusicPoolSO musicPoolSO;
 
+    [Header("Gameplay Music Transition Settings")]
+    [SerializeField] private float fadeOutTime;
+    [SerializeField] private float fadeInTime;
+    [SerializeField] private float muteTime;
+
     [Header("Debug")]
     [SerializeField] private AudioClip currentGameplayMusic;
 
     private void OnEnable()
     {
         RoomManager.OnStartBlockingViewColliders += RoomManager_OnStartBlockingViewColliders;
+        ShieldPiecesManager.OnShieldPieceCollected += ShieldPiecesManager_OnShieldPieceCollected;
     }
 
     private void OnDisable()
     {
         RoomManager.OnStartBlockingViewColliders -= RoomManager_OnStartBlockingViewColliders;
+        ShieldPiecesManager.OnShieldPieceCollected -= ShieldPiecesManager_OnShieldPieceCollected;
     }
 
     private void CheckStartMusicToPlay(Level level)
@@ -49,13 +56,63 @@ public class GameplayMusicManager : MonoBehaviour
                 break;
         }
 
-        if (currentGameplayMusic == musicToPlay) return;
-
-        MusicManager.Instance.PlayMusic(musicToPlay);
-        currentGameplayMusic = musicToPlay;
-
-        Debug.Log($"GameplayMusicPlay : {musicToPlay}");
+        PlayGameplayMusic(musicToPlay);
     }
+
+    private void CheckShieldCollectedMusicToPlay(Dialect dialect)
+    {
+        AudioClip musicToPlay = musicPoolSO.zurryth0;
+
+        switch (dialect)
+        {
+            case Dialect.Zurryth:
+                musicToPlay = CheckZurrythMusicToPlay();
+                break;
+            case Dialect.Rakithu:
+                musicToPlay = CheckRakithuMusicToPlay();
+                break;
+            case Dialect.Xotark:
+                musicToPlay = CheckXotarkMusicToPlay();
+                break;
+            case Dialect.Vythanu:
+                musicToPlay = CheckVyhtanuMusicToPlay();
+                break;
+            default:
+                break;
+        }
+
+        FadeTransitionGameplayMusic(musicToPlay);
+    }
+
+    private void PlayGameplayMusic(AudioClip gameplayMusic)
+    {
+        MusicManager.Instance.PlayMusic(gameplayMusic);
+        currentGameplayMusic = gameplayMusic;
+
+        Debug.Log($"GameplayMusicPlay : {gameplayMusic}");
+    }
+
+    private void FadeTransitionGameplayMusic(AudioClip gameplayMusic)
+    {
+        if (currentGameplayMusic == gameplayMusic) return;
+
+        StartCoroutine(FadeTransitionGameplayMusicCoroutine(gameplayMusic));
+    }
+
+    private IEnumerator FadeTransitionGameplayMusicCoroutine(AudioClip gameplayMusic)
+    {
+        StopAllCoroutines();
+
+        yield return StartCoroutine(MusicFadeManager.Instance.FadeOutMusicCoroutine(fadeOutTime));
+
+        MusicManager.Instance.PlayMusic(gameplayMusic);
+        currentGameplayMusic = gameplayMusic;
+        Debug.Log($"GameplayMusicPlay : {gameplayMusic}");
+
+        yield return StartCoroutine(MusicFadeManager.Instance.FadeInMusicCoroutine(fadeInTime));
+
+    }
+
 
     #region DialectMusic
     private AudioClip CheckZurrythMusicToPlay()
@@ -162,5 +219,9 @@ public class GameplayMusicManager : MonoBehaviour
         if (e.currentRoomVisibilityColliders.Count == 0) return;
 
         CheckStartMusicToPlay(e.currentRoomVisibilityColliders[0].Level);
+    }
+    private void ShieldPiecesManager_OnShieldPieceCollected(object sender, ShieldPiecesManager.OnShieldPieceCollectedEventArgs e)
+    {
+        CheckShieldCollectedMusicToPlay(e.shieldPieceSO.dialect);
     }
 }

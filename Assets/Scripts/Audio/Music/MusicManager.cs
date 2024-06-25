@@ -44,7 +44,7 @@ public class MusicManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("There is more than one MusicManager instance, proceding to destroy duplicate");
+            //Debug.LogWarning("There is more than one MusicManager instance, proceding to destroy duplicate");
             Destroy(gameObject);
         }
     }

@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicPoolSO: {fileID: 11400000, guid: f65d0916b71fdfe44bff2e1a107bcba0, type: 2}
-  currentGameplayMusicID: 0
+  fadeOutTime: 1
+  fadeInTime: 1
+  muteTime: 1
   currentGameplayMusic: {fileID: 0}
 --- !u!1 &3205423146746008005
 GameObject:

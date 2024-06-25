@@ -105,12 +105,11 @@ public class MusicFadeManager : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(FadeInMusicCoroutine(fadeInTime));
     }
-
     #endregion
 
 
     #region Coroutines
-    private IEnumerator FadeOutMusicCoroutine(float fadeOutTime)
+    public IEnumerator FadeOutMusicCoroutine(float fadeOutTime)
     {
         SetMusicFadeState(State.FadingOut);
 
@@ -130,7 +129,7 @@ public class MusicFadeManager : MonoBehaviour
         SetMusicFadeState(State.Muted);
     }
 
-    private IEnumerator FadeInMusicCoroutine(float fadeInTime)
+    public IEnumerator FadeInMusicCoroutine(float fadeInTime)
     {
         SetMusicFadeState(State.FadingIn);
 
