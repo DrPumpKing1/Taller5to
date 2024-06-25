@@ -96,14 +96,15 @@ public class GameplayMusicManager : MonoBehaviour
     {
         if (currentGameplayMusic == gameplayMusic) return;
 
+        StopAllCoroutines();
         StartCoroutine(FadeTransitionGameplayMusicCoroutine(gameplayMusic));
     }
 
     private IEnumerator FadeTransitionGameplayMusicCoroutine(AudioClip gameplayMusic)
     {
-        StopAllCoroutines();
-
         yield return StartCoroutine(MusicFadeManager.Instance.FadeOutMusicCoroutine(fadeOutTime));
+
+        yield return new WaitForSecondsRealtime(muteTime);
 
         MusicManager.Instance.PlayMusic(gameplayMusic);
         currentGameplayMusic = gameplayMusic;

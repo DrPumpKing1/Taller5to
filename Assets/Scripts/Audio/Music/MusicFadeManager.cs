@@ -33,19 +33,6 @@ public class MusicFadeManager : MonoBehaviour
         InitializeVolume();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            FadeInMusic(1f);
-        }
-
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            FadeOutMusic(1f);
-        }
-    }
-
     private void SetSingleton()
     {
         if (Instance == null)
