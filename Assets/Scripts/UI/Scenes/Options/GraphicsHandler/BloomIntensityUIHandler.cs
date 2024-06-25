@@ -16,10 +16,13 @@ public class BloomIntensityUIHandler : MonoBehaviour
     private void OnEnable()
     {
         BloomIntensityManager.OnBloomIntensityManagerInitialized += BloomIntensityManager_OnBloomIntensityManagerInitialized;
+        BloomIntensityManager.OnBloomIntensityChanged += BloomIntensityManager_OnBloomIntensityChanged;
     }
+
     private void OnDisable()
     {
         BloomIntensityManager.OnBloomIntensityManagerInitialized -= BloomIntensityManager_OnBloomIntensityManagerInitialized;
+        BloomIntensityManager.OnBloomIntensityChanged -= BloomIntensityManager_OnBloomIntensityChanged;
     }
 
     private void Awake()
@@ -52,8 +55,6 @@ public class BloomIntensityUIHandler : MonoBehaviour
 
         desiredIntensity = GeneralMethods.RoundToNDecimalPlaces(desiredIntensity, 1);
         BloomIntensityManager.Instance.ChangeIntensity(desiredIntensity);
-
-        UpdateVisual();
     }
 
     private void DecreaseIntensityByButton()
@@ -65,8 +66,6 @@ public class BloomIntensityUIHandler : MonoBehaviour
 
         desiredIntensity = GeneralMethods.RoundToNDecimalPlaces(desiredIntensity, 1);
         BloomIntensityManager.Instance.ChangeIntensity(desiredIntensity);
-
-        UpdateVisual();
     }
 
     protected void UpdateVisual()
@@ -102,9 +101,14 @@ public class BloomIntensityUIHandler : MonoBehaviour
             }
         }
     }
+
     private void BloomIntensityManager_OnBloomIntensityManagerInitialized(object sender, System.EventArgs e)
     {
         InitializeUI();
     }
 
+    private void BloomIntensityManager_OnBloomIntensityChanged(object sender, BloomIntensityManager.OnIntensityChangedEventArgs e)
+    {
+        UpdateVisual();
+    }
 }

@@ -51,8 +51,6 @@ public abstract class VolumeUIHandler : MonoBehaviour
 
         desiredVolume = GeneralMethods.RoundToNDecimalPlaces(desiredVolume, 1);
         volumeManager.ChangeVolume(desiredVolume);
-
-        UpdateVisual();
     }
 
     private void DecreaseVolumeByButton()
@@ -64,8 +62,6 @@ public abstract class VolumeUIHandler : MonoBehaviour
 
         desiredVolume = GeneralMethods.RoundToNDecimalPlaces(desiredVolume, 1);
         volumeManager.ChangeVolume(desiredVolume);
-
-        UpdateVisual();
     }
 
     protected void UpdateVisual()

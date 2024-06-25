@@ -5,44 +5,25 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using System;
 
-public class BloomIntensityManager : MonoBehaviour
+public class BloomIntensityManager : PostProcessingManager
 {
     public static BloomIntensityManager Instance { get; private set; }
-
-    [Header("Intensity Settings")]
-    [SerializeField] private VolumeProfile volumeProfile;
-    [SerializeField, Range(0f, 1f)] protected float initialNormalizedIntensity;
-
-    [Header("Load Settings")]
-    [SerializeField] private string playerPrefsKey;
 
     private Bloom bloom;
 
     public static event EventHandler OnBloomIntensityManagerInitialized;
     public static event EventHandler<OnIntensityChangedEventArgs> OnBloomIntensityChanged;
 
-    private const float MAX_NORMALIZED_INTENSITY = 1f;
-    private const float MIN_NORMALIZED_INTENSITY = 0f;
-
     private const float MAX_INTENSITY = 1.5f;
     private const float MIN_INTENSITY = 0f;
 
     private const float DEFAULT_NORMALIZED_INTENSITY = 0.5f;
 
-    public class OnIntensityChangedEventArgs : EventArgs
-    {
-        public float newIntensity;
-    }
     private void Awake()
     {
         SetSingleton();
-        InitializeBloom();
-    }
-
-    private void Start()
-    {
-        LoadIntensityPlayerPrefs();
-        InitializeIntensity();
+        InitializeSetting();
+        SetDefaultNormalizedIntensity(DEFAULT_NORMALIZED_INTENSITY);
     }
 
     private void SetSingleton()
@@ -58,58 +39,29 @@ public class BloomIntensityManager : MonoBehaviour
         }
     }
 
-    private void InitializeBloom()
+    protected override void InitializeSetting()
     {
         if (!volumeProfile.TryGet(out bloom))
         {
-            Debug.LogError("Bloom settings not found in the Post Process Volume");
+            settingFound = false;
+            Debug.Log("Bloom settings not found in the Post Process Volume");
         }
     }
 
-    private void LoadIntensityPlayerPrefs()
+    protected override void InitializeIntensity()
     {
-        if (!PlayerPrefs.HasKey(playerPrefsKey))
-        {
-            PlayerPrefs.SetFloat(playerPrefsKey, DEFAULT_NORMALIZED_INTENSITY);
-        }
-
-        initialNormalizedIntensity = PlayerPrefs.GetFloat(playerPrefsKey);
-    }
-
-    private void SaveIntensityPlayerPrefs(float intensity)
-    {
-        PlayerPrefs.SetFloat(playerPrefsKey, intensity);
-    }
-
-    private void InitializeIntensity()
-    {
-        ChangeIntensity(initialNormalizedIntensity);
+        base.InitializeIntensity();
         OnBloomIntensityManagerInitialized?.Invoke(this, EventArgs.Empty);
     }
 
-    public void ChangeIntensity(float normalizedIntensity)
+    public override void ChangeIntensity(float normalizedIntensity)
     {
-        normalizedIntensity = normalizedIntensity < GetMinNormalizedIntensity() ? GetMinNormalizedIntensity() : normalizedIntensity;
-        normalizedIntensity = normalizedIntensity > GetMaxNormalizedIntensity() ? GetMaxNormalizedIntensity() : normalizedIntensity;
-
-        if (bloom) SetBloomNormalizedIntensity(normalizedIntensity);
-
-        SaveIntensityPlayerPrefs(normalizedIntensity);
-
+        base.ChangeIntensity(normalizedIntensity);
         OnBloomIntensityChanged?.Invoke(this, new OnIntensityChangedEventArgs { newIntensity = normalizedIntensity });
     }
 
-    private void SetBloomNormalizedIntensity(float normalizedIntensity) => SetBloomIntensity(normalizedIntensity*GetMaxIntensity());
-
-    private void SetBloomIntensity(float intensity) => bloom.intensity.value = intensity;
-
-    public float GetNormalizedIntensity() => GetIntensity()/GetMaxIntensity();
-
-    private float GetIntensity() => bloom.intensity.value;
-
-
-    public float GetMaxNormalizedIntensity() => MAX_NORMALIZED_INTENSITY;
-    public float GetMinNormalizedIntensity() => MIN_NORMALIZED_INTENSITY;
-    public float GetMaxIntensity() => MAX_INTENSITY;
-    public float GetMinIntensity() => MIN_INTENSITY;
+    protected override void SetIntensity(float intensity) => bloom.intensity.value = intensity;
+    protected override float GetIntensity() => bloom.intensity.value;
+    public override float GetMaxIntensity() => MAX_INTENSITY;
+    public override float GetMinIntensity() => MIN_INTENSITY;
 }
