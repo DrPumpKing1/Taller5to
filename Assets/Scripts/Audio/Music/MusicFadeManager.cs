@@ -10,9 +10,6 @@ public class MusicFadeManager : MonoBehaviour
 
     [Header("Volume Settings")]
     [SerializeField] private AudioMixer masterAudioMixer;
-    [SerializeField] private float fadeInTime;
-    [SerializeField] private float fadeOutTime;
-    [SerializeField] private float muteTime;
 
     [Header("States")]
     [SerializeField] private State musicFadeState;
@@ -34,6 +31,19 @@ public class MusicFadeManager : MonoBehaviour
     {
         SetMusicFadeState(State.Idle);
         InitializeVolume();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            FadeInMusic(1f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            FadeOutMusic(1f);
+        }
     }
 
     private void SetSingleton()
@@ -77,8 +87,30 @@ public class MusicFadeManager : MonoBehaviour
     public float GetMaxVolume() => MAX_VOLUME;
     public float GetMinVolume() => MIN_VOLUME;
 
+    #region Methods
+    public void FadeOutMusic(float fadeOutTime)
+    {
+        if (musicFadeState == State.FadingOut) return;
+        if (musicFadeState == State.Muted) return;
+
+        StopAllCoroutines();
+        StartCoroutine(FadeOutMusicCoroutine(fadeOutTime));
+    }
+
+    public void FadeInMusic(float fadeInTime)
+    {
+        if (musicFadeState == State.FadingIn) return;
+        if (musicFadeState == State.Idle) return;
+
+        StopAllCoroutines();
+        StartCoroutine(FadeInMusicCoroutine(fadeInTime));
+    }
+
+    #endregion
+
+
     #region Coroutines
-    private IEnumerator FadeOutMusic(float fadeOutTime)
+    private IEnumerator FadeOutMusicCoroutine(float fadeOutTime)
     {
         SetMusicFadeState(State.FadingOut);
 
@@ -98,7 +130,7 @@ public class MusicFadeManager : MonoBehaviour
         SetMusicFadeState(State.Muted);
     }
 
-    private IEnumerator FadeInMusic(float fadeInTime)
+    private IEnumerator FadeInMusicCoroutine(float fadeInTime)
     {
         SetMusicFadeState(State.FadingIn);
 
@@ -108,7 +140,7 @@ public class MusicFadeManager : MonoBehaviour
 
         while (time < realFadeInTime)
         {
-            ChangeVolume(initialVolume * (1 + time / realFadeInTime));
+            ChangeVolume(initialVolume + (MAX_VOLUME - initialVolume) * time / realFadeInTime);
             time += Time.unscaledDeltaTime;
             yield return null;
         }

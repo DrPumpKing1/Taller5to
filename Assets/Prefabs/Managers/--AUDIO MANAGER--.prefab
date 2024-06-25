@@ -421,6 +421,7 @@ GameObject:
   m_Component:
   - component: {fileID: 245283783126170670}
   - component: {fileID: 1200291698017885331}
+  - component: {fileID: 1100990856816145804}
   m_Layer: 0
   m_Name: MusicFadeManager
   m_TagString: Untagged
@@ -455,6 +456,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff2a78b8b1b4c164083e8d57279fb8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  masterAudioMixer: {fileID: 24100000, guid: 6ef8abae1e23e90448dce2afaebc5397, type: 2}
+  musicFadeState: 1
+--- !u!114 &1100990856816145804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8682589623690763884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53ef79876e7c8234fa65a4f00ecf0acb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneFadeInTime: 0.5
+  sceneFadeOutTime: 0.5
 --- !u!1 &9088693868679850834
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,8 +18,8 @@ public class ScenesManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField,Range(0.1f,0.5f)] private float fadeInInterval;
 
-    public static event EventHandler<OnSceneLoadEventArgs> OnSceneTransition;
-    public static event EventHandler<OnSceneLoadEventArgs> OnSceneTransitionLoad;
+    public static event EventHandler<OnSceneLoadEventArgs> OnSceneTransitionOutStart;
+    public static event EventHandler<OnSceneLoadEventArgs> OnSceneTransitionInStart;
     public static event EventHandler<OnSceneLoadEventArgs> OnSceneLoadStart;
     public static event EventHandler<OnSceneLoadEventArgs> OnSceneLoad;
 
@@ -63,7 +63,7 @@ public class ScenesManager : MonoBehaviour
     private void Start()
     {
         OnSceneLoad?.Invoke(this, new OnSceneLoadEventArgs { sceneName = SceneManager.GetActiveScene().name });
-        OnSceneTransitionLoad.Invoke(this, new OnSceneLoadEventArgs { sceneName = SceneManager.GetActiveScene().name });
+        OnSceneTransitionInStart.Invoke(this, new OnSceneLoadEventArgs { sceneName = SceneManager.GetActiveScene().name });
         SetSceneState(State.TransitionIn);
     }
 
@@ -92,7 +92,7 @@ public class ScenesManager : MonoBehaviour
         if (!CanChangeScene()) return;
 
         SetSceneState(State.TransitionOut);
-        OnSceneTransition?.Invoke(this, new OnSceneLoadEventArgs { sceneName = sceneName });
+        OnSceneTransitionOutStart?.Invoke(this, new OnSceneLoadEventArgs { sceneName = sceneName });
         sceneToLoad = sceneName;
     }
 
@@ -107,7 +107,7 @@ public class ScenesManager : MonoBehaviour
         yield return StartCoroutine(LoadSceneCoroutine(sceneName));
 
         yield return new WaitForSeconds(0.1f);
-        OnSceneTransitionLoad?.Invoke(this, new OnSceneLoadEventArgs { sceneName = sceneName });
+        OnSceneTransitionInStart?.Invoke(this, new OnSceneLoadEventArgs { sceneName = sceneName });
 
         SetSceneState(State.TransitionIn);
 

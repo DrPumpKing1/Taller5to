@@ -16,14 +16,14 @@ public class TransitionUIHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        ScenesManager.OnSceneTransition += ScenesManager_OnSceneTransition;
-        ScenesManager.OnSceneTransitionLoad += ScenesManager_OnSceneTransitionLoad;
+        ScenesManager.OnSceneTransitionOutStart += ScenesManager_OnSceneTransitionOutStart;
+        ScenesManager.OnSceneTransitionInStart += ScenesManager_OnSceneTransitionInStart;
     }
 
     private void OnDisable()
     {
-        ScenesManager.OnSceneTransition -= ScenesManager_OnSceneTransition;
-        ScenesManager.OnSceneTransitionLoad -= ScenesManager_OnSceneTransitionLoad;
+        ScenesManager.OnSceneTransitionOutStart -= ScenesManager_OnSceneTransitionOutStart;
+        ScenesManager.OnSceneTransitionInStart -= ScenesManager_OnSceneTransitionInStart;
     }
 
     private void TriggerFadeOut()
@@ -42,12 +42,12 @@ public class TransitionUIHandler : MonoBehaviour
 
 
     #region ScenesManager Subscriptions
-    private void ScenesManager_OnSceneTransition(object sender, ScenesManager.OnSceneLoadEventArgs e)
+    private void ScenesManager_OnSceneTransitionOutStart(object sender, ScenesManager.OnSceneLoadEventArgs e)
     {
         TriggerFadeOut();
     }
 
-    private void ScenesManager_OnSceneTransitionLoad(object sender, ScenesManager.OnSceneLoadEventArgs e)
+    private void ScenesManager_OnSceneTransitionInStart(object sender, ScenesManager.OnSceneLoadEventArgs e)
     {
         TriggerFadeIn();
     }
