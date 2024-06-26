@@ -124,6 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 918307758512688930}
+  - component: {fileID: 5711512473486685145}
   - component: {fileID: 100748798716270097}
   m_Layer: 0
   m_Name: Visual
@@ -150,6 +151,20 @@ Transform:
   - {fileID: 3660152417214490787}
   m_Father: {fileID: 2670356041725850787}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5711512473486685145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2565649216765441077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dff06d60651bf947b6d71f0417e5afd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  electrode: {fileID: 6545335404376616405}
+  _renderer: {fileID: 7594480431638477279}
 --- !u!114 &100748798716270097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1194,7 +1209,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 15697990847544c46bed3b43f86da053, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 9bc18efb790b90b4d8fe644fafc8af97, type: 2}
+      objectReference: {fileID: 2100000, guid: d5197a6e44d7e4e4f86bf278d067c65f, type: 2}
     - target: {fileID: 919132149155446097, guid: 15697990847544c46bed3b43f86da053, type: 3}
       propertyPath: m_Name
       value: Drainer
@@ -1204,6 +1219,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15697990847544c46bed3b43f86da053, type: 3}
+--- !u!23 &7594480431638477279 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 15697990847544c46bed3b43f86da053, type: 3}
+  m_PrefabInstance: {fileID: 9125583769679816027}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8731968867102393008 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 15697990847544c46bed3b43f86da053, type: 3}
