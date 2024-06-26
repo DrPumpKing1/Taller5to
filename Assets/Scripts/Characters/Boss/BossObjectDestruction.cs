@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class BossPlatformDestruction : MonoBehaviour
+public class BossObjectDestruction : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private float timeToDestroyPlatform;
@@ -13,7 +13,11 @@ public class BossPlatformDestruction : MonoBehaviour
     [Space]
     [SerializeField] private float timer;
 
-    private bool onGraceTime;
+    [Header("States")]
+    [SerializeField] private State bossObjectDestructionState;
+
+    private enum State { Disabled, NotTargeting, Targeting }
+
 
     public static event EventHandler OnBossDestroyProjectionPlatform;
     public static event EventHandler OnBossDestroyAllProjectionPlatforms;
@@ -37,46 +41,73 @@ public class BossPlatformDestruction : MonoBehaviour
     private void Start()
     {
         InitializeVariables();
+        SetBossObjectDestructionState(State.Disabled);
     }
 
     private void Update()
     {
+        HandleBossObjectDestructionState();
         HandleProjectionPlatformDestruction();
     }
     private void InitializeVariables()
     {
         ResetTimer();
-        onGraceTime = false;
+    }
+
+    private void SetBossObjectDestructionState(State state) => this.bossObjectDestructionState = state;
+
+    private void HandleBossObjectDestructionState()
+    {
+        switch (bossObjectDestructionState)
+        {
+            case State.Disabled:
+                DisabledLogic();
+                break;
+            case State.NotTargeting:
+                NotTargetingLogic();
+                break;
+            case State.Targeting:
+                TargetingLogic();
+                break;
+        }
+    }
+
+    private void DisabledLogic() { }
+    private void NotTargetingLogic() 
+    { 
+    
+    }
+    private void TargetingLogic()
+    {
+
     }
 
     private void HandleProjectionPlatformDestruction()
     {
         if (BossStateHandler.Instance.BossState != BossStateHandler.State.OnPhase) return;
-        if (onGraceTime) return;
 
         if (timer > 0) timer -= Time.deltaTime;
 
         if(timer <= 0)
         {
-            DestroyProjectionPlatform();
+            DestroyProjectableObject();
             ResetTimer();
         }
     }
 
-    private void DestroyProjectionPlatform()
+    private void DestroyProjectableObject()
     {
-        ProjectionPlatform projectionPlatformToDestroy;
+        ProjectionPlatform projectionPlatformToDestroyObject;
 
-        if (randomizeProjectionPlatforms) projectionPlatformToDestroy = ChooseRandomProjectionPlatform();
-        else projectionPlatformToDestroy = ChooseFirstProjectionPlatform();
+        if (randomizeProjectionPlatforms) projectionPlatformToDestroyObject = ChooseRandomProjectionPlatform();
+        else projectionPlatformToDestroyObject = ChooseFirstProjectionPlatform();
 
-        projectionPlatforms.Remove(projectionPlatformToDestroy);
-        projectionPlatformToDestroy.DestroyProjectionPlatform();
+        projectionPlatforms.Remove(projectionPlatformToDestroyObject);
+        projectionPlatformToDestroyObject.DestroyProjectionPlatform();
 
         OnBossDestroyProjectionPlatform?.Invoke(this, EventArgs.Empty);
 
         ResetTimer();
-        StartCoroutine(GraceTimeCoroutine());
 
         CheckAllPlatformsDestroyed();
     }
@@ -96,14 +127,6 @@ public class BossPlatformDestruction : MonoBehaviour
         OnBossDestroyAllProjectionPlatforms?.Invoke(this, EventArgs.Empty);
     }
 
-    private IEnumerator GraceTimeCoroutine()
-    {
-        onGraceTime = true;
-
-        yield return new WaitForSeconds(graceTimeAfterPlatformDestruction);
-
-        onGraceTime = false;
-    }
 
     private void ResetTimer() => timer = timeToDestroyPlatform;
 

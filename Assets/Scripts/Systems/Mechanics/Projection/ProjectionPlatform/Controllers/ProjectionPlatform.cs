@@ -10,7 +10,8 @@ public class ProjectionPlatform : MonoBehaviour
 
     [Header("Projection Platform Settings")]
     [SerializeField] private Transform projectionPoint;
-    [SerializeField] private ProjectableObjectSO currentProjectedObject;
+    [SerializeField] private ProjectableObjectSO currentProjectedObjectSO;
+    [SerializeField] private ProjectableObject currentProjectedObject;
 
     [Header("Projectable Object Rotation Settings")]
     [SerializeField] private Vector2 startingDirection;
@@ -21,7 +22,8 @@ public class ProjectionPlatform : MonoBehaviour
     [SerializeField] private Vector3 checkBoxHalfExtends;
 
     public Transform ProjectionPoint => projectionPoint;
-    public ProjectableObjectSO CurrentProjectedObject => currentProjectedObject;
+    public ProjectableObjectSO CurrentProjectedObjectSO => currentProjectedObjectSO;
+    public ProjectableObject CurrentProjectedObject => currentProjectedObject;
     public Vector2 StartingDirection => startingDirection;
     public int ID => id;
 
@@ -35,6 +37,7 @@ public class ProjectionPlatform : MonoBehaviour
     public class OnProjectionEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectSO;
+        public ProjectableObject projectableObject;
     }
 
     private void FixedUpdate()
@@ -50,14 +53,16 @@ public class ProjectionPlatform : MonoBehaviour
 
     public void ClearProjectionPlatform()
     {
+        currentProjectedObjectSO = null;
         currentProjectedObject = null;
         OnProjectionPlatformClear?.Invoke(this, EventArgs.Empty);
     }
 
-    public void SetProjectionPlatform(ProjectableObjectSO projectableObjectSO)
+    public void SetProjectionPlatform(ProjectableObjectSO projectableObjectSO, ProjectableObject projectableObject)
     {
-        currentProjectedObject = projectableObjectSO;
-        OnProjectionPlatformSet?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO });
+        currentProjectedObjectSO = projectableObjectSO;
+        currentProjectedObject = projectableObject;
+        OnProjectionPlatformSet?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectableObject = projectableObject });
     }
 
     public void DestroyProjectionPlatform()

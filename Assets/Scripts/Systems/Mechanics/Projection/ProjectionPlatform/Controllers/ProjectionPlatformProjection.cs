@@ -99,7 +99,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
             return;
         }
 
-        if (projectionPlatform.CurrentProjectedObject != null)
+        if (projectionPlatform.CurrentProjectedObjectSO != null)
         {
             FailObjectProjection(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO);
             return;
@@ -148,7 +148,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
             return false;
         }
 
-        if (projectionPlatform.CurrentProjectedObject != null && !projectionPlatform.ObjectAbove)
+        if (projectionPlatform.CurrentProjectedObjectSO != null && !projectionPlatform.ObjectAbove)
         {
             FailObjectProjection(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO);
             return false;
@@ -188,8 +188,6 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
 
     private void ProjectObject(ProjectableObjectSO projectableObjectSO)
     {
-        projectionPlatform.SetProjectionPlatform(projectableObjectSO);
-
         GameObject projectedObject = Instantiate(projectableObjectSO.prefab.gameObject, projectionPlatform.ProjectionPoint.position, projectionPlatform.ProjectionPoint.rotation);
         ProjectableObject projectableObject = projectedObject.GetComponent<ProjectableObject>();
 
@@ -200,6 +198,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
         OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO });
         OnAnyObjectProjectionSuccess?.Invoke(this, new OnAnyProjectionEventArgs { projectableObjectSO = projectableObjectSO });
 
+        projectionPlatform.SetProjectionPlatform(projectableObjectSO, projectableObject);
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 

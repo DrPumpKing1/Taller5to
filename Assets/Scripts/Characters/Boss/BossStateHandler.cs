@@ -34,7 +34,7 @@ public class BossStateHandler : MonoBehaviour
         BossPhaseHandler.OnPhaseChange += BossPhaseHandler_OnPhaseChange;
         BossPhaseHandler.OnLastPhaseEnded += BossPhaseHandler_OnLastPhaseEnded;
 
-        BossPlatformDestruction.OnBossDestroyAllProjectionPlatforms += BossPlatformDestruction_OnBossDestroyAllProjectionPlatforms;
+        BossObjectDestruction.OnBossDestroyAllProjectionPlatforms += BossPlatformDestruction_OnBossDestroyAllProjectionPlatforms;
     }
 
     private void OnDisable()

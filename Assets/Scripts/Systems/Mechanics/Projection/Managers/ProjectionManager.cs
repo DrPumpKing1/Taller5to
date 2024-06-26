@@ -22,6 +22,8 @@ public class ProjectionManager : MonoBehaviour
     public static event EventHandler<OnProjectionEventArgs> OnObjectDematerialized;
     public static event EventHandler<OnAllObjectsDematerializedEventArgs> OnAllObjectsDematerialized;
 
+    public static event EventHandler<OnProjectionEventArgs> OnObjectDestroyed;
+
     public bool AllProjectableObjectDematerializationInput => projectionInput.GetAllProjectableObjectsDematerializationDown();
 
     public List<ProjectableObjectSO> CurrentProjectedObjectsSOs => currentProjectedObjectsSOs;
@@ -104,6 +106,16 @@ public class ProjectionManager : MonoBehaviour
         ProjectionGemsManager.Instance.RefundProyectionGems(projectableObjectSO.projectionGemsCost);
 
         if(triggerEvents) OnObjectDematerialized?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatformID = projectionPlatform.ID });
+    }
+
+    public void ObjectDestroyed(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform, ProjectableObject projectableObject, bool refundGems)
+    {
+        currentProjectedObjectsSOs.Remove(projectableObjectSO);
+        currentProjectedObjectsComponents.Remove(projectableObject);
+
+        if(refundGems) ProjectionGemsManager.Instance.RefundProyectionGems(projectableObjectSO.projectionGemsCost);
+
+        OnObjectDestroyed?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatformID = projectionPlatform.ID });
     }
 
     public bool AnyObjectsProjected() => currentProjectedObjectsSOs.Count > 0;
