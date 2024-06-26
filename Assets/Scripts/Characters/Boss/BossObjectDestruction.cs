@@ -11,6 +11,7 @@ public class BossObjectDestruction : MonoBehaviour
     [SerializeField] private float timeTargeting;
 
     [Header("Target Settings")]
+    [SerializeField] private bool priorizeSenders;
     [SerializeField] private List<ProjectionPlatform> projectionPlatforms;
 
     [Header("States")]
@@ -19,19 +20,23 @@ public class BossObjectDestruction : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool debug;
     [SerializeField] private float timer;
+    [SerializeField] private int lockedProjectionGems;
     [SerializeField] private ProjectionPlatform currentTargetedProjectionPlatform;
 
     private enum State { Disabled, NotTargeting, Targeting }
+
+    private const int SENDER_ID = 3;    
 
     public static event EventHandler<OnProjectionPlatformTargetEventArgs> OnProjectionPlatformTarget;
     public static event EventHandler<OnProjectionPlatformTargetEventArgs> OnProjectionPlatformTargetRemoved;
     public static event EventHandler<OnProjectionPlatformTargetEventArgs> OnProjectionPlatformTargetDestoyed;
 
-    public static event EventHandler OnBossDestroyedAllObjects;
+    public static event EventHandler OnBossAllProjectionGemsLocked;
 
     public class OnProjectionPlatformTargetEventArgs : EventArgs
     {
         public ProjectionPlatform projectionPlatform;
+        public ProjectableObjectSO projectableObjectSO;
     }
 
     private void OnEnable()
@@ -71,6 +76,7 @@ public class BossObjectDestruction : MonoBehaviour
     private void InitializeVariables()
     {
         ResetTimer();
+        lockedProjectionGems = 0;
     }
 
     private void SetBossObjectDestructionState(State state) => this.bossObjectDestructionState = state;
@@ -91,28 +97,65 @@ public class BossObjectDestruction : MonoBehaviour
         }
     }
 
-    private void DisabledLogic() { }
+    private void DisabledLogic() 
+    {
+        if (currentTargetedProjectionPlatform)
+        {
+            OnProjectionPlatformTargetRemoved?.Invoke(this, new OnProjectionPlatformTargetEventArgs { projectionPlatform = currentTargetedProjectionPlatform, projectableObjectSO = currentTargetedProjectionPlatform.CurrentProjectedObjectSO });
+            if (debug) Debug.Log("Current target removed");
+
+            currentTargetedProjectionPlatform = null;
+            return;
+        }
+    }
     private void NotTargetingLogic() 
-    { 
-    
+    {
+        if(timer >= timeNotTargeting)
+        {
+            SetBossObjectDestructionState(State.Targeting);
+
+            TargetProjectionPlatform();
+            ResetTimer();
+            return;
+        }
+
+        timer += Time.deltaTime;
     }
     private void TargetingLogic()
     {
+        if (timer >= timeTargeting)
+        {
+            SetBossObjectDestructionState(State.NotTargeting);
 
+            DestroyObjectInPlatform();
+            ResetTimer();
+            return;
+        }
+
+        timer += Time.deltaTime;
     }
 
     private void TargetProjectionPlatform()
     {
         ProjectionPlatform targetProjectionPlatform = ChooseRandomProjectionPlatform(GetProjectionPlatformsWithObject());
 
+        if (priorizeSenders)
+        {
+            ProjectionPlatform targetProjectionPlatformWithSender = ChooseRandomProjectionPlatform(GetProjectionPlatformsWithSender());
+            if (targetProjectionPlatformWithSender) targetProjectionPlatform = targetProjectionPlatformWithSender;
+        }
+
         if (!targetProjectionPlatform)
         {
             if (debug) Debug.Log("There are any projection platforms with objects to target");
+            SetBossObjectDestructionState(State.NotTargeting);
             return;
         }
 
         currentTargetedProjectionPlatform = targetProjectionPlatform;
-        OnProjectionPlatformTarget?.Invoke(this, new OnProjectionPlatformTargetEventArgs { projectionPlatform = currentTargetedProjectionPlatform });
+        if (debug) Debug.Log($"{targetProjectionPlatform} targeted");
+
+        OnProjectionPlatformTarget?.Invoke(this, new OnProjectionPlatformTargetEventArgs { projectionPlatform = currentTargetedProjectionPlatform, projectableObjectSO = currentTargetedProjectionPlatform.CurrentProjectedObjectSO });
     }
 
     private void ToRemoveMethod()
@@ -132,17 +175,21 @@ public class BossObjectDestruction : MonoBehaviour
     {
         if (!currentTargetedProjectionPlatform.HasObject())
         {
-            OnProjectionPlatformTargetRemoved?.Invoke(this, new OnProjectionPlatformTargetEventArgs { projectionPlatform = currentTargetedProjectionPlatform });
+            OnProjectionPlatformTargetRemoved?.Invoke(this, new OnProjectionPlatformTargetEventArgs { projectionPlatform = currentTargetedProjectionPlatform, projectableObjectSO = currentTargetedProjectionPlatform.CurrentProjectedObjectSO });
             if (debug) Debug.Log("Current targeted platform does not have an object");
 
             currentTargetedProjectionPlatform = null;
             return;
         }
 
+        OnProjectionPlatformTargetDestoyed?.Invoke(this, new OnProjectionPlatformTargetEventArgs { projectionPlatform = currentTargetedProjectionPlatform, projectableObjectSO = currentTargetedProjectionPlatform.CurrentProjectedObjectSO });
+
+        lockedProjectionGems += currentTargetedProjectionPlatform.CurrentProjectedObjectSO.projectionGemsCost;
+
         currentTargetedProjectionPlatform.CurrentProjectedObject.DestroyProjectableObject();
-        OnProjectionPlatformTargetDestoyed?.Invoke(this, new OnProjectionPlatformTargetEventArgs { projectionPlatform = currentTargetedProjectionPlatform });
         if (debug) Debug.Log("Object in current targeted platform destroyed");
 
+        currentTargetedProjectionPlatform = null;
         CheckPlayerLose();
     }
 
@@ -158,20 +205,46 @@ public class BossObjectDestruction : MonoBehaviour
         return projectionPlatformsWithObject;
     }
 
+    private List<ProjectionPlatform> GetProjectionPlatformsWithSender()
+    {
+        List<ProjectionPlatform> projectionPlatformsWithSender = new List<ProjectionPlatform>();
+
+        foreach (ProjectionPlatform projectionPlatform in projectionPlatforms)
+        {
+            if (!projectionPlatform.HasObject()) continue;
+            if (projectionPlatform.CurrentProjectedObjectSO.id != SENDER_ID) continue;
+            projectionPlatformsWithSender.Add(projectionPlatform);
+        }
+
+        return projectionPlatformsWithSender;
+    }
+
     private ProjectionPlatform ChooseRandomProjectionPlatform(List<ProjectionPlatform> projectionPlatforms)
     {
         if (projectionPlatforms.Count == 0) return null;
 
         int randomIndex = UnityEngine.Random.Range(0, projectionPlatforms.Count - 1);
-        return this.projectionPlatforms[randomIndex];
+        return projectionPlatforms[randomIndex];
     }
 
     private void CheckPlayerLose()
     {
-        if (ProjectionGemsManager.Instance.AvailableProjectionGems > 0) return;
-        if (ProjectionManager.Instance.CurrentProjectedObjectsComponents.Count > 0) return;
+        if (lockedProjectionGems < ProjectionGemsManager.Instance.TotalProjectionGems) return;
 
-        OnBossDestroyedAllObjects?.Invoke(this, EventArgs.Empty);
+        OnBossAllProjectionGemsLocked?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void CheckRefundLockedProjectionGems()
+    {
+        if (lockedProjectionGems > 0)
+        {
+            ProjectionGemsManager.Instance.RefundProjectionGems(lockedProjectionGems);
+            if (debug) Debug.Log($"{lockedProjectionGems} projection gems refunded");
+            lockedProjectionGems = 0;
+            return;
+        }
+
+        if (debug) Debug.Log("No projection gems to refund");
     }
 
     private void ResetTimer() => timer = 0f;
@@ -180,6 +253,7 @@ public class BossObjectDestruction : MonoBehaviour
     private void BossStateHandler_OnBossActiveStart(object sender, EventArgs e)
     {
         ResetTimer();
+        SetBossObjectDestructionState(State.Disabled);
     }
     private void BossStateHandler_OnBossActiveEnd(object sender, EventArgs e)
     {
@@ -190,6 +264,9 @@ public class BossObjectDestruction : MonoBehaviour
     private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
     {
         ResetTimer();
+        SetBossObjectDestructionState(State.Disabled);
+
+        CheckRefundLockedProjectionGems();
     }
 
     private void BossStateHandler_OnBossPhaseChangeEnd(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
@@ -202,6 +279,8 @@ public class BossObjectDestruction : MonoBehaviour
     {
         ResetTimer();
         SetBossObjectDestructionState(State.Disabled);
+
+        CheckRefundLockedProjectionGems();
     }
     private void BossStateHandler_OnPlayerDefeated(object sender, EventArgs e)
     {

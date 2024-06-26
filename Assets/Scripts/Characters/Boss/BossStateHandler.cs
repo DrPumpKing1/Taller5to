@@ -39,7 +39,7 @@ public class BossStateHandler : MonoBehaviour
         BossPhaseHandler.OnPhaseChange += BossPhaseHandler_OnPhaseChange;
         BossPhaseHandler.OnLastPhaseEnded += BossPhaseHandler_OnLastPhaseEnded;
 
-        BossObjectDestruction.OnBossDestroyedAllObjects += BossPlatformDestruction_OnBossDestroyedAllObjects;
+        BossObjectDestruction.OnBossAllProjectionGemsLocked += BossPlatformDestruction_OnBossDestroyedAllObjects;
     }
 
     private void OnDisable()
@@ -48,7 +48,7 @@ public class BossStateHandler : MonoBehaviour
         BossPhaseHandler.OnPhaseChange -= BossPhaseHandler_OnPhaseChange;
         BossPhaseHandler.OnLastPhaseEnded -= BossPhaseHandler_OnLastPhaseEnded;
 
-        BossObjectDestruction.OnBossDestroyedAllObjects += BossPlatformDestruction_OnBossDestroyedAllObjects;
+        BossObjectDestruction.OnBossAllProjectionGemsLocked += BossPlatformDestruction_OnBossDestroyedAllObjects;
     }
 
     private void Awake()

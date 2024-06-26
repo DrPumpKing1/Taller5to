@@ -94,7 +94,7 @@ public class ProjectionManager : MonoBehaviour
         currentProjectedObjectsSOs.Add(projectableObjectSO);
         currentProjectedObjectsComponents.Add(projectableObject);
 
-        ProjectionGemsManager.Instance.UseProyectionGems(projectableObjectSO.projectionGemsCost);
+        ProjectionGemsManager.Instance.UseProjectionGems(projectableObjectSO.projectionGemsCost);
         OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatformID = projectionPlatform.ID });
     }
 
@@ -103,7 +103,7 @@ public class ProjectionManager : MonoBehaviour
         currentProjectedObjectsSOs.Remove(projectableObjectSO);
         currentProjectedObjectsComponents.Remove(projectableObject);
 
-        ProjectionGemsManager.Instance.RefundProyectionGems(projectableObjectSO.projectionGemsCost);
+        ProjectionGemsManager.Instance.RefundProjectionGems(projectableObjectSO.projectionGemsCost);
 
         if(triggerEvents) OnObjectDematerialized?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatformID = projectionPlatform.ID });
     }
@@ -113,7 +113,7 @@ public class ProjectionManager : MonoBehaviour
         currentProjectedObjectsSOs.Remove(projectableObjectSO);
         currentProjectedObjectsComponents.Remove(projectableObject);
 
-        if(refundGems) ProjectionGemsManager.Instance.RefundProyectionGems(projectableObjectSO.projectionGemsCost);
+        if(refundGems) ProjectionGemsManager.Instance.RefundProjectionGems(projectableObjectSO.projectionGemsCost);
 
         OnObjectDestroyed?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatformID = projectionPlatform.ID });
     }

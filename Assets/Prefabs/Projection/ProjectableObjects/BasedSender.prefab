@@ -877,7 +877,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 262135
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -1125,6 +1125,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 27f066cb67047fe4797dcbe975b31956, type: 3}
       propertyPath: m_Name
       value: Selected
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 27f066cb67047fe4797dcbe975b31956, type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 27f066cb67047fe4797dcbe975b31956, type: 3}
       propertyPath: m_IsActive
@@ -1568,6 +1572,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 27f066cb67047fe4797dcbe975b31956, type: 3}
       propertyPath: m_Name
       value: Sender
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 27f066cb67047fe4797dcbe975b31956, type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

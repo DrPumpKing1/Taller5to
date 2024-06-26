@@ -60,16 +60,23 @@ public class ProjectionGemsManager : MonoBehaviour
 
     public bool CheckCanUseProjectionGems(int quantity) => availableProjectionGems >= quantity;
 
-    public void UseProyectionGems(int quantity)
+    public void UseProjectionGems(int quantity)
     {
         availableProjectionGems = availableProjectionGems - quantity < 0 ? 0 : availableProjectionGems - quantity;
         OnProjectionGemsUsed?.Invoke(this, new OnProjectionGemsEventArgs { projectionGems = quantity });
     }
 
-    public void RefundProyectionGems(int quantity)
+    public void RefundProjectionGems(int quantity)
     {
         availableProjectionGems = availableProjectionGems + quantity > totalProjectionGems ? totalProjectionGems : availableProjectionGems + quantity;
         OnProjectionGemsRefunded?.Invoke(this, new OnProjectionGemsEventArgs { projectionGems = quantity });
+    }
+
+    public void RefundAllProjectionGems()
+    {
+        int refundedProjectionGems = totalProjectionGems - availableProjectionGems;
+        availableProjectionGems = totalProjectionGems;
+        OnProjectionGemsRefunded?.Invoke(this, new OnProjectionGemsEventArgs { projectionGems = refundedProjectionGems });
     }
 
     public void IncreaseTotalProjectionGems(int quantity)
@@ -83,4 +90,6 @@ public class ProjectionGemsManager : MonoBehaviour
     {
         OnInsuficentProjectionGems?.Invoke(this, new OnProjectionGemsEventArgs { projectionGems = tryToUseQuantity });
     }
+
+    public bool HasFullProjectionGems() => availableProjectionGems >= totalProjectionGems;
 }

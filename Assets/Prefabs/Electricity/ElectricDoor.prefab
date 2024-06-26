@@ -82,7 +82,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -113,7 +113,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 262135
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: 7965449172434267014}
   - component: {fileID: 6426575695210983281}
   - component: {fileID: 4767944791196707858}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

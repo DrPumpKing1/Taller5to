@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         MonologueManager.OnMonologueStart += MonologueManager_OnMonologueStart;
         MonologueManager.OnMonologueEnd += MonologueManager_OnMonologueEnd;
 
-        BossObjectDestruction.OnBossDestroyedAllObjects += BossObjectDestruction_OnBossDestroyedAllObjects;
+        BossObjectDestruction.OnBossAllProjectionGemsLocked += BossObjectDestruction_OnBossDestroyedAllObjects;
     }
 
     private void OnDisable()
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         MonologueManager.OnMonologueStart -= MonologueManager_OnMonologueStart;
         MonologueManager.OnMonologueEnd -= MonologueManager_OnMonologueEnd;
 
-        BossObjectDestruction.OnBossDestroyedAllObjects -= BossObjectDestruction_OnBossDestroyedAllObjects;
+        BossObjectDestruction.OnBossAllProjectionGemsLocked -= BossObjectDestruction_OnBossDestroyedAllObjects;
     }
 
     private void Awake()

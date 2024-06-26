@@ -755,8 +755,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e9972d2011f774398d67e716901b24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToDestroyPlatform: 5
-  graceTimeAfterPlatformDestruction: 3
+  enableSinceFirstPhase: 0
+  phaseNumberToEnable: 2
+  timeNotTargeting: 5
+  timeTargeting: 5
+  priorizeSenders: 1
   projectionPlatforms:
   - {fileID: 0}
   - {fileID: 0}
@@ -764,9 +767,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  randomizeProjectionPlatforms: 0
-  resetTimerOnPhaseChange: 1
+  bossObjectDestructionState: 0
+  debug: 1
   timer: 0
+  lockedProjectionGems: 0
+  currentTargetedProjectionPlatform: {fileID: 0}
 --- !u!1 &6584687206138455535
 GameObject:
   m_ObjectHideFlags: 0
