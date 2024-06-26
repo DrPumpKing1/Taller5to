@@ -70,4 +70,6 @@ public class ProjectionPlatform : MonoBehaviour
         OnProjectionPlatformDestroyed?.Invoke(this, EventArgs.Empty);
         Destroy(gameObject);
     }
+
+    public bool HasObject() => currentProjectedObject != null;
 }

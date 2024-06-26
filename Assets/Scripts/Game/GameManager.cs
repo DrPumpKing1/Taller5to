@@ -24,8 +24,9 @@ public class GameManager : MonoBehaviour
 
         MonologueManager.OnMonologueStart += MonologueManager_OnMonologueStart;
         MonologueManager.OnMonologueEnd += MonologueManager_OnMonologueEnd;
-    }
 
+        BossObjectDestruction.OnBossDestroyedAllObjects += BossObjectDestruction_OnBossDestroyedAllObjects;
+    }
 
     private void OnDisable()
     {
@@ -37,6 +38,8 @@ public class GameManager : MonoBehaviour
 
         MonologueManager.OnMonologueStart -= MonologueManager_OnMonologueStart;
         MonologueManager.OnMonologueEnd -= MonologueManager_OnMonologueEnd;
+
+        BossObjectDestruction.OnBossDestroyedAllObjects -= BossObjectDestruction_OnBossDestroyedAllObjects;
     }
 
     private void Awake()
@@ -85,7 +88,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region DialogManagerSubscriptions
+    #region DialogueManagerSubscriptions
     private void DialogueManager_OnDialogueStart(object sender, DialogueManager.OnDialogueEventArgs e)
     {
         switch (e.movementLimitType)
@@ -128,6 +131,13 @@ public class GameManager : MonoBehaviour
         }
 
         SetGameState(State.OnGameplay);
+    }
+    #endregion
+
+    #region BossObjectDestruction Subscriptions
+    private void BossObjectDestruction_OnBossDestroyedAllObjects(object sender, System.EventArgs e)
+    {
+        SetGameState(State.OnLost);
     }
     #endregion
 }

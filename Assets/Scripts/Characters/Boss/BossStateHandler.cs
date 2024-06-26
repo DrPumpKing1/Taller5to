@@ -23,10 +23,15 @@ public class BossStateHandler : MonoBehaviour
     public static event EventHandler OnBossActiveStart;
     public static event EventHandler OnBossActiveEnd;
 
-    public static event EventHandler OnBossPhaseChangeStart;
-    public static event EventHandler OnBossPhaseChangeEnd;
+    public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeStart;
+    public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeEnd;
     public static event EventHandler OnBossDefeated;
     public static event EventHandler OnPlayerDefeated;
+
+    public class OnPhaseChangeEventArgs : EventArgs
+    {
+        public int phaseNumber;
+    }
 
     private void OnEnable()
     {
@@ -34,7 +39,7 @@ public class BossStateHandler : MonoBehaviour
         BossPhaseHandler.OnPhaseChange += BossPhaseHandler_OnPhaseChange;
         BossPhaseHandler.OnLastPhaseEnded += BossPhaseHandler_OnLastPhaseEnded;
 
-        BossObjectDestruction.OnBossDestroyAllProjectionPlatforms += BossPlatformDestruction_OnBossDestroyAllProjectionPlatforms;
+        BossObjectDestruction.OnBossDestroyedAllObjects += BossPlatformDestruction_OnBossDestroyedAllObjects;
     }
 
     private void OnDisable()
@@ -42,6 +47,8 @@ public class BossStateHandler : MonoBehaviour
         BossPhaseHandler.OnFirstPhaseStart -= BossPhaseHandler_OnFirstPhaseStart;
         BossPhaseHandler.OnPhaseChange -= BossPhaseHandler_OnPhaseChange;
         BossPhaseHandler.OnLastPhaseEnded -= BossPhaseHandler_OnLastPhaseEnded;
+
+        BossObjectDestruction.OnBossDestroyedAllObjects += BossPlatformDestruction_OnBossDestroyedAllObjects;
     }
 
     private void Awake()
@@ -83,15 +90,15 @@ public class BossStateHandler : MonoBehaviour
         SetBossState(State.OnPhase);
     }
 
-    private IEnumerator ChangePhaseCoroutine()
+    private IEnumerator ChangePhaseCoroutine(int phaseNumber)
     {
         SetBossState(State.PhaseChange);
 
-        OnBossPhaseChangeStart?.Invoke(this, EventArgs.Empty);
+        OnBossPhaseChangeStart?.Invoke(this, new OnPhaseChangeEventArgs { phaseNumber = phaseNumber });
 
         yield return new WaitForSeconds(timeChangingPhase);
 
-        OnBossPhaseChangeEnd?.Invoke(this, EventArgs.Empty);
+        OnBossPhaseChangeEnd?.Invoke(this, new OnPhaseChangeEventArgs { phaseNumber = phaseNumber });
 
         SetBossState(State.OnPhase);
     }
@@ -119,7 +126,7 @@ public class BossStateHandler : MonoBehaviour
     }
     private void BossPhaseHandler_OnPhaseChange(object sender, BossPhaseHandler.OnPhaseChangeEventArgs e)
     {
-        StartCoroutine(ChangePhaseCoroutine());
+        StartCoroutine(ChangePhaseCoroutine(e.newPhase));
     }
 
     private void BossPhaseHandler_OnLastPhaseEnded(object sender, EventArgs e)
@@ -128,8 +135,8 @@ public class BossStateHandler : MonoBehaviour
     }
     #endregion
 
-    #region BossPlatformDestruction Subriptions
-    private void BossPlatformDestruction_OnBossDestroyAllProjectionPlatforms(object sender, EventArgs e)
+    #region BossPlatformDestruction Subcriptions
+    private void BossPlatformDestruction_OnBossDestroyedAllObjects(object sender, EventArgs e)
     {
         DefeatPlayer();
     }
