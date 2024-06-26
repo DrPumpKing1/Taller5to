@@ -128,14 +128,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823e5dc794ae6ee48adc0fb5e844c57a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transformToRotate: {fileID: 5640106717856725899}
+  transformToRotate: {fileID: 2376413180957870614}
   startingDirection: {x: 0, y: 1}
-  timeToRotate: 10
-  clockwiseRotation: 1
-  degreesPerTurn: 90
-  smoothRotateFactor: 15
-  resetTimerOnPhaseChange: 1
-  timer: 0
+  smoothFollowPlayerRotateFactor: 1
+  smoothTargetPlatformRotateFactor: 2
+  rotationState: 0
+  desiredDirection: {x: 0, y: 0, z: 0}
+  player: {fileID: 0}
 --- !u!1 &2145115856461519863
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,8 +637,8 @@ GameObject:
   - component: {fileID: 2172027081183260514}
   - component: {fileID: 4331399682908774126}
   - component: {fileID: 2495749140857903703}
-  - component: {fileID: 61691762310308239}
   - component: {fileID: 1005285739392142598}
+  - component: {fileID: 61691762310308239}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -733,7 +732,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitsPerPhase: 10
   currentHitsInPhase: 0
---- !u!114 &61691762310308239
+--- !u!114 &1005285739392142598
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -741,6 +740,35 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5860173099003437871}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e9972d2011f774398d67e716901b24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableSinceFirstPhase: 0
+  phaseNumberToEnable: 2
+  timeNotTargeting: 5
+  timeTargeting: 10
+  priorizeSenders: 1
+  projectionPlatforms:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  bossObjectDestructionState: 0
+  debug: 1
+  timer: 0
+  lockedProjectionGems: 0
+  currentTargetedProjectionPlatform: {fileID: 0}
+--- !u!114 &61691762310308239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860173099003437871}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c16f049c07902fb4fb3f71c58737e0b4, type: 3}
   m_Name: 
@@ -758,35 +786,6 @@ MonoBehaviour:
     block: {fileID: 8809075865082167730}
   currentBlockingDirections: 
   blockSinceStart: 0
---- !u!114 &1005285739392142598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5860173099003437871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29e9972d2011f774398d67e716901b24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableSinceFirstPhase: 0
-  phaseNumberToEnable: 2
-  timeNotTargeting: 5
-  timeTargeting: 5
-  priorizeSenders: 1
-  projectionPlatforms:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  bossObjectDestructionState: 0
-  debug: 1
-  timer: 0
-  lockedProjectionGems: 0
-  currentTargetedProjectionPlatform: {fileID: 0}
 --- !u!1 &6584687206138455535
 GameObject:
   m_ObjectHideFlags: 0

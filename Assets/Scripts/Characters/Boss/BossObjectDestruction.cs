@@ -232,6 +232,7 @@ public class BossObjectDestruction : MonoBehaviour
         if (lockedProjectionGems < ProjectionGemsManager.Instance.TotalProjectionGems) return;
 
         OnBossAllProjectionGemsLocked?.Invoke(this, EventArgs.Empty);
+        if (debug) Debug.Log("Player Defeated");
     }
 
     private void CheckRefundLockedProjectionGems()

@@ -88,10 +88,6 @@ MonoBehaviour:
   - 0.5
   - 0.95
   drawRaycasts: 1
-  HitWall: 0
-  HitDiagonalWall: 0
-  HitCorner: 0
-  MovementTowardsWall: 0
 --- !u!1 &211851582990758971
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +155,7 @@ MonoBehaviour:
   playerInteractAlternate: {fileID: 907748609654045023}
   checkGround: {fileID: 2176356878162520009}
   smoothRotateFactor: 10
-  holdDirectionThresholdTime: 0.05
+  holdDirectionThresholdTime: 0.03
 --- !u!1 &541895919520759199
 GameObject:
   m_ObjectHideFlags: 0
