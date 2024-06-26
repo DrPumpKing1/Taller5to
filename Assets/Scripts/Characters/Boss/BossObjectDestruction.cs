@@ -158,19 +158,6 @@ public class BossObjectDestruction : MonoBehaviour
         OnProjectionPlatformTarget?.Invoke(this, new OnProjectionPlatformTargetEventArgs { projectionPlatform = currentTargetedProjectionPlatform, projectableObjectSO = currentTargetedProjectionPlatform.CurrentProjectedObjectSO });
     }
 
-    private void ToRemoveMethod()
-    {
-        if (BossStateHandler.Instance.BossState != BossStateHandler.State.OnPhase) return;
-
-        if (timer > 0) timer -= Time.deltaTime;
-
-        if (timer <= 0)
-        {
-            DestroyObjectInPlatform();
-            ResetTimer();
-        }
-    }
-
     private void DestroyObjectInPlatform()
     {
         if (!currentTargetedProjectionPlatform.HasObject())
