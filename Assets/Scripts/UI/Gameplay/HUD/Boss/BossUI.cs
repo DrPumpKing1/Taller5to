@@ -37,7 +37,7 @@ public class BossUI : MonoBehaviour
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
         BossStateHandler.OnBossPhaseChangeEnd += BossStateHandler_OnBossPhaseChangeEnd;
 
-        BossKaerumOvercharge.OnCurrentHitsInPhaseChanged += BossKaerumOvercharge_OnCurrentHitsInPhaseChanged;
+        BossKaerumOvercharge.OnCurrentChargeInPhaseChanged += BossKaerumOvercharge_OnCurrentHitsInPhaseChanged;
         BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart; ;
     }
 
@@ -46,7 +46,7 @@ public class BossUI : MonoBehaviour
         BossStateHandler.OnBossActiveStart -= BossStateHandler_OnBossActiveStart;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
 
-        BossKaerumOvercharge.OnCurrentHitsInPhaseChanged -= BossKaerumOvercharge_OnCurrentHitsInPhaseChanged;
+        BossKaerumOvercharge.OnCurrentChargeInPhaseChanged -= BossKaerumOvercharge_OnCurrentHitsInPhaseChanged;
     }
 
     private void Start()
@@ -110,20 +110,20 @@ public class BossUI : MonoBehaviour
         animator.SetTrigger(HIDE_TRIGGER);
     }
 
-    private void ChangeTargetFillAmount(int numerator, int denominator)
+    private void ChangeTargetFillAmount(float numerator, float denominator)
     {
-        if (fillUntilEnd && denominator > 1) denominator--;
+        if (fillUntilEnd && denominator > 1) denominator -= BossKaerumOvercharge.Instance.ChargePerProjetile;
 
-        targetFillAmount = (float)numerator / denominator;
+        targetFillAmount = numerator / denominator;
     }
 
     private void SetTargetFillAmount(float fillAmount) => targetFillAmount = fillAmount;
     private void SetSmoothFillFactor(float smoothFillFactor) => this.smoothFillFactor = smoothFillFactor;
 
 
-    private void BossKaerumOvercharge_OnCurrentHitsInPhaseChanged(object sender, BossKaerumOvercharge.OnCurrentHitsInPhaseChangedEventArgs e)
+    private void BossKaerumOvercharge_OnCurrentHitsInPhaseChanged(object sender, BossKaerumOvercharge.OnCurrentChargeInPhaseChangedEventArgs e)
     {
-        ChangeTargetFillAmount(e.currentHitsInPhase, e.hitsPerPhase);
+        ChangeTargetFillAmount(e.currentChargeInPhase, e.chargeLimitPerPhase);
     }
 
 

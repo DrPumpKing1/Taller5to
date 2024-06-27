@@ -728,8 +728,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19c5b27dbd6bf1d4ead3e3ef69d51812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitsPerPhase: 5
-  currentHitsInPhase: 0
+  chargeLimitPerPhase: 5
+  chargePerProjectile: 1
+  currentChargeInPhase: 0
+  timeForPassiveDischarge: 5
+  passiveDischargePerSecond: 0.5
+  timeNotHit: 0
 --- !u!114 &1005285739392142598
 MonoBehaviour:
   m_ObjectHideFlags: 0
