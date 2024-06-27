@@ -26,10 +26,20 @@ public class BossPlatformTargetVisual : MonoBehaviour
         BossObjectDestruction.OnBossAllProjectionGemsLocked -= BossObjectDestruction_OnBossAllProjectionGemsLocked;
     }
 
-    private void CreateTargetUI(Vector3 position)
+    private void CreateTargetUI(Vector3 position, float timeTargeting)
     {
         Transform bossPlatformTargetUITransform = Instantiate(bossPlatformTargetUIPrefab, position + instantiationPositionOffset, transform.rotation);
         currentPlatformTargetUI = bossPlatformTargetUITransform;
+
+        BossPlatformTargetUI bossPlatformTargetUI = bossPlatformTargetUITransform.GetComponentInChildren<BossPlatformTargetUI>();
+
+        if (!bossPlatformTargetUI)
+        {
+            Debug.Log("Instantiated prefab does not have a BossPlatformTargetUI component");
+            return;
+        }
+
+        bossPlatformTargetUI.SetTimeTargeting(timeTargeting);
     }
 
     private void DestroyTargetUI()
@@ -43,7 +53,7 @@ public class BossPlatformTargetVisual : MonoBehaviour
     private void BossObjectDestruction_OnProjectionPlatformTarget(object sender, BossObjectDestruction.OnProjectionPlatformTargetEventArgs e)
     {
         DestroyTargetUI();
-        CreateTargetUI(e.projectionPlatform.transform.position);
+        CreateTargetUI(e.projectionPlatform.transform.position, e.timeTargeting);
     }
 
     private void BossObjectDestruction_OnProjectionPlatformTargetDestoyed(object sender, BossObjectDestruction.OnProjectionPlatformTargetEventArgs e)

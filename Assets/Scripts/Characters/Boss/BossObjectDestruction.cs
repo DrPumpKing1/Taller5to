@@ -11,6 +11,7 @@ public class BossObjectDestruction : MonoBehaviour
     [SerializeField] private float timeTargeting;
 
     [Header("Target Settings")]
+    [SerializeField] private bool stopTargetingWhenObjectDematerialized;
     [SerializeField] private bool priorizeSenders;
     [SerializeField] private List<ProjectionPlatform> projectionPlatforms;
 
@@ -37,6 +38,7 @@ public class BossObjectDestruction : MonoBehaviour
     {
         public ProjectionPlatform projectionPlatform;
         public ProjectableObjectSO projectableObjectSO;
+        public float timeTargeting;
     }
 
     private void OnEnable()
@@ -123,6 +125,15 @@ public class BossObjectDestruction : MonoBehaviour
     }
     private void TargetingLogic()
     {
+        if(!currentTargetedProjectionPlatform.HasObject() && stopTargetingWhenObjectDematerialized)
+        {
+            SetBossObjectDestructionState(State.NotTargeting);
+            ResetTimer();
+
+            OnProjectionPlatformTargetRemoved?.Invoke(this, new OnProjectionPlatformTargetEventArgs { projectionPlatform = currentTargetedProjectionPlatform, projectableObjectSO = currentTargetedProjectionPlatform.CurrentProjectedObjectSO });
+            return;
+        }
+
         if (timer >= timeTargeting)
         {
             SetBossObjectDestructionState(State.NotTargeting);
@@ -155,7 +166,7 @@ public class BossObjectDestruction : MonoBehaviour
         currentTargetedProjectionPlatform = targetProjectionPlatform;
         if (debug) Debug.Log($"{targetProjectionPlatform} targeted");
 
-        OnProjectionPlatformTarget?.Invoke(this, new OnProjectionPlatformTargetEventArgs { projectionPlatform = currentTargetedProjectionPlatform, projectableObjectSO = currentTargetedProjectionPlatform.CurrentProjectedObjectSO });
+        OnProjectionPlatformTarget?.Invoke(this, new OnProjectionPlatformTargetEventArgs { projectionPlatform = currentTargetedProjectionPlatform, projectableObjectSO = currentTargetedProjectionPlatform.CurrentProjectedObjectSO, timeTargeting = timeTargeting});
     }
 
     private void DestroyObjectInPlatform()
