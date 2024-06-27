@@ -133,8 +133,6 @@ MonoBehaviour:
   smoothFollowPlayerRotateFactor: 1
   smoothTargetPlatformRotateFactor: 2
   rotationState: 0
-  desiredDirection: {x: 0, y: 0, z: 0}
-  player: {fileID: 0}
 --- !u!1 &2145115856461519863
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,9 +697,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  timeActivating: 3
-  timeChangingPhase: 3
-  debug: 0
+  timeActivating: 5
+  timeChangingPhase: 5
+  debug: 1
 --- !u!114 &4331399682908774126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,7 +728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19c5b27dbd6bf1d4ead3e3ef69d51812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitsPerPhase: 10
+  hitsPerPhase: 5
   currentHitsInPhase: 0
 --- !u!114 &1005285739392142598
 MonoBehaviour:
