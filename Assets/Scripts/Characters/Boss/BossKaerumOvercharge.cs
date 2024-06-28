@@ -25,7 +25,6 @@ public class BossKaerumOvercharge : MonoBehaviour
     public static event EventHandler<OnCurrentChargeInPhaseChangedEventArgs> OnCurrentChargeInPhaseChanged;
     public static event EventHandler OnCurrentChargeInPhaseReset;
 
-
     public float CurrentChargeInPhase => currentChargeInPhase;
     public float ChargePerProjetile => chargePerProjectile;
 
