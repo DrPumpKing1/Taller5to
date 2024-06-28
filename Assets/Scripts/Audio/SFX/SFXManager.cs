@@ -20,8 +20,6 @@ public class SFXManager : MonoBehaviour
 
     private AudioSource audioSource;
 
-    private bool beingDestroyed = false;
-
     private void OnEnable()
     {
         PlayerLand.OnPlayerNormalLand += PlayerLand_OnPlayerNormalLand;
@@ -31,7 +29,7 @@ public class SFXManager : MonoBehaviour
 
         ElectricalSwitchToggle.OnSwitchToggle += ElectricalSwitchToggle_OnSwitchToggle;
 
-        ElectricalDoor.OnDoorPowe += ElectricalDoor_OnDoorPowered;
+        ElectricalDoor.OnDoorPower += ElectricalDoor_OnDoorPowered;
         ElectricalDoor.OnDoorDePowered += ElectricalDoor_OnDoorDePowered;
         ElectricalDrawbridge.OnDrawbridgePower += ElectricalDrawbridge_OnDrawbridgePower;
         ElectricalDrawbridge.OnDrawbridgeDePower += ElectricalDrawbridge_OnDrawbridgeDePower;
@@ -46,6 +44,7 @@ public class SFXManager : MonoBehaviour
         ShieldPieceCollection.OnAnyShieldPieceCollected += ShieldPieceCollection_OnAnyShieldPieceCollected;
         ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
 
+        ProjectableObjectsLearningManager.OnProjectableObjectLearned += ProjectableObjectsLearningManager_OnProjectableObjectLearned;
         ProjectionPlatformProjection.OnAnyObjectProjectionSuccess += ProjectionPlatformProjection_OnAnyObjectProjectionSuccess;
         ProjectionPlatformProjection.OnAnyObjectProjectionFailedInsuficientGems += ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems;
         ProjectableObjectDematerialization.OnAnyObjectDematerialized += ProjectableObjectDematerialization_OnAnyObjectDematerialized;
@@ -54,13 +53,16 @@ public class SFXManager : MonoBehaviour
         ProjectableObjectRotation.OnAnyObjectRotated += ProjectableObjectRotation_OnAnyObjectRotated;
         ProjectableObjectActivation.OnAnyObjectActivated += ProjectableObjectActivation_OnAnyObjectActivated;
         ProjectableObjectActivation.OnAnyObjectDeactivated += ProjectableObjectActivation_OnAnyObjectDeactivated;
+
+        SignalSender.OnProjectileShot += SignalSender_OnProjectileShot;
+        SignalProjectile.OnProjectileImpact += SignalProjectile_OnProjectileImpact;
     }
 
     private void OnDisable()
     {
         ElectricalSwitchToggle.OnSwitchToggle -= ElectricalSwitchToggle_OnSwitchToggle;
 
-        ElectricalDoor.OnDoorPowe -= ElectricalDoor_OnDoorPowered;
+        ElectricalDoor.OnDoorPower -= ElectricalDoor_OnDoorPowered;
         ElectricalDoor.OnDoorDePowered -= ElectricalDoor_OnDoorDePowered;
         ElectricalDrawbridge.OnDrawbridgePower -= ElectricalDrawbridge_OnDrawbridgePower;
         ElectricalDrawbridge.OnDrawbridgeDePower -= ElectricalDrawbridge_OnDrawbridgeDePower;
@@ -72,6 +74,8 @@ public class SFXManager : MonoBehaviour
         ShieldPieceCollection.OnAnyShieldPieceCollected -= ShieldPieceCollection_OnAnyShieldPieceCollected;
         ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
 
+        ProjectableObjectsLearningManager.OnProjectableObjectLearned -= ProjectableObjectsLearningManager_OnProjectableObjectLearned;
+
         ProjectionPlatformProjection.OnAnyObjectProjectionSuccess -= ProjectionPlatformProjection_OnAnyObjectProjectionSuccess;
         ProjectionPlatformProjection.OnAnyObjectProjectionFailedInsuficientGems -= ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems;
         ProjectableObjectDematerialization.OnAnyObjectDematerialized -= ProjectableObjectDematerialization_OnAnyObjectDematerialized;
@@ -80,6 +84,9 @@ public class SFXManager : MonoBehaviour
         ProjectableObjectRotation.OnAnyObjectRotated -= ProjectableObjectRotation_OnAnyObjectRotated;
         ProjectableObjectActivation.OnAnyObjectActivated -= ProjectableObjectActivation_OnAnyObjectActivated;
         ProjectableObjectActivation.OnAnyObjectDeactivated -= ProjectableObjectActivation_OnAnyObjectDeactivated;
+
+        SignalSender.OnProjectileShot -= SignalSender_OnProjectileShot;
+        SignalProjectile.OnProjectileImpact -= SignalProjectile_OnProjectileImpact;
     }
 
     private void Awake()
@@ -180,12 +187,32 @@ public class SFXManager : MonoBehaviour
 
     #endregion
 
-    #region Projection
-    private void ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems(object sender, ProjectionPlatformProjection.OnAnyProjectionEventArgs e)
+    #region Learning
+    private void ProjectableObjectsLearningManager_OnProjectableObjectLearned(object sender, ProjectableObjectsLearningManager.OnProjectableObjectLearnedEventArgs e)
     {
-        ProjectionPlatformProjection projectionPlatformProjection = sender as ProjectionPlatformProjection;
-        PlaySoundAtPoint(SFXPoolSO.objectFailedProjection, projectionPlatformProjection.transform.position);
+        PlaySound(SFXPoolSO.objectLearned);
+
+        switch (e.projectableObjectLearned.id)
+        {
+            case 1:
+                PlaySound(SFXPoolSO.cableLearned);
+                break;
+            case 2:
+                PlaySound(SFXPoolSO.magicBoxLearned);
+                break;
+            case 3:
+                PlaySound(SFXPoolSO.senderLearned);
+                break;
+            case 4:
+                PlaySound(SFXPoolSO.drainerLearned);
+                break;
+        }
     }
+    #endregion
+
+    #region Projection
+
+
 
     private void ProjectionPlatformProjection_OnAnyObjectProjectionSuccess(object sender, ProjectionPlatformProjection.OnAnyProjectionEventArgs e)
     {
@@ -235,6 +262,12 @@ public class SFXManager : MonoBehaviour
     {
         ProjectionResetObject projectionResetObject = sender as ProjectionResetObject;
         PlaySoundAtPoint(SFXPoolSO.projectionResetObjectUsed, projectionResetObject.transform.position);
+    }
+
+    private void ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems(object sender, ProjectionPlatformProjection.OnAnyProjectionEventArgs e)
+    {
+        ProjectionPlatformProjection projectionPlatformProjection = sender as ProjectionPlatformProjection;
+        PlaySoundAtPoint(SFXPoolSO.objectFailedProjection, projectionPlatformProjection.transform.position);
     }
     #endregion
 
@@ -358,8 +391,6 @@ public class SFXManager : MonoBehaviour
     }
     private void PlaySoundAtPoint(AudioClip audioClip, Vector3 position)
     {
-        if (beingDestroyed) return;
-
         GameObject sfxGameObject = new GameObject("TempSFX");
         sfxGameObject.transform.position = position;
 
@@ -379,5 +410,17 @@ public class SFXManager : MonoBehaviour
         Destroy(sfxGameObject, audioClip.length);
     }
 
-    private void OnDestroy() => beingDestroyed = true;
+    #region Projectiles
+    private void SignalSender_OnProjectileShot(object sender, System.EventArgs e)
+    {
+        SignalSender signalSender = sender as SignalSender;
+        PlaySoundAtPoint(SFXPoolSO.projectileShot, signalSender.transform.position);
+    }
+    private void SignalProjectile_OnProjectileImpact(object sender, System.EventArgs e)
+    {
+        SignalProjectile singalProjectile = sender as SignalProjectile;
+        PlaySoundAtPoint(SFXPoolSO.projectileImpact, singalProjectile.transform.position);
+    }
+
+    #endregion
 }

@@ -9,6 +9,15 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip[] playerLand;
     public AudioClip[] vyrxAttach;
 
+    [Header("Learning")]
+    public AudioClip[] objectLearned;
+
+    [Header("Exact Object Learning")]
+    public AudioClip[] cableLearned;
+    public AudioClip[] magicBoxLearned;
+    public AudioClip[] senderLearned;
+    public AudioClip[] drainerLearned;
+
     [Header("Projection")]
     public AudioClip[] objectProjected;
     public AudioClip[] objectFailedProjection;
@@ -37,6 +46,11 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip[] senderRotated;
     public AudioClip[] magicBoxActivated;
     public AudioClip[] magicBoxDeactivated;
+    public AudioClip[] drainerActivated;
+
+    [Header("Projectiles")]
+    public AudioClip[] projectileShot;
+    public AudioClip[] projectileImpact;
 
     [Header("Shields")]
     public AudioClip[] shieldCollected;

@@ -16,6 +16,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 127ddd3bad7132e4397e4e2c4a6389cc, type: 3}
   vyrxAttach:
   - {fileID: 8300000, guid: 15e4972130844994eb710fa3a6ab8d09, type: 3}
+  objectLearned:
+  - {fileID: 8300000, guid: ed64465a33cbae7468a90f6c34e74796, type: 3}
   objectProjected: []
   objectFailedProjection: []
   objectDematerialization:
@@ -25,8 +27,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e29884a5dba5f13478c219fd73e30ecc, type: 3}
   magicBoxProjected:
   - {fileID: 8300000, guid: 131f53ab24256c348b3154c90e8773de, type: 3}
-  senderProjected: []
-  drainerProjected: []
+  senderProjected:
+  - {fileID: 8300000, guid: d90a3fc09606d124cbad2f27e199ccf2, type: 3}
+  drainerProjected:
+  - {fileID: 8300000, guid: 9605a8dc1d6b41b4b8aca08472deed74, type: 3}
   cableDematerialized: []
   magicBoxDematerialized: []
   senderDematerialized: []
@@ -41,6 +45,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ab4932b311f2d874682505e0dc7be05b, type: 3}
   magicBoxDeactivated:
   - {fileID: 8300000, guid: 0ece942b974e2b34bbf7cfe15884a1b5, type: 3}
+  drainerActivated:
+  - {fileID: 8300000, guid: d55ea7ab274b1204eb24636ed6b9417c, type: 3}
+  projectileShot:
+  - {fileID: 8300000, guid: 36274eee8d0369c41b0aaddb5c1a5ec6, type: 3}
+  projectileImpact: []
   shieldCollected:
   - {fileID: 8300000, guid: 181759695c16f4a4a81fbc96a4251d4b, type: 3}
   valueDoorOpened: []
@@ -57,8 +66,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5a86e4ad8c4f69242acb4342189b0fc2, type: 3}
   switchOff:
   - {fileID: 8300000, guid: c2896619fc8647d47ae54aeab60d6f4a, type: 3}
-  doorPowered: []
-  doorDePowered: []
+  doorPowered:
+  - {fileID: 8300000, guid: a75e97b6f164fbe47a122d7d64acc02c, type: 3}
+  doorDePowered:
+  - {fileID: 8300000, guid: 5ba87319c27dba444a4fb8dc10683311, type: 3}
   drawbridgePowered: []
   drawbridgeDePowered: []
   extensibleBridgePowered: []

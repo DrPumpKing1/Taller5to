@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class SignalSender : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class SignalSender : MonoBehaviour
     [SerializeField] private float shootCooldown;
     [SerializeField] private float shootTimer;
     [SerializeField] private bool parentProjectiles;
+
+    public static event EventHandler OnProjectileShot;
 
     private void OnEnable()
     {
@@ -49,6 +52,8 @@ public class SignalSender : MonoBehaviour
         Rigidbody rbProjectile = projectileGO.GetComponent<Rigidbody>();
 
         rbProjectile?.AddForce(shootPosition.right.normalized * shootSpeed, ForceMode.VelocityChange);
+
+        OnProjectileShot?.Invoke(this, EventArgs.Empty);
 
         if (parentProjectiles) projectileGO.transform.SetParent(transform);
     }

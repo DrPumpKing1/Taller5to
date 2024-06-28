@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class SignalProjectile : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class SignalProjectile : MonoBehaviour
     [SerializeField] private GameObject sender;
     [SerializeField] private float intensity;
     [SerializeField] private float lifespan;
+
+    public static event EventHandler OnProjectileImpact;
 
     private void Start()
     {
@@ -32,6 +35,8 @@ public class SignalProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        OnProjectileImpact?.Invoke(this, EventArgs.Empty);
+
         if(collision.gameObject != sender)
         {
             Electrode component = collision.gameObject.GetComponent<Electrode>();

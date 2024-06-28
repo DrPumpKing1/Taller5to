@@ -187,6 +187,6 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 
-    private void AddObjectToLearnedList() => ProjectableObjectsLearningManager.Instance.LearnProjectableObject(ProjectableObjectToLearn);
+    private void AddObjectToLearnedList() => ProjectableObjectsLearningManager.Instance.LearnProjectableObject(ProjectableObjectToLearn, learningPlatform);
     private void AddProjectionGems() => ProjectionGemsManager.Instance.IncreaseTotalProjectionGems(learningPlatform.LearningPlatformSO.projectionGemsToAdd);
 }

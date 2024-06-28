@@ -22,6 +22,7 @@ public class ProjectableObjectsLearningManager : MonoBehaviour
     public class OnProjectableObjectLearnedEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectLearned;
+        public LearningPlatform learningPlatform;
     }
 
     private void Awake()
@@ -43,7 +44,7 @@ public class ProjectableObjectsLearningManager : MonoBehaviour
         }
     }
 
-    public void LearnProjectableObject(ProjectableObjectSO projectableObjectToLearn)
+    public void LearnProjectableObject(ProjectableObjectSO projectableObjectToLearn, LearningPlatform learningPlatform)
     {
         if (CheckLearnedListContainsProjectableObject(projectableObjectToLearn))
         {
@@ -52,7 +53,7 @@ public class ProjectableObjectsLearningManager : MonoBehaviour
         }
 
         AddProjectableObjectToLearnedList(projectableObjectToLearn);
-        OnProjectableObjectLearned?.Invoke(this, new OnProjectableObjectLearnedEventArgs { projectableObjectLearned = projectableObjectToLearn });
+        OnProjectableObjectLearned?.Invoke(this, new OnProjectableObjectLearnedEventArgs { projectableObjectLearned = projectableObjectToLearn, learningPlatform = learningPlatform });
     }
 
     public void AddProjectableObjectToLearnedList(ProjectableObjectSO objectToAdd)

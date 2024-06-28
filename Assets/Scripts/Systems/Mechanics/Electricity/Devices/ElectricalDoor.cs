@@ -34,7 +34,7 @@ public class ElectricalDoor : MonoBehaviour
 
     private bool previousPowered;
 
-    public static event EventHandler<OnDoowPoweredEventArgs> OnDoorPowe;
+    public static event EventHandler<OnDoowPoweredEventArgs> OnDoorPower;
     public static event EventHandler<OnDoowPoweredEventArgs> OnDoorDePowered;
 
     public class OnDoowPoweredEventArgs : EventArgs
@@ -113,7 +113,7 @@ public class ElectricalDoor : MonoBehaviour
         {
             if (!previousPowered)
             {
-                OnDoorPowe?.Invoke(this, new OnDoowPoweredEventArgs { id = id });
+                OnDoorPower?.Invoke(this, new OnDoowPoweredEventArgs { id = id });
             }
 
             notPoweredTimer = 0;

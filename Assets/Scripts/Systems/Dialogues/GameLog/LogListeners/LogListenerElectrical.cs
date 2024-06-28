@@ -9,7 +9,7 @@ public class LogListenerElectrical : MonoBehaviour
         //ELECTRICAL
         ElectricalSwitchToggle.OnSwitchToggle += ElectricalSwitchToggle_OnSwitchToggle;
 
-        ElectricalDoor.OnDoorPowe += ElectricalDoor_OnDoorPowered;
+        ElectricalDoor.OnDoorPower += ElectricalDoor_OnDoorPowered;
         ElectricalDoor.OnDoorDePowered += ElectricalDoor_OnDoorDePowered;
 
         InscriptionPowering.OnInscriptionPoweringFirstTime += InscriptionPowering_OnInscriptionPoweringFirstTime;
@@ -31,7 +31,7 @@ public class LogListenerElectrical : MonoBehaviour
         //ELECTRICAL
         ElectricalSwitchToggle.OnSwitchToggle -= ElectricalSwitchToggle_OnSwitchToggle;
 
-        ElectricalDoor.OnDoorPowe -= ElectricalDoor_OnDoorPowered;
+        ElectricalDoor.OnDoorPower -= ElectricalDoor_OnDoorPowered;
         ElectricalDoor.OnDoorDePowered -= ElectricalDoor_OnDoorDePowered;
 
         InscriptionPowering.OnInscriptionPoweringFirstTime -= InscriptionPowering_OnInscriptionPoweringFirstTime;
