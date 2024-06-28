@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3472635364279596727}
   m_Layer: 0
-  m_Name: DeEnergyzedPos
+  m_Name: StunedPos
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -40,6 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8248800562033427803}
+  - component: {fileID: 4957010132815235120}
   m_Layer: 0
   m_Name: StuneableSource
   m_TagString: Untagged
@@ -66,6 +67,22 @@ Transform:
   - {fileID: 3472635364279596727}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4957010132815235120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2208091632467580866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 415666aa2961f6343bc07bf83d25983c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 7048781938806310252}
+  stunnedSource: {fileID: 4374670263488074907}
+  activePos: {fileID: 4908742991464637554}
+  stunnedPos: {fileID: 3472635364279596727}
 --- !u!1 &6344856861202485404
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4908742991464637554}
   m_Layer: 0
-  m_Name: EnergyzedPos
+  m_Name: ActivePos
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

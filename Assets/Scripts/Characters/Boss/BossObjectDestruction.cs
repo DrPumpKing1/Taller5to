@@ -67,6 +67,7 @@ public class BossObjectDestruction : MonoBehaviour
 
     private void Start()
     {
+        ResetTimer();
         InitializeVariables();
         SetBossObjectDestructionState(State.Disabled);
     }
@@ -77,11 +78,10 @@ public class BossObjectDestruction : MonoBehaviour
     }
     private void InitializeVariables()
     {
-        ResetTimer();
         lockedProjectionGems = 0;
     }
 
-    private void SetBossObjectDestructionState(State state) => this.bossObjectDestructionState = state;
+    private void SetBossObjectDestructionState(State state) => bossObjectDestructionState = state;
 
     private void HandleBossObjectDestructionState()
     {

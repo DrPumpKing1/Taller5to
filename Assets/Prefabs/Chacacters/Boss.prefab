@@ -638,6 +638,7 @@ GameObject:
   - component: {fileID: 4331399682908774126}
   - component: {fileID: 2495749140857903703}
   - component: {fileID: 1005285739392142598}
+  - component: {fileID: 4043897468068149033}
   - component: {fileID: 61691762310308239}
   m_Layer: 0
   m_Name: Boss
@@ -766,6 +767,18 @@ MonoBehaviour:
   timer: 0
   lockedProjectionGems: 0
   currentTargetedProjectionPlatform: {fileID: 0}
+--- !u!114 &4043897468068149033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860173099003437871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 601465436df12f74593315bb03a43e16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &61691762310308239
 MonoBehaviour:
   m_ObjectHideFlags: 0
