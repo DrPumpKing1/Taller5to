@@ -12,22 +12,25 @@ public class BossRotationHandler : MonoBehaviour
     [SerializeField] private Vector2 startingDirection;
 
     [Header("Settings")]
+    [SerializeField, Range(0.5f, 2f)] private float timeRotationTargeting;
     [SerializeField, Range(1f, 100f)] private float smoothFollowPlayerRotateFactor;
-    [SerializeField, Range(1f, 100f)] private float smoothTargetPlatformRotateFactor;
+    [SerializeField, Range(1f, 100f)] private float smoothTargetRotateFactor;
 
     [Header("States")]
     [SerializeField] private State rotationState;
 
-    private enum State {NotRotating, FollowingPlayer, TargetingPlatform}
+    private enum State {NotRotating, FollowingPlayer, Targeting}
 
-    private Vector3 desiredDirection;
+    public Vector3 desiredDirection;
     private Vector3 currentDirection;
     private float smoothRotateFactor;
 
-    private Vector3 currentPlatformTargetedPosition;
+    private Vector3 currentTargetedPosition;
     private GameObject player;
 
     private const string PLAYER_TAG = "Player";
+
+    private float timer;
 
     private void OnEnable()
     {
@@ -38,8 +41,6 @@ public class BossRotationHandler : MonoBehaviour
         BossStateHandler.OnPlayerDefeated += BossStateHandler_OnPlayerDefeated;
 
         BossObjectDestruction.OnProjectionPlatformTarget += BossObjectDestruction_OnProjectionPlatformTarget;
-        BossObjectDestruction.OnProjectionPlatformTargetDestoyed += BossObjectDestruction_OnProjectionPlatformTargetDestoyed;
-        BossObjectDestruction.OnProjectionPlatformTargetRemoved += BossObjectDestruction_OnProjectionPlatformTargetRemoved;
     }
 
     private void OnDisable()
@@ -51,8 +52,6 @@ public class BossRotationHandler : MonoBehaviour
         BossStateHandler.OnPlayerDefeated -= BossStateHandler_OnPlayerDefeated;
 
         BossObjectDestruction.OnProjectionPlatformTarget -= BossObjectDestruction_OnProjectionPlatformTarget;
-        BossObjectDestruction.OnProjectionPlatformTargetDestoyed -= BossObjectDestruction_OnProjectionPlatformTargetDestoyed;
-        BossObjectDestruction.OnProjectionPlatformTargetRemoved -= BossObjectDestruction_OnProjectionPlatformTargetRemoved;
     }
 
     private void Awake()
@@ -76,6 +75,7 @@ public class BossRotationHandler : MonoBehaviour
     private void InitializeVariables()
     {
         smoothRotateFactor = smoothFollowPlayerRotateFactor;
+        timer = 0f;
     }
 
     private void InitializeRotation()
@@ -101,8 +101,8 @@ public class BossRotationHandler : MonoBehaviour
             case (State.FollowingPlayer):
                 FollowingPlayerLogic();
                 break;
-            case (State.TargetingPlatform):
-                TargetingPlatformLogic();
+            case (State.Targeting):
+                TargetingLogic();
                 break;
         }
     }
@@ -118,13 +118,22 @@ public class BossRotationHandler : MonoBehaviour
         desiredDirection = GeneralMethods.SupressYComponent(playerDirection);
     }
 
-    private void TargetingPlatformLogic()
+    private void TargetingLogic()
     {
-        smoothRotateFactor = smoothTargetPlatformRotateFactor;
+        smoothRotateFactor = smoothTargetRotateFactor;
 
-        Vector3 platformDirection = (transform.position - currentPlatformTargetedPosition).normalized;
+        Vector3 targetDirection = (transform.position - currentTargetedPosition).normalized;
 
-        desiredDirection = GeneralMethods.SupressYComponent(platformDirection);
+        desiredDirection = GeneralMethods.SupressYComponent(targetDirection);
+
+        if (timer >= timeRotationTargeting)
+        {
+            SetRotationState(State.FollowingPlayer);
+            ResetTimer();
+            return;
+        }
+
+        timer += Time.deltaTime;
     }
 
     private void HandleRotationSmooth()
@@ -135,48 +144,44 @@ public class BossRotationHandler : MonoBehaviour
         transformToRotate.localRotation = Quaternion.LookRotation(currentDirection);
     }
 
-    private void SetCurrentTargetetPlatformPosition(Vector3 position) => currentPlatformTargetedPosition = position;
+    private void SetCurrentTargetPosition(Vector3 position) => currentTargetedPosition = position;
+
+    private void ResetTimer() => timer = 0f;
 
     #region BossStateHandler Subscriptions
     private void BossStateHandler_OnBossActiveEnd(object sender, EventArgs e)
     {
         SetRotationState(State.FollowingPlayer);
+        ResetTimer();
     }
 
     private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
     {
         SetRotationState(State.NotRotating);
+        ResetTimer();
     }
 
     private void BossStateHandler_OnBossPhaseChangeEnd(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
     {
         SetRotationState(State.FollowingPlayer);
+        ResetTimer();
     }
     private void BossObjectDestruction_OnProjectionPlatformTarget(object sender, BossObjectDestruction.OnProjectionPlatformTargetEventArgs e)
     {
-        SetCurrentTargetetPlatformPosition(e.projectionPlatform.transform.position);
-        SetRotationState(State.TargetingPlatform);
-    }
-
-    private void BossObjectDestruction_OnProjectionPlatformTargetDestoyed(object sender, BossObjectDestruction.OnProjectionPlatformTargetEventArgs e)
-    {
-        SetRotationState(State.FollowingPlayer);
-    }
-
-    private void BossObjectDestruction_OnProjectionPlatformTargetRemoved(object sender, BossObjectDestruction.OnProjectionPlatformTargetEventArgs e)
-    {
-        if (rotationState == State.NotRotating) return;
-        SetRotationState(State.FollowingPlayer);
+        SetCurrentTargetPosition(e.projectionPlatform.transform.position);
+        SetRotationState(State.Targeting);
+        ResetTimer();
     }
 
     private void BossStateHandler_OnBossDefeated(object sender, EventArgs e)
     {
         SetRotationState(State.NotRotating);
-
+        ResetTimer();
     }
     private void BossStateHandler_OnPlayerDefeated(object sender, EventArgs e)
     {
         SetRotationState(State.NotRotating);
+        ResetTimer();
     }
     #endregion
 }
