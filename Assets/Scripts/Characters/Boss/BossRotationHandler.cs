@@ -21,7 +21,7 @@ public class BossRotationHandler : MonoBehaviour
 
     private enum State {NotRotating, FollowingPlayer, Targeting}
 
-    public Vector3 desiredDirection;
+    private Vector3 desiredDirection;
     private Vector3 currentDirection;
     private float smoothRotateFactor;
 
