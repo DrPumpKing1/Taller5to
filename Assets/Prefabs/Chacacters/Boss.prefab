@@ -815,19 +815,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c16f049c07902fb4fb3f71c58737e0b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableDirections: 00000000010000000200000003000000
-  randomizeDirection: 0
-  directionBlocks:
+  attackDirections:
   - direction: 0
-    block: {fileID: 7944433579050273503}
-  - direction: 1
-    block: {fileID: 222961596142793422}
-  - direction: 2
-    block: {fileID: 7019161737190461495}
+    upperAngleLimit: 315
+    lowerAngleLimit: 225
+    vectorizedDirection: {x: 0, y: -1}
   - direction: 3
-    block: {fileID: 8809075865082167730}
-  currentBlockingDirections: 
-  blockSinceStart: 0
+    upperAngleLimit: 45
+    lowerAngleLimit: 315
+    vectorizedDirection: {x: 1, y: 0}
+  - direction: 1
+    upperAngleLimit: 135
+    lowerAngleLimit: 45
+    vectorizedDirection: {x: 1, y: 0}
+  - direction: 2
+    upperAngleLimit: 225
+    lowerAngleLimit: 135
+    vectorizedDirection: {x: -1, y: 0}
 --- !u!1 &6584687206138455535
 GameObject:
   m_ObjectHideFlags: 0

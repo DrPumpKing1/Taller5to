@@ -8,11 +8,12 @@ public class BossBlock : MonoBehaviour
     [Header("Available Direction")]
     [SerializeField] private List<AttackDirection> attackDirections;
 
+    [Serializable]
     public class AttackDirection
     {
         public Direction direction;
         [Range(0f, 360f)] public float upperAngleLimit;
-        [Range(0f, 360f)] public float loweAngleLimit;
+        [Range(0f, 360f)] public float lowerAngleLimit;
         public Vector2 vectorizedDirection;
     }
 
@@ -41,7 +42,9 @@ public class BossBlock : MonoBehaviour
     private void CheckHit(Vector3 point)
     {
         float hitAngle = CalculateHitAngle(point);
-        Debug.Log(hitAngle);
+        AttackDirection attackDirection = GetAttackDirection(hitAngle);
+
+        Debug.Log(attackDirection.direction);
     }
 
     private float CalculateHitAngle(Vector3 point) 
@@ -52,5 +55,19 @@ public class BossBlock : MonoBehaviour
         if (hitAngle < 0) hitAngle += 360f;
 
         return hitAngle;
+    }
+
+    private AttackDirection GetAttackDirection(float hitAngle)
+    {
+        foreach (AttackDirection attackDirection in attackDirections)
+        {
+            if (attackDirection.lowerAngleLimit > attackDirection.upperAngleLimit)
+            {
+                if ((attackDirection.upperAngleLimit >= hitAngle && hitAngle >= 0) || (360f >= hitAngle && hitAngle >= attackDirection.lowerAngleLimit)) return attackDirection;
+            }
+            else if (attackDirection.upperAngleLimit >= hitAngle && hitAngle >= attackDirection.lowerAngleLimit) return attackDirection;
+        }
+
+        return null;
     }
 }
