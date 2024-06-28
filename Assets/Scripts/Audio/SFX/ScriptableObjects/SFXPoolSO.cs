@@ -47,6 +47,7 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip[] magicBoxActivated;
     public AudioClip[] magicBoxDeactivated;
     public AudioClip[] drainerActivated;
+    public AudioClip[] drainerDeactivated;
 
     [Header("Projectiles")]
     public AudioClip[] projectileShot;

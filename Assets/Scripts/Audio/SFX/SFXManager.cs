@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -54,9 +54,14 @@ public class SFXManager : MonoBehaviour
         ProjectableObjectActivation.OnAnyObjectActivated += ProjectableObjectActivation_OnAnyObjectActivated;
         ProjectableObjectActivation.OnAnyObjectDeactivated += ProjectableObjectActivation_OnAnyObjectDeactivated;
 
+        DrainerDevice.OnDrainerStartDraining += DrainerDevice_OnDrainerStartDraining;
+        DrainerDevice.OnDrainerStopDraining += DrainerDevice_OnDrainerStopDraining;
+
         SignalSender.OnProjectileShot += SignalSender_OnProjectileShot;
         SignalProjectile.OnProjectileImpact += SignalProjectile_OnProjectileImpact;
     }
+
+
 
     private void OnDisable()
     {
@@ -84,6 +89,9 @@ public class SFXManager : MonoBehaviour
         ProjectableObjectRotation.OnAnyObjectRotated -= ProjectableObjectRotation_OnAnyObjectRotated;
         ProjectableObjectActivation.OnAnyObjectActivated -= ProjectableObjectActivation_OnAnyObjectActivated;
         ProjectableObjectActivation.OnAnyObjectDeactivated -= ProjectableObjectActivation_OnAnyObjectDeactivated;
+
+        DrainerDevice.OnDrainerStartDraining += DrainerDevice_OnDrainerStartDraining;
+        DrainerDevice.OnDrainerStopDraining += DrainerDevice_OnDrainerStopDraining;
 
         SignalSender.OnProjectileShot -= SignalSender_OnProjectileShot;
         SignalProjectile.OnProjectileImpact -= SignalProjectile_OnProjectileImpact;
@@ -211,9 +219,6 @@ public class SFXManager : MonoBehaviour
     #endregion
 
     #region Projection
-
-
-
     private void ProjectionPlatformProjection_OnAnyObjectProjectionSuccess(object sender, ProjectionPlatformProjection.OnAnyProjectionEventArgs e)
     {
         ProjectionPlatformProjection projectionPlatformProjection = sender as ProjectionPlatformProjection;
@@ -313,6 +318,17 @@ public class SFXManager : MonoBehaviour
         }
     }
 
+    private void DrainerDevice_OnDrainerStartDraining(object sender, System.EventArgs e)
+    {
+        DrainerDevice drainerDevice = sender as DrainerDevice;
+        PlaySoundAtPoint(SFXPoolSO.drainerActivated, drainerDevice.transform.position);
+    }
+    private void DrainerDevice_OnDrainerStopDraining(object sender, System.EventArgs e)
+    {
+        DrainerDevice drainerDevice = sender as DrainerDevice;
+        PlaySoundAtPoint(SFXPoolSO.drainerDeactivated, drainerDevice.transform.position);
+    }
+
     #endregion
 
     #region Shields
@@ -359,6 +375,20 @@ public class SFXManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
+
+    #region Projectiles
+    private void SignalSender_OnProjectileShot(object sender, System.EventArgs e)
+    {
+        SignalSender signalSender = sender as SignalSender;
+        PlaySoundAtPoint(SFXPoolSO.projectileShot, signalSender.transform.position);
+    }
+    private void SignalProjectile_OnProjectileImpact(object sender, System.EventArgs e)
+    {
+        SignalProjectile singalProjectile = sender as SignalProjectile;
+        PlaySoundAtPoint(SFXPoolSO.projectileImpact, singalProjectile.transform.position);
+    }
+
     #endregion
 
     ///
@@ -410,17 +440,4 @@ public class SFXManager : MonoBehaviour
         Destroy(sfxGameObject, audioClip.length);
     }
 
-    #region Projectiles
-    private void SignalSender_OnProjectileShot(object sender, System.EventArgs e)
-    {
-        SignalSender signalSender = sender as SignalSender;
-        PlaySoundAtPoint(SFXPoolSO.projectileShot, signalSender.transform.position);
-    }
-    private void SignalProjectile_OnProjectileImpact(object sender, System.EventArgs e)
-    {
-        SignalProjectile singalProjectile = sender as SignalProjectile;
-        PlaySoundAtPoint(SFXPoolSO.projectileImpact, singalProjectile.transform.position);
-    }
-
-    #endregion
 }
