@@ -221,7 +221,7 @@ public class BossObjectDestruction : MonoBehaviour
     {
         if (projectionPlatforms.Count == 0) return null;
 
-        int randomIndex = UnityEngine.Random.Range(0, projectionPlatforms.Count - 1);
+        int randomIndex = UnityEngine.Random.Range(0, projectionPlatforms.Count);
         return projectionPlatforms[randomIndex];
     }
 

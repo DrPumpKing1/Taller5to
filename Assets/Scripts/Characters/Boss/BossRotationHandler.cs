@@ -41,6 +41,7 @@ public class BossRotationHandler : MonoBehaviour
         BossStateHandler.OnPlayerDefeated += BossStateHandler_OnPlayerDefeated;
 
         BossObjectDestruction.OnProjectionPlatformTarget += BossObjectDestruction_OnProjectionPlatformTarget;
+        BossSourceStun.OnSourceStunned += BossSourceStun_OnSourceStunned;
     }
 
     private void OnDisable()
@@ -51,6 +52,7 @@ public class BossRotationHandler : MonoBehaviour
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
         BossStateHandler.OnPlayerDefeated -= BossStateHandler_OnPlayerDefeated;
 
+        BossObjectDestruction.OnProjectionPlatformTarget -= BossObjectDestruction_OnProjectionPlatformTarget;
         BossObjectDestruction.OnProjectionPlatformTarget -= BossObjectDestruction_OnProjectionPlatformTarget;
     }
 
@@ -169,6 +171,13 @@ public class BossRotationHandler : MonoBehaviour
     private void BossObjectDestruction_OnProjectionPlatformTarget(object sender, BossObjectDestruction.OnProjectionPlatformTargetEventArgs e)
     {
         SetCurrentTargetPosition(e.projectionPlatform.transform.position);
+        SetRotationState(State.Targeting);
+        ResetTimer();
+    }
+
+    private void BossSourceStun_OnSourceStunned(object sender, BossSourceStun.OnSourceStunnedEventArgs e)
+    {
+        SetCurrentTargetPosition(e.stuneableSource.transform.position);
         SetRotationState(State.Targeting);
         ResetTimer();
     }

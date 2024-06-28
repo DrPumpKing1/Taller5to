@@ -537,6 +537,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3266046739033785212}
   - component: {fileID: 4697041016628495400}
+  - component: {fileID: 1093237657832693226}
   - component: {fileID: 7759729513990359966}
   m_Layer: 0
   m_Name: Visual
@@ -575,6 +576,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossPlatformTargetUIPrefab: {fileID: 2594671349859791423, guid: 83595a851c65c684dac4dee700a2538e, type: 3}
+  instantiationPositionOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &1093237657832693226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5087884176433308940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f229927a401814dbe17bff7615ca21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossSourceStunUIPrefab: {fileID: 2594671349859791423, guid: 4237cbfd3f7c64a4d8271edae37ffde2, type: 3}
   instantiationPositionOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &7759729513990359966
 MonoBehaviour:
@@ -779,6 +794,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601465436df12f74593315bb03a43e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableSinceFirstPhase: 0
+  phaseNumberToEnable: 2
+  timeNotSunning: 7
+  timeStunning: 5
+  stuneableSources: []
+  bossSourceStunState: 0
+  debug: 1
+  timer: 0
+  currentSourceStunned: {fileID: 0}
 --- !u!114 &61691762310308239
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -25,11 +25,11 @@ public class BossSourceStun : MonoBehaviour
     private enum State { Disabled, NotStunning, Stunning }
 
     public static event EventHandler<OnSourceStunnedEventArgs> OnSourceStunned;
-    public static event EventHandler<OnSourceStunnedEventArgs> OnSourceUnStunned;
+    public static event EventHandler<OnSourceStunnedEventArgs> OnSourceStunnedEnd;
 
     public class OnSourceStunnedEventArgs : EventArgs
     {
-        public ProjectionPlatform projectionPlatform;
+        public StuneableSource stuneableSource;
         public float timeStunning;
     }
 
@@ -77,32 +77,86 @@ public class BossSourceStun : MonoBehaviour
                 DisabledLogic();
                 break;
             case State.NotStunning:
-                NotTargetingLogic();
+                NotStunningLogic();
                 break;
             case State.Stunning:
-                TargetingLogic();
+                StunningLogic();
                 break;
         }
     }
     private void DisabledLogic()
     {
-
+        if (currentSourceStunned)
+        {
+            EndStuneableSourceStun();
+            return;
+        }
     }
-    private void NotTargetingLogic()
+
+    private void NotStunningLogic()
     {
-        throw new NotImplementedException();
+        if (timer >= timeNotSunning)
+        {
+            SetBossSourceStunState(State.Stunning);
+
+            StunStuneableSource();
+            ResetTimer();
+            return;
+        }
+
+        timer += Time.deltaTime;
     }
 
-    private void TargetingLogic()
+    private void StunningLogic()
     {
-        throw new NotImplementedException();
+        if (timer >= timeStunning)
+        {
+            SetBossSourceStunState(State.NotStunning);
+
+            EndStuneableSourceStun();
+            ResetTimer();
+            return;
+        }
+
+        timer += Time.deltaTime;
+    }
+
+    private void StunStuneableSource()
+    {
+        StuneableSource stunebleSourceToStun = ChooseRandomStuneableSource(stuneableSources);
+
+        if (!stunebleSourceToStun)
+        {
+            if (debug) Debug.Log("There are any stuneable sources to stun");
+            SetBossSourceStunState(State.NotStunning);
+            return;
+        }
+
+        stunebleSourceToStun.StunSource();
+
+        currentSourceStunned = stunebleSourceToStun;
+        if (debug) Debug.Log($"{stunebleSourceToStun} stunned");
+
+        OnSourceStunned?.Invoke(this, new OnSourceStunnedEventArgs { stuneableSource = currentSourceStunned, timeStunning = timeStunning });
+    }
+
+    private void EndStuneableSourceStun()
+    {
+        if (!currentSourceStunned) return;
+
+        currentSourceStunned.EndStun();
+        OnSourceStunnedEnd?.Invoke(this, new OnSourceStunnedEventArgs { stuneableSource = currentSourceStunned, timeStunning = timeStunning });
+
+        if (debug) Debug.Log("Source stun ended");
+
+        currentSourceStunned = null;
     }
 
     private StuneableSource ChooseRandomStuneableSource(List<StuneableSource> stuneableSource)
     {
         if (stuneableSource.Count == 0) return null;
 
-        int randomIndex = UnityEngine.Random.Range(0, stuneableSource.Count - 1);
+        int randomIndex = UnityEngine.Random.Range(0, stuneableSource.Count);
         return stuneableSource[randomIndex];
     }
 
@@ -113,34 +167,40 @@ public class BossSourceStun : MonoBehaviour
     {
         ResetTimer();
         SetBossSourceStunState(State.Disabled);
+        EndStuneableSourceStun();
     }
     private void BossStateHandler_OnBossActiveEnd(object sender, EventArgs e)
     {
         ResetTimer();
         if (enableSinceFirstPhase) SetBossSourceStunState(State.NotStunning);
+        EndStuneableSourceStun();
     }
 
     private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
     {
         ResetTimer();
         SetBossSourceStunState(State.Disabled);
+        EndStuneableSourceStun();
     }
 
     private void BossStateHandler_OnBossPhaseChangeEnd(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
     {
         ResetTimer();
         if (e.phaseNumber >= phaseNumberToEnable) SetBossSourceStunState(State.NotStunning);
+        EndStuneableSourceStun();
     }
 
     private void BossStateHandler_OnBossDefeated(object sender, EventArgs e)
     {
         ResetTimer();
         SetBossSourceStunState(State.Disabled);
+        EndStuneableSourceStun();
     }
     private void BossStateHandler_OnPlayerDefeated(object sender, EventArgs e)
     {
         ResetTimer();
         SetBossSourceStunState(State.Disabled);
+        EndStuneableSourceStun();
     }
     #endregion
 }

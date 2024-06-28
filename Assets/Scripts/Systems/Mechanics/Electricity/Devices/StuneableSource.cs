@@ -13,10 +13,10 @@ public class StuneableSource : MonoBehaviour
 
     private void Start()
     {
-        ActiveSource();
+        EndStun();
     }
 
-    public void ActiveSource()
+    public void EndStun()
     {
         source.position = activePos.position;
         stunnedSource.position = stunnedPos.position;
