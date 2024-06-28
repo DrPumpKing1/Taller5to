@@ -8,16 +8,28 @@ public class NewMovementInput : MovementInput
 
     private PlayerInputActions playerInputActions;
 
+    private Quaternion rotationQuaternion;
+
     protected override void Awake()
     {
         base.Awake();
         InitializePlayerInputActions();
     }
 
+    private void Start()
+    {
+        InitializeRotationQuaternion();
+    }
+
     private void InitializePlayerInputActions()
     {
         playerInputActions = new PlayerInputActions();
         playerInputActions.Movement.Enable();
+    }
+
+    private void InitializeRotationQuaternion()
+    {
+        rotationQuaternion = Quaternion.AngleAxis(cameraTransform.eulerAngles.y, Vector3.up);
     }
 
     public override bool CanProcessMovementInput()
@@ -44,7 +56,7 @@ public class NewMovementInput : MovementInput
 
         Vector2 rawDirection = GetDirectionVectorNormalized();
         Vector3 rawDirectionVector3 = new Vector3(rawDirection.x,0f,rawDirection.y);
-        Vector3 rotatedDirection = Quaternion.AngleAxis(cameraTransform.eulerAngles.y, Vector3.up) * rawDirectionVector3;
+        Vector3 rotatedDirection = rotationQuaternion * rawDirectionVector3;
         Vector2 isometricDirection = new Vector2(rotatedDirection.x, rotatedDirection.z);
 
         isometricDirection.Normalize();
