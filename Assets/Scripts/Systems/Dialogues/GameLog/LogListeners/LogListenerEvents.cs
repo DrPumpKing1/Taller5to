@@ -34,7 +34,7 @@ public class LogListenerEvents : MonoBehaviour
         ThirdLearningPlatformEncounterCollider.OnThirdLearningPlatformEncounter += ThirdLearningPlatformEncounterCollider_OnThirdLearningPlatformEncounter;
 
         //LEVEL3
-        FourthVirtueDoorEncounterCollider.OnFourthVirtueDoorEncounter += FourthVirtueDoorEncounterCollider_OnFourthVirtueDoorEncounter;
+        FourthVirtueDoorMissingEncounterCollider.OnFourthVirtueDoorMissingEncounter += FourthVirtueDoorMissingEncounterCollider_OnFourthVirtueDooMissingrEncounter;
         FirstSenderProjectionEncounterCollider.OnFirstSenderProjectionEncounter += FirstSenderProjectionEncounterCollider_OnFirstSenderProjectionEncounter;
         MissingLearningPlatformEncounterCollider.OnMissingLearningPlatformEncounter += MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter;
     }
@@ -69,7 +69,7 @@ public class LogListenerEvents : MonoBehaviour
         ThirdLearningPlatformEncounterCollider.OnThirdLearningPlatformEncounter -= ThirdLearningPlatformEncounterCollider_OnThirdLearningPlatformEncounter;
 
         //LEVEL3
-        FourthVirtueDoorEncounterCollider.OnFourthVirtueDoorEncounter -= FourthVirtueDoorEncounterCollider_OnFourthVirtueDoorEncounter;
+        FourthVirtueDoorMissingEncounterCollider.OnFourthVirtueDoorMissingEncounter -= FourthVirtueDoorMissingEncounterCollider_OnFourthVirtueDooMissingrEncounter;
         FirstSenderProjectionEncounterCollider.OnFirstSenderProjectionEncounter -= FirstSenderProjectionEncounterCollider_OnFirstSenderProjectionEncounter;
         MissingLearningPlatformEncounterCollider.OnMissingLearningPlatformEncounter -= MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter;
     }
@@ -103,7 +103,7 @@ public class LogListenerEvents : MonoBehaviour
     private void ThirdLearningPlatformEncounterCollider_OnThirdLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/ThirdLearningPlatformEncounter");
 
     //LEVEL3
-    private void FourthVirtueDoorEncounterCollider_OnFourthVirtueDoorEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FourthVirtueDoorEncounter");
+    private void FourthVirtueDoorMissingEncounterCollider_OnFourthVirtueDooMissingrEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FourthVirtueDoorMissingEncounter");
     private void FirstSenderProjectionEncounterCollider_OnFirstSenderProjectionEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstSenderProjectionEncounter");
     private void MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/MissingLearningPlatformEncounter");
 }
