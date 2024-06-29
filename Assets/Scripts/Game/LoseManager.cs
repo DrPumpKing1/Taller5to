@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LoseManager : MonoBehaviour
 {
+    public static int loseTimes = 0;
+
     [Header("Settings")]
     [SerializeField,Range(1f,10f)] private float timeToReloadAfterLose;
 

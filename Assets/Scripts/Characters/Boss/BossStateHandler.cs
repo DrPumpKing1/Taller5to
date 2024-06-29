@@ -16,9 +16,13 @@ public class BossStateHandler : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] private bool debug;
+    [SerializeField] private bool bossDefeated;
+    [SerializeField] private bool playerDefeated;
 
     public enum State { Rest, Activating, PhaseChange, OnPhase, BossDefeated, PlayerDefeated}
     public State BossState => state;
+    public bool BossDefeated => bossDefeated;
+    public bool PlayerDefeated => playerDefeated;
 
     public static event EventHandler OnBossActiveStart;
     public static event EventHandler OnBossActiveEnd;
@@ -54,6 +58,7 @@ public class BossStateHandler : MonoBehaviour
     private void Awake()
     {
         SetSingleton();
+        InitializeVariables();
     }
 
     private void Start()
@@ -74,8 +79,13 @@ public class BossStateHandler : MonoBehaviour
         }
     }
 
-    private void SetBossState(State state) => this.state = state;
+    private void InitializeVariables()
+    {
+        bossDefeated = false;
+        playerDefeated = false;
+    }
 
+    private void SetBossState(State state) => this.state = state;
 
     private IEnumerator ActivateBossCoroutine()
     {
@@ -106,6 +116,8 @@ public class BossStateHandler : MonoBehaviour
     private void DefeatBoss()
     {
         SetBossState(State.BossDefeated);
+        bossDefeated = true;
+
         OnBossDefeated?.Invoke(this, EventArgs.Empty);
 
         if (debug) Debug.Log("Boss Defeated");
@@ -114,6 +126,8 @@ public class BossStateHandler : MonoBehaviour
     private void DefeatPlayer()
     {
         SetBossState(State.PlayerDefeated);
+        playerDefeated = true;
+
         OnPlayerDefeated?.Invoke(this, EventArgs.Empty);
 
         if (debug) Debug.Log("Player Defeated");

@@ -16,6 +16,8 @@ public class PlayerAnimationController : MonoBehaviour
 
     public float HorizontalSpeed => playerHorizontalMovement.FinalMoveVector.magnitude;
 
+    private const string FALL_ANIMATION_NAME = "Fall";
+
     private const string HORIZONTAL_SPEED_FLOAT = "HorizontalSpeed";
 
 
@@ -79,7 +81,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void ResetLandingTriggers()
     {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Fall")) return; //Hardcoded to prevent SoftLanding in Fall bug -> Not detecting SoftLanding trigger in Fall Animation, sometimes
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(FALL_ANIMATION_NAME)) return; //Hardcoded to prevent SoftLanding in Fall bug -> Not detecting SoftLanding trigger in Fall Animation, sometimes
 
         animator.ResetTrigger(SOFT_LAND_TRIGGER);
         animator.ResetTrigger(NORMAL_LAND_TRIGGER);

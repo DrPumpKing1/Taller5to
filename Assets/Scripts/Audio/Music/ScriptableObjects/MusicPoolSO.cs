@@ -39,5 +39,5 @@ public class MusicPoolSO : ScriptableObject
 
     [Header("Boss")]
     public AudioClip boss;
-    public AudioClip final;
+    public AudioClip afterBoss;
 }

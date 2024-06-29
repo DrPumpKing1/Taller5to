@@ -22,6 +22,7 @@ public class GameplayMusicManager : MonoBehaviour
         RoomManager.OnEnterBlockingViewColliders += RoomManager_OnEnterBlockingViewColliders;
 
         ShieldPiecesManager.OnShieldPieceCollected += ShieldPiecesManager_OnShieldPieceCollected;
+        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
     }
 
     private void OnDisable()
@@ -30,30 +31,31 @@ public class GameplayMusicManager : MonoBehaviour
         RoomManager.OnEnterBlockingViewColliders -= RoomManager_OnEnterBlockingViewColliders;
 
         ShieldPiecesManager.OnShieldPieceCollected -= ShieldPiecesManager_OnShieldPieceCollected;
+        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
     }
 
-    private void CheckStartMusicToPlay(Level level)
+    private void CheckStartMusicToPlay(MusicLevel level)
     {
         AudioClip musicToPlay = musicPoolSO.zurryth0;
 
         switch (level)
         {
-            case Level.Tutorial:
+            case MusicLevel.Tutorial:
                 musicToPlay = CheckZurrythMusicToPlay();
                 break;
-            case Level.Lobby:
+            case MusicLevel.Lobby:
                 musicToPlay = CheckLobbyMusicToPlay();
                 break;
-            case Level.Level1:
+            case MusicLevel.Level1:
                 musicToPlay = CheckRakithuMusicToPlay();
                 break;
-            case Level.Level2:
+            case MusicLevel.Level2:
                 musicToPlay = CheckXotarkMusicToPlay();
                 break;
-            case Level.Level3:
+            case MusicLevel.Level3:
                 musicToPlay = CheckVyhtanuMusicToPlay();
                 break;
-            case Level.Boss:
+            case MusicLevel.Boss:
                 musicToPlay = CheckBossMusicToPlay();
                 break;
             default:
@@ -63,28 +65,28 @@ public class GameplayMusicManager : MonoBehaviour
         PlayGameplayMusic(musicToPlay);
     }
 
-    private void CheckRoomChangeMusicToPlay(Level level)
+    private void CheckRoomChangeMusicToPlay(MusicLevel level)
     {
         AudioClip musicToPlay = musicPoolSO.zurryth0;
 
         switch (level)
         {
-            case Level.Tutorial:
+            case MusicLevel.Tutorial:
                 musicToPlay = CheckZurrythMusicToPlay();
                 break;
-            case Level.Lobby:
+            case MusicLevel.Lobby:
                 musicToPlay = CheckLobbyMusicToPlay();
                 break;
-            case Level.Level1:
+            case MusicLevel.Level1:
                 musicToPlay = CheckRakithuMusicToPlay();
                 break;
-            case Level.Level2:
+            case MusicLevel.Level2:
                 musicToPlay = CheckXotarkMusicToPlay();
                 break;
-            case Level.Level3:
+            case MusicLevel.Level3:
                 musicToPlay = CheckVyhtanuMusicToPlay();
                 break;
-            case Level.Boss:
+            case MusicLevel.Boss:
                 musicToPlay = CheckBossMusicToPlay();
                 break;
             default:
@@ -241,7 +243,8 @@ public class GameplayMusicManager : MonoBehaviour
     #region BossMusic
     private AudioClip CheckBossMusicToPlay()
     {
-        return musicPoolSO.boss;
+        if (BossStateHandler.Instance.BossDefeated) return musicPoolSO.afterBoss;
+        else return musicPoolSO.boss;
     }
     #endregion
 
@@ -250,19 +253,24 @@ public class GameplayMusicManager : MonoBehaviour
     {
         if (e.currentRoomVisibilityColliders.Count == 0) return;
 
-        CheckStartMusicToPlay(e.currentRoomVisibilityColliders[0].Level);
+        CheckStartMusicToPlay(e.currentRoomVisibilityColliders[0].MusicLevel);
     }
 
     private void RoomManager_OnEnterBlockingViewColliders(object sender, RoomManager.OnBlockingViewCollidersEnterEventArgs e)
     {
         if (e.newRoomVisibilityColliders.Count == 0) return;
-        if (e.previousRoomVisibilityColliders[0].Level == e.newRoomVisibilityColliders[0].Level) return;
+        if (e.previousRoomVisibilityColliders[0].MusicLevel == e.newRoomVisibilityColliders[0].MusicLevel) return;
 
-        CheckRoomChangeMusicToPlay(e.newRoomVisibilityColliders[0].Level);
+        CheckRoomChangeMusicToPlay(e.newRoomVisibilityColliders[0].MusicLevel);
     }
 
     private void ShieldPiecesManager_OnShieldPieceCollected(object sender, ShieldPiecesManager.OnShieldPieceCollectedEventArgs e)
     {
         CheckShieldCollectedMusicToPlay(e.shieldPieceSO.dialect);
+    }
+
+    private void BossStateHandler_OnBossDefeated(object sender, EventArgs e)
+    {
+        FadeTransitionGameplayMusic(musicPoolSO.afterBoss);
     }
 }
