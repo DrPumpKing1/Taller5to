@@ -8,7 +8,8 @@ public class LogListenerShields : MonoBehaviour
     {
         //SHIELDS
         ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
-        NotEnoughShieldsCollider.OnNotEnoughShieldsCollider += NotEnoughShieldsCollider_OnNotEnoughShieldsCollider; ;
+        NotEnoughShieldsCollider.OnNotEnoughShieldsCollider += NotEnoughShieldsCollider_OnNotEnoughShieldsCollider;
+        CantOpenDoahCollider.OnCantOpenDoahCollider += CantOpenDoahCollider_OnCantOpenDoahCollider;
     }
 
     private void OnDisable()
@@ -16,6 +17,7 @@ public class LogListenerShields : MonoBehaviour
         //SHIELDS
         ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
         NotEnoughShieldsCollider.OnNotEnoughShieldsCollider -= NotEnoughShieldsCollider_OnNotEnoughShieldsCollider;
+        CantOpenDoahCollider.OnCantOpenDoahCollider -= CantOpenDoahCollider_OnCantOpenDoahCollider;
     }
 
     private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e)
@@ -25,4 +27,5 @@ public class LogListenerShields : MonoBehaviour
     }
 
     private void NotEnoughShieldsCollider_OnNotEnoughShieldsCollider(object sender, NotEnoughShieldsCollider.OnNotEnoughShieldsColliderEventArgs e) => GameLogManager.Instance.Log($"Worth/NotEnoughShields/{e.dialect}");
+    private void CantOpenDoahCollider_OnCantOpenDoahCollider(object sender, CantOpenDoahCollider.OnCantOpenDoahColliderEventArgs e) => GameLogManager.Instance.Log($"Worth/CantOpenDoah/{e.dialect}");
 }
