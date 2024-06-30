@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class LoseManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class LoseManager : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField,Range(1f,10f)] private float timeToReloadAfterLose;
+
+    public static event EventHandler OnLose;
 
     private void OnEnable()
     {
@@ -34,5 +37,7 @@ public class LoseManager : MonoBehaviour
     private void BossStateHandler_OnPlayerDefeated(object sender, System.EventArgs e)
     {
         LoseReload();
+
+        OnLose?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private State state;
     [SerializeField] private State previousState;
 
-    public enum State {OnGameplay, OnUI, OnLost}
+    public enum State {OnGameplay, OnUI, OnLost, OnWin}
 
     public State GameState => state;
 
@@ -19,7 +19,8 @@ public class GameManager : MonoBehaviour
         UIManager.OnUIActive += UIManager_OnUIActive;
         UIManager.OnUIInactive += UIManager_OnUIInactive;
 
-        BossObjectDestruction.OnBossAllProjectionGemsLocked += BossObjectDestruction_OnBossDestroyedAllObjects;
+        LoseManager.OnLose += LoseManager_OnLose;
+        WinManager.OnWin += WinManager_OnWin;
     }
 
     private void OnDisable()
@@ -27,7 +28,8 @@ public class GameManager : MonoBehaviour
         UIManager.OnUIActive -= UIManager_OnUIActive;
         UIManager.OnUIInactive -= UIManager_OnUIInactive;
 
-        BossObjectDestruction.OnBossAllProjectionGemsLocked -= BossObjectDestruction_OnBossDestroyedAllObjects;
+        LoseManager.OnLose -= LoseManager_OnLose;
+        WinManager.OnWin -= WinManager_OnWin;
     }
 
     private void Awake()
@@ -76,10 +78,17 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region BossObjectDestruction Subscriptions
-    private void BossObjectDestruction_OnBossDestroyedAllObjects(object sender, System.EventArgs e)
+    #region LoseManager Subscriptions
+    private void LoseManager_OnLose(object sender, System.EventArgs e)
     {
         SetGameState(State.OnLost);
+    }
+    #endregion
+
+    #region WinManager Subscriptions
+    private void WinManager_OnWin(object sender, System.EventArgs e)
+    {
+        SetGameState(State.OnWin);
     }
     #endregion
 }
