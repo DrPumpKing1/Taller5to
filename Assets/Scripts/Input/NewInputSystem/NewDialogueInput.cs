@@ -20,11 +20,10 @@ public class NewDialogueInput : DialogueInput
 
     public override bool CanProcessDialogueInput()
     {
-        if (GameManager.Instance.GameState == GameManager.State.OnFreeDialogue) return true;
-        if (GameManager.Instance.GameState == GameManager.State.OnRestrictedDialogue) return true;
-        if (GameManager.Instance.GameState == GameManager.State.OnForcedDialogue) return true;
-
-        return false;
+        if (GameManager.Instance.GameState != GameManager.State.OnGameplay) return false;
+        if (DialogueManager.Instance._ManagerState == DialogueManager.ManagerState.NotOnDialogue) return false;
+        
+        return true;
     }
 
     public override bool GetSkipDown()

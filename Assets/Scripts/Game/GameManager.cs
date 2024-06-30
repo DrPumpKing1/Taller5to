@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private State state;
     [SerializeField] private State previousState;
 
-    public enum State {OnGameplay, OnUI, OnForcedDialogue, OnRestrictedDialogue, OnFreeDialogue, OnMonologue, OnLost}
+    public enum State {OnGameplay, OnUI, OnLost}
 
     public State GameState => state;
 
@@ -19,12 +19,6 @@ public class GameManager : MonoBehaviour
         UIManager.OnUIActive += UIManager_OnUIActive;
         UIManager.OnUIInactive += UIManager_OnUIInactive;
 
-        DialogueManager.OnDialogueStart += DialogueManager_OnDialogueStart;
-        DialogueManager.OnDialogueEnd += DialogueManager_OnDialogueEnd;
-
-        MonologueManager.OnMonologueStart += MonologueManager_OnMonologueStart;
-        MonologueManager.OnMonologueEnd += MonologueManager_OnMonologueEnd;
-
         BossObjectDestruction.OnBossAllProjectionGemsLocked += BossObjectDestruction_OnBossDestroyedAllObjects;
     }
 
@@ -32,12 +26,6 @@ public class GameManager : MonoBehaviour
     {
         UIManager.OnUIActive -= UIManager_OnUIActive;
         UIManager.OnUIInactive -= UIManager_OnUIInactive;
-
-        DialogueManager.OnDialogueStart -= DialogueManager_OnDialogueStart;
-        DialogueManager.OnDialogueEnd -= DialogueManager_OnDialogueEnd;
-
-        MonologueManager.OnMonologueStart -= MonologueManager_OnMonologueStart;
-        MonologueManager.OnMonologueEnd -= MonologueManager_OnMonologueEnd;
 
         BossObjectDestruction.OnBossAllProjectionGemsLocked -= BossObjectDestruction_OnBossDestroyedAllObjects;
     }
@@ -85,52 +73,6 @@ public class GameManager : MonoBehaviour
     private void UIManager_OnUIInactive(object sender, System.EventArgs e)
     {
         SetGameState(previousState);
-    }
-    #endregion
-
-    #region DialogueManagerSubscriptions
-    private void DialogueManager_OnDialogueStart(object sender, DialogueManager.OnDialogueEventArgs e)
-    {
-        switch (e.movementLimitType)
-        {
-            case MovementLimitType.FreeMovement:
-                SetGameState(State.OnFreeDialogue);
-                break;
-            case MovementLimitType.RestrictedMovement:
-                SetGameState(State.OnRestrictedDialogue);
-                break;
-            case MovementLimitType.ZeroMovement:
-                SetGameState(State.OnForcedDialogue);
-                break;
-        }
-    }
-
-    private void DialogueManager_OnDialogueEnd(object sender, DialogueManager.OnDialogueEventArgs e)
-    {
-        if (state != State.OnForcedDialogue && state != State.OnFreeDialogue && state != State.OnRestrictedDialogue)
-        {
-            SetPreviousState(State.OnGameplay);
-            return;
-        }
-
-        SetGameState(State.OnGameplay);       
-    }
-    #endregion
-
-    #region MonologueManager Susbcriptions
-    private void MonologueManager_OnMonologueStart(object sender, MonologueManager.OnMonologueEventArgs e)
-    {
-        SetGameState(State.OnMonologue);
-    }
-    private void MonologueManager_OnMonologueEnd(object sender, MonologueManager.OnMonologueEventArgs e)
-    {
-        if(state != State.OnMonologue)
-        {
-            SetPreviousState(State.OnGameplay);
-            return;
-        }
-
-        SetGameState(State.OnGameplay);
     }
     #endregion
 

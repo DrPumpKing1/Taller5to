@@ -16,8 +16,12 @@ public class MonologueManager : MonoBehaviour
 
     [Header("States")]
     [SerializeField] private State state;
+    [SerializeField] private ManagerState managerState;
 
+    public enum ManagerState { NotOnMonologue, OnMonologue}
     private enum State { NotOnMonologue, OnMonologue, BetweenSentences, StartingMonologue, EndingMonologue, PlayingSentence, SkippingSentence }
+
+    public ManagerState _ManagerState => managerState;
 
     public static event EventHandler<OnMonologueEventArgs> OnMonologueStart;
     public static event EventHandler<OnMonologueEventArgs> OnMonologueEnd;
@@ -56,6 +60,7 @@ public class MonologueManager : MonoBehaviour
     private void Start()
     {
         SetMonologueState(State.NotOnMonologue);
+        SetMonologueManagerState(ManagerState.NotOnMonologue);
         ResetTimer();
     }
 
@@ -77,6 +82,7 @@ public class MonologueManager : MonoBehaviour
         }
     }
     private void SetMonologueState(State state) => this.state = state;
+    private void SetMonologueManagerState(ManagerState state) => managerState = state;
 
     private void HandleMonologueStates()
     {
@@ -176,6 +182,7 @@ public class MonologueManager : MonoBehaviour
             OnMonologueEnd?.Invoke(this, new OnMonologueEventArgs { monologueSO = currentMonologueSO });
             ClearVariables();
             SetMonologueState(State.NotOnMonologue);
+            SetMonologueManagerState(ManagerState.NotOnMonologue);
         }
     }
 
@@ -219,6 +226,7 @@ public class MonologueManager : MonoBehaviour
         OnSentencePlay?.Invoke(this, new OnSentencePlayEventArgs { sentence = currentSentence, isFirstSentence = true });
 
         SetMonologueState(State.StartingMonologue);
+        SetMonologueManagerState(ManagerState.OnMonologue);
     }
 
     public void EndMonologue()

@@ -125,7 +125,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
         return true;
     }
 
-    private bool RestrictedMovement() => GameManager.Instance.GameState == GameManager.State.OnRestrictedDialogue;
+    private bool RestrictedMovement() => DialogueManager.Instance._ManagerState == DialogueManager.ManagerState.RestrictedDialogue;
 
     private void SmoothSpeed()
     {

@@ -34,12 +34,10 @@ public class NewMovementInput : MovementInput
 
     public override bool CanProcessMovementInput()
     {
-        if(GameManager.Instance.GameState == GameManager.State.OnGameplay) return true;
-        if(GameManager.Instance.GameState == GameManager.State.OnFreeDialogue) return true;
-        if(GameManager.Instance.GameState == GameManager.State.OnRestrictedDialogue) return true;
-        if (GameManager.Instance.GameState == GameManager.State.OnMonologue) return true;
+        if (GameManager.Instance.GameState != GameManager.State.OnGameplay) return false;
+        if (DialogueManager.Instance._ManagerState == DialogueManager.ManagerState.ZeroMovementDialogue) return false;
 
-        return false;
+        return true;
     }
 
     public override Vector2 GetDirectionVectorNormalized()

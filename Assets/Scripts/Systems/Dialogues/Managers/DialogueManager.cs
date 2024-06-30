@@ -22,8 +22,12 @@ public class DialogueManager : MonoBehaviour
 
     [Header("States")]
     [SerializeField] private State state;
+    [SerializeField] private ManagerState managerState;
 
+    public enum ManagerState { NotOnDialogue, FreeDialogue, RestrictedDialogue, ZeroMovementDialogue}
     private enum State{ NotOnDialogue, OnSentence, BetweenSentences, StartingDialogue, EndingDialogue, PlayingSentence, SkippingSentence }
+
+    public ManagerState _ManagerState => managerState;
 
     private bool SkipInput => dialogueInput.GetSkipDown();
 
@@ -65,6 +69,7 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         SetDialogueState(State.NotOnDialogue);
+        SetDialogueManagerState(ManagerState.NotOnDialogue);
         ResetTimer();
     }
 
@@ -86,6 +91,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
     private void SetDialogueState(State state) => this.state = state;
+    private void SetDialogueManagerState(ManagerState state) => managerState = state;
 
     private void HandleDialogueStates()
     {
@@ -192,6 +198,7 @@ public class DialogueManager : MonoBehaviour
             OnDialogueEnd?.Invoke(this, new OnDialogueEventArgs { dialogueSO = currentDialogueSO, movementLimitType = currentDialogueSO.movementLimitType });
             ClearVariables();
             SetDialogueState(State.NotOnDialogue);
+            SetDialogueManagerState(ManagerState.NotOnDialogue);
         }
     }
 
@@ -245,6 +252,19 @@ public class DialogueManager : MonoBehaviour
         OnSentencePlay?.Invoke(this, new OnSentencePlayEventArgs { sentence = currentSentence, isFirstSentence = true });
 
         SetDialogueState(State.StartingDialogue);
+
+        switch (dialogueSO.movementLimitType)
+        {
+            case MovementLimitType.FreeMovement:
+                SetDialogueManagerState(ManagerState.FreeDialogue);
+                break;
+            case MovementLimitType.RestrictedMovement:
+                SetDialogueManagerState(ManagerState.RestrictedDialogue);
+                break;
+            case MovementLimitType.ZeroMovement:
+                SetDialogueManagerState(ManagerState.ZeroMovementDialogue);
+                break;
+        }
     }
 
     public void EndDialogue()
