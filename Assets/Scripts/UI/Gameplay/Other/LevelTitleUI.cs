@@ -23,13 +23,14 @@ public class LevelTitleUI : MonoBehaviour
 
     private const string HIDDEN_ANIMATION_NAME = "LevelTitleHidden";
 
-    private const string TUTORIAL_TITLE = "Tutorial";
-    private const string LOBBY_TITLE = "Lobby";
-    private const string LEVEL1_TITLE = "Level1";
-    private const string LEVEL2_TITLE = "Level2";
-    private const string LEVEL3_TITLE = "Level3";
-    private const string BOSS_TITLE = "Boss";
-    private const string FINAL_ROOM_TITLE = "FinalRoom";
+    private const string EXTERIOR_TITLE = "Aesyth Planet";
+    private const string TUTORIAL_TITLE = "Divine Liberator Entry";
+    private const string LOBBY_TITLE = "Chamber of Cultural Passages";
+    private const string LEVEL1_TITLE = "Sanctuary of <i>Ka'hoshita</i>";
+    private const string LEVEL2_TITLE = "Spiritual Wisdom Center";
+    private const string LEVEL3_TITLE = "Rest of the Lost Souls";
+    private const string BOSS_TITLE = "Warden's Room";
+    private const string FINAL_ROOM_TITLE = "<i>Katryssa Midrita</i> Sacred Chamber";
 
     private void OnEnable()
     {
@@ -61,6 +62,9 @@ public class LevelTitleUI : MonoBehaviour
 
         switch (titleLevel)
         {
+            case TitleLevel.Exterior:
+                levelTitle = EXTERIOR_TITLE;
+                break;
             case TitleLevel.Tutorial:
                 levelTitle = TUTORIAL_TITLE;
                 break;
@@ -83,7 +87,7 @@ public class LevelTitleUI : MonoBehaviour
                 levelTitle = FINAL_ROOM_TITLE;
                 break;
             default:
-                break;
+                return;
         }
 
         LevelTitleShow(levelTitle, isStart);
