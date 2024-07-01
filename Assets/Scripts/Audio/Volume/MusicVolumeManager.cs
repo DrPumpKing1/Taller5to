@@ -11,8 +11,8 @@ public class MusicVolumeManager : VolumeManager
     private const string MUSIC_VOLUME = "MusicVolume";
 
     public static event EventHandler OnMusicVolumeManagerInitialized;
-
     public static event EventHandler<OnVolumeChangedEventArgs> OnMusicVolumeChanged;
+
     private void Awake()
     {
         SetSingleton();

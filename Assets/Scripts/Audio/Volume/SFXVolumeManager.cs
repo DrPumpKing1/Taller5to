@@ -11,8 +11,8 @@ public class SFXVolumeManager : VolumeManager
     private const string SFX_VOLUME = "SFXVolume";
 
     public static event EventHandler OnSFXVolumeManagerInitialized;
-
     public static event EventHandler<OnVolumeChangedEventArgs> OnSFXVolumeChanged;
+
     private void Awake()
     {
         SetSingleton();

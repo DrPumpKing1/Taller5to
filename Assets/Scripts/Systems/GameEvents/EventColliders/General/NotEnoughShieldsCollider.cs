@@ -17,7 +17,6 @@ public class NotEnoughShieldsCollider : ConditionalEventCollider
 
     protected override void TriggerCollider()
     {
-        if (!MeetsCondition()) return;
         OnNotEnoughShieldsCollider?.Invoke(this, new OnNotEnoughShieldsColliderEventArgs { dialect = dialect });
     }
 
@@ -27,3 +26,6 @@ public class NotEnoughShieldsCollider : ConditionalEventCollider
         return false;
     }
 }
+
+
+
