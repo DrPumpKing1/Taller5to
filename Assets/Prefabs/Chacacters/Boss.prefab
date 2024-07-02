@@ -240,6 +240,8 @@ MonoBehaviour:
   timeActivating: 5
   timeChangingPhase: 5
   debug: 1
+  bossDefeated: 0
+  playerDefeated: 0
 --- !u!114 &4331399682908774126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,11 +270,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19c5b27dbd6bf1d4ead3e3ef69d51812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chargeLimitPerPhase: 5
+  chargeLimitPerPhase: 30
   chargePerProjectile: 1
   currentChargeInPhase: 0
-  timeForPassiveDischarge: 5
-  passiveDischargePerSecond: 0.5
+  timeForPassiveDischarge: 8
+  passiveDischargePerSecond: 0.25
   timeNotHit: 0
 --- !u!114 &1005285739392142598
 MonoBehaviour:
@@ -288,7 +290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableSinceFirstPhase: 1
   phaseNumberToEnable: 2
-  timeNotTargeting: 5
+  timeNotTargeting: 10
   timeTargeting: 10
   stopTargetingWhenObjectDematerialized: 1
   priorizeSenders: 1
@@ -318,7 +320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableSinceFirstPhase: 0
   phaseNumberToEnable: 2
-  timeNotSunning: 7
+  timeNotSunning: 7.5
   timeStunning: 5
   stuneableSources: []
   bossSourceStunState: 0
