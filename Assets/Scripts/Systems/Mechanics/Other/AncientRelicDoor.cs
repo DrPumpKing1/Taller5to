@@ -9,13 +9,11 @@ public class AncientRelicDoor : MonoBehaviour
     [SerializeField] private Transform transformToDisable;
 
     [Header("Settings")]
-    [SerializeField] private float timeDisabledAfterDepowered;
-    [SerializeField] private List<Electrode> controllingElectrodes;
+    [SerializeField] private List<ProjectionPlatform> controllingProjectionPlatforms;
+
+    private const int DRAINER_ID = 4;
 
     private bool previouslyPowered;
-    public float timer;
-
-    public const float ACTIVATION_THRESHOLD = 20f;
 
     private void Start()
     {
@@ -24,48 +22,36 @@ public class AncientRelicDoor : MonoBehaviour
 
     private void Update()
     {
-        HandlePowered();
+        HandleDrainersInPlatforms();
     }
 
     private void InitializeVariables()
     {
         previouslyPowered = false;
-        timer = 0f;
     }
 
-    private void HandlePowered()
+    private void HandleDrainersInPlatforms()
     {
-        if(AllControllingElectrodesDePowered())
+        if(AllPlatformsWithDrainer() && !previouslyPowered)
         {
-            ResetTimer();
-
-            if (previouslyPowered)
-            {
-                DisableDoor();
-                previouslyPowered = false;
-            }
-
-            return;
+            DisableDoor();
+            previouslyPowered = true;
         }
         
-        if(!AllControllingElectrodesDePowered())
+        if(!AllPlatformsWithDrainer() && previouslyPowered)
         {
-            timer += Time.deltaTime;
-
-            if (timer >= timeDisabledAfterDepowered && !previouslyPowered)
-            {
-                EnableDoor();
-                previouslyPowered = true;
-            }
+            EnableDoor();
+            previouslyPowered = false;
         }
 
     }
 
-    private bool AllControllingElectrodesDePowered()
+    private bool AllPlatformsWithDrainer()
     {
-        foreach(Electrode electrode in controllingElectrodes)
+        foreach(ProjectionPlatform projectionPlatform in controllingProjectionPlatforms)
         {
-            if (electrode.Power >= ACTIVATION_THRESHOLD) return false;
+            if (!projectionPlatform.HasObject()) return false;
+            if (projectionPlatform.CurrentProjectedObjectSO.id != DRAINER_ID) return false;
         }
 
         return true;
@@ -73,5 +59,4 @@ public class AncientRelicDoor : MonoBehaviour
 
     private void DisableDoor() => transformToDisable.gameObject.SetActive(false);
     private void EnableDoor() => transformToDisable.gameObject.SetActive(true);
-    private void ResetTimer() => timer = 0f;
 }
