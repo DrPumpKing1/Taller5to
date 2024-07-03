@@ -1,16 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ProjectableObjectsLearnedPersistence : MonoBehaviour, IDataPersistence<PlayerData>
 {
     public void LoadData(PlayerData data)
     {
-        ProjectableObjectsLearningManager projectableObjectsLearningManager = FindObjectOfType<ProjectableObjectsLearningManager>();
-
+        List<int> projectableObjectsLearnedIDs = new List<int>();
+        
         foreach (KeyValuePair<int, bool> projectableObjectLearnedData in data.projectableObjectsLearned)
         {
-            if (projectableObjectLearnedData.Value) projectableObjectsLearningManager.AddProjectableObjectToLearnedListById(projectableObjectLearnedData.Key);
+            if (projectableObjectLearnedData.Value) projectableObjectsLearnedIDs.Add(projectableObjectLearnedData.Key);
+        }
+
+        projectableObjectsLearnedIDs.Sort();
+        ProjectableObjectsLearningManager projectableObjectsLearningManager = FindObjectOfType<ProjectableObjectsLearningManager>();
+
+        foreach (int projectableObjectLearnedID in projectableObjectsLearnedIDs)
+        {
+            projectableObjectsLearningManager.AddProjectableObjectToLearnedListById(projectableObjectLearnedID);
         }
     }
 

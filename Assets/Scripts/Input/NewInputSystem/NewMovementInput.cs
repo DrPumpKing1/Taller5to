@@ -35,7 +35,11 @@ public class NewMovementInput : MovementInput
     public override bool CanProcessMovementInput()
     {
         if (GameManager.Instance.GameState != GameManager.State.OnGameplay) return false;
+
         if (DialogueManager.Instance._ManagerState == DialogueManager.ManagerState.ZeroMovementDialogue) return false;
+
+        if (ScenesManager.Instance.SceneState == ScenesManager.State.TransitionOut) return false;
+        if (ScenesManager.Instance.SceneState == ScenesManager.State.FullBlack) return false;
 
         return true;
     }

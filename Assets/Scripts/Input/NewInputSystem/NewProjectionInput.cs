@@ -24,6 +24,9 @@ public class NewProjectionInput : ProjectionInput
 
         if (DialogueManager.Instance._ManagerState == DialogueManager.ManagerState.ZeroMovementDialogue) return false;
 
+        if (ScenesManager.Instance.SceneState == ScenesManager.State.TransitionOut) return false;
+        if (ScenesManager.Instance.SceneState == ScenesManager.State.FullBlack) return false;
+
         return true;
     }
 

@@ -22,6 +22,9 @@ public class NewCameraInput : CameraInput
     {
         if (GameManager.Instance.GameState == GameManager.State.OnUI) return false;
 
+        if (ScenesManager.Instance.SceneState == ScenesManager.State.TransitionOut) return false;
+        if (ScenesManager.Instance.SceneState == ScenesManager.State.FullBlack) return false;
+
         return true;
     }
 
