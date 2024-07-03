@@ -18,6 +18,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 15e4972130844994eb710fa3a6ab8d09, type: 3}
   objectLearned:
   - {fileID: 8300000, guid: ed64465a33cbae7468a90f6c34e74796, type: 3}
+  cableLearned: []
+  magicBoxLearned: []
+  senderLearned: []
+  drainerLearned: []
   objectProjected: []
   objectFailedProjection: []
   objectDematerialization:
@@ -47,6 +51,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0ece942b974e2b34bbf7cfe15884a1b5, type: 3}
   drainerActivated:
   - {fileID: 8300000, guid: d55ea7ab274b1204eb24636ed6b9417c, type: 3}
+  drainerDeactivated: []
   projectileShot:
   - {fileID: 8300000, guid: 36274eee8d0369c41b0aaddb5c1a5ec6, type: 3}
   projectileImpact: []
@@ -78,3 +83,11 @@ MonoBehaviour:
   inscriptionDePowered: []
   receiverPowered: []
   receiverDePowered: []
+  dialogueOpen: []
+  dialogueClose: []
+  monologueOpen: []
+  monologueClose: []
+  pauseOpen: []
+  pauseClosed: []
+  inventoryOpen: []
+  inventoryClosed: []

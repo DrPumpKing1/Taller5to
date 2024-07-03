@@ -88,4 +88,19 @@ public class SFXPoolSO : ScriptableObject
 
     public AudioClip[] receiverPowered;
     public AudioClip[] receiverDePowered;
+
+    [Header("Dialogues")]
+    public AudioClip[] dialogueOpen;
+    public AudioClip[] dialogueClose;
+
+    [Header("Monologues")]
+    public AudioClip[] monologueOpen;
+    public AudioClip[] monologueClose;
+
+    [Header("UI")]
+    public AudioClip[] pauseOpen;
+    public AudioClip[] pauseClosed;
+
+    public AudioClip[] inventoryOpen;
+    public AudioClip[] inventoryClosed;
 }

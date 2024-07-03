@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TemporalSFXController : MonoBehaviour
 {
+    private bool pausable;
+    public bool Pausable => pausable;
+
     private void OnEnable()
     {
         ScenesManager.OnSceneLoadStart += ScenesManager_OnSceneLoadStart;
@@ -17,4 +20,6 @@ public class TemporalSFXController : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public void SetPausable(bool pausable) => this.pausable = pausable;
 }

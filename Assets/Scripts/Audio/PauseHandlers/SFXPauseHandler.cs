@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class SFXPauseHandler : MonoBehaviour
 {
+    [Header("Components")]
+    [SerializeField] private List<AudioSource> audioSourcesToPause;
+
     [Header("Settings")]
     [SerializeField] private bool pauseSFXOnPause;
 
     [Header("Debug")]
     [SerializeField] private bool debug;
-
-    private AudioSource audioSource;
 
     private void OnEnable()
     {
@@ -24,21 +25,33 @@ public class SFXPauseHandler : MonoBehaviour
         PauseManager.OnGameResumed -= PauseManager_OnGameResumed;
     }
 
-    private void Awake()
+    private void PauseAudioSources()
     {
-        audioSource = GetComponent<AudioSource>();
+        foreach(AudioSource audioSource in audioSourcesToPause)
+        {
+            audioSource.Pause();
+        }
     }
+
+    private void UnPauseAudioSources()
+    {
+        foreach (AudioSource audioSource in audioSourcesToPause)
+        {
+            audioSource.UnPause();
+        }
+    }
+
 
     private void PauseGlobalSFX()
     {
         if (!pauseSFXOnPause) return;
-        audioSource.Pause();
+        PauseAudioSources();
     }
 
     private void ResumeGlobalSFX()
     {
         if (!pauseSFXOnPause) return;
-        audioSource.UnPause();
+        UnPauseAudioSources();
     }
 
     private void PauseAllTemporalSFX()
@@ -49,6 +62,8 @@ public class SFXPauseHandler : MonoBehaviour
 
         foreach (TemporalSFXController temporalSFXController in temporalSFXControllers)
         {
+            if (!temporalSFXController.Pausable) continue;
+
             AudioSource audioSource = temporalSFXController.GetComponent<AudioSource>();
 
             if (!audioSource)
@@ -69,6 +84,8 @@ public class SFXPauseHandler : MonoBehaviour
 
         foreach (TemporalSFXController temporalSFXController in temporalSFXControllers)
         {
+            if (!temporalSFXController.Pausable) continue;
+
             AudioSource audioSource = temporalSFXController.GetComponent<AudioSource>();
 
             if (!audioSource)
