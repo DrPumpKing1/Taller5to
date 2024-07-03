@@ -149,4 +149,30 @@ public class UniqueMonologueTriggerHandler : MonoBehaviour
             }
         }
     }
+
+    private UniqueMonologueEvent GetUniqueMonologueEventByID(int id)
+    {
+        foreach (UniqueMonologueEvent uniqueMonologueEvent in uniqueMonologueEvents)
+        {
+            if (id == uniqueMonologueEvent.id) return uniqueMonologueEvent;
+        }
+
+        return null;
+    }
+
+    public void SetUniqueMonologuesTriggered(List<int> monoloquesIDs)
+    {
+        foreach (UniqueMonologueEvent uniqueMonologueEvent in uniqueMonologueEvents)
+        {
+            uniqueMonologueEvent.triggered = false;
+        }
+
+        foreach (int monologueID in monoloquesIDs)
+        {
+            UniqueMonologueEvent uniqueMonologueTrigger = GetUniqueMonologueEventByID(monologueID);
+            if (uniqueMonologueTrigger == null) continue;
+
+            uniqueMonologueTrigger.triggered = true;
+        }
+    }
 }

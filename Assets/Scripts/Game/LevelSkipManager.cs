@@ -81,21 +81,18 @@ public class LevelSkipManager : MonoBehaviour
     private void ReloadWithSettings(LevelSettings levelSettings)
     {
         CheckpointManager.Instance.SetCheckpointID(levelSettings.checkpointID);
+
         ProjectableObjectsLearningManager.Instance.ReplaceProjectableObjectsList(levelSettings.projectableObjectsSOs);
+        ShieldPiecesManager.Instance.ReplaceShieldPiecesCollectedList(levelSettings.shieldPiecesSOs);
+
         ProjectionGemsManager.Instance.SetTotalProjectionGems(levelSettings.projectionGems);
         InventoryOpeningManager.Instance.SetCanOpenInventory(levelSettings.canOpenInventory);
         HUDVisibilityHandler.Instance.SetIsVisible(levelSettings.HUDVisible);
         PetPlayerAttachment.Instance.SetAttachToPlayer(levelSettings.attachToPlayer);
 
-        foreach(int dialogueIDTriggered in levelSettings.dialoguesIDsTriggered)
-        {
-            UniqueDialogueTriggerHandler.Instance.SetUniqueDialogueTriggered(dialogueIDTriggered, true);
-        }
+        UniqueDialogueTriggerHandler.Instance.SetUniqueDialoguesTriggered(levelSettings.dialoguesIDsTriggered);
+        UniqueMonologueTriggerHandler.Instance.SetUniqueMonologuesTriggered(levelSettings.monologuesIDsTriggered);
 
-        foreach (int monologueIDTriggered in levelSettings.monologuesIDsTriggered)
-        {
-            UniqueMonologueTriggerHandler.Instance.SetUniqueMonologueTriggered(monologueIDTriggered, true);
-        }
 
         PlayerDataPersistenceManager.Instance.SaveGameData();
         PetDataPersistenceManager.Instance.SaveGameData();

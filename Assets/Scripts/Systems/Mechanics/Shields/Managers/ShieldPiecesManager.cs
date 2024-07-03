@@ -140,4 +140,15 @@ public class ShieldPiecesManager : MonoBehaviour
 
         return count;
     }
+
+    public void ReplaceShieldPiecesCollectedList(List<ShieldPieceSO> shieldPiecesSOs)
+    {
+        shieldPiecesCollected.Clear();
+
+        foreach (ShieldPieceSO shieldPieceSO in shieldPiecesCollected)
+        {
+            if (!shieldPiecesCollected.Contains(shieldPieceSO)) continue;
+            shieldPiecesCollected.Add(shieldPieceSO);
+        }
+    }
 }
