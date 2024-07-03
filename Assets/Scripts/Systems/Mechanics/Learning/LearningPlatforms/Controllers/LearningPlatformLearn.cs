@@ -58,6 +58,8 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     #endregion
 
     public event EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
+    public static event EventHandler OnStartLearning;
+    public static event EventHandler OnEndLearning;
 
     public class OnObjectLearnedEventArgs : EventArgs
     {
@@ -163,9 +165,17 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
         return true;
     }
 
-    public void HoldInteractionStart() => OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
+    public void HoldInteractionStart()
+    {
+        OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
+        OnStartLearning?.Invoke(this, EventArgs.Empty);
+    }
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
-    public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
+    public void HoldInteractionEnd()
+    {
+        OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
+        OnEndLearning?.Invoke(this, EventArgs.Empty);
+    }
 
     public Transform GetTransform() => transform;
     #endregion

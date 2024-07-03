@@ -51,6 +51,9 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     public event EventHandler OnObjectDematerialized;
     public static event EventHandler<OnAnyObjectDematerializedEventArgs> OnAnyObjectDematerialized;
 
+    public static event EventHandler<OnAnyObjectDematerializedEventArgs> OnStartDematerialization;
+    public static event EventHandler<OnAnyObjectDematerializedEventArgs> OnEndDematerialization;
+
     public class OnAnyObjectDematerializedEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectSO;
@@ -129,9 +132,17 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
 
         return true;
     }
-    public void HoldInteractionStart() => OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
+    public void HoldInteractionStart()
+    {
+        OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
+        OnStartDematerialization?.Invoke(this, new OnAnyObjectDematerializedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
+    }
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
-    public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
+    public void HoldInteractionEnd()
+    {
+        OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
+        OnEndDematerialization?.Invoke(this, new OnAnyObjectDematerializedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
+    }
     public Transform GetTransform() => transform;
 
     #endregion

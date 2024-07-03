@@ -13,6 +13,7 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip[] vyrxAttach;
 
     [Header("Learning")]
+    public AudioClip startLearning;
     public AudioClip[] objectLearned;
 
     [Header("Exact Object Learning")]
@@ -25,6 +26,7 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip startProjection;
     public AudioClip[] objectProjected;
     public AudioClip[] objectFailedProjection;
+    public AudioClip startDematerialization;
     public AudioClip[] objectDematerialization;
     public AudioClip[] projectionResetObjectUsed;
 

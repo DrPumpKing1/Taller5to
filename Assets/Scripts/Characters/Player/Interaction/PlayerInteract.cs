@@ -261,11 +261,12 @@ public class PlayerInteract : MonoBehaviour
 
             if (holdPercent >= 1)
             {
-                holdInteractable.TryInteract();
-
                 OnInteractionCompleted?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
                 OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
                 holdInteractable.HoldInteractionEnd();
+
+                holdInteractable.TryInteract();
+
                 ResetInteractions();
             }
         }
