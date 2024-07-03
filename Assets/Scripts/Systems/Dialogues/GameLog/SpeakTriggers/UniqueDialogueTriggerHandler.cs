@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class UniqueDialogueTriggerHandler : MonoBehaviour
 {
+    public static UniqueDialogueTriggerHandler Instance { get; private set; }
+
     [Serializable]
     public class UniqueDialogueEvent
     {
@@ -21,7 +23,7 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
     [Header("Enabler")]
     [SerializeField] private bool enableTriggerDialogues;
 
-    [Header("Dialogues")] 
+    [Header("Dialogues")]
     [SerializeField] private float hintWaitTimer = 0f;
     [SerializeField] private bool waintingHint = false;
     [SerializeField] private UniqueDialogueEvent lastDialogueEvent;
@@ -43,9 +45,27 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
         GameLogManager.OnLogAdd -= ReadLogDialogue;
     }
 
+    private void Awake()
+    {
+        SetSingleton();
+    }
+
     private void Update()
     {
         HandleShowHint();
+    }
+
+    private void SetSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("There is more than one UniqueDialogueTriggerHandler instance, proceding to destroy duplicate");
+            Destroy(gameObject);
+        }
     }
 
     private void HandleShowHint()
@@ -83,8 +103,8 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
         string lastLog = GameLogManager.Instance.GameLog[^1].log;
 
         var compatibleDialogues = uniqueDialogueEvents.Where(x => x.eventCode == lastLog && !x.triggered);
-        
-        if(!compatibleDialogues.Any()) yield break;
+
+        if (!compatibleDialogues.Any()) yield break;
 
         UniqueDialogueEvent dialogueEvent = compatibleDialogues.First();
 
@@ -111,20 +131,46 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
             waintingHint = false;
             yield break;
         }
-        
+
         hintWaitTimer = lastDialogueEvent.hintTime;
         waintingHint = true;
     }
 
     public void SetUniqueDialogueTriggered(int id, bool triggered)
     {
-        foreach(UniqueDialogueEvent uniqueDialogueEvent in uniqueDialogueEvents)
+        foreach (UniqueDialogueEvent uniqueDialogueEvent in uniqueDialogueEvents)
         {
-            if(id == uniqueDialogueEvent.id)
+            if (id == uniqueDialogueEvent.id)
             {
                 uniqueDialogueEvent.triggered = triggered;
                 return;
             }
+        }
+    }
+
+    private UniqueDialogueEvent GetUniqueDialoqueEventByID(int id)
+    {
+        foreach (UniqueDialogueEvent uniqueDialogueEvent in uniqueDialogueEvents)
+        {
+            if (id == uniqueDialogueEvent.id) return uniqueDialogueEvent;
+        }
+
+        return null;
+    }
+
+    public void SetUniqueDialoguesTriggered(List<int> dialoguesIDs)
+    {
+        foreach (UniqueDialogueEvent uniqueDialogueEvent in uniqueDialogueEvents)
+        {
+            uniqueDialogueEvent.triggered = false;
+        }
+
+        foreach (int dialogueID in dialoguesIDs)
+        {
+            UniqueDialogueEvent uniqueDialogueEvent = GetUniqueDialoqueEventByID(dialogueID);
+            if (uniqueDialogueEvent == null) continue;
+
+            uniqueDialogueEvent.triggered = true;
         }
     }
 }

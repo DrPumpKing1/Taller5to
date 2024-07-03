@@ -118,4 +118,15 @@ public class ProjectableObjectsLearningManager : MonoBehaviour
 
         return null;
     }
+
+    public void ReplaceProjectableObjectsList(List<ProjectableObjectSO> projectableObjectsSOs)
+    {
+        projectableObjectsLearned.Clear();
+
+        foreach(ProjectableObjectSO projectableObjectSO in projectableObjectsSOs)
+        {
+            if (!projectableObjectsLearned.Contains(projectableObjectSO)) return;
+            projectableObjectsLearned.Add(projectableObjectSO);
+        }
+    }
 }

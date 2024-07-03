@@ -70,7 +70,7 @@ public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class,
         }
     }
 
-    protected void SaveGameData()
+    public void SaveGameData()
     {
         if (!enableDataPersistence) return;
 

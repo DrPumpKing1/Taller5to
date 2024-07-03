@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class UniqueMonologueTriggerHandler : MonoBehaviour
 {
+    public static UniqueMonologueTriggerHandler Instance { get; private set; }
+
     [Serializable]
     public class UniqueMonologueEvent
     {
@@ -43,9 +45,27 @@ public class UniqueMonologueTriggerHandler : MonoBehaviour
         GameLogManager.OnLogAdd -= ReadLogMonologue;
     }
 
+    private void Awake()
+    {
+        SetSingleton();
+    }
+
     private void Update()
     {
         HandleShowHint();
+    }
+
+    private void SetSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("There is more than one UniqueMonologueTriggerHandler instance, proceding to destroy duplicate");
+            Destroy(gameObject);
+        }
     }
 
     private void HandleShowHint()

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class HUDVisibilityHandler : MonoBehaviour
 {
+    public static HUDVisibilityHandler Instance { get; private set; }
+
     [Header("Settings")]
     [SerializeField] private bool isVisible;
 
@@ -28,11 +30,25 @@ public class HUDVisibilityHandler : MonoBehaviour
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+        SetSingleton();
     }
 
     private void Start()
     {
         CheckIsVisible();
+    }
+
+    private void SetSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("There is more than one HUDVisibilityHandler instance, proceding to destroy duplicate");
+            Destroy(gameObject);
+        }
     }
 
     public void SetIsVisible(bool visible)
