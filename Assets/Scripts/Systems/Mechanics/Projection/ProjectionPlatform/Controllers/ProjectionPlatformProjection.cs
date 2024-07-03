@@ -55,6 +55,9 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     public static event EventHandler<OnAnyProjectionEventArgs> OnAnyObjectProjectionFailed;
     public static event EventHandler<OnAnyProjectionEventArgs> OnAnyObjectProjectionFailedInsuficientGems;
 
+    public static event EventHandler OnStartProjection;
+    public static event EventHandler OnEndProjection;
+
     public class OnProjectionEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectSO;
@@ -163,9 +166,17 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
         return true;
     }
 
-    public void HoldInteractionStart() => OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
+    public void HoldInteractionStart()
+    {
+        OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
+        OnStartProjection?.Invoke(this, EventArgs.Empty);
+    }
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
-    public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
+    public void HoldInteractionEnd()
+    {
+        OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
+        OnEndProjection?.Invoke(this, EventArgs.Empty);
+    }
 
     public Transform GetTransform() => transform;
     #endregion

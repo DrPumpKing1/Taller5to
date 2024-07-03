@@ -6,6 +6,9 @@ using UnityEngine;
 public class SFXPoolSO : ScriptableObject
 {
     [Header("Player")]
+    public AudioClip playerWalk;
+    public AudioClip playerSprint;
+
     public AudioClip[] playerLand;
     public AudioClip[] vyrxAttach;
 
@@ -19,6 +22,7 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip[] drainerLearned;
 
     [Header("Projection")]
+    public AudioClip startProjection;
     public AudioClip[] objectProjected;
     public AudioClip[] objectFailedProjection;
     public AudioClip[] objectDematerialization;

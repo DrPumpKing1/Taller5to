@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb42b6e38c3327249bb9a94c6266b715, type: 3}
   m_Name: SFXPool
   m_EditorClassIdentifier: 
+  playerWalk: {fileID: 8300000, guid: 460cb7a1bcc008f419f7fefc47a45d52, type: 3}
+  playerSprint: {fileID: 8300000, guid: dcf6b072d54dd06449226b667ff13001, type: 3}
   playerLand:
   - {fileID: 8300000, guid: 127ddd3bad7132e4397e4e2c4a6389cc, type: 3}
   vyrxAttach:
@@ -22,6 +24,7 @@ MonoBehaviour:
   magicBoxLearned: []
   senderLearned: []
   drainerLearned: []
+  startProjection: {fileID: 8300000, guid: 460cb7a1bcc008f419f7fefc47a45d52, type: 3}
   objectProjected: []
   objectFailedProjection: []
   objectDematerialization:
