@@ -125,7 +125,7 @@ public class ProjectableObjectsLearningManager : MonoBehaviour
 
         foreach(ProjectableObjectSO projectableObjectSO in projectableObjectsSOs)
         {
-            if (!projectableObjectsLearned.Contains(projectableObjectSO)) continue;
+            if (projectableObjectsLearned.Contains(projectableObjectSO)) continue;
             projectableObjectsLearned.Add(projectableObjectSO);
         }
     }

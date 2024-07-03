@@ -10,6 +10,8 @@ public class DebugScript : MonoBehaviour
         CheckSkipDialogue();
         CheckReloadScene();
         CheckHideInstruction();
+
+        CheckSkipLevel1();
     }
 
     private void CheckSkipDialogue()
@@ -33,6 +35,14 @@ public class DebugScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.U))
         {
             InstructionsManager.Instance.HideInstruction();
+        }
+    }
+
+    private void CheckSkipLevel1()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            LevelSkipManager.Instance.SkipLevel(1);
         }
     }
 }

@@ -20,6 +20,8 @@ public class LevelSkipManager : MonoBehaviour
     [Header("Boss Settings")]
     [SerializeField] private LevelSettings bossSettings;
 
+    private bool skippingLevel;
+
     [Serializable]
     public class LevelSettings
     {
@@ -28,6 +30,8 @@ public class LevelSkipManager : MonoBehaviour
         public List<ShieldPieceSO> shieldPiecesSOs;
         public List<int> dialoguesIDsTriggered;
         public List<int> monologuesIDsTriggered;
+        public List<int> learningPlatformsUsedIDs;
+        public List<int> switchesToggledIDs;
         public int projectionGems;
         public bool canOpenInventory;
         public bool HUDVisible;
@@ -37,6 +41,16 @@ public class LevelSkipManager : MonoBehaviour
     private void Awake()
     {
         SetSingleton();
+    }
+
+    private void Start()
+    {
+        InitializeVariables();
+    }
+
+    private void InitializeVariables()
+    {
+        skippingLevel = false;
     }
 
     private void SetSingleton()
@@ -54,6 +68,8 @@ public class LevelSkipManager : MonoBehaviour
 
     public void SkipLevel(int id)
     {
+        if (skippingLevel) return;
+
         LevelSettings levelSettings;
 
         switch (id)
@@ -85,6 +101,9 @@ public class LevelSkipManager : MonoBehaviour
         ProjectableObjectsLearningManager.Instance.ReplaceProjectableObjectsList(levelSettings.projectableObjectsSOs);
         ShieldPiecesManager.Instance.ReplaceShieldPiecesCollectedList(levelSettings.shieldPiecesSOs);
 
+        SetSwitchesToggled(levelSettings.switchesToggledIDs);
+        SetLearningPlatformsUsed(levelSettings.learningPlatformsUsedIDs);
+
         ProjectionGemsManager.Instance.SetTotalProjectionGems(levelSettings.projectionGems);
         InventoryOpeningManager.Instance.SetCanOpenInventory(levelSettings.canOpenInventory);
         HUDVisibilityHandler.Instance.SetIsVisible(levelSettings.HUDVisible);
@@ -93,6 +112,7 @@ public class LevelSkipManager : MonoBehaviour
         UniqueDialogueTriggerHandler.Instance.SetUniqueDialoguesTriggered(levelSettings.dialoguesIDsTriggered);
         UniqueMonologueTriggerHandler.Instance.SetUniqueMonologuesTriggered(levelSettings.monologuesIDsTriggered);
 
+        //
 
         PlayerDataPersistenceManager.Instance.SaveGameData();
         PetDataPersistenceManager.Instance.SaveGameData();
@@ -101,5 +121,37 @@ public class LevelSkipManager : MonoBehaviour
         LogDataPersistenceManager.Instance.SaveGameData();
 
         ScenesManager.Instance.FadeReloadCurrentScene();
+    }
+
+    private void SetLearningPlatformsUsed(List<int> learningPlatformsUsedIDs)
+    {
+        LearningPlatform[] learningPlatforms = FindObjectsOfType<LearningPlatform>();
+
+        foreach (LearningPlatform learningPlatform in learningPlatforms)
+        {
+            foreach (int learningPlatformUsedID in learningPlatformsUsedIDs)
+            {
+                if (learningPlatform.LearningPlatformSO.id == learningPlatformUsedID)
+                {
+                    learningPlatform.SetIsLearned(true);
+                }
+            }
+        }
+    }
+
+    private void SetSwitchesToggled(List<int> switchesToggledIDs)
+    {
+        ElectricalSwitch[] electricalSwitches = FindObjectsOfType<ElectricalSwitch>();
+
+        foreach (ElectricalSwitch electricalSwitch in electricalSwitches)
+        {
+            foreach (int switchToggledID in switchesToggledIDs)
+            {
+                if (electricalSwitch.ID == switchToggledID)
+                {
+                    electricalSwitch.SetIsOn(true);
+                }
+            }
+        }
     }
 }

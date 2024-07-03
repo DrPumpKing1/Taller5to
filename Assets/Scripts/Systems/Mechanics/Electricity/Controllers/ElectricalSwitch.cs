@@ -39,4 +39,6 @@ public class ElectricalSwitch : MonoBehaviour
         shouldInitialize = true;
         initialState = isOn;
     }
+
+    public void SetIsOn(bool isOn) => switchElectrode.SetSwitch(isOn);
 }

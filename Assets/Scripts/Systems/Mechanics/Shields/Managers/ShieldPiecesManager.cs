@@ -145,9 +145,9 @@ public class ShieldPiecesManager : MonoBehaviour
     {
         shieldPiecesCollected.Clear();
 
-        foreach (ShieldPieceSO shieldPieceSO in shieldPiecesCollected)
+        foreach (ShieldPieceSO shieldPieceSO in shieldPiecesSOs)
         {
-            if (!shieldPiecesCollected.Contains(shieldPieceSO)) continue;
+            if (shieldPiecesCollected.Contains(shieldPieceSO)) continue;
             shieldPiecesCollected.Add(shieldPieceSO);
         }
     }
