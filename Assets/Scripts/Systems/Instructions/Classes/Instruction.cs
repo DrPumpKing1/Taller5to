@@ -47,6 +47,7 @@ public abstract class Instruction : MonoBehaviour
 
     protected void CheckShouldShow()
     {
+        if (!CheckCondition()) return;
         if (hasBeenAcomplished) return;
         if (isShowing) return;
 
@@ -60,4 +61,6 @@ public abstract class Instruction : MonoBehaviour
 
         HideInstruction();
     }
+
+    protected abstract bool CheckCondition();
 }

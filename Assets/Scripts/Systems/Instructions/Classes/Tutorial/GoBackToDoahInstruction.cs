@@ -20,4 +20,10 @@ public class GoBackToDoahInstruction : LogAcomplishedInstruction
     {
         CheckShouldShow();
     }
+
+    protected override bool CheckCondition()
+    {
+        if (ProjectableObjectsLearningManager.Instance.ProjectableObjectsLearned.Count > 0) return false;
+        return true;
+    }
 }

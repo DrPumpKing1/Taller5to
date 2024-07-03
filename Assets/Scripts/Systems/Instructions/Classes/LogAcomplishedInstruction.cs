@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class LogAcomplishedInstruction : Instruction
+public abstract class LogAcomplishedInstruction : Instruction
 {
     [Header("Log")]
     [SerializeField] protected string logToAcomplish;
@@ -51,4 +51,6 @@ public class LogAcomplishedInstruction : Instruction
 
         hasBeenAcomplished = true;
     }
+
+    protected override bool CheckCondition() => true;
 }

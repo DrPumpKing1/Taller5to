@@ -16,6 +16,9 @@ public class PressTabToSeeShieldsInstruction : Instruction
         InventoryOpeningManager.OnInventoryOpen -= InventoryOpeningManager_OnInventoryOpen;
     }
 
+    protected override bool CheckCondition() => true;
+
+
     private void FirstShieldPieceCollectedEnd_OnFirstShieldPieceCollectedEnd(object sender, System.EventArgs e)
     {
         CheckShouldShow();
@@ -24,4 +27,5 @@ public class PressTabToSeeShieldsInstruction : Instruction
     {
         hasBeenAcomplished = true;
     }
+
 }
