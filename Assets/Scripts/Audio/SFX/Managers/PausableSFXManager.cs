@@ -74,8 +74,8 @@ public class PausableSFXManager : SFXManager
         ProjectableObjectActivation.OnAnyObjectActivated -= ProjectableObjectActivation_OnAnyObjectActivated;
         ProjectableObjectActivation.OnAnyObjectDeactivated -= ProjectableObjectActivation_OnAnyObjectDeactivated;
 
-        DrainerDevice.OnDrainerStartDraining += DrainerDevice_OnDrainerStartDraining;
-        DrainerDevice.OnDrainerStopDraining += DrainerDevice_OnDrainerStopDraining;
+        DrainerDevice.OnDrainerStartDraining -= DrainerDevice_OnDrainerStartDraining;
+        DrainerDevice.OnDrainerStopDraining -= DrainerDevice_OnDrainerStopDraining;
 
         SignalSender.OnProjectileShot -= SignalSender_OnProjectileShot;
         SignalProjectile.OnProjectileImpact -= SignalProjectile_OnProjectileImpact;
