@@ -37,6 +37,11 @@ public class LogListenerEvents : MonoBehaviour
         FourthVirtueDoorMissingEncounterCollider.OnFourthVirtueDoorMissingEncounter += FourthVirtueDoorMissingEncounterCollider_OnFourthVirtueDooMissingrEncounter;
         FirstSenderProjectionEncounterCollider.OnFirstSenderProjectionEncounter += FirstSenderProjectionEncounterCollider_OnFirstSenderProjectionEncounter;
         MissingLearningPlatformEncounterCollider.OnMissingLearningPlatformEncounter += MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter;
+
+        //LEVEL4
+        BossEncounterCollider.OnBossEncounter += BossEncounterCollider_OnBossEncounter;
+        FourthLearningPlatformEncounterCollider.OnFourthLearningPlatformEncounter += FourthLearningPlatformEncounterCollider_OnFourthLearningPlatformEncounter;
+        AncientRelicEncounterCollider.OnAncientRelicEncounter += AncientRelicEncounterCollider_OnAncientRelicEncounter;
     }
 
     private void OnDisable()
@@ -72,6 +77,11 @@ public class LogListenerEvents : MonoBehaviour
         FourthVirtueDoorMissingEncounterCollider.OnFourthVirtueDoorMissingEncounter -= FourthVirtueDoorMissingEncounterCollider_OnFourthVirtueDooMissingrEncounter;
         FirstSenderProjectionEncounterCollider.OnFirstSenderProjectionEncounter -= FirstSenderProjectionEncounterCollider_OnFirstSenderProjectionEncounter;
         MissingLearningPlatformEncounterCollider.OnMissingLearningPlatformEncounter -= MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter;
+
+        //LEVEL4
+        BossEncounterCollider.OnBossEncounter -= BossEncounterCollider_OnBossEncounter;
+        FourthLearningPlatformEncounterCollider.OnFourthLearningPlatformEncounter -= FourthLearningPlatformEncounterCollider_OnFourthLearningPlatformEncounter;
+        AncientRelicEncounterCollider.OnAncientRelicEncounter -= AncientRelicEncounterCollider_OnAncientRelicEncounter;
     }
 
     //TUTORIAL
@@ -106,4 +116,9 @@ public class LogListenerEvents : MonoBehaviour
     private void FourthVirtueDoorMissingEncounterCollider_OnFourthVirtueDooMissingrEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FourthVirtueDoorMissingEncounter");
     private void FirstSenderProjectionEncounterCollider_OnFirstSenderProjectionEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FirstSenderProjectionEncounter");
     private void MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/MissingLearningPlatformEncounter");
+
+    //BOSS
+    private void BossEncounterCollider_OnBossEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/BossEncounter");
+    private void FourthLearningPlatformEncounterCollider_OnFourthLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FourthLearningPlatformEncounter");
+    private void AncientRelicEncounterCollider_OnAncientRelicEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/AncientRelicEncounter");
 }
