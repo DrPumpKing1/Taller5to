@@ -39,6 +39,7 @@ public class LogListenerEvents : MonoBehaviour
         MissingLearningPlatformEncounterCollider.OnMissingLearningPlatformEncounter += MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter;
 
         //BOSS
+        BossPreviousEncounterCollider.OnBossPreviousEncounter += BossPreviousEncounterCollider_OnBossPreviousEncounter;
         BossEncounterCollider.OnBossEncounter += BossEncounterCollider_OnBossEncounter;
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
         BossStateHandler.OnPlayerDefeated += BossStateHandler_OnPlayerDefeated;
@@ -85,6 +86,7 @@ public class LogListenerEvents : MonoBehaviour
         MissingLearningPlatformEncounterCollider.OnMissingLearningPlatformEncounter -= MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter;
 
         //BOSS
+        BossPreviousEncounterCollider.OnBossPreviousEncounter -= BossPreviousEncounterCollider_OnBossPreviousEncounter;
         BossEncounterCollider.OnBossEncounter -= BossEncounterCollider_OnBossEncounter;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
         BossStateHandler.OnPlayerDefeated -= BossStateHandler_OnPlayerDefeated;
@@ -130,6 +132,7 @@ public class LogListenerEvents : MonoBehaviour
     private void MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/MissingLearningPlatformEncounter");
 
     //BOSS
+    private void BossPreviousEncounterCollider_OnBossPreviousEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/BossPreviousEncounter");
     private void BossEncounterCollider_OnBossEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/BossEncounter");
     private void BossStateHandler_OnPlayerDefeated(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/PlayerDefeated");
     private void BossStateHandler_OnBossDefeated(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/BossDefeated");
