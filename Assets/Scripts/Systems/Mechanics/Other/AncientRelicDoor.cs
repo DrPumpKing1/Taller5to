@@ -15,6 +15,9 @@ public class AncientRelicDoor : MonoBehaviour
 
     private bool previouslyPowered;
 
+    public static event EventHandler OnRelicDoorPowered;
+    public static event EventHandler OnRelicDoorDepowered;
+
     private void Start()
     {
         InitializeVariables();
@@ -56,7 +59,15 @@ public class AncientRelicDoor : MonoBehaviour
 
         return true;
     }
+    private void EnableDoor()
+    {
+        transformToDisable.gameObject.SetActive(true);
+        OnRelicDoorPowered?.Invoke(this, EventArgs.Empty);
+    }
 
-    private void DisableDoor() => transformToDisable.gameObject.SetActive(false);
-    private void EnableDoor() => transformToDisable.gameObject.SetActive(true);
+    private void DisableDoor()
+    {
+        transformToDisable.gameObject.SetActive(false);
+        OnRelicDoorDepowered?.Invoke(this, EventArgs.Empty);
+    }
 }
