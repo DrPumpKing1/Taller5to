@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UnPausableSFXManager : SFXManager
 {
+    public static UnPausableSFXManager Instance { get; private set; }
     private void OnEnable()
     {
         InventoryOpeningManager.OnInventoryOpen += InventoryOpeningManager_OnInventoryOpen;
@@ -20,6 +21,25 @@ public class UnPausableSFXManager : SFXManager
 
         PauseManager.OnGamePaused -= PauseManager_OnGamePaused;
         PauseManager.OnGameResumed -= PauseManager_OnGameResumed;
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        SetSingleton();
+    }
+
+    private void SetSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            //Debug.LogWarning("There is more than one UnPausableSFXManager instance, proceding to destroy duplicate");
+            Destroy(gameObject);
+        }
     }
 
     #region  UI

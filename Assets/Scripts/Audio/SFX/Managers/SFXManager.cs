@@ -21,7 +21,7 @@ public class SFXManager : MonoBehaviour
     [SerializeField] protected bool debug;
 
     protected AudioSource audioSource;
-    protected void Awake()
+    protected virtual void Awake()
     {
         audioSource = GetComponent<AudioSource>();
     }
