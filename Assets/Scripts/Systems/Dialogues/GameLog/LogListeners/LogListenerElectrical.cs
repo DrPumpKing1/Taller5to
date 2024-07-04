@@ -25,7 +25,7 @@ public class LogListenerElectrical : MonoBehaviour
         HiddenSourceReceiver.OnAnyHiddenSourceReceiverPower += HiddenSourceReceiver_OnAnyHiddenSourceReceiverPower;
         HiddenSourceReceiver.OnAnyHiddenSourceReceiverDePower += HiddenSourceReceiver_OnAnyHiddenSourceReceiverDePower;
 
-        AncientRelicDoor.OnRelicDoorDepowered += AncientRelicDoor_OnRelicDoorDisabled;
+        AncientRelicDoor.OnAncientRelicDoorDepowered += AncientRelicDoor_OnAncientRelicDoorDePower;
     }
 
     private void OnDisable()
@@ -49,7 +49,7 @@ public class LogListenerElectrical : MonoBehaviour
         HiddenSourceReceiver.OnAnyHiddenSourceReceiverPower -= HiddenSourceReceiver_OnAnyHiddenSourceReceiverPower;
         HiddenSourceReceiver.OnAnyHiddenSourceReceiverDePower -= HiddenSourceReceiver_OnAnyHiddenSourceReceiverDePower;
 
-        AncientRelicDoor.OnRelicDoorDepowered -= AncientRelicDoor_OnRelicDoorDisabled;
+        AncientRelicDoor.OnAncientRelicDoorDepowered -= AncientRelicDoor_OnAncientRelicDoorDePower;
     }
 
 
@@ -72,7 +72,7 @@ public class LogListenerElectrical : MonoBehaviour
     private void HiddenSourceReceiver_OnAnyHiddenSourceReceiverPower(object sender, HiddenSourceReceiver.OnHiddenSourcePowerEventArgs e) => GameLogManager.Instance.Log($"Electrical/PowerReceiver/{e.id}");
     private void HiddenSourceReceiver_OnAnyHiddenSourceReceiverDePower(object sender, HiddenSourceReceiver.OnHiddenSourcePowerEventArgs e) => GameLogManager.Instance.Log($"Electrical/DePowerReceiver/{e.id}");
 
-    private void AncientRelicDoor_OnRelicDoorDisabled(object sender, System.EventArgs e) => GameLogManager.Instance.Log($"Electrical/DepowerRelicDoor");
+    private void AncientRelicDoor_OnAncientRelicDoorDePower(object sender, System.EventArgs e) => GameLogManager.Instance.Log($"Electrical/DePowerAncientRelicDoor");
 }
 
 

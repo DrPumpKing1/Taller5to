@@ -38,10 +38,11 @@ public class LogListenerEvents : MonoBehaviour
         FirstSenderProjectionEncounterCollider.OnFirstSenderProjectionEncounter += FirstSenderProjectionEncounterCollider_OnFirstSenderProjectionEncounter;
         MissingLearningPlatformEncounterCollider.OnMissingLearningPlatformEncounter += MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter;
 
-        //LEVEL4
+        //BOSS
         BossEncounterCollider.OnBossEncounter += BossEncounterCollider_OnBossEncounter;
         FourthLearningPlatformEncounterCollider.OnFourthLearningPlatformEncounter += FourthLearningPlatformEncounterCollider_OnFourthLearningPlatformEncounter;
         AncientRelicEncounterCollider.OnAncientRelicEncounter += AncientRelicEncounterCollider_OnAncientRelicEncounter;
+        AncientRelic.OnAncientRelicCollected += AncientRelic_OnAncientRelicCollected;
     }
 
     private void OnDisable()
@@ -78,10 +79,11 @@ public class LogListenerEvents : MonoBehaviour
         FirstSenderProjectionEncounterCollider.OnFirstSenderProjectionEncounter -= FirstSenderProjectionEncounterCollider_OnFirstSenderProjectionEncounter;
         MissingLearningPlatformEncounterCollider.OnMissingLearningPlatformEncounter -= MissingLearningPlatformEncounterCollider_OnMissingLearningPlatformEncounter;
 
-        //LEVEL4
+        //BOSS
         BossEncounterCollider.OnBossEncounter -= BossEncounterCollider_OnBossEncounter;
         FourthLearningPlatformEncounterCollider.OnFourthLearningPlatformEncounter -= FourthLearningPlatformEncounterCollider_OnFourthLearningPlatformEncounter;
         AncientRelicEncounterCollider.OnAncientRelicEncounter -= AncientRelicEncounterCollider_OnAncientRelicEncounter;
+        AncientRelic.OnAncientRelicCollected -= AncientRelic_OnAncientRelicCollected;
     }
 
     //TUTORIAL
@@ -121,4 +123,5 @@ public class LogListenerEvents : MonoBehaviour
     private void BossEncounterCollider_OnBossEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/BossEncounter");
     private void FourthLearningPlatformEncounterCollider_OnFourthLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FourthLearningPlatformEncounter");
     private void AncientRelicEncounterCollider_OnAncientRelicEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/AncientRelicEncounter");
+    private void AncientRelic_OnAncientRelicCollected(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/AncientRelicCollected");
 }

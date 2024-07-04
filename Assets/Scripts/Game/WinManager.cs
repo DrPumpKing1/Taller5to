@@ -13,12 +13,12 @@ public class WinManager : MonoBehaviour
 
     private void OnEnable()
     {
-        AncientRelic.OnAncientRelicCollected += AncientRelic_OnAncientRelicCollected;
+        AncientRelicCollectedEnd.OnAncientRelicCollectedEnd += AncientRelicCollectedEnd_OnAncientRelicCollectedEnc;
     }
 
     private void OnDisable()
     {
-        AncientRelic.OnAncientRelicCollected -= AncientRelic_OnAncientRelicCollected;
+        AncientRelicCollectedEnd.OnAncientRelicCollectedEnd -= AncientRelicCollectedEnd_OnAncientRelicCollectedEnc;
     }
 
     private void Win()
@@ -43,7 +43,7 @@ public class WinManager : MonoBehaviour
 
         DeleteAllData();
     }
-    private void AncientRelic_OnAncientRelicCollected(object sender, System.EventArgs e)
+    private void AncientRelicCollectedEnd_OnAncientRelicCollectedEnc(object sender, System.EventArgs e)
     {
         Win();
 
