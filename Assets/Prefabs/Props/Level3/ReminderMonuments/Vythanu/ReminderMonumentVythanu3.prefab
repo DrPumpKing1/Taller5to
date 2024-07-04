@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6099852254315363250}
   - component: {fileID: 7950081433115723987}
   m_Layer: 0
-  m_Name: ReminderMonument
+  m_Name: ReminderMonumentVythanu3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 397aa649ce50dab4b87c34426703c0a0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 23d1eb3ac6e777f4db56ba6ab3b5aaf3, type: 2}
     - target: {fileID: 919132149155446097, guid: 397aa649ce50dab4b87c34426703c0a0, type: 3}
       propertyPath: m_Name
       value: ReminderMonument
