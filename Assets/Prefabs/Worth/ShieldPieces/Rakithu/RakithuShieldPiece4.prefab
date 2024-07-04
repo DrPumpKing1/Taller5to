@@ -100,10 +100,18 @@ PrefabInstance:
       propertyPath: shieldPieceSO
       value: 
       objectReference: {fileID: 11400000, guid: 71a2f51f9718c7e4cad8258d344779d5, type: 2}
+    - target: {fileID: 5259387525080063882, guid: 347f58362b888284b93c35830067cdfc, type: 3}
+      propertyPath: m_Color.b
+      value: 0.050980393
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259387525080063882, guid: 347f58362b888284b93c35830067cdfc, type: 3}
+      propertyPath: m_Color.g
+      value: 0.73333335
+      objectReference: {fileID: 0}
     - target: {fileID: 5773293257616416141, guid: 347f58362b888284b93c35830067cdfc, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: abccc0d8e5334564caf94afe2337029e, type: 2}
+      objectReference: {fileID: 2100000, guid: e6ad254dd332df04fb42e53db9a12314, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

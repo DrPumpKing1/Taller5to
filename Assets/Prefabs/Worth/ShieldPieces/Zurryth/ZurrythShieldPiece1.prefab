@@ -108,10 +108,18 @@ PrefabInstance:
       propertyPath: shieldPieceSO
       value: 
       objectReference: {fileID: 11400000, guid: c52449f1981f8844cbf5a2f75551a544, type: 2}
+    - target: {fileID: 5259387525080063882, guid: 347f58362b888284b93c35830067cdfc, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259387525080063882, guid: 347f58362b888284b93c35830067cdfc, type: 3}
+      propertyPath: m_Color.g
+      value: 0.37254903
+      objectReference: {fileID: 0}
     - target: {fileID: 5773293257616416141, guid: 347f58362b888284b93c35830067cdfc, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 281f3514f6a5634448e44145e2667693, type: 2}
+      objectReference: {fileID: 2100000, guid: 39f787fa05f3fa04fa3ea2bd98e33879, type: 2}
     - target: {fileID: 7258372821036167672, guid: 347f58362b888284b93c35830067cdfc, type: 3}
       propertyPath: m_Layer
       value: 17
