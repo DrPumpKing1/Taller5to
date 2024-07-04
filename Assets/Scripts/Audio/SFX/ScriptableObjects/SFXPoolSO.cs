@@ -109,4 +109,8 @@ public class SFXPoolSO : ScriptableObject
 
     public AudioClip[] inventoryOpen;
     public AudioClip[] inventoryClosed;
+
+    public AudioClip[] buttonclick1;
+    public AudioClip[] buttonclick2;
+    public AudioClip[] buttonclick3;
 }

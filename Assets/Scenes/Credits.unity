@@ -372,7 +372,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -2450}
+  m_AnchoredPosition: {x: 0, y: -2400}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &480265385
@@ -903,7 +903,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1500}
+  m_AnchoredPosition: {x: 0, y: -1550}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1323500073
@@ -927,7 +927,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "LEAD ARTIST\nBehig\xEDn Mendoza\n\nARTISTS\nSebasti\xE1n Beltr\xE1n\nBehig\xEDn
-    Mendoza\nAlexandra Noriega\nKotaro Yanagui"
+    Mendoza\nAlexandra Noriega\nKotaro Yanagui\nGian Huam\xE1n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1222,7 +1222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creditsTransform: {fileID: 342627475}
-  scrollSpeed: 35
+  scrollSpeed: 75
   anchoredPositionLimit: 2800
   sceneToTransition: MainMenu
 --- !u!1 &1525731723

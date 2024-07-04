@@ -29,6 +29,7 @@ public class PausableSFXManager : SFXManager
         ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
 
         ProjectableObjectsLearningManager.OnProjectableObjectLearned += ProjectableObjectsLearningManager_OnProjectableObjectLearned;
+
         ProjectionPlatformProjection.OnAnyObjectProjectionSuccess += ProjectionPlatformProjection_OnAnyObjectProjectionSuccess;
         ProjectionPlatformProjection.OnAnyObjectProjectionFailedInsuficientGems += ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems;
         ProjectableObjectDematerialization.OnAnyObjectDematerialized += ProjectableObjectDematerialization_OnAnyObjectDematerialized;
@@ -44,11 +45,12 @@ public class PausableSFXManager : SFXManager
         SignalSender.OnProjectileShot += SignalSender_OnProjectileShot;
         SignalProjectile.OnProjectileImpact += SignalProjectile_OnProjectileImpact;
     }
-
-
-
     private void OnDisable()
     {
+        PlayerLand.OnPlayerNormalLand -= PlayerLand_OnPlayerNormalLand;
+        PlayerLand.OnPlayerHardLand -= PlayerLand_OnPlayerHardLand;
+        PetPlayerAttachment.OnVyrxAttachToPlayer -= PetPlayerAttachment_OnVyrxAttachToPlayer;
+
         ElectricalSwitchToggle.OnSwitchToggle -= ElectricalSwitchToggle_OnSwitchToggle;
 
         ElectricalDoor.OnDoorPower -= ElectricalDoor_OnDoorPowered;
@@ -59,6 +61,9 @@ public class PausableSFXManager : SFXManager
         ElectricalExtensibleBridge.OnExtensibleBridgeDePower -= ElectricalExtensibleBridge_OnExtensibleBridgeDePower;
         HiddenSourceReceiver.OnAnyHiddenSourceReceiverPower -= HiddenSourceReceiver_OnAnyHiddenSourceReceiverPower;
         HiddenSourceReceiver.OnAnyHiddenSourceReceiverDePower -= HiddenSourceReceiver_OnAnyHiddenSourceReceiverDePower;
+
+        InscriptionPowering.OnInscriptionPower -= InscriptionPowering_OnInscriptionPower;
+        InscriptionPowering.OnInscriptionDePower -= InscriptionPowering_OnInscriptionDePower;
 
         ShieldPieceCollection.OnAnyShieldPieceCollected -= ShieldPieceCollection_OnAnyShieldPieceCollected;
         ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
@@ -79,9 +84,7 @@ public class PausableSFXManager : SFXManager
 
         SignalSender.OnProjectileShot -= SignalSender_OnProjectileShot;
         SignalProjectile.OnProjectileImpact -= SignalProjectile_OnProjectileImpact;
-    }
-
-   
+    } 
 
     #region Player
     private void PlayerLand_OnPlayerNormalLand(object sender, System.EventArgs e)

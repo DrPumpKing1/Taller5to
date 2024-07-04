@@ -15,15 +15,14 @@ public class UnPausableSFXManager : SFXManager
 
     private void OnDisable()
     {
-        InventoryOpeningManager.OnInventoryOpen += InventoryOpeningManager_OnInventoryOpen;
-        InventoryOpeningManager.OnInventoryClose += InventoryOpeningManager_OnInventoryClose;
+        InventoryOpeningManager.OnInventoryOpen -= InventoryOpeningManager_OnInventoryOpen;
+        InventoryOpeningManager.OnInventoryClose -= InventoryOpeningManager_OnInventoryClose;
 
         PauseManager.OnGamePaused -= PauseManager_OnGamePaused;
         PauseManager.OnGameResumed -= PauseManager_OnGameResumed;
     }
 
     #region  UI
-
     private void InventoryOpeningManager_OnInventoryOpen(object sender, System.EventArgs e)
     {
         PlaySound(SFXPoolSO.inventoryOpen);
@@ -44,4 +43,20 @@ public class UnPausableSFXManager : SFXManager
     }
     #endregion
 
+    #region Buttons
+    public void PlaySFXButtonClick1()
+    {
+        PlaySound(SFXPoolSO.buttonclick1);
+    }
+
+    public void PlaySFXButtonClick2()
+    {
+        PlaySound(SFXPoolSO.buttonclick2);
+    }
+
+    public void PlaySFXButtonClick3()
+    {
+        PlaySound(SFXPoolSO.buttonclick3);
+    }
+    #endregion
 }

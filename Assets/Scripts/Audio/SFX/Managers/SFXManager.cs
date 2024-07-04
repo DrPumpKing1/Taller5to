@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-
-
 public class SFXManager : MonoBehaviour
 {
     [Header("Components")]
@@ -23,8 +21,7 @@ public class SFXManager : MonoBehaviour
     [SerializeField] protected bool debug;
 
     protected AudioSource audioSource;
-
-    private void Awake()
+    protected void Awake()
     {
         audioSource = GetComponent<AudioSource>();
     }
