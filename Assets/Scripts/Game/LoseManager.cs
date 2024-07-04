@@ -14,12 +14,12 @@ public class LoseManager : MonoBehaviour
 
     private void OnEnable()
     {
-        BossStateHandler.OnPlayerDefeated += BossStateHandler_OnPlayerDefeated;
+        PlayerDefeatedEnd.OnPlayerDefeatedEnd += PlayerDefeatedEnd_OnPlayerDefeatedEnd;
     }
 
     private void OnDisable()
     {
-        BossStateHandler.OnPlayerDefeated -= BossStateHandler_OnPlayerDefeated;
+        PlayerDefeatedEnd.OnPlayerDefeatedEnd -= PlayerDefeatedEnd_OnPlayerDefeatedEnd;
     }
 
     private void LoseReload()
@@ -34,7 +34,7 @@ public class LoseManager : MonoBehaviour
         ScenesManager.Instance.FadeReloadCurrentScene();
     }
 
-    private void BossStateHandler_OnPlayerDefeated(object sender, System.EventArgs e)
+    private void PlayerDefeatedEnd_OnPlayerDefeatedEnd(object sender, System.EventArgs e)
     {
         LoseReload();
 

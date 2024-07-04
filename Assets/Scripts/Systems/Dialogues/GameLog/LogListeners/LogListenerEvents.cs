@@ -40,6 +40,11 @@ public class LogListenerEvents : MonoBehaviour
 
         //BOSS
         BossEncounterCollider.OnBossEncounter += BossEncounterCollider_OnBossEncounter;
+        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
+        BossStateHandler.OnPlayerDefeated += BossStateHandler_OnPlayerDefeated;
+
+        BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
+
         FourthLearningPlatformEncounterCollider.OnFourthLearningPlatformEncounter += FourthLearningPlatformEncounterCollider_OnFourthLearningPlatformEncounter;
         AncientRelicEncounterCollider.OnAncientRelicEncounter += AncientRelicEncounterCollider_OnAncientRelicEncounter;
         AncientRelic.OnAncientRelicCollected += AncientRelic_OnAncientRelicCollected;
@@ -81,6 +86,11 @@ public class LogListenerEvents : MonoBehaviour
 
         //BOSS
         BossEncounterCollider.OnBossEncounter -= BossEncounterCollider_OnBossEncounter;
+        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
+        BossStateHandler.OnPlayerDefeated -= BossStateHandler_OnPlayerDefeated;
+
+        BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
+
         FourthLearningPlatformEncounterCollider.OnFourthLearningPlatformEncounter -= FourthLearningPlatformEncounterCollider_OnFourthLearningPlatformEncounter;
         AncientRelicEncounterCollider.OnAncientRelicEncounter -= AncientRelicEncounterCollider_OnAncientRelicEncounter;
         AncientRelic.OnAncientRelicCollected -= AncientRelic_OnAncientRelicCollected;
@@ -121,6 +131,11 @@ public class LogListenerEvents : MonoBehaviour
 
     //BOSS
     private void BossEncounterCollider_OnBossEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/BossEncounter");
+    private void BossStateHandler_OnPlayerDefeated(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/PlayerDefeated");
+    private void BossStateHandler_OnBossDefeated(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/BossDefeated");
+
+    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e) => GameLogManager.Instance.Log($"Narrative/BossPhaseChange/{e.phaseNumber}");
+
     private void FourthLearningPlatformEncounterCollider_OnFourthLearningPlatformEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/FourthLearningPlatformEncounter");
     private void AncientRelicEncounterCollider_OnAncientRelicEncounter(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/AncientRelicEncounter");
     private void AncientRelic_OnAncientRelicCollected(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Narrative/AncientRelicCollected");

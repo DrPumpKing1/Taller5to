@@ -632,7 +632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableSinceFirstPhase: 1
   phaseNumberToEnable: 2
-  timeNotTargeting: 10
+  timeNotTargeting: 12
   timeTargeting: 10
   stopTargetingWhenObjectDematerialized: 1
   priorizeSenders: 1
@@ -662,7 +662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableSinceFirstPhase: 0
   phaseNumberToEnable: 2
-  timeNotSunning: 7.5
+  timeNotSunning: 10
   timeStunning: 5
   stuneableSources: []
   bossSourceStunState: 0
