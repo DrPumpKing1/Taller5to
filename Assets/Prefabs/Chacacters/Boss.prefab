@@ -584,7 +584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   timeActivating: 5
-  timeChangingPhase: 5
+  timeChangingPhase: 6
   debug: 1
   bossDefeated: 0
   playerDefeated: 0
@@ -637,7 +637,7 @@ MonoBehaviour:
   enableSinceFirstPhase: 1
   phaseNumberToEnable: 2
   timeNotTargeting: 12
-  timeTargeting: 10
+  timeTargeting: 15
   stopTargetingWhenObjectDematerialized: 1
   priorizeSenders: 1
   projectionPlatforms:
