@@ -211,7 +211,7 @@ public class GameplayMusicManager : MonoBehaviour
     }
     private AudioClip CheckVyhtanuMusicToPlay()
     {
-        int shieldNumber = ShieldPiecesManager.Instance.GetNumberOfPiecesByDialect(Dialect.Xotark);
+        int shieldNumber = ShieldPiecesManager.Instance.GetNumberOfPiecesByDialect(Dialect.Vythanu);
 
         switch (shieldNumber)
         {
