@@ -38,15 +38,17 @@ public class BossUI : MonoBehaviour
         BossStateHandler.OnBossPhaseChangeEnd += BossStateHandler_OnBossPhaseChangeEnd;
 
         BossKaerumOvercharge.OnCurrentChargeInPhaseChanged += BossKaerumOvercharge_OnCurrentHitsInPhaseChanged;
-        BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart; ;
+        BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
     }
 
     private void OnDisable()
     {
         BossStateHandler.OnBossActiveStart -= BossStateHandler_OnBossActiveStart;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
+        BossStateHandler.OnBossPhaseChangeEnd -= BossStateHandler_OnBossPhaseChangeEnd;
 
         BossKaerumOvercharge.OnCurrentChargeInPhaseChanged -= BossKaerumOvercharge_OnCurrentHitsInPhaseChanged;
+        BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
     }
 
     private void Start()
