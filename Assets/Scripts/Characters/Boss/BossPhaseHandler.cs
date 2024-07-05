@@ -45,6 +45,8 @@ public class BossPhaseHandler : MonoBehaviour
         BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
         BossStateHandler.OnBossPhaseChangeEnd -= BossStateHandler_OnBossPhaseChangeEnd;
 
+        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
+
         BossKaerumOvercharge.OnBossHit -= BossKaerumOvercharge_OnBossHit;
         BossKaerumOvercharge.OnBossOvercharge -= BossKaerumOvercharge_OnBossOvercharge;
     }

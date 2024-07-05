@@ -45,6 +45,7 @@ public class BossShield : MonoBehaviour
     private void OnDisable()
     {
         BossStateHandler.OnBossActiveStart -= BossStateHandler_OnBossActiveStart;
+        BossStateHandler.OnBossActiveEnd -= BossStateHandler_OnBossActiveEnd;
 
         BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
         BossStateHandler.OnBossPhaseChangeEnd -= BossStateHandler_OnBossPhaseChangeEnd;
