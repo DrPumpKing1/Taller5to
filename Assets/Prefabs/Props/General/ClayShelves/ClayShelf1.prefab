@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7541578189789555706, guid: f69d3bc16852ebd408c572da98c5438f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7d9e09f301aefa640938d182ed23f9af, type: 2}
     - target: {fileID: 919132149155446097, guid: f69d3bc16852ebd408c572da98c5438f, type: 3}
       propertyPath: m_Name
       value: ClayShelf1

@@ -106,6 +106,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LuminousStone
       objectReference: {fileID: 0}
+    - target: {fileID: 1190666062908655768, guid: a89b25b147de8f143956994688eba81e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 766c1d631d55fb24f9ede867d3834a1e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

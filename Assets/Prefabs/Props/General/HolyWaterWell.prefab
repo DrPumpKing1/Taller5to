@@ -138,6 +138,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HolyWaterWell
       objectReference: {fileID: 0}
+    - target: {fileID: 3414027387227848381, guid: d0afc43c0e67d5b4388919dc1938deac, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cdf7511fd95946648a763e25ebb42c97, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
