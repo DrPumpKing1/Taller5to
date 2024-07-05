@@ -31,7 +31,7 @@ public abstract class VolumeManager : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey(playerPrefsKey))
         {
-            PlayerPrefs.SetFloat(playerPrefsKey, 1);
+            PlayerPrefs.SetFloat(playerPrefsKey, initialVolume);
         }
 
         initialVolume = PlayerPrefs.GetFloat(playerPrefsKey);
