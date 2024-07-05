@@ -17,6 +17,7 @@ public class MusicManager : MonoBehaviour
 
     private const string MENU_SCENE_NAME = "MainMenu";
     private const string GAMEPLAY_SCENE_NAME = "Gameplay";
+    private const string OPTIONS_SCENE_NAME = "Options";
     private const string CREDITS_SCENE_NAME = "Credits";
 
     private void OnEnable()
@@ -79,6 +80,10 @@ public class MusicManager : MonoBehaviour
             case MENU_SCENE_NAME:
                 PlayMusic(musicPoolSO.menuMusic);
                 Debug.Log("MainMenuMusicPlay");
+                break;
+            case OPTIONS_SCENE_NAME:
+                PlayMusic(musicPoolSO.optionsMusic);
+                Debug.Log("OptionsMusicPlay");
                 break;
             case CREDITS_SCENE_NAME:
                 PlayMusic(musicPoolSO.creditsMusic);
