@@ -73,6 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   projectionPoint: {fileID: 539050184912737839}
+  currentProjectedObjectSO: {fileID: 0}
   currentProjectedObject: {fileID: 0}
   startingDirection: {x: 1, y: 0}
   objectAvobeLayers:
@@ -440,7 +441,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 69529db4569931f449265a58791585b2, type: 2}
+  - {fileID: 2100000, guid: a4a673f717e546843baa1913087db392, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
