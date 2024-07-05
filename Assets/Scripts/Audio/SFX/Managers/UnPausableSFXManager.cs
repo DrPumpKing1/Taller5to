@@ -66,17 +66,17 @@ public class UnPausableSFXManager : SFXManager
     #region Buttons
     public void PlaySFXButtonClick1()
     {
-        PlaySound(SFXPoolSO.buttonclick1);
+        PlaySound(SFXPoolSO.buttonClick1);
     }
 
     public void PlaySFXButtonClick2()
     {
-        PlaySound(SFXPoolSO.buttonclick2);
+        PlaySound(SFXPoolSO.buttonClick2);
     }
 
     public void PlaySFXButtonClick3()
     {
-        PlaySound(SFXPoolSO.buttonclick3);
+        PlaySound(SFXPoolSO.buttonClick3);
     }
     #endregion
 }

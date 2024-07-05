@@ -62,7 +62,8 @@ MonoBehaviour:
   projectileImpact: []
   shieldCollected:
   - {fileID: 8300000, guid: 181759695c16f4a4a81fbc96a4251d4b, type: 3}
-  valueDoorOpened: []
+  valueDoorOpened:
+  - {fileID: 8300000, guid: 59f88ab3b37075f4f977d9eb8ee5e962, type: 3}
   zurrythShieldCollected: []
   rakithuShieldCollected: []
   xotarkShieldCollected: []
@@ -100,6 +101,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c33b5254b0546ad43af00a43b3c1b1ed, type: 3}
   inventoryClosed:
   - {fileID: 8300000, guid: 89f986a374b13e748b805631e3bfaafe, type: 3}
-  buttonclick1: []
-  buttonclick2: []
-  buttonclick3: []
+  buttonClick1:
+  - {fileID: 8300000, guid: f1837926566daab4d9865215be6a1dec, type: 3}
+  buttonClick2: []
+  buttonClick3: []
