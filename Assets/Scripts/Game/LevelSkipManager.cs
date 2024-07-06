@@ -101,8 +101,8 @@ public class LevelSkipManager : MonoBehaviour
         ProjectableObjectsLearningManager.Instance.ReplaceProjectableObjectsList(levelSettings.projectableObjectsSOs);
         ShieldPiecesManager.Instance.ReplaceShieldPiecesCollectedList(levelSettings.shieldPiecesSOs);
 
-        SetSwitchesToggled(levelSettings.switchesToggledIDs);
-        SetLearningPlatformsUsed(levelSettings.learningPlatformsUsedIDs);
+        ReplaceSwitchesToggled(levelSettings.switchesToggledIDs);
+        ReplaceLearningPlatformsUsed(levelSettings.learningPlatformsUsedIDs);
 
         ProjectionGemsManager.Instance.SetTotalProjectionGems(levelSettings.projectionGems);
         InventoryOpeningManager.Instance.SetCanOpenInventory(levelSettings.canOpenInventory);
@@ -123,9 +123,14 @@ public class LevelSkipManager : MonoBehaviour
         ScenesManager.Instance.FadeReloadCurrentScene();
     }
 
-    private void SetLearningPlatformsUsed(List<int> learningPlatformsUsedIDs)
+    private void ReplaceLearningPlatformsUsed(List<int> learningPlatformsUsedIDs)
     {
         LearningPlatform[] learningPlatforms = FindObjectsOfType<LearningPlatform>();
+
+        foreach (LearningPlatform learningPlatform in learningPlatforms)
+        {
+            learningPlatform.SetIsLearned(false);
+        }
 
         foreach (LearningPlatform learningPlatform in learningPlatforms)
         {
@@ -139,9 +144,14 @@ public class LevelSkipManager : MonoBehaviour
         }
     }
 
-    private void SetSwitchesToggled(List<int> switchesToggledIDs)
+    private void ReplaceSwitchesToggled(List<int> switchesToggledIDs)
     {
         ElectricalSwitch[] electricalSwitches = FindObjectsOfType<ElectricalSwitch>();
+
+        foreach (ElectricalSwitch electricalSwitch in electricalSwitches)
+        {
+            electricalSwitch.SetIsOn(false);
+        }
 
         foreach (ElectricalSwitch electricalSwitch in electricalSwitches)
         {
