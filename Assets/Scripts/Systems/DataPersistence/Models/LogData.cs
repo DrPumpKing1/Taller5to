@@ -10,7 +10,7 @@ public class LogData
 
     public LogData()
     {
-        uniqueDialoguesTriggered = new SerializableDictionary<int, bool>(); //String -> id; bool -> isTriggered
-        uniqueMonologuesTriggered = new SerializableDictionary<int, bool>(); //String -> id; bool -> isTriggered
+        uniqueDialoguesTriggered = new SerializableDictionary<int, bool>(); //String -> indexInList; bool -> isTriggered
+        uniqueMonologuesTriggered = new SerializableDictionary<int, bool>(); //String -> indexInList; bool -> isTriggered
     }
 }

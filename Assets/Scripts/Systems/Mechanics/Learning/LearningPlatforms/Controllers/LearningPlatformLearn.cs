@@ -7,7 +7,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
 {
     [Header("Components")]
     [SerializeField] private LearningPlatform learningPlatform;
-    [SerializeField] private Transform rotatingObject;
+    [SerializeField] private Transform rotatingGem;
 
     [Header("Interactable Settings")]
     [SerializeField, Range(1f, 100f)] private float horizontalInteractionRange;
@@ -22,13 +22,6 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
-
-    [Header("Proximity Learn")]
-    [SerializeField] private bool enableProximityLearn;
-    [SerializeField] private float proximityRadius;
-
-    private GameObject player;
-    private const string PLAYER_TAG = "Player";
 
     #region IHoldInteractableProperties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -68,52 +61,22 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
 
     private void Start()
     {
-        InitializeVariables();
         CheckIsLearned();
-    }
-
-    private void Update()
-    {
-        CheckProximityLearn();
-    }
-
-    private void InitializeVariables()
-    {
-        player = GameObject.FindGameObjectWithTag(PLAYER_TAG);
     }
 
     private void CheckIsLearned()
     {
-        if (learningPlatform.IsLearned)
+        if (learningPlatform.ObjectHasBeenLearned())
         {
-            canBeSelected = false;
-            isInteractable = false;
-            hasAlreadyBeenInteracted = true;
-
-            DisableRotatingObject();
+            DisableInteractability();
+            DisableRotatingGem();
         }
     }
 
-    private void CheckProximityLearn()
-    {
-        if (!enableProximityLearn) return;
-        if (learningPlatform.IsLearned) return;
-        if (!(Vector3.Distance(transform.position, player.transform.position) <= proximityRadius)) return;
-
-        LearnObject();
-    }
-
     #region IHoldInteractable Methods
-    public void Select()
-    {
-        OnObjectSelected?.Invoke(this, EventArgs.Empty);
-        //Debug.Log("Learning Platform Selected");
-    }
-    public void Deselect()
-    {
-        OnObjectDeselected?.Invoke(this, EventArgs.Empty);
-        //Debug.Log("Learning Platform Deselected");
-    }
+    public void Select() => OnObjectSelected?.Invoke(this, EventArgs.Empty);
+    public void Deselect() => OnObjectDeselected?.Invoke(this, EventArgs.Empty);
+
     public void TryInteract()
     {
         if (!isInteractable)
@@ -143,11 +106,13 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
         Debug.Log("Cant Interact with Learning Platform");
         OnObjectFailInteracted?.Invoke(this, EventArgs.Empty);
     }
+
     public void AlreadyInteracted()
     {
         Debug.Log("Learning Platform has Already Been Interacted");
         OnObjectHasAlreadyBeenInteracted?.Invoke(this, EventArgs.Empty);
     }
+
     public bool CheckSuccess()
     {
         if (!isInteractable)
@@ -171,6 +136,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
         OnStartLearning?.Invoke(this, EventArgs.Empty);
     }
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
+
     public void HoldInteractionEnd()
     {
         OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
@@ -180,21 +146,25 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     public Transform GetTransform() => transform;
     #endregion
 
-    private void DisableRotatingObject() => rotatingObject.gameObject.SetActive(false); 
+    private void DisableRotatingGem() => rotatingGem.gameObject.SetActive(false); 
 
     private void LearnObject()
+    {
+        DisableInteractability();
+        DisableRotatingGem();
+
+        AddObjectToLearnedList();
+        AddProjectionGems();
+
+        OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { projectableOjectSO = ProjectableObjectToLearn });
+        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void DisableInteractability()
     {
         canBeSelected = false;
         isInteractable = false;
         hasAlreadyBeenInteracted = true;
-
-        DisableRotatingObject();
-        AddObjectToLearnedList();
-        AddProjectionGems();
-
-        learningPlatform.SetIsLearned(true);
-        OnObjectLearned?.Invoke(this, new OnObjectLearnedEventArgs { projectableOjectSO = ProjectableObjectToLearn });
-        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 
     private void AddObjectToLearnedList() => ProjectableObjectsLearningManager.Instance.LearnProjectableObject(ProjectableObjectToLearn, learningPlatform);

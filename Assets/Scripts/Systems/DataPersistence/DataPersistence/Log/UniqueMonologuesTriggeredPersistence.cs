@@ -18,14 +18,14 @@ public class UniqueMonologuesTriggeredPersistence : MonoBehaviour, IDataPersiste
     {
         UniqueMonologueTriggerHandler uniqueMonologueTriggerHandler = FindObjectOfType<UniqueMonologueTriggerHandler>();
 
-        foreach (UniqueMonologueTriggerHandler.UniqueMonologueEvent uniqueMonologueEvent in uniqueMonologueTriggerHandler.UniqueMonologueEvents)
+        for (int i = 0; i < uniqueMonologueTriggerHandler.UniqueMonologueEvents.Count; i++)
         {
-            if (data.uniqueMonologuesTriggered.ContainsKey(uniqueMonologueEvent.id)) data.uniqueMonologuesTriggered.Remove(uniqueMonologueEvent.id);
+            if (data.uniqueMonologuesTriggered.ContainsKey(i)) data.uniqueMonologuesTriggered.Remove(i);
         }
 
-        foreach (UniqueMonologueTriggerHandler.UniqueMonologueEvent uniqueMonologueEvent in uniqueMonologueTriggerHandler.UniqueMonologueEvents)
+        for (int i = 0; i < uniqueMonologueTriggerHandler.UniqueMonologueEvents.Count; i++)
         {
-            data.uniqueMonologuesTriggered.Add(uniqueMonologueEvent.id, uniqueMonologueEvent.triggered);
+            data.uniqueMonologuesTriggered.Add(i, uniqueMonologueTriggerHandler.UniqueMonologueEvents[i].triggered);
         }
     }
 }

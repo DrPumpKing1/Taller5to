@@ -18,14 +18,14 @@ public class UniqueDialoguesTriggeredPersistence : MonoBehaviour, IDataPersisten
     {
         UniqueDialogueTriggerHandler uniqueDialogueTriggerHandler = FindObjectOfType<UniqueDialogueTriggerHandler>();
 
-        foreach (UniqueDialogueTriggerHandler.UniqueDialogueEvent uniqueDialogueEvent in uniqueDialogueTriggerHandler.UniqueDialogueEvents)
+        for(int i=0; i< uniqueDialogueTriggerHandler.UniqueDialogueEvents.Count; i++)
         {
-            if (data.uniqueDialoguesTriggered.ContainsKey(uniqueDialogueEvent.id)) data.uniqueDialoguesTriggered.Remove(uniqueDialogueEvent.id);
+            if (data.uniqueDialoguesTriggered.ContainsKey(i)) data.uniqueDialoguesTriggered.Remove(i);
         }
 
-        foreach (UniqueDialogueTriggerHandler.UniqueDialogueEvent uniqueDialogueEvent in uniqueDialogueTriggerHandler.UniqueDialogueEvents)
+        for (int i = 0; i < uniqueDialogueTriggerHandler.UniqueDialogueEvents.Count; i++)
         {
-            data.uniqueDialoguesTriggered.Add(uniqueDialogueEvent.id, uniqueDialogueEvent.triggered);
+            data.uniqueDialoguesTriggered.Add(i, uniqueDialogueTriggerHandler.UniqueDialogueEvents[i].triggered);
         }
     }
 }

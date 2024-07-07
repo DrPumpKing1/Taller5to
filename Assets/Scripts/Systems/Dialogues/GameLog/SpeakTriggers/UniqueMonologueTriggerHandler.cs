@@ -11,7 +11,6 @@ public class UniqueMonologueTriggerHandler : MonoBehaviour
     [Serializable]
     public class UniqueMonologueEvent
     {
-        public int id;
         public MonologueSO monologue;
         public MonologueSO hint;
         public bool triggered;
@@ -138,41 +137,47 @@ public class UniqueMonologueTriggerHandler : MonoBehaviour
         waintingHint = true;
     }
 
-    public void SetUniqueMonologueTriggered(int id, bool triggered)
+    public void SetUniqueMonologueTriggered(int indexInList, bool triggered)
     {
-        foreach (UniqueMonologueEvent uniqueMonlologueEvent in uniqueMonologueEvents)
+        for (int i = 0; i < uniqueMonologueEvents.Count; i++)
         {
-            if (id == uniqueMonlologueEvent.id)
-            {
-                uniqueMonlologueEvent.triggered = triggered;
-                return;
-            }
+            if (indexInList == i) uniqueMonologueEvents[i].triggered = triggered;
         }
     }
 
-    private UniqueMonologueEvent GetUniqueMonologueEventByID(int id)
+    private UniqueMonologueEvent GetUniqueMonologueEventByIndex(int indexInList)
     {
-        foreach (UniqueMonologueEvent uniqueMonologueEvent in uniqueMonologueEvents)
+        for (int i = 0; i < uniqueMonologueEvents.Count; i++)
         {
-            if (id == uniqueMonologueEvent.id) return uniqueMonologueEvent;
+            if (indexInList == i) return uniqueMonologueEvents[i];
         }
 
         return null;
     }
 
-    public void SetUniqueMonologuesTriggered(List<int> monoloquesIDs)
+    private UniqueMonologueEvent GetUniqueMonologueEventByMonologueSO(MonologueSO monologueSO)
+    {
+        foreach (UniqueMonologueEvent uniqueMonologueEvent in uniqueMonologueEvents)
+        {
+            if (uniqueMonologueEvent.monologue == monologueSO) return uniqueMonologueEvent;
+        }
+
+        return null;
+    }
+
+    public void ReplaceUniqueMonologuesTriggered(List<MonologueSO> monologueSOs, bool triggered)
     {
         foreach (UniqueMonologueEvent uniqueMonologueEvent in uniqueMonologueEvents)
         {
             uniqueMonologueEvent.triggered = false;
         }
 
-        foreach (int monologueID in monoloquesIDs)
+        foreach (MonologueSO monologueSO in monologueSOs)
         {
-            UniqueMonologueEvent uniqueMonologueTrigger = GetUniqueMonologueEventByID(monologueID);
+            UniqueMonologueEvent uniqueMonologueTrigger = GetUniqueMonologueEventByMonologueSO(monologueSO);
             if (uniqueMonologueTrigger == null) continue;
 
-            uniqueMonologueTrigger.triggered = true;
+            uniqueMonologueTrigger.triggered = triggered;
         }
     }
 }

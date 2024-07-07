@@ -330,7 +330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   learningPlatform: {fileID: 7187077217301300134}
-  rotatingObject: {fileID: 5864789338599887871}
+  rotatingGem: {fileID: 8902437196319105986}
   horizontalInteractionRange: 4
   verticalInteractionRange: 2
   canBeSelected: 1
@@ -340,8 +340,6 @@ MonoBehaviour:
   holdDuration: 1
   grabPetAttention: 1
   grabPlayerAttention: 1
-  enableProximityLearn: 0
-  proximityRadius: 3.5
 --- !u!1 &9210152937397501401
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +351,7 @@ GameObject:
   - component: {fileID: 5864789338599887871}
   - component: {fileID: 2565708416948798674}
   m_Layer: 0
-  m_Name: RotatingObject
+  m_Name: RotatingGem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -550,11 +548,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_SizeDelta.x
@@ -566,7 +564,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

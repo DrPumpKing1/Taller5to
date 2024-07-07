@@ -11,7 +11,6 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
     [Serializable]
     public class UniqueDialogueEvent
     {
-        public int id;
         public DialogueSO dialogue;
         public DialogueSO hint;
         public bool triggered;
@@ -136,41 +135,48 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
         waintingHint = true;
     }
 
-    public void SetUniqueDialogueTriggered(int id, bool triggered)
+    public void SetUniqueDialogueTriggered(int indexInList, bool triggered)
     {
-        foreach (UniqueDialogueEvent uniqueDialogueEvent in uniqueDialogueEvents)
+        for(int i=0; i<uniqueDialogueEvents.Count; i++)
         {
-            if (id == uniqueDialogueEvent.id)
-            {
-                uniqueDialogueEvent.triggered = triggered;
-                return;
-            }
+            if(indexInList == i) uniqueDialogueEvents[i].triggered = triggered;
         }
     }
 
-    private UniqueDialogueEvent GetUniqueDialoqueEventByID(int id)
+    private UniqueDialogueEvent GetUniqueDialoqueEventByIndex(int indexInList)
     {
-        foreach (UniqueDialogueEvent uniqueDialogueEvent in uniqueDialogueEvents)
+        for (int i = 0; i < uniqueDialogueEvents.Count; i++)
         {
-            if (id == uniqueDialogueEvent.id) return uniqueDialogueEvent;
+            if (indexInList == i) return uniqueDialogueEvents[i];
         }
 
         return null;
     }
 
-    public void SetUniqueDialoguesTriggered(List<int> dialoguesIDs)
+    private UniqueDialogueEvent GetUniqueDialoqueEventByDialogueSO(DialogueSO dialogueSO)
+    {
+        foreach (UniqueDialogueEvent uniqueDialogueEvent in uniqueDialogueEvents)
+        {
+            if (uniqueDialogueEvent.dialogue == dialogueSO) return uniqueDialogueEvent;
+        }
+
+        return null;
+    }
+    
+
+    public void ReplaceUniqueDialoguesTriggered(List<DialogueSO> dialogueSOs, bool triggered)
     {
         foreach (UniqueDialogueEvent uniqueDialogueEvent in uniqueDialogueEvents)
         {
             uniqueDialogueEvent.triggered = false;
         }
 
-        foreach (int dialogueID in dialoguesIDs)
+        foreach (DialogueSO dialogueSO in dialogueSOs)
         {
-            UniqueDialogueEvent uniqueDialogueEvent = GetUniqueDialoqueEventByID(dialogueID);
+            UniqueDialogueEvent uniqueDialogueEvent = GetUniqueDialoqueEventByDialogueSO(dialogueSO);
             if (uniqueDialogueEvent == null) continue;
 
-            uniqueDialogueEvent.triggered = true;
+            uniqueDialogueEvent.triggered = triggered;
         }
     }
 }

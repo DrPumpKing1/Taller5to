@@ -8,11 +8,11 @@ public class LearningPlatform : MonoBehaviour
     [Header("Leraning Platform Settings")]
     [SerializeField] private LearningPlatformSO learningPlatformSO;
 
-    [Header("Identifiers")]
-    [SerializeField] private bool isLearned;
-
     public LearningPlatformSO LearningPlatformSO => learningPlatformSO;
-    public bool IsLearned => isLearned;
 
-    public void SetIsLearned(bool learned) => isLearned = learned;
+    public bool ObjectHasBeenLearned()
+    {
+        if (ProjectableObjectsLearningManager.Instance.ProjectableObjectsLearned.Contains(learningPlatformSO.projectableObjectToLearn)) return true;
+        return false;
+    }
 }

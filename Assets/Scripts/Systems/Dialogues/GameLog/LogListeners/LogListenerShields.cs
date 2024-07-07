@@ -8,16 +8,12 @@ public class LogListenerShields : MonoBehaviour
     {
         //SHIELDS
         ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
-        NotEnoughShieldsCollider.OnNotEnoughShieldsCollider += NotEnoughShieldsCollider_OnNotEnoughShieldsCollider;
-        CantOpenDoahCollider.OnCantOpenDoahCollider += CantOpenDoahCollider_OnCantOpenDoahCollider;
     }
 
     private void OnDisable()
     {
         //SHIELDS
         ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
-        NotEnoughShieldsCollider.OnNotEnoughShieldsCollider -= NotEnoughShieldsCollider_OnNotEnoughShieldsCollider;
-        CantOpenDoahCollider.OnCantOpenDoahCollider -= CantOpenDoahCollider_OnCantOpenDoahCollider;
     }
 
     private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e)

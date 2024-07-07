@@ -26,12 +26,15 @@ public class LevelSkipManager : MonoBehaviour
     public class LevelSettings
     {
         public int checkpointID;
+        [Space]
         public List<ProjectableObjectSO> projectableObjectsSOs;
         public List<ShieldPieceSO> shieldPiecesSOs;
-        public List<int> dialoguesIDsTriggered;
-        public List<int> monologuesIDsTriggered;
-        public List<int> learningPlatformsUsedIDs;
+        [Space]
+        public List<DialogueSO> uniqueDialoguesTriggered;
+        public List<MonologueSO> uniqueMonologuesTriggered;
+        [Space]
         public List<int> switchesToggledIDs;
+        [Space]
         public int projectionGems;
         public bool canOpenInventory;
         public bool HUDVisible;
@@ -102,15 +105,14 @@ public class LevelSkipManager : MonoBehaviour
         ShieldPiecesManager.Instance.ReplaceShieldPiecesCollectedList(levelSettings.shieldPiecesSOs);
 
         ReplaceSwitchesToggled(levelSettings.switchesToggledIDs);
-        ReplaceLearningPlatformsUsed(levelSettings.learningPlatformsUsedIDs);
 
         ProjectionGemsManager.Instance.SetTotalProjectionGems(levelSettings.projectionGems);
         InventoryOpeningManager.Instance.SetCanOpenInventory(levelSettings.canOpenInventory);
         HUDVisibilityHandler.Instance.SetIsVisible(levelSettings.HUDVisible);
         PetPlayerAttachment.Instance.SetAttachToPlayer(levelSettings.attachToPlayer);
 
-        UniqueDialogueTriggerHandler.Instance.SetUniqueDialoguesTriggered(levelSettings.dialoguesIDsTriggered);
-        UniqueMonologueTriggerHandler.Instance.SetUniqueMonologuesTriggered(levelSettings.monologuesIDsTriggered);
+        UniqueDialogueTriggerHandler.Instance.ReplaceUniqueDialoguesTriggered(levelSettings.uniqueDialoguesTriggered, true);
+        UniqueMonologueTriggerHandler.Instance.ReplaceUniqueMonologuesTriggered(levelSettings.uniqueMonologuesTriggered, true);
 
         //
 
@@ -121,27 +123,6 @@ public class LevelSkipManager : MonoBehaviour
         LogDataPersistenceManager.Instance.SaveGameData();
 
         ScenesManager.Instance.FadeReloadCurrentScene();
-    }
-
-    private void ReplaceLearningPlatformsUsed(List<int> learningPlatformsUsedIDs)
-    {
-        LearningPlatform[] learningPlatforms = FindObjectsOfType<LearningPlatform>();
-
-        foreach (LearningPlatform learningPlatform in learningPlatforms)
-        {
-            learningPlatform.SetIsLearned(false);
-        }
-
-        foreach (LearningPlatform learningPlatform in learningPlatforms)
-        {
-            foreach (int learningPlatformUsedID in learningPlatformsUsedIDs)
-            {
-                if (learningPlatform.LearningPlatformSO.id == learningPlatformUsedID)
-                {
-                    learningPlatform.SetIsLearned(true);
-                }
-            }
-        }
     }
 
     private void ReplaceSwitchesToggled(List<int> switchesToggledIDs)
