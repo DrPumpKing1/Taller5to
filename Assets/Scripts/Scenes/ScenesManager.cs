@@ -32,14 +32,14 @@ public class ScenesManager : MonoBehaviour
 
     private void OnEnable()
     {
-        TransitionUIHandler.OnFadeOutEnd += TransitionUIHandler_OnFadeOutEnd;
-        TransitionUIHandler.OnFadeInEnd += TransitionUIHandler_OnFadeInEnd;
+        SceneTransitionUIHandler.OnFadeOutEnd += TransitionUIHandler_OnFadeOutEnd;
+        SceneTransitionUIHandler.OnFadeInEnd += TransitionUIHandler_OnFadeInEnd;
     }
 
     private void OnDisable()
     {
-        TransitionUIHandler.OnFadeOutEnd -= TransitionUIHandler_OnFadeOutEnd;
-        TransitionUIHandler.OnFadeInEnd -= TransitionUIHandler_OnFadeInEnd;
+        SceneTransitionUIHandler.OnFadeOutEnd -= TransitionUIHandler_OnFadeOutEnd;
+        SceneTransitionUIHandler.OnFadeInEnd -= TransitionUIHandler_OnFadeInEnd;
     }
 
     private void Awake()

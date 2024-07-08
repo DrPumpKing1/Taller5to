@@ -117,7 +117,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  resistance: 10
   type: 02000000
   contacts: []
 --- !u!114 &6943706257806782275
@@ -253,7 +252,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 50f2644f913d56a48b6989465d7e2df0, type: 2}
+  - {fileID: 2100000, guid: 469651a8994d1db4b98a4f79e4f9e82a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

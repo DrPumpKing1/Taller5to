@@ -491,6 +491,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7846662925050479611}
   - component: {fileID: 6265826671895022892}
+  - component: {fileID: 2856413567954985433}
   m_Layer: 8
   m_Name: Visual
   m_TagString: Untagged
@@ -528,6 +529,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c6b8041b1b58541a4fb0bae7ddc9a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2856413567954985433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376142338285860018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3be18bb290fd8c47b9d654059a52703, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transformToLevitate: {fileID: 7846662925050479611}
+  refferenceTransform: {fileID: 3347468614378750834}
+  levitationEnabled: 1
+  amplitudeX: 0.1
+  frequencyX: 1
+  amplitudeY: 0.1
+  frequencyY: 1
+  amplitudeZ: 0.1
+  frequencyZ: 1
 --- !u!1 &4515691063624333679
 GameObject:
   m_ObjectHideFlags: 0
