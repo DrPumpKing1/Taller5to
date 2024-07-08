@@ -24,12 +24,12 @@ public class MonologueReactionTriggerHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        GameLogManager.OnLogAdd += ReadLogForMonologue;
+        GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
     }
 
     private void OnDisable()
     {
-        GameLogManager.OnLogAdd -= ReadLogForMonologue;
+        GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
     }
 
     private void Update()
@@ -42,11 +42,11 @@ public class MonologueReactionTriggerHandler : MonoBehaviour
         if (reactionTimer > 0f) reactionTimer -= Time.deltaTime;
     }
 
-    private void ReadLogForMonologue()
+    private void HandleReactionMonologue(string log)
     {
         if (reactionTimer > 0) return;
 
-        storedLogPattern.Add(GameLogManager.Instance.GameLog[^1].log);
+        storedLogPattern.Add(log);
 
         var compatibleMonologues = monologues.Where(x =>
         {
@@ -87,4 +87,11 @@ public class MonologueReactionTriggerHandler : MonoBehaviour
 
         return true;
     }
+
+    #region GameLog Subscriptions
+    private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
+    {
+        HandleReactionMonologue(e.gameplayAction.log);
+    }
+    #endregion
 }

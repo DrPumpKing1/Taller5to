@@ -43,14 +43,16 @@ public abstract class LogAcomplishedInstruction : Instruction
 
         return true;
     }
+    protected override bool CheckCondition() => true;
 
-    private void GameLogManager_OnLogAdd()
+
+    #region GameLog Subscriptions
+    private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
-        if (hasBeenAcomplished) return;
         if (!LogContainsLogToAcomplish()) return;
+        if (hasBeenAcomplished) return;
 
         hasBeenAcomplished = true;
     }
-
-    protected override bool CheckCondition() => true;
+    #endregion
 }

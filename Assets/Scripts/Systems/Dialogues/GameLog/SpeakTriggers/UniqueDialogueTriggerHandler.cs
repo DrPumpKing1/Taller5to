@@ -36,12 +36,12 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        GameLogManager.OnLogAdd += ReadLogDialogue;
+        GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
     }
 
     private void OnDisable()
     {
-        GameLogManager.OnLogAdd -= ReadLogDialogue;
+        GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
     }
 
     private void Awake()
@@ -90,18 +90,9 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
         DialogueManager.Instance.StartDialogue(lastDialogueEvent.dialogue);
     }
 
-    private void ReadLogDialogue()
+    private IEnumerator ReadLogDialogueCoroutine(string log)
     {
-        if (!enableTriggerDialogues) return;
-
-        StartCoroutine(ReadLogDialogueCoroutine());
-    }
-
-    private IEnumerator ReadLogDialogueCoroutine()
-    {
-        string lastLog = GameLogManager.Instance.GameLog[^1].log;
-
-        var compatibleDialogues = uniqueDialogueEvents.Where(x => x.eventCode == lastLog && !x.triggered);
+        var compatibleDialogues = uniqueDialogueEvents.Where(x => x.eventCode == log && !x.triggered);
 
         if (!compatibleDialogues.Any()) yield break;
 
@@ -179,4 +170,13 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
             uniqueDialogueEvent.triggered = triggered;
         }
     }
+
+    #region GameLog Subscriptions
+    private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
+    {
+        if (!enableTriggerDialogues) return;
+
+        StartCoroutine(ReadLogDialogueCoroutine(e.gameplayAction.log));
+    }
+    #endregion
 }

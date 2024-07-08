@@ -27,19 +27,12 @@ public class MonologueTriggerHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        GameLogManager.OnLogAdd += ReadLogMonologue;
+        GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
     }
 
     private void OnDisable()
     {
-        GameLogManager.OnLogAdd -= ReadLogMonologue;
-    }
-
-    private void ReadLogMonologue()
-    {
-        if (!enableTriggerMonologues) return;
-
-        StartCoroutine(ReadLogMonologueCoroutine());
+        GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
     }
 
     private IEnumerator ReadLogMonologueCoroutine()
@@ -71,4 +64,13 @@ public class MonologueTriggerHandler : MonoBehaviour
 
         lastMonologueEvent = monologueEvent;
     }
+
+    #region GameLogSubscriptions
+    private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
+    {
+        if (!enableTriggerMonologues) return;
+
+        StartCoroutine(ReadLogMonologueCoroutine());
+    }
+    #endregion
 }

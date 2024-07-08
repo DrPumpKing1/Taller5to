@@ -36,12 +36,12 @@ public class UniqueMonologueTriggerHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        GameLogManager.OnLogAdd += ReadLogMonologue;
+        GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
     }
 
     private void OnDisable()
     {
-        GameLogManager.OnLogAdd -= ReadLogMonologue;
+        GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
     }
 
     private void Awake()
@@ -90,20 +90,11 @@ public class UniqueMonologueTriggerHandler : MonoBehaviour
         MonologueManager.Instance.StartMonologue(lastMonologueEvent.monologue);
     }
 
-    private void ReadLogMonologue()
-    {
-        if (!enableTriggerMonologues) return;
-
-        StartCoroutine(ReadLogMonologueCoroutine());
-    }
-
-    private IEnumerator ReadLogMonologueCoroutine()
+    private IEnumerator ReadLogMonologueCoroutine(string log)
     {
         //UniqueMonologues may have priority over dialogues
 
-        string lastLog = GameLogManager.Instance.GameLog[^1].log;
-
-        var compatibleMonologues = uniqueMonologueEvents.Where(x => x.eventCode == lastLog && !x.triggered);
+        var compatibleMonologues = uniqueMonologueEvents.Where(x => x.eventCode == log && !x.triggered);
 
         if (!compatibleMonologues.Any()) yield break;
 
@@ -180,4 +171,13 @@ public class UniqueMonologueTriggerHandler : MonoBehaviour
             uniqueMonologueTrigger.triggered = triggered;
         }
     }
+
+    #region GameLog Subscriptions
+    private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
+    {
+        if (!enableTriggerMonologues) return;
+
+        StartCoroutine(ReadLogMonologueCoroutine(e.gameplayAction.log));
+    }
+    #endregion
 }
