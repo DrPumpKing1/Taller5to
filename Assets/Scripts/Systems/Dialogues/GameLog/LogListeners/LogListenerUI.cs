@@ -28,7 +28,7 @@ public class LogListenerUI : MonoBehaviour
 
     private void PauseManager_OnGameResumed(object sender, System.EventArgs e) => GameLogManager.Instance.Log($"UI/GameResumed");
 
-    private void InventoryOpeningManager_OnInventoryOpen(object sender, System.EventArgs e) => GameLogManager.Instance.Log($"UI/InventoryOpened");
-    private void InventoryOpeningManager_OnInventoryClose(object sender, System.EventArgs e) => GameLogManager.Instance.Log($"UI/InventoryClosed");
+    private void InventoryOpeningManager_OnInventoryOpen(object sender, System.EventArgs e) => GameLogManager.Instance.Log($"UI/InventoryOpen");
+    private void InventoryOpeningManager_OnInventoryClose(object sender, System.EventArgs e) => GameLogManager.Instance.Log($"UI/InventoryClose");
 
 }

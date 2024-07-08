@@ -6,6 +6,9 @@ using System.Linq;
 
 public abstract class Instruction : MonoBehaviour
 {
+    [Header("Log")]
+    [SerializeField] protected string logToAcomplish;
+
     [Header("Booleans")]
     [SerializeField] protected bool hasBeenAcomplished;
     [SerializeField] protected bool isShowing;
@@ -16,6 +19,15 @@ public abstract class Instruction : MonoBehaviour
     public class OnInstructionEventArgs
     {
         public Instruction instruction;
+    }
+
+    protected virtual void OnEnable()
+    {
+        GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
+    }
+    protected virtual void OnDisable()
+    {
+        GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
     }
 
     private void Start()
@@ -62,5 +74,44 @@ public abstract class Instruction : MonoBehaviour
         HideInstruction();
     }
 
-    protected abstract bool CheckCondition();
+    protected virtual bool CheckCondition() => true;
+
+    protected bool LogContainsLogToAcomplish()
+    {
+        foreach (GameLogManager.GameplayAction gameplayAction in GameLogManager.Instance.GameLog)
+        {
+            if (ComparePatterns(gameplayAction.log, logToAcomplish))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool ComparePatterns(string pattern, string toCompare)
+    {
+        List<string> patternSplitted = pattern.Split("/").ToList();
+        List<string> toCompareSplitted = toCompare.Split("/").ToList();
+
+        if (patternSplitted.Count < toCompareSplitted.Count) return false;
+
+        for (int i = 0; i < toCompareSplitted.Count; i++)
+        {
+            if (patternSplitted[i] != toCompareSplitted[i]) return false;
+        }
+
+        return true;
+    }
+
+
+    #region GameLog Subscriptions
+    private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
+    {
+        if (!LogContainsLogToAcomplish()) return;
+        if (hasBeenAcomplished) return;
+
+        hasBeenAcomplished = true;
+    }
+    #endregion
 }

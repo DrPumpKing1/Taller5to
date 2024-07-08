@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoBackToDoahInstruction : LogAcomplishedInstruction
+public class GoBackToDoahInstruction : Instruction
 {
     protected override void OnEnable()
     {
@@ -21,9 +21,5 @@ public class GoBackToDoahInstruction : LogAcomplishedInstruction
         CheckShouldShow();
     }
 
-    protected override bool CheckCondition()
-    {
-        if (ProjectableObjectsLearningManager.Instance.ProjectableObjectsLearned.Count > 0) return false;
-        return true;
-    }
+    protected override bool CheckCondition() => ProjectableObjectsLearningManager.Instance.ProjectableObjectsLearned.Count <= 0;
 }
