@@ -17,9 +17,16 @@ public class ProjectionPlatform : MonoBehaviour
     [SerializeField] private Vector2 startingDirection;
 
     [Header("Object Avobe Check Settings")]
+    [SerializeField] private bool useObjectAbove;
     [SerializeField] private LayerMask objectAvobeLayers;
     [SerializeField] private Vector3 checkBoxCenter;
     [SerializeField] private Vector3 checkBoxHalfExtends;
+
+    public bool ObjectAbove { get; private set; }
+    private GameObject player;
+
+    private const string PLAYER_TAG = "Player";
+    private const float DISTANCE_TO_UPDATE = 10f;
 
     public Transform ProjectionPoint => projectionPoint;
     public ProjectableObjectSO CurrentProjectedObjectSO => currentProjectedObjectSO;
@@ -27,8 +34,6 @@ public class ProjectionPlatform : MonoBehaviour
     public Vector2 StartingDirection => startingDirection;
     public int ID => id;
 
-    public bool ObjectAbove;
-    public bool useObjectAbove;
 
     public event EventHandler OnProjectionPlatformClear;
     public event EventHandler<OnProjectionEventArgs> OnProjectionPlatformSet;
@@ -40,6 +45,11 @@ public class ProjectionPlatform : MonoBehaviour
         public ProjectableObject projectableObject;
     }
 
+    private void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag(PLAYER_TAG);
+    }
+
     private void FixedUpdate()
     {
         ObjectAbove = CheckObjectAbove() && useObjectAbove;
@@ -47,6 +57,8 @@ public class ProjectionPlatform : MonoBehaviour
 
     private bool CheckObjectAbove()
     {
+        if (!CheckPlayerClose()) return false;
+
         bool objectAbove = Physics.CheckBox(transform.position + transform.TransformDirection(checkBoxCenter), checkBoxHalfExtends, transform.rotation, objectAvobeLayers);
         return objectAbove;
     }
@@ -72,4 +84,12 @@ public class ProjectionPlatform : MonoBehaviour
     }
 
     public bool HasObject() => currentProjectedObject != null;
+
+    private bool CheckPlayerClose()
+    {
+        if (!player) return true;
+        if (Vector3.Distance(transform.position, player.transform.position) <= DISTANCE_TO_UPDATE) return true;
+
+        return false;
+    }
 }

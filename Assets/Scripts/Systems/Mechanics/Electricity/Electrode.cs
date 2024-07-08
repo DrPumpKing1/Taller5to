@@ -10,25 +10,23 @@ public class Electrode : MonoBehaviour
     public event ReceiveSignalDel OnReceiveSignal; 
 
     protected const float MAX_POWER = 10000;
-    protected const float DECAY_MULTIPLIER = 10f;
     public const float ACTIVATION_THRESHOLD = 20f;
     public const float ELECTRICITY_TICK_DURATION = 1f;
 
     [Header("Debug Tools")]
     [SerializeField] protected bool debug;
-    public bool DebugTool { get { return debug; } }
+    public bool DebugTool => debug;
 
     [Header("Electricity Component")]
 
     [SerializeField] protected float sourcePower;
     [SerializeField] protected float power;
-    public float Power { get { return power; } }
+    public float Power => power;
     public float SourcePower { get { return sourcePower; } set { sourcePower = value; } }
 
     [Header("Transmission Variables")]
     [SerializeField] protected List<Signal> signals;
     [SerializeField] protected AnimationCurve powerCurve;
-    [SerializeField] protected float resistance;
 
     public List<Signal> Signals { get { return signals; } }
 
@@ -152,7 +150,7 @@ public class Electrode : MonoBehaviour
     {
         float distance = Vector3.Distance(transform.position, otherComponent.transform.position);
 
-        float intensity = Mathf.Max(this.power - (DECAY_MULTIPLIER * distance + resistance), 0f);
+        float intensity = Mathf.Max(power, 0f);
 
         if (debug) Debug.Log($"{name} sending signal of {intensity} to {otherComponent.name}");
 

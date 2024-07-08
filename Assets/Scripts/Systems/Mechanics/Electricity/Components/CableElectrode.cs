@@ -13,13 +13,13 @@ public class CableElectrode : Electrode
 
     private GameObject player;
 
-    private const string PLAYER_TAG = "PlayerTag";
-    private const float DISTANCE_TO_UPDATE = 20f;
+    private const string PLAYER_TAG = "Player";
+    private const float DISTANCE_TO_UPDATE = 30f;
 
     protected override void Start()
     {
         base.Start();
-        //player = GameObject.FindGameObjectWithTag(PLAYER_TAG);
+        player = GameObject.FindGameObjectWithTag(PLAYER_TAG);
     }
 
     protected override void Update()
@@ -35,7 +35,7 @@ public class CableElectrode : Electrode
 
     private void FindNearElectricalComponents()
     {
-        //if (!CheckPlayerClose()) return;
+        if (!CheckPlayerClose()) return;
 
         for (int i = 0; i < corners.Length - 1; i++)
         {

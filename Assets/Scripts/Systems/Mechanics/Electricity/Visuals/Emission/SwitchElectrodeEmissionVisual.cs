@@ -17,7 +17,7 @@ public class SwitchElectrodeEmissionVisual : MonoBehaviour
 
     private bool IsPowered => switchElectrode.Power >= Electrode.ACTIVATION_THRESHOLD;
 
-    private const float NOT_POWERED_TIME_THRESHOLD = 0.1f;
+    private const float NOT_POWERED_TIME_THRESHOLD = 0.25f;
     private float notPoweredTimer;
     private bool previousPowered;
 

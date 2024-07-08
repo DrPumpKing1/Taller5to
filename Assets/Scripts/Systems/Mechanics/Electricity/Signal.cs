@@ -12,6 +12,11 @@ public class Signal : MonoBehaviour
 
     private void Update()
     {
+        HandleSignalTimer();
+    }
+
+    private void HandleSignalTimer()
+    {
         if (timer < duration) timer += Time.deltaTime;
         else timer = 0f;
     }
@@ -31,10 +36,8 @@ public class Signal : MonoBehaviour
         return power;
     }
 
-    public float GetConstant()
-    {
-        return intensity;
-    }
+    public float GetConstant() => intensity;
+
 
     public Signal SetSignal(float intensity, AnimationCurve powerCurve, float duration)
     {
@@ -48,7 +51,7 @@ public class Signal : MonoBehaviour
 
     public void Expire()
     {
-        if (this.gameObject == null) return;
+        if (gameObject == null) return;
 
         Electrode electrode = gameObject.GetComponent<Electrode>();
         
