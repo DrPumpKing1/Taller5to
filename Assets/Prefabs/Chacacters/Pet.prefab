@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 8712415838178567264}
   - component: {fileID: 4294327316686227277}
   - component: {fileID: 667387256996876672}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: DirectionalLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,8 +205,8 @@ Transform:
   m_Children:
   - {fileID: 7762422532195686897}
   - {fileID: 144160859035733218}
-  - {fileID: 8712415838178567264}
   - {fileID: 8135469180389639760}
+  - {fileID: 8712415838178567264}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &5923628213344039110
@@ -570,7 +570,7 @@ GameObject:
   - component: {fileID: 8135469180389639760}
   - component: {fileID: 5430851358018602028}
   - component: {fileID: 140892466498583387}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -599,7 +599,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7139136590000787815}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
@@ -610,7 +610,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
