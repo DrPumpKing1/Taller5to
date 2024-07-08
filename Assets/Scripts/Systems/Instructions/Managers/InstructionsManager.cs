@@ -18,10 +18,9 @@ public class InstructionsManager : MonoBehaviour
     [Serializable]
     public class UniqueInstruction
     {
-        public int id;
         public Instruction instruction;
-        public bool hasBeenShown;
         public Transform instructionUIPrefab;
+        public bool hasBeenShown;
     }
 
 
