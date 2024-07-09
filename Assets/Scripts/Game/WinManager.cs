@@ -6,6 +6,7 @@ using System;
 public class WinManager : MonoBehaviour
 {
     [Header("Settings")]
+    [SerializeField] private string logToWin;
     [SerializeField] private string transitionScene;
     [SerializeField, Range(1f, 10f)] private float timeToTransitioAfterWin;
 
@@ -13,12 +14,12 @@ public class WinManager : MonoBehaviour
 
     private void OnEnable()
     {
-        AncientRelicCollectedEnd.OnAncientRelicCollectedEnd += AncientRelicCollectedEnd_OnAncientRelicCollectedEnc;
+        GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
     }
 
     private void OnDisable()
     {
-        AncientRelicCollectedEnd.OnAncientRelicCollectedEnd -= AncientRelicCollectedEnd_OnAncientRelicCollectedEnc;
+        GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
     }
 
     private void Win()
@@ -43,10 +44,11 @@ public class WinManager : MonoBehaviour
 
         DeleteAllData();
     }
-    private void AncientRelicCollectedEnd_OnAncientRelicCollectedEnc(object sender, System.EventArgs e)
-    {
-        Win();
 
+    private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
+    {
+        if (e.gameplayAction.log != logToWin) return;
+        Win();
         OnWin?.Invoke(this, EventArgs.Empty);
     }
 }
