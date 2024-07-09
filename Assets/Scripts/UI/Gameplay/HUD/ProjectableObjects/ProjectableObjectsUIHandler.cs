@@ -43,10 +43,6 @@ public class ProjectableObjectsUIHandler : MonoBehaviour
     {
         SetProyectableObjectsUI(ProjectableObjectSelectionManager.Instance.ProjectableObjectsIndexed);
         DeselectAllUI();
-
-        //if (ProjectableObjectSelectionManager.Instance.ProjectableObjectsIndexed.Count <= 0) return;
-        
-        //SelectIndexedProjectableObject(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectIndexed);
     }
 
     private void SetProyectableObjectsUI(List<ProjectableObjectSelectionManager.ProjectableObjectIndexed> projectableObjectsIndexed)
@@ -174,11 +170,13 @@ public class ProjectableObjectsUIHandler : MonoBehaviour
     private void ProjectionManager_OnProjectableObjectSelected(object sender, ProjectableObjectSelectionManager.OnSelectionEventArgs e)
     {
         SelectIndexedProjectableObject(e.projectableObjectIndexed);
+        Debug.Log(e.projectableObjectIndexed.index + "Selected");
     }
 
     private void ProjectionManager_OnProjectableObjectDeselected(object sender, ProjectableObjectSelectionManager.OnSelectionEventArgs e)
     {
         DeselectIndexedProjectableObject(e.projectableObjectIndexed);
+        Debug.Log(e.projectableObjectIndexed.index + "Deselected");
     }
     #endregion
 }

@@ -97,14 +97,15 @@ public class ProjectableObjectSelectionManager : MonoBehaviour
         InitializeProjectableObjectsIndexed();
         ClampInitialSelectionIndex();
 
-        if (projectableObjectsIndexed.Count > 0)
-        {
-            SelectProjectableObject(projectableObjectsIndexed[InitialSelectionIndex]);
-        }
-
         currentSelectionIndex = InitialSelectionIndex;
 
         OnProjectableObjectSelectionManagerInitialized?.Invoke(this, EventArgs.Empty);
+
+        if (projectableObjectsIndexed.Count > 0)
+        {
+            SelectProjectableObject(projectableObjectsIndexed[InitialSelectionIndex]);
+            OnProjectableObjectSelected?.Invoke(this, new OnSelectionEventArgs { projectableObjectIndexed = selectedProjectableObjectIndexed });
+        }
     }
 
     private void InitializeProjectableObjectsIndexed()
@@ -115,6 +116,8 @@ public class ProjectableObjectSelectionManager : MonoBehaviour
         {
             ProjectableObjectIndexed projectableObjectIndexed = new ProjectableObjectIndexed { index = index, projectableObjectSO = projectableObjectSO };
             projectableObjectsIndexed.Add(projectableObjectIndexed);
+
+            index++;
         }
     }
 
@@ -211,7 +214,7 @@ public class ProjectableObjectSelectionManager : MonoBehaviour
         SelectProjectableObject(projectableObjectsIndexed[currentSelectionIndex]);
 
         OnProjectableObjectDeselected?.Invoke(this, new OnSelectionEventArgs { projectableObjectIndexed = projectableObjectsIndexed[previousIndex] });
-        OnProjectableObjectSelected?.Invoke(this, new OnSelectionEventArgs { projectableObjectIndexed = projectableObjectsIndexed[previousIndex] });
+        OnProjectableObjectSelected?.Invoke(this, new OnSelectionEventArgs { projectableObjectIndexed = selectedProjectableObjectIndexed });
     }
 
     private void SelectProjectableObject(ProjectableObjectIndexed projectableObjectIndexed)
