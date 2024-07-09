@@ -25,7 +25,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     #region IHoldInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
     public float VerticalInteractionRange => verticalInteractionRange;
-    public bool IsSelectable => canBeSelected && !projectionPlatform.ObjectAbove && ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO != null;
+    public bool IsSelectable => canBeSelected && !projectionPlatform.ObjectAbove && ProjectableObjectSelectionManager.Instance.ProjectableObjectsIndexed.Count>0;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;
@@ -104,13 +104,13 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
 
         if (projectionPlatform.CurrentProjectedObjectSO != null)
         {
-            FailObjectProjection(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO);
+            FailObjectProjection(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectIndexed.projectableObjectSO);
             return;
         }
 
-        if (!ProjectionManager.Instance.CanProjectObject(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO))
+        if (!ProjectionManager.Instance.CanProjectObject(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectIndexed.projectableObjectSO))
         {
-            FailObjectProjectionInsuficientGems(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO);
+            FailObjectProjectionInsuficientGems(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectIndexed.projectableObjectSO);
             return;
         }
 
@@ -119,7 +119,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
 
     public void Interact()
     {
-        ProjectObject(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO);
+        ProjectObject(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectIndexed.projectableObjectSO);
 
         OnObjectInteracted?.Invoke(this, EventArgs.Empty);
 
@@ -153,13 +153,13 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
 
         if (projectionPlatform.CurrentProjectedObjectSO != null && !projectionPlatform.ObjectAbove)
         {
-            FailObjectProjection(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO);
+            FailObjectProjection(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectIndexed.projectableObjectSO);
             return false;
         }
 
-        if (!ProjectionManager.Instance.CanProjectObject(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO))
+        if (!ProjectionManager.Instance.CanProjectObject(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectIndexed.projectableObjectSO))
         {
-            FailObjectProjectionInsuficientGems(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectSO);
+            FailObjectProjectionInsuficientGems(ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectIndexed.projectableObjectSO);
             return false;
         }
 

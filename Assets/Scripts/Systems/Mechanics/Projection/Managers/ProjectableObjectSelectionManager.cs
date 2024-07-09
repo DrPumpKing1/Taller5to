@@ -13,7 +13,8 @@ public class ProjectableObjectSelectionManager : MonoBehaviour
     [SerializeField] private ProjectionInput projectionInput;
 
     [Header("Projectable Object Settings")]
-    [SerializeField] private ProjectableObjectSO selectedProjectableObjectSO;
+    [SerializeField] private List<ProjectableObjectIndexed> projectableObjectsIndexed = new List<ProjectableObjectIndexed>();
+    [SerializeField] private ProjectableObjectIndexed selectedProjectableObjectIndexed;
 
     [Header("Selection Settings")]
     [SerializeField] private int InitialSelectionIndex;
@@ -33,20 +34,26 @@ public class ProjectableObjectSelectionManager : MonoBehaviour
     private bool _3rdProjectableObjectInput => projectionInput.Get3rdProjectableObjectDown();
     private bool _4thProjectableObjectInput => projectionInput.Get4thProjectableObjectDown();
 
-    public List<ProjectableObjectSO> ProjectableObjectsInventory => ProjectableObjectsLearningManager.Instance.ProjectableObjectsLearned;
-    public ProjectableObjectSO SelectedProjectableObjectSO => selectedProjectableObjectSO;
-    public int CurrentSelectionIndex => currentSelectionIndex;
+    public List<ProjectableObjectIndexed> ProjectableObjectsIndexed => projectableObjectsIndexed;
+    public ProjectableObjectIndexed SelectedProjectableObjectIndexed => selectedProjectableObjectIndexed;
 
-    public class OnObjectAddedToInventoryEventArgs : EventArgs
-    {
-        public ProjectableObjectSO projectableObjectSO;
-    }
-
-    public class OnSelectionEventArgs : EventArgs
+    [Serializable]
+    public class ProjectableObjectIndexed
     {
         public int index;
         public ProjectableObjectSO projectableObjectSO;
     }
+
+    public class OnObjectAddedToInventoryEventArgs : EventArgs
+    {
+        public ProjectableObjectIndexed projectableObjectIndexed;
+    }
+
+    public class OnSelectionEventArgs : EventArgs
+    {
+        public ProjectableObjectIndexed projectableObjectIndexed;
+    }
+
 
     public void OnEnable()
     {
@@ -87,24 +94,60 @@ public class ProjectableObjectSelectionManager : MonoBehaviour
 
     private void InitializeVariables()
     {
+        InitializeProjectableObjectsIndexed();
         ClampInitialSelectionIndex();
 
-        if (ProjectableObjectsInventory.Count > 0) SelectProjectableObject(ProjectableObjectsInventory[InitialSelectionIndex]);
+        if (projectableObjectsIndexed.Count > 0)
+        {
+            SelectProjectableObject(projectableObjectsIndexed[InitialSelectionIndex]);
+        }
 
         currentSelectionIndex = InitialSelectionIndex;
 
         OnProjectableObjectSelectionManagerInitialized?.Invoke(this, EventArgs.Empty);
     }
 
+    private void InitializeProjectableObjectsIndexed()
+    {
+        int index = 0;
+
+        foreach(ProjectableObjectSO projectableObjectSO in ProjectableObjectsLearningManager.Instance.ProjectableObjectsLearned)
+        {
+            ProjectableObjectIndexed projectableObjectIndexed = new ProjectableObjectIndexed { index = index, projectableObjectSO = projectableObjectSO };
+            projectableObjectsIndexed.Add(projectableObjectIndexed);
+        }
+    }
+
+    private void AddProjectableObjectToIndexedList(ProjectableObjectSO projectableObjectSO)
+    {
+        int index = projectableObjectsIndexed.Count;
+
+        ProjectableObjectIndexed projectableObjectIndexed = new ProjectableObjectIndexed { index = index, projectableObjectSO = projectableObjectSO};
+        projectableObjectsIndexed.Add(projectableObjectIndexed);
+
+        OnObjectAddedToInventory?.Invoke(this, new OnObjectAddedToInventoryEventArgs { projectableObjectIndexed = projectableObjectIndexed });
+
+        CheckIsFirstLearned();
+    }
+
+    private void CheckIsFirstLearned()
+    {
+        if (projectableObjectsIndexed.Count > 1) return;
+        
+        currentSelectionIndex = 0;
+        SelectProjectableObject(projectableObjectsIndexed[currentSelectionIndex]);
+        OnProjectableObjectSelected?.Invoke(this, new OnSelectionEventArgs { projectableObjectIndexed = selectedProjectableObjectIndexed });    
+    }
+
     private void ClampInitialSelectionIndex()
     {
-        InitialSelectionIndex = ProjectableObjectsInventory.Count <= InitialSelectionIndex ? ProjectableObjectsInventory.Count - 1 : InitialSelectionIndex;
-        InitialSelectionIndex = ProjectableObjectsInventory.Count == 0 ? 0 : InitialSelectionIndex;
+        InitialSelectionIndex = projectableObjectsIndexed.Count <= InitialSelectionIndex ? projectableObjectsIndexed.Count - 1 : InitialSelectionIndex;
+        InitialSelectionIndex = projectableObjectsIndexed.Count == 0 ? 0 : InitialSelectionIndex;
     }
 
     private void HandleProjectableObjectSelection()
     {
-        if (ProjectableObjectsInventory.Count <= 1) return;
+        if (projectableObjectsIndexed.Count <= 1) return;
         if (playerInteract.IsInteracting) return;
         if (playerInteractAlternate.IsInteractingAlternate) return;
 
@@ -119,16 +162,16 @@ public class ProjectableObjectSelectionManager : MonoBehaviour
         if (!SelectionInputNext) return;
 
         int previousIndex = currentSelectionIndex;
-        int maxIndex = ProjectableObjectsInventory.Count - 1;
+        int maxIndex = projectableObjectsIndexed.Count - 1;
 
         int desiredIndex = currentSelectionIndex + 1;
 
         currentSelectionIndex = desiredIndex > maxIndex ? 0 : desiredIndex;
 
-        SelectProjectableObject(ProjectableObjectsInventory[currentSelectionIndex]);
+        SelectProjectableObject(projectableObjectsIndexed[currentSelectionIndex]);
 
-        OnProjectableObjectDeselected?.Invoke(this,new OnSelectionEventArgs { index = previousIndex, projectableObjectSO = ProjectableObjectsInventory[previousIndex] });
-        OnProjectableObjectSelected?.Invoke(this,new OnSelectionEventArgs { index = currentSelectionIndex, projectableObjectSO = ProjectableObjectsInventory[currentSelectionIndex] });
+        OnProjectableObjectDeselected?.Invoke(this,new OnSelectionEventArgs { projectableObjectIndexed =  projectableObjectsIndexed[previousIndex] });
+        OnProjectableObjectSelected?.Invoke(this,new OnSelectionEventArgs { projectableObjectIndexed = selectedProjectableObjectIndexed });
     }
 
     private void HandleProjectableObjectSelectionPrevious()
@@ -136,16 +179,16 @@ public class ProjectableObjectSelectionManager : MonoBehaviour
         if (!SelectionInputPrevious) return;
 
         int previousIndex = currentSelectionIndex;
-        int maxIndex = ProjectableObjectsInventory.Count - 1;
+        int maxIndex = projectableObjectsIndexed.Count - 1;
 
         int desiredIndex = currentSelectionIndex - 1;
 
         currentSelectionIndex = desiredIndex < 0 ? maxIndex : desiredIndex;
 
-        SelectProjectableObject(ProjectableObjectsInventory[currentSelectionIndex]);
+        SelectProjectableObject(projectableObjectsIndexed[currentSelectionIndex]);
 
-        OnProjectableObjectDeselected?.Invoke(this, new OnSelectionEventArgs { index = previousIndex, projectableObjectSO = ProjectableObjectsInventory[previousIndex] });
-        OnProjectableObjectSelected?.Invoke(this, new OnSelectionEventArgs { index = currentSelectionIndex, projectableObjectSO = ProjectableObjectsInventory[currentSelectionIndex] });
+        OnProjectableObjectDeselected?.Invoke(this, new OnSelectionEventArgs { projectableObjectIndexed = projectableObjectsIndexed[previousIndex] });
+        OnProjectableObjectSelected?.Invoke(this, new OnSelectionEventArgs { projectableObjectIndexed = selectedProjectableObjectIndexed });
     }
 
     private void HandleProjectableObjectExactSlotSelection()
@@ -160,35 +203,29 @@ public class ProjectableObjectSelectionManager : MonoBehaviour
     {
         if (!input) return;
         if (currentSelectionIndex == index) return;
-        if (ProjectableObjectsInventory.Count <= index) return;
+        if (projectableObjectsIndexed.Count <= index) return;
 
         int previousIndex = currentSelectionIndex;
         currentSelectionIndex = index;
 
-        SelectProjectableObject(ProjectableObjectsInventory[currentSelectionIndex]);
+        SelectProjectableObject(projectableObjectsIndexed[currentSelectionIndex]);
 
-        OnProjectableObjectDeselected?.Invoke(this, new OnSelectionEventArgs { index = previousIndex, projectableObjectSO = ProjectableObjectsInventory[previousIndex] });
-        OnProjectableObjectSelected?.Invoke(this, new OnSelectionEventArgs { index = currentSelectionIndex, projectableObjectSO = ProjectableObjectsInventory[currentSelectionIndex] });
+        OnProjectableObjectDeselected?.Invoke(this, new OnSelectionEventArgs { projectableObjectIndexed = projectableObjectsIndexed[previousIndex] });
+        OnProjectableObjectSelected?.Invoke(this, new OnSelectionEventArgs { projectableObjectIndexed = projectableObjectsIndexed[previousIndex] });
     }
 
-    private void SelectProjectableObject(ProjectableObjectSO projectableObjectSO)
+    private void SelectProjectableObject(ProjectableObjectIndexed projectableObjectIndexed)
     {
-        if (!projectableObjectSO) return;
-        selectedProjectableObjectSO = projectableObjectSO; 
+        selectedProjectableObjectIndexed = projectableObjectIndexed; 
     }
 
     #region ObjectLearned
     private void ProjectableObjectsLearningManager_OnProjectableObjectLearned(object sender, ProjectableObjectsLearningManager.OnProjectableObjectLearnedEventArgs e)
     {
-        OnObjectAddedToInventory?.Invoke(this, new OnObjectAddedToInventoryEventArgs { projectableObjectSO = e.projectableObjectLearned });
-
-        if (ProjectableObjectsInventory.Count <= 1)
-        {
-            currentSelectionIndex = 0;
-            SelectProjectableObject(ProjectableObjectsInventory[currentSelectionIndex]);
-            OnProjectableObjectSelected?.Invoke(this, new OnSelectionEventArgs { index = currentSelectionIndex, projectableObjectSO = ProjectableObjectsInventory[currentSelectionIndex] });
-        }
+        AddProjectableObjectToIndexedList(e.projectableObjectLearned);
     }
+
+    
 
     #endregion
 
