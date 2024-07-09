@@ -78,14 +78,6 @@ public class NewProjectionInput : ProjectionInput
         return projectionInput;
     }
 
-    public override bool Get5thProjectableObjectDown()
-    {
-        if (!CanProcessProjectionInput()) return false;
-
-        bool projectionInput = playerInputActions.Projection._5thProjectableObject.WasPerformedThisFrame();
-        return projectionInput;
-    }
-
     public override bool GetAllProjectableObjectsDematerializationDown()
     {
         if (!CanProcessProjectionInput()) return false;
