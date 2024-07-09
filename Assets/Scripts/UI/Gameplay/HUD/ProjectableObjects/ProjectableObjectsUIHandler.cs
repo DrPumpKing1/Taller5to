@@ -10,6 +10,9 @@ public class ProjectableObjectsUIHandler : MonoBehaviour
     [SerializeField] private Animator projectableObjectSelectionUIAnimator;
     [SerializeField] private List<ProjectableObjectUI> projectableObjectUIs;
 
+    [Header("Debug")]
+    [SerializeField] private bool debug;
+
     private const string IDLE_0_ANIMATION = "Idle0";
     private const string IDLE_1_ANIMATION = "Idle1";
     private const string IDLE_2_ANIMATION = "Idle2";
@@ -23,52 +26,49 @@ public class ProjectableObjectsUIHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        ProjectableObjectSelectionManager.OnProjectableObjectSelectionManagerInitialized += ProjectionManager_OnProjectionManagerInitialized;
+        ProjectableObjectSelectionManager.OnProjectableObjectSelectionManagerInitialized += ProjectableObjectSelectionManager_OnProjectableObjectSelectionManagerInitialized;
 
         ProjectableObjectSelectionManager.OnObjectAddedToInventory += ProjectableObjectSelectionManager_OnObjectAddedToInventory;
-        ProjectableObjectSelectionManager.OnProjectableObjectSelected += ProjectionManager_OnProjectableObjectSelected;
-        ProjectableObjectSelectionManager.OnProjectableObjectDeselected += ProjectionManager_OnProjectableObjectDeselected;
+        ProjectableObjectSelectionManager.OnProjectableObjectSelected += ProjectableObjectSelectionManager_OnProjectableObjectSelected;
+        ProjectableObjectSelectionManager.OnProjectableObjectDeselected += ProjectableObjectSelectionManager_OnProjectableObjectDeselected;
     }
 
     private void OnDisable()
     {
-        ProjectableObjectSelectionManager.OnProjectableObjectSelectionManagerInitialized -= ProjectionManager_OnProjectionManagerInitialized;
+        ProjectableObjectSelectionManager.OnProjectableObjectSelectionManagerInitialized -= ProjectableObjectSelectionManager_OnProjectableObjectSelectionManagerInitialized;
 
         ProjectableObjectSelectionManager.OnObjectAddedToInventory -= ProjectableObjectSelectionManager_OnObjectAddedToInventory;
-        ProjectableObjectSelectionManager.OnProjectableObjectSelected -= ProjectionManager_OnProjectableObjectSelected;
-        ProjectableObjectSelectionManager.OnProjectableObjectDeselected -= ProjectionManager_OnProjectableObjectDeselected;
+        ProjectableObjectSelectionManager.OnProjectableObjectSelected -= ProjectableObjectSelectionManager_OnProjectableObjectSelected;
+        ProjectableObjectSelectionManager.OnProjectableObjectDeselected -= ProjectableObjectSelectionManager_OnProjectableObjectDeselected;
     }
 
     private void InitializeUI()
     {
-        SetProyectableObjectsUI(ProjectableObjectSelectionManager.Instance.ProjectableObjectsIndexed);
+        SetProjectableObjectsUI(ProjectableObjectSelectionManager.Instance.ProjectableObjectsIndexed);
+        PlayRawAnimation(ProjectableObjectSelectionManager.Instance.ProjectableObjectsIndexed.Count);
         DeselectAllUI();
     }
 
-    private void SetProyectableObjectsUI(List<ProjectableObjectSelectionManager.ProjectableObjectIndexed> projectableObjectsIndexed)
+    private void SetProjectableObjectsUI(List<ProjectableObjectSelectionManager.ProjectableObjectIndexed> availableProjectableObjectsIndexed)
     {
-        SetExistingProjectableObjectUIs(projectableObjectsIndexed);
-        PlayRawAnimation(projectableObjectsIndexed.Count);
-    }
-    private void AddProjectableObjectToUI(ProjectableObjectSelectionManager.ProjectableObjectIndexed projectableObjectIndexed)
-    {
-        SetAddedProjectableObjectUI(projectableObjectIndexed);
-        PlayTransitionAnimation(ProjectableObjectSelectionManager.Instance.ProjectableObjectsIndexed.Count);
-    }
-
-    private void SetExistingProjectableObjectUIs(List<ProjectableObjectSelectionManager.ProjectableObjectIndexed> availableProjectableObjectsIndexed)
-    {
-        int index = 0;
-
         foreach(ProjectableObjectSelectionManager.ProjectableObjectIndexed availableProjectableObjectIndexed in availableProjectableObjectsIndexed)
         {
-
+            SetProjectableObjectUI(availableProjectableObjectIndexed);
         }
     }
 
-    private void SetAddedProjectableObjectUI(ProjectableObjectSelectionManager.ProjectableObjectIndexed projectableObjectIndexed)
+    private void SetProjectableObjectUI(ProjectableObjectSelectionManager.ProjectableObjectIndexed projectableObjectIndexed)
     {
-        
+        foreach(ProjectableObjectUI projectableObjectUI in projectableObjectUIs)
+        {
+            if(projectableObjectUI.Index == projectableObjectIndexed.index)
+            {
+                projectableObjectUI.SetUI(projectableObjectIndexed.projectableObjectSO);
+                return;
+            }
+        }
+
+        if(debug) Debug.Log($"No projectable object UI matches index: {projectableObjectIndexed.index}");
     }
 
     private void PlayRawAnimation(int availableProjectableObjectsIndexed)
@@ -138,7 +138,7 @@ public class ProjectableObjectsUIHandler : MonoBehaviour
             }
         }
 
-        Debug.Log($"No projectable object UI matches selection index: {projectableObjectIndexed.index}");
+        if (debug) Debug.Log($"No projectable object UI matches selection index: {projectableObjectIndexed.index}");
     }
 
     private void DeselectIndexedProjectableObject(ProjectableObjectSelectionManager.ProjectableObjectIndexed projectableObjectIndexed)
@@ -152,31 +152,30 @@ public class ProjectableObjectsUIHandler : MonoBehaviour
             }
         }
 
-        Debug.Log($"No projectable object UI matches deselection index: {projectableObjectIndexed.index}");
+        if (debug) Debug.Log($"No projectable object UI matches deselection index: {projectableObjectIndexed.index}");
     }
 
 
     #region Events Subscriptions
-    private void ProjectionManager_OnProjectionManagerInitialized(object sender, EventArgs e)
+    private void ProjectableObjectSelectionManager_OnProjectableObjectSelectionManagerInitialized(object sender, EventArgs e)
     {
         InitializeUI();     
     }
 
     private void ProjectableObjectSelectionManager_OnObjectAddedToInventory(object sender, ProjectableObjectSelectionManager.OnObjectAddedToInventoryEventArgs e)
     {
-        AddProjectableObjectToUI(e.projectableObjectIndexed);
+        SetProjectableObjectUI(e.projectableObjectIndexed);
+        PlayTransitionAnimation(ProjectableObjectSelectionManager.Instance.ProjectableObjectsIndexed.Count);
     }
 
-    private void ProjectionManager_OnProjectableObjectSelected(object sender, ProjectableObjectSelectionManager.OnSelectionEventArgs e)
+    private void ProjectableObjectSelectionManager_OnProjectableObjectSelected(object sender, ProjectableObjectSelectionManager.OnSelectionEventArgs e)
     {
         SelectIndexedProjectableObject(e.projectableObjectIndexed);
-        Debug.Log(e.projectableObjectIndexed.index + "Selected");
     }
 
-    private void ProjectionManager_OnProjectableObjectDeselected(object sender, ProjectableObjectSelectionManager.OnSelectionEventArgs e)
+    private void ProjectableObjectSelectionManager_OnProjectableObjectDeselected(object sender, ProjectableObjectSelectionManager.OnSelectionEventArgs e)
     {
         DeselectIndexedProjectableObject(e.projectableObjectIndexed);
-        Debug.Log(e.projectableObjectIndexed.index + "Deselected");
     }
     #endregion
 }
