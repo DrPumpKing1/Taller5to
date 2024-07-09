@@ -8,6 +8,7 @@ public class HUDVisibilityHandler : MonoBehaviour
     public static HUDVisibilityHandler Instance { get; private set; }
 
     [Header("Settings")]
+    [SerializeField] private string logToShow;
     [SerializeField] private bool isVisible;
 
     public bool IsVisible => isVisible;
@@ -20,11 +21,11 @@ public class HUDVisibilityHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        FirstObjectLearnedEnd.OnFirstObjectLearnedEnd += FirstObjectLearnedEnd_OnFirstObjectLearnedEnd;
+        GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
     }
     private void OnDisable()
     {
-        FirstObjectLearnedEnd.OnFirstObjectLearnedEnd -= FirstObjectLearnedEnd_OnFirstObjectLearnedEnd;
+        GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
     }
 
     private void Awake()
@@ -69,8 +70,9 @@ public class HUDVisibilityHandler : MonoBehaviour
         }
     }
 
-    private void FirstObjectLearnedEnd_OnFirstObjectLearnedEnd(object sender, EventArgs e)
+    private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
+        if (e.gameplayAction.log != logToShow) return;
         OnShowHUDFirstTime?.Invoke(this, EventArgs.Empty);
         SetIsVisible(true);
     }

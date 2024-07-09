@@ -11,6 +11,7 @@ public class InventoryOpeningManager : MonoBehaviour
     [SerializeField] private UIInput UIInput;
 
     [Header("Settings")]
+    [SerializeField] private string logToSetCanOpen;
     [SerializeField] private bool canOpenInventory;
 
     public static event EventHandler OnInventoryOpen;
@@ -24,13 +25,13 @@ public class InventoryOpeningManager : MonoBehaviour
     private void OnEnable()
     {
         InventoryUI.OnCloseFromUI += InventoryUI_OnCloseFromUI;
-        FirstShieldPieceCollectedEnd.OnFirstShieldPieceCollectedEnd += FirstShieldPieceCollectedEnd_OnFirstShieldPieceCollectedEnd;            
+        GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
     }
 
     private void OnDisable()
     {
         InventoryUI.OnCloseFromUI -= InventoryUI_OnCloseFromUI;
-        FirstShieldPieceCollectedEnd.OnFirstShieldPieceCollectedEnd -= FirstShieldPieceCollectedEnd_OnFirstShieldPieceCollectedEnd;            
+        GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
     }
 
     private void Awake()
@@ -106,8 +107,9 @@ public class InventoryOpeningManager : MonoBehaviour
     }
     #endregion
 
-    private void FirstShieldPieceCollectedEnd_OnFirstShieldPieceCollectedEnd(object sender, EventArgs e)
+    private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
+        if (e.gameplayAction.log != logToSetCanOpen) return;
         SetCanOpenInventory(true);
     }
 }

@@ -8,6 +8,7 @@ public class PetPlayerAttachment : MonoBehaviour
     public static PetPlayerAttachment Instance { get; private set; }
 
     [Header("Settings")]
+    [SerializeField] private string logToAttach;
     [SerializeField] private bool attachToPlayer;
     public bool AttachToPlayer => attachToPlayer;
 
@@ -15,12 +16,12 @@ public class PetPlayerAttachment : MonoBehaviour
 
     private void OnEnable()
     {
-        MeetVyrxEnd.OnMeetVyrxEnd += MeetVyrxEnd_OnMeetVyrxEnd;
+        GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
     }
 
     private void OnDisable()
     {
-        MeetVyrxEnd.OnMeetVyrxEnd -= MeetVyrxEnd_OnMeetVyrxEnd;
+        GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
     }
 
     private void Awake()
@@ -47,8 +48,10 @@ public class PetPlayerAttachment : MonoBehaviour
 
     public void SetAttachToPlayer(bool attach) => attachToPlayer = attach;
 
-    private void MeetVyrxEnd_OnMeetVyrxEnd(object sender, EventArgs e)
+
+    private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
+        if (e.gameplayAction.log != logToAttach) return;
         SetAttachToPlayer(true);
         OnVyrxAttachToPlayer?.Invoke(this, EventArgs.Empty);
     }
