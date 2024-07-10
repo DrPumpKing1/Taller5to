@@ -27,7 +27,8 @@ public class ScenesManager : MonoBehaviour
 
     public class OnSceneLoadEventArgs : EventArgs
     {
-        public string sceneName;
+        public string originScene;
+        public string targetScene;
     }
 
     private void OnEnable()
@@ -62,8 +63,8 @@ public class ScenesManager : MonoBehaviour
 
     private void Start()
     {
-        OnSceneLoad?.Invoke(this, new OnSceneLoadEventArgs { sceneName = SceneManager.GetActiveScene().name });
-        OnSceneTransitionInStart.Invoke(this, new OnSceneLoadEventArgs { sceneName = SceneManager.GetActiveScene().name });
+        OnSceneLoad?.Invoke(this, new OnSceneLoadEventArgs { originScene = "",targetScene = SceneManager.GetActiveScene().name });
+        OnSceneTransitionInStart.Invoke(this, new OnSceneLoadEventArgs { originScene = "", targetScene = SceneManager.GetActiveScene().name });
         SetSceneState(State.TransitionIn);
     }
 
@@ -78,22 +79,24 @@ public class ScenesManager : MonoBehaviour
         SimpleLoadTargetScene(currentSceneName);
     }
 
-    public void SimpleLoadTargetScene(string sceneName)
+    public void SimpleLoadTargetScene(string targetScene)
     {
         if (!CanChangeScene()) return;
-        StartCoroutine(LoadSceneCoroutine(sceneName));
+        StartCoroutine(LoadSceneCoroutine(targetScene));
     }
     #endregion
 
     #region FadeLoad
 
-    public void FadeLoadTargetScene(string sceneName)
+    public void FadeLoadTargetScene(string targetScene)
     {
         if (!CanChangeScene()) return;
 
+        string originScene = SceneManager.GetActiveScene().name;
+
         SetSceneState(State.TransitionOut);
-        OnSceneTransitionOutStart?.Invoke(this, new OnSceneLoadEventArgs { sceneName = sceneName });
-        sceneToLoad = sceneName;
+        OnSceneTransitionOutStart?.Invoke(this, new OnSceneLoadEventArgs { originScene = originScene, targetScene = targetScene });
+        sceneToLoad = targetScene;
     }
 
     public void FadeReloadCurrentScene()
@@ -102,12 +105,14 @@ public class ScenesManager : MonoBehaviour
         FadeLoadTargetScene(currentSceneName);
     }
 
-    private IEnumerator LoadSceneTransitionCoroutine(string sceneName)
+    private IEnumerator LoadSceneTransitionCoroutine(string targetScene)
     {
-        yield return StartCoroutine(LoadSceneCoroutine(sceneName));
+        string originScene = SceneManager.GetActiveScene().name;
+
+        yield return StartCoroutine(LoadSceneCoroutine(targetScene));
 
         yield return new WaitForSeconds(0.1f);
-        OnSceneTransitionInStart?.Invoke(this, new OnSceneLoadEventArgs { sceneName = sceneName });
+        OnSceneTransitionInStart?.Invoke(this, new OnSceneLoadEventArgs { originScene = originScene, targetScene = targetScene });
 
         SetSceneState(State.TransitionIn);
 
@@ -116,24 +121,28 @@ public class ScenesManager : MonoBehaviour
 
     #endregion
 
-    public void LoadScene(string sceneName)
+    public void LoadScene(string targetScene)
     {
-        SceneManager.LoadSceneAsync(sceneName);
-        OnSceneLoad?.Invoke(this, new OnSceneLoadEventArgs { sceneName = sceneName });
+        string originScene = SceneManager.GetActiveScene().name;
+
+        SceneManager.LoadSceneAsync(targetScene);
+        OnSceneLoad?.Invoke(this, new OnSceneLoadEventArgs { originScene = originScene, targetScene = targetScene });
     }
 
-    private IEnumerator LoadSceneCoroutine(string sceneName)
+    private IEnumerator LoadSceneCoroutine(string targetScene)
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        string originScene = SceneManager.GetActiveScene().name;
 
-        OnSceneLoadStart?.Invoke(this, new OnSceneLoadEventArgs { sceneName = sceneName });
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetScene);
+
+        OnSceneLoadStart?.Invoke(this, new OnSceneLoadEventArgs { originScene = originScene, targetScene = targetScene });
 
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
 
-        OnSceneLoad?.Invoke(this, new OnSceneLoadEventArgs { sceneName = sceneName });
+        OnSceneLoad?.Invoke(this, new OnSceneLoadEventArgs { originScene = originScene, targetScene = targetScene });
     }
 
     public void QuitGame() => Application.Quit();

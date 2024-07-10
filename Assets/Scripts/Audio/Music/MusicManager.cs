@@ -94,6 +94,6 @@ public class MusicManager : MonoBehaviour
 
     private void ScenesManager_OnSceneLoad(object sender, ScenesManager.OnSceneLoadEventArgs e)
     {
-        HandleScenesMusicPlay(e.sceneName);
+        HandleScenesMusicPlay(e.targetScene);
     }
 }

@@ -1,14 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneMusicFadeHandler : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private float sceneFadeInTime;
     [SerializeField] private float sceneFadeOutTime;
-    [SerializeField] private List<string> exceptionScenes;
+    [SerializeField] private List<ExceptionTransition> exceptionTransitions;
     
+    [System.Serializable]
+    public class ExceptionTransition
+    {
+        public string originScene;
+        public string targetScene;
+    }
 
     private void OnEnable()
     {
@@ -24,21 +31,21 @@ public class SceneMusicFadeHandler : MonoBehaviour
 
     private void ScenesManager_OnSceneTransitionInStart(object sender, ScenesManager.OnSceneLoadEventArgs e)
     {
-        if (IsExceptionScene(e.sceneName)) return;
+        if (IsExceptionTransition(e.originScene, e.targetScene)) return;
         MusicFadeManager.Instance.FadeInMusic(sceneFadeInTime);
     }
 
     private void ScenesManager_OnSceneTransitionOutStart(object sender, ScenesManager.OnSceneLoadEventArgs e)
     {
-        if (IsExceptionScene(e.sceneName)) return;
+        if (IsExceptionTransition(e.originScene, e.targetScene)) return;
         MusicFadeManager.Instance.FadeOutMusic(sceneFadeOutTime);
     }
 
-    private bool IsExceptionScene(string sceneName)
+    private bool IsExceptionTransition(string originScene, string targetScene)
     {
-        foreach(string exceptionScene in exceptionScenes)
+        foreach(ExceptionTransition exceptionTransition in exceptionTransitions)
         {
-            if (exceptionScene == sceneName) return true;
+            if (exceptionTransition.targetScene == targetScene && exceptionTransition.originScene == originScene) return true;
         }
 
         return false;
