@@ -28,8 +28,6 @@ public class PlayerAnimationController : MonoBehaviour
 
     private const string INTERACT_TRIGGER = "Interact";
 
-    private const string DEATH_TRIGGER = "Death";
-
     private const string GROUNDED_BOOL = "Grounded";
 
     private void OnEnable()
@@ -58,7 +56,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void LateUpdate()
     {
-        HandleTriggerReset();
+        //HandleTriggerReset();
     }
 
     private void HandleHorizontalSpeedBlend()
@@ -73,10 +71,10 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void HandleTriggerReset()
     {
-        if (animator.IsInTransition(0)) return;
+        //if (animator.IsInTransition(0)) return;
 
         animator.ResetTrigger(FALL_TRIGGER);
-        ResetLandingTriggers();
+        //ResetLandingTriggers();
     }
 
     private void ResetLandingTriggers()
@@ -88,9 +86,36 @@ public class PlayerAnimationController : MonoBehaviour
         animator.ResetTrigger(HARD_LAND_TRIGGER);
     }
 
-    private void PlayerFall_OnPlayerFall(object sender, EventArgs e) => animator.SetTrigger(FALL_TRIGGER);
-    private void PlayerLand_OnPlayerSoftLand(object sender, EventArgs e) => animator.SetTrigger(SOFT_LAND_TRIGGER);
-    private void PlayerLand_OnPlayerNormalLand(object sender, EventArgs e) => animator.SetTrigger(NORMAL_LAND_TRIGGER);
-    private void PlayerLand_OnPlayerHardLand(object sender, EventArgs e) => animator.SetTrigger(HARD_LAND_TRIGGER);
-    private void PlayerHealth_OnPlayerDeath(object sender, EventArgs e) => animator.SetTrigger(DEATH_TRIGGER);
+    private void PlayerFall_OnPlayerFall(object sender, EventArgs e)
+    {
+        animator.ResetTrigger(SOFT_LAND_TRIGGER);
+        animator.ResetTrigger(NORMAL_LAND_TRIGGER);
+        animator.ResetTrigger(HARD_LAND_TRIGGER);
+
+        animator.SetTrigger(FALL_TRIGGER);
+    }
+    private void PlayerLand_OnPlayerSoftLand(object sender, EventArgs e)
+    {
+        animator.ResetTrigger(FALL_TRIGGER);
+        animator.ResetTrigger(NORMAL_LAND_TRIGGER);
+        animator.ResetTrigger(HARD_LAND_TRIGGER);
+
+        animator.SetTrigger(SOFT_LAND_TRIGGER);
+    }
+    private void PlayerLand_OnPlayerNormalLand(object sender, EventArgs e)
+    {
+        animator.ResetTrigger(FALL_TRIGGER);
+        animator.ResetTrigger(SOFT_LAND_TRIGGER);
+        animator.ResetTrigger(HARD_LAND_TRIGGER);
+
+        animator.SetTrigger(NORMAL_LAND_TRIGGER);
+    }
+    private void PlayerLand_OnPlayerHardLand(object sender, EventArgs e)
+    {
+        animator.ResetTrigger(FALL_TRIGGER);
+        animator.ResetTrigger(SOFT_LAND_TRIGGER);
+        animator.ResetTrigger(NORMAL_LAND_TRIGGER);
+
+        animator.SetTrigger(HARD_LAND_TRIGGER);
+    }
 }

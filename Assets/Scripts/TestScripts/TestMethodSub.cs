@@ -5,35 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class TestMethodSub : MonoBehaviour
 {
-    [SerializeField] private PlayerLand playerLand;
-    [SerializeField] private PlayerFall playerFall;
-
-    [SerializeField] private DialogueSO dialogueSO;
     private void OnEnable()
     {
-        //playerFall.OnPlayerFall += PlayerFall_OnPlayerFall;
-        //playerLand.OnPlayerLand += PlayerLand_OnPlayerLand;
-    }
+        PlayerFall.OnPlayerFall += PlayerFall_OnPlayerFall;
+        PlayerLand.OnPlayerLand += PlayerLand_OnPlayerLand;
 
+        PlayerLand.OnPlayerSoftLand += PlayerLand_OnPlayerSoftLand;
+        PlayerLand.OnPlayerNormalLand += PlayerLand_OnPlayerNormalLand;
+        PlayerLand.OnPlayerHardLand += PlayerLand_OnPlayerHardLand;
+    }
     private void OnDisable()
     {
-        //playerFall.OnPlayerFall -= PlayerFall_OnPlayerFall;
-        //playerLand.OnPlayerLand -= PlayerLand_OnPlayerLand;
+        PlayerFall.OnPlayerFall -= PlayerFall_OnPlayerFall;
+        PlayerLand.OnPlayerLand -= PlayerLand_OnPlayerLand;
 
+        PlayerLand.OnPlayerSoftLand -= PlayerLand_OnPlayerSoftLand;
+        PlayerLand.OnPlayerNormalLand -= PlayerLand_OnPlayerNormalLand;
+        PlayerLand.OnPlayerHardLand -= PlayerLand_OnPlayerHardLand;
     }
 
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            DialogueManager.Instance.StartDialogue(dialogueSO);
-        }
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            DialogueManager.Instance.EndDialogue();
-        }
-    }
     private void PlayerFall_OnPlayerFall(object sender, System.EventArgs e)
     {
         Debug.Log("Fall");
@@ -45,5 +35,19 @@ public class TestMethodSub : MonoBehaviour
 
         Debug.Log("Land");
         Debug.Log(e.landHeight);
+    }
+
+    private void PlayerLand_OnPlayerSoftLand(object sender, System.EventArgs e)
+    {
+        Debug.Log("SoftLand");
+    }
+    private void PlayerLand_OnPlayerNormalLand(object sender, System.EventArgs e)
+    {
+        Debug.Log("NormalLand");
+
+    }
+    private void PlayerLand_OnPlayerHardLand(object sender, System.EventArgs e)
+    {
+        Debug.Log("HardLand");
     }
 }
