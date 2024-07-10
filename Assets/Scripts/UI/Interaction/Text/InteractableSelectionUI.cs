@@ -8,11 +8,16 @@ public class InteractableSelectionUI : MonoBehaviour
     [Header("Interactable Components")]
     [SerializeField] private Component interactableComponent;
 
+    [Header("Components")]
+    [SerializeField] private Animator selectionUIAnimator;
+
     [Header("UI Components")]
-    [SerializeField] private CanvasGroup selectionUICanvasGroup;
     [SerializeField] private TextMeshProUGUI interactableSelectionText;
 
     private IInteractable interactable;
+
+    private const string SHOW_TRIGGER = "Show";
+    private const string HIDE_TRIGGER = "Hide";
 
     private void OnEnable()
     {
@@ -49,12 +54,14 @@ public class InteractableSelectionUI : MonoBehaviour
 
     public void HideSelectionUI()
     {
-        GeneralUIMethods.SetCanvasGroupAlpha(selectionUICanvasGroup,0f);
+        selectionUIAnimator.ResetTrigger(SHOW_TRIGGER);
+        selectionUIAnimator.SetTrigger(HIDE_TRIGGER);
     }
 
     public void ShowSelectionUI()
     {
-        GeneralUIMethods.SetCanvasGroupAlpha(selectionUICanvasGroup, 1f);
+        selectionUIAnimator.ResetTrigger(HIDE_TRIGGER);
+        selectionUIAnimator.SetTrigger(SHOW_TRIGGER);
     }
 
     private void SetInteractableSelectionText() => interactableSelectionText.text = $"{interactable.TooltipMessage}";

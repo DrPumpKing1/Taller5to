@@ -9,15 +9,20 @@ public class HoldInteractableSelectionUI : MonoBehaviour
     [Header("Hold Interactable Components")]
     [SerializeField] private Component holdInteractableComponent;
 
+    [Header("Components")]
+    [SerializeField] private Animator selectionUIAnimator;
+    [SerializeField] private Animator holdUIAnimator;
+
     [Header("UI Components")]
-    [SerializeField] private CanvasGroup selectionUICanvasGroup;
     [SerializeField] private TextMeshProUGUI interactableSelectionText;
     [Space]
-    [SerializeField] private CanvasGroup holdUICanvasGroup;
     [SerializeField] private TextMeshProUGUI interactableHoldText;
     [SerializeField] private Image indicatorImage;
 
     private IHoldInteractable holdInteractable;
+
+    private const string SHOW_TRIGGER = "Show";
+    private const string HIDE_TRIGGER = "Hide";
 
     private void OnEnable()
     {
@@ -65,24 +70,28 @@ public class HoldInteractableSelectionUI : MonoBehaviour
         if (holdInteractable == null) Debug.LogError("The holdInteractable component does not implement IHoldInteractable");
     }
 
-    private void HideSelectionUI()
+    public void HideSelectionUI()
     {
-        GeneralUIMethods.SetCanvasGroupAlpha(selectionUICanvasGroup, 0f);
+        selectionUIAnimator.ResetTrigger(SHOW_TRIGGER);
+        selectionUIAnimator.SetTrigger(HIDE_TRIGGER);
     }
 
-    private void ShowSelectionUI()
+    public void ShowSelectionUI()
     {
-        GeneralUIMethods.SetCanvasGroupAlpha(selectionUICanvasGroup, 1f);
+        selectionUIAnimator.ResetTrigger(HIDE_TRIGGER);
+        selectionUIAnimator.SetTrigger(SHOW_TRIGGER);
     }
 
     private void HideHoldUI()
     {
-        GeneralUIMethods.SetCanvasGroupAlpha(holdUICanvasGroup, 0f);
+        holdUIAnimator.ResetTrigger(SHOW_TRIGGER);
+        holdUIAnimator.SetTrigger(HIDE_TRIGGER);
     }
 
     private void ShowHoldUI()
     {
-        GeneralUIMethods.SetCanvasGroupAlpha(holdUICanvasGroup, 1f);
+        holdUIAnimator.ResetTrigger(HIDE_TRIGGER);
+        holdUIAnimator.SetTrigger(SHOW_TRIGGER);
     }
 
     private void SetInteractableSelectionText() => interactableSelectionText.text = $"{holdInteractable.TooltipMessage}";

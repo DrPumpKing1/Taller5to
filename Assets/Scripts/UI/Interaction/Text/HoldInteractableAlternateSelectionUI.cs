@@ -9,15 +9,20 @@ public class HoldInteractableAlternateSelectionUI : MonoBehaviour
     [Header("Hold Interactable Alternate Components")]
     [SerializeField] private Component holdInteractableAlternateComponent;
 
+    [Header("Components")]
+    [SerializeField] private Animator selectionUIAnimator;
+    [SerializeField] private Animator holdUIAnimator;
+
     [Header("UI Components")]
-    [SerializeField] private CanvasGroup alternateSelectionUICanvasGroup;
     [SerializeField] private TextMeshProUGUI interactableAlternateSelectionText;
     [Space]
-    [SerializeField] private CanvasGroup holdAlternateUICanvasGroup;
     [SerializeField] private TextMeshProUGUI interactableAlternateHoldText;
     [SerializeField] private Image indicatorImage;
 
     private IHoldInteractableAlternate holdInteractableAlternate;
+
+    private const string SHOW_TRIGGER = "Show";
+    private const string HIDE_TRIGGER = "Hide";
 
     private void OnEnable()
     {
@@ -65,24 +70,28 @@ public class HoldInteractableAlternateSelectionUI : MonoBehaviour
         if (holdInteractableAlternate == null) Debug.LogError("The holdInteractableAlternate component does not implement IHoldInteractableAlternate");
     }
 
-    private void HideSelectionUI()
+    public void HideSelectionUI()
     {
-        GeneralUIMethods.SetCanvasGroupAlpha(alternateSelectionUICanvasGroup, 0f);
+        selectionUIAnimator.ResetTrigger(SHOW_TRIGGER);
+        selectionUIAnimator.SetTrigger(HIDE_TRIGGER);
     }
 
-    private void ShowSelectionUI()
+    public void ShowSelectionUI()
     {
-        GeneralUIMethods.SetCanvasGroupAlpha(alternateSelectionUICanvasGroup, 1f);
+        selectionUIAnimator.ResetTrigger(HIDE_TRIGGER);
+        selectionUIAnimator.SetTrigger(SHOW_TRIGGER);
     }
 
     private void HideHoldUI()
     {
-        GeneralUIMethods.SetCanvasGroupAlpha(holdAlternateUICanvasGroup, 0f);
+        holdUIAnimator.ResetTrigger(SHOW_TRIGGER);
+        holdUIAnimator.SetTrigger(HIDE_TRIGGER);
     }
 
     private void ShowHoldUI()
     {
-        GeneralUIMethods.SetCanvasGroupAlpha(holdAlternateUICanvasGroup, 1f);
+        holdUIAnimator.ResetTrigger(HIDE_TRIGGER);
+        holdUIAnimator.SetTrigger(SHOW_TRIGGER);
     }
 
     private void SetInteractableAlternateSelectionText() => interactableAlternateSelectionText.text = $"{holdInteractableAlternate.TooltipMessageAlternate}";

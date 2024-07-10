@@ -8,11 +8,16 @@ public class InteractableAlternateSelectionUI : MonoBehaviour
     [Header("Interactable Alternate Components")]
     [SerializeField] private Component interactableAlternateComponent;
 
+    [Header("Components")]
+    [SerializeField] private Animator selectionUIAnimator;
+
     [Header("UI Components")]
-    [SerializeField] private CanvasGroup alternateSelectionUICanvasGroup;
     [SerializeField] private TextMeshProUGUI interactableAlternateSelectionText;
 
     private IInteractableAlternate interactableAlternate;
+
+    private const string SHOW_TRIGGER = "Show";
+    private const string HIDE_TRIGGER = "Hide";
 
     private void OnEnable()
     {
@@ -49,12 +54,14 @@ public class InteractableAlternateSelectionUI : MonoBehaviour
 
     public void HideSelectionUI()
     {
-        GeneralUIMethods.SetCanvasGroupAlpha(alternateSelectionUICanvasGroup, 0f);
+        selectionUIAnimator.ResetTrigger(SHOW_TRIGGER);
+        selectionUIAnimator.SetTrigger(HIDE_TRIGGER);
     }
 
     public void ShowSelectionUI()
     {
-        GeneralUIMethods.SetCanvasGroupAlpha(alternateSelectionUICanvasGroup, 1f);
+        selectionUIAnimator.ResetTrigger(HIDE_TRIGGER);
+        selectionUIAnimator.SetTrigger(SHOW_TRIGGER);
     }
 
     private void SetInteractableAlternateSelectionText() => interactableAlternateSelectionText.text = $"{interactableAlternate.TooltipMessageAlternate}";
