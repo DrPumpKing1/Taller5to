@@ -48,7 +48,7 @@ MonoBehaviour:
   capsuleCollider: {fileID: 4813907677414057247}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 129
+    m_Bits: 2097281
   checkGoundYOffset: -0.1
   raySphereRadius: 0.15
   checkSlopeRayLength: 0.1
@@ -70,11 +70,11 @@ MonoBehaviour:
   playerHorizontalMovement: {fileID: 1658583223491952907}
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 129
+    m_Bits: 2097281
   wallRayLength: 0.1
   wallSphereRadius: 0.1
   wallDetectionPoints:
-  - 0.2
+  - 0.25
   - 0.5
   - 0.95
   diagonalRayLength: 0.75

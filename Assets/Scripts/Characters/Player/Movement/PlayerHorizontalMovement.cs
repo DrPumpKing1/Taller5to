@@ -116,8 +116,8 @@ public class PlayerHorizontalMovement : MonoBehaviour
     private bool CanMove()
     {
         if (DirectionInputVector == Vector2.zero) return false;
-        if (checkWall.HitCorner && checkWall.HitDiagonalWall) return false;
-        if (checkWall.MovementTowardsWall && checkWall.HitDiagonalWall) return false;
+        if (checkWall.HitCorner && checkWall.HitDiagonalWall && !checkGround.OnSlope) return false;
+        if (checkWall.MovementTowardsWall && checkWall.HitDiagonalWall && !checkGround.OnSlope) return false;
         if (playerLand.IsRecoveringFromLanding) return false;
         if (playerInteract.IsInteracting) return false;
         if (playerInteractAlternate.IsInteractingAlternate) return false;
@@ -195,6 +195,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     public bool HasMovementInput() => DirectionInputVector != Vector2.zero;
 
+    #region MovementStates
     private void HandleMovementState()
     {
         switch (state)
@@ -265,4 +266,6 @@ public class PlayerHorizontalMovement : MonoBehaviour
     }
 
     private void SetMovementState(State state) => this.state = state;
+
+    #endregion
 }
