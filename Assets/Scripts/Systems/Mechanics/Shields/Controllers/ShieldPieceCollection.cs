@@ -21,13 +21,7 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
     [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
-
-    [Header("Proximity Collection")]
-    [SerializeField] private bool enableProximityCollection;
-    [SerializeField] private float proximityRadius;
-
-    private GameObject player;
-    private const string PLAYER_TAG = "Player";
+    [SerializeField] private Transform attentionTransform;
 
     #region IInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -38,6 +32,8 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
     public string TooltipMessage => tooltipMessage;
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
+    public Transform AttentionTransform => attentionTransform;
+
     #endregion
 
     #region IInteractableEvents
@@ -60,29 +56,6 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
     public class OnAnyShieldPieceCollectedEventArgs : EventArgs
     {
         public ShieldPieceSO shieldPieceSO;
-    }
-
-    private void Start()
-    {
-        InitializeVariables();
-    }
-    private void Update()
-    {
-        CheckProximityCollection();
-    }
-
-    private void InitializeVariables()
-    {
-        player = GameObject.FindGameObjectWithTag(PLAYER_TAG);
-    }
-
-    private void CheckProximityCollection()
-    {
-        if (!enableProximityCollection) return;
-        if (shieldPiece.IsCollected) return;
-        if (!(Vector3.Distance(transform.position, player.transform.position) <= proximityRadius)) return;
-
-        CollectShieldPiece();
     }
 
     #region  IInteractable Methods

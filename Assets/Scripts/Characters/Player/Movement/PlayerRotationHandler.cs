@@ -25,7 +25,7 @@ public class PlayerRotationHandler : MonoBehaviour
     private Vector2 previousDirectionInput;
     private float directionHoldingTimer = 0f;
 
-    private Transform curentInteractingTransform;
+    private Transform currentAttentionTransform;
     private bool interactingRotate;
 
     private void OnEnable()
@@ -87,12 +87,12 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void DefineDesiredFacingDirection()
     {
-        if (curentInteractingTransform)
+        if (currentAttentionTransform)
         {
-            Vector3 facingVectorRaw = (curentInteractingTransform.position - transform.position).normalized;
+            Vector3 facingVectorRaw = (currentAttentionTransform.position - transform.position).normalized;
             DesiredFacingDirection = GeneralMethods.SupressYComponent(facingVectorRaw);
 
-            if (!interactingRotate) curentInteractingTransform = null;
+            if (!interactingRotate) currentAttentionTransform = null;
             return;
         }
 
@@ -134,7 +134,7 @@ public class PlayerRotationHandler : MonoBehaviour
     {
         if (!e.interactable.GrabPlayerAttention) return;
 
-        curentInteractingTransform = e.interactable.GetTransform();
+        currentAttentionTransform = e.interactable.AttentionTransform;
         interactingRotate = true;
     }
 
@@ -149,7 +149,7 @@ public class PlayerRotationHandler : MonoBehaviour
     {
         if (!e.interactableAlternate.GrabPlayerAttention) return;
 
-        curentInteractingTransform = e.interactableAlternate.GetTransform();
+        currentAttentionTransform = e.interactableAlternate.AttentionTransform;
         interactingRotate = true;
     }
     private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)

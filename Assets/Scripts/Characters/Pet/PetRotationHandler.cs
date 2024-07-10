@@ -24,7 +24,7 @@ public class PetRotationHandler : MonoBehaviour
 
     private Vector3 desiredFacingDirection;
 
-    private Transform curentInteractingTransform;
+    private Transform currentAttentionTransform;
     private bool interactingRotate;
 
     private void OnEnable()
@@ -77,11 +77,11 @@ public class PetRotationHandler : MonoBehaviour
 
     private void DefineDesiredFacingDirection()
     {
-        if (curentInteractingTransform)
+        if (currentAttentionTransform)
         {
-            desiredFacingDirection = (curentInteractingTransform.position - transform.position).normalized;
+            desiredFacingDirection = (currentAttentionTransform.position - transform.position).normalized;
 
-            if(!interactingRotate) curentInteractingTransform = null;
+            if(!interactingRotate) currentAttentionTransform = null;
             return;
         }
 
@@ -111,7 +111,7 @@ public class PetRotationHandler : MonoBehaviour
     {
         if (!e.interactable.GrabPetAttention) return;
 
-        curentInteractingTransform = e.interactable.GetTransform();
+        currentAttentionTransform = e.interactable.AttentionTransform;
         interactingRotate = true;
     }
 
@@ -127,7 +127,7 @@ public class PetRotationHandler : MonoBehaviour
     {
         if (!e.interactableAlternate.GrabPetAttention) return;
 
-        curentInteractingTransform = e.interactableAlternate.GetTransform();
+        currentAttentionTransform = e.interactableAlternate.AttentionTransform;
         interactingRotate = true;
     }
     private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)

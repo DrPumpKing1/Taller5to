@@ -18,10 +18,12 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     [SerializeField] private bool hasAlreadyBeenInteracted;
     [SerializeField] private string tooltipMessage;
     [Space]
-    [SerializeField] private float holdDuration;
-    [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
+    [SerializeField] private Transform attentionTransform;
+    [Space]
+    [SerializeField] private float holdDuration;
+
 
     #region IHoldInteractableProperties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -33,6 +35,8 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     public float HoldDuration => holdDuration;
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
+    public Transform AttentionTransform => attentionTransform;
+
     #endregion
 
     public ProjectableObjectSO ProjectableObjectToLearn => learningPlatform.LearningPlatformSO.projectableObjectToLearn;

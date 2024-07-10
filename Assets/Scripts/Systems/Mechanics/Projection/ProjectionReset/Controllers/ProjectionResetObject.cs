@@ -18,6 +18,7 @@ public class ProjectionResetObject : MonoBehaviour, IHoldInteractable
     [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
+    [SerializeField] private Transform attentionTransform;
 
     #region IHoldInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -29,6 +30,8 @@ public class ProjectionResetObject : MonoBehaviour, IHoldInteractable
     public float HoldDuration => holdDuration;
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
+    public Transform AttentionTransform => attentionTransform;
+
     #endregion
 
     #region IHoldInteractable Events

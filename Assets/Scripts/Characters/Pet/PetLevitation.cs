@@ -13,14 +13,14 @@ public class PetLevitation : MonoBehaviour
     [SerializeField] private bool levitationEnabled;
 
     [Header("Settings")]
-    [SerializeField, Range(0.1f, 2f)] private float amplitudeX;
-    [SerializeField, Range(0.1f, 2f)] private float frequencyX;
+    [SerializeField, Range(0f, 2f)] private float amplitudeX;
+    [SerializeField, Range(0f, 2f)] private float frequencyX;
     [Space]
-    [SerializeField, Range(0.1f, 2f)] private float amplitudeY;
-    [SerializeField, Range(0.1f, 2f)] private float frequencyY;
+    [SerializeField, Range(0f, 2f)] private float amplitudeY;
+    [SerializeField, Range(0f, 2f)] private float frequencyY;
     [Space]
-    [SerializeField, Range(0.1f, 2f)] private float amplitudeZ;
-    [SerializeField, Range(0.1f, 2f)] private float frequencyZ;
+    [SerializeField, Range(0f, 2f)] private float amplitudeZ;
+    [SerializeField, Range(0f, 2f)] private float frequencyZ;
 
     private void Update()
     {

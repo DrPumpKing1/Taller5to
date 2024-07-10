@@ -18,6 +18,7 @@ public class ElectricalAltSwitchInteraction : MonoBehaviour, IInteractableAltern
     [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
+    [SerializeField] private Transform attentionTransform;
 
     #region IHoldInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -28,6 +29,8 @@ public class ElectricalAltSwitchInteraction : MonoBehaviour, IInteractableAltern
     public string TooltipMessageAlternate => $"{(!switchElectrode.SwitchOn ? "Encender Switch" : "Apagar Switch")}";
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
+    public Transform AttentionTransform => attentionTransform;
+
     #endregion
 
     #region IHoldInteractable Events

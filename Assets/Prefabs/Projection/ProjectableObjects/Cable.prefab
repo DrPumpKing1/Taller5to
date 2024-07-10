@@ -338,6 +338,37 @@ Transform:
   - {fileID: 6458017915391542718}
   m_Father: {fileID: 5914065945423667599}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4440750293407381694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3643100066269509216}
+  m_Layer: 9
+  m_Name: AttentionTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3643100066269509216
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4440750293407381694}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7028397045733667877}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5892851123687239070
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,6 +542,7 @@ Transform:
   m_Children:
   - {fileID: 2234224886624068271}
   - {fileID: 2956777573550824589}
+  - {fileID: 3643100066269509216}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1516361548936382483
@@ -570,6 +602,7 @@ MonoBehaviour:
   holdDuration: 0.5
   grabPetAttention: 1
   grabPlayerAttention: 1
+  attentionTransform: {fileID: 3643100066269509216}
 --- !u!114 &8971957355950650021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -595,6 +628,7 @@ MonoBehaviour:
   tooltipMessageAlternate: Rotate C'ibla
   grabPetAttention: 1
   grabPlayerAttention: 1
+  attentionTransform: {fileID: 3643100066269509216}
 --- !u!1001 &6724889919926528138
 PrefabInstance:
   m_ObjectHideFlags: 0

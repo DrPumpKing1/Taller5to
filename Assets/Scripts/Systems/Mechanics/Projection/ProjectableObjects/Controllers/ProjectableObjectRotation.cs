@@ -25,6 +25,7 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
     [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
+    [SerializeField] private Transform attentionTransform;
 
     public static event EventHandler<OnAnyObjectRotatedEventArgs> OnAnyObjectRotated;
 
@@ -43,6 +44,8 @@ public class ProjectableObjectRotation : MonoBehaviour, IInteractableAlternate
     public string TooltipMessageAlternate => tooltipMessageAlternate;
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
+    public Transform AttentionTransform => attentionTransform;
+
     #endregion
 
     #region IInteractableAlternate Events

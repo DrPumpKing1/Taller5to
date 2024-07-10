@@ -66,6 +66,7 @@ Transform:
   m_Children:
   - {fileID: 7759499385202903705}
   - {fileID: 4247761924111617953}
+  - {fileID: 4916250522706028478}
   - {fileID: 701260707685383892}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -127,6 +128,7 @@ MonoBehaviour:
   tooltipMessageOn: Turn Switch Off
   grabPetAttention: 1
   grabPlayerAttention: 1
+  attentionTransform: {fileID: 4916250522706028478}
 --- !u!1 &4951630828617947725
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,7 +333,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  resistance: 1
   type: 01000000
   contacts: []
   switchOn: 0
@@ -348,6 +349,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   electrode: {fileID: 5242777094007922750}
+--- !u!1 &7561102684628133655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4916250522706028478}
+  m_Layer: 9
+  m_Name: AttentionTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4916250522706028478
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7561102684628133655}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 572105064047745792}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7635996615990341417
 GameObject:
   m_ObjectHideFlags: 0

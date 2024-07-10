@@ -151,6 +151,7 @@ Transform:
   m_Children:
   - {fileID: 7235937744042499366}
   - {fileID: 6533736108598617908}
+  - {fileID: 1905609949941607371}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &6097144565376611826
@@ -239,8 +240,7 @@ MonoBehaviour:
   tooltipMessage: Collect Shield Piece
   grabPetAttention: 1
   grabPlayerAttention: 1
-  enableProximityCollection: 0
-  proximityRadius: 0
+  attentionTransform: {fileID: 1905609949941607371}
 --- !u!1 &7066122621920408571
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,6 +491,37 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &8231251647452521502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1905609949941607371}
+  m_Layer: 9
+  m_Name: AttentionTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1905609949941607371
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8231251647452521502}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3636674754347769617}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7021178735806494849
 PrefabInstance:
   m_ObjectHideFlags: 0

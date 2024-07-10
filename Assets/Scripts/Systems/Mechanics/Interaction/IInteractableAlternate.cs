@@ -22,6 +22,8 @@ public interface IInteractableAlternate
 
     public bool GrabPetAttention { get; }
     public bool GrabPlayerAttention { get; }
+    public Transform AttentionTransform { get; }
+
 
     public void SelectAlternate();
     public void DeselectAlternate();
