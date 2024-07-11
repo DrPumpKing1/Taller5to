@@ -20,7 +20,6 @@ public class MusicVolumeUIHandler : VolumeUIHandler
     private void MusicVolumeManager_OnMusicVolumeManagerInitialized(object sender, System.EventArgs e)
     {
         SetVolumeManager();
-        UpdateVisual();
     }
 
     private void MusicVolumeManager_OnMusicVolumeChanged(object sender, VolumeManager.OnVolumeChangedEventArgs e)

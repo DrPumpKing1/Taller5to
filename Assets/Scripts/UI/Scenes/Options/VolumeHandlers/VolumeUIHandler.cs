@@ -8,8 +8,9 @@ public abstract class VolumeUIHandler : MonoBehaviour
     [Header("UI Components")]
     [SerializeField] protected Button increaseVolumeButton;
     [SerializeField] protected Button decreaseVolumeButton;
-    [SerializeField] protected Transform volumeBarsContainer;
-    [SerializeField] protected Transform volumeBarSingleUIPrefab;
+
+    [Header("Components")]
+    [SerializeField] List<OptionBarUI> optionBarUIs;
 
     protected VolumeManager volumeManager;
 
@@ -24,11 +25,21 @@ public abstract class VolumeUIHandler : MonoBehaviour
     {
         increaseVolumeButton.onClick.AddListener(IncreaseVolumeByButton);
         decreaseVolumeButton.onClick.AddListener(DecreaseVolumeByButton);
+
+        IntializeOptionBarUIs();
     }
 
     private void Start()
     {
         InitializeUI();
+    }
+
+    protected void IntializeOptionBarUIs()
+    {
+        foreach(OptionBarUI optionBarUI in optionBarUIs)
+        {
+            optionBarUI.BackgroundButton.onClick.AddListener(() => volumeManager.ChangeVolume(optionBarUI.BarValue));
+        }
     }
 
     protected abstract void SetVolumeManager();
@@ -68,35 +79,23 @@ public abstract class VolumeUIHandler : MonoBehaviour
     {
         if (!volumeManager) return;
 
-        foreach (Transform child in volumeBarsContainer)
+        HideAllOptionBars();
+        float currentValue = GeneralMethods.RoundToNDecimalPlaces(volumeManager.GetLinearVolume(),1);
+
+        foreach (OptionBarUI optionBarUI in optionBarUIs)
         {
-            Destroy(child.gameObject);
+            if (optionBarUI.BarValue <= currentValue) optionBarUI.ShowActiveIndicator();
+            else optionBarUI.HideActiveIndicator();          
         }
+    }
 
-        int totalBars = Mathf.RoundToInt(volumeManager.GetMaxVolume() * 10f);
-        int activeBars = Mathf.RoundToInt(volumeManager.GetLinearVolume() * 10f);
+    protected void HideAllOptionBars()
+    {
+        if (!volumeManager) return;
 
-        for (int i = 0; i < totalBars; i++)
+        foreach (OptionBarUI optionBarUI in optionBarUIs)
         {
-            Transform volumeBarTransform = Instantiate(volumeBarSingleUIPrefab, volumeBarsContainer);
-
-            OptionsBarSingleUI volumeBarSingleUI = volumeBarTransform.GetComponent<OptionsBarSingleUI>();
-
-            if (!volumeBarSingleUI)
-            {
-                Debug.LogWarning("The instantiated transform does not have a VolumeBarSingleUI component");
-                continue;
-            }
-
-            if (activeBars > 0)
-            {
-                volumeBarSingleUI.EnableActiveIndicator();
-                activeBars--;
-            }
-            else
-            {
-                volumeBarSingleUI.DisableActiveIndicator();
-            }
+            optionBarUI.HideActiveIndicator();
         }
     }
 }

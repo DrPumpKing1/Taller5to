@@ -8,8 +8,9 @@ public abstract class PostProcessingUIHandler : MonoBehaviour
     [Header("UI Components")]
     [SerializeField] protected Button increaseIntensityButton;
     [SerializeField] protected Button decreaseIntensityButton;
-    [SerializeField] protected Transform optionsBarsContainer;
-    [SerializeField] protected Transform optionsBarSingleUIPrefab;
+
+    [Header("Components")]
+    [SerializeField] List<OptionBarUI> optionBarUIs;
 
     protected PostProcessingManager postProcessingManager;
 
@@ -24,11 +25,21 @@ public abstract class PostProcessingUIHandler : MonoBehaviour
     {
         increaseIntensityButton.onClick.AddListener(IncreaseIntensityByButton);
         decreaseIntensityButton.onClick.AddListener(DecreaseIntensityByButton);
+
+        IntializeOptionBarUIs();
     }
 
     private void Start()
     {
         InitializeUI();
+    }
+
+    protected void IntializeOptionBarUIs()
+    {
+        foreach (OptionBarUI optionBarUI in optionBarUIs)
+        {
+            optionBarUI.BackgroundButton.onClick.AddListener(() => postProcessingManager.ChangeIntensity(optionBarUI.BarValue));
+        }
     }
 
     protected abstract void SetPostProcessingManager();
@@ -68,35 +79,23 @@ public abstract class PostProcessingUIHandler : MonoBehaviour
     {
         if (!postProcessingManager) return;
 
-        foreach (Transform child in optionsBarsContainer)
+        HideAllOptionBars();
+        float currentValue = GeneralMethods.RoundToNDecimalPlaces(postProcessingManager.GetNormalizedIntensity(), 1);
+
+        foreach (OptionBarUI optionBarUI in optionBarUIs)
         {
-            Destroy(child.gameObject);
+            if (optionBarUI.BarValue <= currentValue) optionBarUI.ShowActiveIndicator();
+            else optionBarUI.HideActiveIndicator();
         }
+    }
 
-        int totalBars = Mathf.RoundToInt(postProcessingManager.GetMaxNormalizedIntensity() * 10f);
-        int activeBars = Mathf.RoundToInt(postProcessingManager.GetNormalizedIntensity() * 10f);
+    protected void HideAllOptionBars()
+    {
+        if (!postProcessingManager) return;
 
-        for (int i = 0; i < totalBars; i++)
+        foreach (OptionBarUI optionBarUI in optionBarUIs)
         {
-            Transform optionsBarTransform = Instantiate(optionsBarSingleUIPrefab, optionsBarsContainer);
-
-            OptionsBarSingleUI optionsBarSingleUI = optionsBarTransform.GetComponent<OptionsBarSingleUI>();
-
-            if (!optionsBarSingleUI)
-            {
-                Debug.LogWarning("The instantiated transform does not have a OptionsBarSingleUI component");
-                continue;
-            }
-
-            if (activeBars > 0)
-            {
-                optionsBarSingleUI.EnableActiveIndicator();
-                activeBars--;
-            }
-            else
-            {
-                optionsBarSingleUI.DisableActiveIndicator();
-            }
+            optionBarUI.HideActiveIndicator();
         }
     }
 }
