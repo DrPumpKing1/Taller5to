@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class OptionBarUI : MonoBehaviour
 {
-    [Header("UI Components")]
+    [Header("Components")]
     [SerializeField] private Animator indicatorAnimator;
+
+    [Header("UI Components")]
     [SerializeField] private Button backgroundButton;
 
     [Header("Settings")]
@@ -25,6 +27,7 @@ public class OptionBarUI : MonoBehaviour
         indicatorAnimator.ResetTrigger(HIDE_TRIGGER);
         indicatorAnimator.SetTrigger(SHOW_TRIGGER);
     }
+
     public void HideActiveIndicator()
     {
         indicatorAnimator.ResetTrigger(SHOW_TRIGGER);
