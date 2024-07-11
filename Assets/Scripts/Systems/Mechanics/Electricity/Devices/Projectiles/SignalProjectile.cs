@@ -1,0 +1,74 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
+
+public class SignalProjectile : MonoBehaviour
+{
+    [Header("Components")]
+    [SerializeField] private GameObject sender;
+
+    [Header("Settings")]
+    [SerializeField] private float intensity;
+    [SerializeField] private float lifespan;
+
+    public static event EventHandler OnAnyProjectileImpact;
+    public event EventHandler OnProjectileImpact;
+    public event EventHandler OnProjectileLifespanEnd;
+
+    private void Update()
+    {
+        HandleLifespan();
+    }
+
+    public void SetProjectile(GameObject sender, float intensity)
+    {
+        this.sender = sender;
+        this.intensity = intensity;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        OnProjectileImpact?.Invoke(this, EventArgs.Empty);
+        OnAnyProjectileImpact?.Invoke(this, EventArgs.Empty);
+
+        if (collision.gameObject != sender)
+        {
+            Electrode component = collision.gameObject.GetComponent<Electrode>();
+
+            if (component != null)
+            {
+                if (!component.Source) component.ReceiveSignal(intensity);
+                else if (intensity > component.Power)
+                {
+                    component.SourcePower = intensity;
+                    Electricity.Instance.UpdateElectrode(component);
+                }
+            }
+
+            ElectrodeCollider electroCollider = collision.gameObject.GetComponent<ElectrodeCollider>();
+
+            if(electroCollider != null )
+            {
+                if (!electroCollider.Electrode.Source) electroCollider.Electrode.ReceiveSignal(intensity);
+                else if (intensity < component.Power)
+                {
+                    component.SourcePower = intensity;
+                    Electricity.Instance.UpdateElectrode(component);
+                }
+            }
+
+            Destroy(gameObject);
+        }
+    }
+
+    private void HandleLifespan()
+    {
+        if (lifespan >= 0) lifespan -= Time.deltaTime;
+        else
+        {
+            OnProjectileLifespanEnd?.Invoke(this, EventArgs.Empty);
+            Destroy(gameObject);
+        }
+    }
+}

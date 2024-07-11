@@ -43,7 +43,7 @@ public class PausableSFXManager : SFXManager
         DrainerDevice.OnDrainerStopDraining += DrainerDevice_OnDrainerStopDraining;
 
         SignalSender.OnProjectileShot += SignalSender_OnProjectileShot;
-        SignalProjectile.OnProjectileImpact += SignalProjectile_OnProjectileImpact;
+        SignalProjectile.OnAnyProjectileImpact += SignalProjectile_OnAnyProjectileImpact;
     }
     private void OnDisable()
     {
@@ -83,7 +83,7 @@ public class PausableSFXManager : SFXManager
         DrainerDevice.OnDrainerStopDraining -= DrainerDevice_OnDrainerStopDraining;
 
         SignalSender.OnProjectileShot -= SignalSender_OnProjectileShot;
-        SignalProjectile.OnProjectileImpact -= SignalProjectile_OnProjectileImpact;
+        SignalProjectile.OnAnyProjectileImpact -= SignalProjectile_OnAnyProjectileImpact;
     } 
 
     #region Player
@@ -367,7 +367,7 @@ public class PausableSFXManager : SFXManager
         SignalSender signalSender = sender as SignalSender;
         PlaySoundAtPoint(SFXPoolSO.projectileShot, signalSender.transform.position);
     }
-    private void SignalProjectile_OnProjectileImpact(object sender, System.EventArgs e)
+    private void SignalProjectile_OnAnyProjectileImpact(object sender, System.EventArgs e)
     {
         SignalProjectile singalProjectile = sender as SignalProjectile;
         PlaySoundAtPoint(SFXPoolSO.projectileImpact, singalProjectile.transform.position);
