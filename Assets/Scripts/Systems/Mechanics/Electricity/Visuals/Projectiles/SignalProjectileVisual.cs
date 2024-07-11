@@ -8,11 +8,12 @@ public class SignalProjectileVisual : MonoBehaviour
     [SerializeField] private SignalProjectile signalProjectile;
 
     [Header("VisualEffects")]
-    [SerializeField] private Transform trailTransform;
-    [SerializeField] private Transform impactTransform;
+    [SerializeField] private Transform trailVFXTransform;
+    [SerializeField] private Transform impactVFXPrefab;
 
     [Header("Settings")]
     [SerializeField,Range(0f,1f)] private float trailDestroyTime;
+    [SerializeField,Range(0f,2f)] private float impactDestroyTime;
 
     private void OnEnable()
     {
@@ -26,18 +27,28 @@ public class SignalProjectileVisual : MonoBehaviour
         signalProjectile.OnProjectileLifespanEnd -= SignalProjectile_OnProjectileLifespanEnd;
     }
 
-    private void UnparentTrail() => trailTransform.SetParent(null);
-    private void DestroyTrailAfterTime() => Destroy(trailTransform.gameObject, trailDestroyTime);
+    private void EndTrail()
+    {
+        trailVFXTransform.SetParent(null);
+        Destroy(trailVFXTransform.gameObject, trailDestroyTime);
+    }
+
+    private void CreateImpact()
+    {
+        Transform impactVFXPrefabTransform = Instantiate(impactVFXPrefab, transform.position, transform.rotation);
+        impactVFXPrefabTransform.SetParent(null);
+
+        Destroy(impactVFXPrefabTransform.gameObject, impactDestroyTime);
+    }
 
     private void SignalProjectile_OnProjectileImpact(object sender, System.EventArgs e)
     {
-        UnparentTrail();
-        DestroyTrailAfterTime();
+        EndTrail();
+        CreateImpact();
     }
 
     private void SignalProjectile_OnProjectileLifespanEnd(object sender, System.EventArgs e)
     {
-        UnparentTrail();
-        DestroyTrailAfterTime();
+        EndTrail();
     }
 }

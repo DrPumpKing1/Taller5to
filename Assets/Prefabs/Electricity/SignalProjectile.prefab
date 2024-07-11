@@ -197,8 +197,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   signalProjectile: {fileID: 288554812272710922}
-  trailTransform: {fileID: 728080220840802558}
+  trailVFXTransform: {fileID: 728080220840802558}
+  impactVFXPrefab: {fileID: 5975315872649016596, guid: 7ca1d5b309d72db49b0359c3fbb30020, type: 3}
   trailDestroyTime: 0.25
+  impactDestroyTime: 1.5
 --- !u!1001 &6672661235785800247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -327,7 +329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7071094888788485255, guid: c42c0ee26aba69b41a08c566bb4beb9f, type: 3}
       propertyPath: m_Name
-      value: PulsatingOrb1
+      value: PulsatingOrbVFX1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
