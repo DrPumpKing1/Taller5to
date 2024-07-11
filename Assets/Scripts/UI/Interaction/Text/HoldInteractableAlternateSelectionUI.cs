@@ -126,7 +126,7 @@ public class HoldInteractableAlternateSelectionUI : MonoBehaviour
     private void HoldInteractableAlternate_OnHoldInteractionAlternateEnd(object sender, System.EventArgs e)
     {
         HideHoldUI();
-        ShowSelectionUI();
+        if(holdInteractableAlternate.IsSelectableAlternate) ShowSelectionUI();
 
         SetInteractableAlternateSelectionText();
         SetInteractableAlternateHoldText();
