@@ -263,8 +263,8 @@ public class PlayerInteract : MonoBehaviour
             {
                 OnInteractionCompleted?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
                 OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
-                holdInteractable.HoldInteractionEnd();
 
+                holdInteractable.HoldInteractionEnd();
                 holdInteractable.TryInteract();
 
                 ResetInteractions();
