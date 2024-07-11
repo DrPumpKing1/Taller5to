@@ -13,8 +13,13 @@ public class SignalProjectile : MonoBehaviour
     [SerializeField] private float lifespan;
 
     public static event EventHandler OnAnyProjectileImpact;
-    public event EventHandler OnProjectileImpact;
+    public event EventHandler<OnProjectileImpactEventArgs> OnProjectileImpact;
     public event EventHandler OnProjectileLifespanEnd;
+
+    public class OnProjectileImpactEventArgs : EventArgs
+    {
+        public ContactPoint contactPoint; 
+    } 
 
     private void Update()
     {
@@ -29,7 +34,7 @@ public class SignalProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        OnProjectileImpact?.Invoke(this, EventArgs.Empty);
+        OnProjectileImpact?.Invoke(this, new OnProjectileImpactEventArgs { contactPoint = collision.contacts[0] });
         OnAnyProjectileImpact?.Invoke(this, EventArgs.Empty);
 
         if (collision.gameObject != sender)

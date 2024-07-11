@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 4766485842306974857}
   - component: {fileID: 5870821043204691987}
   - component: {fileID: 1998002744240103324}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,6 +330,14 @@ PrefabInstance:
     - target: {fileID: 7071094888788485255, guid: c42c0ee26aba69b41a08c566bb4beb9f, type: 3}
       propertyPath: m_Name
       value: PulsatingOrbVFX1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071094888788485255, guid: c42c0ee26aba69b41a08c566bb4beb9f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8687074670773655817, guid: c42c0ee26aba69b41a08c566bb4beb9f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -33,18 +33,21 @@ public class SignalProjectileVisual : MonoBehaviour
         Destroy(trailVFXTransform.gameObject, trailDestroyTime);
     }
 
-    private void CreateImpact()
+    private void CreateImpact(ContactPoint contactPoint)
     {
-        Transform impactVFXPrefabTransform = Instantiate(impactVFXPrefab, transform.position, transform.rotation);
+        Quaternion rotation = Quaternion.LookRotation(contactPoint.normal);
+        Vector3 offset = contactPoint.normal* 0.01f;
+
+        Transform impactVFXPrefabTransform = Instantiate(impactVFXPrefab, transform.position + offset, rotation);
         impactVFXPrefabTransform.SetParent(null);
 
         Destroy(impactVFXPrefabTransform.gameObject, impactDestroyTime);
     }
 
-    private void SignalProjectile_OnProjectileImpact(object sender, System.EventArgs e)
+    private void SignalProjectile_OnProjectileImpact(object sender, SignalProjectile.OnProjectileImpactEventArgs e)
     {
         EndTrail();
-        CreateImpact();
+        CreateImpact(e.contactPoint);
     }
 
     private void SignalProjectile_OnProjectileLifespanEnd(object sender, System.EventArgs e)
