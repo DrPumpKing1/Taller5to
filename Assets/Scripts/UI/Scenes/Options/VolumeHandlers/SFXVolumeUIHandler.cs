@@ -23,6 +23,7 @@ public class SFXVolumeUIHandler : VolumeUIHandler
     }
     private void SFXVolumeManager_OnSFXVolumeChanged(object sender, VolumeManager.OnVolumeChangedEventArgs e)
     {
+        if (!volumeManager) return;
         UpdateVisual();
     }
 }

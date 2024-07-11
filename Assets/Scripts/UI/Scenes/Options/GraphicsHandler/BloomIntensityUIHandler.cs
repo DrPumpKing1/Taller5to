@@ -23,6 +23,7 @@ public class BloomIntensityUIHandler : PostProcessingUIHandler
     }
     private void BloomIntensityManager_OnBloomIntensityChanged(object sender, BloomIntensityManager.OnIntensityChangedEventArgs e)
     {
+        if (!postProcessingManager) return;
         UpdateVisual();
     }
 }

@@ -23,6 +23,7 @@ public class MasterVolumeUIHandler : VolumeUIHandler
     }
     private void MasterVolumeManager_OnMasterVolumeChanged(object sender, VolumeManager.OnVolumeChangedEventArgs e)
     {
+        if (!volumeManager) return;
         UpdateVisual();
     }
 }

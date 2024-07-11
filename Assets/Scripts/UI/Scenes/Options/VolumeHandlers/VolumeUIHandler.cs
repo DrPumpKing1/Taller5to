@@ -77,8 +77,6 @@ public abstract class VolumeUIHandler : MonoBehaviour
 
     protected void UpdateVisual()
     {
-        if (!volumeManager) return;
-
         HideAllOptionBars();
         float currentValue = GeneralMethods.RoundToNDecimalPlaces(volumeManager.GetLinearVolume(),1);
 
@@ -91,8 +89,6 @@ public abstract class VolumeUIHandler : MonoBehaviour
 
     protected void HideAllOptionBars()
     {
-        if (!volumeManager) return;
-
         foreach (OptionBarUI optionBarUI in optionBarUIs)
         {
             optionBarUI.HideActiveIndicator();

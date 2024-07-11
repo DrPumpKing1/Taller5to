@@ -77,8 +77,6 @@ public abstract class PostProcessingUIHandler : MonoBehaviour
 
     protected void UpdateVisual()
     {
-        if (!postProcessingManager) return;
-
         HideAllOptionBars();
         float currentValue = GeneralMethods.RoundToNDecimalPlaces(postProcessingManager.GetNormalizedIntensity(), 1);
 
@@ -91,8 +89,6 @@ public abstract class PostProcessingUIHandler : MonoBehaviour
 
     protected void HideAllOptionBars()
     {
-        if (!postProcessingManager) return;
-
         foreach (OptionBarUI optionBarUI in optionBarUIs)
         {
             optionBarUI.HideActiveIndicator();
