@@ -36,9 +36,8 @@ public class SignalProjectileVisual : MonoBehaviour
     private void CreateImpact(ContactPoint contactPoint)
     {
         Quaternion rotation = Quaternion.LookRotation(contactPoint.normal);
-        Vector3 offset = contactPoint.normal* 0.01f;
 
-        Transform impactVFXPrefabTransform = Instantiate(impactVFXPrefab, transform.position + offset, rotation);
+        Transform impactVFXPrefabTransform = Instantiate(impactVFXPrefab, transform.position, rotation);
         impactVFXPrefabTransform.SetParent(null);
 
         Destroy(impactVFXPrefabTransform.gameObject, impactDestroyTime);
