@@ -493,7 +493,6 @@ GameObject:
   - component: {fileID: 7846662925050479611}
   - component: {fileID: 6265826671895022892}
   - component: {fileID: 2856413567954985433}
-  - component: {fileID: 6101884796604439473}
   m_Layer: 8
   m_Name: Visual
   m_TagString: Untagged
@@ -553,19 +552,6 @@ MonoBehaviour:
   frequencyY: 1
   amplitudeZ: 0
   frequencyZ: 1
---- !u!114 &6101884796604439473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4376142338285860018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 791d3269c1732a74989636423f97b608, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  learningVisualEffect: {fileID: 6326709232485023524}
 --- !u!1 &4515691063624333679
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,11 +758,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d40ede9b2c9e8564f9f666faee71f7ef, type: 3}
---- !u!2083052967 &6326709232485023524 stripped
-VisualEffect:
-  m_CorrespondingSourceObject: {fileID: 4644740330609389429, guid: d40ede9b2c9e8564f9f666faee71f7ef, type: 3}
-  m_PrefabInstance: {fileID: 1709558328693297233}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6544024647942105094 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5577876917114009687, guid: d40ede9b2c9e8564f9f666faee71f7ef, type: 3}

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5577876917114009687}
+  - component: {fileID: 6406624128030691980}
   m_Layer: 0
   m_Name: LearningVFX
   m_TagString: Untagged
@@ -32,6 +33,19 @@ Transform:
   - {fileID: 1625384005764374835}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6406624128030691980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180223484792031968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 791d3269c1732a74989636423f97b608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  learningVFX: {fileID: 4644740330609389429}
 --- !u!1 &1294021515506514291
 GameObject:
   m_ObjectHideFlags: 0

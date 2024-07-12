@@ -7,9 +7,11 @@ using UnityEngine.VFX;
 public class PetLearningVFXHandler : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private VisualEffect learningVisualEffect;
+    [SerializeField] private VisualEffect learningVFX;
 
     private Transform currentAttentionTransform = null;
+
+    private const string DURATION_PROPERTY = "Duration";
 
     private void OnEnable()
     {
@@ -25,37 +27,46 @@ public class PetLearningVFXHandler : MonoBehaviour
 
     private void Start()
     {
-        InitializeLearningVFX();
+        InitializeVFX();
     }
 
     private void Update()
     {
-        HandleLearningVisualEffectRotation();
+        HandleVFXRotation();
+    }
+    private void InitializeVFX()
+    {
+        learningVFX.gameObject.SetActive(true);
+        learningVFX.Stop();
     }
 
-    private void HandleLearningVisualEffectRotation()
+    private void HandleVFXRotation()
     {
         if (!currentAttentionTransform) return;
 
-        Vector3 direction = (currentAttentionTransform.position - learningVisualEffect.transform.position).normalized;
-        learningVisualEffect.transform.rotation = Quaternion.LookRotation(direction);
+        Vector3 direction = (currentAttentionTransform.position - learningVFX.transform.position).normalized;
+        learningVFX.transform.rotation = Quaternion.LookRotation(direction);
     }
 
-    private void InitializeLearningVFX()
+    private void SetVFXDuration(float duration)
     {
-        learningVisualEffect.gameObject.SetActive(true);
-        learningVisualEffect.Stop();
+        if (learningVFX.HasFloat(DURATION_PROPERTY))
+        {
+            learningVFX.SetFloat(DURATION_PROPERTY, duration);
+        }
     }
 
     private void LearningPlatformLearn_OnStartLearning(object sender, LearningPlatformLearn.OnLearningEventArgs e)
     {
-        learningVisualEffect.Play();
+        SetVFXDuration(e.holdDuration);
+
+        learningVFX.Play();
         currentAttentionTransform = e.attentionTransform;
     }
 
     private void LearningPlatformLearn_OnEndLearning(object sender, LearningPlatformLearn.OnLearningEventArgs e)
     {
-        learningVisualEffect.Stop();
+        learningVFX.Stop();
         currentAttentionTransform = null;
     }
 }
