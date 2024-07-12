@@ -11,14 +11,13 @@ public class PetProjectingVFXHandler : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField,Range(3f,6f)] private float velocity;
-    [SerializeField,Range(1f,3f)] private float randomLifetimeRatio;
 
     private Transform currentAttentionTransform = null;
 
     private const string DURATION_PROPERTY = "Duration";
-    private const string MIN_LIFETIME_PROPERTY = "MinLifetime";
-    private const string MAX_LIFETIME_PROPERTY = "MaxLifetime";
+    private const string ORIGIN_PROPERTY = "Velocity";
     private const string VELOCITY_PROPERTY = "Velocity";
+    private const string NORMALIZED_DIRECTION_PROPERTY = "NormalizedDirection";
 
     private void OnEnable()
     {
@@ -39,8 +38,8 @@ public class PetProjectingVFXHandler : MonoBehaviour
 
     private void Update()
     {
-        //HandleVFXRotation();
-        HandleVFXLifetime();
+        HandleVFXOrigin();
+        HandleVFXDirection();
     }
     private void InitializeVFX()
     {
@@ -48,19 +47,28 @@ public class PetProjectingVFXHandler : MonoBehaviour
         projectingVFX.Stop();
     }
 
-    private void HandleVFXRotation()
+    private void HandleVFXOrigin()
     {
         if (!currentAttentionTransform) return;
 
-        Vector3 direction = (currentAttentionTransform.position - projectingVFX.transform.position).normalized;
-        projectingVFX.transform.rotation = Quaternion.LookRotation(direction);
+        Vector3 origin = projectingVFX.transform.position;
+
+        if (projectingVFX.HasVector3(ORIGIN_PROPERTY))
+        {
+            projectingVFX.SetVector3(ORIGIN_PROPERTY, origin);
+        }
     }
 
-    private void HandleVFXLifetime()
+    private void HandleVFXDirection()
     {
         if (!currentAttentionTransform) return;
 
-        float distanceToAttentionTransform = Vector3.Distance(currentAttentionTransform.position, projectingVFX.transform.position);
+        Vector3 normalizedDirection = (currentAttentionTransform.position - projectingVFX.transform.position).normalized;
+
+        if (projectingVFX.HasVector3(NORMALIZED_DIRECTION_PROPERTY))
+        {
+            projectingVFX.SetVector3(NORMALIZED_DIRECTION_PROPERTY, normalizedDirection);
+        }
 
     }
 
