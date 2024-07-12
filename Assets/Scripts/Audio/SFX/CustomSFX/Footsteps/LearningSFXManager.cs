@@ -17,12 +17,12 @@ public class LearningSFXManager : CustomSFXManager
         LearningPlatformLearn.OnStartLearning -= LearningPlatformLearn_OnStartLearning;
         LearningPlatformLearn.OnEndLearning -= LearningPlatformLearn_OnEndLearning;
     }
-    private void LearningPlatformLearn_OnStartLearning(object sender, System.EventArgs e)
+    private void LearningPlatformLearn_OnStartLearning(object sender, LearningPlatformLearn.OnLearningEventArgs e)
     {
         ReplaceAudioClip(SFXPoolSO.startLearning);
     }
 
-    private void LearningPlatformLearn_OnEndLearning(object sender, System.EventArgs e)
+    private void LearningPlatformLearn_OnEndLearning(object sender, LearningPlatformLearn.OnLearningEventArgs e)
     {
         StopAudioSource();
     }

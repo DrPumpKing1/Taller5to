@@ -55,12 +55,17 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     #endregion
 
     public event EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
-    public static event EventHandler OnStartLearning;
-    public static event EventHandler OnEndLearning;
+    public static event EventHandler<OnLearningEventArgs> OnStartLearning;
+    public static event EventHandler<OnLearningEventArgs> OnEndLearning;
 
     public class OnObjectLearnedEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableOjectSO;
+    }
+
+    public class OnLearningEventArgs : EventArgs
+    {
+        public Transform attentionTransform;
     }
 
     private void Start()
@@ -137,14 +142,14 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     public void HoldInteractionStart()
     {
         OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
-        OnStartLearning?.Invoke(this, EventArgs.Empty);
+        OnStartLearning?.Invoke(this, new OnLearningEventArgs { attentionTransform = attentionTransform });
     }
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
 
     public void HoldInteractionEnd()
     {
         OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
-        OnEndLearning?.Invoke(this, EventArgs.Empty);
+        OnEndLearning?.Invoke(this, new OnLearningEventArgs { attentionTransform = attentionTransform });
     }
 
     public Transform GetTransform() => transform;
