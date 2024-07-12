@@ -32,7 +32,7 @@ public class InsufficientProjectionGemsVisual : MonoBehaviour
         if (cooldownTimer > 0) cooldownTimer -= Time.deltaTime;
     }
 
-    private void ProjectionPlatformProjection_OnObjectProjectionFailedInsuficientGems(object sender, ProjectionPlatformProjection.OnProjectionEventArgs e)
+    private void ProjectionPlatformProjection_OnObjectProjectionFailedInsuficientGems(object sender, ProjectionPlatformProjection.OnObjectProjectionEventArgs e)
     {
         if (cooldownTimer > 0) return;
 

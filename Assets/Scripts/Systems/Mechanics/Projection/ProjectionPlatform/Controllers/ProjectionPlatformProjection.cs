@@ -50,18 +50,18 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     public event EventHandler<IHoldInteractable.OnHoldInteractionEventArgs> OnContinousHoldInteraction;
     #endregion
 
-    public event EventHandler<OnProjectionEventArgs> OnObjectProjectionSuccess;
-    public event EventHandler<OnProjectionEventArgs> OnObjectProjectionFailed;
-    public event EventHandler<OnProjectionEventArgs> OnObjectProjectionFailedInsuficientGems;
+    public event EventHandler<OnObjectProjectionEventArgs> OnObjectProjectionSuccess;
+    public event EventHandler<OnObjectProjectionEventArgs> OnObjectProjectionFailed;
+    public event EventHandler<OnObjectProjectionEventArgs> OnObjectProjectionFailedInsuficientGems;
 
     public static event EventHandler<OnAnyProjectionEventArgs> OnAnyObjectProjectionSuccess;
     public static event EventHandler<OnAnyProjectionEventArgs> OnAnyObjectProjectionFailed;
     public static event EventHandler<OnAnyProjectionEventArgs> OnAnyObjectProjectionFailedInsuficientGems;
 
-    public static event EventHandler OnStartProjection;
-    public static event EventHandler OnEndProjection;
+    public static event EventHandler<OnProjectionEventArgs> OnStartProjection;
+    public static event EventHandler<OnProjectionEventArgs> OnEndProjection;
 
-    public class OnProjectionEventArgs : EventArgs
+    public class OnObjectProjectionEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectSO;
     }
@@ -69,6 +69,12 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     public class OnAnyProjectionEventArgs : EventArgs
     {
         public ProjectableObjectSO projectableObjectSO;
+    }
+
+    public class OnProjectionEventArgs : EventArgs
+    {
+        public Transform attentionTransform;
+        public float holdDuration;
     }
 
     private void OnEnable()
@@ -172,13 +178,13 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     public void HoldInteractionStart()
     {
         OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
-        OnStartProjection?.Invoke(this, EventArgs.Empty);
+        OnStartProjection?.Invoke(this, new OnProjectionEventArgs { attentionTransform = attentionTransform, holdDuration = holdDuration });
     }
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
     public void HoldInteractionEnd()
     {
         OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
-        OnEndProjection?.Invoke(this, EventArgs.Empty);
+        OnEndProjection?.Invoke(this, new OnProjectionEventArgs { attentionTransform = attentionTransform, holdDuration = holdDuration });
     }
 
     public Transform GetTransform() => transform;
@@ -187,7 +193,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     private void FailObjectProjection(ProjectableObjectSO projectableObjectSO)
     {
         ProjectionManager.Instance.FailObjectProjection(projectableObjectSO, projectionPlatform);
-        OnObjectProjectionFailed?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO });
+        OnObjectProjectionFailed?.Invoke(this, new OnObjectProjectionEventArgs { projectableObjectSO = projectableObjectSO });
         OnAnyObjectProjectionFailed?.Invoke(this, new OnAnyProjectionEventArgs { projectableObjectSO = projectableObjectSO });
         Debug.Log("Cant Project Object");
     }
@@ -195,7 +201,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     private void FailObjectProjectionInsuficientGems(ProjectableObjectSO projectableObjectSO)
     {
         ProjectionManager.Instance.FailObjectProjectionInsuficientGems(projectableObjectSO, projectionPlatform);
-        OnObjectProjectionFailedInsuficientGems?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO });
+        OnObjectProjectionFailedInsuficientGems?.Invoke(this, new OnObjectProjectionEventArgs { projectableObjectSO = projectableObjectSO });
         OnAnyObjectProjectionFailedInsuficientGems?.Invoke(this, new OnAnyProjectionEventArgs { projectableObjectSO = projectableObjectSO });
         Debug.Log("Insuficient Projection Gems");
     }
@@ -209,7 +215,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
         projectableObject.SetProjectionPlatform(projectionPlatform);
 
         ProjectionManager.Instance.SuccessObjectProjection(projectableObjectSO, projectionPlatform, projectableObject);
-        OnObjectProjectionSuccess?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO });
+        OnObjectProjectionSuccess?.Invoke(this, new OnObjectProjectionEventArgs { projectableObjectSO = projectableObjectSO });
         OnAnyObjectProjectionSuccess?.Invoke(this, new OnAnyProjectionEventArgs { projectableObjectSO = projectableObjectSO });
 
         projectionPlatform.SetProjectionPlatform(projectableObjectSO, projectableObject);
