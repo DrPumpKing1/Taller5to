@@ -143,7 +143,6 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
 
     public void HoldInteractionEnd()
     {
-        canBeSelected = false;
         OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
         OnEndLearning?.Invoke(this, EventArgs.Empty);
     }

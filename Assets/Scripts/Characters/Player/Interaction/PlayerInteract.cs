@@ -81,6 +81,7 @@ public class PlayerInteract : MonoBehaviour
     {
         ResetInteractions();
     }
+
     private void Update()
     {
         HandleInteractableSelections();
@@ -123,8 +124,19 @@ public class PlayerInteract : MonoBehaviour
             DeselectInteractable(currentInteractable);
         }
     }
+    private void HandleInteractions()
+    {
+        if (!CanInteract()) return;
 
-    private IInteractable CheckForInteractableNormal()
+        if(playerInteractAlternate.IsInteractingAlternate) { ResetInteractions(); return; }
+
+        if (currentInteractable == null) { ResetInteractions(); return; }
+
+        if(CheckIfHoldInteractable(currentInteractable)) HandleHoldInteractions(currentInteractable as IHoldInteractable);
+        else HandleDownInteractions(currentInteractable);
+    }
+
+    private IInteractable CheckForInteractableRaycastFront()
     {
         RaycastHit[] hits = GetInteractableLayerHitsNormal();
 
@@ -194,6 +206,13 @@ public class PlayerInteract : MonoBehaviour
         if (IsInteracting)
         {
             OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = interactable });
+
+            if (CheckIfHoldInteractable(interactable))
+            {
+                OnHoldInteractionStopped?.Invoke(this, new OnInteractionEventArgs { interactable = interactable as IHoldInteractable });
+                (interactable as IHoldInteractable).HoldInteractionEnd();
+            }
+
         }
 
         currentInteractable = null;
@@ -204,17 +223,6 @@ public class PlayerInteract : MonoBehaviour
         ResetInteractions();
     }
 
-    private void HandleInteractions()
-    {
-        if (!CanInteract()) return;
-
-        if(playerInteractAlternate.IsInteractingAlternate) { ResetInteractions(); return; }
-
-        if (currentInteractable == null) { ResetInteractions(); return; }
-
-        if(CheckIfHoldInteractable(currentInteractable)) HandleHoldInteractions(currentInteractable as IHoldInteractable);
-        else HandleDownInteractions(currentInteractable);
-    }
 
     private void HandleDownInteractions(IInteractable interactable)
     {    
@@ -264,8 +272,8 @@ public class PlayerInteract : MonoBehaviour
                 OnInteractionCompleted?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
                 OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
 
-                holdInteractable.HoldInteractionEnd();
                 holdInteractable.TryInteract();
+                holdInteractable.HoldInteractionEnd();
 
                 ResetInteractions();
             }
@@ -275,6 +283,7 @@ public class PlayerInteract : MonoBehaviour
             OnHoldInteractionStopped?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
             OnInteractionEnded?.Invoke(this, new OnInteractionEventArgs { interactable = holdInteractable });
             holdInteractable.HoldInteractionEnd();
+
             ResetInteractions();
         }
 

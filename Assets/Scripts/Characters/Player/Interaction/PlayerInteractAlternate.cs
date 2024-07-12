@@ -106,6 +106,17 @@ public class PlayerInteractAlternate : MonoBehaviour
             DeselectInteractableAlternate(curentInteractableAlternate);
         }
     }
+    private void HandleInteractionsAlternate()
+    {
+        if (!CanInteractAlternate()) return;
+
+        if(playerInteract.IsInteracting) { ResetInteractionsAlternate(); return; }
+
+        if (curentInteractableAlternate == null) { ResetInteractionsAlternate(); return; }
+
+        if (CheckIfHoldInteractableAlternate(curentInteractableAlternate)) HandleHoldInteractionsAlternate(curentInteractableAlternate as IHoldInteractableAlternate);
+        else HandleDownInteractionsAlternate(curentInteractableAlternate);
+    }
 
     private void CheckIfInteractableIsTheSame(ref IInteractableAlternate interactableAlternate)
     {
@@ -188,8 +199,6 @@ public class PlayerInteractAlternate : MonoBehaviour
 
         interactableAlternate.SelectAlternate();
         OnInteractableAlternateSelected?.Invoke(this, new OnInteractionAlternateEventArgs { interactableAlternate = interactableAlternate });
-
-        //Debug.Log("Selected");
     }
 
     private void DeselectInteractableAlternate(IInteractableAlternate interactableAlternate)
@@ -197,6 +206,12 @@ public class PlayerInteractAlternate : MonoBehaviour
         if (IsInteractingAlternate)
         {
             OnInteractionAlternateEnded?.Invoke(this, new OnInteractionAlternateEventArgs { interactableAlternate = interactableAlternate });
+
+            if (CheckIfHoldInteractableAlternate(interactableAlternate))
+            {
+                OnHoldInteractionAlternateStopped?.Invoke(this, new OnInteractionAlternateEventArgs { interactableAlternate = interactableAlternate as IHoldInteractableAlternate });
+                (interactableAlternate as IHoldInteractableAlternate).HoldInteractionAlternateEnd();
+            }
         }
 
         curentInteractableAlternate = null;
@@ -205,21 +220,8 @@ public class PlayerInteractAlternate : MonoBehaviour
         OnInteractableAlternateDeselected?.Invoke(this, new OnInteractionAlternateEventArgs { interactableAlternate = interactableAlternate });
 
         ResetInteractionsAlternate();
-
-        //Debug.Log("Deselected");
     }
 
-    private void HandleInteractionsAlternate()
-    {
-        if (!CanInteractAlternate()) return;
-
-        if(playerInteract.IsInteracting) { ResetInteractionsAlternate(); return; }
-
-        if (curentInteractableAlternate == null) { ResetInteractionsAlternate(); return; }
-
-        if (CheckIfHoldInteractableAlternate(curentInteractableAlternate)) HandleHoldInteractionsAlternate(curentInteractableAlternate as IHoldInteractableAlternate);
-        else HandleDownInteractionsAlternate(curentInteractableAlternate);
-    }
 
     private void HandleDownInteractionsAlternate(IInteractableAlternate interactableAlternate)
     {
@@ -265,10 +267,10 @@ public class PlayerInteractAlternate : MonoBehaviour
 
             if (holdPercent >= 1)
             {
-                holdInteractableAlternate.TryInteractAlternate();
-
                 OnInteractionAlternateCompleted?.Invoke(this, new OnInteractionAlternateEventArgs { interactableAlternate = holdInteractableAlternate });
                 OnInteractionAlternateEnded?.Invoke(this, new OnInteractionAlternateEventArgs { interactableAlternate = holdInteractableAlternate });
+
+                holdInteractableAlternate.TryInteractAlternate();
                 holdInteractableAlternate.HoldInteractionAlternateEnd();
 
                 ResetInteractionsAlternate();
