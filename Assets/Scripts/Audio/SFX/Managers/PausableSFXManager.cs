@@ -42,7 +42,7 @@ public class PausableSFXManager : SFXManager
         DrainerDevice.OnDrainerStartDraining += DrainerDevice_OnDrainerStartDraining;
         DrainerDevice.OnDrainerStopDraining += DrainerDevice_OnDrainerStopDraining;
 
-        SignalSender.OnProjectileShot += SignalSender_OnProjectileShot;
+        SignalSender.OnAnyProjectileShot += SignalSender_OnProjectileShot;
         SignalProjectile.OnAnyProjectileImpact += SignalProjectile_OnAnyProjectileImpact;
     }
     private void OnDisable()
@@ -82,7 +82,7 @@ public class PausableSFXManager : SFXManager
         DrainerDevice.OnDrainerStartDraining -= DrainerDevice_OnDrainerStartDraining;
         DrainerDevice.OnDrainerStopDraining -= DrainerDevice_OnDrainerStopDraining;
 
-        SignalSender.OnProjectileShot -= SignalSender_OnProjectileShot;
+        SignalSender.OnAnyProjectileShot -= SignalSender_OnProjectileShot;
         SignalProjectile.OnAnyProjectileImpact -= SignalProjectile_OnAnyProjectileImpact;
     } 
 

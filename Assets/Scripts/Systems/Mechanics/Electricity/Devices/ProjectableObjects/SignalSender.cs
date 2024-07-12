@@ -13,10 +13,11 @@ public class SignalSender : MonoBehaviour
     [SerializeField] private Transform shootPosition;
     [SerializeField] private float shootSpeed;
     [SerializeField] private float shootCooldown;
-    [SerializeField] private float shootTimer;
     [SerializeField] private bool parentProjectiles;
 
-    public static event EventHandler OnProjectileShot;
+    private float shootTimer;
+    public static event EventHandler OnAnyProjectileShot;
+    public event EventHandler OnProjectileShot;
 
     private void OnEnable()
     {
@@ -28,9 +29,23 @@ public class SignalSender : MonoBehaviour
         electrode.OnReceiveSignal -= ShootSender;
     }
 
+    private void Start()
+    {
+        InitializeVariables();
+    }
+
     private void Update()
     {
-        if(shootTimer > 0) shootTimer -= Time.deltaTime;
+        HandleShootTimer();
+    }
+    private void InitializeVariables()
+    {
+        shootTimer = shootCooldown/2;
+    }
+
+    private void HandleShootTimer()
+    {
+        if (shootTimer > 0) shootTimer -= Time.deltaTime;
     }
 
     private void ShootSender()
@@ -53,6 +68,7 @@ public class SignalSender : MonoBehaviour
 
         rbProjectile?.AddForce(shootPosition.right.normalized * shootSpeed, ForceMode.VelocityChange);
 
+        OnAnyProjectileShot?.Invoke(this, EventArgs.Empty);
         OnProjectileShot?.Invoke(this, EventArgs.Empty);
 
         if (parentProjectiles) projectileGO.transform.SetParent(transform);

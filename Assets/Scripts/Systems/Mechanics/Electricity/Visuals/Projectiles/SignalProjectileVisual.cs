@@ -33,7 +33,7 @@ public class SignalProjectileVisual : MonoBehaviour
         Destroy(trailVFXTransform.gameObject, trailDestroyTime);
     }
 
-    private void CreateImpact(ContactPoint contactPoint)
+    private void CreateImpactvfx(ContactPoint contactPoint)
     {
         Quaternion rotation = Quaternion.LookRotation(contactPoint.normal);
 
@@ -46,7 +46,7 @@ public class SignalProjectileVisual : MonoBehaviour
     private void SignalProjectile_OnProjectileImpact(object sender, SignalProjectile.OnProjectileImpactEventArgs e)
     {
         EndTrail();
-        CreateImpact(e.contactPoint);
+        CreateImpactvfx(e.contactPoint);
     }
 
     private void SignalProjectile_OnProjectileLifespanEnd(object sender, System.EventArgs e)
