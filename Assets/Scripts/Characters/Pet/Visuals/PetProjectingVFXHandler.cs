@@ -18,6 +18,7 @@ public class PetProjectingVFXHandler : MonoBehaviour
     private const string ORIGIN_PROPERTY = "Velocity";
     private const string VELOCITY_PROPERTY = "Velocity";
     private const string NORMALIZED_DIRECTION_PROPERTY = "NormalizedDirection";
+    private const string DESTINATION_PROPERTY = "Destination";
 
     private void OnEnable()
     {
@@ -40,6 +41,7 @@ public class PetProjectingVFXHandler : MonoBehaviour
     {
         HandleVFXOrigin();
         HandleVFXDirection();
+        HandleVFXDestination();
     }
     private void InitializeVFX()
     {
@@ -69,7 +71,18 @@ public class PetProjectingVFXHandler : MonoBehaviour
         {
             projectingVFX.SetVector3(NORMALIZED_DIRECTION_PROPERTY, normalizedDirection);
         }
+    }
 
+    private void HandleVFXDestination()
+    {
+        if (!currentAttentionTransform) return;
+
+        Vector3 destination = currentAttentionTransform.position;
+
+        if (projectingVFX.HasVector3(DESTINATION_PROPERTY))
+        {
+            projectingVFX.SetVector3(DESTINATION_PROPERTY, destination);
+        }
     }
 
     private void SetVFXDuration(float duration)
