@@ -14,27 +14,52 @@ public class CableElectrode : Electrode
     private GameObject player;
 
     private const string PLAYER_TAG = "Player";
-    private const float DISTANCE_TO_UPDATE = 30f;
+    private const float PLAYER_DISTANCE_TO_UPDATE = 30f;
+    private const int FRAME_UPDATE_INTERVAL = 3;
+
+    private int frameNumber;
 
     protected override void Start()
     {
         base.Start();
-        player = GameObject.FindGameObjectWithTag(PLAYER_TAG);
+        InitializeVariables();
+        ResetFrameNumber();
     }
 
     protected override void Update()
     {
         base.Update(); 
-        LabelLineRenderer();
     }
 
     private void FixedUpdate()
     {
-        FindNearElectricalComponents();
+        FrameUpdateLogic();
+    }
+
+    private void LateUpdate()
+    {       
+        LabelLineRenderer();
+    }
+
+    private void InitializeVariables()
+    {
+        player = GameObject.FindGameObjectWithTag(PLAYER_TAG);
+    }
+
+    private void FrameUpdateLogic()
+    {
+        HandleFrameUpdateCount();
+
+        if (ShouldUpdateByFrame()) 
+        {
+            ResetFrameNumber();
+            FindNearElectricalComponents();
+        }
     }
 
     private void FindNearElectricalComponents()
     {
+
         if (!CheckPlayerClose()) return;
 
         for (int i = 0; i < corners.Length - 1; i++)
@@ -101,8 +126,12 @@ public class CableElectrode : Electrode
     private bool CheckPlayerClose()
     {
         if (!player) return true;
-        if (Vector3.Distance(transform.position, player.transform.position) <= DISTANCE_TO_UPDATE) return true;
+        if (Vector3.Distance(transform.position, player.transform.position) <= PLAYER_DISTANCE_TO_UPDATE) return true;
 
         return false;
     }
+
+    private void HandleFrameUpdateCount() => frameNumber++;
+    private void ResetFrameNumber() => frameNumber = 0;
+    private bool ShouldUpdateByFrame() => frameNumber >= FRAME_UPDATE_INTERVAL;
 }
