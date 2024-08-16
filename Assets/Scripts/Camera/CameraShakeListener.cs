@@ -4,40 +4,22 @@ using UnityEngine;
 
 public class CameraShakeListener : MonoBehaviour
 {
-    [Header("Virtue Door Settings")]
-    [SerializeField,Range(0,1f)] private float virtueDoorShakeAmplitude;
-    [SerializeField,Range(0,5f)] private float virtueDoorShakeFrequency;
-    [SerializeField,Range(0.5f,10f)] private float virtueDoorShakeTime;
-    [SerializeField,Range(0f,10f)] private float virtueDoorShakeFadeInTime;
-    [SerializeField,Range(0f,10f)] private float virtueDoorShakeFadeOutTime;
+    [System.Serializable]
+    public class CameraShakeSettings
+    {
+        [Range(0, 1f)] public float amplitude;
+        [Range(0, 5f)] public float frequency;
+        [Range(0.5f, 10f)] public float shakeTime;
+        [Range(0f, 10f)] public float fadeInTime;
+        [Range(0f, 10f)] public float fadeOutTime;
+    }
 
-    [Header("Boss Door Settings")]
-    [SerializeField, Range(0, 1f)] private float bossDoorShakeAmplitude;
-    [SerializeField, Range(0, 5f)] private float bossDoorShakeFrequency;
-    [SerializeField, Range(0.5f, 10f)] private float bossDoorShakeTime;
-    [SerializeField, Range(0f, 10f)] private float bossDoorShakeFadeInTime;
-    [SerializeField, Range(0f, 10f)] private float bossDoorShakeFadeOutTime;
-
-    [Header("Boss Active Settings")]
-    [SerializeField, Range(0, 1f)] private float bossActiveShakeAmplitude;
-    [SerializeField, Range(0, 5f)] private float bossActiveShakeFrequency;
-    [SerializeField, Range(0.5f, 10f)] private float bossActiveShakeTime;
-    [SerializeField, Range(0f, 10f)] private float bossActiveShakeFadeInTime;
-    [SerializeField, Range(0f, 10f)] private float bossActiveShakeFadeOutTime;
-
-    [Header("Boss PhaseChange Settings")]
-    [SerializeField, Range(0, 1f)] private float bossPhaseChangeShakeAmplitude;
-    [SerializeField, Range(0, 5f)] private float bossPhaseChangeShakeFrequency;
-    [SerializeField, Range(0.5f, 10f)] private float bossPhaseChangeShakeTime;
-    [SerializeField, Range(0f, 10f)] private float bossPhaseChangeShakeFadeInTime;
-    [SerializeField, Range(0f, 10f)] private float bossPhaseChangeShakeFadeOutTime;
-
-    [Header("Boss Defeated Settings")]
-    [SerializeField, Range(0, 1f)] private float bossDefeatedShakeAmplitude;
-    [SerializeField, Range(0, 5f)] private float bossDefeatedShakeFrequency;
-    [SerializeField, Range(0.5f, 10f)] private float bossDefeatedShakeTime;
-    [SerializeField, Range(0f, 10f)] private float bossDefeatedShakeFadeInTime;
-    [SerializeField, Range(0f, 10f)] private float bossDefeatedShakeFadeOutTime;
+    [Header("Shakes Settings")]
+    [SerializeField] private CameraShakeSettings virtueDoorSettings;
+    [SerializeField] private CameraShakeSettings bossDoorSettings;
+    [SerializeField] private CameraShakeSettings bossActiveSettings;
+    [SerializeField] private CameraShakeSettings bossPhaseChangeSettings;
+    [SerializeField] private CameraShakeSettings bossDefeatedSettings;
 
     private void OnEnable()
     {
@@ -57,12 +39,9 @@ public class CameraShakeListener : MonoBehaviour
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
     }
 
-
-
-
-    private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e) => CameraShakeHandler.Instance.ShakeCamera(virtueDoorShakeAmplitude, virtueDoorShakeFrequency, virtueDoorShakeTime, virtueDoorShakeFadeInTime, virtueDoorShakeFadeOutTime);
-    private void BossDoor_OnBossDoorOpen(object sender, System.EventArgs e) => CameraShakeHandler.Instance.ShakeCamera(bossDoorShakeAmplitude, bossDoorShakeFrequency, bossDoorShakeTime, bossDoorShakeFadeInTime, bossDoorShakeFadeOutTime);
-    private void BossStateHandler_OnBossActiveStart(object sender, System.EventArgs e) => CameraShakeHandler.Instance.ShakeCamera(bossActiveShakeAmplitude, bossActiveShakeFrequency, bossActiveShakeTime, bossActiveShakeFadeInTime, bossActiveShakeFadeOutTime);
-    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e) => CameraShakeHandler.Instance.ShakeCamera(bossPhaseChangeShakeAmplitude, bossPhaseChangeShakeFrequency, bossPhaseChangeShakeTime, bossPhaseChangeShakeFadeInTime, bossPhaseChangeShakeFadeOutTime);
-    private void BossStateHandler_OnBossDefeated(object sender, System.EventArgs e) => CameraShakeHandler.Instance.ShakeCamera(bossDefeatedShakeAmplitude, bossDefeatedShakeFrequency, bossDefeatedShakeTime, bossDefeatedShakeFadeInTime, bossDefeatedShakeFadeOutTime);
+    private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e) => CameraShakeHandler.Instance.ShakeCamera(virtueDoorSettings.amplitude, virtueDoorSettings.frequency, virtueDoorSettings.shakeTime, virtueDoorSettings.fadeInTime, virtueDoorSettings.fadeOutTime);
+    private void BossDoor_OnBossDoorOpen(object sender, System.EventArgs e) => CameraShakeHandler.Instance.ShakeCamera(bossDoorSettings.amplitude, bossDoorSettings.frequency, bossDoorSettings.shakeTime, bossDoorSettings.fadeInTime, bossDoorSettings.fadeOutTime);
+    private void BossStateHandler_OnBossActiveStart(object sender, System.EventArgs e) => CameraShakeHandler.Instance.ShakeCamera(bossActiveSettings.amplitude, bossActiveSettings.frequency, bossActiveSettings.shakeTime, bossActiveSettings.fadeInTime, bossActiveSettings.fadeOutTime);
+    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e) => CameraShakeHandler.Instance.ShakeCamera(bossPhaseChangeSettings.amplitude, bossPhaseChangeSettings.frequency, bossPhaseChangeSettings.shakeTime, bossPhaseChangeSettings.fadeInTime, bossPhaseChangeSettings.fadeOutTime);
+    private void BossStateHandler_OnBossDefeated(object sender, System.EventArgs e) => CameraShakeHandler.Instance.ShakeCamera(bossDefeatedSettings.amplitude, bossDefeatedSettings.frequency, bossDefeatedSettings.shakeTime, bossDefeatedSettings.fadeInTime, bossDefeatedSettings.fadeOutTime);
 }

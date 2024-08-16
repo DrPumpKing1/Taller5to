@@ -9,6 +9,7 @@ public class CameraScrollWorldSpaceUIHandler : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private CameraScroll cameraScroll;
+    [SerializeField] private Camera mainCamera;
 
     [Header("Settings")]
     [SerializeField, Range(1f, 2f)] private float scaleFactorMin;
@@ -46,10 +47,10 @@ public class CameraScrollWorldSpaceUIHandler : MonoBehaviour
 
     private void CalculateWorldSpaceUIScaleFactor()
     {
-        float orthographicSize = Camera.main.orthographicSize;
+        float orthographicSize = mainCamera.orthographicSize;
         float scaleFactor = orthographicSize / cameraScroll.OrthoSizeDefault;
 
-        desiredFactor = Vector3.one * scaleFactor * CalculateUIFixedFactor();
+        desiredFactor = CalculateUIFixedFactor() * scaleFactor * Vector3.one;
     }
 
     private void SmoothFactor()

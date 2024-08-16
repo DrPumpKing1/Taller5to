@@ -10,6 +10,7 @@ public class CableElectrode : Electrode
 
     [SerializeField] private float radius;
     [SerializeField] private float thickness;
+    [SerializeField] private bool updateLineRenderer;
 
     private GameObject player;
 
@@ -24,11 +25,7 @@ public class CableElectrode : Electrode
         base.Start();
         InitializeVariables();
         ResetFrameNumber();
-    }
-
-    protected override void Update()
-    {
-        base.Update(); 
+        DrawLineRenderer();
     }
 
     private void FixedUpdate()
@@ -38,7 +35,7 @@ public class CableElectrode : Electrode
 
     private void LateUpdate()
     {       
-        LabelLineRenderer();
+        UpdateLineRenderer();
     }
 
     private void InitializeVariables()
@@ -59,7 +56,6 @@ public class CableElectrode : Electrode
 
     private void FindNearElectricalComponents()
     {
-
         if (!CheckPlayerClose()) return;
 
         for (int i = 0; i < corners.Length - 1; i++)
@@ -104,7 +100,7 @@ public class CableElectrode : Electrode
         }
     }
 
-    private void LabelLineRenderer()
+    private void DrawLineRenderer()
     {
         lineRenderer.startWidth = thickness;
         lineRenderer.endWidth = thickness;
@@ -114,6 +110,13 @@ public class CableElectrode : Electrode
         {
             lineRenderer.SetPosition(i, corners[i].position);
         }
+    }
+
+    private void UpdateLineRenderer()
+    {
+        if (!updateLineRenderer) return;
+
+        DrawLineRenderer();
     }
 
     //public override bool CheckContact(Electrode other)
