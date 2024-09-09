@@ -20,12 +20,12 @@ public class InventoryUI : BaseUI
 
     private const string SHOW_TRIGGER = "Show";
     private const string HIDE_TRIGGER = "Hide";
+
     protected override void OnEnable()
     {
         base.OnEnable();
         InventoryOpeningManager.OnInventoryOpen += InventoryOpeningManager_OnDictionarySelectionOpen;
         InventoryOpeningManager.OnInventoryClose += InventoryOpeningManager_OnDictionarySelectionClose;
-
     }
 
     protected override void OnDisable()
