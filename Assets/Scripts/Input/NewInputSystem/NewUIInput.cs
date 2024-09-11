@@ -50,6 +50,14 @@ public class NewUIInput : UIInput
         return true;
     }
 
+    private bool CanProcessJournalInput()
+    {
+        if (PauseManager.Instance.GamePaused) return false;
+        if (DialogueManager.Instance._ManagerState == DialogueManager.ManagerState.ZeroMovementDialogue) return false;
+
+        return true;
+    }
+
     public override bool GetPauseDown()
     {
         if (!CanProcessUIInput()) return false;
@@ -71,8 +79,18 @@ public class NewUIInput : UIInput
         return UIInput;
     }
 
-    public override void UseInput() => MaxInputCooldownTimer();
+    public override bool GetJournalDown()
+    {
+        if (!CanProcessUIInput()) return false;
+        if (!CanProcessJournalInput()) return false;
+        if (InputOnCooldown()) return false;
 
+        bool UIInput = playerInputActions.UI.Journal.WasPerformedThisFrame();
+
+        return UIInput;
+    }
+
+    public override void UseInput() => MaxInputCooldownTimer();
 
     private void HandleInputCooldown()
     {

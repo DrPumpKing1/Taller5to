@@ -10,6 +10,9 @@ public class UnPausableSFXManager : SFXManager
         InventoryOpeningManager.OnInventoryOpen += InventoryOpeningManager_OnInventoryOpen;
         InventoryOpeningManager.OnInventoryClose += InventoryOpeningManager_OnInventoryClose;
 
+        JournalOpeningManager.OnJournalOpen += JournalOpeningManager_OnJournalOpen;
+        JournalOpeningManager.OnJournalClose += JournalOpeningManager_OnJournalClose;
+
         PauseManager.OnGamePaused += PauseManager_OnGamePaused;
         PauseManager.OnGameResumed += PauseManager_OnGameResumed;
     }
@@ -18,6 +21,9 @@ public class UnPausableSFXManager : SFXManager
     {
         InventoryOpeningManager.OnInventoryOpen -= InventoryOpeningManager_OnInventoryOpen;
         InventoryOpeningManager.OnInventoryClose -= InventoryOpeningManager_OnInventoryClose;
+
+        JournalOpeningManager.OnJournalOpen += JournalOpeningManager_OnJournalOpen;
+        JournalOpeningManager.OnJournalClose += JournalOpeningManager_OnJournalClose;
 
         PauseManager.OnGamePaused -= PauseManager_OnGamePaused;
         PauseManager.OnGameResumed -= PauseManager_OnGameResumed;
@@ -50,7 +56,17 @@ public class UnPausableSFXManager : SFXManager
 
     private void InventoryOpeningManager_OnInventoryClose(object sender, System.EventArgs e)
     {
-        PlaySound(SFXPoolSO.inventoryClosed);
+        PlaySound(SFXPoolSO.inventoryClose);
+    }
+
+    private void JournalOpeningManager_OnJournalOpen(object sender, System.EventArgs e)
+    {
+        PlaySound(SFXPoolSO.journalOpen);
+    }
+
+    private void JournalOpeningManager_OnJournalClose(object sender, System.EventArgs e)
+    {
+        PlaySound(SFXPoolSO.journalClose);
     }
 
     private void PauseManager_OnGamePaused(object sender, System.EventArgs e)
@@ -59,7 +75,7 @@ public class UnPausableSFXManager : SFXManager
     }
     private void PauseManager_OnGameResumed(object sender, System.EventArgs e)
     {
-        PlaySound(SFXPoolSO.pauseClosed);
+        PlaySound(SFXPoolSO.pauseClose);
     }
     #endregion
 
