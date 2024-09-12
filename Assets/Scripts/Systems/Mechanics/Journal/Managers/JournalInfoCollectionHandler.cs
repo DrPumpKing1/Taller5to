@@ -6,8 +6,9 @@ using UnityEngine;
 public class JournalInfoCollectionHandler : MonoBehaviour
 {
     [Header("Journal Info-Log List")]
-    [SerializeField] private List<JournalInfoSOLogRelation> journalInfoSOLogRelations = new List<JournalInfoSOLogRelation>();
+    [SerializeField] private List<JournalInfoSOLogRelation> journalInfoSOLogRelations;
 
+    [Serializable]
     public class JournalInfoSOLogRelation
     {
         public JournalInfoSO journalInfoSO;
