@@ -80,12 +80,12 @@ public class JournalInfoManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.N))
         {
-            
+            CheckJournalInfo(completeJournalInfoLogPool[0].journalInfoSO);
         }
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            GameLogManager.Instance.Log("JournalLog2");
+            CheckJournalInfo(completeJournalInfoLogPool[1].journalInfoSO);
         }
     }
 
@@ -178,6 +178,31 @@ public class JournalInfoManager : MonoBehaviour
     }
     #endregion
 
+    #region Check Journal Info
+    public void CheckJournalInfo(JournalInfoSO journalInfoSO)
+    {
+        foreach(JournalInfoCheck journalInfoCheck in journalInfoCollectedChecked)
+        {
+            if (journalInfoCheck.journalInfoSO == journalInfoSO)
+            {
+                if (journalInfoCheck.hasBeenChecked)
+                {
+                    if (debug) Debug.LogWarning($"Journal Info with id {journalInfoSO.id} has alreadyBeenChecked");
+                }
+                else
+                {
+                    journalInfoCheck.hasBeenChecked = true;
+                }
+
+                return;
+            }
+        }
+
+        if (debug) Debug.LogWarning($"Journal Info with id {journalInfoSO.id} not found in collectedJournalInfo");
+    }
+
+
+    #endregion
     public void ReplaceJournalInfoCollectedList(List<JournalInfoSO> journalInfosSOs)
     {
         journalInfoCollectedChecked.Clear();
