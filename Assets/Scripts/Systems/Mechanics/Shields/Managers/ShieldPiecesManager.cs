@@ -13,8 +13,8 @@ public class ShieldPiecesManager : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] private bool debug;
-    public List<ShieldPieceSO> ShieldPiecesCollected { get { return shieldPiecesCollected; } }
-    public List<ShieldPieceSO> CompleteShieldPiecesPool { get { return completeShieldPiecesPool; } }
+    public List<ShieldPieceSO> ShieldPiecesCollected => shieldPiecesCollected;
+    public List<ShieldPieceSO> CompleteShieldPiecesPool => completeShieldPiecesPool;
 
     public static event EventHandler<OnShieldPieceCollectedEventArgs> OnShieldPieceCollected;
 
@@ -26,14 +26,6 @@ public class ShieldPiecesManager : MonoBehaviour
     private void Awake()
     {
         SetSingleton();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            Debug.Log(HasCompletedShield(Dialect.Rakithu));
-        }
     }
 
     private void SetSingleton()
@@ -79,7 +71,7 @@ public class ShieldPiecesManager : MonoBehaviour
 
         if (CheckIfInventoryContainsShieldPiece(pieceToCollect))
         {
-            if (debug) Debug.Log($"Symbols Dictionary already contains symbolToAdd with id: {pieceToCollect.id}");
+            if (debug) Debug.Log($"Inventory already contains shield piece with id: {pieceToCollect.id}");
             return;
         }
 

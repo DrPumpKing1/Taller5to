@@ -57,7 +57,7 @@ public class JournalOpeningManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("There is more than one InventoryOpeningManager instance, proceding to destroy duplicate");
+            Debug.LogWarning("There is more than one JournalOpeningManager instance, proceding to destroy duplicate");
             Destroy(gameObject);
         }
     }
