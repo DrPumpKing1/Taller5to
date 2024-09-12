@@ -42,13 +42,7 @@ public class ShieldPiecesManager : MonoBehaviour
         }
     }
 
-    public void CollectShieldPiece(ShieldPieceSO collectedPiece)
-    {
-        AddPieceToInventory(collectedPiece);
-        OnShieldPieceCollected?.Invoke(this, new OnShieldPieceCollectedEventArgs { shieldPieceSO = collectedPiece });
-    }
-
-    private void AddPieceToInventory(ShieldPieceSO pieceToCollect)
+    public void CollectShieldPiece(ShieldPieceSO pieceToCollect)
     {
         if (shieldPiecesCollected.Contains(pieceToCollect))
         {
@@ -57,6 +51,7 @@ public class ShieldPiecesManager : MonoBehaviour
         }
 
         shieldPiecesCollected.Add(pieceToCollect);
+        OnShieldPieceCollected?.Invoke(this, new OnShieldPieceCollectedEventArgs { shieldPieceSO = pieceToCollect });
     }
 
     public void AddShieldPieceToInventoryByID(int id)

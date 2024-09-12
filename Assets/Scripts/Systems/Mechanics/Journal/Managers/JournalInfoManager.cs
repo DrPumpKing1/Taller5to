@@ -42,13 +42,7 @@ public class JournalInfoManager : MonoBehaviour
         }
     }
 
-    public void CollectJournalInfo(JournalInfoSO collectedJournalInfo)
-    {
-        AddJournalInfoToJournal(collectedJournalInfo);
-        OnJournalInfoCollected?.Invoke(this, new OnJournalInfoCollectedEventArgs { journalInfoSO = collectedJournalInfo });
-    }
-
-    private void AddJournalInfoToJournal(JournalInfoSO journalInfoToCollect)
+    public void CollectJournalInfo(JournalInfoSO journalInfoToCollect)
     {
         if (journalInfoCollected.Contains(journalInfoToCollect))
         {
@@ -56,6 +50,7 @@ public class JournalInfoManager : MonoBehaviour
             return;
         }
 
+        OnJournalInfoCollected?.Invoke(this, new OnJournalInfoCollectedEventArgs { journalInfoSO = journalInfoToCollect});
         journalInfoCollected.Add(journalInfoToCollect);
     }
 

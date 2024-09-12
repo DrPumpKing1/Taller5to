@@ -45,5 +45,4 @@ public class ShieldPieceUIHandler : MonoBehaviour
     {
         CheckShieldPieceImageState();
     }
-
 }
