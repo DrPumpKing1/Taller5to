@@ -8,20 +8,44 @@ public class JournalInfoManager : MonoBehaviour
     public static JournalInfoManager Instance { get; private set; }
 
     [Header("Journal Info Settings")]
-    [SerializeField] private List<JournalInfoSO> journalInfoCollected;
-    [SerializeField] private List<JournalInfoSO> completeJournalInfoPool;
+    [SerializeField] private List<JournalInfoCheck> journalInfoCollectedChecked;
+    [SerializeField] private List<JournalInfoLog> completeJournalInfoLogPool;
 
     [Header("Debug")]
     [SerializeField] private bool debug;
-    public List<JournalInfoSO> JournalInfoCollected => journalInfoCollected;
-    public List<JournalInfoSO> CompleteJournalInfoPool => completeJournalInfoPool;
+    public List<JournalInfoCheck> JournalInfoCollectedChecked => journalInfoCollectedChecked;
+    public List<JournalInfoLog> CompleteJournalInfoLogPool => completeJournalInfoLogPool;
 
     public static event EventHandler<OnJournalInfoCollectedEventArgs> OnJournalInfoCollected;
+
+    [Serializable]
+    public class JournalInfoCheck
+    {
+        public JournalInfoSO journalInfoSO;
+        public bool hasBeenChecked;
+    }
+
+    [Serializable]
+    public class JournalInfoLog
+    {
+        public JournalInfoSO journalInfoSO;
+        public string logToCollect;
+    }
 
     public class OnJournalInfoCollectedEventArgs : EventArgs
     {
         public JournalInfoSO journalInfoSO;
     }
+
+    private void OnEnable()
+    {
+        GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
+    }
+    private void OnDisable()
+    {
+        GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
+    }
+
 
     private void Awake()
     {
@@ -42,77 +66,135 @@ public class JournalInfoManager : MonoBehaviour
         }
     }
 
-    public void CollectJournalInfo(JournalInfoSO journalInfoToCollect)
+    private void Update()
     {
-        if (journalInfoCollected.Contains(journalInfoToCollect))
+        if (Input.GetKeyDown(KeyCode.V))
         {
-            if (debug) Debug.Log($"Journal already contains info with name: {journalInfoToCollect.infoName}");
-            return;
+            GameLogManager.Instance.Log("JournalLog1");
         }
 
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            GameLogManager.Instance.Log("JournalLog2");
+        }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            GameLogManager.Instance.Log("JournalLog2");
+        }
+    }
+
+    #region Collection By Log
+    private void CheckJournalInfoCollectionByLog(string log)
+    {
+        foreach (JournalInfoLog journalInfoLog in completeJournalInfoLogPool)
+        {
+            if (journalInfoLog.logToCollect == log) CollectJournalInfo(journalInfoLog.journalInfoSO);
+        }
+    }
+    #endregion
+
+    #region Addition To List
+    public void CollectJournalInfo(JournalInfoSO journalInfoToCollect)
+    {
+        foreach(JournalInfoCheck journalInfoCheck in journalInfoCollectedChecked)
+        {
+            if(journalInfoCheck.journalInfoSO == journalInfoToCollect)
+            {
+                if (debug) Debug.Log($"Journal already contains info with name: {journalInfoToCollect.infoName}");
+                return;
+            }
+        }
+
+        JournalInfoCheck journalInfoCheckToAdd = new JournalInfoCheck { journalInfoSO = journalInfoToCollect, hasBeenChecked = false};
+        journalInfoCollectedChecked.Add(journalInfoCheckToAdd);
+
         OnJournalInfoCollected?.Invoke(this, new OnJournalInfoCollectedEventArgs { journalInfoSO = journalInfoToCollect});
-        journalInfoCollected.Add(journalInfoToCollect);
     }
 
     public void AddJournalInfoToJournalByID(int id)
     {
-        JournalInfoSO journalInfoToCollect = GetJournalInfoInCompletePoolByID(id);
+        JournalInfoLog journalInfoLog = GetJournalInfoLogInCompletePoolByID(id);
 
-        if (!journalInfoToCollect)
+        if (journalInfoLog == null)
         {
-            if (debug) Debug.LogWarning("Addition will be ignored due to journal info piece not found");
+            if (debug) Debug.LogWarning("Addition will be ignored due to journal info not found");
             return;
         }
 
-        if (CheckIfJournalContainsJournalInfo(journalInfoToCollect))
+        if (CheckIfJournalContainsJournalInfoCheck(journalInfoLog.journalInfoSO))
         {
-            if (debug) Debug.Log($"Journal already contains journal info with id: {journalInfoToCollect.id}");
+            if (debug) Debug.Log($"Journal already contains journal info with id: {journalInfoLog.journalInfoSO.id}");
             return;
         }
 
-        journalInfoCollected.Add(journalInfoToCollect);
+        JournalInfoCheck journalInfoCheck = new JournalInfoCheck { journalInfoSO = journalInfoLog.journalInfoSO, hasBeenChecked = false };
+        journalInfoCollectedChecked.Add(journalInfoCheck);
     }
 
-    public bool CheckIfJournalContainsJournalInfo(JournalInfoSO journalInfo) => journalInfoCollected.Contains(journalInfo);
-
-    public bool CheckIfJournalContainsShieldPieceByID(int id)
+    public bool CheckIfJournalContainsJournalInfoCheck(JournalInfoSO journalInfo)
     {
-        foreach (JournalInfoSO journalInfo in journalInfoCollected)
+        foreach(JournalInfoCheck journalInfoCheck in journalInfoCollectedChecked)
         {
-            if (journalInfo.id == id) return true;
+            if (journalInfoCheck.journalInfoSO == journalInfo) return true;
         }
 
         return false;
     }
 
-    public JournalInfoSO GetJournalInfoInCompletePoolByID(int id)
+    public bool CheckIfJournalContainsJournalInfoCheckByID(int id)
     {
-        foreach (JournalInfoSO journalInfo in completeJournalInfoPool)
+        foreach (JournalInfoCheck jouralInfoCheck in journalInfoCollectedChecked)
         {
-            if (journalInfo.id == id) return journalInfo;
+            if (jouralInfoCheck.journalInfoSO.id == id) return true;
+        }
+
+        return false;
+    }
+
+    public JournalInfoLog GetJournalInfoLogInCompletePoolByID(int id)
+    {
+        foreach (JournalInfoLog journalInfoLog in completeJournalInfoLogPool)
+        {
+            if (journalInfoLog.journalInfoSO.id == id) return journalInfoLog;
         }
 
         if (debug) Debug.LogWarning($"Journal Info with id {id} not found in completePool");
         return null;
     }
 
-    public JournalInfoSO GetJournalInfoInJournalByID(int id)
+    public JournalInfoCheck GetJournalInfoCheckInJournalByID(int id)
     {
-        foreach (JournalInfoSO journalInfo in journalInfoCollected)
+        foreach (JournalInfoCheck journalInfoCheck in journalInfoCollectedChecked)
         {
-            if (journalInfo.id == id) return journalInfo;
+            if (journalInfoCheck.journalInfoSO.id == id) return journalInfoCheck;
         }
         return null;
     }
+    #endregion
 
     public void ReplaceJournalInfoCollectedList(List<JournalInfoSO> journalInfosSOs)
     {
-        journalInfoCollected.Clear();
+        journalInfoCollectedChecked.Clear();
 
         foreach (JournalInfoSO journalInfoSO in journalInfosSOs)
         {
-            if (journalInfoCollected.Contains(journalInfoSO)) continue;
-            journalInfoCollected.Add(journalInfoSO);
+            if (CheckIfJournalContainsJournalInfoCheck(journalInfoSO)) continue;
+
+            JournalInfoCheck journalInfoCheckToAdd = new JournalInfoCheck { journalInfoSO = journalInfoSO, hasBeenChecked = true };
+            journalInfoCollectedChecked.Add(journalInfoCheckToAdd);
         }
     }
+
+    #region GameLogManagerSubscriptions
+    private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
+    {
+        CheckJournalInfoCollectionByLog(e.gameplayAction.log);
+    }
+    #endregion
 }
