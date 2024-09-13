@@ -25,13 +25,7 @@ public class JournalInfoCollectedPersistence : MonoBehaviour, IDataPersistence<J
     {
         JournalInfoManager journalInfoManager = FindObjectOfType<JournalInfoManager>();
 
-        foreach (JournalInfoManager.JournalInfoCheck journalInfoCheck in journalInfoManager.JournalInfoCollectedChecked) //Clear all data in data
-        {
-            foreach(JournalInfo journalInfo in data.journalInfoList)
-            {
-                if (journalInfoCheck.journalInfoSO.id == journalInfo.id) data.journalInfoList.Remove(journalInfo);
-            }
-        }
+        data.journalInfoList.Clear();
 
         foreach (JournalInfoManager.JournalInfoLog journalInfoLog in journalInfoManager.CompleteJournalInfoLogPool) 
         {
