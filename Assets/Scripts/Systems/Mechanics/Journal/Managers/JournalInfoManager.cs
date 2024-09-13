@@ -48,7 +48,6 @@ public class JournalInfoManager : MonoBehaviour
         GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
     }
 
-
     private void Awake()
     {
         SetSingleton();
