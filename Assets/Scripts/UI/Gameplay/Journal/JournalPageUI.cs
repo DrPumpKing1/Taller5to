@@ -4,15 +4,39 @@ using UnityEngine;
 
 public class JournalPageUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Components")]
+    [SerializeField] private Animator journalPageAnimator;
+
+    private const string SHOW_TRIGGER = "Show";
+    private const string HIDE_TRIGGER = "Hide";
+
+    private const string SHOWING_ANIMATION = "JournalPageUIShowing";
+    private const string HIDDEN_ANIMATION = "JournalPageUItHidden";
+
+    public void ShowPage()
     {
-        
+        journalPageAnimator.ResetTrigger(HIDE_TRIGGER);
+        journalPageAnimator.SetTrigger(SHOW_TRIGGER);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void HidePage()
     {
-        
+        journalPageAnimator.ResetTrigger(SHOW_TRIGGER);
+        journalPageAnimator.SetTrigger(HIDE_TRIGGER);
+    }
+
+    public void ShowPageInmediately()
+    {
+        journalPageAnimator.ResetTrigger(HIDE_TRIGGER);
+        journalPageAnimator.ResetTrigger(SHOW_TRIGGER);
+
+        journalPageAnimator.Play(SHOWING_ANIMATION);
+    }
+    public void HidePageInmediately()
+    {
+        journalPageAnimator.ResetTrigger(HIDE_TRIGGER);
+        journalPageAnimator.ResetTrigger(SHOW_TRIGGER);
+
+        journalPageAnimator.Play(HIDDEN_ANIMATION);
     }
 }
