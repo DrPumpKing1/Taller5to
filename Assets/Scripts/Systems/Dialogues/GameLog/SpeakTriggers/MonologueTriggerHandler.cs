@@ -37,7 +37,7 @@ public class MonologueTriggerHandler : MonoBehaviour
 
     private IEnumerator ReadLogMonologueCoroutine()
     {
-        if (DialogueManager.Instance.PlayingDialogue()) yield break; //Dialogues have priority over monologues
+        if (DialogueManager.Instance.PlayingDialogue()) yield break; //Monologues can't play while another dialogue is playing
         if (MonologueManager.Instance.PlayingMonologue()) yield break; //Monologues can't play while another monologue is playing
 
         string lastLog = GameLogManager.Instance.GameLog[^1].log;
