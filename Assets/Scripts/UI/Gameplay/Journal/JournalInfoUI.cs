@@ -10,6 +10,7 @@ public class JournalInfoUI : MonoBehaviour
     [SerializeField] private JournalInfoSO journalInfoSO;
     [SerializeField] private JournalInfoContentUI journalInfoContentUI;
 
+    public event EventHandler OnJournalInfoHide;
     public event EventHandler OnJournalInfoCollected;
     public event EventHandler OnJournalInfoChecked;
 
@@ -25,8 +26,31 @@ public class JournalInfoUI : MonoBehaviour
         journalInfoContentUI.OnMouseEnterContent -= JournalInfoContentUI_OnMouseEnterContent;
     }
 
+    private void Start()
+    {
+        CheckJournalInfoState();
+    }
+
+    private void CheckJournalInfoState()
+    {
+        if (!JournalInfoManager.Instance.CheckIfJournalContainsJournalInfoCheck(journalInfoSO))
+        {
+            OnJournalInfoHide?.Invoke(this, EventArgs.Empty);
+            return;
+        }
+
+        OnJournalInfoCollected.Invoke(this, EventArgs.Empty);
+
+        if (JournalInfoManager.Instance.CheckIfJournalInfoIsChecked(journalInfoSO))
+        {
+            OnJournalInfoChecked.Invoke(this, EventArgs.Empty);
+        }
+    }
+
     private void JournalInfoManager_OnJournalInfoCollected(object sender, JournalInfoManager.OnJournalInfoEventArgs e)
     {
+        if (e.journalInfoSO != journalInfoSO) return;
+
         OnJournalInfoCollected?.Invoke(this, EventArgs.Empty);
     }
     private void JournalInfoContentUI_OnMouseEnterContent(object sender, EventArgs e)

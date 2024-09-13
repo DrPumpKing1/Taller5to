@@ -18,25 +18,23 @@ public class JournalInfoContentUI : MonoBehaviour, IPointerEnterHandler, IPointe
 
     private void OnEnable()
     {
+        journalInfoUI.OnJournalInfoHide += JournalInfoUI_OnJournalInfoHide;
         journalInfoUI.OnJournalInfoCollected += JournalInfoUI_OnJournalInfoCollected;
         journalInfoUI.OnJournalInfoChecked += JournalInfoUI_OnJournalInfoChecked;
     }
 
     private void OnDisable()
     {
-        journalInfoUI.OnJournalInfoCollected += JournalInfoUI_OnJournalInfoCollected;
-        journalInfoUI.OnJournalInfoChecked += JournalInfoUI_OnJournalInfoChecked;
+        journalInfoUI.OnJournalInfoHide -= JournalInfoUI_OnJournalInfoHide;
+        journalInfoUI.OnJournalInfoCollected -= JournalInfoUI_OnJournalInfoCollected;
+        journalInfoUI.OnJournalInfoChecked -= JournalInfoUI_OnJournalInfoChecked;
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    private void HideJournalInfo()
     {
-        OnMouseEnterContent?.Invoke(this, EventArgs.Empty);
-        Debug.Log("Enter");
-    }
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        OnMouseExitContent?.Invoke(this, EventArgs.Empty);
-        Debug.Log("Exit");
+        contentGameObject.SetActive(false);
+        notCollectedGameObject.SetActive(true);
+        notCheckedIndicator.SetActive(false);
     }
 
     private void CollectJournalInfo()
@@ -51,8 +49,23 @@ public class JournalInfoContentUI : MonoBehaviour, IPointerEnterHandler, IPointe
         notCheckedIndicator.SetActive(false);
     }
 
+    #region Pointer Methods
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnMouseEnterContent?.Invoke(this, EventArgs.Empty);
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnMouseExitContent?.Invoke(this, EventArgs.Empty);
+    }
+    #endregion
 
     #region JournalInfoUISubscriptions
+    private void JournalInfoUI_OnJournalInfoHide(object sender, EventArgs e)
+    {
+        HideJournalInfo();
+    }
+
     private void JournalInfoUI_OnJournalInfoCollected(object sender, EventArgs e)
     {
         CollectJournalInfo();
