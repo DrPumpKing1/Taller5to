@@ -8,7 +8,7 @@ public class InventoryOpeningPersistence : MonoBehaviour, IDataPersistence<UIDat
     {
         InventoryOpeningManager inventoryOpeningManager = FindObjectOfType<InventoryOpeningManager>();
 
-        if (!data.canOpenInventory) return; //If its false, it means PlayerData has been initialized as a new()
+        if (!data.canOpenInventory) return; //If its false, it means UIData has been initialized as a new()
 
         if (data.canOpenInventory) inventoryOpeningManager.SetCanOpenInventory(true);
         else inventoryOpeningManager.SetCanOpenInventory(false);

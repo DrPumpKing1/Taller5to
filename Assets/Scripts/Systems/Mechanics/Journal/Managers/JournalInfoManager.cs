@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using static JournalInfoManager;
 
 public class JournalInfoManager : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class JournalInfoManager : MonoBehaviour
     public List<JournalInfoCheck> JournalInfoCollectedChecked => journalInfoCollectedChecked;
     public List<JournalInfoLog> CompleteJournalInfoLogPool => completeJournalInfoLogPool;
 
-    public static event EventHandler<OnJournalInfoCollectedEventArgs> OnJournalInfoCollected;
+    public static event EventHandler<OnJournalInfoEventArgs> OnJournalInfoCollected;
+    public static event EventHandler<OnJournalInfoEventArgs> OnJournalInfoChecked;
 
     [Serializable]
     public class JournalInfoCheck
@@ -32,7 +34,7 @@ public class JournalInfoManager : MonoBehaviour
         public string logToCollect;
     }
 
-    public class OnJournalInfoCollectedEventArgs : EventArgs
+    public class OnJournalInfoEventArgs : EventArgs
     {
         public JournalInfoSO journalInfoSO;
     }
@@ -114,7 +116,7 @@ public class JournalInfoManager : MonoBehaviour
         JournalInfoCheck journalInfoCheckToAdd = new JournalInfoCheck { journalInfoSO = journalInfoToCollect, hasBeenChecked = false};
         journalInfoCollectedChecked.Add(journalInfoCheckToAdd);
 
-        OnJournalInfoCollected?.Invoke(this, new OnJournalInfoCollectedEventArgs { journalInfoSO = journalInfoToCollect});
+        OnJournalInfoCollected?.Invoke(this, new OnJournalInfoEventArgs { journalInfoSO = journalInfoToCollect});
     }
 
     public void AddJournalInfoToJournalByID(int id)
@@ -179,30 +181,56 @@ public class JournalInfoManager : MonoBehaviour
     #endregion
 
     #region Check Journal Info
-    public void CheckJournalInfo(JournalInfoSO journalInfoSO)
+    public void CheckJournalInfo(JournalInfoSO journalInfoToCheck)
     {
         foreach(JournalInfoCheck journalInfoCheck in journalInfoCollectedChecked)
         {
-            if (journalInfoCheck.journalInfoSO == journalInfoSO)
+            if (journalInfoCheck.journalInfoSO == journalInfoToCheck)
             {
                 if (journalInfoCheck.hasBeenChecked)
                 {
-                    if (debug) Debug.LogWarning($"Journal Info with id {journalInfoSO.id} has alreadyBeenChecked");
+                    if (debug) Debug.LogWarning($"Journal Info with id {journalInfoToCheck.id} has alreadyBeenChecked");
                 }
                 else
                 {
                     journalInfoCheck.hasBeenChecked = true;
+                    OnJournalInfoChecked?.Invoke(this, new OnJournalInfoEventArgs { journalInfoSO = journalInfoToCheck });
                 }
 
                 return;
             }
         }
 
-        if (debug) Debug.LogWarning($"Journal Info with id {journalInfoSO.id} not found in collectedJournalInfo");
+        if (debug) Debug.LogWarning($"Journal Info with id {journalInfoToCheck.id} not found in collectedJournalInfo");
     }
 
+    public void CheckJournalInfoByID(int id)
+    {
+        foreach (JournalInfoCheck journalInfoCheck in journalInfoCollectedChecked)
+        {
+            if (journalInfoCheck.journalInfoSO.id == id)
+            {
+                journalInfoCheck.hasBeenChecked = true;
+                return;
+            }
+        }
+    }
 
+    public bool CheckIfJournalInfoIsChecked(JournalInfoSO journalInfoSO)
+    {
+        foreach(JournalInfoCheck journalInfoCheck in journalInfoCollectedChecked)
+        {
+            if(journalInfoCheck.journalInfoSO == journalInfoSO)
+            {
+                if (journalInfoCheck.hasBeenChecked) return true;
+                else return false;
+            }
+        }
+
+        return false;
+    }
     #endregion
+
     public void ReplaceJournalInfoCollectedList(List<JournalInfoSO> journalInfosSOs)
     {
         journalInfoCollectedChecked.Clear();

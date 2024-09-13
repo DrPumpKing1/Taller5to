@@ -7,10 +7,12 @@ public class UIData
 {
     public bool HUDVisible;
     public bool canOpenInventory;
+    public bool canOpenJournal;
 
     public UIData()
     {
         HUDVisible = false;
         canOpenInventory = false;
+        canOpenJournal = false;
     }
 }
