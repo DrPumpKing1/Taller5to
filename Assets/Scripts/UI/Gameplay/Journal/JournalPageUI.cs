@@ -11,7 +11,7 @@ public class JournalPageUI : MonoBehaviour
     private const string HIDE_TRIGGER = "Hide";
 
     private const string SHOWING_ANIMATION = "JournalPageUIShowing";
-    private const string HIDDEN_ANIMATION = "JournalPageUItHidden";
+    private const string HIDDEN_ANIMATION = "JournalPageUIHidden";
 
     public void ShowPage()
     {

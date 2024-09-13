@@ -124,7 +124,7 @@ public class JournalInfoManager : MonoBehaviour
 
         if (journalInfoLog == null)
         {
-            if (debug) Debug.LogWarning("Addition will be ignored due to journal info not found");
+            if (debug) Debug.Log("Addition will be ignored due to journal info not found");
             return;
         }
 
@@ -165,7 +165,7 @@ public class JournalInfoManager : MonoBehaviour
             if (journalInfoLog.journalInfoSO.id == id) return journalInfoLog;
         }
 
-        if (debug) Debug.LogWarning($"Journal Info with id {id} not found in completePool");
+        if (debug) Debug.Log($"Journal Info with id {id} not found in completePool");
         return null;
     }
 
@@ -188,7 +188,7 @@ public class JournalInfoManager : MonoBehaviour
             {
                 if (journalInfoCheck.hasBeenChecked)
                 {
-                    if (debug) Debug.LogWarning($"Journal Info with id {journalInfoToCheck.id} has alreadyBeenChecked");
+                    if (debug) Debug.Log($"Journal Info with id {journalInfoToCheck.id} has alreadyBeenChecked");
                 }
                 else
                 {
@@ -200,7 +200,7 @@ public class JournalInfoManager : MonoBehaviour
             }
         }
 
-        if (debug) Debug.LogWarning($"Journal Info with id {journalInfoToCheck.id} not found in collectedJournalInfo");
+        if (debug) Debug.Log($"Journal Info with id {journalInfoToCheck.id} not found in collectedJournalInfo");
     }
 
     public void CheckJournalInfoByID(int id)

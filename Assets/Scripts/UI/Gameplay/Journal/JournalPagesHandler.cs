@@ -51,25 +51,25 @@ public class JournalPagesHandler : MonoBehaviour
     private void ShowJournalPage(JournalPageButton journalPageButton)
     {
         journalPageButton.journalPageUI.ShowPage();
-        currentJournalPageButton = journalPageButton;
+        SetCurrentJournalPage(journalPageButton);
     }
 
     private void HideJournalPage(JournalPageButton journalPageButton)
     {
         journalPageButton.journalPageUI.HidePage();
-        currentJournalPageButton = null;
+        ClearCurrentJournalPage();
     }
 
     private void ShowJournalPageInmediately(JournalPageButton journalPageButton)
     {
         journalPageButton.journalPageUI.ShowPageInmediately();
-        currentJournalPageButton = journalPageButton;
+        SetCurrentJournalPage(journalPageButton);
     }
 
     private void HideJournalPageInmediately(JournalPageButton journalPageButton)
     {
         journalPageButton.journalPageUI.HidePageInmediately();
-        currentJournalPageButton = null;
+        ClearCurrentJournalPage();
     }
 
     private void SetCurrentJournalPage(JournalPageButton journalPageButton) => currentJournalPageButton = journalPageButton;
