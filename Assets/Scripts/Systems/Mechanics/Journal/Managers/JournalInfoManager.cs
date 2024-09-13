@@ -68,29 +68,6 @@ public class JournalInfoManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            GameLogManager.Instance.Log("JournalLog1");
-        }
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            GameLogManager.Instance.Log("JournalLog2");
-        }
-
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            CheckJournalInfo(completeJournalInfoLogPool[0].journalInfoSO);
-        }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            CheckJournalInfo(completeJournalInfoLogPool[1].journalInfoSO);
-        }
-    }
-
     #region Collection By Log
     private void CheckJournalInfoCollectionByLog(string log)
     {
