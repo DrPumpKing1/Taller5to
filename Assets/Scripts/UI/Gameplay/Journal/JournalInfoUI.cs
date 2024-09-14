@@ -14,15 +14,21 @@ public class JournalInfoUI : MonoBehaviour
     public event EventHandler OnJournalInfoCollected;
     public event EventHandler OnJournalInfoChecked;
 
+    public JournalInfoSO JournalInfoSO => journalInfoSO;    
+
     private void OnEnable()
     {
         JournalInfoManager.OnJournalInfoCollected += JournalInfoManager_OnJournalInfoCollected;
+        JournalInfoManager.OnJournalInfoChecked += JournalInfoManager_OnJournalInfoChecked;
+
         journalInfoContentUI.OnMouseEnterContent += JournalInfoContentUI_OnMouseEnterContent;
     }
 
     private void OnDisable()
     {
         JournalInfoManager.OnJournalInfoCollected -= JournalInfoManager_OnJournalInfoCollected;
+        JournalInfoManager.OnJournalInfoChecked += JournalInfoManager_OnJournalInfoChecked;
+
         journalInfoContentUI.OnMouseEnterContent -= JournalInfoContentUI_OnMouseEnterContent;
     }
 
@@ -53,12 +59,18 @@ public class JournalInfoUI : MonoBehaviour
 
         OnJournalInfoCollected?.Invoke(this, EventArgs.Empty);
     }
+
+    private void JournalInfoManager_OnJournalInfoChecked(object sender, JournalInfoManager.OnJournalInfoEventArgs e)
+    {
+        if (e.journalInfoSO != journalInfoSO) return;
+        OnJournalInfoChecked?.Invoke(this, EventArgs.Empty);
+    }
+
     private void JournalInfoContentUI_OnMouseEnterContent(object sender, EventArgs e)
     {
         if (!JournalInfoManager.Instance.CheckIfJournalContainsJournalInfoCheck(journalInfoSO)) return; //JournalInfo not collected
         if (JournalInfoManager.Instance.CheckIfJournalInfoIsChecked(journalInfoSO)) return; //JournalInfo alreadyChecked
 
         JournalInfoManager.Instance.CheckJournalInfo(journalInfoSO);
-        OnJournalInfoChecked?.Invoke(this, EventArgs.Empty);
     }
 }

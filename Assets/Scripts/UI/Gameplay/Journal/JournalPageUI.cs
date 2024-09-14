@@ -1,10 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static JournalInfoManager;
 
 public class JournalPageUI : MonoBehaviour
 {
     [Header("Components")]
+    [SerializeField] private List<JournalInfoUI> journalInfoUIs;
+    [SerializeField] private GameObject pageNotCheckedIndicator;
+    [Space]
     [SerializeField] private Animator journalPageAnimator;
 
     private const string SHOW_TRIGGER = "Show";
@@ -13,6 +18,30 @@ public class JournalPageUI : MonoBehaviour
     private const string SHOWING_ANIMATION = "JournalPageUIShowing";
     private const string HIDDEN_ANIMATION = "JournalPageUIHidden";
 
+    private void OnEnable()
+    {
+        JournalInfoManager.OnJournalInfoCollected += JournalInfoManager_OnJournalInfoCollected;
+        JournalInfoManager.OnJournalInfoChecked += JournalInfoManager_OnJournalInfoChecked;
+    }
+
+    private void OnDisable()
+    {
+        JournalInfoManager.OnJournalInfoChecked -= JournalInfoManager_OnJournalInfoChecked;
+        JournalInfoManager.OnJournalInfoChecked -= JournalInfoManager_OnJournalInfoChecked;
+    }
+
+    private void Start()
+    {
+        CheckJournalPageState();
+    }
+
+    private void CheckJournalPageState()
+    {
+        CheckShowIndicator();
+        CheckHideIndicator();
+    }
+
+    #region Show & Hide Page
     public void ShowPage()
     {
         journalPageAnimator.ResetTrigger(HIDE_TRIGGER);
@@ -39,4 +68,57 @@ public class JournalPageUI : MonoBehaviour
 
         journalPageAnimator.Play(HIDDEN_ANIMATION);
     }
+    #endregion
+
+    #region Show & Hide Indicator
+
+    public void ShowNotCheckedIndicator()
+    {
+        pageNotCheckedIndicator.SetActive(true);
+    }
+
+    public void HideNotCheckedIndicator()
+    {
+        pageNotCheckedIndicator.SetActive(false);
+    }
+
+    private void CheckShowIndicator()
+    {
+        foreach (JournalInfoUI journalInfoUI in journalInfoUIs)
+        {
+            JournalInfoManager.JournalInfoCheck journalInfoCheck = JournalInfoManager.Instance.GetJournalInfoCheckInJournal(journalInfoUI.JournalInfoSO);
+            if (journalInfoCheck == null) continue;
+
+            if (!journalInfoCheck.hasBeenChecked)
+            {
+                ShowNotCheckedIndicator();
+                return;
+            }
+        }
+    }
+    private void CheckHideIndicator()
+    {
+        foreach (JournalInfoUI journalInfoUI in journalInfoUIs)
+        {
+            JournalInfoManager.JournalInfoCheck journalInfoCheck = JournalInfoManager.Instance.GetJournalInfoCheckInJournal(journalInfoUI.JournalInfoSO);
+            if (journalInfoCheck == null) continue;
+            if (!journalInfoCheck.hasBeenChecked) return;
+        }
+
+        HideNotCheckedIndicator();
+    }
+
+    #endregion
+
+    #region JournalInfoManager Susbcriptions
+    private void JournalInfoManager_OnJournalInfoCollected(object sender, JournalInfoManager.OnJournalInfoEventArgs e)
+    {
+        CheckShowIndicator();
+    }
+
+    private void JournalInfoManager_OnJournalInfoChecked(object sender, JournalInfoManager.OnJournalInfoEventArgs e)
+    {
+        CheckHideIndicator();
+    }
+    #endregion
 }

@@ -177,6 +177,15 @@ public class JournalInfoManager : MonoBehaviour
         }
         return null;
     }
+
+    public JournalInfoCheck GetJournalInfoCheckInJournal(JournalInfoSO journalInfoSO)
+    {
+        foreach (JournalInfoCheck journalInfoCheck in journalInfoCollectedChecked)
+        {
+            if (journalInfoCheck.journalInfoSO == journalInfoSO) return journalInfoCheck;
+        }
+        return null;
+    }
     #endregion
 
     #region Check Journal Info
