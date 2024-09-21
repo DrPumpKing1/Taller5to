@@ -22,8 +22,8 @@ public class UnPausableSFXManager : SFXManager
         InventoryOpeningManager.OnInventoryOpen -= InventoryOpeningManager_OnInventoryOpen;
         InventoryOpeningManager.OnInventoryClose -= InventoryOpeningManager_OnInventoryClose;
 
-        JournalOpeningManager.OnJournalOpen += JournalOpeningManager_OnJournalOpen;
-        JournalOpeningManager.OnJournalClose += JournalOpeningManager_OnJournalClose;
+        JournalOpeningManager.OnJournalOpen -= JournalOpeningManager_OnJournalOpen;
+        JournalOpeningManager.OnJournalClose -= JournalOpeningManager_OnJournalClose;
 
         PauseManager.OnGamePaused -= PauseManager_OnGamePaused;
         PauseManager.OnGameResumed -= PauseManager_OnGameResumed;

@@ -80,9 +80,11 @@ public class InventoryOpeningManager : MonoBehaviour
         }
         else    
         {
-            if (UIManager.Instance.GetUILayersCount() == 1) //If count is 1, the active layer is the InventoryUI, this script should not have a refference to the inventoryUI
+            if (UIManager.Instance.GetUILayersCount() != 1) return; //If count is 1, the active layer is the InventoryUI, this script should not have a refference to the inventoryUI
+            
             CloseInventory();
             UIInput.UseInput();
+            
         }
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 public class JournalOpeningManager : MonoBehaviour
 {
@@ -66,6 +67,7 @@ public class JournalOpeningManager : MonoBehaviour
     {
         JournalOpen = false;
     }
+
     public void SetCanOpenJournal(bool canOpen) => canOpenJournal = canOpen;
     private void CheckOpenCloseJournal()
     {
@@ -74,15 +76,18 @@ public class JournalOpeningManager : MonoBehaviour
 
         if (!JournalOpen)
         {
-            if (UIManager.Instance.UIActive) return; //UIManager should not have any layer active
-            OpenJournal();
+            if (UIManager.Instance.UIActive) return;
+
             UIInput.UseInput();
+            OpenJournal();
         }
         else
         {
-            if (UIManager.Instance.GetUILayersCount() == 1) //If count is 1, the active layer is the InventoryUI, this script should not have a refference to the inventoryUI
+            if (UIManager.Instance.GetUILayersCount() != 1) return; //If count is 1, the active layer is the InventoryUI, this script should not have a refference to the inventoryUI
+            
             CloseJournal();
             UIInput.UseInput();
+            
         }
     }
 

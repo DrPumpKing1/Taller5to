@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     [Header("UI Layers")]
     [SerializeField] private List<BaseUI> _UILayers;
 
-    public List<BaseUI> UILayers { get { return _UILayers; } }
+    public List<BaseUI> UILayers => _UILayers;
     private bool CloseInput => UIInput.GetPauseDown();
 
     public static event EventHandler<OnUIToCloseInputEventArgs> OnUIToCloseInput;

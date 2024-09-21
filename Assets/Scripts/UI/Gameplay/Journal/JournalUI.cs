@@ -28,6 +28,13 @@ public class JournalUI : BaseUI
         JournalOpeningManager.OnJournalClose += JournalOpeningManager_OnJournalClose;
     }
 
+    protected override void OnDisable()
+    {
+        base.OnEnable();
+        JournalOpeningManager.OnJournalOpen -= JournalOpeningManager_OnJournalOpen;
+        JournalOpeningManager.OnJournalClose -= JournalOpeningManager_OnJournalClose;
+    }
+
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -93,13 +100,6 @@ public class JournalUI : BaseUI
     {
         journalUIAnimator.ResetTrigger(SHOW_TRIGGER);
         journalUIAnimator.SetTrigger(HIDE_TRIGGER);
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-        JournalOpeningManager.OnJournalOpen += JournalOpeningManager_OnJournalOpen;
-        JournalOpeningManager.OnJournalClose += JournalOpeningManager_OnJournalClose;
     }
 
     #region JournalOpeningManager Subscriptions
