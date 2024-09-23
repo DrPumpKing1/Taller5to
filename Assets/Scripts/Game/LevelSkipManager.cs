@@ -108,7 +108,7 @@ public class LevelSkipManager : MonoBehaviour
 
         ProjectionGemsManager.Instance.SetTotalProjectionGems(levelSettings.projectionGems);
         InventoryOpeningManager.Instance.SetCanOpenInventory(levelSettings.canOpenInventory);
-        HUDVisibilityHandler.Instance.SetIsVisible(levelSettings.HUDVisible);
+        ProjectionHUDVisibilityHandler.Instance.SetIsVisible(levelSettings.HUDVisible);
         PetPlayerAttachment.Instance.SetAttachToPlayer(levelSettings.attachToPlayer);
 
         UniqueDialogueTriggerHandler.Instance.ReplaceUniqueDialoguesTriggered(levelSettings.uniqueDialoguesTriggered, true);

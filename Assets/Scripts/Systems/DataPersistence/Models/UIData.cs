@@ -5,13 +5,14 @@ using UnityEngine;
 [System.Serializable]
 public class UIData
 {
-    public bool HUDVisible;
+    public bool projectionHUDVisible;
     public bool canOpenInventory;
     public bool canOpenJournal;
 
     public UIData()
     {
-        HUDVisible = false;
+        projectionHUDVisible = false;
+
         canOpenInventory = false;
         canOpenJournal = false;
     }
