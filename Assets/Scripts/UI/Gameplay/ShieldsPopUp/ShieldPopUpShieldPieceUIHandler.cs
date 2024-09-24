@@ -19,7 +19,12 @@ public class ShieldPopUpShieldPieceUIHandler : MonoBehaviour
     private const string HIDDEN_ANIMATION = "Hidden";
     private const string SHOWING_ANIMATION = "Showing";
 
-    private void CheckShieldPieceImageState()
+    private void Start()
+    {
+        CheckShieldPieceState();
+    }
+
+    private void CheckShieldPieceState()
     {
         if (ShieldPiecesManager.Instance.ShieldPiecesCollected.Contains(shieldPieceSO))
         {
@@ -31,23 +36,23 @@ public class ShieldPopUpShieldPieceUIHandler : MonoBehaviour
         }
     }
 
-    private void ShowPieceUI()
+    public void ShowPieceUI()
     {
         shieldsPopUpPieceUIAnimator.ResetTrigger(HIDE_TRIGGER);
         shieldsPopUpPieceUIAnimator.SetTrigger(SHOW_TRIGGER);
     }
-    private void HidePieceUI()
+    public void HidePieceUI()
     {
         shieldsPopUpPieceUIAnimator.ResetTrigger(SHOW_TRIGGER);
         shieldsPopUpPieceUIAnimator.SetTrigger(HIDE_TRIGGER);
     }
 
-    private void ShowPieceUIInmediately()
+    public void ShowPieceUIInmediately()
     {
         shieldsPopUpPieceUIAnimator.Play(SHOWING_ANIMATION);
     }
 
-    private void HidePieceUIInmediately()
+    public void HidePieceUIInmediately()
     {
         shieldsPopUpPieceUIAnimator.Play(HIDDEN_ANIMATION);
     }

@@ -15,32 +15,69 @@ public class ShieldPopUpShieldUI : MonoBehaviour
     private void OnEnable()
     {
         ShieldsPopUpUI.OnShieldPopUpShow += ShieldsPopUpUI_OnShieldPopUpShow;
+        ShieldsPopUpUI.OnShieldPopUpComplete += ShieldsPopUpUI_OnShieldPopUpComplete;
         ShieldsPopUpUI.OnShieldPopUpHide += ShieldsPopUpUI_OnShieldPopUpHide;
     }
+
     private void OnDisable()
     {
         ShieldsPopUpUI.OnShieldPopUpShow -= ShieldsPopUpUI_OnShieldPopUpShow;
+        ShieldsPopUpUI.OnShieldPopUpComplete -= ShieldsPopUpUI_OnShieldPopUpComplete;
         ShieldsPopUpUI.OnShieldPopUpHide -= ShieldsPopUpUI_OnShieldPopUpHide;
+    }
+
+    private void Start()
+    {
+        HideUI();
     }
 
     private void ShowShieldUI() => backgroundImage.enabled = true;
     private void HideShieldUI() => backgroundImage.enabled = false;
 
-    private void CheckShouldShow(ShieldPieceSO shieldPieceSO)
+    private void HideUI()
     {
-        if (dialect != shieldPieceSO.dialect) return;
+        HideShieldUI();
+        HideAllPieces();
+    }
+
+    private void CheckShouldShow(Dialect dialect)
+    {
+        if (this.dialect != dialect) return;
         ShowShieldUI();
+    }
+
+    private void CheckShowPiece(ShieldPieceSO shieldPieceSO)
+    {
+        foreach (ShieldPopUpShieldPieceUIHandler piece in pieces)
+        {
+            if (piece.ShieldPieceSO == shieldPieceSO) piece.ShowPieceUI();
+            else if (piece.OnInventory) piece.ShowPieceUIInmediately();
+            else piece.HidePieceUIInmediately();
+        }
+    }
+
+    private void HideAllPieces()
+    {
+        foreach (ShieldPopUpShieldPieceUIHandler piece in pieces)
+        {
+            piece.HidePieceUIInmediately();
+        }
     }
 
     #region ShieldsPopUpUI Subscriptions
     private void ShieldsPopUpUI_OnShieldPopUpShow(object sender, ShieldsPopUpUI.OnShieldPopUpEventArgs e)
     {
-        CheckShouldShow(e.shieldPieceSO);
+        CheckShouldShow(e.shieldPieceSO.dialect);
+    }
+
+    private void ShieldsPopUpUI_OnShieldPopUpComplete(object sender, ShieldsPopUpUI.OnShieldPopUpEventArgs e)
+    {
+        CheckShowPiece(e.shieldPieceSO);
     }
 
     private void ShieldsPopUpUI_OnShieldPopUpHide(object sender, ShieldsPopUpUI.OnShieldPopUpEventArgs e)
     {
-        HideShieldUI();
+        HideUI();
     }
     #endregion
 }
