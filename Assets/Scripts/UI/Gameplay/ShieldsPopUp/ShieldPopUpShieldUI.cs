@@ -40,19 +40,30 @@ public class ShieldPopUpShieldUI : MonoBehaviour
         HideAllPieces();
     }
 
-    private void CheckShouldShow(Dialect dialect)
+    private void CheckShouldShow(ShieldPieceSO shieldPieceSO)
     {
-        if (this.dialect != dialect) return;
+        if (shieldPieceSO.dialect != dialect) return;
+
         ShowShieldUI();
+        CheckShowPiecesInmediately(shieldPieceSO);
+    }
+
+    private void CheckShowPiecesInmediately(ShieldPieceSO shieldPieceSO)
+    {
+        foreach (ShieldPopUpShieldPieceUIHandler piece in pieces)
+        {
+            if (piece.OnInventory && piece.ShieldPieceSO != shieldPieceSO) piece.ShowPieceUIInmediately();
+            else piece.HidePieceUIInmediately();
+        }
     }
 
     private void CheckShowPiece(ShieldPieceSO shieldPieceSO)
     {
+        if (dialect != shieldPieceSO.dialect) return;
+
         foreach (ShieldPopUpShieldPieceUIHandler piece in pieces)
         {
             if (piece.ShieldPieceSO == shieldPieceSO) piece.ShowPieceUI();
-            else if (piece.OnInventory) piece.ShowPieceUIInmediately();
-            else piece.HidePieceUIInmediately();
         }
     }
 
@@ -67,7 +78,7 @@ public class ShieldPopUpShieldUI : MonoBehaviour
     #region ShieldsPopUpUI Subscriptions
     private void ShieldsPopUpUI_OnShieldPopUpShow(object sender, ShieldsPopUpUI.OnShieldPopUpEventArgs e)
     {
-        CheckShouldShow(e.shieldPieceSO.dialect);
+        CheckShouldShow(e.shieldPieceSO);
     }
 
     private void ShieldsPopUpUI_OnShieldPopUpComplete(object sender, ShieldsPopUpUI.OnShieldPopUpEventArgs e)

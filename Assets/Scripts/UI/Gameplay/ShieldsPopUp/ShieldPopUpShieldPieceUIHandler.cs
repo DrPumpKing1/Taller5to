@@ -19,6 +19,15 @@ public class ShieldPopUpShieldPieceUIHandler : MonoBehaviour
     private const string HIDDEN_ANIMATION = "Hidden";
     private const string SHOWING_ANIMATION = "Showing";
 
+    private void OnEnable()
+    {
+        ShieldPiecesManager.OnShieldPieceCollected += ShieldPiecesManager_OnShieldPieceCollected;
+    }
+    private void OnDisable()
+    {
+        ShieldPiecesManager.OnShieldPieceCollected -= ShieldPiecesManager_OnShieldPieceCollected;
+    }
+
     private void Start()
     {
         CheckShieldPieceState();
@@ -55,5 +64,10 @@ public class ShieldPopUpShieldPieceUIHandler : MonoBehaviour
     public void HidePieceUIInmediately()
     {
         shieldsPopUpPieceUIAnimator.Play(HIDDEN_ANIMATION);
+    }
+
+    private void ShieldPiecesManager_OnShieldPieceCollected(object sender, ShieldPiecesManager.OnShieldPieceCollectedEventArgs e)
+    {
+        CheckShieldPieceState();
     }
 }

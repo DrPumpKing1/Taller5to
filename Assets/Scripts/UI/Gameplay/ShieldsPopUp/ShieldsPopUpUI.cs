@@ -14,8 +14,8 @@ public class ShieldsPopUpUI : MonoBehaviour
     private const string SHOW_TRIGGER = "Show";
     private const string HIDE_TRIGGER = "Hide";
 
-    private const float SHOW_TIME = 1f;
-    private const float HIDE_TIME = 1f;
+    private const float SHOW_TIME = 1.5f;
+    private const float HIDE_TIME = 1.5f;
 
     public static event EventHandler<OnShieldPopUpEventArgs> OnShieldPopUpShow;
     public static event EventHandler<OnShieldPopUpEventArgs> OnShieldPopUpComplete;
