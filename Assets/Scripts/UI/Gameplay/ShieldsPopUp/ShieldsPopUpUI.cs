@@ -18,6 +18,7 @@ public class ShieldsPopUpUI : MonoBehaviour
     private const float HIDE_TIME = 1f;
 
     public static event EventHandler<OnShieldPopUpEventArgs> OnShieldPopUpShow;
+    public static event EventHandler<OnShieldPopUpEventArgs> OnShieldPopUpComplete;
     public static event EventHandler<OnShieldPopUpEventArgs> OnShieldPopUpHide;
 
     public class OnShieldPopUpEventArgs: EventArgs
@@ -52,6 +53,9 @@ public class ShieldsPopUpUI : MonoBehaviour
 
         ShowPopUp();
         yield return new WaitForSeconds(SHOW_TIME);
+
+        OnShieldPopUpComplete?.Invoke(this, new OnShieldPopUpEventArgs { shieldPieceSO = shieldPieceSO });
+
         yield return new WaitForSeconds(timeShowingPopUp);
         HidePopUp();
         yield return new WaitForSeconds(HIDE_TIME);
