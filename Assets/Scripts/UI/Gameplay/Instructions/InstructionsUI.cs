@@ -29,7 +29,6 @@ public class InstructionsUI : MonoBehaviour
         InstructionsManager.OnInstructionShow -= InstructionsManager_OnInstructionShow;
         InstructionsManager.OnInstructionHide -= InstructionsManager_OnInstructionHide;
         InstructionsManager.OnInstructionReplace -= InstructionsManager_OnInstructionReplace;
-
     }
 
     private void ShowInstruction(InstructionsManager.UniqueInstruction uniqueInstruction)
