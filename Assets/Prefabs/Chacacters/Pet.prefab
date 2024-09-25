@@ -313,6 +313,9 @@ MonoBehaviour:
   - {x: 0.7, y: 0, z: 0.7}
   safeOrbitRadius: 1.25
   safePositionVector: {x: 0, y: 0, z: -1}
+  minGuidanceSmoothPositionSpeedFactor: 0.1
+  maxGuidanceSmoothPositionSpeedFactor: 2.25
+  timeToReachMaxGuidanceSmoothPositionSpeedFactor: 1.5
   moveTowardsObject: 0
   offsetFromInteractableObject: {x: 0, y: 3.5, z: 0}
   colisionDetectionRadius: 1.5
@@ -320,7 +323,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 129
   state: 0
-  currentSmoothPositionSpeedFactor: 0
+  currentGuidanceSmoothPositionSpeedFactor: 0
+  currentGuidancePositionTransform: {fileID: 0}
 --- !u!1 &4246972803737518667
 GameObject:
   m_ObjectHideFlags: 0

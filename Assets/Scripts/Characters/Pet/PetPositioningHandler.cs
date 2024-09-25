@@ -14,7 +14,7 @@ public class PetPositioningHandler : MonoBehaviour
     [Header("Initial Position Settings")]
     [SerializeField] private Vector3 startPositionOffsetFromOrbitPoint;
 
-    [Header("Orbit Positioning Settings")]
+    [Header("Player Follow Settings")]
     [SerializeField, Range(1f, 5f)] private float orbitRadius;
     [Space]
     [SerializeField, Range(0.1f, 100f)] private float minSmoothPositionSpeedFactor;
@@ -27,6 +27,11 @@ public class PetPositioningHandler : MonoBehaviour
     [Header("Safe Positioning Settings")]
     [SerializeField, Range(1f, 2f)] private float safeOrbitRadius;
     [SerializeField] private Vector3 safePositionVector;
+
+    [Header("Guidance Positioning Settings")]
+    [SerializeField, Range(0.1f, 100f)] private float minGuidanceSmoothPositionSpeedFactor;
+    [SerializeField, Range(0.1f, 100f)] private float maxGuidanceSmoothPositionSpeedFactor;
+    [SerializeField, Range(0.1f, 10f)] private float timeToReachMaxGuidanceSmoothPositionSpeedFactor;
 
     [Header("Player Interaction Settings")]
     [SerializeField] private bool moveTowardsObject;
@@ -43,17 +48,20 @@ public class PetPositioningHandler : MonoBehaviour
 
     public State PositioningState => state;
 
-    private Vector3 desiredDirectionVector;
-    private float targetRadius;
+    private Vector3 playerFollowDesiredDirectionVector;
+    private float playerFollowTargetRadius;
 
-    private Vector3 targetDirectionVector;
-    private Vector3 desiredPosition;
+    private Vector3 playerFollowTargetDirectionVector;
+    private Vector3 playerFollowDesiredPosition;
 
     private Transform curentInteractingTransform;
 
-    public float currentSmoothPositionSpeedFactor;
-
+    private float currentSmoothPositionSpeedFactor;
     private float timeFollowing;
+
+    private float currentGuidanceSmoothPositionSpeedFactor;
+    private Transform currentGuidancePositionTransform;
+    private float timeGuiding;
 
     private void OnEnable()
     {
@@ -115,13 +123,16 @@ public class PetPositioningHandler : MonoBehaviour
     private void StillLogic()
     {
         ResetTimeFollowing();
+        ResetTimeGuiding();
     }
 
     private void FollowingPlayerLogic()
     {
+        ResetTimeGuiding();
+
         timeFollowing += Time.fixedDeltaTime;
 
-        HandlePositionSpeedFactor(minSmoothPositionSpeedFactor,maxSmoothPositionSpeedFactor,timeToReachMaxSmoothPositionSpeedFactor);
+        HandlePositionSpeedFactor(ref currentSmoothPositionSpeedFactor, minSmoothPositionSpeedFactor,maxSmoothPositionSpeedFactor, timeFollowing, timeToReachMaxSmoothPositionSpeedFactor);
 
         if (orbitPoint)
         {
@@ -130,16 +141,28 @@ public class PetPositioningHandler : MonoBehaviour
 
         if (curentInteractingTransform)
         {
-            desiredPosition = curentInteractingTransform.position + offsetFromInteractableObject;
+            playerFollowDesiredPosition = curentInteractingTransform.position + offsetFromInteractableObject;
         }
 
-        MoveToDesiredPosition();
+        MoveToPosition(playerFollowDesiredPosition,currentSmoothPositionSpeedFactor);
     }
 
     private void OnGuidanceLogic()
     {
         ResetTimeFollowing();
+
+        if (currentGuidancePositionTransform == null) return;
+
+        timeGuiding += Time.fixedDeltaTime;
+
+        HandlePositionSpeedFactor(ref currentGuidanceSmoothPositionSpeedFactor, minGuidanceSmoothPositionSpeedFactor, maxGuidanceSmoothPositionSpeedFactor, timeGuiding, timeToReachMaxGuidanceSmoothPositionSpeedFactor);
+
+        MoveToPosition(currentGuidancePositionTransform.position,currentGuidanceSmoothPositionSpeedFactor);
     }
+
+    private void MoveToPosition(Vector3 position, float smoothFactor) => transform.position = Vector3.Lerp(transform.position, position, smoothFactor * Time.fixedDeltaTime);
+
+    private void HandlePositionSpeedFactor(ref float currentFactor, float initialFactor, float finalFactor, float time, float timeToReachFinalFactor) => currentFactor = Mathf.Lerp(initialFactor, finalFactor, time / timeToReachFinalFactor);
 
     #region FollowingPlayer Methods
 
@@ -171,8 +194,8 @@ public class PetPositioningHandler : MonoBehaviour
             }
         }
 
-        desiredDirectionVector = dirVector;
-        targetRadius = radius;
+        playerFollowDesiredDirectionVector = dirVector;
+        playerFollowTargetRadius = radius;
     }
     private Vector3 CalculateLocalPreferredPositionVector(Vector3 worldPreferredPosition, Transform refferenceTransform)
     {
@@ -185,16 +208,20 @@ public class PetPositioningHandler : MonoBehaviour
 
     private Vector3 CalculateOrbitPosition(Transform refferenceTransform, Vector3 directionVector, float orbitRadius) => refferenceTransform.position + orbitRadius * directionVector;
 
-    private void CalculateTargetDirectionVector() => targetDirectionVector = Vector3.Slerp(targetDirectionVector, desiredDirectionVector, smoothVectorSpeedFactor * Time.fixedDeltaTime);
+    private void CalculateTargetDirectionVector() => playerFollowTargetDirectionVector = Vector3.Slerp(playerFollowTargetDirectionVector, playerFollowDesiredDirectionVector, smoothVectorSpeedFactor * Time.fixedDeltaTime);
 
-    private void CalculateDesiredPosition() => desiredPosition = CalculateOrbitPosition(orbitPoint, targetDirectionVector, targetRadius);
+    private void CalculateDesiredPosition() => playerFollowDesiredPosition = CalculateOrbitPosition(orbitPoint, playerFollowTargetDirectionVector, playerFollowTargetRadius);
 
-    private void MoveToDesiredPosition() => transform.position = Vector3.Lerp(transform.position, desiredPosition, currentSmoothPositionSpeedFactor * Time.fixedDeltaTime);
-    private void MoveInstantlyToDesiredPosition() => transform.position = desiredPosition;
-
-    private void HandlePositionSpeedFactor(float initialFactor, float finalFactor, float timeToReachFinalFactor) => currentSmoothPositionSpeedFactor = Mathf.Lerp(initialFactor, finalFactor, timeFollowing/timeToReachFinalFactor);
+    private void MoveInstantlyToDesiredPosition() => transform.position = playerFollowDesiredPosition;
 
     private void ResetTimeFollowing() => timeFollowing = 0f;
+    #endregion
+
+    #region Guidance Methods
+    private void ResetTimeGuiding() => timeGuiding = 0f;
+    private void SetGuidancePositionTransform(Transform guidancePositionTransform) => currentGuidancePositionTransform = guidancePositionTransform;
+    private void ClearGuidancePositionTransform() => currentGuidancePositionTransform = null;
+
     #endregion
 
     #region StartPosition Methods
@@ -209,11 +236,13 @@ public class PetPositioningHandler : MonoBehaviour
     #region PetGuidanceListener Subscriptions
     private void PetGuidanceListener_OnPetGuidanceStart(object sender, PetGuidanceListener.OnPetGuidanceEventArgs e)
     {
+        SetGuidancePositionTransform(e.positionTransform);
         SetPositioningState(State.OnGuidance);
     }
 
     private void PetGuidanceListener_OnPetGuidanceEnd(object sender, PetGuidanceListener.OnPetGuidanceEventArgs e)
     {
+        ClearGuidancePositionTransform();
         SetPositioningState(State.FollowingPlayer);
     }
 
