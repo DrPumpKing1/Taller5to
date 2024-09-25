@@ -60,7 +60,8 @@ public class PetPositioningHandler : MonoBehaviour
         PetPlayerAttachment.OnVyrxAttachToPlayer += PetPlayerAttachment_OnVyrxAttachToPlayer;
         PetPlayerAttachment.OnVyrxUnattachToPlayer += PetPlayerAttachment_OnVyrxUnattachToPlayer;
 
-
+        PetGuidanceListener.OnPetGuidanceStart += PetGuidanceListener_OnPetGuidanceStart;
+        PetGuidanceListener.OnPetGuidanceEnd += PetGuidanceListener_OnPetGuidanceEnd;
 
         PlayerStartPositioning.OnPlayerStartPositioned += PlayerStartPositioning_OnPlayerStartPositioned;
 
@@ -75,6 +76,9 @@ public class PetPositioningHandler : MonoBehaviour
     {
         PetPlayerAttachment.OnVyrxAttachToPlayer -= PetPlayerAttachment_OnVyrxAttachToPlayer;
         PetPlayerAttachment.OnVyrxUnattachToPlayer -= PetPlayerAttachment_OnVyrxUnattachToPlayer;
+
+        PetGuidanceListener.OnPetGuidanceStart -= PetGuidanceListener_OnPetGuidanceStart;
+        PetGuidanceListener.OnPetGuidanceEnd -= PetGuidanceListener_OnPetGuidanceEnd;
 
         PlayerStartPositioning.OnPlayerStartPositioned -= PlayerStartPositioning_OnPlayerStartPositioned;
 
@@ -202,6 +206,18 @@ public class PetPositioningHandler : MonoBehaviour
     }
     #endregion
 
+    #region PetGuidanceListener Subscriptions
+    private void PetGuidanceListener_OnPetGuidanceStart(object sender, PetGuidanceListener.OnPetGuidanceEventArgs e)
+    {
+        SetPositioningState(State.OnGuidance);
+    }
+
+    private void PetGuidanceListener_OnPetGuidanceEnd(object sender, PetGuidanceListener.OnPetGuidanceEventArgs e)
+    {
+        SetPositioningState(State.FollowingPlayer);
+    }
+
+    #endregion
 
 
     #region PetPlayerAttachment Subscriptions
