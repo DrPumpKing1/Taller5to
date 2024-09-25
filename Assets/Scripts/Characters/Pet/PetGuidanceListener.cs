@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using static PetGuidanceListener;
 
 public class PetGuidanceListener : MonoBehaviour
 {
@@ -54,7 +55,6 @@ public class PetGuidanceListener : MonoBehaviour
             {
                 SetCurrentGuidance(petGuidance);
                 OnPetGuidanceStart?.Invoke(this, new OnPetGuidanceEventArgs { positionTransform = petGuidance.positionTransform, lookTransform = petGuidance.lookTransform });
-                Debug.Log("StartGuidance");
                 return;
             }
         }
@@ -62,16 +62,12 @@ public class PetGuidanceListener : MonoBehaviour
 
     private void CheckEndGuidance(string log)
     {
-        foreach (PetGuidance petGuidance in petGuidances)
-        {
-            if (petGuidance.logToEndGuidance == log)
-            {
-                ClearCurrentGuidance();
-                OnPetGuidanceEnd?.Invoke(this, new OnPetGuidanceEventArgs { positionTransform = petGuidance.positionTransform, lookTransform = petGuidance.lookTransform });
-                Debug.Log("EndGuidance");
-                return;
-            }
-        }
+        if (currentGuidance == null) return;
+        if (currentGuidance.logToEndGuidance != log) return;
+
+        OnPetGuidanceEnd?.Invoke(this, new OnPetGuidanceEventArgs { positionTransform = currentGuidance.positionTransform, lookTransform = currentGuidance.lookTransform });
+        ClearCurrentGuidance();
+        return;
     }
 
     #region GameLogManagerSubscriptions
