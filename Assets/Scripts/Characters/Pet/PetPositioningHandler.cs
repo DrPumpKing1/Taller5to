@@ -32,18 +32,26 @@ public class PetPositioningHandler : MonoBehaviour
     [SerializeField, Range(0.5f, 1.75f)] private float colisionDetectionRadius;
     [SerializeField] private LayerMask collisionLayers;
 
+    [Header("States")]
+    [SerializeField] private State state;
+
+    public enum State { Still, FollowingPlayer, OnGuidance }
+
+    public State PositioningState => state;
+
     private Vector3 desiredDirectionVector;
     private float targetRadius;
 
     private Vector3 targetDirectionVector;
     private Vector3 desiredPosition;
 
-    private bool AttachToPlayer => petPlayerAttachment.AttachToPlayer;
-
     private Transform curentInteractingTransform;
 
     private void OnEnable()
     {
+        PetPlayerAttachment.OnVyrxAttachToPlayer += PetPlayerAttachment_OnVyrxAttachToPlayer;
+        PetPlayerAttachment.OnVyrxUnattachToPlayer += PetPlayerAttachment_OnVyrxUnattachToPlayer;
+
         PlayerStartPositioning.OnPlayerStartPositioned += PlayerStartPositioning_OnPlayerStartPositioned;
 
         playerInteract.OnInteractionStarted += PlayerInteract_OnInteractionStarted;
@@ -66,13 +74,31 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HandlePositioning();
+        HandlePositioningState();
     }
 
-    private void HandlePositioning()
-    {
-        if (!AttachToPlayer) return;
+    private void SetPositioningState(State state) => this.state = state;
 
+    private void HandlePositioningState()
+    {
+        switch (state)
+        {
+            case State.Still:
+                StillLogic();
+                break;
+            case State.FollowingPlayer:
+                FollowingPlayerLogic();
+                break;
+            case State.OnGuidance:
+                OnGuidanceLogic();
+                break;
+        }
+    }
+
+    private void StillLogic() { }
+
+    private void FollowingPlayerLogic()
+    {
         if (orbitPoint)
         {
             HandleRegularPositioning();
@@ -85,6 +111,13 @@ public class PetPositioningHandler : MonoBehaviour
 
         MoveToDesiredPosition();
     }
+
+    private void OnGuidanceLogic()
+    {
+
+    }
+
+    #region FollowingPlayer Methods
 
     private void HandleRegularPositioning()
     {
@@ -136,12 +169,28 @@ public class PetPositioningHandler : MonoBehaviour
     private void MoveToDesiredPosition() => transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothPositionSpeedFactor * Time.deltaTime);
     private void MoveInstantlyToDesiredPosition() => transform.position = desiredPosition;
 
+    #endregion
+
     private void StartPositionPet(Vector3 positionVector, float radius)
     {
-        if (!petPlayerAttachment.AttachToPlayer) return;
+        if (state != State.FollowingPlayer) return;
 
         transform.position = orbitPoint.position + startPositionOffsetFromOrbitPoint;
     }
+
+
+    #region PetPlayerAttachment Subscriptions
+    private void PetPlayerAttachment_OnVyrxAttachToPlayer(object sender, EventArgs e)
+    {
+        SetPositioningState(State.FollowingPlayer);
+    }
+
+    private void PetPlayerAttachment_OnVyrxUnattachToPlayer(object sender, EventArgs e)
+    {
+        SetPositioningState(State.Still);
+    }
+
+    #endregion
 
     #region PlayerStartPositioning Subscriptions
     private void PlayerStartPositioning_OnPlayerStartPositioned(object sender, System.EventArgs e)

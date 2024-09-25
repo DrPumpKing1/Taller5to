@@ -10,9 +10,13 @@ public class PetPlayerAttachment : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private string logToAttach;
     [SerializeField] private bool attachToPlayer;
+
     public bool AttachToPlayer => attachToPlayer;
 
     public static event EventHandler OnVyrxAttachToPlayer;
+    public static event EventHandler OnVyrxUnattachToPlayer;
+    public static event EventHandler OnVyrxInitialAttachToPlayer;
+
 
     private void OnEnable()
     {
@@ -28,6 +32,8 @@ public class PetPlayerAttachment : MonoBehaviour
     {
         IgnorePetPlayerCollisions();
         SetSingleton();
+
+        SetAttachToPlayer(attachToPlayer);
     }
 
     private void SetSingleton()
@@ -46,13 +52,24 @@ public class PetPlayerAttachment : MonoBehaviour
 
     private void IgnorePetPlayerCollisions() => Physics.IgnoreLayerCollision(6, 8);
 
-    public void SetAttachToPlayer(bool attach) => attachToPlayer = attach;
-
+    public void SetAttachToPlayer(bool attach)
+    {
+        if (attach)
+        {
+            OnVyrxAttachToPlayer?.Invoke(this, EventArgs.Empty);
+            attachToPlayer = true;
+        }
+        else
+        {
+            OnVyrxUnattachToPlayer?.Invoke(this, EventArgs.Empty);
+            attachToPlayer = false;
+        }
+    }
 
     private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
         if (e.gameplayAction.log != logToAttach) return;
         SetAttachToPlayer(true);
-        OnVyrxAttachToPlayer?.Invoke(this, EventArgs.Empty);
+        OnVyrxInitialAttachToPlayer?.Invoke(this, EventArgs.Empty);
     }
 }

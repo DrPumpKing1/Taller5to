@@ -9,7 +9,7 @@ public class PausableSFXManager : SFXManager
     {
         PlayerLand.OnPlayerNormalLand += PlayerLand_OnPlayerNormalLand;
         PlayerLand.OnPlayerHardLand += PlayerLand_OnPlayerHardLand;
-        PetPlayerAttachment.OnVyrxAttachToPlayer += PetPlayerAttachment_OnVyrxAttachToPlayer;
+        PetPlayerAttachment.OnVyrxInitialAttachToPlayer += PetPlayerAttachment_OnVyrxAttachToPlayer;
 
         ElectricalSwitchToggle.OnSwitchToggle += ElectricalSwitchToggle_OnSwitchToggle;
 
@@ -49,7 +49,7 @@ public class PausableSFXManager : SFXManager
     {
         PlayerLand.OnPlayerNormalLand -= PlayerLand_OnPlayerNormalLand;
         PlayerLand.OnPlayerHardLand -= PlayerLand_OnPlayerHardLand;
-        PetPlayerAttachment.OnVyrxAttachToPlayer -= PetPlayerAttachment_OnVyrxAttachToPlayer;
+        PetPlayerAttachment.OnVyrxInitialAttachToPlayer -= PetPlayerAttachment_OnVyrxAttachToPlayer;
 
         ElectricalSwitchToggle.OnSwitchToggle -= ElectricalSwitchToggle_OnSwitchToggle;
 

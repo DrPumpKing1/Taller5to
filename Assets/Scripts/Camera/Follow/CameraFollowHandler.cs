@@ -16,7 +16,6 @@ public class CameraFollowHandler : MonoBehaviour
     [Header("States")]
     [SerializeField] private State state;
 
-    [SerializeField] private Transform testTransform;
     private Vector3 originalPlayerCameraFollowPointPosition;
 
     public enum State { FollowingPlayer, MovingTransition }
@@ -34,14 +33,6 @@ public class CameraFollowHandler : MonoBehaviour
     {
         SetCameraState(State.FollowingPlayer);
         InitializeVariables();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            TransitionMoveCamera(testTransform,0.5f,1f,1f,1f,0.5f);
-        }
     }
 
     private void SetSingleton()
