@@ -9,7 +9,7 @@ public class CameraShakeHandler : MonoBehaviour
     public static CameraShakeHandler Instance { get; private set; }
 
     [Header("Components")]
-    [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
+    [SerializeField] private CinemachineVirtualCamera CMVCam;
 
     [Header("States")]
     [SerializeField] private State state;
@@ -22,7 +22,7 @@ public class CameraShakeHandler : MonoBehaviour
 
     private void Awake()
     {
-        cinemachineBasicMultiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        cinemachineBasicMultiChannelPerlin = CMVCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         SetSingleton();
     }
 

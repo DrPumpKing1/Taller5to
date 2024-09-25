@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CameraFollowHandler : MonoBehaviour
 {
@@ -15,11 +16,14 @@ public class CameraFollowHandler : MonoBehaviour
     [Header("States")]
     [SerializeField] private State state;
 
+    [SerializeField] private Transform testTransform;
     private Vector3 originalPlayerCameraFollowPointPosition;
 
     public enum State { FollowingPlayer, MovingTransition }
 
     public State CameraState => state;
+
+    private const float MOVE_TIME_FACTOR = 0.1f;
 
     private void Awake()
     {
@@ -30,6 +34,14 @@ public class CameraFollowHandler : MonoBehaviour
     {
         SetCameraState(State.FollowingPlayer);
         InitializeVariables();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            TransitionMoveCamera(testTransform,0.5f,1f,1f,1f,0.5f);
+        }
     }
 
     private void SetSingleton()
@@ -52,27 +64,62 @@ public class CameraFollowHandler : MonoBehaviour
 
     private void SetCameraState(State state) => this.state = state;
 
-    public void TransitionMoveCamera(Transform targetTransform, float moveInTime, float watchTime, float moveOutTime)
+    public void TransitionMoveCamera(Transform targetTransform, float stallTimeIn, float moveInTime, float stallTime, float moveOutTime, float stallTimeOut)
     {
         if (state != State.FollowingPlayer) return;
 
         StopAllCoroutines();
-        StartCoroutine(TransitionMoveCameraCoroutine(targetTransform, moveInTime, watchTime, moveOutTime));
+        StartCoroutine(TransitionMoveCameraCoroutine(targetTransform, stallTimeIn, moveInTime, stallTime, moveOutTime, stallTimeOut));
     }
 
-    private IEnumerator TransitionMoveCameraCoroutine(Transform targetTransform, float moveInTime, float watchTime, object moveOutTime)
+    private IEnumerator TransitionMoveCameraCoroutine(Transform targetTransform, float stallTimeIn, float moveInTime, float stallTime, float moveOutTime,  float stallTimeOut)
     {
         SetCameraState(State.MovingTransition);
 
+        GameObject cameraFollowGameObject = new GameObject("CameraFollowGameObject");
+        Transform cameraFollowTransform = cameraFollowGameObject.transform;
+
+        cameraFollowTransform.position = playerCameraFollowPoint.position;
+        CMVCam.Follow = cameraFollowTransform;
+
+        Vector3 startingPositionIn = cameraFollowTransform.position;
+
+        yield return new WaitForSeconds(stallTimeIn);
+
         float time = 0f;
+        float positionDifferenceMagnitude = float.MaxValue;
 
-        while (time <= moveInTime)
+        while (positionDifferenceMagnitude > 0.2f)
         {
+            cameraFollowTransform.position = Vector3.Lerp(cameraFollowTransform.position, targetTransform.position, time/(moveInTime) * 1/(MOVE_TIME_FACTOR * moveInTime) * Time.deltaTime);
 
-
+            positionDifferenceMagnitude = (cameraFollowTransform.position - targetTransform.position).magnitude;
             time += Time.deltaTime;
             yield return null;
         }
+
+        cameraFollowTransform.position = targetTransform.position;
+
+        yield return new WaitForSeconds(stallTime);
+
+        time = 0f;
+        positionDifferenceMagnitude = float.MaxValue;
+
+        while (positionDifferenceMagnitude > 0.2f)
+        {
+            cameraFollowTransform.position = Vector3.Lerp(cameraFollowTransform.position, playerCameraFollowPoint.position, time / (moveOutTime) * 1 / (MOVE_TIME_FACTOR * moveOutTime) * Time.deltaTime);
+
+            positionDifferenceMagnitude = (cameraFollowTransform.position - playerCameraFollowPoint.position).magnitude;
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        cameraFollowTransform.position = playerCameraFollowPoint.position;
+        CMVCam.Follow = playerCameraFollowPoint;
+
+        Destroy(cameraFollowGameObject);
+
+        yield return new WaitForSeconds(stallTimeOut);
 
         SetCameraState(State.FollowingPlayer);
     }
