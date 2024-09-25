@@ -270,6 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logToAttach: Dialogues/End/3
+  overrideAttachToPlayer: 0
   attachToPlayer: 0
 --- !u!114 &5680990158484470575
 MonoBehaviour:
@@ -289,7 +290,9 @@ MonoBehaviour:
   playerInteractAlternate: {fileID: 0}
   startPositionOffsetFromOrbitPoint: {x: 0, y: 1.5, z: 0}
   orbitRadius: 1.5
-  smoothPositionSpeedFactor: 2.5
+  minSmoothPositionSpeedFactor: 0.5
+  maxSmoothPositionSpeedFactor: 2.25
+  timeToReachMaxSmoothPositionSpeedFactor: 4
   smoothVectorSpeedFactor: 2.5
   preferredDirectionVectors:
   - {x: 0.7, y: 0.5, z: 0}
@@ -316,6 +319,8 @@ MonoBehaviour:
   collisionLayers:
     serializedVersion: 2
     m_Bits: 129
+  state: 0
+  currentSmoothPositionSpeedFactor: 0
 --- !u!1 &4246972803737518667
 GameObject:
   m_ObjectHideFlags: 0

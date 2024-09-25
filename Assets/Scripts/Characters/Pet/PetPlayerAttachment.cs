@@ -38,6 +38,14 @@ public class PetPlayerAttachment : MonoBehaviour
         SetIntialOverrideAttachToPlayer(attachToPlayer);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            SetAttachToPlayer(true);
+        }
+    }
+
     private void SetSingleton()
     {
         if (Instance == null)

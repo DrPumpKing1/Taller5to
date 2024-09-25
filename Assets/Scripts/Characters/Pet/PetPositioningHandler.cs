@@ -16,7 +16,11 @@ public class PetPositioningHandler : MonoBehaviour
 
     [Header("Orbit Positioning Settings")]
     [SerializeField, Range(1f, 5f)] private float orbitRadius;
-    [SerializeField, Range(0.1f, 100f)] private float smoothPositionSpeedFactor;
+    [Space]
+    [SerializeField, Range(0.1f, 100f)] private float minSmoothPositionSpeedFactor;
+    [SerializeField, Range(0.1f, 100f)] private float maxSmoothPositionSpeedFactor;
+    [SerializeField, Range(0.1f, 10f)] private float timeToReachMaxSmoothPositionSpeedFactor;
+    [Space]
     [SerializeField, Range(0.1f, 100f)] private float smoothVectorSpeedFactor;
     [SerializeField] List<Vector3> preferredDirectionVectors;
 
@@ -47,6 +51,10 @@ public class PetPositioningHandler : MonoBehaviour
 
     private Transform curentInteractingTransform;
 
+    public float currentSmoothPositionSpeedFactor;
+
+    private float timeFollowing;
+
     private void OnEnable()
     {
         PetPlayerAttachment.OnVyrxAttachToPlayer += PetPlayerAttachment_OnVyrxAttachToPlayer;
@@ -63,6 +71,9 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void OnDisable()
     {
+        PetPlayerAttachment.OnVyrxAttachToPlayer -= PetPlayerAttachment_OnVyrxAttachToPlayer;
+        PetPlayerAttachment.OnVyrxUnattachToPlayer -= PetPlayerAttachment_OnVyrxUnattachToPlayer;
+
         PlayerStartPositioning.OnPlayerStartPositioned -= PlayerStartPositioning_OnPlayerStartPositioned;
 
         playerInteract.OnInteractionStarted -= PlayerInteract_OnInteractionStarted;
@@ -95,10 +106,17 @@ public class PetPositioningHandler : MonoBehaviour
         }
     }
 
-    private void StillLogic() { }
+    private void StillLogic()
+    {
+        ResetTimeFollowing();
+    }
 
     private void FollowingPlayerLogic()
     {
+        timeFollowing += Time.fixedDeltaTime;
+
+        HandlePositionSpeedFactor(minSmoothPositionSpeedFactor,maxSmoothPositionSpeedFactor,timeToReachMaxSmoothPositionSpeedFactor);
+
         if (orbitPoint)
         {
             HandleRegularPositioning();
@@ -114,7 +132,7 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void OnGuidanceLogic()
     {
-
+        ResetTimeFollowing();
     }
 
     #region FollowingPlayer Methods
@@ -150,9 +168,6 @@ public class PetPositioningHandler : MonoBehaviour
         desiredDirectionVector = dirVector;
         targetRadius = radius;
     }
-
-    private Vector3 CalculateOrbitPosition(Transform refferenceTransform, Vector3 directionVector, float orbitRadius) => refferenceTransform.position + orbitRadius * directionVector;
-
     private Vector3 CalculateLocalPreferredPositionVector(Vector3 worldPreferredPosition, Transform refferenceTransform)
     {
         if (worldPreferredPosition.magnitude == 0f) return refferenceTransform.up;
@@ -162,13 +177,18 @@ public class PetPositioningHandler : MonoBehaviour
         return preferredVector;
     }
 
-    private void CalculateTargetDirectionVector() => targetDirectionVector = Vector3.Slerp(targetDirectionVector, desiredDirectionVector, smoothVectorSpeedFactor * Time.deltaTime);
+    private Vector3 CalculateOrbitPosition(Transform refferenceTransform, Vector3 directionVector, float orbitRadius) => refferenceTransform.position + orbitRadius * directionVector;
+
+    private void CalculateTargetDirectionVector() => targetDirectionVector = Vector3.Slerp(targetDirectionVector, desiredDirectionVector, smoothVectorSpeedFactor * Time.fixedDeltaTime);
 
     private void CalculateDesiredPosition() => desiredPosition = CalculateOrbitPosition(orbitPoint, targetDirectionVector, targetRadius);
 
-    private void MoveToDesiredPosition() => transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothPositionSpeedFactor * Time.deltaTime);
+    private void MoveToDesiredPosition() => transform.position = Vector3.Lerp(transform.position, desiredPosition, currentSmoothPositionSpeedFactor * Time.fixedDeltaTime);
     private void MoveInstantlyToDesiredPosition() => transform.position = desiredPosition;
 
+    private void HandlePositionSpeedFactor(float initialFactor, float finalFactor, float timeToReachFinalFactor) => currentSmoothPositionSpeedFactor = Mathf.Lerp(initialFactor, finalFactor, timeFollowing/timeToReachFinalFactor);
+
+    private void ResetTimeFollowing() => timeFollowing = 0f;
     #endregion
 
     private void StartPositionPet(Vector3 positionVector, float radius)
