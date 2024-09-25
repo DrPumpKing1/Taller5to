@@ -9,6 +9,9 @@ public class PetPlayerAttachment : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private string logToAttach;
+
+    [Header("Debug")]
+    [SerializeField] private bool overrideAttachToPlayer;
     [SerializeField] private bool attachToPlayer;
 
     public bool AttachToPlayer => attachToPlayer;
@@ -16,7 +19,6 @@ public class PetPlayerAttachment : MonoBehaviour
     public static event EventHandler OnVyrxAttachToPlayer;
     public static event EventHandler OnVyrxUnattachToPlayer;
     public static event EventHandler OnVyrxInitialAttachToPlayer;
-
 
     private void OnEnable()
     {
@@ -33,7 +35,7 @@ public class PetPlayerAttachment : MonoBehaviour
         IgnorePetPlayerCollisions();
         SetSingleton();
 
-        SetAttachToPlayer(attachToPlayer);
+        SetIntialOverrideAttachToPlayer(attachToPlayer);
     }
 
     private void SetSingleton()
@@ -51,6 +53,19 @@ public class PetPlayerAttachment : MonoBehaviour
     }
 
     private void IgnorePetPlayerCollisions() => Physics.IgnoreLayerCollision(6, 8);
+
+    public void SetInitialAttachToPlayer(bool attach)
+    {
+        if (overrideAttachToPlayer) return;
+        SetAttachToPlayer(attach);
+    }
+
+    private void SetIntialOverrideAttachToPlayer(bool attach)
+    {
+        if (!overrideAttachToPlayer) return;
+        SetAttachToPlayer(attach);
+
+    }
 
     public void SetAttachToPlayer(bool attach)
     {
