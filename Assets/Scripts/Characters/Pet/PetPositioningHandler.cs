@@ -60,6 +60,8 @@ public class PetPositioningHandler : MonoBehaviour
         PetPlayerAttachment.OnVyrxAttachToPlayer += PetPlayerAttachment_OnVyrxAttachToPlayer;
         PetPlayerAttachment.OnVyrxUnattachToPlayer += PetPlayerAttachment_OnVyrxUnattachToPlayer;
 
+
+
         PlayerStartPositioning.OnPlayerStartPositioned += PlayerStartPositioning_OnPlayerStartPositioned;
 
         playerInteract.OnInteractionStarted += PlayerInteract_OnInteractionStarted;
@@ -191,12 +193,15 @@ public class PetPositioningHandler : MonoBehaviour
     private void ResetTimeFollowing() => timeFollowing = 0f;
     #endregion
 
+    #region StartPosition Methods
     private void StartPositionPet(Vector3 positionVector, float radius)
     {
         if (state != State.FollowingPlayer) return;
 
         transform.position = orbitPoint.position + startPositionOffsetFromOrbitPoint;
     }
+    #endregion
+
 
 
     #region PetPlayerAttachment Subscriptions

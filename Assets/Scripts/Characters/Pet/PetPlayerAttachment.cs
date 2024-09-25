@@ -89,10 +89,12 @@ public class PetPlayerAttachment : MonoBehaviour
         }
     }
 
+    #region GameLogManagerSubscriptions
     private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
         if (e.gameplayAction.log != logToAttach) return;
         SetAttachToPlayer(true);
         OnVyrxInitialAttachToPlayer?.Invoke(this, EventArgs.Empty);
     }
+    #endregion
 }
