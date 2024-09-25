@@ -114,12 +114,19 @@ public class CameraFollowHandler : MonoBehaviour
             yield return null;
         }
 
+        time = 0f;
+
+        while(time<=  stallTimeOut) //To recftify position during stallTimeOut
+        {
+            cameraFollowTransform.position = playerCameraFollowPoint.position;
+            time += Time.deltaTime;
+            yield return null;
+        }
+
         cameraFollowTransform.position = playerCameraFollowPoint.position;
         CMVCam.Follow = playerCameraFollowPoint;
 
         Destroy(cameraFollowGameObject);
-
-        yield return new WaitForSeconds(stallTimeOut);
 
         SetCameraState(State.FollowingPlayer);
     }
