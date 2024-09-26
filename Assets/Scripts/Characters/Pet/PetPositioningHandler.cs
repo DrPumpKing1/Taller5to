@@ -47,7 +47,7 @@ public class PetPositioningHandler : MonoBehaviour
     private Vector3 playerFollowTargetDirectionVector;
     private Vector3 playerFollowDesiredPosition;
 
-    private Transform curentInteractingTransform;
+    private Transform currentInteracionPositionTransform;
 
     private float currentSmoothPositionSpeedFactor;
     private float timeFollowing;
@@ -117,9 +117,9 @@ public class PetPositioningHandler : MonoBehaviour
             HandleRegularPositioning();
         }
 
-        if (curentInteractingTransform)
+        if (currentInteracionPositionTransform)
         {
-            playerFollowDesiredPosition = curentInteractingTransform.position + offsetFromInteractableObject;
+            SetDesiredPosition(currentInteracionPositionTransform.position);
         }
 
         MoveToPosition(playerFollowDesiredPosition,currentSmoothPositionSpeedFactor);
@@ -193,6 +193,8 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void CalculateDesiredPosition() => playerFollowDesiredPosition = CalculateOrbitPosition(orbitPoint, playerFollowTargetDirectionVector, playerFollowTargetRadius);
 
+    private void SetDesiredPosition(Vector3 desiredPosition) => playerFollowDesiredPosition = desiredPosition;
+
     private void MoveInstantlyToDesiredPosition() => transform.position = playerFollowDesiredPosition;
 
     private void ResetTimeFollowing() => timeFollowing = 0f;
@@ -214,6 +216,11 @@ public class PetPositioningHandler : MonoBehaviour
 
     #endregion
 
+    #region Interaction Methods
+    private void SetInteractionPositionTransform(Transform interactionPositionTransform) => currentInteracionPositionTransform = interactionPositionTransform;
+    private void ClearInteractionPositionTransform() => currentInteracionPositionTransform = null;
+    #endregion
+
     ///
 
     #region PlayerStartPositioning Subscriptions
@@ -226,19 +233,15 @@ public class PetPositioningHandler : MonoBehaviour
     #region PlayerInteraction Subscriptions
     private void PlayerInteract_OnInteractionStarted(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
-        if (!moveTowardsObject) return;
+        if (!e.interactable.GrabPetAttention) return;
+        if (e.interactable.GetInteractionPositionTransform() == null) return;
 
-        curentInteractingTransform = e.interactable.GetTransform();
-
-        if (e.interactable.GetTransform().GetComponent<ProjectableObject>()) return;
-        if (e.interactable.GetTransform().GetComponent<ProjectionPlatform>()) return;
-
-        curentInteractingTransform = null;
+        SetInteractionPositionTransform(e.interactable.GetInteractionPositionTransform());
     }
 
     private void PlayerInteract_OnInteractionEnded(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
-        curentInteractingTransform = null;
+        ClearInteractionPositionTransform();
     }
     #endregion
 
@@ -246,18 +249,14 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void PlayerInteractAlternate_OnInteractionAlternateStarted(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {
-        if (!moveTowardsObject) return;
+        if (!e.interactableAlternate.GrabPetAttention) return;
+        if (e.interactableAlternate.GetInteractionAlternatePositionTransform() == null) return;
 
-        curentInteractingTransform = e.interactableAlternate.GetTransform();
-
-        if (e.interactableAlternate.GetTransform().GetComponent<ProjectableObject>()) return;
-        if (e.interactableAlternate.GetTransform().GetComponent<ProjectionPlatform>()) return;
-
-        curentInteractingTransform = null;
+        SetInteractionPositionTransform(e.interactableAlternate.GetInteractionAlternatePositionTransform());
     }
     private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {
-        curentInteractingTransform = null;
+        ClearInteractionPositionTransform();
     }
     #endregion
 }

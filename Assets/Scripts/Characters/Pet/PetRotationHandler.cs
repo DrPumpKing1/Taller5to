@@ -130,8 +130,6 @@ public class PetRotationHandler : MonoBehaviour
     }
 
     private void RotateInstantlyTowardsDirection(Vector3 direction) => transform.localRotation = Quaternion.LookRotation(direction);
-    private void SetInteractionAttentionTransform(Transform interactionAttentionTransform) => currentInteractionAttentionTransform = interactionAttentionTransform;
-    private void ClearInteractionAttentionTransform() => currentInteractionAttentionTransform = null;
 
     private void SetDesiredFacingDirectionTowardsTransform(Transform lookTransform) => desiredFacingDirection = (lookTransform.position - transform.position).normalized;
     private void SetDesiredFacingDirectionTowardsDirection(Vector3 direction) => desiredFacingDirection = direction;
@@ -142,6 +140,11 @@ public class PetRotationHandler : MonoBehaviour
 
         transform.localRotation = Quaternion.LookRotation(FacingDirection);
     }
+
+    #region Interaction Methods
+    private void SetInteractionAttentionTransform(Transform interactionAttentionTransform) => currentInteractionAttentionTransform = interactionAttentionTransform;
+    private void ClearInteractionAttentionTransform() => currentInteractionAttentionTransform = null;
+    #endregion
 
     private void RotateTowardsTransform(Transform lookTransform)
     {
