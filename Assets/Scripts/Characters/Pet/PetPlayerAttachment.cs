@@ -20,6 +20,8 @@ public class PetPlayerAttachment : MonoBehaviour
     public static event EventHandler OnVyrxUnattachToPlayer;
     public static event EventHandler OnVyrxInitialAttachToPlayer;
 
+    private bool initialAttachFromSave;
+
     private void OnEnable()
     {
         GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
@@ -38,15 +40,8 @@ public class PetPlayerAttachment : MonoBehaviour
 
     private void Start()
     {
+        CheckSetInitialAttachToPlayer();
         SetIntialOverrideAttachToPlayer(attachToPlayer);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            SetAttachToPlayer(true);
-        }
     }
 
     private void SetSingleton()
@@ -65,17 +60,18 @@ public class PetPlayerAttachment : MonoBehaviour
 
     private void IgnorePetPlayerCollisions() => Physics.IgnoreLayerCollision(6, 8);
 
-    public void SetInitialAttachToPlayer(bool attach)
+    public void SetInitialAttachToPlayer(bool attach) => initialAttachFromSave = attach;
+
+    private void CheckSetInitialAttachToPlayer()
     {
         if (overrideAttachToPlayer) return;
-        SetAttachToPlayer(attach);
+        SetAttachToPlayer(initialAttachFromSave);
     }
 
     private void SetIntialOverrideAttachToPlayer(bool attach)
     {
         if (!overrideAttachToPlayer) return;
         SetAttachToPlayer(attach);
-
     }
 
     public void SetAttachToPlayer(bool attach)
