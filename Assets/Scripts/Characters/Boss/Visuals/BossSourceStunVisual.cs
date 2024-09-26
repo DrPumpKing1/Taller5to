@@ -12,14 +12,14 @@ public class BossSourceStunVisual : MonoBehaviour
 
     private void OnEnable()
     {
-        BossSourceStun.OnSourceStunned += BossSourceStun_OnSourceStunned; ;
-        BossSourceStun.OnSourceStunnedEnd += BossSourceStun_OnSourceStunnedEnd; ;
+        BossSourceStun.OnSourceStunned += BossSourceStun_OnSourceStunned;
+        BossSourceStun.OnSourceStunnedEnd += BossSourceStun_OnSourceStunnedEnd;
         BossObjectDestruction.OnBossAllProjectionGemsLocked += BossObjectDestruction_OnBossAllProjectionGemsLocked;
     }
 
     private void OnDisable()
     {
-        BossSourceStun.OnSourceStunned -= BossSourceStun_OnSourceStunned; ;
+        BossSourceStun.OnSourceStunned -= BossSourceStun_OnSourceStunned;
         BossSourceStun.OnSourceStunnedEnd -= BossSourceStun_OnSourceStunnedEnd; ;
         BossObjectDestruction.OnBossAllProjectionGemsLocked -= BossObjectDestruction_OnBossAllProjectionGemsLocked;
     }

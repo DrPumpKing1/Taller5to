@@ -27,7 +27,7 @@ public class JournalInfoUI : MonoBehaviour
     private void OnDisable()
     {
         JournalInfoManager.OnJournalInfoCollected -= JournalInfoManager_OnJournalInfoCollected;
-        JournalInfoManager.OnJournalInfoChecked += JournalInfoManager_OnJournalInfoChecked;
+        JournalInfoManager.OnJournalInfoChecked -= JournalInfoManager_OnJournalInfoChecked;
 
         journalInfoContentUI.OnMouseEnterContent -= JournalInfoContentUI_OnMouseEnterContent;
     }

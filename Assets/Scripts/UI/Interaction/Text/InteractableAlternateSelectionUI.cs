@@ -31,7 +31,7 @@ public class InteractableAlternateSelectionUI : MonoBehaviour
     {
         interactableAlternate.OnObjectSelectedAlternate -= InteractableAlternate_OnObjectSelectedAlternate;
         interactableAlternate.OnObjectDeselectedAlternate -= InteractableAlternate_OnObjectDeselectedAlternate;
-        interactableAlternate.OnObjectInteractedAlternate += InteractableAlternate_OnObjectInteractedAlternate;
+        interactableAlternate.OnObjectInteractedAlternate -= InteractableAlternate_OnObjectInteractedAlternate;
         interactableAlternate.OnUpdatedInteractableAlternateState -= InteractableAlternate_OnUpdatedInteractableAlternateState;
     }
 

@@ -97,6 +97,11 @@ public class PetPositioningHandler : MonoBehaviour
         playerInteractAlternate.OnInteractionAlternateEnded -= PlayerInteractAlternate_OnInteractionAlternateEnded;
     }
 
+    private void Start()
+    {
+        ClearGuidancePositionTransform();
+    }
+
     private void FixedUpdate()
     {
         HandlePositioningState();
@@ -245,7 +250,6 @@ public class PetPositioningHandler : MonoBehaviour
         ClearGuidancePositionTransform();
         SetPositioningState(State.FollowingPlayer);
     }
-
     #endregion
 
 

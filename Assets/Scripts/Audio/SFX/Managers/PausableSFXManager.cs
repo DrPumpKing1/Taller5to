@@ -9,7 +9,7 @@ public class PausableSFXManager : SFXManager
     {
         PlayerLand.OnPlayerNormalLand += PlayerLand_OnPlayerNormalLand;
         PlayerLand.OnPlayerHardLand += PlayerLand_OnPlayerHardLand;
-        PetPlayerAttachment.OnVyrxInitialAttachToPlayer += PetPlayerAttachment_OnVyrxAttachToPlayer;
+        PetPlayerAttachment.OnVyrxInitialAttachToPlayer += PetPlayerAttachment_OnVyrxInitialAttachToPlayer;
 
         ElectricalSwitchToggle.OnSwitchToggle += ElectricalSwitchToggle_OnSwitchToggle;
 
@@ -49,7 +49,7 @@ public class PausableSFXManager : SFXManager
     {
         PlayerLand.OnPlayerNormalLand -= PlayerLand_OnPlayerNormalLand;
         PlayerLand.OnPlayerHardLand -= PlayerLand_OnPlayerHardLand;
-        PetPlayerAttachment.OnVyrxInitialAttachToPlayer -= PetPlayerAttachment_OnVyrxAttachToPlayer;
+        PetPlayerAttachment.OnVyrxInitialAttachToPlayer -= PetPlayerAttachment_OnVyrxInitialAttachToPlayer;
 
         ElectricalSwitchToggle.OnSwitchToggle -= ElectricalSwitchToggle_OnSwitchToggle;
 
@@ -96,7 +96,7 @@ public class PausableSFXManager : SFXManager
     {
         PlaySound(SFXPoolSO.playerLand);
     }
-    private void PetPlayerAttachment_OnVyrxAttachToPlayer(object sender, System.EventArgs e)
+    private void PetPlayerAttachment_OnVyrxInitialAttachToPlayer(object sender, System.EventArgs e)
     {
         PlaySound(SFXPoolSO.vyrxAttach);
     }

@@ -33,8 +33,11 @@ public class PetPlayerAttachment : MonoBehaviour
     private void Awake()
     {
         IgnorePetPlayerCollisions();
-        SetSingleton();
+        SetSingleton();      
+    }
 
+    private void Start()
+    {
         SetIntialOverrideAttachToPlayer(attachToPlayer);
     }
 
