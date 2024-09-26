@@ -107,7 +107,7 @@ public class PetProjectingVFXHandler : MonoBehaviour
         SetVFXVelocity(velocity);
 
         projectingVFX.Play();
-        currentAttentionTransform = e.attentionTransform;
+        currentAttentionTransform = e.interactionAttentionTransform;
     }
 
     private void ProjectionPlatformProjection_OnEndProjection(object sender, ProjectionPlatformProjection.OnProjectionEventArgs e)

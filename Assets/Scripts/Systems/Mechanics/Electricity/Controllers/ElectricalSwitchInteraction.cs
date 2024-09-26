@@ -20,7 +20,8 @@ public class ElectricalSwitchInteraction : MonoBehaviour, IHoldInteractable
     [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
-    [SerializeField] private Transform attentionTransform;
+    [SerializeField] private Transform interactionAttentionTransform;
+    [SerializeField] private Transform interactionPositionTransform;
 
     #region IHoldInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -32,8 +33,6 @@ public class ElectricalSwitchInteraction : MonoBehaviour, IHoldInteractable
     public float HoldDuration => holdDuration;
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
-    public Transform AttentionTransform => attentionTransform;
-
     #endregion
 
     #region IHoldInteractable Events
@@ -108,6 +107,8 @@ public class ElectricalSwitchInteraction : MonoBehaviour, IHoldInteractable
     public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
 
     public Transform GetTransform() => transform;
+    public Transform GetInteractionAttentionTransform() => interactionAttentionTransform;
+    public Transform GetInteractionPositionTransform() => interactionPositionTransform;
     #endregion
 
     private void SwitchComponent()

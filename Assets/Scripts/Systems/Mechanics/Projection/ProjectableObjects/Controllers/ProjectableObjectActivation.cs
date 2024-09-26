@@ -23,7 +23,8 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
     [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
-    [SerializeField] private Transform attentionTransform;
+    [SerializeField] private Transform interactionAttentionTransform;
+    [SerializeField] private Transform interactionPositionTransform;
 
     #region IHoldInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -34,8 +35,6 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
     public string TooltipMessageAlternate => $"{(!activableDevice.IsActive ? tooltipMessageInactive : tooltipMessageActive)}";
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
-    public Transform AttentionTransform => attentionTransform;
-
     #endregion
 
     private bool Power => activableDevice.Power;
@@ -106,6 +105,8 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
     }
 
     public Transform GetTransform() => transform;
+    public Transform GetInteractionAlternateAttentionTransform() => interactionAttentionTransform;
+    public Transform GetInteractionAlternatePositionTransform() => interactionPositionTransform;
     #endregion
 
     private void Start()

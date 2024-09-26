@@ -24,8 +24,6 @@ public interface IInteractable
     public bool GrabPetAttention { get; }
     public bool GrabPlayerAttention { get; }
 
-    public Transform AttentionTransform { get; }
-
     public void Select();
     public void Deselect();
     public void TryInteract();
@@ -33,4 +31,6 @@ public interface IInteractable
     public void FailInteract();
     public void AlreadyInteracted();
     public Transform GetTransform();
+    public Transform GetInteractionAttentionTransform();
+    public Transform GetInteractionPositionTransform();
 }

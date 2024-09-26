@@ -18,12 +18,12 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     [SerializeField] private bool hasAlreadyBeenInteracted;
     [SerializeField] private string tooltipMessage;
     [Space]
+    [SerializeField] private float holdDuration;
+    [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
-    [SerializeField] private Transform attentionTransform;
-    [Space]
-    [SerializeField] private float holdDuration;
-
+    [SerializeField] private Transform interactionAttentionTransform;
+    [SerializeField] private Transform interactionPositionTransform;
 
     #region IHoldInteractableProperties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -35,7 +35,6 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     public float HoldDuration => holdDuration;
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
-    public Transform AttentionTransform => attentionTransform;
 
     #endregion
 
@@ -65,7 +64,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
 
     public class OnLearningEventArgs : EventArgs
     {
-        public Transform attentionTransform;
+        public Transform interactionAttentionTransform;
         public float holdDuration;
     }
 
@@ -143,17 +142,19 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     public void HoldInteractionStart()
     {
         OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
-        OnStartLearning?.Invoke(this, new OnLearningEventArgs { attentionTransform = attentionTransform, holdDuration = holdDuration });
+        OnStartLearning?.Invoke(this, new OnLearningEventArgs { interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
     }
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
 
     public void HoldInteractionEnd()
     {
         OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
-        OnEndLearning?.Invoke(this, new OnLearningEventArgs { attentionTransform = attentionTransform, holdDuration = holdDuration });
+        OnEndLearning?.Invoke(this, new OnLearningEventArgs { interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
     }
 
     public Transform GetTransform() => transform;
+    public Transform GetInteractionAttentionTransform() => interactionAttentionTransform;
+    public Transform GetInteractionPositionTransform() => interactionPositionTransform;
     #endregion
 
     private void DisableRotatingGem() => rotatingGem.gameObject.SetActive(false); 

@@ -19,7 +19,8 @@ public class InscriptionRead : MonoBehaviour, IInteractable
     [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
-    [SerializeField] private Transform attentionTransform;
+    [SerializeField] private Transform interactionAttentionTransform;
+    [SerializeField] private Transform interactionPositionTransform;
     [Space]
     [SerializeField] private string tooltipMessage;
 
@@ -44,8 +45,6 @@ public class InscriptionRead : MonoBehaviour, IInteractable
     public string TooltipMessage => tooltipMessage;
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
-    public Transform AttentionTransform => attentionTransform;
-
     #endregion
 
     #region IInteractableEvents
@@ -109,6 +108,10 @@ public class InscriptionRead : MonoBehaviour, IInteractable
     }
 
     public Transform GetTransform() => transform;
+
+    public Transform GetInteractionAttentionTransform() => interactionAttentionTransform;
+    public Transform GetInteractionPositionTransform() => interactionPositionTransform;
+
     #endregion
 
     private void Update()

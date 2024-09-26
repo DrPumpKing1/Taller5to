@@ -21,7 +21,8 @@ public class ElectricalSwitchToggle : MonoBehaviour, IInteractable
     [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
-    [SerializeField] private Transform attentionTransform;
+    [SerializeField] private Transform interactionAttentionTransform;
+    [SerializeField] private Transform interactionPositionTransform;
 
     public static event EventHandler<OnSwitchToggleEventArgs> OnSwitchToggle;
 
@@ -40,8 +41,6 @@ public class ElectricalSwitchToggle : MonoBehaviour, IInteractable
     public string TooltipMessage => $"{(!switchElectrode.SwitchOn ? tooltipMessageOff : tooltipMessageOn)}";
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
-    public Transform AttentionTransform => attentionTransform;
-
     #endregion
 
     #region IInteractable Events
@@ -99,6 +98,8 @@ public class ElectricalSwitchToggle : MonoBehaviour, IInteractable
     }
 
     public Transform GetTransform() => transform;
+    public Transform GetInteractionAttentionTransform() => interactionAttentionTransform;
+    public Transform GetInteractionPositionTransform() => interactionPositionTransform;
     #endregion
 
     private void SwitchComponent()

@@ -145,7 +145,7 @@ public class PetRotationHandler : MonoBehaviour
     {
         if (!e.interactable.GrabPetAttention) return;
 
-        SetInteractionAttentionTransform(e.interactable.AttentionTransform);
+        SetInteractionAttentionTransform(e.interactable.GetInteractionAttentionTransform());
     }
 
     private void PlayerInteract_OnInteractionEnded(object sender, PlayerInteract.OnInteractionEventArgs e)
@@ -160,7 +160,7 @@ public class PetRotationHandler : MonoBehaviour
     {
         if (!e.interactableAlternate.GrabPetAttention) return;
 
-        SetInteractionAttentionTransform(e.interactableAlternate.AttentionTransform);
+        SetInteractionAttentionTransform(e.interactableAlternate.GetInteractionAlternateAttentionTransform());
     }
     private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {

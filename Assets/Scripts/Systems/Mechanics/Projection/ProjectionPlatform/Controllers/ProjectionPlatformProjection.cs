@@ -21,7 +21,8 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
-    [SerializeField] private Transform attentionTransform;
+    [SerializeField] private Transform interactionAttentionTransform;
+    [SerializeField] private Transform interactionPositionTransform;
 
     #region IHoldInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
@@ -33,8 +34,6 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     public float HoldDuration => holdDuration;
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
-    public Transform AttentionTransform => attentionTransform;
-
     #endregion
 
     #region IHoldInteractable Events
@@ -73,7 +72,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
 
     public class OnProjectionEventArgs : EventArgs
     {
-        public Transform attentionTransform;
+        public Transform interactionAttentionTransform;
         public float holdDuration;
     }
 
@@ -178,16 +177,18 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     public void HoldInteractionStart()
     {
         OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
-        OnStartProjection?.Invoke(this, new OnProjectionEventArgs { attentionTransform = attentionTransform, holdDuration = holdDuration });
+        OnStartProjection?.Invoke(this, new OnProjectionEventArgs { interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
     }
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
     public void HoldInteractionEnd()
     {
         OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
-        OnEndProjection?.Invoke(this, new OnProjectionEventArgs { attentionTransform = attentionTransform, holdDuration = holdDuration });
+        OnEndProjection?.Invoke(this, new OnProjectionEventArgs { interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
     }
 
     public Transform GetTransform() => transform;
+    public Transform GetInteractionAttentionTransform() => interactionAttentionTransform;
+    public Transform GetInteractionPositionTransform() => interactionPositionTransform;
     #endregion
 
     private void FailObjectProjection(ProjectableObjectSO projectableObjectSO)

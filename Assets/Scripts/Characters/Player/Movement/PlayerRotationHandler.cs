@@ -134,7 +134,7 @@ public class PlayerRotationHandler : MonoBehaviour
     {
         if (!e.interactable.GrabPlayerAttention) return;
 
-        currentAttentionTransform = e.interactable.AttentionTransform;
+        currentAttentionTransform = e.interactable.GetInteractionAttentionTransform();
         interactingRotate = true;
     }
 
@@ -149,7 +149,7 @@ public class PlayerRotationHandler : MonoBehaviour
     {
         if (!e.interactableAlternate.GrabPlayerAttention) return;
 
-        currentAttentionTransform = e.interactableAlternate.AttentionTransform;
+        currentAttentionTransform = e.interactableAlternate.GetInteractionAlternateAttentionTransform();
         interactingRotate = true;
     }
     private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)

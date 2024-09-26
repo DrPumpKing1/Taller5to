@@ -56,6 +56,37 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!1 &1178955993307754970
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4456781279340975230}
+  m_Layer: 9
+  m_Name: InteractionPositionTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4456781279340975230
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178955993307754970}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1286970370104639652}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2161428737200019133
 GameObject:
   m_ObjectHideFlags: 0
@@ -66,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8113911913073056384}
   m_Layer: 9
-  m_Name: AttentionTransform
+  m_Name: InteractionAttentionTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -297,6 +328,7 @@ Transform:
   - {fileID: 3260369499609817628}
   - {fileID: 6527064925950735548}
   - {fileID: 8113911913073056384}
+  - {fileID: 4456781279340975230}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &2003726968655611962
@@ -370,7 +402,8 @@ MonoBehaviour:
   tooltipMessage: Collect Ancient Relic
   grabPetAttention: 1
   grabPlayerAttention: 1
-  attentionTransform: {fileID: 8113911913073056384}
+  interactionAttentionTransform: {fileID: 8113911913073056384}
+  interactionPositionTransform: {fileID: 0}
 --- !u!1001 &5001334690578495481
 PrefabInstance:
   m_ObjectHideFlags: 0

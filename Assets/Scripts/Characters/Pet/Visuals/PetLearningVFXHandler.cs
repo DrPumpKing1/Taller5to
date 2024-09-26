@@ -61,7 +61,7 @@ public class PetLearningVFXHandler : MonoBehaviour
         SetVFXDuration(e.holdDuration);
 
         learningVFX.Play();
-        currentAttentionTransform = e.attentionTransform;
+        currentAttentionTransform = e.interactionAttentionTransform;
     }
 
     private void LearningPlatformLearn_OnEndLearning(object sender, LearningPlatformLearn.OnLearningEventArgs e)

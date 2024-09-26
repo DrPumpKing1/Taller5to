@@ -21,7 +21,8 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     [Space]
     [SerializeField] private bool grabPetAttention;
     [SerializeField] private bool grabPlayerAttention;
-    [SerializeField] private Transform attentionTransform;
+    [SerializeField] private Transform interactionAttentionTransform;
+    [SerializeField] private Transform interactionPositionTransform;
 
 
     #region IHoldInteractable Properties
@@ -34,7 +35,6 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     public float HoldDuration => holdDuration;
     public bool GrabPetAttention => grabPetAttention;
     public bool GrabPlayerAttention => grabPlayerAttention;
-    public Transform AttentionTransform => attentionTransform;
 
     #endregion
 
@@ -147,6 +147,8 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
         OnEndDematerialization?.Invoke(this, new OnAnyObjectDematerializedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
     }
     public Transform GetTransform() => transform;
+    public Transform GetInteractionAttentionTransform() => interactionAttentionTransform;
+    public Transform GetInteractionPositionTransform() => interactionPositionTransform;
 
     #endregion
 

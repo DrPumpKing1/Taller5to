@@ -265,6 +265,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 352028062762035767}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2889227720589211594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1252096447771913972}
+  m_Layer: 9
+  m_Name: InteractionPositionTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1252096447771913972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2889227720589211594}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7028397045733667877}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3420160984727219095
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,7 +456,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4413268859216329536}
   m_Layer: 9
-  m_Name: AttentionTransform
+  m_Name: InteractionAttentionTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -706,6 +737,7 @@ Transform:
   - {fileID: 8766563608364183038}
   - {fileID: 1064894585774912557}
   - {fileID: 4413268859216329536}
+  - {fileID: 1252096447771913972}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1516361548936382483
@@ -765,7 +797,8 @@ MonoBehaviour:
   holdDuration: 0.5
   grabPetAttention: 1
   grabPlayerAttention: 1
-  attentionTransform: {fileID: 4413268859216329536}
+  interactionAttentionTransform: {fileID: 4413268859216329536}
+  interactionPositionTransform: {fileID: 0}
 --- !u!114 &8971957355950650021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -791,7 +824,8 @@ MonoBehaviour:
   tooltipMessageAlternate: Rotate S'oota
   grabPetAttention: 1
   grabPlayerAttention: 1
-  attentionTransform: {fileID: 4413268859216329536}
+  interactionAttentionTransform: {fileID: 4413268859216329536}
+  interactionPositionTransform: {fileID: 0}
 --- !u!1 &8727335372719881467
 GameObject:
   m_ObjectHideFlags: 0
