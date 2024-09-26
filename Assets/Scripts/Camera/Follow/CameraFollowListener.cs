@@ -27,4 +27,12 @@ public class CameraFollowListener : MonoBehaviour
     {
         
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H)) 
+        { 
+            CameraFollowHandler.Instance.TransitionMoveCamera(exampleSettings.targetTransform, exampleSettings.stallTimeIn, exampleSettings.moveInTime, exampleSettings.stallTime, exampleSettings.moveOutTime, exampleSettings.stallTimeOut);
+        }
+    }
 }

@@ -87,7 +87,7 @@ public class InscriptionPowering : MonoBehaviour
 
     private void CheckDropShield()
     {
-        if (inscription.HasDroppedShieldPiece) return;
+        if (!inscription.ShouldDropShieldPiece()) return;
 
         DropShieldPiece();
         OnInscriptionPoweringFirstTime?.Invoke(this, new OnInscriptionPoweringEventArgs { id = inscription.InscriptionSO.id });

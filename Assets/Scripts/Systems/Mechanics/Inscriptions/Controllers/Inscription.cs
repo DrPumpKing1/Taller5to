@@ -20,4 +20,12 @@ public class Inscription : MonoBehaviour
 
     public void SetHasBeenRead(bool read) => hasBeenRead = read;
     public void SetHasDroppedShieldPiece(bool dropped) => hasDroppedShieldPiece = dropped;
+
+    public bool ShouldDropShieldPiece()
+    {
+        if (hasDroppedShieldPiece) return false;
+        if (ShieldPiecesManager.Instance.ShieldPiecesCollected.Contains(shieldPieceSO)) return false;
+
+        return true;
+    }
 }
