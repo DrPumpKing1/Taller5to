@@ -25,7 +25,7 @@ public class PlayerRotationHandler : MonoBehaviour
     private Vector2 previousDirectionInput;
     private float directionHoldingTimer = 0f;
 
-    private Transform currentAttentionTransform;
+    private Transform currentInteractionAttentionTransform;
     private bool interactingRotate;
 
     private void OnEnable()
@@ -87,18 +87,16 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void DefineDesiredFacingDirection()
     {
-        if (currentAttentionTransform)
+        if (currentInteractionAttentionTransform)
         {
-            Vector3 facingVectorRaw = (currentAttentionTransform.position - transform.position).normalized;
-            DesiredFacingDirection = GeneralMethods.SupressYComponent(facingVectorRaw);
-
-            if (!interactingRotate) currentAttentionTransform = null;
+            SetDesiredFacingDirectionTowardsTransform(currentInteractionAttentionTransform);
+            if (!interactingRotate) ClearInteractionAttentionTransform();
             return;
         }
 
         if (CanChangeDirectionDueToMovement())
         {
-            DesiredFacingDirection = GeneralMethods.Vector2ToVector3(DirectionInput);
+            SetDesiredFacingDirectionTowardsDirection(DirectionInput);
         }
     }
 
@@ -112,6 +110,15 @@ public class PlayerRotationHandler : MonoBehaviour
         RotateTowardsDirection(DesiredFacingDirection);
     }
 
+    #region General Methods
+
+    private void SetDesiredFacingDirectionTowardsDirection(Vector3 direction) => DesiredFacingDirection = GeneralMethods.Vector2ToVector3(direction);
+    private void SetDesiredFacingDirectionTowardsTransform(Transform lookTransform)
+    {
+        Vector3 facingVectorRaw = (lookTransform.position - transform.position).normalized;
+        DesiredFacingDirection = GeneralMethods.SupressYComponent(facingVectorRaw);
+    }
+
     private void RotateTowardsDirection(Vector3 direction)
     {
         FacingDirection = Vector3.Slerp(FacingDirection, direction, smoothRotateFactor * Time.deltaTime);
@@ -122,6 +129,8 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void AvoidXZRotation() => transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
 
+    #endregion
+
     #region PlayerStartDirectioningSettings
     private void PlayerStartDirection_OnPlayerStartDirectioned(object sender, PlayerStartDirection.OnPlayerStartDirectionedEventArgs e)
     {
@@ -129,13 +138,21 @@ public class PlayerRotationHandler : MonoBehaviour
     }
     #endregion
 
+    #region InteractionSettings
+    private void SetInteractionAttentionTransform(Transform transform) => currentInteractionAttentionTransform = transform;
+    private void ClearInteractionAttentionTransform() => currentInteractionAttentionTransform = null;
+    #endregion
+
+    ///
+
     #region PlayerInteractionSubscriptions
     private void PlayerInteract_OnInteractionStarted(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
         if (!e.interactable.GrabPlayerAttention) return;
+        if (e.interactable.GetInteractionAttentionTransform() == null) return;
 
-        currentAttentionTransform = e.interactable.GetInteractionAttentionTransform();
         interactingRotate = true;
+        SetInteractionAttentionTransform(e.interactable.GetInteractionAttentionTransform());
     }
 
     private void PlayerInteract_OnInteractionEnded(object sender, PlayerInteract.OnInteractionEventArgs e)
@@ -148,9 +165,10 @@ public class PlayerRotationHandler : MonoBehaviour
     private void PlayerInteractAlternate_OnInteractionAlternateStarted(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {
         if (!e.interactableAlternate.GrabPlayerAttention) return;
+        if (e.interactableAlternate.GetInteractionAlternateAttentionTransform() == null) return;
 
-        currentAttentionTransform = e.interactableAlternate.GetInteractionAlternateAttentionTransform();
         interactingRotate = true;
+        SetInteractionAttentionTransform(e.interactableAlternate.GetInteractionAlternateAttentionTransform());
     }
     private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {
