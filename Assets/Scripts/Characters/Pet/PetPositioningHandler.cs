@@ -41,13 +41,6 @@ public class PetPositioningHandler : MonoBehaviour
     [SerializeField, Range(0.5f, 1.75f)] private float colisionDetectionRadius;
     [SerializeField] private LayerMask collisionLayers;
 
-    [Header("States")]
-    [SerializeField] private State state;
-
-    public enum State { Still, FollowingPlayer, OnGuidance }
-
-    public State PositioningState => state;
-
     private Vector3 playerFollowDesiredDirectionVector;
     private float playerFollowTargetRadius;
 
@@ -60,18 +53,11 @@ public class PetPositioningHandler : MonoBehaviour
     private float timeFollowing;
 
     private float currentGuidanceSmoothPositionSpeedFactor;
-    private Transform currentGuidancePositionTransform;
     private float timeGuiding;
 
     private void OnEnable()
     {
-        PetPlayerAttachment.OnVyrxAttachToPlayer += PetPlayerAttachment_OnVyrxAttachToPlayer;
-        PetPlayerAttachment.OnVyrxUnattachToPlayer += PetPlayerAttachment_OnVyrxUnattachToPlayer;
-
-        PetGuidanceListener.OnPetGuidanceStart += PetGuidanceListener_OnPetGuidanceStart;
-        PetGuidanceListener.OnPetGuidanceEnd += PetGuidanceListener_OnPetGuidanceEnd;
-
-        PlayerStartPositioning.OnPlayerStartPositioned += PlayerStartPositioning_OnPlayerStartPositioned;
+        PlayerStartPositioning.OnPlayerStartPositionedFirstUpdate += PlayerStartPositioning_OnPlayerStartPositionedFirstUpdate;
 
         playerInteract.OnInteractionStarted += PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;
@@ -82,13 +68,7 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        PetPlayerAttachment.OnVyrxAttachToPlayer -= PetPlayerAttachment_OnVyrxAttachToPlayer;
-        PetPlayerAttachment.OnVyrxUnattachToPlayer -= PetPlayerAttachment_OnVyrxUnattachToPlayer;
-
-        PetGuidanceListener.OnPetGuidanceStart -= PetGuidanceListener_OnPetGuidanceStart;
-        PetGuidanceListener.OnPetGuidanceEnd -= PetGuidanceListener_OnPetGuidanceEnd;
-
-        PlayerStartPositioning.OnPlayerStartPositioned -= PlayerStartPositioning_OnPlayerStartPositioned;
+        PlayerStartPositioning.OnPlayerStartPositionedFirstUpdate -= PlayerStartPositioning_OnPlayerStartPositionedFirstUpdate;
 
         playerInteract.OnInteractionStarted -= PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded -= PlayerInteract_OnInteractionEnded;
@@ -97,29 +77,22 @@ public class PetPositioningHandler : MonoBehaviour
         playerInteractAlternate.OnInteractionAlternateEnded -= PlayerInteractAlternate_OnInteractionAlternateEnded;
     }
 
-    private void Start()
-    {
-        ClearGuidancePositionTransform();
-    }
-
     private void FixedUpdate()
     {
         HandlePositioningState();
     }
 
-    private void SetPositioningState(State state) => this.state = state;
-
     private void HandlePositioningState()
     {
-        switch (state)
+        switch (PetStateHandler.Instance.PetState)
         {
-            case State.Still:
+            case PetStateHandler.State.Still:
                 StillLogic();
                 break;
-            case State.FollowingPlayer:
+            case PetStateHandler.State.FollowingPlayer:
                 FollowingPlayerLogic();
                 break;
-            case State.OnGuidance:
+            case PetStateHandler.State.OnGuidance:
                 OnGuidanceLogic();
                 break;
         }
@@ -156,18 +129,21 @@ public class PetPositioningHandler : MonoBehaviour
     {
         ResetTimeFollowing();
 
-        if (currentGuidancePositionTransform == null) return;
+        if (PetStateHandler.Instance.CurrentPetGuidanceObject == null) return;
 
         timeGuiding += Time.fixedDeltaTime;
 
         HandlePositionSpeedFactor(ref currentGuidanceSmoothPositionSpeedFactor, minGuidanceSmoothPositionSpeedFactor, maxGuidanceSmoothPositionSpeedFactor, timeGuiding, timeToReachMaxGuidanceSmoothPositionSpeedFactor);
 
-        MoveToPosition(currentGuidancePositionTransform.position,currentGuidanceSmoothPositionSpeedFactor);
+        MoveToPosition(PetStateHandler.Instance.CurrentPetGuidanceObject.positionTransform.position,currentGuidanceSmoothPositionSpeedFactor);
     }
 
+    #region General Methods
     private void MoveToPosition(Vector3 position, float smoothFactor) => transform.position = Vector3.Lerp(transform.position, position, smoothFactor * Time.fixedDeltaTime);
 
     private void HandlePositionSpeedFactor(ref float currentFactor, float initialFactor, float finalFactor, float time, float timeToReachFinalFactor) => currentFactor = Mathf.Lerp(initialFactor, finalFactor, time / timeToReachFinalFactor);
+
+    #endregion
 
     #region FollowingPlayer Methods
 
@@ -224,50 +200,24 @@ public class PetPositioningHandler : MonoBehaviour
 
     #region Guidance Methods
     private void ResetTimeGuiding() => timeGuiding = 0f;
-    private void SetGuidancePositionTransform(Transform guidancePositionTransform) => currentGuidancePositionTransform = guidancePositionTransform;
-    private void ClearGuidancePositionTransform() => currentGuidancePositionTransform = null;
 
     #endregion
 
     #region StartPosition Methods
+    private bool CanStartPosition() => PetStateHandler.Instance.PetState == PetStateHandler.State.FollowingPlayer;
     private void StartPositionPet(Vector3 positionVector, float radius)
     {
-        if (state != State.FollowingPlayer) return;
+        if (!CanStartPosition()) return;
 
         transform.position = orbitPoint.position + startPositionOffsetFromOrbitPoint;
     }
-    #endregion
-
-    #region PetGuidanceListener Subscriptions
-    private void PetGuidanceListener_OnPetGuidanceStart(object sender, PetGuidanceListener.OnPetGuidanceEventArgs e)
-    {
-        SetGuidancePositionTransform(e.positionTransform);
-        SetPositioningState(State.OnGuidance);
-    }
-
-    private void PetGuidanceListener_OnPetGuidanceEnd(object sender, PetGuidanceListener.OnPetGuidanceEventArgs e)
-    {
-        ClearGuidancePositionTransform();
-        SetPositioningState(State.FollowingPlayer);
-    }
-    #endregion
-
-
-    #region PetPlayerAttachment Subscriptions
-    private void PetPlayerAttachment_OnVyrxAttachToPlayer(object sender, EventArgs e)
-    {
-        SetPositioningState(State.FollowingPlayer);
-    }
-
-    private void PetPlayerAttachment_OnVyrxUnattachToPlayer(object sender, EventArgs e)
-    {
-        SetPositioningState(State.Still);
-    }
 
     #endregion
+
+    ///
 
     #region PlayerStartPositioning Subscriptions
-    private void PlayerStartPositioning_OnPlayerStartPositioned(object sender, System.EventArgs e)
+    private void PlayerStartPositioning_OnPlayerStartPositionedFirstUpdate(object sender, System.EventArgs e)
     {
         StartPositionPet(preferredDirectionVectors[0],orbitRadius);
     }

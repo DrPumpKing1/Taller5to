@@ -52,6 +52,7 @@ MonoBehaviour:
   smoothRotateFactor: 3
   applyStartingRotation: 1
   startingFacingDirection: {x: -1, y: 0, z: 0}
+  state: 0
 --- !u!1 &1835222234857732829
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,6 +183,7 @@ GameObject:
   - component: {fileID: 5923628213344039110}
   - component: {fileID: 2624488069321933222}
   - component: {fileID: 2838269271005741648}
+  - component: {fileID: 3985624961970628698}
   - component: {fileID: 5680990158484470575}
   m_Layer: 8
   m_Name: Pet
@@ -272,6 +274,18 @@ MonoBehaviour:
   logToAttach: Dialogues/End/3
   overrideAttachToPlayer: 0
   attachToPlayer: 0
+--- !u!114 &3985624961970628698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3043309969516445686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4556b6331d174f4dad8ac8954e0052d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5680990158484470575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,8 +337,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 129
   state: 0
-  currentGuidanceSmoothPositionSpeedFactor: 0
-  currentGuidancePositionTransform: {fileID: 0}
 --- !u!1 &4246972803737518667
 GameObject:
   m_ObjectHideFlags: 0

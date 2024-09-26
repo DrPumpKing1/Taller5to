@@ -7,10 +7,10 @@ using static PetGuidanceListener;
 public class PetGuidanceListener : MonoBehaviour
 {
     [Header("Guidance Settings")]
-    [SerializeField] private List<PetGuidance> petGuidances;
+    [SerializeField] private List<PetGuidanceObject> petGuidanceObjects;
 
     [Serializable]
-    public class PetGuidance
+    public class PetGuidanceObject
     {
         public string logToStartGuidance;
         public string logToEndGuidance;
@@ -23,11 +23,10 @@ public class PetGuidanceListener : MonoBehaviour
 
     public class OnPetGuidanceEventArgs : EventArgs
     {
-        public Transform positionTransform;
-        public Transform lookTransform;
+        public PetGuidanceObject petGuidanceObject;
     }
 
-    private PetGuidance currentGuidance;
+    private PetGuidanceObject currentPetGuidanceObject;
 
     private void OnEnable()
     {
@@ -44,17 +43,17 @@ public class PetGuidanceListener : MonoBehaviour
         ClearCurrentGuidance();
     }
 
-    private void SetCurrentGuidance(PetGuidance petGuidance) => currentGuidance = petGuidance;
-    private void ClearCurrentGuidance() => currentGuidance = null;
+    private void SetCurrentGuidance(PetGuidanceObject petGuidance) => currentPetGuidanceObject = petGuidance;
+    private void ClearCurrentGuidance() => currentPetGuidanceObject = null;
 
     private void CheckStartGuidance(string log)
     {
-        foreach(PetGuidance petGuidance in petGuidances)
+        foreach(PetGuidanceObject petGuidanceObject in petGuidanceObjects)
         {
-            if(petGuidance.logToStartGuidance == log)
+            if(petGuidanceObject.logToStartGuidance == log)
             {
-                SetCurrentGuidance(petGuidance);
-                OnPetGuidanceStart?.Invoke(this, new OnPetGuidanceEventArgs { positionTransform = petGuidance.positionTransform, lookTransform = petGuidance.lookTransform });
+                SetCurrentGuidance(petGuidanceObject);
+                OnPetGuidanceStart?.Invoke(this, new OnPetGuidanceEventArgs { petGuidanceObject = petGuidanceObject });
                 return;
             }
         }
@@ -62,10 +61,10 @@ public class PetGuidanceListener : MonoBehaviour
 
     private void CheckEndGuidance(string log)
     {
-        if (currentGuidance == null) return;
-        if (currentGuidance.logToEndGuidance != log) return;
+        if (currentPetGuidanceObject == null) return;
+        if (currentPetGuidanceObject.logToEndGuidance != log) return;
 
-        OnPetGuidanceEnd?.Invoke(this, new OnPetGuidanceEventArgs { positionTransform = currentGuidance.positionTransform, lookTransform = currentGuidance.lookTransform });
+        OnPetGuidanceEnd?.Invoke(this, new OnPetGuidanceEventArgs { petGuidanceObject = currentPetGuidanceObject });
         ClearCurrentGuidance();
         return;
     }

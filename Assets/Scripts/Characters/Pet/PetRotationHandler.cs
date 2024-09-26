@@ -18,30 +18,15 @@ public class PetRotationHandler : MonoBehaviour
     [SerializeField] private bool applyStartingRotation;
     [SerializeField] private Vector3 startingFacingDirection;
 
-    [Header("States")]
-    [SerializeField] private State state;
-
-    public enum State { Still, FollowingPlayer, OnGuidance }
-
-    public State RotationState => state;
-
     private Vector3 PlayerFacingDirection => playerRotationHandler.FacingDirection;
     public Vector3 FacingDirection { get; private set; }
 
     private Vector3 desiredFacingDirection;
 
-    private Transform currentAttentionTransform;
-
-    private Transform currentGuidanceLookTransform;
+    private Transform currentInteractionAttentionTransform;
 
     private void OnEnable()
     {
-        PetPlayerAttachment.OnVyrxAttachToPlayer += PetPlayerAttachment_OnVyrxAttachToPlayer;
-        PetPlayerAttachment.OnVyrxUnattachToPlayer += PetPlayerAttachment_OnVyrxUnattachToPlayer;
-
-        PetGuidanceListener.OnPetGuidanceStart += PetGuidanceListener_OnPetGuidanceStart;
-        PetGuidanceListener.OnPetGuidanceEnd += PetGuidanceListener_OnPetGuidanceEnd;
-
         playerInteract.OnInteractionStarted += PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;
 
@@ -51,12 +36,6 @@ public class PetRotationHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        PetPlayerAttachment.OnVyrxAttachToPlayer -= PetPlayerAttachment_OnVyrxAttachToPlayer;
-        PetPlayerAttachment.OnVyrxUnattachToPlayer -= PetPlayerAttachment_OnVyrxUnattachToPlayer;
-
-        PetGuidanceListener.OnPetGuidanceStart -= PetGuidanceListener_OnPetGuidanceStart;
-        PetGuidanceListener.OnPetGuidanceEnd -= PetGuidanceListener_OnPetGuidanceEnd;
-
         playerInteract.OnInteractionStarted -= PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded -= PlayerInteract_OnInteractionEnded;
 
@@ -67,7 +46,6 @@ public class PetRotationHandler : MonoBehaviour
     private void Start()
     {
         InitializeStartingRotation();
-        ClearGuidanceLookTransform();
     }
 
     private void Update()
@@ -86,19 +64,17 @@ public class PetRotationHandler : MonoBehaviour
         RotateInstantlyTowardsDirection(FacingDirection);
     }
 
-    private void SetRotationState(State state) => this.state = state;
-
     private void HandleRotationState()
     {
-        switch (state)
+        switch (PetStateHandler.Instance.PetState)
         {
-            case State.Still:
+            case PetStateHandler.State.Still:
                 StillLogic();
                 break;
-            case State.FollowingPlayer:
+            case PetStateHandler.State.FollowingPlayer:
                 FollowingPlayerLogic();
                 break;
-            case State.OnGuidance:
+            case PetStateHandler.State.OnGuidance:
                 OnGuidanceLogic();
                 break;
         }
@@ -117,18 +93,17 @@ public class PetRotationHandler : MonoBehaviour
 
     private void OnGuidanceLogic()
     {
-        if (currentGuidanceLookTransform == null) return;
+        if (PetStateHandler.Instance.CurrentPetGuidanceObject == null) return;
 
-        SetDesiredFacingDirectionTowardsTransform(currentGuidanceLookTransform);
+        SetDesiredFacingDirectionTowardsTransform(PetStateHandler.Instance.CurrentPetGuidanceObject.lookTransform);
         ApplyRotation();
     }
 
     private void DefineDesiredPlayerFollowFacingDirection()
     {
-        if (currentAttentionTransform) //If interacting
+        if (currentInteractionAttentionTransform) //If interacting
         {
-            SetDesiredFacingDirectionTowardsTransform(currentAttentionTransform);
-            //if(!interactingRotate) currentAttentionTransform = null;
+            SetDesiredFacingDirectionTowardsTransform(currentInteractionAttentionTransform);
             return;
         }
 
@@ -146,8 +121,8 @@ public class PetRotationHandler : MonoBehaviour
     }
 
     private void RotateInstantlyTowardsDirection(Vector3 direction) => transform.localRotation = Quaternion.LookRotation(direction);
-    private void SetAttentionTransform(Transform attentionTransform) => currentAttentionTransform = attentionTransform;
-    private void ClearAttentionTransform() => currentAttentionTransform = null;
+    private void SetInteractionAttentionTransform(Transform interactionAttentionTransform) => currentInteractionAttentionTransform = interactionAttentionTransform;
+    private void ClearAttentionTransform() => currentInteractionAttentionTransform = null;
 
     private void SetDesiredFacingDirectionTowardsTransform(Transform lookTransform) => desiredFacingDirection = (lookTransform.position - transform.position).normalized;
     private void SetDesiredFacingDirectionTowardsDirection(Vector3 direction) => desiredFacingDirection = direction;
@@ -165,46 +140,12 @@ public class PetRotationHandler : MonoBehaviour
         RotateTowardsDirection(facingDirection);
     }
 
-    #region Guidance Methods
-    private void SetGuidanceLookTransform(Transform guidanceLookTransform) => currentGuidanceLookTransform = guidanceLookTransform;
-    private void ClearGuidanceLookTransform() => currentGuidanceLookTransform = null;
-
-    #endregion
-
-    #region PetGuidanceListener Subscriptions
-    private void PetGuidanceListener_OnPetGuidanceStart(object sender, PetGuidanceListener.OnPetGuidanceEventArgs e)
-    {
-        SetGuidanceLookTransform(e.lookTransform);
-        SetRotationState(State.OnGuidance);
-    }
-
-    private void PetGuidanceListener_OnPetGuidanceEnd(object sender, PetGuidanceListener.OnPetGuidanceEventArgs e)
-    {
-        ClearGuidanceLookTransform();
-        SetRotationState(State.FollowingPlayer);
-    }
-    #endregion
-
-
-    #region PetPlayerAttachment Subscriptions
-    private void PetPlayerAttachment_OnVyrxAttachToPlayer(object sender, EventArgs e)
-    {
-        SetRotationState(State.FollowingPlayer);
-    }
-
-    private void PetPlayerAttachment_OnVyrxUnattachToPlayer(object sender, EventArgs e)
-    {
-        SetRotationState(State.Still);
-    }
-    #endregion
-
-
     #region PlayerInteractionSubscriptions
     private void PlayerInteract_OnInteractionStarted(object sender, PlayerInteract.OnInteractionEventArgs e)
     {
         if (!e.interactable.GrabPetAttention) return;
 
-        SetAttentionTransform(e.interactable.AttentionTransform);
+        SetInteractionAttentionTransform(e.interactable.AttentionTransform);
     }
 
     private void PlayerInteract_OnInteractionEnded(object sender, PlayerInteract.OnInteractionEventArgs e)
@@ -219,7 +160,7 @@ public class PetRotationHandler : MonoBehaviour
     {
         if (!e.interactableAlternate.GrabPetAttention) return;
 
-        SetAttentionTransform(e.interactableAlternate.AttentionTransform);
+        SetInteractionAttentionTransform(e.interactableAlternate.AttentionTransform);
     }
     private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {

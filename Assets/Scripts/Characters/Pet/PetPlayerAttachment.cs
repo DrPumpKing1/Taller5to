@@ -65,25 +65,25 @@ public class PetPlayerAttachment : MonoBehaviour
     private void CheckSetInitialAttachToPlayer()
     {
         if (overrideAttachToPlayer) return;
-        SetAttachToPlayer(initialAttachFromSave);
+        SetAttachToPlayer(initialAttachFromSave,true);
     }
 
     private void SetIntialOverrideAttachToPlayer(bool attach)
     {
         if (!overrideAttachToPlayer) return;
-        SetAttachToPlayer(attach);
+        SetAttachToPlayer(attach, true);
     }
 
-    public void SetAttachToPlayer(bool attach)
+    public void SetAttachToPlayer(bool attach, bool triggerEvents)
     {
         if (attach)
         {
-            OnVyrxAttachToPlayer?.Invoke(this, EventArgs.Empty);
+            if(triggerEvents) OnVyrxAttachToPlayer?.Invoke(this, EventArgs.Empty);
             attachToPlayer = true;
         }
         else
         {
-            OnVyrxUnattachToPlayer?.Invoke(this, EventArgs.Empty);
+            if(triggerEvents) OnVyrxUnattachToPlayer?.Invoke(this, EventArgs.Empty);
             attachToPlayer = false;
         }
     }
@@ -92,7 +92,7 @@ public class PetPlayerAttachment : MonoBehaviour
     private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
         if (e.gameplayAction.log != logToAttach) return;
-        SetAttachToPlayer(true);
+        SetAttachToPlayer(true,true);
         OnVyrxInitialAttachToPlayer?.Invoke(this, EventArgs.Empty);
     }
     #endregion
