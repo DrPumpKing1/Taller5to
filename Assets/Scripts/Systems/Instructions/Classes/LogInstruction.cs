@@ -24,5 +24,4 @@ public class LogInstruction : Instruction
         if (e.gameplayAction.log != logToShow) return;
         CheckShouldShow();
     }
-
 }
