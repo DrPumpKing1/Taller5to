@@ -27,7 +27,7 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
     [SerializeField] private bool waintingHint = false;
     [SerializeField] private UniqueDialogueEvent lastDialogueEvent;
     [Space]
-    [SerializeField] private float dialogReplacementSafeTime = 0.5f;
+    [SerializeField] private float dialogReplacementSafeTime = 1f;
 
     [Header("Collections")]
     [SerializeField] private List<UniqueDialogueEvent> uniqueDialogueEvents;

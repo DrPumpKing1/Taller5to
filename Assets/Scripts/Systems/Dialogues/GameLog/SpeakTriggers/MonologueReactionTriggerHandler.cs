@@ -14,10 +14,15 @@ public class MonologueReactionTriggerHandler : MonoBehaviour
         public List<string> logPattern;
     }
 
+    [Header("Enabler")]
+    [SerializeField] private bool enableTriggerReactionMonologues;
+
     [Header("Monologues")]
     [SerializeField] private float reactionCooldown;
     [SerializeField] private float reactionTimer;
+    [SerializeField] private float monologueReplacementSafeTime = 1f;
 
+    [Header("Collections")]
     [SerializeField] private List<MonologueReaction> monologues;
 
     public List<string> storedLogPattern = new List<string>();
@@ -42,9 +47,9 @@ public class MonologueReactionTriggerHandler : MonoBehaviour
         if (reactionTimer > 0f) reactionTimer -= Time.deltaTime;
     }
 
-    private void HandleReactionMonologue(string log)
+    private IEnumerator HandleReactionMonologue(string log)
     {
-        if (reactionTimer > 0) return;
+        if (reactionTimer > 0) yield break;
 
         storedLogPattern.Add(log);
 
@@ -63,11 +68,17 @@ public class MonologueReactionTriggerHandler : MonoBehaviour
             return true;
         });
 
-        if (!compatibleMonologues.Any()) return;
+        if (!compatibleMonologues.Any()) yield break;
 
         MonologueReaction monologue = compatibleMonologues.First();
 
         reactionTimer = reactionCooldown + monologue.reactionTime;
+
+        if (MonologueManager.Instance.PlayingMonologue())
+        {
+            MonologueManager.Instance.EndMonologue();
+            yield return new WaitForSeconds(monologueReplacementSafeTime);
+        }
 
         MonologueManager.Instance.StartMonologue(monologue.monologue);
         storedLogPattern.Clear();
@@ -91,7 +102,9 @@ public class MonologueReactionTriggerHandler : MonoBehaviour
     #region GameLog Subscriptions
     private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
-        HandleReactionMonologue(e.gameplayAction.log);
+        if (!enableTriggerReactionMonologues) return;
+
+        StartCoroutine(HandleReactionMonologue(e.gameplayAction.log));
     }
     #endregion
 }

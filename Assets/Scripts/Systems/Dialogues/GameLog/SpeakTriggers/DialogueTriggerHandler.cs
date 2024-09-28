@@ -21,7 +21,7 @@ public class DialogueTriggerHandler : MonoBehaviour
     [Header("Dialogues")]
     [SerializeField] private DialogueEvent lastDialogueEvent;
     [Space]
-    [SerializeField] private float dialogueReplacementSafeTime = 0.5f;
+    [SerializeField] private float dialogueReplacementSafeTime = 1f;
 
     [Header("Collections")]
     [SerializeField] private List<DialogueEvent> dialogues;

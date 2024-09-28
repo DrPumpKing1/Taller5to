@@ -20,7 +20,7 @@ public class MonologueTriggerHandler : MonoBehaviour
     [Header("Monologues")]
     [SerializeField] private MonologueEvent lastMonologueEvent;
     [Space]
-    [SerializeField] private float monologueReplacementSafeTime = 0.5f;
+    [SerializeField] private float monologueReplacementSafeTime = 1f;
 
     [Header("Collections")]
     [SerializeField] private List<MonologueEvent> monologues;

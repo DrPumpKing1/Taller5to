@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using static PetGuidanceListener;
 
 public class PetGuidanceListener : MonoBehaviour
 {
@@ -12,6 +11,7 @@ public class PetGuidanceListener : MonoBehaviour
     [Serializable]
     public class PetGuidanceObject
     {
+        public string guidanceName;
         public string logToStartGuidance;
         public string logToEndGuidance;
         public Transform positionTransform;

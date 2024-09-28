@@ -27,7 +27,7 @@ public class UniqueMonologueTriggerHandler : MonoBehaviour
     [SerializeField] private bool waintingHint = false;
     [SerializeField] private UniqueMonologueEvent lastMonologueEvent;
     [Space]
-    [SerializeField] private float monologueReplacementSafeTime = 0.5f;
+    [SerializeField] private float monologueReplacementSafeTime = 1f;
 
     [Header("Collections")]
     [SerializeField] private List<UniqueMonologueEvent> uniqueMonologueEvents;
