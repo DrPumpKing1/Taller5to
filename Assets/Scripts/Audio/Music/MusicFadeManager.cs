@@ -94,7 +94,6 @@ public class MusicFadeManager : MonoBehaviour
     }
     #endregion
 
-
     #region Coroutines
     public IEnumerator FadeOutMusicCoroutine(float fadeOutTime)
     {

@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class CinematicsTransitionPanelUIHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Components")]
+    [SerializeField] private Animator transitionPanelUIAnimator;
+
+    [Header("Settings")]
+    [SerializeField, Range(0.5f, 2f)] private float fullBlackTime;
+
+    public float FullBlackTime => fullBlackTime;    
+
+    private const string SHOW_TRIGGER = "Show";
+    private const string HIDE_TRIGGER = "Hide";
+
+    public void ShowTransitionPanel()
     {
-        
+        transitionPanelUIAnimator.ResetTrigger(HIDE_TRIGGER);
+        transitionPanelUIAnimator.SetTrigger(SHOW_TRIGGER);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void HideTransitionPanel()
     {
-        
+        transitionPanelUIAnimator.ResetTrigger(SHOW_TRIGGER);
+        transitionPanelUIAnimator.SetTrigger(HIDE_TRIGGER);
     }
 }

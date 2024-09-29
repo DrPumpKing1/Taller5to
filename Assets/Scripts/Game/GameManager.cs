@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
 
     private void CinematicsManager_OnCinematicEnd(object sender, CinematicsManager.OnCinematicEventArgs e)
     {
-        SetGameState(previousState);
+        SetGameState(State.OnGameplay);
 
     }
     #endregion

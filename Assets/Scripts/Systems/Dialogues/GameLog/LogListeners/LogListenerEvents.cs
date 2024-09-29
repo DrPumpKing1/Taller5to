@@ -9,6 +9,10 @@ public class LogListenerEvents : MonoBehaviour
         //EVENT COLLIDERS
         EventCollider.OnEventColliderTrigger += EventCollider_OnEventColliderTrigger;
 
+        //CINEMATICS
+        CinematicsManager.OnCinematicStart += CinematicsManager_OnCinematicStart;
+        CinematicsManager.OnCinematicEnd += CinematicsManager_OnCinematicEnd;
+
         //TUTORIAL
 
         //LEVEL1
@@ -47,6 +51,10 @@ public class LogListenerEvents : MonoBehaviour
 
     //EVENT COLLIDERS
     private void EventCollider_OnEventColliderTrigger(object sender, EventCollider.OnEventColliderTriggerEventArgs e) => GameLogManager.Instance.Log($"Events/EventCollider/{e.eventID}");
+
+    //CINEMATICS
+    private void CinematicsManager_OnCinematicStart(object sender, CinematicsManager.OnCinematicEventArgs e) => GameLogManager.Instance.Log($"Cinematics/Start/{e.cinematic.id}");
+    private void CinematicsManager_OnCinematicEnd(object sender, CinematicsManager.OnCinematicEventArgs e) => GameLogManager.Instance.Log($"Cinematics/End/{e.cinematic.id}");
 
     //TUTORIAL
 

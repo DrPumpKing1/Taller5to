@@ -28,7 +28,7 @@ public class PauseManager : MonoBehaviour
     {
         PauseUI.OnCloseFromUI -= PauseUI_OnCloseFromUI;
         SetResumeTimeScale();
-        GamePaused = false;
+        SetGamePaused(false);
     }
 
     private void Awake()
@@ -60,7 +60,7 @@ public class PauseManager : MonoBehaviour
     }
     private void InitializeVariables()
     {
-        GamePaused = false;
+        SetGamePaused(false);
         GamePausedThisFrame = false;
         AudioListener.pause = false;
     }
@@ -93,7 +93,7 @@ public class PauseManager : MonoBehaviour
     {
         OnGamePaused?.Invoke(this, EventArgs.Empty);
         SetPauseTimeScale();
-        GamePaused = true;
+        SetGamePaused(true);
         AudioListener.pause = false;
     }
 
@@ -101,10 +101,11 @@ public class PauseManager : MonoBehaviour
     {
         OnGameResumed?.Invoke(this, EventArgs.Empty);
         SetResumeTimeScale();
-        GamePaused = false;
+        SetGamePaused(false);
         AudioListener.pause = false;
     }
 
+    private void SetGamePaused(bool gamePaused) => GamePaused = gamePaused;
     private void SetPauseTimeScale() => Time.timeScale = 0f;
     private void SetResumeTimeScale() => Time.timeScale = 1f;
 

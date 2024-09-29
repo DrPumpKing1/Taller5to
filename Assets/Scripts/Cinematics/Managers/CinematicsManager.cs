@@ -33,22 +33,19 @@ public class CinematicsManager : MonoBehaviour
     private void OnEnable()
     {
         GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
+        CinematicsUIHandler.OnCinematicUIEnd += CinematicsUIHandler_OnCinematicUIEnd;
     }
 
     private void OnDisable()
     {
         GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
-    }
+        CinematicsUIHandler.OnCinematicUIEnd -= CinematicsUIHandler_OnCinematicUIEnd;
 
+    }
 
     private void Awake()
     {
         SetSingleton();
-    }
-
-    private void Start()
-    {
-        
     }
 
     private void SetSingleton()
@@ -96,6 +93,13 @@ public class CinematicsManager : MonoBehaviour
     private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
         CheckStartCinematic(e.gameplayAction.log);
+    }
+    #endregion
+
+    #region CinematicsUIHandlerSubscriptions
+    private void CinematicsUIHandler_OnCinematicUIEnd(object sender, EventArgs e)
+    {
+        EndCinematic();
     }
     #endregion
 }
