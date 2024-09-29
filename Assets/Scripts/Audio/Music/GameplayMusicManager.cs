@@ -13,6 +13,10 @@ public class GameplayMusicManager : MonoBehaviour
     [SerializeField] private float fadeInTime;
     [SerializeField] private float muteTime;
 
+    [Header("Cinematic Gameplay Music Fade Settings")]
+    [SerializeField] private float fadeOutTimeCinematics;
+    [SerializeField] private float fadeInTimeCinematics;
+
     [Header("Debug")]
     [SerializeField] private AudioClip currentGameplayMusic;
 
@@ -22,8 +26,14 @@ public class GameplayMusicManager : MonoBehaviour
         RoomManager.OnEnterBlockingViewColliders += RoomManager_OnEnterBlockingViewColliders;
 
         ShieldPiecesManager.OnShieldPieceCollected += ShieldPiecesManager_OnShieldPieceCollected;
+
+        CinematicsManager.OnCinematicStart += CinematicsManager_OnCinematicStart;
+        CinematicsManager.OnCinematicEnd += CinematicsManager_OnCinematicEnd;
+
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
     }
+
+    
 
     private void OnDisable()
     {
@@ -31,6 +41,10 @@ public class GameplayMusicManager : MonoBehaviour
         RoomManager.OnEnterBlockingViewColliders -= RoomManager_OnEnterBlockingViewColliders;
 
         ShieldPiecesManager.OnShieldPieceCollected -= ShieldPiecesManager_OnShieldPieceCollected;
+
+        CinematicsManager.OnCinematicStart -= CinematicsManager_OnCinematicStart;
+        CinematicsManager.OnCinematicEnd -= CinematicsManager_OnCinematicEnd;
+
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
     }
 
@@ -248,7 +262,7 @@ public class GameplayMusicManager : MonoBehaviour
     }
     #endregion
 
-
+    #region RoomManager Subscriptions
     private void RoomManager_OnStartBlockingViewColliders(object sender, RoomManager.OnBlockingViewCollidersStartEventArgs e)
     {
         if (e.currentRoomVisibilityColliders.Count == 0) return;
@@ -263,7 +277,9 @@ public class GameplayMusicManager : MonoBehaviour
 
         CheckRoomChangeMusicToPlay(e.newRoomVisibilityColliders[0].MusicLevel);
     }
+    #endregion
 
+    #region ShieldPiecesManagerSubscriptions
     private void ShieldPiecesManager_OnShieldPieceCollected(object sender, ShieldPiecesManager.OnShieldPieceCollectedEventArgs e)
     {
         CheckShieldCollectedMusicToPlay(e.shieldPieceSO.dialect);
@@ -273,4 +289,17 @@ public class GameplayMusicManager : MonoBehaviour
     {
         FadeTransitionGameplayMusic(musicPoolSO.afterBoss);
     }
+    #endregion
+
+    #region CinematicsManagerSubscriptions
+    private void CinematicsManager_OnCinematicStart(object sender, CinematicsManager.OnCinematicEventArgs e)
+    {
+        StartCoroutine(MusicFadeManager.Instance.FadeOutMusicCoroutine(fadeOutTimeCinematics));
+    }
+
+    private void CinematicsManager_OnCinematicEnd(object sender, CinematicsManager.OnCinematicEventArgs e)
+    {
+        StartCoroutine(MusicFadeManager.Instance.FadeInMusicCoroutine(fadeInTimeCinematics));
+    }
+    #endregion
 }

@@ -10,6 +10,7 @@ public class DebugScript : MonoBehaviour
         CheckSkipDialogue();
         CheckReloadScene();
         CheckHideInstruction();
+        CheckEndCinematic();
 
         CheckSkipLevel1();
         CheckSkipLevel2();
@@ -17,6 +18,13 @@ public class DebugScript : MonoBehaviour
         CheckSkipBoss();
     }
 
+    private void CheckHideInstruction()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            InstructionsManager.Instance.HideInstruction();
+        }
+    }
     private void CheckSkipDialogue()
     {
         if (Input.GetKeyDown(KeyCode.O))
@@ -33,11 +41,11 @@ public class DebugScript : MonoBehaviour
         }
     }
 
-    private void CheckHideInstruction()
+    private void CheckEndCinematic()
     {
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.K))
         {
-            InstructionsManager.Instance.HideInstruction();
+            CinematicsManager.Instance.EndCinematicDirect();
         }
     }
 

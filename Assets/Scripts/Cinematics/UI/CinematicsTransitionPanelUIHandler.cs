@@ -10,7 +10,10 @@ public class CinematicsTransitionPanelUIHandler : MonoBehaviour
     [Header("Settings")]
     [SerializeField, Range(0.5f, 2f)] private float fullBlackTime;
 
-    public float FullBlackTime => fullBlackTime;    
+    public float FullBlackTime => fullBlackTime;
+    public float TransitionTime => TRANSITION_TIME;
+
+    private const float TRANSITION_TIME = 0.5f;
 
     private const string SHOW_TRIGGER = "Show";
     private const string HIDE_TRIGGER = "Hide";

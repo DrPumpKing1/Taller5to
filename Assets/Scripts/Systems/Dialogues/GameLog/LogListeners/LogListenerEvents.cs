@@ -33,6 +33,10 @@ public class LogListenerEvents : MonoBehaviour
         //EVENT COLLIDERS
         EventCollider.OnEventColliderTrigger -= EventCollider_OnEventColliderTrigger;
 
+        //CINEMATICS
+        CinematicsManager.OnCinematicStart -= CinematicsManager_OnCinematicStart;
+        CinematicsManager.OnCinematicEnd -= CinematicsManager_OnCinematicEnd;
+
         //TUTORIAL
 
         //LEVEL1

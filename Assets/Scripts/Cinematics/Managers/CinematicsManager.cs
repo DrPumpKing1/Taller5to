@@ -13,6 +13,13 @@ public class CinematicsManager : MonoBehaviour
     [Header("Cinematics")]
     [SerializeField] private List<Cinematic> cinematics;
 
+    [Header("States")]
+    [SerializeField] private State state;
+
+    public enum State { NotPlaying, Starting, Playing, Ending}
+
+    public State CinematicState => state;
+
     [Serializable]
     public class Cinematic
     {
@@ -25,6 +32,10 @@ public class CinematicsManager : MonoBehaviour
 
     public static event EventHandler<OnCinematicEventArgs> OnCinematicStart;
     public static event EventHandler<OnCinematicEventArgs> OnCinematicEnd;
+
+    public static event EventHandler<OnCinematicEventArgs> OnCinematicEndDirect;
+
+
     public class OnCinematicEventArgs : EventArgs
     {
         public Cinematic cinematic;
@@ -33,19 +44,31 @@ public class CinematicsManager : MonoBehaviour
     private void OnEnable()
     {
         GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
+
+        CinematicsUIHandler.OnCinematicUIStarting += CinematicsUIHandler_OnCinematicUIStarting;
+        CinematicsUIHandler.OnCinematicUIStart += CinematicsUIHandler_OnCinematicUIStart;
+        CinematicsUIHandler.OnCinematicUIEnding += CinematicsUIHandler_OnCinematicUIEnding;
         CinematicsUIHandler.OnCinematicUIEnd += CinematicsUIHandler_OnCinematicUIEnd;
     }
 
     private void OnDisable()
     {
         GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
-        CinematicsUIHandler.OnCinematicUIEnd -= CinematicsUIHandler_OnCinematicUIEnd;
 
+        CinematicsUIHandler.OnCinematicUIStarting -= CinematicsUIHandler_OnCinematicUIStarting;
+        CinematicsUIHandler.OnCinematicUIStart -= CinematicsUIHandler_OnCinematicUIStart;
+        CinematicsUIHandler.OnCinematicUIEnding -= CinematicsUIHandler_OnCinematicUIEnding;
+        CinematicsUIHandler.OnCinematicUIEnd -= CinematicsUIHandler_OnCinematicUIEnd;
     }
 
     private void Awake()
     {
         SetSingleton();
+    }
+
+    private void Start()
+    {
+        SetCinematicState(State.NotPlaying);
     }
 
     private void SetSingleton()
@@ -61,6 +84,8 @@ public class CinematicsManager : MonoBehaviour
         }
     }
 
+    private void SetCinematicState(State state) => this.state = state;
+
     private void CheckStartCinematic(string log)
     {
         foreach (Cinematic cinematic in cinematics)
@@ -71,6 +96,13 @@ public class CinematicsManager : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void EndCinematicDirect()
+    {
+        if (state != State.Playing) return;
+
+        OnCinematicEndDirect?.Invoke(this, new OnCinematicEventArgs { cinematic = currentCinematic });
     }
 
     private void StartCinematic(Cinematic cinematic)
@@ -88,7 +120,6 @@ public class CinematicsManager : MonoBehaviour
     private void SetCurrentCinematic(Cinematic cinematic) =>  currentCinematic = cinematic;
     private void ClearCurrentCinematic() => currentCinematic = null;
 
-
     #region GameLogManager Subscriptions
     private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
@@ -97,8 +128,22 @@ public class CinematicsManager : MonoBehaviour
     #endregion
 
     #region CinematicsUIHandlerSubscriptions
+    private void CinematicsUIHandler_OnCinematicUIStarting(object sender, EventArgs e)
+    {
+        SetCinematicState(State.Starting);
+    }
+    private void CinematicsUIHandler_OnCinematicUIStart(object sender, EventArgs e)
+    {
+        SetCinematicState(State.Playing);
+    }
+
+    private void CinematicsUIHandler_OnCinematicUIEnding(object sender, EventArgs e)
+    {
+        SetCinematicState(State.Ending);
+    }
     private void CinematicsUIHandler_OnCinematicUIEnd(object sender, EventArgs e)
     {
+        SetCinematicState(State.NotPlaying);
         EndCinematic();
     }
     #endregion
