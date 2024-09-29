@@ -37,6 +37,7 @@ public class NewUIInput : UIInput
     {
         if (ScenesManager.Instance.SceneState != ScenesManager.State.Idle) return false;
 
+        if (GameManager.Instance.GameState == GameManager.State.OnCinematic) return false;
         if (GameManager.Instance.GameState == GameManager.State.OnLost) return false;
 
         return true;

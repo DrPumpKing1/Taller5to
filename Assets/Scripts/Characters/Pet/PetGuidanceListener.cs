@@ -43,7 +43,7 @@ public class PetGuidanceListener : MonoBehaviour
         ClearCurrentGuidance();
     }
 
-    private void SetCurrentGuidance(PetGuidanceObject petGuidance) => currentPetGuidanceObject = petGuidance;
+    private void SetCurrentPetGuidanceObject(PetGuidanceObject petGuidance) => currentPetGuidanceObject = petGuidance;
     private void ClearCurrentGuidance() => currentPetGuidanceObject = null;
 
     private void CheckStartGuidance(string log)
@@ -52,8 +52,7 @@ public class PetGuidanceListener : MonoBehaviour
         {
             if(petGuidanceObject.logToStartGuidance == log)
             {
-                SetCurrentGuidance(petGuidanceObject);
-                OnPetGuidanceStart?.Invoke(this, new OnPetGuidanceEventArgs { petGuidanceObject = petGuidanceObject });
+                StartGuidance(petGuidanceObject);
                 return;
             }
         }
@@ -64,12 +63,23 @@ public class PetGuidanceListener : MonoBehaviour
         if (currentPetGuidanceObject == null) return;
         if (currentPetGuidanceObject.logToEndGuidance != log) return;
 
-        OnPetGuidanceEnd?.Invoke(this, new OnPetGuidanceEventArgs { petGuidanceObject = currentPetGuidanceObject });
-        ClearCurrentGuidance();
+        EndGuidance();
         return;
     }
 
-    #region GameLogManagerSubscriptions
+    private void StartGuidance(PetGuidanceObject petGuidanceObject)
+    {
+        SetCurrentPetGuidanceObject(petGuidanceObject);
+        OnPetGuidanceStart?.Invoke(this, new OnPetGuidanceEventArgs { petGuidanceObject = petGuidanceObject });
+    }
+
+    private void EndGuidance()
+    {
+        OnPetGuidanceEnd?.Invoke(this, new OnPetGuidanceEventArgs { petGuidanceObject = currentPetGuidanceObject });
+        ClearCurrentGuidance();
+    }
+
+    #region GameLogManager Subscriptions
     private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
         CheckEndGuidance(e.gameplayAction.log);

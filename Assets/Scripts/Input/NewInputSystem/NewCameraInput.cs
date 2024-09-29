@@ -21,6 +21,7 @@ public class NewCameraInput : CameraInput
     public override bool CanProcessCameraInput()
     {
         if (GameManager.Instance.GameState == GameManager.State.OnUI) return false;
+        if (GameManager.Instance.GameState == GameManager.State.OnCinematic) return false;
 
         if (ScenesManager.Instance.SceneState == ScenesManager.State.TransitionOut) return false;
         if (ScenesManager.Instance.SceneState == ScenesManager.State.FullBlack) return false;

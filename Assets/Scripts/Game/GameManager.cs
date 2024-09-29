@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private State state;
     [SerializeField] private State previousState;
 
-    public enum State {OnGameplay, OnUI, OnLost, OnWin}
+    public enum State {OnGameplay, OnUI, OnCinematic, OnLost, OnWin}
 
     public State GameState => state;
 
@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     {
         UIManager.OnUIActive += UIManager_OnUIActive;
         UIManager.OnUIInactive += UIManager_OnUIInactive;
+
+        CinematicsManager.OnCinematicStart += CinematicsManager_OnCinematicStart;
+        CinematicsManager.OnCinematicEnd += CinematicsManager_OnCinematicEnd;
 
         LoseManager.OnLose += LoseManager_OnLose;
         WinManager.OnWin += WinManager_OnWin;
@@ -27,6 +30,9 @@ public class GameManager : MonoBehaviour
     {
         UIManager.OnUIActive -= UIManager_OnUIActive;
         UIManager.OnUIInactive -= UIManager_OnUIInactive;
+
+        CinematicsManager.OnCinematicStart -= CinematicsManager_OnCinematicStart;
+        CinematicsManager.OnCinematicEnd -= CinematicsManager_OnCinematicEnd;
 
         LoseManager.OnLose -= LoseManager_OnLose;
         WinManager.OnWin -= WinManager_OnWin;
@@ -75,6 +81,20 @@ public class GameManager : MonoBehaviour
     private void UIManager_OnUIInactive(object sender, System.EventArgs e)
     {
         SetGameState(previousState);
+    }
+    #endregion
+
+    #region CinematicsManager Subscriptions
+    private void CinematicsManager_OnCinematicStart(object sender, CinematicsManager.OnCinematicEventArgs e)
+    {
+        SetGameState(State.OnCinematic);
+
+    }
+
+    private void CinematicsManager_OnCinematicEnd(object sender, CinematicsManager.OnCinematicEventArgs e)
+    {
+        SetGameState(previousState);
+
     }
     #endregion
 
