@@ -13,23 +13,27 @@ MonoBehaviour:
   m_Name: FirstProjectableObjectLearn
   m_EditorClassIdentifier: 
   id: 15
-  movementLimitType: 0
+  movementLimitType: 2
   allowSkip: 1
   sentences:
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: It seems I learned <b><i>C'ibla</i></b>, some kind of <i>K'aerum</i> conductor.
       It will prove to be useful for completing circuits.
     time: 7
+    audioClip: {fileID: 0}
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
     text: You just absorbed that thing. How are we supposed to use it now?
     time: 6
+    audioClip: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: "I <b>project</b> them with my abilities. To do so I use a special resource
       called <b><i>G\xB4hem</i></b>. Each object I learn increases my <i>G\xB4hem</i>
       pool by one."
     time: 10
+    audioClip: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: 'Later on you will see what I mean.
 
 '
     time: 5
+    audioClip: {fileID: 0}
