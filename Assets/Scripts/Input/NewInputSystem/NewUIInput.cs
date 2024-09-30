@@ -11,6 +11,9 @@ public class NewUIInput : UIInput
 
     private float inputCooldownTimer;
 
+    private bool hasGameManager;
+    private bool hasDialogueManager;
+
     protected override void Awake()
     {
         base.Awake();
@@ -20,6 +23,7 @@ public class NewUIInput : UIInput
     private void Start()
     {
         ResetInputCooldownTimer();
+        DefineManagers();
     }
 
     private void Update()
@@ -33,11 +37,17 @@ public class NewUIInput : UIInput
         playerInputActions.UI.Enable();
     }
 
+    private void DefineManagers()
+    {
+        hasGameManager = GameManager.Instance != null;
+        hasDialogueManager = DialogueManager.Instance != null;
+    }
+
     public override bool CanProcessUIInput()
     {
         if (ScenesManager.Instance.SceneState != ScenesManager.State.Idle) return false;
 
-        if (GameManager.Instance.GameState == GameManager.State.OnLost) return false;
+        if (hasGameManager && GameManager.Instance.GameState == GameManager.State.OnLost) return false;
 
         return true;
     }
@@ -45,8 +55,8 @@ public class NewUIInput : UIInput
     private bool CanProcessInventoryInput()
     {
         if (PauseManager.Instance.GamePaused) return false;
-        if (GameManager.Instance.GameState == GameManager.State.OnCinematic) return false;
-        if (DialogueManager.Instance._ManagerState == DialogueManager.ManagerState.ZeroMovementDialogue) return false;
+        if (hasGameManager && GameManager.Instance.GameState == GameManager.State.OnCinematic) return false;
+        if (hasDialogueManager && DialogueManager.Instance._ManagerState == DialogueManager.ManagerState.ZeroMovementDialogue) return false;
 
         return true;
     }
@@ -54,8 +64,8 @@ public class NewUIInput : UIInput
     private bool CanProcessJournalInput()
     {
         if (PauseManager.Instance.GamePaused) return false;
-        if (GameManager.Instance.GameState == GameManager.State.OnCinematic) return false;
-        if (DialogueManager.Instance._ManagerState == DialogueManager.ManagerState.ZeroMovementDialogue) return false;
+        if (hasGameManager && GameManager.Instance.GameState == GameManager.State.OnCinematic) return false;
+        if (hasDialogueManager && DialogueManager.Instance._ManagerState == DialogueManager.ManagerState.ZeroMovementDialogue) return false;
 
         return true;
     }
