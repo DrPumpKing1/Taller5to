@@ -5,6 +5,7 @@ using System;
 using UnityEngine.Video;
 using static PetGuidanceListener;
 using static CinematicsManager;
+using static UniqueDialogueTriggerHandler;
 
 public class CinematicsManager : MonoBehaviour
 {
@@ -16,8 +17,8 @@ public class CinematicsManager : MonoBehaviour
     [Header("States")]
     [SerializeField] private State state;
 
+    public List<Cinematic> Cinematics => cinematics;
     public enum State { NotPlaying, Starting, Playing, Ending}
-
     public State CinematicState => state;
 
     [Serializable]
@@ -26,6 +27,7 @@ public class CinematicsManager : MonoBehaviour
         public int id;
         public string logToPlay;
         public VideoClip videoClip;
+        public bool triggered;
     }
 
     private Cinematic currentCinematic;
@@ -90,7 +92,7 @@ public class CinematicsManager : MonoBehaviour
     {
         foreach (Cinematic cinematic in cinematics)
         {
-            if (cinematic.logToPlay == log)
+            if (cinematic.logToPlay == log && !cinematic.triggered)
             {
                 StartCinematic(cinematic);
                 return;
@@ -109,12 +111,22 @@ public class CinematicsManager : MonoBehaviour
     {
         SetCurrentCinematic(cinematic); 
         OnCinematicStart?.Invoke(this, new OnCinematicEventArgs { cinematic = cinematic });
+
+        cinematic.triggered = true;
     }
 
     private void EndCinematic()
     {
         OnCinematicEnd?.Invoke(this, new OnCinematicEventArgs { cinematic = currentCinematic });
         ClearCurrentCinematic();
+    }
+
+    public void SetCinematicTriggered(int indexInList, bool triggered)
+    {
+        for (int i = 0; i < cinematics.Count; i++)
+        {
+            if (indexInList == i) cinematics[i].triggered = triggered;
+        }
     }
 
     private void SetCurrentCinematic(Cinematic cinematic) =>  currentCinematic = cinematic;
