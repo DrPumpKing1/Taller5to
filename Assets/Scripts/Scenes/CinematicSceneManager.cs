@@ -6,6 +6,8 @@ using UnityEngine.Video;
 
 public class CinematicSceneManager : MonoBehaviour
 {
+    public static CinematicSceneManager Instance { get; private set; }
+
     [Header("Components")]
     [SerializeField] private VideoPlayer videoPlayer;
 
@@ -14,9 +16,27 @@ public class CinematicSceneManager : MonoBehaviour
 
     private const float sceneFadeOutTime = 0.5f;
 
+    private void Awake()
+    {
+        SetSingleton();
+    }
+
     private void Start()
     {
         StartCoroutine(CinematicCoroutine());
+    }
+
+    private void SetSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("There is more than one CinematicSceneManager instance, proceding to destroy duplicate");
+            Destroy(gameObject);
+        }
     }
 
     private IEnumerator CinematicCoroutine()
@@ -26,6 +46,11 @@ public class CinematicSceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(ininterruptedDuration);
 
+        ScenesManager.Instance.FadeLoadTargetScene(nextScene);
+    }
+
+    public void SkipCinematic()
+    {
         ScenesManager.Instance.FadeLoadTargetScene(nextScene);
     }
 }

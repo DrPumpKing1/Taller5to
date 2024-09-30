@@ -18,13 +18,13 @@ public class CinematicsUIHandler : MonoBehaviour
     private void OnEnable()
     {
         CinematicsManager.OnCinematicStart += CinematicsManager_OnCinematicStart;
-        CinematicsManager.OnCinematicEndDirect += CinematicsManager_OnCinematicEndDirect;
+        CinematicsManager.OnCinematicSkip += CinematicsManager_OnCinematicSkip;
     }
 
     private void OnDisable()
     {
         CinematicsManager.OnCinematicStart -= CinematicsManager_OnCinematicStart;
-        CinematicsManager.OnCinematicEndDirect -= CinematicsManager_OnCinematicEndDirect;
+        CinematicsManager.OnCinematicSkip -= CinematicsManager_OnCinematicSkip;
     }
 
     private IEnumerator PlayCinematic(VideoClip videoClip)
@@ -77,7 +77,7 @@ public class CinematicsUIHandler : MonoBehaviour
         StartCoroutine(PlayCinematic(e.cinematic.videoClip));
     }
 
-    private void CinematicsManager_OnCinematicEndDirect(object sender, CinematicsManager.OnCinematicEventArgs e)
+    private void CinematicsManager_OnCinematicSkip(object sender, CinematicsManager.OnCinematicEventArgs e)
     {
         StopAllCoroutines();
         StartCoroutine(EndCinematic());

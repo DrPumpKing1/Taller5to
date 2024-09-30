@@ -33,7 +33,7 @@ public class CinematicsManager : MonoBehaviour
     public static event EventHandler<OnCinematicEventArgs> OnCinematicStart;
     public static event EventHandler<OnCinematicEventArgs> OnCinematicEnd;
 
-    public static event EventHandler<OnCinematicEventArgs> OnCinematicEndDirect;
+    public static event EventHandler<OnCinematicEventArgs> OnCinematicSkip;
 
 
     public class OnCinematicEventArgs : EventArgs
@@ -98,11 +98,11 @@ public class CinematicsManager : MonoBehaviour
         }
     }
 
-    public void EndCinematicDirect()
+    public void SkipCinematic()
     {
         if (state != State.Playing) return;
 
-        OnCinematicEndDirect?.Invoke(this, new OnCinematicEventArgs { cinematic = currentCinematic });
+        OnCinematicSkip?.Invoke(this, new OnCinematicEventArgs { cinematic = currentCinematic });
     }
 
     private void StartCinematic(Cinematic cinematic)
