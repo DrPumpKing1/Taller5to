@@ -10,7 +10,7 @@ public class MainMenuUIButtonsHandler : MonoBehaviour
 {
     [Header("Play Button")]
     [SerializeField] private Button playButton;
-    [SerializeField] private string firstCinematicScene;
+    [SerializeField] private string startCinematicScene;
     [SerializeField] private string gameplayScene;
     [Space]
     [SerializeField] private string dataPathToCheck;
@@ -57,7 +57,7 @@ public class MainMenuUIButtonsHandler : MonoBehaviour
 
     private void PlayFirstCinematic()
     {
-        ScenesManager.Instance.FadeLoadTargetScene(firstCinematicScene);
+        ScenesManager.Instance.FadeLoadTargetScene(startCinematicScene);
     }
 
     private void StartGame()
