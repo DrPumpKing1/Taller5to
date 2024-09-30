@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.IO;
 
 
 public class MainMenuUIButtonsHandler : MonoBehaviour
 {
     [Header("Play Button")]
     [SerializeField] private Button playButton;
+    [SerializeField] private string firstCinematicScene;
     [SerializeField] private string gameplayScene;
+    [Space]
+    [SerializeField] private string dataPathToCheck;
 
     [Header("Options Button")]
     [SerializeField] private Button optionsButton;
@@ -36,6 +40,27 @@ public class MainMenuUIButtonsHandler : MonoBehaviour
     }
 
     private void PlayGame()
+    {
+        if (CheckIfDataPathExists()) StartGame();
+        else PlayFirstCinematic();
+    }
+
+    private bool CheckIfDataPathExists()
+    {
+        string dirPath = Application.persistentDataPath;
+        string path = Path.Combine(dirPath, dataPathToCheck);
+
+        if (File.Exists(path)) return true;
+
+        return false;
+    }
+
+    private void PlayFirstCinematic()
+    {
+        ScenesManager.Instance.FadeLoadTargetScene(firstCinematicScene);
+    }
+
+    private void StartGame()
     {
         ScenesManager.Instance.FadeLoadTargetScene(gameplayScene);
     }

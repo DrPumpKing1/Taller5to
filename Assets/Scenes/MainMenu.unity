@@ -1313,7 +1313,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playButton: {fileID: 1537032862}
+  firstCinematicScene: Cinematic1
   gameplayScene: Gameplay
+  dataPathToCheck: playerData.wwdata
   optionsButton: {fileID: 815442040}
   optionsScene: Options
   creditsButton: {fileID: 2110100426}

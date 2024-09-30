@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static JournalInfoManager;
 
 public class JournalPageUI : MonoBehaviour
 {
@@ -26,7 +25,7 @@ public class JournalPageUI : MonoBehaviour
 
     private void OnDisable()
     {
-        JournalInfoManager.OnJournalInfoChecked -= JournalInfoManager_OnJournalInfoChecked;
+        JournalInfoManager.OnJournalInfoCollected -= JournalInfoManager_OnJournalInfoCollected;
         JournalInfoManager.OnJournalInfoChecked -= JournalInfoManager_OnJournalInfoChecked;
     }
 
