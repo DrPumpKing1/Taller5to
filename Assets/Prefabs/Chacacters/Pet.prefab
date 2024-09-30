@@ -52,7 +52,6 @@ MonoBehaviour:
   smoothRotateFactor: 3
   applyStartingRotation: 1
   startingFacingDirection: {x: -1, y: 0, z: 0}
-  state: 0
 --- !u!1 &1835222234857732829
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,6 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4556b6331d174f4dad8ac8954e0052d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
 --- !u!114 &5680990158484470575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,7 +336,6 @@ MonoBehaviour:
   collisionLayers:
     serializedVersion: 2
     m_Bits: 129
-  state: 0
 --- !u!1 &4246972803737518667
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,9 +567,9 @@ MonoBehaviour:
   transformToLevitate: {fileID: 7846662925050479611}
   refferenceTransform: {fileID: 3347468614378750834}
   levitationEnabled: 1
-  amplitudeX: 0.15
+  amplitudeX: 0.25
   frequencyX: 0.5
-  amplitudeY: 0.15
+  amplitudeY: 0.2
   frequencyY: 1
   amplitudeZ: 0
   frequencyZ: 1
