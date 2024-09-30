@@ -7,7 +7,7 @@ public class ShieldDoor : MonoBehaviour
 {
     [Header("Identifiers")]
     [SerializeField] private int id;
-    [SerializeField] private Dialect dialect;
+    [SerializeField] protected Dialect dialect;
     
     [Header("Device Settings")]
     [SerializeField] private Transform gateTransform;
@@ -24,7 +24,7 @@ public class ShieldDoor : MonoBehaviour
     [Header("State")]
     [SerializeField] private bool state;
 
-    private bool isWorthy;
+    protected bool isWorthy;
     private GameObject player;
     private Coroutine doorMovement;
 
@@ -80,7 +80,7 @@ public class ShieldDoor : MonoBehaviour
         isNextToPlayer = Vector3.Distance(doorCenter.position, player.transform.position) <= proximityRadius;
     }
 
-    private void CheckVirtue()
+    protected virtual void CheckVirtue()
     {
         isWorthy = ShieldPiecesManager.Instance.HasCompletedShield(dialect);
     }
