@@ -19,6 +19,8 @@ public class MusicManager : MonoBehaviour
     private const string GAMEPLAY_SCENE_NAME = "Gameplay";
     private const string OPTIONS_SCENE_NAME = "Options";
     private const string CREDITS_SCENE_NAME = "Credits";
+    private const string START_CINEMATIC_SCENE_NAME = "StartCinematic";
+    private const string END_CINEMATIC_SCENE_NAME = "EndCinematic";
 
     private void OnEnable()
     {
@@ -56,8 +58,7 @@ public class MusicManager : MonoBehaviour
 
         if (!music)
         {
-            audioSource.Stop();
-            audioSource.clip = null;
+            StopMusic();
         }
 
         if (audioSource.clip != music)
@@ -68,6 +69,12 @@ public class MusicManager : MonoBehaviour
         }
 
         currentMusic = audioSource.clip;
+    }
+
+    public void StopMusic()
+    {
+        audioSource.Stop();
+        audioSource.clip = null;
     }
 
     private void HandleScenesMusicPlay(string sceneName)
@@ -89,6 +96,11 @@ public class MusicManager : MonoBehaviour
                 PlayMusic(musicPoolSO.creditsMusic);
                 Debug.Log("CredistMusicPlay");
                 break;
+            case START_CINEMATIC_SCENE_NAME:
+            case END_CINEMATIC_SCENE_NAME:
+                StopMusic();
+                Debug.Log("Music Stopped CinematicScene");
+            break;
         }
     }
 
