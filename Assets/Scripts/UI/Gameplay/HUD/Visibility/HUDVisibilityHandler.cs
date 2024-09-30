@@ -8,7 +8,6 @@ public class HUDVisibilityHandler : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private string logToShow;
     [SerializeField] private bool isVisible;
-
     public bool IsVisible => isVisible;
 
     private CanvasGroup canvasGroup;
@@ -58,6 +57,7 @@ public class HUDVisibilityHandler : MonoBehaviour
     private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
         if (e.gameplayAction.log != logToShow) return;
+
         OnShowHUDFirstTime?.Invoke(this, EventArgs.Empty);
         SetIsVisible(true);
     }
