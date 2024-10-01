@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: ThirdProjectableObjectLearn
   m_EditorClassIdentifier: 
   id: 31
-  movementLimitType: 1
+  movementLimitType: 2
   allowSkip: 1
   sentences:
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: I learned an object called <b><i>S'oota</i></b>, a <i>K'aerum</i> shooter.
       It will be of use to energyze K'aerum objects from the distance.
     time: 8
+    audioClip: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: I now have a <i>G'hems</i> pool of three.
     time: 5
+    audioClip: {fileID: 0}

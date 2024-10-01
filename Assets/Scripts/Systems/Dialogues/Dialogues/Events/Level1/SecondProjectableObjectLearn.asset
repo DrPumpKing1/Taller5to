@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: SecondProjectableObjectLearn
   m_EditorClassIdentifier: 
   id: 26
-  movementLimitType: 1
+  movementLimitType: 2
   allowSkip: 1
   sentences:
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: The object I learned is called <b><i>P'riita</i></b>, a <i>K'aerum</i>
       platform. It will be of use to reach higher terrain.
     time: 8
+    audioClip: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: My <i>G'hems</i> pool has been increased to two.
     time: 5
+    audioClip: {fileID: 0}

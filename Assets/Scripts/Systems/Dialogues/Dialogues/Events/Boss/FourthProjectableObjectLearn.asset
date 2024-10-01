@@ -13,16 +13,19 @@ MonoBehaviour:
   m_Name: FourthProjectableObjectLearn
   m_EditorClassIdentifier: 
   id: 41
-  movementLimitType: 1
+  movementLimitType: 2
   allowSkip: 1
   sentences:
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: I learned an object called <b><i>D'ryna</i></b>, the <i>K'aerum</i> drainer.
       It will drain the <i>K'aerum</i> of the circuits.
     time: 8
+    audioClip: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: This was thought to be a forbidden object among my people.
     time: 6
+    audioClip: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: I now have four <i>G'hems</i> in my pool.
     time: 5
+    audioClip: {fileID: 0}
