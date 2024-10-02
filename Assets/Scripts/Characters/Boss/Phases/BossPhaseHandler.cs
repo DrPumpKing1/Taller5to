@@ -15,22 +15,26 @@ public class BossPhaseHandler : MonoBehaviour
 
     private const BossPhase FIRST_PHASE = BossPhase.Phase0;
     private const BossPhase LAST_PHASE = BossPhase.Phase3;
+    private const BossPhase DEFEATED_PHASE = BossPhase.Defeated;
 
-    public static event EventHandler<OnPhaseChangeEventArgs> OnPhaseChange;
-    public static event EventHandler OnLastPhaseEnded;
+    public static event EventHandler<OnPhaseEventArgs> OnPhaseCompleated;
+    public static event EventHandler OnLastPhaseCompleated;
 
-    public class OnPhaseChangeEventArgs : EventArgs
+    public class OnPhaseEventArgs : EventArgs
     {
+        public BossPhase currentPhase;
         public BossPhase nextPhase;
     }
 
     private void OnEnable()
     {
+        BossStateHandler.OnBossPhaseChangeMid += BossStateHandler_OnBossPhaseChangeMid;
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
     }
 
     private void OnDisable()
     {
+        BossStateHandler.OnBossPhaseChangeMid -= BossStateHandler_OnBossPhaseChangeMid;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
     }
 
@@ -43,6 +47,14 @@ public class BossPhaseHandler : MonoBehaviour
     {
         SetDefeated(false);
         SetCurrentPhase(FIRST_PHASE);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            ChangeToNextPhase();
+        }
     }
 
     private void SetSingleton()
@@ -75,24 +87,31 @@ public class BossPhaseHandler : MonoBehaviour
         }
     }
 
-    private void CheckChangePhase()
+    private void ChangeToNextPhase()
     {
+        if (BossStateHandler.Instance.BossState != BossStateHandler.State.OnPhase) return;
+        if (isDefeated) return;
+
         if (currentPhase == LAST_PHASE)
         {
-            OnLastPhaseEnded?.Invoke(this, EventArgs.Empty);
+            OnLastPhaseCompleated?.Invoke(this, EventArgs.Empty);
+            SetDefeated(true);
+            SetCurrentPhase(DEFEATED_PHASE);
             return;
         }
 
         BossPhase nextPhase = GetNextPhase(currentPhase);
-        SetCurrentPhase(nextPhase);
-        OnPhaseChange?.Invoke(this, new OnPhaseChangeEventArgs { nextPhase = nextPhase });
+        OnPhaseCompleated?.Invoke(this, new OnPhaseEventArgs {currentPhase = currentPhase, nextPhase = nextPhase });
     }
 
     private void SetDefeated(bool defeated) => isDefeated = defeated;
 
 
     #region BossStateHandler Subscriptions
+    private void BossStateHandler_OnBossPhaseChangeMid(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
+    {
+        SetCurrentPhase(e.nextPhase);
+    }
     private void BossStateHandler_OnBossDefeated(object sender, EventArgs e) => SetDefeated(true);
     #endregion
-
 }

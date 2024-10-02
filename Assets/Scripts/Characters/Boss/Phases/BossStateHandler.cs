@@ -11,8 +11,8 @@ public class BossStateHandler : MonoBehaviour
     [SerializeField] private State state;
 
     [Header("Settings")]
-    [SerializeField] private float timePreChangingPhase;
-    [SerializeField] private float timePostChangingPhase;
+    [SerializeField] private float timePrePhaseChange;
+    [SerializeField] private float timePostPhaseChange;
 
     [Header("Booleans")]
     [SerializeField] private bool bossDefeated;
@@ -20,7 +20,7 @@ public class BossStateHandler : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool debug;
 
-    public enum State { Rest, PhaseChange, OnPhase, BossDefeated, PlayerDefeated }
+    public enum State {PhaseChange, OnPhase, BossDefeated, PlayerDefeated }
     public State BossState => state;
     public bool BossDefeated => bossDefeated;
 
@@ -31,19 +31,20 @@ public class BossStateHandler : MonoBehaviour
 
     public class OnPhaseChangeEventArgs : EventArgs
     {
+        public BossPhase currentPhase;
         public BossPhase nextPhase;
     }
 
     private void OnEnable()
     {
-        BossPhaseHandler.OnPhaseChange += BossPhaseHandler_OnPhaseChange;
-        BossPhaseHandler.OnLastPhaseEnded += BossPhaseHandler_OnLastPhaseEnded;
+        BossPhaseHandler.OnPhaseCompleated += BossPhaseHandler_OnPhaseCompleated;
+        BossPhaseHandler.OnLastPhaseCompleated += BossPhaseHandler_OnLastPhaseCompleated;
     }
 
     private void OnDisable()
     {
-        BossPhaseHandler.OnPhaseChange -= BossPhaseHandler_OnPhaseChange;
-        BossPhaseHandler.OnLastPhaseEnded -= BossPhaseHandler_OnLastPhaseEnded;
+        BossPhaseHandler.OnPhaseCompleated -= BossPhaseHandler_OnPhaseCompleated;
+        BossPhaseHandler.OnLastPhaseCompleated -= BossPhaseHandler_OnLastPhaseCompleated;
     }
 
     private void Awake()
@@ -54,7 +55,7 @@ public class BossStateHandler : MonoBehaviour
     private void Start()
     {
         SetBossDefeated(false);
-        SetBossState(State.Rest);
+        SetBossState(State.OnPhase);
     }
 
     private void SetSingleton()
@@ -72,19 +73,19 @@ public class BossStateHandler : MonoBehaviour
 
     private void SetBossState(State state) => this.state = state;
 
-    private IEnumerator ChangePhaseCoroutine(BossPhase nextPhase)
+    private IEnumerator ChangePhaseCoroutine(BossPhase currentPhase, BossPhase nextPhase)
     {
         SetBossState(State.PhaseChange);
 
-        OnBossPhaseChangeStart?.Invoke(this, new OnPhaseChangeEventArgs { nextPhase = nextPhase });
+        OnBossPhaseChangeStart?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
 
-        yield return new WaitForSeconds(timePreChangingPhase);
+        yield return new WaitForSeconds(timePrePhaseChange);
 
-        OnBossPhaseChangeMid?.Invoke(this, new OnPhaseChangeEventArgs { nextPhase = nextPhase });
+        OnBossPhaseChangeMid?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
 
-        yield return new WaitForSeconds(timePostChangingPhase);
+        yield return new WaitForSeconds(timePostPhaseChange);
 
-        OnBossPhaseChangeEnd?.Invoke(this, new OnPhaseChangeEventArgs { nextPhase = nextPhase });
+        OnBossPhaseChangeEnd?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
 
         SetBossState(State.OnPhase);
     }
@@ -102,12 +103,13 @@ public class BossStateHandler : MonoBehaviour
     private bool SetBossDefeated(bool defeated) => bossDefeated = defeated;
 
     #region BossPhaseHandler Subscriptions
-    private void BossPhaseHandler_OnPhaseChange(object sender, BossPhaseHandler.OnPhaseChangeEventArgs e)
+    private void BossPhaseHandler_OnPhaseCompleated(object sender, BossPhaseHandler.OnPhaseEventArgs e)
     {
-        StartCoroutine(ChangePhaseCoroutine(e.nextPhase));
+        if (state != State.OnPhase) return;
+        StartCoroutine(ChangePhaseCoroutine(e.currentPhase,e.nextPhase));
     }
 
-    private void BossPhaseHandler_OnLastPhaseEnded(object sender, EventArgs e)
+    private void BossPhaseHandler_OnLastPhaseCompleated(object sender, EventArgs e)
     {
         DefeatBoss();
     }
