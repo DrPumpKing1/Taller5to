@@ -9,8 +9,12 @@ public class LogListenerProjection : MonoBehaviour
         //PROJECTION
         ProjectionManager.OnObjectProjectionSuccess += ProjectionManager_OnObjectProjectionSuccess;
         ProjectionManager.OnObjectProjectionFailed += ProjectionManager_OnObjectProjectionFailed;
+
         ProjectionManager.OnObjectDematerialized += ProjectionManager_OnObjectDematerialized;
         ProjectionManager.OnAllObjectsDematerialized += ProjectionManager_OnAllObjectsDematerialized;
+
+        ProjectionManager.OnObjectForceDematerialized += ProjectionManager_OnObjectForceDematerialized;
+        ProjectionManager.OnAllObjectsForceDematerialized += ProjectionManager_OnAllObjectsForceDematerialized;
     }
 
     private void OnDisable()
@@ -18,8 +22,12 @@ public class LogListenerProjection : MonoBehaviour
         //SHIELDS
         ProjectionManager.OnObjectProjectionSuccess -= ProjectionManager_OnObjectProjectionSuccess;
         ProjectionManager.OnObjectProjectionFailed -= ProjectionManager_OnObjectProjectionFailed;
+
         ProjectionManager.OnObjectDematerialized -= ProjectionManager_OnObjectDematerialized;
         ProjectionManager.OnAllObjectsDematerialized -= ProjectionManager_OnAllObjectsDematerialized;
+
+        ProjectionManager.OnObjectForceDematerialized -= ProjectionManager_OnObjectForceDematerialized;
+        ProjectionManager.OnAllObjectsForceDematerialized -= ProjectionManager_OnAllObjectsForceDematerialized;
     }
 
     private void ProjectionManager_OnObjectProjectionSuccess(object sender, ProjectionManager.OnProjectionEventArgs e)
@@ -42,5 +50,16 @@ public class LogListenerProjection : MonoBehaviour
     {
         GameLogManager.Instance.Log($"Projection/DematerializeAllObjects");
         GameLogManager.Instance.Log($"Projection/DematerializeAllObjectsCount/{e.projectableObjectSOs.Count}");
+    }
+    private void ProjectionManager_OnObjectForceDematerialized(object sender, ProjectionManager.OnProjectionEventArgs e)
+    {
+        GameLogManager.Instance.Log($"Projection/ForceDematerializeObject/{e.projectableObjectSO.id}");
+        GameLogManager.Instance.Log($"Projection/ForceDematerializeObjectExact/{e.projectableObjectSO.id}/{e.projectionPlatformID}");
+    }
+
+    private void ProjectionManager_OnAllObjectsForceDematerialized(object sender, ProjectionManager.OnAllObjectsDematerializedEventArgs e)
+    {
+        GameLogManager.Instance.Log($"Projection/ForceDematerializeAllObjects");
+        GameLogManager.Instance.Log($"Projection/ForceDematerializeAllObjectsCount/{e.projectableObjectSOs.Count}");
     }
 }

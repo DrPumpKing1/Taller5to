@@ -39,12 +39,18 @@ public class BossObjectDematerialization : MonoBehaviour
 
     public void DematerializeInTargetPlatform(ProjectionPlatform projectionPlatform)
     {
+        if (projectionPlatform.CurrentProjectedObject == null) return;
 
+        ProjectableObjectDematerialization projectableObjectDematerialization = projectionPlatform.GetProjectableObjectDematerialization();
+
+        if (projectableObjectDematerialization == null) return;
+
+        projectableObjectDematerialization.ForceDematerializeObject(true);
     }
 
     public void DematerializeAllObjects()
     {
-        ProjectionManager.Instance.DematerializeAllObjects();
+        ProjectionManager.Instance.ForceDematerializeAllObjects();
         OnBossAllObjectDematerialized?.Invoke(this, EventArgs.Empty);
     }
 

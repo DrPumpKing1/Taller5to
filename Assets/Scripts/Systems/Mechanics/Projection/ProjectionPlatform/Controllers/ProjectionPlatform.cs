@@ -77,6 +77,20 @@ public class ProjectionPlatform : MonoBehaviour
         OnProjectionPlatformSet?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectableObject = projectableObject });
     }
 
+    public ProjectableObjectDematerialization GetProjectableObjectDematerialization()
+    {
+        if(currentProjectedObject == null) return null;
+
+        if(currentProjectedObject.TryGetComponent(out ProjectableObjectDematerialization projectableObjectDematerialization))
+        {
+            return projectableObjectDematerialization;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public void DestroyProjectionPlatform()
     {
         OnProjectionPlatformDestroyed?.Invoke(this, EventArgs.Empty);

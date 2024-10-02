@@ -52,7 +52,9 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     #endregion
 
     public event EventHandler OnObjectDematerialized;
+
     public static event EventHandler<OnAnyObjectDematerializedEventArgs> OnAnyObjectDematerialized;
+    public static event EventHandler<OnAnyObjectDematerializedEventArgs> OnAnyObjectForceDematerialized;
 
     public static event EventHandler<OnAnyObjectDematerializedEventArgs> OnStartDematerialization;
     public static event EventHandler<OnAnyObjectDematerializedEventArgs> OnEndDematerialization;
@@ -65,12 +67,16 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     public void OnEnable()
     {
         ProjectionManager.OnAllObjectsDematerialized += ProjectionManager_OnAllObjectsDematerialized;
+        ProjectionManager.OnAllObjectsForceDematerialized += ProjectionManager_OnAllObjectsForceDematerialized;
+
         projectableObject.OnProjectionPlatformSet += ProjectableObject_OnProjectionPlatformSet;
     }
 
     public void OnDisable()
     {
         ProjectionManager.OnAllObjectsDematerialized -= ProjectionManager_OnAllObjectsDematerialized;
+        ProjectionManager.OnAllObjectsForceDematerialized -= ProjectionManager_OnAllObjectsForceDematerialized;
+
         projectableObject.OnProjectionPlatformSet -= ProjectableObject_OnProjectionPlatformSet;
         projectableObject.ProjectionPlatform.OnProjectionPlatformDestroyed -= ProjectionPlatform_OnProjectionPlatformDestroyed;
     }
@@ -135,17 +141,21 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
 
         return true;
     }
+
     public void HoldInteractionStart()
     {
         OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
         OnStartDematerialization?.Invoke(this, new OnAnyObjectDematerializedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
     }
+
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
+
     public void HoldInteractionEnd()
     {
         OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
         OnEndDematerialization?.Invoke(this, new OnAnyObjectDematerializedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
     }
+
     public Transform GetTransform() => transform;
     public Transform GetInteractionAttentionTransform() => interactionAttentionTransform;
     public Transform GetInteractionPositionTransform() => interactionPositionTransform;
@@ -165,11 +175,28 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
         Destroy(gameObject);
     }
 
-    #region ProjectionManager Subscriptions
+    public void ForceDematerializeObject(bool triggerEvents)
+    {
+        if (projectableObject.ProjectionPlatform) projectableObject.ProjectionPlatform.ClearProjectionPlatform();
 
+        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
+
+        ProjectionManager.Instance.ObjectForceDematerialized(projectableObject.ProjectableObjectSO, projectableObject.ProjectionPlatform, projectableObject, triggerEvents);
+        OnObjectDematerialized?.Invoke(this, EventArgs.Empty);
+        OnAnyObjectForceDematerialized?.Invoke(this, new OnAnyObjectDematerializedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
+
+        Destroy(gameObject);
+    }
+
+    #region ProjectionManager Subscriptions
     private void ProjectionManager_OnAllObjectsDematerialized(object sender, ProjectionManager.OnAllObjectsDematerializedEventArgs e)
     {
         DematerializeObject(false);
+    }
+
+    private void ProjectionManager_OnAllObjectsForceDematerialized(object sender, ProjectionManager.OnAllObjectsDematerializedEventArgs e)
+    {
+        ForceDematerializeObject(false);
     }
     #endregion
 
@@ -183,7 +210,7 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     #region ProjectionPlatform Subscriptions
     private void ProjectionPlatform_OnProjectionPlatformDestroyed(object sender, EventArgs e)
     {
-        DematerializeObject(true);
+        ForceDematerializeObject(true);
     }
     #endregion
 

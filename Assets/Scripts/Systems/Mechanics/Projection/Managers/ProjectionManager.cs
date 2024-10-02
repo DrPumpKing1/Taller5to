@@ -20,7 +20,10 @@ public class ProjectionManager : MonoBehaviour
     public static event EventHandler<OnProjectionEventArgs> OnObjectProjectionSuccess;
     public static event EventHandler<OnProjectionEventArgs> OnObjectProjectionFailed;
     public static event EventHandler<OnProjectionEventArgs> OnObjectDematerialized;
+    public static event EventHandler<OnProjectionEventArgs> OnObjectForceDematerialized;
+
     public static event EventHandler<OnAllObjectsDematerializedEventArgs> OnAllObjectsDematerialized;
+    public static event EventHandler<OnAllObjectsDematerializedEventArgs> OnAllObjectsForceDematerialized;
 
     public static event EventHandler<OnProjectionEventArgs> OnObjectDestroyed;
 
@@ -76,6 +79,11 @@ public class ProjectionManager : MonoBehaviour
         OnAllObjectsDematerialized?.Invoke(this, new OnAllObjectsDematerializedEventArgs { projectableObjectSOs = currentProjectedObjectsSOs });
     }
 
+    public void ForceDematerializeAllObjects()
+    {
+        OnAllObjectsForceDematerialized?.Invoke(this, new OnAllObjectsDematerializedEventArgs { projectableObjectSOs = currentProjectedObjectsSOs });
+    }
+
     public bool CanProjectObject(ProjectableObjectSO projectableObjectSO) => ProjectionGemsManager.Instance.CheckCanUseProjectionGems(projectableObjectSO.projectionGemsCost);
 
     public void FailObjectProjection(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform)
@@ -106,6 +114,16 @@ public class ProjectionManager : MonoBehaviour
         ProjectionGemsManager.Instance.RefundProjectionGems(projectableObjectSO.projectionGemsCost);
 
         if(triggerEvents) OnObjectDematerialized?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatformID = projectionPlatform.ID });
+    }
+
+    public void ObjectForceDematerialized(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform, ProjectableObject projectableObject, bool triggerEvents)
+    {
+        currentProjectedObjectsSOs.Remove(projectableObjectSO);
+        currentProjectedObjectsComponents.Remove(projectableObject);
+
+        ProjectionGemsManager.Instance.RefundProjectionGems(projectableObjectSO.projectionGemsCost);
+
+        if (triggerEvents) OnObjectForceDematerialized?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = projectableObjectSO, projectionPlatformID = projectionPlatform.ID });
     }
 
     public void ObjectDestroyed(ProjectableObjectSO projectableObjectSO, ProjectionPlatform projectionPlatform, ProjectableObject projectableObject, bool refundGems)
