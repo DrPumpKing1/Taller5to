@@ -16,7 +16,6 @@ public class BossStateHandler : MonoBehaviour
 
     [Header("Booleans")]
     [SerializeField] private bool bossDefeated;
-    [SerializeField] private bool playerDefeated;
 
     [Header("Debug")]
     [SerializeField] private bool debug;
@@ -24,27 +23,37 @@ public class BossStateHandler : MonoBehaviour
     public enum State { Rest, PhaseChange, OnPhase, BossDefeated, PlayerDefeated }
     public State BossState => state;
     public bool BossDefeated => bossDefeated;
-    public bool PlayerDefeated => playerDefeated;
 
     public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeStart;
     public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeMid;
     public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeEnd;
     public static event EventHandler OnBossDefeated;
-    public static event EventHandler OnPlayerDefeated;
 
     public class OnPhaseChangeEventArgs : EventArgs
     {
         public BossPhase nextPhase;
     }
 
+    private void OnEnable()
+    {
+        BossPhaseHandler.OnPhaseChange += BossPhaseHandler_OnPhaseChange;
+        BossPhaseHandler.OnLastPhaseEnded += BossPhaseHandler_OnLastPhaseEnded;
+    }
+
+    private void OnDisable()
+    {
+        BossPhaseHandler.OnPhaseChange -= BossPhaseHandler_OnPhaseChange;
+        BossPhaseHandler.OnLastPhaseEnded -= BossPhaseHandler_OnLastPhaseEnded;
+    }
+
     private void Awake()
     {
         SetSingleton();
-        InitializeVariables();
     }
 
     private void Start()
     {
+        SetBossDefeated(false);
         SetBossState(State.Rest);
     }
 
@@ -59,12 +68,6 @@ public class BossStateHandler : MonoBehaviour
             Debug.LogWarning("There is more than one BossStateHandler instance, proceding to destroy duplicate");
             Destroy(gameObject);
         }
-    }
-
-    private void InitializeVariables()
-    {
-        bossDefeated = false;
-        playerDefeated = false;
     }
 
     private void SetBossState(State state) => this.state = state;
@@ -89,21 +92,25 @@ public class BossStateHandler : MonoBehaviour
     private void DefeatBoss()
     {
         SetBossState(State.BossDefeated);
-        bossDefeated = true;
+        SetBossDefeated(true);
 
         OnBossDefeated?.Invoke(this, EventArgs.Empty);
 
         if (debug) Debug.Log("Boss Defeated");
     }
 
-    private void DefeatPlayer()
+    private bool SetBossDefeated(bool defeated) => bossDefeated = defeated;
+
+    #region BossPhaseHandler Subscriptions
+    private void BossPhaseHandler_OnPhaseChange(object sender, BossPhaseHandler.OnPhaseChangeEventArgs e)
     {
-        SetBossState(State.PlayerDefeated);
-        playerDefeated = true;
-
-        OnPlayerDefeated?.Invoke(this, EventArgs.Empty);
-
-        if (debug) Debug.Log("Player Defeated");
+        StartCoroutine(ChangePhaseCoroutine(e.nextPhase));
     }
+
+    private void BossPhaseHandler_OnLastPhaseEnded(object sender, EventArgs e)
+    {
+        DefeatBoss();
+    }
+    #endregion
 
 }
