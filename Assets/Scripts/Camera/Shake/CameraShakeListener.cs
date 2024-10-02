@@ -25,23 +25,23 @@ public class CameraShakeListener : MonoBehaviour
     {
         ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
         //BossDoor.OnBossDoorOpen += BossDoor_OnBossDoorOpen;
-        BossStateHandler.OnBossActiveStart += BossStateHandler_OnBossActiveStart;
-        BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
-        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
+        BossStateHandlerOld.OnBossActiveStart += BossStateHandler_OnBossActiveStart;
+        BossStateHandlerOld.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
+        BossStateHandlerOld.OnBossDefeated += BossStateHandler_OnBossDefeated;
     }
 
     private void OnDisable()
     {
         ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
         //BossDoor.OnBossDoorOpen -= BossDoor_OnBossDoorOpen;
-        BossStateHandler.OnBossActiveStart -= BossStateHandler_OnBossActiveStart;
-        BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
-        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
+        BossStateHandlerOld.OnBossActiveStart -= BossStateHandler_OnBossActiveStart;
+        BossStateHandlerOld.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
+        BossStateHandlerOld.OnBossDefeated -= BossStateHandler_OnBossDefeated;
     }
 
     private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e) => CameraShakeHandler.Instance.ShakeCamera(virtueDoorSettings.amplitude, virtueDoorSettings.frequency, virtueDoorSettings.shakeTime, virtueDoorSettings.fadeInTime, virtueDoorSettings.fadeOutTime);
     private void BossDoor_OnBossDoorOpen(object sender, System.EventArgs e) => CameraShakeHandler.Instance.ShakeCamera(bossDoorSettings.amplitude, bossDoorSettings.frequency, bossDoorSettings.shakeTime, bossDoorSettings.fadeInTime, bossDoorSettings.fadeOutTime);
     private void BossStateHandler_OnBossActiveStart(object sender, System.EventArgs e) => CameraShakeHandler.Instance.ShakeCamera(bossActiveSettings.amplitude, bossActiveSettings.frequency, bossActiveSettings.shakeTime, bossActiveSettings.fadeInTime, bossActiveSettings.fadeOutTime);
-    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e) => CameraShakeHandler.Instance.ShakeCamera(bossPhaseChangeSettings.amplitude, bossPhaseChangeSettings.frequency, bossPhaseChangeSettings.shakeTime, bossPhaseChangeSettings.fadeInTime, bossPhaseChangeSettings.fadeOutTime);
+    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandlerOld.OnPhaseChangeEventArgs e) => CameraShakeHandler.Instance.ShakeCamera(bossPhaseChangeSettings.amplitude, bossPhaseChangeSettings.frequency, bossPhaseChangeSettings.shakeTime, bossPhaseChangeSettings.fadeInTime, bossPhaseChangeSettings.fadeOutTime);
     private void BossStateHandler_OnBossDefeated(object sender, System.EventArgs e) => CameraShakeHandler.Instance.ShakeCamera(bossDefeatedSettings.amplitude, bossDefeatedSettings.frequency, bossDefeatedSettings.shakeTime, bossDefeatedSettings.fadeInTime, bossDefeatedSettings.fadeOutTime);
 }

@@ -30,7 +30,7 @@ public class GameplayMusicManager : MonoBehaviour
         CinematicsManager.OnCinematicStart += CinematicsManager_OnCinematicStart;
         CinematicsManager.OnCinematicEnd += CinematicsManager_OnCinematicEnd;
 
-        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
+        BossStateHandlerOld.OnBossDefeated += BossStateHandler_OnBossDefeated;
     }
 
     
@@ -45,7 +45,7 @@ public class GameplayMusicManager : MonoBehaviour
         CinematicsManager.OnCinematicStart -= CinematicsManager_OnCinematicStart;
         CinematicsManager.OnCinematicEnd -= CinematicsManager_OnCinematicEnd;
 
-        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
+        BossStateHandlerOld.OnBossDefeated -= BossStateHandler_OnBossDefeated;
     }
 
     private void CheckStartMusicToPlay(MusicLevel level)
@@ -257,8 +257,12 @@ public class GameplayMusicManager : MonoBehaviour
     #region BossMusic
     private AudioClip CheckBossMusicToPlay()
     {
+        return musicPoolSO.boss;
+
+        /*
         if (BossStateHandler.Instance.BossDefeated) return musicPoolSO.afterBoss;
         else return musicPoolSO.boss;
+        */
     }
     #endregion
 

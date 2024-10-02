@@ -18,12 +18,12 @@ public class BossDoor : MonoBehaviour
 
     private void OnEnable()
     {
-        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
+        BossStateHandlerOld.OnBossDefeated += BossStateHandler_OnBossDefeated;
     }
 
     private void OnDisable()
     {
-        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
+        BossStateHandlerOld.OnBossDefeated -= BossStateHandler_OnBossDefeated;
     }
 
     private void TriggerMovement(bool state)

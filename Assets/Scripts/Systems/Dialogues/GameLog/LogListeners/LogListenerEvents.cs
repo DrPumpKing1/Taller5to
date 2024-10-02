@@ -22,9 +22,9 @@ public class LogListenerEvents : MonoBehaviour
         //LEVEL3
 
         //BOSS
-        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
-        BossStateHandler.OnPlayerDefeated += BossStateHandler_OnPlayerDefeated;
-        BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
+        BossStateHandlerOld.OnBossDefeated += BossStateHandler_OnBossDefeated;
+        BossStateHandlerOld.OnPlayerDefeated += BossStateHandler_OnPlayerDefeated;
+        BossStateHandlerOld.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
         AncientRelic.OnAncientRelicCollected += AncientRelic_OnAncientRelicCollected;
     }
 
@@ -47,9 +47,9 @@ public class LogListenerEvents : MonoBehaviour
 
 
         //BOSS
-        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
-        BossStateHandler.OnPlayerDefeated -= BossStateHandler_OnPlayerDefeated;
-        BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
+        BossStateHandlerOld.OnBossDefeated -= BossStateHandler_OnBossDefeated;
+        BossStateHandlerOld.OnPlayerDefeated -= BossStateHandler_OnPlayerDefeated;
+        BossStateHandlerOld.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
         AncientRelic.OnAncientRelicCollected -= AncientRelic_OnAncientRelicCollected;
     }
 
@@ -69,6 +69,6 @@ public class LogListenerEvents : MonoBehaviour
     //BOSS
     private void BossStateHandler_OnPlayerDefeated(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Events/PlayerDefeated");
     private void BossStateHandler_OnBossDefeated(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Events/BossDefeated");
-    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e) => GameLogManager.Instance.Log($"Events/BossPhaseChange/{e.phaseNumber}");
+    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandlerOld.OnPhaseChangeEventArgs e) => GameLogManager.Instance.Log($"Events/BossPhaseChange/{e.phaseNumber}");
     private void AncientRelic_OnAncientRelicCollected(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Events/AncientRelicCollected");
 }

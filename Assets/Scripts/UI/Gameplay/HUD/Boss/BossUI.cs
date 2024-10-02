@@ -33,22 +33,22 @@ public class BossUI : MonoBehaviour
     
     private void OnEnable()
     {
-        BossStateHandler.OnBossActiveStart += BossStateHandler_OnBossActiveStart;
-        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
-        BossStateHandler.OnBossPhaseChangeEnd += BossStateHandler_OnBossPhaseChangeEnd;
+        BossStateHandlerOld.OnBossActiveStart += BossStateHandler_OnBossActiveStart;
+        BossStateHandlerOld.OnBossDefeated += BossStateHandler_OnBossDefeated;
+        BossStateHandlerOld.OnBossPhaseChangeEnd += BossStateHandler_OnBossPhaseChangeEnd;
 
-        BossKaerumOvercharge.OnCurrentChargeInPhaseChanged += BossKaerumOvercharge_OnCurrentHitsInPhaseChanged;
-        BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
+        BossKaerumOverchargeOld.OnCurrentChargeInPhaseChanged += BossKaerumOvercharge_OnCurrentHitsInPhaseChanged;
+        BossStateHandlerOld.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
     }
 
     private void OnDisable()
     {
-        BossStateHandler.OnBossActiveStart -= BossStateHandler_OnBossActiveStart;
-        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
-        BossStateHandler.OnBossPhaseChangeEnd -= BossStateHandler_OnBossPhaseChangeEnd;
+        BossStateHandlerOld.OnBossActiveStart -= BossStateHandler_OnBossActiveStart;
+        BossStateHandlerOld.OnBossDefeated -= BossStateHandler_OnBossDefeated;
+        BossStateHandlerOld.OnBossPhaseChangeEnd -= BossStateHandler_OnBossPhaseChangeEnd;
 
-        BossKaerumOvercharge.OnCurrentChargeInPhaseChanged -= BossKaerumOvercharge_OnCurrentHitsInPhaseChanged;
-        BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
+        BossKaerumOverchargeOld.OnCurrentChargeInPhaseChanged -= BossKaerumOvercharge_OnCurrentHitsInPhaseChanged;
+        BossStateHandlerOld.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
     }
 
     private void Start()
@@ -114,7 +114,7 @@ public class BossUI : MonoBehaviour
 
     private void ChangeTargetFillAmount(float numerator, float denominator)
     {
-        if (fillUntilEnd && denominator > 1) denominator -= BossKaerumOvercharge.Instance.ChargePerProjetile;
+        if (fillUntilEnd && denominator > 1) denominator -= BossKaerumOverchargeOld.Instance.ChargePerProjetile;
 
         targetFillAmount = numerator / denominator;
     }
@@ -123,7 +123,7 @@ public class BossUI : MonoBehaviour
     private void SetSmoothFillFactor(float smoothFillFactor) => this.smoothFillFactor = smoothFillFactor;
 
 
-    private void BossKaerumOvercharge_OnCurrentHitsInPhaseChanged(object sender, BossKaerumOvercharge.OnCurrentChargeInPhaseChangedEventArgs e)
+    private void BossKaerumOvercharge_OnCurrentHitsInPhaseChanged(object sender, BossKaerumOverchargeOld.OnCurrentChargeInPhaseChangedEventArgs e)
     {
         ChangeTargetFillAmount(e.currentChargeInPhase, e.chargeLimitPerPhase);
     }
@@ -139,13 +139,13 @@ public class BossUI : MonoBehaviour
         HideBossBar();
     }
 
-    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
+    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandlerOld.OnPhaseChangeEventArgs e)
     {
         SetTargetFillAmount(0f);
         SetSmoothFillFactor(phaseChangeSmoothFillFactor);
     }
 
-    private void BossStateHandler_OnBossPhaseChangeEnd(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
+    private void BossStateHandler_OnBossPhaseChangeEnd(object sender, BossStateHandlerOld.OnPhaseChangeEventArgs e)
     {
         ChangeBarColor(e.phaseNumber);
         SetSmoothFillFactor(regularSmoothFillFactor);

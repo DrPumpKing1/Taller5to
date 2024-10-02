@@ -597,11 +597,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5860173099003437871}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2de5f9fdf5b7d0458a0bea71ef0001f, type: 3}
+  m_Script: {fileID: 11500000, guid: aa0f218ccffe3c3479b4b22fee5b1d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   phaseNumber: 0
-  lastPhase: 3
+  lastPhase: 0
   isInvulnerable: 0
   isDefeated: 0
 --- !u!114 &2495749140857903703
@@ -661,16 +661,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5860173099003437871}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 601465436df12f74593315bb03a43e16, type: 3}
+  m_Script: {fileID: 11500000, guid: 17ed97c3360edc14b945daa4752855c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enableSinceFirstPhase: 0
-  phaseNumberToEnable: 2
-  timeNotSunning: 10
-  timeStunning: 5
+  phaseNumberToEnable: 0
+  timeNotSunning: 0
+  timeStunning: 0
   stuneableSources: []
   bossSourceStunState: 0
-  debug: 1
+  debug: 0
   timer: 0
   currentSourceStunned: {fileID: 0}
 --- !u!114 &4942902495125812452
@@ -794,31 +794,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7408403795753596725}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c16f049c07902fb4fb3f71c58737e0b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 2544201b36e8f0f49b6caa5289548de3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeNotAttackedThreshold: 2.5
-  attackDirections:
-  - direction: 0
-    upperAngleLimit: 315
-    lowerAngleLimit: 225
-    vectorizedDirection: {x: 0, y: 1}
-    timeNotAttacked: 0
-  - direction: 3
-    upperAngleLimit: 45
-    lowerAngleLimit: 315
-    vectorizedDirection: {x: -1, y: 0}
-    timeNotAttacked: 0
-  - direction: 1
-    upperAngleLimit: 135
-    lowerAngleLimit: 45
-    vectorizedDirection: {x: 0, y: -1}
-    timeNotAttacked: 0
-  - direction: 2
-    upperAngleLimit: 225
-    lowerAngleLimit: 135
-    vectorizedDirection: {x: 1, y: 0}
-    timeNotAttacked: 0
+  timeNotAttackedThreshold: 0
+  attackDirections: []
 --- !u!1 &7974147450004669483
 GameObject:
   m_ObjectHideFlags: 0
