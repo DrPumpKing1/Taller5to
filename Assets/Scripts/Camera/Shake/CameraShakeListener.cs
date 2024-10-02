@@ -27,7 +27,7 @@ public class CameraShakeListener : MonoBehaviour
         //BossDoor.OnBossDoorOpen += BossDoor_OnBossDoorOpen;
         BossStateHandlerOld.OnBossActiveStart += BossStateHandler_OnBossActiveStart;
         BossStateHandlerOld.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
-        BossStateHandlerOld.OnBossDefeated += BossStateHandler_OnBossDefeated;
+        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
     }
 
     private void OnDisable()
@@ -36,7 +36,7 @@ public class CameraShakeListener : MonoBehaviour
         //BossDoor.OnBossDoorOpen -= BossDoor_OnBossDoorOpen;
         BossStateHandlerOld.OnBossActiveStart -= BossStateHandler_OnBossActiveStart;
         BossStateHandlerOld.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
-        BossStateHandlerOld.OnBossDefeated -= BossStateHandler_OnBossDefeated;
+        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
     }
 
     private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e) => CameraShakeHandler.Instance.ShakeCamera(virtueDoorSettings.amplitude, virtueDoorSettings.frequency, virtueDoorSettings.shakeTime, virtueDoorSettings.fadeInTime, virtueDoorSettings.fadeOutTime);
