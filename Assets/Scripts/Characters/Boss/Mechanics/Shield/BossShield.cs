@@ -9,6 +9,7 @@ public class BossShield : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private List<Electrode> controllingNodes; //All should be deenergized to deactivate shield
+    [SerializeField] private List<ElectricityCutNode> electricityCutNodes;
 
     [Header("Booleans")]
     [SerializeField] private bool shieldActive;
@@ -67,7 +68,27 @@ public class BossShield : MonoBehaviour
     private void SetShieldActive(bool active)
     {
         shieldTransform.gameObject.SetActive(active);
+        
+        if (active) CutNodesElectricity();
+        else LetNodesElectricity();
+
         shieldActive = active;
+    }
+
+    private void CutNodesElectricity()
+    {
+        foreach(ElectricityCutNode electricityCutNode in electricityCutNodes)
+        {
+            electricityCutNode.CutElectricity();
+        }
+    }
+
+    private void LetNodesElectricity()
+    {
+        foreach (ElectricityCutNode electricityCutNode in electricityCutNodes)
+        {
+            electricityCutNode.LetElectricity();
+        }
     }
 
     private void ResetTimer() => notPoweredTimer = 0f;
