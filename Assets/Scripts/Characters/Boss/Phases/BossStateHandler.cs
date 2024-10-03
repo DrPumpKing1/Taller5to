@@ -100,8 +100,6 @@ public class BossStateHandler : MonoBehaviour
 
         yield return new WaitForSeconds(BOSS_PHASE_CHANGE_TIME_A);
 
-        InstantPositionPlayer();
-
         OnBossPhaseChangeMidA?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
         OnBossPhaseChangeMidB?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
         OnBossPhaseChangeMidC?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
@@ -138,11 +136,6 @@ public class BossStateHandler : MonoBehaviour
 
     private bool SetBossDefeated(bool defeated) => bossDefeated = defeated;
 
-    private void InstantPositionPlayer()
-    {
-        PlayerPositioningHandler.Instance.InstantPositionPlayer(playerInstantPositionTransform.position);
-        PlayerDirectionHandler.Instance.InstantDirectionPlayer(playerInstantDirection);
-    }
 
     #region BossPhaseHandler Subscriptions
     private void BossPhaseHandler_OnPhaseCompleated(object sender, BossPhaseHandler.OnPhaseEventArgs e)
