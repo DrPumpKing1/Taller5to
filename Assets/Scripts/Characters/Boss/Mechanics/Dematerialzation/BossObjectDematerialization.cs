@@ -11,13 +11,13 @@ public class BossObjectDematerialization : MonoBehaviour
 
     private void OnEnable()
     {
-        BossStateHandler.OnBossPhaseChangeMid += BossStateHandler_OnBossPhaseChangeMid;
+        BossStateHandler.OnBossPhaseChangeMidA += BossStateHandler_OnBossPhaseChangeMidA;
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
     }
 
     private void OnDisable()
     {
-        BossStateHandler.OnBossPhaseChangeMid -= BossStateHandler_OnBossPhaseChangeMid;
+        BossStateHandler.OnBossPhaseChangeMidA -= BossStateHandler_OnBossPhaseChangeMidA;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
     }
 
@@ -57,7 +57,7 @@ public class BossObjectDematerialization : MonoBehaviour
     }
 
     #region BossStateHandler Subscriptions
-    private void BossStateHandler_OnBossPhaseChangeMid(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
+    private void BossStateHandler_OnBossPhaseChangeMidA(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
     {
         DematerializeAllObjects();
     }

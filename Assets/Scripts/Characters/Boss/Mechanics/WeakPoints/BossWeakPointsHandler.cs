@@ -44,7 +44,7 @@ public class BossWeakPointsHandler : MonoBehaviour
     private void OnEnable()
     {
         BossPhaseHandler.OnPhaseCompleated += BossPhaseHandler_OnPhaseCompleated;
-        BossStateHandler.OnBossPhaseChangeMid += BossStateHandler_OnBossPhaseChangeMid;
+        BossStateHandler.OnBossPhaseChangeMidA += BossStateHandler_OnBossPhaseChangeMidA;
 
         BossPhaseHandler.OnLastPhaseCompleated += BossPhaseHandler_OnLastPhaseCompleated;
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
@@ -54,7 +54,7 @@ public class BossWeakPointsHandler : MonoBehaviour
     private void OnDisable()
     {
         BossPhaseHandler.OnPhaseCompleated -= BossPhaseHandler_OnPhaseCompleated;
-        BossStateHandler.OnBossPhaseChangeMid -= BossStateHandler_OnBossPhaseChangeMid;
+        BossStateHandler.OnBossPhaseChangeMidA -= BossStateHandler_OnBossPhaseChangeMidA;
 
         BossPhaseHandler.OnLastPhaseCompleated -= BossPhaseHandler_OnLastPhaseCompleated;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
@@ -148,7 +148,7 @@ public class BossWeakPointsHandler : MonoBehaviour
         DisableWeakPointsByPhase(e.currentPhase);
     }
 
-    private void BossStateHandler_OnBossPhaseChangeMid(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
+    private void BossStateHandler_OnBossPhaseChangeMidA(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
     {
         EnableWeakPointsByPhase(e.nextPhase);
     }

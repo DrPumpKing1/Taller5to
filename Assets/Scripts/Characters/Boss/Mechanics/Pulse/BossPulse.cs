@@ -28,12 +28,12 @@ public class BossPulse : MonoBehaviour
 
     private void OnEnable()
     {
-        BossStateHandler.OnBossPhaseChangeMid += BossStateHandler_OnBossPhaseChangeMid;
+        BossStateHandler.OnBossPhaseChangeMidC += BossStateHandler_OnBossPhaseChangeMidC;
     }
 
     private void OnDisable()
     {
-        BossStateHandler.OnBossPhaseChangeMid -= BossStateHandler_OnBossPhaseChangeMid;
+        BossStateHandler.OnBossPhaseChangeMidC -= BossStateHandler_OnBossPhaseChangeMidC;
     }
 
     private void Awake()
@@ -86,7 +86,7 @@ public class BossPulse : MonoBehaviour
 
 
     #region BossPhaseHandler Subscriptions
-    private void BossStateHandler_OnBossPhaseChangeMid(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
+    private void BossStateHandler_OnBossPhaseChangeMidC(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
     {
         CheckPulse(e.nextPhase);
     }

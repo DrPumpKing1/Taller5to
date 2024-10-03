@@ -30,7 +30,7 @@ public class BossPhaseHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        BossStateHandler.OnBossPhaseChangeMid += BossStateHandler_OnBossPhaseChangeMid;
+        BossStateHandler.OnBossPhaseChangeMidA += BossStateHandler_OnBossPhaseChangeMidA;
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
 
         BossWeakPointsHandler.OnPhaseWeakPointsHit += BossWeakPointsHandler_OnPhaseWeakPointsHit;
@@ -38,7 +38,7 @@ public class BossPhaseHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        BossStateHandler.OnBossPhaseChangeMid -= BossStateHandler_OnBossPhaseChangeMid;
+        BossStateHandler.OnBossPhaseChangeMidA -= BossStateHandler_OnBossPhaseChangeMidA;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
 
         BossWeakPointsHandler.OnPhaseWeakPointsHit -= BossWeakPointsHandler_OnPhaseWeakPointsHit;
@@ -121,7 +121,7 @@ public class BossPhaseHandler : MonoBehaviour
 
 
     #region BossStateHandler Subscriptions
-    private void BossStateHandler_OnBossPhaseChangeMid(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
+    private void BossStateHandler_OnBossPhaseChangeMidA(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
     {
         SetCurrentPhase(e.nextPhase);
     }

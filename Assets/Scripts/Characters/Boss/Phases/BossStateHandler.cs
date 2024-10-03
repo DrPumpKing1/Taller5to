@@ -25,7 +25,9 @@ public class BossStateHandler : MonoBehaviour
     public bool BossDefeated => bossDefeated;
 
     public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeStart;
-    public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeMid;
+    public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeMidA;
+    public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeMidB;
+    public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeMidC;
     public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeEnd;
     public static event EventHandler OnBossAlmostDefeated;
     public static event EventHandler OnBossDefeated;
@@ -84,7 +86,9 @@ public class BossStateHandler : MonoBehaviour
 
         yield return new WaitForSeconds(timePrePhaseChange);
 
-        OnBossPhaseChangeMid?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
+        OnBossPhaseChangeMidA?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
+        OnBossPhaseChangeMidB?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
+        OnBossPhaseChangeMidC?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
 
         yield return new WaitForSeconds(timePostPhaseChange);
 

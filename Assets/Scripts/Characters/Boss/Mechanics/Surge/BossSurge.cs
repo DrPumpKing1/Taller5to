@@ -35,12 +35,12 @@ public class BossSurge : MonoBehaviour
 
     private void OnEnable()
     {
-        BossStateHandler.OnBossPhaseChangeMid += BossStateHandler_OnBossPhaseChangeMid;
+        BossStateHandler.OnBossPhaseChangeMidB += BossStateHandler_OnBossPhaseChangeMidB;
     }
 
     private void OnDisable()
     {
-        BossStateHandler.OnBossPhaseChangeMid -= BossStateHandler_OnBossPhaseChangeMid;
+        BossStateHandler.OnBossPhaseChangeMidB -= BossStateHandler_OnBossPhaseChangeMidB;
     }
 
     private void Awake()
@@ -102,7 +102,7 @@ public class BossSurge : MonoBehaviour
     private void ClearCurrentActiveLayout() => currentActiveLayout = null;
 
     #region BossStateHandler Subscriptions
-    private void BossStateHandler_OnBossPhaseChangeMid(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
+    private void BossStateHandler_OnBossPhaseChangeMidB(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
     {
         CheckSurge(e.nextPhase, true);
     }
