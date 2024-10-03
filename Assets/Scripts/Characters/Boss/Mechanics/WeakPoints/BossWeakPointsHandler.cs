@@ -103,6 +103,11 @@ public class BossWeakPointsHandler : MonoBehaviour
         {
             HandlePhaseWeakPoints(phaseWeakPoints);
         }
+
+        foreach (PhaseWeakPoints phaseWeakPoints in beamPhaseWeakPointsList)
+        {
+            HandlePhaseWeakPoints(phaseWeakPoints);
+        }
     }
 
     private void HandlePhaseWeakPoints(PhaseWeakPoints phaseWeakPoints)
