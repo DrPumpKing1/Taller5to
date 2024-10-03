@@ -15,6 +15,7 @@ public class BossPhaseHandler : MonoBehaviour
 
     private const BossPhase FIRST_PHASE = BossPhase.Phase0;
     private const BossPhase LAST_PHASE = BossPhase.Phase3;
+    private const BossPhase ALMOST_DEFEATED_PHASE = BossPhase.AlmostDefeated;
     private const BossPhase DEFEATED_PHASE = BossPhase.Defeated;
 
     public static event EventHandler<OnPhaseEventArgs> OnPhaseCompleated;
@@ -95,8 +96,7 @@ public class BossPhaseHandler : MonoBehaviour
         if (currentPhase == LAST_PHASE)
         {
             OnLastPhaseCompleated?.Invoke(this, EventArgs.Empty);
-            SetDefeated(true);
-            SetCurrentPhase(DEFEATED_PHASE);
+            SetCurrentPhase(ALMOST_DEFEATED_PHASE);
             return;
         }
 

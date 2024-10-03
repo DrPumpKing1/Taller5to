@@ -20,13 +20,14 @@ public class BossStateHandler : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool debug;
 
-    public enum State {PhaseChange, OnPhase, BossDefeated, PlayerDefeated }
+    public enum State {PhaseChange, OnPhase, AlmostDefeated, Defeated }
     public State BossState => state;
     public bool BossDefeated => bossDefeated;
 
     public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeStart;
     public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeMid;
     public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeEnd;
+    public static event EventHandler OnBossAlmostDefeated;
     public static event EventHandler OnBossDefeated;
 
     public class OnPhaseChangeEventArgs : EventArgs
@@ -89,16 +90,25 @@ public class BossStateHandler : MonoBehaviour
 
         SetBossState(State.OnPhase);
     }
+    private void AlmostDefeatBoss()
+    {
+        SetBossState(State.AlmostDefeated);
+
+        OnBossAlmostDefeated?.Invoke(this, EventArgs.Empty);
+
+        if (debug) Debug.Log("Boss Almost Defeated");
+    }
 
     private void DefeatBoss()
     {
-        SetBossState(State.BossDefeated);
+        SetBossState(State.Defeated);
         SetBossDefeated(true);
 
         OnBossDefeated?.Invoke(this, EventArgs.Empty);
 
         if (debug) Debug.Log("Boss Defeated");
     }
+
 
     private bool SetBossDefeated(bool defeated) => bossDefeated = defeated;
 
@@ -111,7 +121,7 @@ public class BossStateHandler : MonoBehaviour
 
     private void BossPhaseHandler_OnLastPhaseCompleated(object sender, EventArgs e)
     {
-        DefeatBoss();
+        AlmostDefeatBoss();
     }
     #endregion
 
