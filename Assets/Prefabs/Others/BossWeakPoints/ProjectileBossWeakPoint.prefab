@@ -137,6 +137,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1635103752738492167}
+  - {fileID: 653811549173628366}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &391058023074211898
@@ -155,7 +156,6 @@ MonoBehaviour:
   visual: {fileID: 2543399283296426818}
   isEnabled: 0
   isHit: 0
-  poweredAccumulatedTimer: 0
 --- !u!65 &3295836126887515806
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -209,3 +209,73 @@ Transform:
   - {fileID: 194233270902760109}
   m_Father: {fileID: 7201879571109408548}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1557168928170543039
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7201879571109408548}
+    m_Modifications:
+    - target: {fileID: 165147066141074043, guid: bdddffe3fccd2444ea0d4ac41340fcf5, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1402651200035356294, guid: bdddffe3fccd2444ea0d4ac41340fcf5, type: 3}
+      propertyPath: bossWeakPoint
+      value: 
+      objectReference: {fileID: 391058023074211898}
+    - target: {fileID: 2057831394023520881, guid: bdddffe3fccd2444ea0d4ac41340fcf5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057831394023520881, guid: bdddffe3fccd2444ea0d4ac41340fcf5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057831394023520881, guid: bdddffe3fccd2444ea0d4ac41340fcf5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057831394023520881, guid: bdddffe3fccd2444ea0d4ac41340fcf5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057831394023520881, guid: bdddffe3fccd2444ea0d4ac41340fcf5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057831394023520881, guid: bdddffe3fccd2444ea0d4ac41340fcf5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057831394023520881, guid: bdddffe3fccd2444ea0d4ac41340fcf5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057831394023520881, guid: bdddffe3fccd2444ea0d4ac41340fcf5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057831394023520881, guid: bdddffe3fccd2444ea0d4ac41340fcf5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057831394023520881, guid: bdddffe3fccd2444ea0d4ac41340fcf5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5039448654497393068, guid: bdddffe3fccd2444ea0d4ac41340fcf5, type: 3}
+      propertyPath: m_Name
+      value: BossWeakpointIndicatorUIHolder
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bdddffe3fccd2444ea0d4ac41340fcf5, type: 3}
+--- !u!4 &653811549173628366 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2057831394023520881, guid: bdddffe3fccd2444ea0d4ac41340fcf5, type: 3}
+  m_PrefabInstance: {fileID: 1557168928170543039}
+  m_PrefabAsset: {fileID: 0}
