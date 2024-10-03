@@ -7,7 +7,7 @@ public class ProjectileBossWeakPoint : BossWeakPoint
     private const float POWERED_TIME_THRESHOLD = 5f;
     private const float POWERED_TIME_PER_PROJECTILE = 4.5f;
 
-    public float poweredAccumulatedTimer;
+    private float poweredAccumulatedTimer;
 
     protected override void Start()
     {

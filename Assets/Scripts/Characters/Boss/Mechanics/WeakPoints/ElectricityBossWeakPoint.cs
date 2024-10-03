@@ -5,7 +5,7 @@ using UnityEngine;
 public class ElectricityBossWeakPoint : BossWeakPoint
 {
     [Header("Components")]
-    [SerializeField] private Electrode controllingNode;
+    [SerializeField] private CableElectrode controlingCable;
 
     private const float POWERED_TIME_THRESHOLD = 0.25f;
     private float poweredTimer;
@@ -22,7 +22,7 @@ public class ElectricityBossWeakPoint : BossWeakPoint
     {
         if (!IsEnabled) return;
 
-        if (!NodeEnergyed())
+        if (!CableEnergyzed())
         {
             ResetTimer();
             SetIsHit(false);
@@ -40,7 +40,7 @@ public class ElectricityBossWeakPoint : BossWeakPoint
         }
     }
 
-    private bool NodeEnergyed() => controllingNode.Power >= Electrode.ACTIVATION_THRESHOLD;
+    private bool CableEnergyzed() => controlingCable.Power >= Electrode.ACTIVATION_THRESHOLD;
     private bool SetPreviouslypowered(bool powered) => previousPowered = powered;
     private void ResetTimer() => poweredTimer = 0f;
 }
