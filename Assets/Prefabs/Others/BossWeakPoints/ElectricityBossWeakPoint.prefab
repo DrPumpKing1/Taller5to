@@ -206,8 +206,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  weakPointEnabled: 0
-  weakPointHit: 0
+  visual: {fileID: 2543399283296426818}
+  isEnabled: 0
+  isHit: 0
   controllingNode: {fileID: 8916157108412918367}
 --- !u!1 &6499984962450078299
 GameObject:

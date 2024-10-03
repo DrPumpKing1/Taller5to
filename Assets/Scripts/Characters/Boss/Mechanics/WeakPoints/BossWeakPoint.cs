@@ -8,19 +8,40 @@ public abstract class BossWeakPoint : MonoBehaviour
     [Header("Identifiers")]
     [SerializeField] private int id;
 
+    [Header("Components")]
+    [SerializeField] private GameObject visual;
+
     [Header("Settings")]
-    [SerializeField] private bool weakPointEnabled;
-    [SerializeField] private bool weakPointHit;
+    [SerializeField] private bool isEnabled;
+    [SerializeField] private bool isHit;
 
     public int ID => id;
-    public bool WeakPointEnabled => weakPointEnabled;
-    public bool WeakPointHit => weakPointHit;
+    public bool IsEnabled => isEnabled;
+    public bool IsHit => isHit;
 
-    public static event EventHandler<OnBossWeakPointHitEventArgs> OnBossWeakPointHit;
+    public static event EventHandler<OnBossWeakPointEventArgs> OnBossWeakpointEnable;
+    public static event EventHandler<OnBossWeakPointEventArgs> OnBossWeakpointDisable;
 
-    public class OnBossWeakPointHitEventArgs : EventArgs
+    private void OnEnable()
+    {
+        BossWeakPointsHandler.OnWeakPointsEnable += BossWeakPointsHandler_OnWeakPointsEnable;
+        BossWeakPointsHandler.OnWeakPointsDisable += BossWeakPointsHandler_OnWeakPointsDisable;
+    }
+
+    private void OnDisable()
+    {
+        BossWeakPointsHandler.OnWeakPointsEnable -= BossWeakPointsHandler_OnWeakPointsEnable;
+        BossWeakPointsHandler.OnWeakPointsDisable -= BossWeakPointsHandler_OnWeakPointsDisable;
+    }
+
+    public class OnBossWeakPointEventArgs : EventArgs
     {
         public BossWeakPoint bossWeakPoint;
+    }
+
+    protected virtual void Start()
+    {
+        SetIsHit(false);
     }
 
     private void Update()
@@ -30,13 +51,42 @@ public abstract class BossWeakPoint : MonoBehaviour
 
     protected abstract void HandleWeakPointPower();
 
-    protected void HitWeakPoint()
+    public void SetWeakPoint(bool enable)
     {
-        SetIsHit(true);
-        SetWeakPoint(false);
-        OnBossWeakPointHit?.Invoke(this, new OnBossWeakPointHitEventArgs { bossWeakPoint = this });
+        isEnabled = enable;
+        SetVisual(enable);
+    }
+    public void SetIsHit(bool isHit) => this.isHit = isHit;
+
+    private void CheckEnable(List<BossWeakPoint> weakPointsToEnable)
+    {
+        if(weakPointsToEnable.Contains(this))
+        {
+            SetWeakPoint(true);
+            OnBossWeakpointEnable?.Invoke(this, new OnBossWeakPointEventArgs { bossWeakPoint = this });
+        }
     }
 
-    public void SetWeakPoint(bool enable) => weakPointEnabled = enable;
-    public void SetIsHit(bool isHit) => weakPointHit = isHit;
+    private void CheckDisable(List<BossWeakPoint> weakPointsToDisable)
+    {
+        if (weakPointsToDisable.Contains(this))
+        {
+            SetWeakPoint(false);
+            OnBossWeakpointDisable?.Invoke(this, new OnBossWeakPointEventArgs { bossWeakPoint = this });
+        }
+    }
+
+    private void SetVisual(bool active) => visual.SetActive(active);
+
+    #region BossWeakPointsHandler Subscriptions
+    private void BossWeakPointsHandler_OnWeakPointsEnable(object sender, BossWeakPointsHandler.OnWeakPointsEventArgs e)
+    {
+        CheckEnable(e.weakPoints);
+    }
+
+    private void BossWeakPointsHandler_OnWeakPointsDisable(object sender, BossWeakPointsHandler.OnWeakPointsEventArgs e)
+    {
+        CheckDisable(e.weakPoints);
+    }
+    #endregion
 }

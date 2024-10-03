@@ -11,20 +11,21 @@ public class ElectricityBossWeakPoint : BossWeakPoint
     private float poweredTimer;
     private bool previousPowered;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         SetPreviouslypowered(false);
         ResetTimer();
     }
 
     protected override void HandleWeakPointPower()
     {
-        if (!WeakPointEnabled) return;
-        if (WeakPointHit) return;
+        if (!IsEnabled) return;
 
         if (!NodeEnergyed())
         {
             ResetTimer();
+            SetIsHit(false);
             SetPreviouslypowered(false);
         }
         else
@@ -33,7 +34,7 @@ public class ElectricityBossWeakPoint : BossWeakPoint
 
             if (poweredTimer >= POWERED_TIME_THRESHOLD && !previousPowered)
             {
-                HitWeakPoint();
+                SetIsHit(true);
                 SetPreviouslypowered(true);
             }
         }

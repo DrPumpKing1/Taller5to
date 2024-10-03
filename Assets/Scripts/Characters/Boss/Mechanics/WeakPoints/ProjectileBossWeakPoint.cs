@@ -9,19 +9,23 @@ public class ProjectileBossWeakPoint : BossWeakPoint
 
     public float poweredAccumulatedTimer;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         ResetTimer();
     }
 
     protected override void HandleWeakPointPower()
     {
-        if (!WeakPointEnabled) return;
-        if (WeakPointHit) return;
+        if (!IsEnabled) return;
 
         if(poweredAccumulatedTimer >= POWERED_TIME_THRESHOLD)
         {
-            HitWeakPoint();
+            SetIsHit(true);
+        }
+        else
+        {
+            SetIsHit(false);
         }
 
         if (poweredAccumulatedTimer > 0f) poweredAccumulatedTimer -= Time.deltaTime;
@@ -30,7 +34,7 @@ public class ProjectileBossWeakPoint : BossWeakPoint
 
     private void PowerWeakPoint()
     {
-        if (!WeakPointEnabled) return;
+        if (!IsEnabled) return;
         poweredAccumulatedTimer += POWERED_TIME_PER_PROJECTILE;
     }
 

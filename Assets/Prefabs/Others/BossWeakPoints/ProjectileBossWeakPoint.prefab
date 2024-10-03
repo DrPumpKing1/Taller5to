@@ -152,8 +152,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  weakPointEnabled: 0
-  weakPointHit: 0
+  visual: {fileID: 2543399283296426818}
+  isEnabled: 0
+  isHit: 0
   poweredAccumulatedTimer: 0
 --- !u!65 &3295836126887515806
 BoxCollider:
