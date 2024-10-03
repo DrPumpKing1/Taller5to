@@ -1,18 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossWeakPoint : MonoBehaviour
+public abstract class BossWeakPoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Identifiers")]
+    [SerializeField] private int id;
+
+    [Header("Settings")]
+    [SerializeField] private bool weakPointEnabled;
+    [SerializeField] private bool weakPointHit;
+
+    public int ID => id;
+    public bool WeakPointEnabled => weakPointEnabled;
+    public bool WeakPointHit => weakPointHit;
+
+    public static event EventHandler<OnBossWeakPointHitEventArgs> OnBossWeakPointHit;
+
+    public class OnBossWeakPointHitEventArgs : EventArgs
     {
-        
+        public BossWeakPoint bossWeakPoint;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        HandleWeakPointPower();
     }
+
+    protected abstract void HandleWeakPointPower();
+
+    protected void HitWeakPoint()
+    {
+        SetIsHit(true);
+        SetWeakPoint(false);
+        OnBossWeakPointHit?.Invoke(this, new OnBossWeakPointHitEventArgs { bossWeakPoint = this });
+    }
+
+    public void SetWeakPoint(bool enable) => weakPointEnabled = enable;
+    public void SetIsHit(bool isHit) => weakPointHit = isHit;
 }
