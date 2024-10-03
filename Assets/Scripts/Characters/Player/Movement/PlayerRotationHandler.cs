@@ -128,6 +128,12 @@ public class PlayerRotationHandler : MonoBehaviour
         transform.localRotation = Quaternion.LookRotation(FacingDirection);
     }
 
+    private void RotateInstantlyTowardsDirection(Vector3 direction)
+    {
+        direction.Normalize();
+        transform.localRotation = Quaternion.LookRotation(direction);
+    }
+
     private void SetFacingDirection(Vector3 direction) => FacingDirection = direction;
     private void AvoidXZRotation() => transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
 
@@ -145,7 +151,7 @@ public class PlayerRotationHandler : MonoBehaviour
     }
     private void PlayerDirectionHandler_OnPlayerInstantDirectioned(object sender, PlayerDirectionHandler.OnPlayerDirectionedEventArgs e)
     {
-        SetFacingDirection(e.facingDirection);
+        RotateInstantlyTowardsDirection(e.facingDirection);
     }
 
     #endregion
