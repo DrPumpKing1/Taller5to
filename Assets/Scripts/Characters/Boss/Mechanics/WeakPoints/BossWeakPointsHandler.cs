@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Analytics;
-using static BossWeakPointsHandler;
 
 public class BossWeakPointsHandler : MonoBehaviour
 {
@@ -31,6 +30,8 @@ public class BossWeakPointsHandler : MonoBehaviour
 
     private const BossPhase FIRST_WEAK_POINTS_PHASE = BossPhase.Phase0;
     private const BossPhase ALMOST_DEFEATED_WEAK_POINTS_PHASE = BossPhase.AlmostDefeated;
+
+    private const float TIME_TO_ENABLE_ALMOST_DEFEATED_WEAK_POINTS = 2f;
 
     public class OnWeakPointsEventArgs : EventArgs
     {
@@ -119,6 +120,12 @@ public class BossWeakPointsHandler : MonoBehaviour
         if(debug) Debug.Log($"AllWeakPointsHit {phaseWeakPoints.bossPhase}");
     }
 
+    private IEnumerator EnableAlmostDefeatedWeakPointsCoroutine()
+    {
+        yield return new WaitForSeconds(TIME_TO_ENABLE_ALMOST_DEFEATED_WEAK_POINTS);
+        EnableWeakPointsByPhaseChange(ALMOST_DEFEATED_WEAK_POINTS_PHASE);
+    }
+
     #region PhaseChange
     private void EnableWeakPointsByPhaseChange(BossPhase bossPhase)
     {
@@ -201,7 +208,7 @@ public class BossWeakPointsHandler : MonoBehaviour
     private void BossPhaseHandler_OnLastPhaseCompleated(object sender, EventArgs e)
     {
         DisableAllWeakPoints();
-        EnableWeakPointsByPhaseChange(ALMOST_DEFEATED_WEAK_POINTS_PHASE);
+        StartCoroutine(EnableAlmostDefeatedWeakPointsCoroutine());
     }
 
     private void BossStateHandler_OnBossDefeated(object sender, EventArgs e)
