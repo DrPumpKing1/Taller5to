@@ -28,6 +28,9 @@ public class BossStateHandler : MonoBehaviour
     public State BossState => state;
     public bool BossDefeated => bossDefeated;
 
+    private const float BOSS_PHASE_CHANGE_TIME_A = 0.5f;
+    private const float BOSS_PHASE_CHANGE_TIME_B = 1f;
+
     public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeStart;
     public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeMidA;
     public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeMidB;
@@ -35,6 +38,9 @@ public class BossStateHandler : MonoBehaviour
     public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangeEnd;
     public static event EventHandler OnBossAlmostDefeated;
     public static event EventHandler OnBossDefeated;
+
+    public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangePreMid;
+    public static event EventHandler<OnPhaseChangeEventArgs> OnBossPhaseChangePostMid;
 
     public class OnPhaseChangeEventArgs : EventArgs
     {
@@ -90,11 +96,19 @@ public class BossStateHandler : MonoBehaviour
 
         yield return new WaitForSeconds(timePrePhaseChange);
 
+        OnBossPhaseChangePreMid?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
+
+        yield return new WaitForSeconds(BOSS_PHASE_CHANGE_TIME_A);
+
         InstantPositionPlayer();
 
         OnBossPhaseChangeMidA?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
         OnBossPhaseChangeMidB?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
         OnBossPhaseChangeMidC?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
+
+        yield return new WaitForSeconds(BOSS_PHASE_CHANGE_TIME_B);
+
+        OnBossPhaseChangePostMid?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
 
         yield return new WaitForSeconds(timePostPhaseChange);
 
