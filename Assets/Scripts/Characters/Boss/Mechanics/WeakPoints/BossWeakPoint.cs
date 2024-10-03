@@ -22,6 +22,9 @@ public abstract class BossWeakPoint : MonoBehaviour
     public static event EventHandler<OnBossWeakPointEventArgs> OnBossWeakpointEnable;
     public static event EventHandler<OnBossWeakPointEventArgs> OnBossWeakpointDisable;
 
+    public event EventHandler OnWeakPointEnable;
+    public event EventHandler OnWeakPointDisable;
+
     private void OnEnable()
     {
         BossWeakPointsHandler.OnWeakPointsEnable += BossWeakPointsHandler_OnWeakPointsEnable;
@@ -64,6 +67,7 @@ public abstract class BossWeakPoint : MonoBehaviour
         {
             SetWeakPoint(true);
             OnBossWeakpointEnable?.Invoke(this, new OnBossWeakPointEventArgs { bossWeakPoint = this });
+            OnWeakPointEnable?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -73,6 +77,7 @@ public abstract class BossWeakPoint : MonoBehaviour
         {
             SetWeakPoint(false);
             OnBossWeakpointDisable?.Invoke(this, new OnBossWeakPointEventArgs { bossWeakPoint = this });
+            OnWeakPointDisable?.Invoke(this, EventArgs.Empty);
         }
     }
 

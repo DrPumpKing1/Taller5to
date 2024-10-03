@@ -40,12 +40,14 @@ public class BossStateHandler : MonoBehaviour
     {
         BossPhaseHandler.OnPhaseCompleated += BossPhaseHandler_OnPhaseCompleated;
         BossPhaseHandler.OnLastPhaseCompleated += BossPhaseHandler_OnLastPhaseCompleated;
+        BossPhaseHandler.OnAlmostDefeatedPhaseCompleated += BossPhaseHandler_OnAlmostDefeatedPhaseCompleated;
     }
 
     private void OnDisable()
     {
         BossPhaseHandler.OnPhaseCompleated -= BossPhaseHandler_OnPhaseCompleated;
         BossPhaseHandler.OnLastPhaseCompleated -= BossPhaseHandler_OnLastPhaseCompleated;
+        BossPhaseHandler.OnAlmostDefeatedPhaseCompleated -= BossPhaseHandler_OnAlmostDefeatedPhaseCompleated;
     }
 
     private void Awake()
@@ -123,6 +125,12 @@ public class BossStateHandler : MonoBehaviour
     {
         AlmostDefeatBoss();
     }
+
+    private void BossPhaseHandler_OnAlmostDefeatedPhaseCompleated(object sender, EventArgs e)
+    {
+        DefeatBoss();
+    }
+
     #endregion
 
 }

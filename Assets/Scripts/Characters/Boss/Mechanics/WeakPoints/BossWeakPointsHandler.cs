@@ -12,6 +12,9 @@ public class BossWeakPointsHandler : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private List<PhaseWeakPoints> phaseWeakPointsList;
 
+    [Header("Debug")]
+    [SerializeField] private bool debug;
+
     [Serializable]
     public class PhaseWeakPoints
     {
@@ -26,6 +29,7 @@ public class BossWeakPointsHandler : MonoBehaviour
     public static event EventHandler<OnPhaseWeakPointsHitEventArgs> OnPhaseWeakPointsHit;
 
     private const BossPhase FIRST_WEAK_POINTS_PHASE = BossPhase.Phase0;
+    private const BossPhase ALMOST_DEFEATED_WEAK_POINTS_PHASE = BossPhase.AlmostDefeated;
 
     public class OnWeakPointsEventArgs : EventArgs
     {
@@ -42,12 +46,18 @@ public class BossWeakPointsHandler : MonoBehaviour
         BossPhaseHandler.OnPhaseCompleated += BossPhaseHandler_OnPhaseCompleated;
         BossStateHandler.OnBossPhaseChangeMid += BossStateHandler_OnBossPhaseChangeMid;
 
+        BossPhaseHandler.OnLastPhaseCompleated += BossPhaseHandler_OnLastPhaseCompleated;
+        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
+
     }
 
     private void OnDisable()
     {
         BossPhaseHandler.OnPhaseCompleated -= BossPhaseHandler_OnPhaseCompleated;
         BossStateHandler.OnBossPhaseChangeMid -= BossStateHandler_OnBossPhaseChangeMid;
+
+        BossPhaseHandler.OnLastPhaseCompleated -= BossPhaseHandler_OnLastPhaseCompleated;
+        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
     }
 
     private void Awake()
@@ -93,11 +103,13 @@ public class BossWeakPointsHandler : MonoBehaviour
 
         foreach (BossWeakPoint bossWeakPoint in phaseWeakPoints.weakPoints)
         {
-            if (!bossWeakPoint.IsHit) continue;
+            if (!bossWeakPoint.IsHit) return;
         }
 
         phaseWeakPoints.allHit = true;
         OnPhaseWeakPointsHit?.Invoke(this, new OnPhaseWeakPointsHitEventArgs { phaseWeakPoints = phaseWeakPoints });
+
+        if(debug) Debug.Log($"AllWeakPointsHit {phaseWeakPoints.bossPhase}");
     }
 
     private void EnableWeakPointsByPhase(BossPhase bossPhase)
@@ -140,6 +152,15 @@ public class BossWeakPointsHandler : MonoBehaviour
     {
         EnableWeakPointsByPhase(e.nextPhase);
     }
+    private void BossPhaseHandler_OnLastPhaseCompleated(object sender, EventArgs e)
+    {
+        DisableAllWeakPoints();
+        EnableWeakPointsByPhase(ALMOST_DEFEATED_WEAK_POINTS_PHASE);
+    }
 
+    private void BossStateHandler_OnBossDefeated(object sender, EventArgs e)
+    {
+        DisableAllWeakPoints();
+    }
     #endregion
 }

@@ -20,6 +20,7 @@ public class BossPhaseHandler : MonoBehaviour
 
     public static event EventHandler<OnPhaseEventArgs> OnPhaseCompleated;
     public static event EventHandler OnLastPhaseCompleated;
+    public static event EventHandler OnAlmostDefeatedPhaseCompleated;
 
     public class OnPhaseEventArgs : EventArgs
     {
@@ -31,12 +32,16 @@ public class BossPhaseHandler : MonoBehaviour
     {
         BossStateHandler.OnBossPhaseChangeMid += BossStateHandler_OnBossPhaseChangeMid;
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
+
+        BossWeakPointsHandler.OnPhaseWeakPointsHit += BossWeakPointsHandler_OnPhaseWeakPointsHit;
     }
 
     private void OnDisable()
     {
         BossStateHandler.OnBossPhaseChangeMid -= BossStateHandler_OnBossPhaseChangeMid;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
+
+        BossWeakPointsHandler.OnPhaseWeakPointsHit -= BossWeakPointsHandler_OnPhaseWeakPointsHit;
     }
 
     private void Awake()
@@ -90,8 +95,16 @@ public class BossPhaseHandler : MonoBehaviour
 
     private void ChangeToNextPhase()
     {
-        if (BossStateHandler.Instance.BossState != BossStateHandler.State.OnPhase) return;
+        if (BossStateHandler.Instance.BossState == BossStateHandler.State.PhaseChange) return;
+        if (BossStateHandler.Instance.BossState == BossStateHandler.State.Defeated) return;
         if (isDefeated) return;
+
+        if(currentPhase == ALMOST_DEFEATED_PHASE)
+        {
+            OnAlmostDefeatedPhaseCompleated?.Invoke(this, EventArgs.Empty);
+            SetCurrentPhase(DEFEATED_PHASE);
+            return;
+        }
 
         if (currentPhase == LAST_PHASE)
         {
@@ -113,5 +126,13 @@ public class BossPhaseHandler : MonoBehaviour
         SetCurrentPhase(e.nextPhase);
     }
     private void BossStateHandler_OnBossDefeated(object sender, EventArgs e) => SetDefeated(true);
+    #endregion
+
+    #region BossWeakPointsHandler Subscriptions
+    private void BossWeakPointsHandler_OnPhaseWeakPointsHit(object sender, BossWeakPointsHandler.OnPhaseWeakPointsHitEventArgs e)
+    {
+        if (currentPhase != e.phaseWeakPoints.bossPhase) return;
+        ChangeToNextPhase();
+    }
     #endregion
 }
