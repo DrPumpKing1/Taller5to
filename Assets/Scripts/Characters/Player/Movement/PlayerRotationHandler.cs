@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerRotationHandler : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private PlayerStartDirection playerStartDirection;
     [SerializeField] private PlayerHorizontalMovement playerHorizontalMovement;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
@@ -30,7 +29,8 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        playerStartDirection.OnPlayerStartDirectioned += PlayerStartDirection_OnPlayerStartDirectioned;
+        PlayerDirectionHandler.OnPlayerStartDirectioned += PlayerStartDirection_OnPlayerStartDirectioned;
+        PlayerDirectionHandler.OnPlayerInstantDirectioned += PlayerDirectionHandler_OnPlayerInstantDirectioned;
 
         playerInteract.OnInteractionStarted += PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;
@@ -41,7 +41,8 @@ public class PlayerRotationHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        playerStartDirection.OnPlayerStartDirectioned -= PlayerStartDirection_OnPlayerStartDirectioned;
+        PlayerDirectionHandler.OnPlayerStartDirectioned -= PlayerStartDirection_OnPlayerStartDirectioned;
+        PlayerDirectionHandler.OnPlayerInstantDirectioned -= PlayerDirectionHandler_OnPlayerInstantDirectioned;
 
         playerInteract.OnInteractionStarted -= PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded -= PlayerInteract_OnInteractionEnded;
@@ -127,15 +128,9 @@ public class PlayerRotationHandler : MonoBehaviour
         transform.localRotation = Quaternion.LookRotation(FacingDirection);
     }
 
+    private void SetFacingDirection(Vector3 direction) => FacingDirection = direction;
     private void AvoidXZRotation() => transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
 
-    #endregion
-
-    #region PlayerStartDirectioningSettings
-    private void PlayerStartDirection_OnPlayerStartDirectioned(object sender, PlayerStartDirection.OnPlayerStartDirectionedEventArgs e)
-    {
-        FacingDirection = e.startingFacingDirection;
-    }
     #endregion
 
     #region InteractionSettings
@@ -143,6 +138,17 @@ public class PlayerRotationHandler : MonoBehaviour
     private void ClearInteractionAttentionTransform() => currentInteractionAttentionTransform = null;
     #endregion
 
+    #region PlayerDirectionHandler Subscriptions
+    private void PlayerStartDirection_OnPlayerStartDirectioned(object sender, PlayerDirectionHandler.OnPlayerDirectionedEventArgs e)
+    {
+        SetFacingDirection(e.facingDirection);
+    }
+    private void PlayerDirectionHandler_OnPlayerInstantDirectioned(object sender, PlayerDirectionHandler.OnPlayerDirectionedEventArgs e)
+    {
+        SetFacingDirection(e.facingDirection);
+    }
+
+    #endregion
     ///
 
     #region PlayerInteractionSubscriptions

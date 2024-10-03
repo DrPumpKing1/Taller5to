@@ -57,7 +57,8 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerStartPositioning.OnPlayerStartPositionedFirstUpdate += PlayerStartPositioning_OnPlayerStartPositionedFirstUpdate;
+        PlayerPositioningHandler.OnPlayerStartPositionedFirstUpdate += PlayerStartPositioning_OnPlayerStartPositionedFirstUpdate;
+        PlayerPositioningHandler.OnPlayerInstantPositioned += PlayerPositioningHandler_OnPlayerInstantPositioned;
 
         playerInteract.OnInteractionStarted += PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;
@@ -68,7 +69,8 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerStartPositioning.OnPlayerStartPositionedFirstUpdate -= PlayerStartPositioning_OnPlayerStartPositionedFirstUpdate;
+        PlayerPositioningHandler.OnPlayerStartPositionedFirstUpdate -= PlayerStartPositioning_OnPlayerStartPositionedFirstUpdate;
+        PlayerPositioningHandler.OnPlayerInstantPositioned -= PlayerPositioningHandler_OnPlayerInstantPositioned;
 
         playerInteract.OnInteractionStarted -= PlayerInteract_OnInteractionStarted;
         playerInteract.OnInteractionEnded -= PlayerInteract_OnInteractionEnded;
@@ -206,10 +208,10 @@ public class PetPositioningHandler : MonoBehaviour
     #endregion
 
     #region StartPosition Methods
-    private bool CanStartPosition() => PetStateHandler.Instance.PetState == PetStateHandler.State.FollowingPlayer;
-    private void StartPositionPet(Vector3 positionVector, float radius)
+    private bool CanInstantPosition() => PetStateHandler.Instance.PetState == PetStateHandler.State.FollowingPlayer;
+    private void InstantPositionPet(Vector3 positionVector, float radius)
     {
-        if (!CanStartPosition()) return;
+        if (!CanInstantPosition()) return;
 
         transform.position = orbitPoint.position + startPositionOffsetFromOrbitPoint;
     }
@@ -223,10 +225,15 @@ public class PetPositioningHandler : MonoBehaviour
 
     ///
 
-    #region PlayerStartPositioning Subscriptions
+    #region PlayerPositioningHandler Subscriptions
     private void PlayerStartPositioning_OnPlayerStartPositionedFirstUpdate(object sender, System.EventArgs e)
     {
-        StartPositionPet(preferredDirectionVectors[0],orbitRadius);
+        InstantPositionPet(preferredDirectionVectors[0],orbitRadius);
+    }
+
+    private void PlayerPositioningHandler_OnPlayerInstantPositioned(object sender, PlayerPositioningHandler.OnPlayerPositionedEventArgs e)
+    {
+        InstantPositionPet(preferredDirectionVectors[0], orbitRadius);
     }
     #endregion
 

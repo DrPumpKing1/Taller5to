@@ -57,12 +57,12 @@ public class RoomManager : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerStartPositioning.OnPlayerStartPositioned += PlayerStartPositioning_OnPlayerStartPositioned;       
+        PlayerPositioningHandler.OnPlayerStartPositioned += PlayerStartPositioning_OnPlayerStartPositioned;       
     }
 
     private void OnDisable()
     {
-        PlayerStartPositioning.OnPlayerStartPositioned -= PlayerStartPositioning_OnPlayerStartPositioned;
+        PlayerPositioningHandler.OnPlayerStartPositioned -= PlayerStartPositioning_OnPlayerStartPositioned;
     }
     private void Awake()
     {

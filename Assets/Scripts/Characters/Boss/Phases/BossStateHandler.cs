@@ -17,6 +17,10 @@ public class BossStateHandler : MonoBehaviour
     [Header("Booleans")]
     [SerializeField] private bool bossDefeated;
 
+    [Header("Player Instant Position")]
+    [SerializeField] private Transform playerInstantPositionTransform;
+    [SerializeField] private Vector2 playerInstantDirection;
+
     [Header("Debug")]
     [SerializeField] private bool debug;
 
@@ -86,6 +90,8 @@ public class BossStateHandler : MonoBehaviour
 
         yield return new WaitForSeconds(timePrePhaseChange);
 
+        InstantPositionPlayer();
+
         OnBossPhaseChangeMidA?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
         OnBossPhaseChangeMidB?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
         OnBossPhaseChangeMidC?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
@@ -117,6 +123,12 @@ public class BossStateHandler : MonoBehaviour
 
 
     private bool SetBossDefeated(bool defeated) => bossDefeated = defeated;
+
+    private void InstantPositionPlayer()
+    {
+        PlayerPositioningHandler.Instance.InstantPositionPlayer(playerInstantPositionTransform.position);
+        PlayerDirectionHandler.Instance.InstantDirectionPlayer(playerInstantDirection);
+    }
 
     #region BossPhaseHandler Subscriptions
     private void BossPhaseHandler_OnPhaseCompleated(object sender, BossPhaseHandler.OnPhaseEventArgs e)
