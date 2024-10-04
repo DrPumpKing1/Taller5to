@@ -7,10 +7,12 @@ public class CableElectrode : Electrode
     [Header("Cable Specifics")]
     [SerializeField] private Transform[] corners;
     [SerializeField] private LineRenderer lineRenderer;
-
+    [Space]
     [SerializeField] private float radius;
     [SerializeField] private float thickness;
     [SerializeField] private bool updateLineRenderer;
+    [Space]
+    [SerializeField] private bool enableDistanceCheckOverride;
 
     private GameObject player;
 
@@ -56,7 +58,7 @@ public class CableElectrode : Electrode
 
     private void FindNearElectricalComponents()
     {
-        if (!CheckPlayerClose()) return;
+        if (!CheckPlayerClose() && !enableDistanceCheckOverride) return;
 
         for (int i = 0; i < corners.Length - 1; i++)
         {

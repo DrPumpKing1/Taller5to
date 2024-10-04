@@ -18,8 +18,9 @@ public class ProjectileBossWeakPoint : BossWeakPoint
     protected override void HandleWeakPointPower()
     {
         if (!IsEnabled) return;
+        if (!CheckPlayerClose()) return;
 
-        if(poweredAccumulatedTimer >= POWERED_TIME_THRESHOLD)
+        if (poweredAccumulatedTimer >= POWERED_TIME_THRESHOLD)
         {
             SetIsHit(true);
         }

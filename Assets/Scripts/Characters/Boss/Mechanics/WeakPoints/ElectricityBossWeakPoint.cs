@@ -21,6 +21,7 @@ public class ElectricityBossWeakPoint : BossWeakPoint
     protected override void HandleWeakPointPower()
     {
         if (!IsEnabled) return;
+        if(!CheckPlayerClose()) return;
 
         if (!CableEnergyzed())
         {

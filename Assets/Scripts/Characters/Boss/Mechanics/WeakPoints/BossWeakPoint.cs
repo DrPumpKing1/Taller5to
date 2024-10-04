@@ -19,6 +19,11 @@ public abstract class BossWeakPoint : MonoBehaviour
     public bool IsEnabled => isEnabled;
     public bool IsHit => isHit;
 
+    private GameObject player;
+
+    private const string PLAYER_TAG = "Player";
+    private const float PLAYER_DISTANCE_TO_HIT = 100f;
+
     public static event EventHandler<OnBossWeakPointEventArgs> OnBossWeakpointEnable;
     public static event EventHandler<OnBossWeakPointEventArgs> OnBossWeakpointDisable;
 
@@ -42,6 +47,11 @@ public abstract class BossWeakPoint : MonoBehaviour
         public BossWeakPoint bossWeakPoint;
     }
 
+    private void Awake()
+    {
+        InitializePlayerGameObject();
+    }
+
     protected virtual void Start()
     {
         SetIsHit(false);
@@ -50,6 +60,11 @@ public abstract class BossWeakPoint : MonoBehaviour
     private void Update()
     {
         HandleWeakPointPower();
+    }
+
+    private void InitializePlayerGameObject()
+    {
+        player = GameObject.FindGameObjectWithTag(PLAYER_TAG);
     }
 
     protected abstract void HandleWeakPointPower();
@@ -82,6 +97,14 @@ public abstract class BossWeakPoint : MonoBehaviour
     }
 
     private void SetVisual(bool active) => visual.SetActive(active);
+
+    protected bool CheckPlayerClose()
+    {
+        if (!player) return true;
+        if (Vector3.Distance(transform.position, player.transform.position) <= PLAYER_DISTANCE_TO_HIT) return true;
+
+        return false;
+    }
 
     #region BossWeakPointsHandler Subscriptions
     private void BossWeakPointsHandler_OnWeakPointsEnable(object sender, BossWeakPointsHandler.OnWeakPointsEventArgs e)
