@@ -22,9 +22,8 @@ public class LogListenerEvents : MonoBehaviour
         //LEVEL3
 
         //BOSS
-        BossStateHandlerOld.OnBossDefeated += BossStateHandler_OnBossDefeated;
-        BossStateHandlerOld.OnPlayerDefeated += BossStateHandler_OnPlayerDefeated;
-        BossStateHandlerOld.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
+        BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
+        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
         AncientRelic.OnAncientRelicCollected += AncientRelic_OnAncientRelicCollected;
     }
 
@@ -47,9 +46,8 @@ public class LogListenerEvents : MonoBehaviour
 
 
         //BOSS
-        BossStateHandlerOld.OnBossDefeated -= BossStateHandler_OnBossDefeated;
-        BossStateHandlerOld.OnPlayerDefeated -= BossStateHandler_OnPlayerDefeated;
-        BossStateHandlerOld.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
+        BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
+        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
         AncientRelic.OnAncientRelicCollected -= AncientRelic_OnAncientRelicCollected;
     }
 
@@ -67,8 +65,7 @@ public class LogListenerEvents : MonoBehaviour
     //LEVEL3
 
     //BOSS
-    private void BossStateHandler_OnPlayerDefeated(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Events/PlayerDefeated");
     private void BossStateHandler_OnBossDefeated(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Events/BossDefeated");
-    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandlerOld.OnPhaseChangeEventArgs e) => GameLogManager.Instance.Log($"Events/BossPhaseChange/{e.phaseNumber}");
+    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e) => GameLogManager.Instance.Log($"Events/BossPhaseChange/{e.nextPhase}");
     private void AncientRelic_OnAncientRelicCollected(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Events/AncientRelicCollected");
 }
