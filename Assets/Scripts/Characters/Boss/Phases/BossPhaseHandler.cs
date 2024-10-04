@@ -22,6 +22,10 @@ public class BossPhaseHandler : MonoBehaviour
     public static event EventHandler OnLastPhaseCompleated;
     public static event EventHandler OnAlmostDefeatedPhaseCompleated;
 
+    private GameObject player;//
+    private const string PLAYER_TAG = "Player";//
+    private const float PLAYER_DISTANCE_TO_UPDATE = 30f;//
+
     public class OnPhaseEventArgs : EventArgs
     {
         public BossPhase currentPhase;
@@ -47,6 +51,7 @@ public class BossPhaseHandler : MonoBehaviour
     private void Awake()
     {
         SetSingleton();
+        player = GameObject.FindGameObjectWithTag(PLAYER_TAG); //
     }
 
     private void Start()
@@ -57,7 +62,7 @@ public class BossPhaseHandler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.M) && CheckPlayerClose())
         {
             ChangeToNextPhase();
         }
@@ -135,4 +140,13 @@ public class BossPhaseHandler : MonoBehaviour
         ChangeToNextPhase();
     }
     #endregion
+
+    //
+    private bool CheckPlayerClose()
+    {
+        if (!player) return true;
+        if (Vector3.Distance(transform.position, player.transform.position) <= PLAYER_DISTANCE_TO_UPDATE) return true;
+
+        return false;
+    }
 }

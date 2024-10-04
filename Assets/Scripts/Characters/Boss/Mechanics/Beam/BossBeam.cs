@@ -22,6 +22,13 @@ public class BossBeam : MonoBehaviour
 
     private void Update()
     {
+        
+        //Test();
+        
+    }
+
+    private void Test()
+    {
         if (Input.GetKeyDown(KeyCode.B))
         {
             OnBeamStart?.Invoke(this, new OnBeamEventArgs { bossPhase = BossPhase.Phase3 });
