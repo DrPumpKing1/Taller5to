@@ -11,6 +11,7 @@ public class PetGuidanceListener : MonoBehaviour
     [Serializable]
     public class PetGuidanceObject
     {
+        public int id;
         public string guidanceName;
         public string logToStartGuidance;
         public string logToEndGuidance;
