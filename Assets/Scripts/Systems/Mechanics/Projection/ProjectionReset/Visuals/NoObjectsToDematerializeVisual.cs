@@ -39,14 +39,14 @@ public class NoObjectsToDematerializeVisual : MonoBehaviour
 
         Transform noObjectsToDematerializeUITransform = Instantiate(noObjectsToDematerializeUIPrefab, transform.position + instantiationPositionOffset, transform.rotation);
 
-        NoObjectsToDematerializeUI noObjectsToDematerializeUI = noObjectsToDematerializeUITransform.GetComponentInChildren<NoObjectsToDematerializeUI>();
+        FeedbackUI feedbackUI = noObjectsToDematerializeUITransform.GetComponentInChildren<FeedbackUI>();
 
-        if (!noObjectsToDematerializeUI)
+        if (!feedbackUI)
         {
-            Debug.LogWarning("There's not a InsufficientProjectionGemsUI attached to instantiated prefab");
+            Debug.LogWarning("There's not a FeedbackUI attached to instantiated prefab");
             return;
         }
 
-        cooldownTimer = noObjectsToDematerializeUI.LifeTime;
+        cooldownTimer = feedbackUI.TotalLifetime;
     }
 }

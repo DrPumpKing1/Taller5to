@@ -38,15 +38,15 @@ public class InsufficientProjectionGemsVisual : MonoBehaviour
 
         Transform insufficientProjectionGemsUITransform = Instantiate(insufficientProjectionGemsUIPrefab, transform.position + instantiationPositionOffset, transform.rotation);
 
-        InsufficientProjectionGemsUI insufficientProjectionGemsUI = insufficientProjectionGemsUITransform.GetComponentInChildren<InsufficientProjectionGemsUI>();
+        FeedbackUI feedbackUI = insufficientProjectionGemsUITransform.GetComponentInChildren<FeedbackUI>();
 
-        if (!insufficientProjectionGemsUI)
+        if (!feedbackUI)
         {
-            Debug.LogWarning("There's not a InsufficientProjectionGemsUI attached to instantiated prefab");
+            Debug.LogWarning("There's not a FeedbackUI attached to instantiated prefab");
             return;
         }
 
-        cooldownTimer = insufficientProjectionGemsUI.LifeTime;
+        cooldownTimer = feedbackUI.TotalLifetime;
     }
 
 }

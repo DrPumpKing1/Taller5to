@@ -325,7 +325,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7881402616386405376}
-  - component: {fileID: 8617461622517834303}
   - component: {fileID: 925953812673219491}
   m_Layer: 0
   m_Name: Visual
@@ -351,25 +350,6 @@ Transform:
   - {fileID: 5245893289592977836}
   m_Father: {fileID: 3061237008394950533}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8617461622517834303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5576991132002602105}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 477eef53336058e41840ae8a18734bd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectionPlatformProjection: {fileID: 0}
-  selectedVisualRenderer: {fileID: 5503237954577967689}
-  deselectedVisualMaterial: {fileID: 2100000, guid: 69529db4569931f449265a58791585b2, type: 2}
-  selectedVisualMaterial: {fileID: 2100000, guid: f225cbf5f550f684a8c94cc51913eb0d, type: 2}
-  materialFadeTime: 0.1
-  minAlpha: 0
-  maxAlpha: 0.4
 --- !u!114 &925953812673219491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,12 +357,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5576991132002602105}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ce472eb7bcc76a4f99f778b2d90c419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectionPlatformProjection: {fileID: 0}
+  projectionPlatformProjection: {fileID: -7844609768730437856}
   insufficientProjectionGemsUIPrefab: {fileID: 7432648003712889798, guid: 8b3dcc2d0d5ec5349aa8cd4aecee5475, type: 3}
   instantiationPositionOffset: {x: 0, y: 1.75, z: 0}
 --- !u!1 &5939218099306923369
@@ -796,7 +776,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 5.5750003
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.y

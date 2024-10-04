@@ -3,23 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class LearningSuccessUI : MonoBehaviour
+public class LearningSuccessUI : FeedbackUI
 {
-    [Header("Components")]
+    [Header("Text")]
     [SerializeField] private TextMeshProUGUI learningSuccessText;
-
-    [Header("Settings")]
-    [SerializeField] private float lifeTime;
-
-    private void Awake()
-    {
-        DestroyAfterLifetime();
-    }
 
     public void SetLearningSuccessText(ProjectableObjectSO learnedObject)
     {
         learningSuccessText.text = $"{learnedObject.objectName} projection learned";
     }
-
-    private void DestroyAfterLifetime() => Destroy(transform.parent.gameObject, lifeTime);
 }
