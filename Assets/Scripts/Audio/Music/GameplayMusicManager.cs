@@ -9,13 +9,13 @@ public class GameplayMusicManager : MonoBehaviour
     [SerializeField] private MusicPoolSO musicPoolSO;
 
     [Header("Gameplay Music Transition Settings")]
-    [SerializeField] private float fadeOutTime;
-    [SerializeField] private float fadeInTime;
-    [SerializeField] private float muteTime;
+    [SerializeField,Range(0.1f,2f)]  private float fadeOutTime;
+    [SerializeField, Range(0.1f, 2f)] private float fadeInTime;
+    [SerializeField, Range(0.1f, 2f)] private float muteTime;
 
     [Header("Cinematic Gameplay Music Fade Settings")]
-    [SerializeField] private float fadeOutTimeCinematics;
-    [SerializeField] private float fadeInTimeCinematics;
+    [SerializeField, Range(0.1f, 2f)] private float fadeOutTimeCinematics;
+    [SerializeField, Range(0.1f, 2f)] private float fadeInTimeCinematics;
 
     [Header("Debug")]
     [SerializeField] private AudioClip currentGameplayMusic;
