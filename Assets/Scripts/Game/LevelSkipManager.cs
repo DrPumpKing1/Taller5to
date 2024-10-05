@@ -37,7 +37,7 @@ public class LevelSkipManager : MonoBehaviour
         [Space]
         public int projectionGems;
         public bool canOpenInventory;
-        public bool HUDVisible;
+        public bool projectionHUDVisible;
         public bool attachToPlayer;
     }
 
@@ -108,7 +108,7 @@ public class LevelSkipManager : MonoBehaviour
 
         ProjectionGemsManager.Instance.SetTotalProjectionGems(levelSettings.projectionGems);
         InventoryOpeningManager.Instance.SetCanOpenInventory(levelSettings.canOpenInventory);
-        ProjectionHUDVisibilityHandler.Instance.SetIsVisible(levelSettings.HUDVisible);
+        ProjectionHUDVisibilityHandler.Instance.SetIsVisible(levelSettings.projectionHUDVisible);
         PetPlayerAttachment.Instance.SetAttachToPlayer(levelSettings.attachToPlayer,false);
 
         UniqueDialogueTriggerHandler.Instance.ReplaceUniqueDialoguesTriggered(levelSettings.uniqueDialoguesTriggered, true);
