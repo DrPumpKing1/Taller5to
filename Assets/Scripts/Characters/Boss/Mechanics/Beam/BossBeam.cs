@@ -19,22 +19,24 @@ public class BossBeam : MonoBehaviour
     public State BeamState => state;
     private float timer;
 
+    private const int DRAINER_ID = 4;
+    private PhaseBeam currentPhaseBeam;
+
     public static event EventHandler<OnBeamEventArgs> OnBeamStart;
     public static event EventHandler<OnBeamEventArgs> OnBeamEnd;
 
     public static event EventHandler<OnBeamStunEventArgs> OnBeamStun;
 
-    public StunableProjectionPlatformProjection test;
 
     [Serializable]
     public class PhaseBeam
     {
         public BossPhase bossPhase;
-        public float activationTime;
-        public float chargeTime;
-        public float cooldownTime;
-        public float stunTime;
-        public float selectionRadius;
+        [Range(1f,20f)] public float activationTime;
+        [Range(1f, 20f)] public float chargeTime;
+        [Range(1f, 20f)] public float cooldownTime;
+        [Range(1f, 20f)] public float stunTime;
+        [Range(10f, 40f)] public float selectionRadius;
         public List<StunableProjectionPlatformProjection> stunablePlatforms;
     }
 
@@ -67,16 +69,12 @@ public class BossBeam : MonoBehaviour
     private void Start()
     {
         ResetTimer();
+        SetBeamState(State.Disabled);
     }
 
     private void Update()
     {     
         HandleBossBeamStates();
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            OnBeamStun?.Invoke(this, new OnBeamStunEventArgs { stunableProjectionPlatformProjection = test, stunTime = 3 });
-        }
     }
 
     private void SetSingleton()
@@ -116,7 +114,7 @@ public class BossBeam : MonoBehaviour
 
     private void DisabledLogic()
     {
-
+        ResetTimer();
     }
 
     private void ActivatingLogic()
@@ -147,12 +145,28 @@ public class BossBeam : MonoBehaviour
         }
     }
 
+    private void CheckBossBeamEnable(BossPhase bossPhase)
+    {
+        foreach(PhaseBeam phaseBeam in phaseBeams)
+        {
+            if(phaseBeam.bossPhase == bossPhase)
+            {
+                SetCurrentPhaseBeam(phaseBeam);
+                SetBeamState(State.Activating);
+                return;
+            }
+        }
+    }
+
+    private void SetCurrentPhaseBeam(PhaseBeam phaseBeam) => currentPhaseBeam = phaseBeam;
+    private void ClearCurrentPhaseBeam() => currentPhaseBeam = null;
+    private void SetTimer(float time) => timer = time;
     private void ResetTimer() => timer = 0f;
 
     #region BossStateHandler Subscriptions
     private void BossStateHandler_OnBossPhaseChangeEnd(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
     {
-        
+        CheckBossBeamEnable(e.nextPhase);
     }
     #endregion
 }
