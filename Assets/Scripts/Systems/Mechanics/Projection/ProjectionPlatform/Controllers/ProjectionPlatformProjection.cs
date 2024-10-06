@@ -13,7 +13,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     [SerializeField, Range(1f, 100f)] private float verticalInteractionRange;
     [Space]
     [SerializeField] private bool canBeSelected;
-    [SerializeField] private bool isInteractable;
+    [SerializeField] protected bool isInteractable;
     [SerializeField] private bool hasAlreadyBeenInteracted;
     [SerializeField] private string tooltipMessage;
     [Space]
@@ -76,12 +76,12 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
         public float holdDuration;
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         projectionPlatform.OnProjectionPlatformClear += ProjectionPlatform_OnProjectionPlatformClear;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         projectionPlatform.OnProjectionPlatformClear -= ProjectionPlatform_OnProjectionPlatformClear;
     }
@@ -104,7 +104,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
             return;
         }
 
-        if (!IsInteractable)
+        if (!isInteractable)
         {
             FailInteract();
             return;
@@ -134,11 +134,12 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
         canBeSelected = false; //Can´t be selected until is Platform is Reseted (clearing the projected object resets it)
     }
 
-    public void FailInteract()
+    public virtual void FailInteract()
     {
         OnObjectFailInteracted?.Invoke(this, EventArgs.Empty);
-        Debug.Log("FailInteract");
+        //Debug.Log("FailInteract");
     }
+
     public void AlreadyInteracted()
     {
         OnObjectHasAlreadyBeenInteracted?.Invoke(this, EventArgs.Empty);

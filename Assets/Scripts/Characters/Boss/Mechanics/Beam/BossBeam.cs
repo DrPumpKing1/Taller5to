@@ -22,6 +22,10 @@ public class BossBeam : MonoBehaviour
     public static event EventHandler<OnBeamEventArgs> OnBeamStart;
     public static event EventHandler<OnBeamEventArgs> OnBeamEnd;
 
+    public static event EventHandler<OnBeamStunEventArgs> OnBeamStun;
+
+    public StunableProjectionPlatformProjection test;
+
     [Serializable]
     public class PhaseBeam
     {
@@ -34,9 +38,25 @@ public class BossBeam : MonoBehaviour
         public List<StunableProjectionPlatformProjection> stunablePlatforms;
     }
 
-    public class OnBeamEventArgs
+    public class OnBeamEventArgs : EventArgs
     {
         public BossPhase bossPhase;
+    }
+
+    public class OnBeamStunEventArgs : EventArgs
+    {
+        public StunableProjectionPlatformProjection stunableProjectionPlatformProjection;
+        public float stunTime;
+    }
+
+    private void OnEnable()
+    {
+        BossStateHandler.OnBossPhaseChangeEnd += BossStateHandler_OnBossPhaseChangeEnd;
+    }
+
+    private void OnDisable()
+    {
+        BossStateHandler.OnBossPhaseChangeEnd -= BossStateHandler_OnBossPhaseChangeEnd;
     }
 
     private void Awake()
@@ -51,7 +71,25 @@ public class BossBeam : MonoBehaviour
 
     private void Update()
     {     
-        HandleBossBeamStates();      
+        HandleBossBeamStates();
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            OnBeamStun?.Invoke(this, new OnBeamStunEventArgs { stunableProjectionPlatformProjection = test, stunTime = 3 });
+        }
+    }
+
+    private void SetSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("There is more than one BossBeam, proceding to destroy duplicate");
+            Destroy(gameObject);
+        }
     }
 
     private void SetBeamState(State state) => this.state = state;
@@ -109,19 +147,12 @@ public class BossBeam : MonoBehaviour
         }
     }
 
-    private void SetSingleton()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Debug.LogWarning("There is more than one BossBeam, proceding to destroy duplicate");
-            Destroy(gameObject);
-        }
-    }
-
     private void ResetTimer() => timer = 0f;
 
+    #region BossStateHandler Subscriptions
+    private void BossStateHandler_OnBossPhaseChangeEnd(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
+    {
+        
+    }
+    #endregion
 }
