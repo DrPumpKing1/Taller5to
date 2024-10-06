@@ -27,7 +27,6 @@ public class BossBeam : MonoBehaviour
 
     public static event EventHandler<OnBeamStunEventArgs> OnBeamStun;
 
-
     [Serializable]
     public class PhaseBeam
     {

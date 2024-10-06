@@ -139,6 +139,8 @@ MonoBehaviour:
   grabPlayerAttention: 1
   interactionAttentionTransform: {fileID: 2010054631332910845}
   interactionPositionTransform: {fileID: 0}
+  isStunned: 0
+  state: 0
 --- !u!1 &284464508244304068
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,6 +328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7881402616386405376}
   - component: {fileID: 925953812673219491}
+  - component: {fileID: 95808043328170727}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -364,6 +367,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectionPlatformProjection: {fileID: -7844609768730437856}
   insufficientProjectionGemsUIPrefab: {fileID: 7432648003712889798, guid: 8b3dcc2d0d5ec5349aa8cd4aecee5475, type: 3}
+  instantiationPositionOffset: {x: 0, y: 1.75, z: 0}
+--- !u!114 &95808043328170727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5576991132002602105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1512e137a1df17e459e1a3e5bfc5eeb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunableProjectionPlatformProjection: {fileID: -7844609768730437856}
+  platformStunUIPrefab: {fileID: 7432648003712889798, guid: acabd1ad61946774c8e02564e27ba06f, type: 3}
   instantiationPositionOffset: {x: 0, y: 1.75, z: 0}
 --- !u!1 &5939218099306923369
 GameObject:
