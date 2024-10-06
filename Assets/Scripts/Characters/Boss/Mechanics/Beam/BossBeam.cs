@@ -54,11 +54,19 @@ public class BossBeam : MonoBehaviour
     private void OnEnable()
     {
         BossStateHandler.OnBossPhaseChangeEnd += BossStateHandler_OnBossPhaseChangeEnd;
+        BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
+
+        BossPhaseHandler.OnLastPhaseCompleated += BossPhaseHandler_OnLastPhaseCompleated;
+        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
     }
 
     private void OnDisable()
     {
+        BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
         BossStateHandler.OnBossPhaseChangeEnd -= BossStateHandler_OnBossPhaseChangeEnd;
+
+        BossPhaseHandler.OnLastPhaseCompleated += BossPhaseHandler_OnLastPhaseCompleated;
+        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
     }
 
     private void Awake()
@@ -119,17 +127,50 @@ public class BossBeam : MonoBehaviour
 
     private void ActivatingLogic()
     {
+        if(timer < currentPhaseBeam.activationTime)
+        {
+            timer += Time.deltaTime;
+            return;
+        }
 
+        ResetTimer();
+
+        //ChooseStunableProjectionPlatform;
+        //Fire Event
+
+        SetBeamState(State.Charging);
     }
 
     private void ChargingLogic()
     {
+        if (timer < currentPhaseBeam.chargeTime)
+        {
+            timer += Time.deltaTime;
+            return;
+        }
 
+        ResetTimer();
+
+        //DematerializeOnProjectionPlatform;
+        //Fire Event
+
+        SetBeamState(State.OnCooldown);
     }
 
     private void OnCooldownLogic()
     {
+        if (timer < currentPhaseBeam.cooldownTime)
+        {
+            timer += Time.deltaTime;
+            return;
+        }
 
+        ResetTimer();
+
+        //ChooseStunableProjectionPlatform;
+        //FireEvent
+
+        SetBeamState(State.Charging);
     }
 
     private void Test()
@@ -147,6 +188,8 @@ public class BossBeam : MonoBehaviour
 
     private void CheckBossBeamEnable(BossPhase bossPhase)
     {
+        ResetTimer();
+
         foreach(PhaseBeam phaseBeam in phaseBeams)
         {
             if(phaseBeam.bossPhase == bossPhase)
@@ -156,6 +199,9 @@ public class BossBeam : MonoBehaviour
                 return;
             }
         }
+
+        ClearCurrentPhaseBeam();
+        SetBeamState(State.Disabled);
     }
 
     private void SetCurrentPhaseBeam(PhaseBeam phaseBeam) => currentPhaseBeam = phaseBeam;
@@ -163,10 +209,42 @@ public class BossBeam : MonoBehaviour
     private void SetTimer(float time) => timer = time;
     private void ResetTimer() => timer = 0f;
 
-    #region BossStateHandler Subscriptions
+    private void SuddenBeamDisable()
+    {
+        if(state == State.Charging)
+        {
+            //EndCharge
+        }
+
+        if(state == State.OnCooldown)
+        {
+            //EndCooldown
+        }
+
+        ResetTimer();
+        ClearCurrentPhaseBeam();
+        SetBeamState(State.Disabled);
+    }
+
+    #region BossState&PhaseHandler Subscriptions
+    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
+    {
+        SuddenBeamDisable();
+    }
+
     private void BossStateHandler_OnBossPhaseChangeEnd(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
     {
         CheckBossBeamEnable(e.nextPhase);
     }
+
+    private void BossPhaseHandler_OnLastPhaseCompleated(object sender, EventArgs e)
+    {
+        SuddenBeamDisable();
+    }
+    private void BossStateHandler_OnBossDefeated(object sender, EventArgs e)
+    {
+        SuddenBeamDisable();
+    }
+
     #endregion
 }
