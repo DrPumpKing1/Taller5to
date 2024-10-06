@@ -14,7 +14,7 @@ public class BossBeam : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private List<PhaseBeam> phaseBeams;
 
-    public enum State { Disabled, Charging, OnCooldown}
+    public enum State { Disabled,Activating, Charging, OnCooldown}
 
     public State BeamState => state;
     private float timer;
@@ -26,6 +26,7 @@ public class BossBeam : MonoBehaviour
     public class PhaseBeam
     {
         public BossPhase bossPhase;
+        public float activationTime;
         public float chargeTime;
         public float cooldownTime;
         public float stunTime;
@@ -62,6 +63,9 @@ public class BossBeam : MonoBehaviour
             case State.Disabled:
                 DisabledLogic();
                 break;
+            case State.Activating:
+                ActivatingLogic();
+                break;
             case State.Charging:
                 ChargingLogic();
                 break;
@@ -73,6 +77,11 @@ public class BossBeam : MonoBehaviour
     }
 
     private void DisabledLogic()
+    {
+
+    }
+
+    private void ActivatingLogic()
     {
 
     }
