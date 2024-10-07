@@ -37,6 +37,7 @@ public class SignalProjectile : MonoBehaviour
         OnProjectileImpact?.Invoke(this, new OnProjectileImpactEventArgs { contactPoint = collision.contacts[0] });
         OnAnyProjectileImpact?.Invoke(this, EventArgs.Empty);
 
+        /*
         if (collision.gameObject != sender)
         {
             Electrode component = collision.gameObject.GetComponent<Electrode>();
@@ -65,6 +66,9 @@ public class SignalProjectile : MonoBehaviour
 
             Destroy(gameObject);
         }
+        */
+
+        Destroy(gameObject);
     }
 
     private void HandleLifespan()

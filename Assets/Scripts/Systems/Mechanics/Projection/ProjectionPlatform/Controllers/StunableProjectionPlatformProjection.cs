@@ -27,13 +27,13 @@ public class StunableProjectionPlatformProjection : ProjectionPlatformProjection
     protected override void OnEnable()
     {
         base.OnEnable();
-        BossBeam.OnBeamStun += BossBeam_OnBeamStun;
+        BossBeam.OnBeamPlatformStun += BossBeam_OnBeamStun;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        BossBeam.OnBeamStun -= BossBeam_OnBeamStun;
+        BossBeam.OnBeamPlatformStun -= BossBeam_OnBeamStun;
     }
 
     private void Update()
@@ -110,7 +110,7 @@ public class StunableProjectionPlatformProjection : ProjectionPlatformProjection
 
 
     #region BossBeam Subscriptions
-    private void BossBeam_OnBeamStun(object sender, BossBeam.OnBeamStunEventArgs e)
+    private void BossBeam_OnBeamStun(object sender, BossBeam.OnBeamPlatformEventArgs e)
     {
         if (e.stunableProjectionPlatformProjection != this) return;
         if (state != State.NotStunned) return;

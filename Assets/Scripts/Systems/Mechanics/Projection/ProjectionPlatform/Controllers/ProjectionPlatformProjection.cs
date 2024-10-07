@@ -24,6 +24,8 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     [SerializeField] private Transform interactionAttentionTransform;
     [SerializeField] private Transform interactionPositionTransform;
 
+    public ProjectionPlatform ProjectionPlatform => projectionPlatform;
+
     #region IHoldInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
     public float VerticalInteractionRange => verticalInteractionRange;
@@ -215,12 +217,12 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
 
         projectedObject.transform.SetParent(projectionPlatform.ProjectionPoint);
         projectableObject.SetProjectionPlatform(projectionPlatform);
+        projectionPlatform.SetProjectionPlatform(projectableObjectSO, projectableObject);
 
         ProjectionManager.Instance.SuccessObjectProjection(projectableObjectSO, projectionPlatform, projectableObject);
         OnObjectProjectionSuccess?.Invoke(this, new OnObjectProjectionEventArgs { projectableObjectSO = projectableObjectSO });
         OnAnyObjectProjectionSuccess?.Invoke(this, new OnAnyProjectionEventArgs { projectableObjectSO = projectableObjectSO });
 
-        projectionPlatform.SetProjectionPlatform(projectableObjectSO, projectableObject);
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 

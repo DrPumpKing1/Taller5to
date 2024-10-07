@@ -7,7 +7,7 @@ public class InsufficientProjectionGemsUI : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float lifeTime;
 
-    public float LifeTime { get { return lifeTime; } }
+    public float LifeTime => lifeTime;
 
     private void Awake()
     {

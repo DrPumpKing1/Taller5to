@@ -166,11 +166,11 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     {
         if (projectableObject.ProjectionPlatform) projectableObject.ProjectionPlatform.ClearProjectionPlatform();
 
-        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
-
         ProjectionManager.Instance.ObjectDematerialized(projectableObject.ProjectableObjectSO, projectableObject.ProjectionPlatform, projectableObject, triggerEvents);
         OnObjectDematerialized?.Invoke(this, EventArgs.Empty);
         OnAnyObjectDematerialized?.Invoke(this, new OnAnyObjectDematerializedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
+
+        OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
 
         Destroy(gameObject);
     }

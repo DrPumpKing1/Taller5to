@@ -51,8 +51,8 @@ public class BossWeakPointsHandler : MonoBehaviour
         BossPhaseHandler.OnLastPhaseCompleated += BossPhaseHandler_OnLastPhaseCompleated;
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
 
-        BossBeam.OnBeamStart += BossBeam_OnBeamStart;
-        BossBeam.OnBeamEnd += BossBeam_OnBeamEnd;
+        BossBeam.OnBeamChargeStart += BossBeam_OnBeamStart;
+        BossBeam.OnBeamChargeEnd += BossBeam_OnBeamEnd;
 
     }
 
@@ -64,8 +64,8 @@ public class BossWeakPointsHandler : MonoBehaviour
         BossPhaseHandler.OnLastPhaseCompleated -= BossPhaseHandler_OnLastPhaseCompleated;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
 
-        BossBeam.OnBeamStart -= BossBeam_OnBeamStart;
-        BossBeam.OnBeamEnd -= BossBeam_OnBeamEnd;
+        BossBeam.OnBeamChargeStart -= BossBeam_OnBeamStart;
+        BossBeam.OnBeamChargeEnd -= BossBeam_OnBeamEnd;
     }
 
     private void Awake()

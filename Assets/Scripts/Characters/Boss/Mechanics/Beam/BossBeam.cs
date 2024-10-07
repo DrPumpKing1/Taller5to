@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Threading;
+using static BossBeam;
+using UnityEngine.SocialPlatforms;
 
 public class BossBeam : MonoBehaviour
 {
@@ -22,14 +24,18 @@ public class BossBeam : MonoBehaviour
     private const int DRAINER_ID = 4;
     private PhaseBeam currentPhaseBeam;
     public Transform currentBeamSphere;
+    public StunableProjectionPlatformProjection currentTargetedProjectionPlatform;
 
-    public static event EventHandler<OnBeamEventArgs> OnBeamStart;
-    public static event EventHandler<OnBeamEventArgs> OnBeamEnd;
+    public static event EventHandler<OnBeamEventArgs> OnBeamChargeStart;
+    public static event EventHandler<OnBeamEventArgs> OnBeamChargeEnd;
 
-    public static event EventHandler<OnBeamStunEventArgs> OnBeamStun;
+    public static event EventHandler<OnBeamPlatformEventArgs> OnBeamPlatformTargeted;
+    public static event EventHandler<OnBeamPlatformEventArgs> OnBeamPlatformTargetCleared;
+    public static event EventHandler<OnBeamPlatformEventArgs> OnBeamPlatformStun;
 
     public static event EventHandler<OnBeamSphereEventArgs> OnBeamSphereSelected;
     public static event EventHandler<OnBeamSphereEventArgs> OnBeamSphereCleared;
+
 
     [Serializable]
     public class PhaseBeam
@@ -39,7 +45,7 @@ public class BossBeam : MonoBehaviour
         [Range(1f, 20f)] public float chargeTime;
         [Range(1f, 20f)] public float cooldownTime;
         [Range(1f, 20f)] public float stunTime;
-        [Range(10f, 40f)] public float selectionRadius;
+        [Range(10f, 80f)] public float selectionRadius;
         public List<StunableProjectionPlatformProjection> stunablePlatforms;
     }
 
@@ -53,7 +59,7 @@ public class BossBeam : MonoBehaviour
         public BossPhase bossPhase;
     }
 
-    public class OnBeamStunEventArgs : EventArgs
+    public class OnBeamPlatformEventArgs : EventArgs
     {
         public StunableProjectionPlatformProjection stunableProjectionPlatformProjection;
         public float stunTime;
@@ -66,6 +72,9 @@ public class BossBeam : MonoBehaviour
 
         BossPhaseHandler.OnLastPhaseCompleated += BossPhaseHandler_OnLastPhaseCompleated;
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
+
+        ProjectionPlatformProjection.OnAnyObjectProjectionSuccess += ProjectionPlatformProjection_OnAnyObjectProjectionSuccess;
+        ProjectableObjectDematerialization.OnAnyObjectDematerialized += ProjectableObjectDematerialization_OnAnyObjectDematerialized;
     }
 
     private void OnDisable()
@@ -73,8 +82,11 @@ public class BossBeam : MonoBehaviour
         BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
         BossStateHandler.OnBossPhaseChangeEnd -= BossStateHandler_OnBossPhaseChangeEnd;
 
-        BossPhaseHandler.OnLastPhaseCompleated += BossPhaseHandler_OnLastPhaseCompleated;
+        BossPhaseHandler.OnLastPhaseCompleated -= BossPhaseHandler_OnLastPhaseCompleated;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
+
+        ProjectionPlatformProjection.OnAnyObjectProjectionSuccess -= ProjectionPlatformProjection_OnAnyObjectProjectionSuccess;
+        ProjectableObjectDematerialization.OnAnyObjectDematerialized -= ProjectableObjectDematerialization_OnAnyObjectDematerialized;
     }
 
     private void Awake()
@@ -170,12 +182,12 @@ public class BossBeam : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            OnBeamStart?.Invoke(this, new OnBeamEventArgs { bossPhase = BossPhase.Phase3 });
+            OnBeamChargeStart?.Invoke(this, new OnBeamEventArgs { bossPhase = BossPhase.Phase3 });
         }
 
         if (Input.GetKeyDown(KeyCode.N))
         {
-            OnBeamEnd?.Invoke(this, new OnBeamEventArgs { bossPhase = BossPhase.Phase3 });
+            OnBeamChargeEnd?.Invoke(this, new OnBeamEventArgs { bossPhase = BossPhase.Phase3 });
         }
     }
 
@@ -202,35 +214,144 @@ public class BossBeam : MonoBehaviour
     {
         ResetTimer();
 
-        //ChooseStunableProjectionPlatform;
-        //Fire Event
-
         SetRandomBeamSphere();
+        TargetProjectionPlatform();
+
         SetBeamState(State.Charging);
+
+        OnBeamChargeStart?.Invoke(this, new OnBeamEventArgs { bossPhase = currentPhaseBeam.bossPhase });
     }
 
     private void OnChargeEnd()
     {
         ResetTimer();
 
-        //DematerializeOnProjectionPlatform;
-        //Fire Event
+        DematerializeInPlatform();
+        StunProjectionPlatform();
 
+        ClearCurrentTargetedProjectionPlatform();
         ClearCurrentBeamSphere();
+
         SetBeamState(State.OnCooldown);
+
+        OnBeamChargeEnd?.Invoke(this, new OnBeamEventArgs { bossPhase = currentPhaseBeam.bossPhase });
     }
 
     private void OnCooldownEnd()
     {
         ResetTimer();
 
-        //ChooseStunableProjectionPlatform;
-        //FireEvent
-
         SetRandomBeamSphere();
+        TargetProjectionPlatform();
+
         SetBeamState(State.Charging);
+
+        OnBeamChargeStart?.Invoke(this, new OnBeamEventArgs { bossPhase = currentPhaseBeam.bossPhase });
     }
     #endregion
+
+
+    private void TargetProjectionPlatform()
+    {
+        List<StunableProjectionPlatformProjection> platformsInRange = GetStunableProjectionPlatformsInSphereRange(currentPhaseBeam.stunablePlatforms, currentBeamSphere, currentPhaseBeam.selectionRadius);
+
+        List<StunableProjectionPlatformProjection> validPlatformsWithDrainer = GetStunableProjectionPlatformsWithSpecificObject(platformsInRange, DRAINER_ID);
+        List<StunableProjectionPlatformProjection> validPlatformsWithObject = GetStunableProjectionPlatformsWithObject(platformsInRange);
+
+        List<StunableProjectionPlatformProjection> platformsPool;
+
+        if (validPlatformsWithDrainer.Count > 0) platformsPool = validPlatformsWithDrainer;
+        else platformsPool = validPlatformsWithObject;
+
+        if (platformsPool.Count <= 0) return;
+
+        int randomIndex = UnityEngine.Random.Range(0, platformsPool.Count);
+        StunableProjectionPlatformProjection targetPlatform = platformsPool[randomIndex];
+
+        SetTargetedProjectionPlatform(targetPlatform);
+    }
+
+    private void CheckReTargetProjectionPlatform()
+    {
+        if (currentTargetedProjectionPlatform)
+        {
+            if (CheckValidStunableProjectionPlatform(currentTargetedProjectionPlatform, currentBeamSphere, currentPhaseBeam.selectionRadius)) return;
+            ClearCurrentTargetedProjectionPlatform();
+        }
+
+        TargetProjectionPlatform();
+    }
+
+    private void DematerializeInPlatform()
+    {
+        if (!currentTargetedProjectionPlatform) return;
+
+        BossObjectDematerialization.Instance.DematerializeInTargetPlatform(currentTargetedProjectionPlatform.ProjectionPlatform);
+    }
+
+    private void StunProjectionPlatform()
+    {
+        if (!currentTargetedProjectionPlatform) return;
+
+        OnBeamPlatformStun?.Invoke(this, new OnBeamPlatformEventArgs { stunableProjectionPlatformProjection = currentTargetedProjectionPlatform, stunTime = currentPhaseBeam.stunTime });
+    }
+
+    private List<StunableProjectionPlatformProjection> GetStunableProjectionPlatformsInSphereRange(List<StunableProjectionPlatformProjection> pool, Transform sphereTransform, float range)
+    {
+        List<StunableProjectionPlatformProjection> stunableProjectionPlatformsInRange = new List<StunableProjectionPlatformProjection>();
+
+        Vector3 supressedYComponentSpherePosition = GeneralMethods.SupressYComponent(sphereTransform.position);
+
+        foreach (StunableProjectionPlatformProjection platform in pool)
+        {
+            Vector3 supressedYComponentPlatformPosition = GeneralMethods.SupressYComponent(platform.transform.position);
+            if (Vector3.Distance(supressedYComponentPlatformPosition, supressedYComponentSpherePosition) > range) continue;          
+            stunableProjectionPlatformsInRange.Add(platform);
+        }
+
+        return stunableProjectionPlatformsInRange;
+    }
+
+    private List<StunableProjectionPlatformProjection> GetStunableProjectionPlatformsWithObject(List<StunableProjectionPlatformProjection> pool)
+    {
+        List<StunableProjectionPlatformProjection> stunableProjectionPlatformsWithObject = new List<StunableProjectionPlatformProjection>();
+
+        foreach (StunableProjectionPlatformProjection platform in pool)
+        {
+            if (!platform.ProjectionPlatform.HasObject()) continue;
+            stunableProjectionPlatformsWithObject.Add(platform);
+        }
+
+        return stunableProjectionPlatformsWithObject;
+    }
+
+    private List<StunableProjectionPlatformProjection> GetStunableProjectionPlatformsWithSpecificObject(List<StunableProjectionPlatformProjection> pool, int objectID)
+    {
+        List<StunableProjectionPlatformProjection> stunableProjectionPlatformsWithSpecificObject = new List<StunableProjectionPlatformProjection>();
+
+        foreach (StunableProjectionPlatformProjection platform in pool)
+        {
+            if (!platform.ProjectionPlatform.HasObject()) continue;
+            if (platform.ProjectionPlatform.CurrentProjectedObjectSO.id != objectID) continue;
+            stunableProjectionPlatformsWithSpecificObject.Add(platform);
+        }
+
+        return stunableProjectionPlatformsWithSpecificObject;
+    }
+
+    private bool CheckValidStunableProjectionPlatform(StunableProjectionPlatformProjection platform, Transform sphereTransform, float range)
+    {
+        List<StunableProjectionPlatformProjection> platformsInRange = GetStunableProjectionPlatformsInSphereRange(currentPhaseBeam.stunablePlatforms, currentBeamSphere, currentPhaseBeam.selectionRadius);
+
+        List<StunableProjectionPlatformProjection> validPlatformsWithDrainer = GetStunableProjectionPlatformsWithSpecificObject(platformsInRange, DRAINER_ID);
+        List<StunableProjectionPlatformProjection> validPlatformsWithObject = GetStunableProjectionPlatformsWithObject(platformsInRange);
+
+        if (!platformsInRange.Contains(platform)) return false;
+        if (!validPlatformsWithObject.Contains(platform)) return false;
+        if (validPlatformsWithDrainer.Count > 0 && !validPlatformsWithDrainer.Contains(platform)) return false;
+        
+        return true;
+    }
 
     #region SelectBeamSphere
     private void SetRandomBeamSphere() => SetCurrentBeamSphere(SelectRandomBeamSphere());
@@ -252,8 +373,20 @@ public class BossBeam : MonoBehaviour
         currentBeamSphere = null;      
     }
     #endregion
+
     private void SetCurrentPhaseBeam(PhaseBeam phaseBeam) => currentPhaseBeam = phaseBeam;
     private void ClearCurrentPhaseBeam() => currentPhaseBeam = null;
+    private void SetTargetedProjectionPlatform(StunableProjectionPlatformProjection stunableProjectionPlatform)
+    {
+        currentTargetedProjectionPlatform = stunableProjectionPlatform;
+        OnBeamPlatformTargeted?.Invoke(this,new OnBeamPlatformEventArgs { stunableProjectionPlatformProjection= currentTargetedProjectionPlatform });
+    }
+    private void ClearCurrentTargetedProjectionPlatform()
+    {
+        OnBeamPlatformTargetCleared?.Invoke(this, new OnBeamPlatformEventArgs { stunableProjectionPlatformProjection = currentTargetedProjectionPlatform });
+        currentTargetedProjectionPlatform = null;
+    }
+
     private void SetTimer(float time) => timer = time;
     private void ResetTimer() => timer = 0f;
 
@@ -270,25 +403,10 @@ public class BossBeam : MonoBehaviour
         }
 
         ResetTimer();
-        ClearCurrentPhaseBeam();
+        ClearCurrentTargetedProjectionPlatform();
         ClearCurrentBeamSphere();
+        ClearCurrentPhaseBeam();
         SetBeamState(State.Disabled);
-    }
-
-    private List<StunableProjectionPlatformProjection> GetStunableProjectionPlatformsInSphereRange(List<StunableProjectionPlatformProjection> pool,Transform sphereTransform, float range)
-    {
-        List<StunableProjectionPlatformProjection> stunableProjectionPlatformsInRange = new List<StunableProjectionPlatformProjection>();
-
-        Vector3 supressedYComponentSpherePosition = GeneralMethods.SupressYComponent(sphereTransform.position);
-
-        foreach(StunableProjectionPlatformProjection platform in pool)
-        {
-            Vector3 supressedYComponentPlatformPosition = GeneralMethods.SupressYComponent(platform.transform.position);
-
-            if(Vector3.Distance(supressedYComponentPlatformPosition, supressedYComponentSpherePosition) <= range) stunableProjectionPlatformsInRange.Add(platform);
-        }
-
-        return stunableProjectionPlatformsInRange;
     }
 
     #region BossState&PhaseHandler Subscriptions
@@ -311,5 +429,21 @@ public class BossBeam : MonoBehaviour
         SuddenBeamDisable();
     }
 
+    #endregion
+
+    #region ProjectionPlatformProjection Subscriptions
+    private void ProjectableObjectDematerialization_OnAnyObjectDematerialized(object sender, ProjectableObjectDematerialization.OnAnyObjectDematerializedEventArgs e)
+    {
+        if (state != State.Charging) return;
+
+        CheckReTargetProjectionPlatform();
+    }
+
+    private void ProjectionPlatformProjection_OnAnyObjectProjectionSuccess(object sender, ProjectionPlatformProjection.OnAnyProjectionEventArgs e)
+    {
+        if (state != State.Charging) return;
+
+        CheckReTargetProjectionPlatform();
+    }
     #endregion
 }
