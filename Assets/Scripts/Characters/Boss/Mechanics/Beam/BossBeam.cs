@@ -29,9 +29,9 @@ public class BossBeam : MonoBehaviour
     public static event EventHandler<OnBeamEventArgs> OnBeamChargeStart;
     public static event EventHandler<OnBeamEventArgs> OnBeamChargeEnd;
 
-    public static event EventHandler<OnBeamPlatformEventArgs> OnBeamPlatformTargeted;
-    public static event EventHandler<OnBeamPlatformEventArgs> OnBeamPlatformTargetCleared;
-    public static event EventHandler<OnBeamPlatformEventArgs> OnBeamPlatformStun;
+    public static event EventHandler<OnBeamPlatformTargetEventArgs> OnBeamPlatformTargeted;
+    public static event EventHandler<OnBeamPlatformTargetEventArgs> OnBeamPlatformTargetCleared;
+    public static event EventHandler<OnBeamPlatformStunEventArgs> OnBeamPlatformStun;
 
     public static event EventHandler<OnBeamSphereEventArgs> OnBeamSphereSelected;
     public static event EventHandler<OnBeamSphereEventArgs> OnBeamSphereCleared;
@@ -59,7 +59,13 @@ public class BossBeam : MonoBehaviour
         public BossPhase bossPhase;
     }
 
-    public class OnBeamPlatformEventArgs : EventArgs
+    public class OnBeamPlatformTargetEventArgs : EventArgs
+    {
+        public Transform beamSphere;
+        public StunableProjectionPlatformProjection stunableProjectionPlatformProjection;
+    }
+
+    public class OnBeamPlatformStunEventArgs : EventArgs
     {
         public StunableProjectionPlatformProjection stunableProjectionPlatformProjection;
         public float stunTime;
@@ -293,7 +299,7 @@ public class BossBeam : MonoBehaviour
     {
         if (!currentTargetedProjectionPlatform) return;
 
-        OnBeamPlatformStun?.Invoke(this, new OnBeamPlatformEventArgs { stunableProjectionPlatformProjection = currentTargetedProjectionPlatform, stunTime = currentPhaseBeam.stunTime });
+        OnBeamPlatformStun?.Invoke(this, new OnBeamPlatformStunEventArgs { stunableProjectionPlatformProjection = currentTargetedProjectionPlatform, stunTime = currentPhaseBeam.stunTime });
     }
 
     private List<StunableProjectionPlatformProjection> GetStunableProjectionPlatformsInSphereRange(List<StunableProjectionPlatformProjection> pool, Transform sphereTransform, float range)
@@ -379,11 +385,11 @@ public class BossBeam : MonoBehaviour
     private void SetTargetedProjectionPlatform(StunableProjectionPlatformProjection stunableProjectionPlatform)
     {
         currentTargetedProjectionPlatform = stunableProjectionPlatform;
-        OnBeamPlatformTargeted?.Invoke(this,new OnBeamPlatformEventArgs { stunableProjectionPlatformProjection= currentTargetedProjectionPlatform });
+        OnBeamPlatformTargeted?.Invoke(this,new OnBeamPlatformTargetEventArgs { stunableProjectionPlatformProjection= currentTargetedProjectionPlatform, beamSphere = currentBeamSphere });
     }
     private void ClearCurrentTargetedProjectionPlatform()
     {
-        OnBeamPlatformTargetCleared?.Invoke(this, new OnBeamPlatformEventArgs { stunableProjectionPlatformProjection = currentTargetedProjectionPlatform });
+        OnBeamPlatformTargetCleared?.Invoke(this, new OnBeamPlatformTargetEventArgs { stunableProjectionPlatformProjection = currentTargetedProjectionPlatform, beamSphere = currentBeamSphere });
         currentTargetedProjectionPlatform = null;
     }
 

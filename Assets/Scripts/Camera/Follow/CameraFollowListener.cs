@@ -32,7 +32,12 @@ public class CameraFollowListener : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H)) 
+        //Test();
+    }
+
+    private void Test()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
         {
             StartTransition(cameraTransitions[0]);
         }

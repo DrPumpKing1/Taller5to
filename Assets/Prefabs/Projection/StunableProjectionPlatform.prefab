@@ -329,6 +329,7 @@ GameObject:
   - component: {fileID: 7881402616386405376}
   - component: {fileID: 925953812673219491}
   - component: {fileID: 95808043328170727}
+  - component: {fileID: 8588522796694472561}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -383,6 +384,19 @@ MonoBehaviour:
   stunableProjectionPlatformProjection: {fileID: -7844609768730437856}
   platformStunUIPrefab: {fileID: 7432648003712889798, guid: acabd1ad61946774c8e02564e27ba06f, type: 3}
   instantiationPositionOffset: {x: 0, y: 1.75, z: 0}
+--- !u!114 &8588522796694472561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5576991132002602105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36070aeea58174348b1de4cd7e89a1ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunableProjectionPlatform: {fileID: -7844609768730437856}
 --- !u!1 &5939218099306923369
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,7 +808,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 5.5750003
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.y
