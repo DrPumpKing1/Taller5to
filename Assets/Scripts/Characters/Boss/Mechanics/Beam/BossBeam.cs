@@ -13,19 +13,23 @@ public class BossBeam : MonoBehaviour
     
     [Header("Settings")]
     [SerializeField] private List<PhaseBeam> phaseBeams;
+    [SerializeField] private List<Transform> beamSpheres;
 
     public enum State { Disabled,Activating, Charging, OnCooldown}
-
     public State BeamState => state;
     private float timer;
 
     private const int DRAINER_ID = 4;
     private PhaseBeam currentPhaseBeam;
+    public Transform currentBeamSphere;
 
     public static event EventHandler<OnBeamEventArgs> OnBeamStart;
     public static event EventHandler<OnBeamEventArgs> OnBeamEnd;
 
     public static event EventHandler<OnBeamStunEventArgs> OnBeamStun;
+
+    public static event EventHandler<OnBeamSphereEventArgs> OnBeamSphereSelected;
+    public static event EventHandler<OnBeamSphereEventArgs> OnBeamSphereCleared;
 
     [Serializable]
     public class PhaseBeam
@@ -37,6 +41,11 @@ public class BossBeam : MonoBehaviour
         [Range(1f, 20f)] public float stunTime;
         [Range(10f, 40f)] public float selectionRadius;
         public List<StunableProjectionPlatformProjection> stunablePlatforms;
+    }
+
+    public class OnBeamSphereEventArgs : EventArgs
+    {
+        public Transform beamSphere;
     }
 
     public class OnBeamEventArgs : EventArgs
@@ -132,12 +141,7 @@ public class BossBeam : MonoBehaviour
             return;
         }
 
-        ResetTimer();
-
-        //ChooseStunableProjectionPlatform;
-        //Fire Event
-
-        SetBeamState(State.Charging);
+        OnActivationEnd();
     }
 
     private void ChargingLogic()
@@ -148,12 +152,7 @@ public class BossBeam : MonoBehaviour
             return;
         }
 
-        ResetTimer();
-
-        //DematerializeOnProjectionPlatform;
-        //Fire Event
-
-        SetBeamState(State.OnCooldown);
+        OnChargeEnd();
     }
 
     private void OnCooldownLogic()
@@ -164,12 +163,7 @@ public class BossBeam : MonoBehaviour
             return;
         }
 
-        ResetTimer();
-
-        //ChooseStunableProjectionPlatform;
-        //FireEvent
-
-        SetBeamState(State.Charging);
+        OnCooldownEnd();
     }
 
     private void Test()
@@ -203,6 +197,61 @@ public class BossBeam : MonoBehaviour
         SetBeamState(State.Disabled);
     }
 
+    #region OnStateEnds
+    private void OnActivationEnd()
+    {
+        ResetTimer();
+
+        //ChooseStunableProjectionPlatform;
+        //Fire Event
+
+        SetRandomBeamSphere();
+        SetBeamState(State.Charging);
+    }
+
+    private void OnChargeEnd()
+    {
+        ResetTimer();
+
+        //DematerializeOnProjectionPlatform;
+        //Fire Event
+
+        ClearCurrentBeamSphere();
+        SetBeamState(State.OnCooldown);
+    }
+
+    private void OnCooldownEnd()
+    {
+        ResetTimer();
+
+        //ChooseStunableProjectionPlatform;
+        //FireEvent
+
+        SetRandomBeamSphere();
+        SetBeamState(State.Charging);
+    }
+    #endregion
+
+    #region SelectBeamSphere
+    private void SetRandomBeamSphere() => SetCurrentBeamSphere(SelectRandomBeamSphere());
+
+    private Transform SelectRandomBeamSphere()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, beamSpheres.Count);
+        return beamSpheres[randomIndex];
+    }
+
+    private void SetCurrentBeamSphere(Transform beamSphere)
+    {
+        currentBeamSphere = beamSphere;
+        OnBeamSphereSelected?.Invoke(this, new OnBeamSphereEventArgs { beamSphere = currentBeamSphere });
+    }
+    private void ClearCurrentBeamSphere() 
+    {
+        OnBeamSphereCleared?.Invoke(this, new OnBeamSphereEventArgs { beamSphere = currentBeamSphere });
+        currentBeamSphere = null;      
+    }
+    #endregion
     private void SetCurrentPhaseBeam(PhaseBeam phaseBeam) => currentPhaseBeam = phaseBeam;
     private void ClearCurrentPhaseBeam() => currentPhaseBeam = null;
     private void SetTimer(float time) => timer = time;
@@ -222,20 +271,21 @@ public class BossBeam : MonoBehaviour
 
         ResetTimer();
         ClearCurrentPhaseBeam();
+        ClearCurrentBeamSphere();
         SetBeamState(State.Disabled);
     }
 
-    private List<StunableProjectionPlatformProjection> GetStunableProjectionPlatformsInRange(List<StunableProjectionPlatformProjection> pool, float range)
+    private List<StunableProjectionPlatformProjection> GetStunableProjectionPlatformsInSphereRange(List<StunableProjectionPlatformProjection> pool,Transform sphereTransform, float range)
     {
         List<StunableProjectionPlatformProjection> stunableProjectionPlatformsInRange = new List<StunableProjectionPlatformProjection>();
 
-        Vector3 supressedYComponentBossPosition = GeneralMethods.SupressYComponent(transform.position);
+        Vector3 supressedYComponentSpherePosition = GeneralMethods.SupressYComponent(sphereTransform.position);
 
         foreach(StunableProjectionPlatformProjection platform in pool)
         {
             Vector3 supressedYComponentPlatformPosition = GeneralMethods.SupressYComponent(platform.transform.position);
 
-            if(Vector3.Distance(supressedYComponentPlatformPosition, supressedYComponentBossPosition) <= range) stunableProjectionPlatformsInRange.Add(platform);
+            if(Vector3.Distance(supressedYComponentPlatformPosition, supressedYComponentSpherePosition) <= range) stunableProjectionPlatformsInRange.Add(platform);
         }
 
         return stunableProjectionPlatformsInRange;
