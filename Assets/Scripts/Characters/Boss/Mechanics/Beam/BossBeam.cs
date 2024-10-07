@@ -225,6 +225,22 @@ public class BossBeam : MonoBehaviour
         SetBeamState(State.Disabled);
     }
 
+    private List<StunableProjectionPlatformProjection> GetStunableProjectionPlatformsInRange(List<StunableProjectionPlatformProjection> pool, float range)
+    {
+        List<StunableProjectionPlatformProjection> stunableProjectionPlatformsInRange = new List<StunableProjectionPlatformProjection>();
+
+        Vector3 supressedYComponentBossPosition = GeneralMethods.SupressYComponent(transform.position);
+
+        foreach(StunableProjectionPlatformProjection platform in pool)
+        {
+            Vector3 supressedYComponentPlatformPosition = GeneralMethods.SupressYComponent(platform.transform.position);
+
+            if(Vector3.Distance(supressedYComponentPlatformPosition, supressedYComponentBossPosition) <= range) stunableProjectionPlatformsInRange.Add(platform);
+        }
+
+        return stunableProjectionPlatformsInRange;
+    }
+
     #region BossState&PhaseHandler Subscriptions
     private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
     {
