@@ -18,11 +18,24 @@ public class CameraFollowHandler : MonoBehaviour
 
     private Vector3 originalPlayerCameraFollowPointPosition;
 
-    public enum State { FollowingPlayer, MovingTransition }
+    public enum State { FollowingPlayer, MovingIn, LookingTarget, MovingOut }
 
     public State CameraState => state;
 
     private const float MOVE_TIME_FACTOR = 0.1f;
+
+    private Transform currentCameraFollowTransform;
+    private float previousCameraDistance;
+
+    public static event EventHandler<OnCameraTransitionEventArgs> OnCameraTransitionInStart;
+    public static event EventHandler<OnCameraTransitionEventArgs> OnCameraTransitionInEnd;
+    public static event EventHandler<OnCameraTransitionEventArgs> OnCameraTransitionOutStart;
+    public static event EventHandler<OnCameraTransitionEventArgs> OnCameraTransitionOutEnd;
+
+    public class OnCameraTransitionEventArgs : EventArgs
+    {
+        
+    }
 
     private void Awake()
     {
@@ -31,8 +44,8 @@ public class CameraFollowHandler : MonoBehaviour
 
     private void Start()
     {
-        SetCameraState(State.FollowingPlayer);
         InitializeVariables();
+        SetCameraState(State.FollowingPlayer);
     }
 
     private void SetSingleton()
@@ -55,25 +68,40 @@ public class CameraFollowHandler : MonoBehaviour
 
     private void SetCameraState(State state) => this.state = state;
 
-    public void TransitionMoveCamera(Transform targetTransform, float stallTimeIn, float moveInTime, float stallTime, float moveOutTime, float stallTimeOut)
+    private void SetCurrentCameraFollowTransform(Transform transform) => currentCameraFollowTransform = transform;
+    private void ClearCurrentCameraFollowTransform() => currentCameraFollowTransform = null;
+
+    public void TransitionMoveCamera(Transform targetTransform, float stallTimeIn, float moveInTime, float stallTime, float moveOutTime, float stallTimeOut, float targetDistance, bool endInTime)
     {
         if (state != State.FollowingPlayer) return;
 
         StopAllCoroutines();
-        StartCoroutine(TransitionMoveCameraCoroutine(targetTransform, stallTimeIn, moveInTime, stallTime, moveOutTime, stallTimeOut));
+        StartCoroutine(TransitionMoveCameraCoroutine(targetTransform, stallTimeIn, moveInTime, stallTime, moveOutTime, stallTimeOut, targetDistance, endInTime));
     }
 
-    private IEnumerator TransitionMoveCameraCoroutine(Transform targetTransform, float stallTimeIn, float moveInTime, float stallTime, float moveOutTime,  float stallTimeOut)
+    public void EndTransition(Transform targetTransform, float stallTimeIn, float moveInTime, float stallTime, float moveOutTime, float stallTimeOut, float targetDistance, bool endInTime)
     {
-        SetCameraState(State.MovingTransition);
+        if (state == State.MovingOut) return;
+        if (state == State.FollowingPlayer) return;
+
+        StopAllCoroutines();
+        StartCoroutine(EndTransitionCoroutine(targetTransform, stallTimeIn, moveInTime, stallTime, moveOutTime, stallTimeOut, targetDistance, endInTime));
+    }
+
+
+    private IEnumerator TransitionMoveCameraCoroutine(Transform targetTransform, float stallTimeIn, float moveInTime, float stallTime, float moveOutTime,  float stallTimeOut, float targetDistance, bool endInTime)
+    {
+        SetCameraState(State.MovingIn);
 
         GameObject cameraFollowGameObject = new GameObject("CameraFollowGameObject");
         Transform cameraFollowTransform = cameraFollowGameObject.transform;
 
-        cameraFollowTransform.position = playerCameraFollowPoint.position;
-        CMVCam.Follow = cameraFollowTransform;
+        SetCurrentCameraFollowTransform(cameraFollowTransform);
 
-        Vector3 startingPositionIn = cameraFollowTransform.position;
+        currentCameraFollowTransform.position = playerCameraFollowPoint.position;
+        CMVCam.Follow = currentCameraFollowTransform;
+
+        Vector3 startingPositionIn = currentCameraFollowTransform.position;
 
         yield return new WaitForSeconds(stallTimeIn);
 
@@ -82,42 +110,57 @@ public class CameraFollowHandler : MonoBehaviour
 
         while (positionDifferenceMagnitude > 0.2f)
         {
-            cameraFollowTransform.position = Vector3.Lerp(cameraFollowTransform.position, targetTransform.position, time/(moveInTime) * 1/(MOVE_TIME_FACTOR * moveInTime) * Time.deltaTime);
+            currentCameraFollowTransform.position = Vector3.Lerp(currentCameraFollowTransform.position, targetTransform.position, time/(moveInTime) * 1/(MOVE_TIME_FACTOR * moveInTime) * Time.deltaTime);
 
-            positionDifferenceMagnitude = (cameraFollowTransform.position - targetTransform.position).magnitude;
+            positionDifferenceMagnitude = (currentCameraFollowTransform.position - targetTransform.position).magnitude;
             time += Time.deltaTime;
             yield return null;
         }
 
-        cameraFollowTransform.position = targetTransform.position;
+        currentCameraFollowTransform.position = targetTransform.position;
+
+        SetCameraState(State.LookingTarget);
+
+        if (!endInTime) yield break;
 
         yield return new WaitForSeconds(stallTime);
 
-        time = 0f;
-        positionDifferenceMagnitude = float.MaxValue;
+        yield return StartCoroutine(EndTransitionCoroutine(targetTransform, stallTimeIn, moveInTime, stallTime, moveOutTime, stallTimeOut, targetDistance, endInTime));
+    }
+
+    private IEnumerator EndTransitionCoroutine(Transform targetTransform, float stallTimeIn, float moveInTime, float stallTime, float moveOutTime, float stallTimeOut, float targetDistance, bool endInTime)
+    {
+        if (state == State.MovingOut) yield break;
+        if (state == State.FollowingPlayer) yield break;
+
+        SetCameraState(State.MovingOut);
+
+        float time = 0f;
+        float positionDifferenceMagnitude = float.MaxValue;
 
         while (positionDifferenceMagnitude > 0.2f)
         {
-            cameraFollowTransform.position = Vector3.Lerp(cameraFollowTransform.position, playerCameraFollowPoint.position, time / (moveOutTime) * 1 / (MOVE_TIME_FACTOR * moveOutTime) * Time.deltaTime);
+            currentCameraFollowTransform.position = Vector3.Lerp(currentCameraFollowTransform.position, playerCameraFollowPoint.position, time / (moveOutTime) * 1 / (MOVE_TIME_FACTOR * moveOutTime) * Time.deltaTime);
 
-            positionDifferenceMagnitude = (cameraFollowTransform.position - playerCameraFollowPoint.position).magnitude;
+            positionDifferenceMagnitude = (currentCameraFollowTransform.position - playerCameraFollowPoint.position).magnitude;
             time += Time.deltaTime;
             yield return null;
         }
 
         time = 0f;
 
-        while(time<=  stallTimeOut) //To recftify position during stallTimeOut
+        while (time <= stallTimeOut) //To rectify position during stallTimeOut
         {
-            cameraFollowTransform.position = playerCameraFollowPoint.position;
+            currentCameraFollowTransform.position = playerCameraFollowPoint.position;
             time += Time.deltaTime;
             yield return null;
         }
 
-        cameraFollowTransform.position = playerCameraFollowPoint.position;
+        currentCameraFollowTransform.position = playerCameraFollowPoint.position;
         CMVCam.Follow = playerCameraFollowPoint;
 
-        Destroy(cameraFollowGameObject);
+        Destroy(currentCameraFollowTransform.gameObject);
+        ClearCurrentCameraFollowTransform();
 
         SetCameraState(State.FollowingPlayer);
     }

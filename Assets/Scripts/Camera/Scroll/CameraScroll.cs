@@ -108,4 +108,7 @@ public class CameraScroll : MonoBehaviour
         ScrollFactor = scrollFactor;
     }
 
+    //For CameraFollowHandler
+    public void LerpTowardsTargetDistance(float desiredDistance, float smoothFactor) => Distance = Mathf.SmoothDamp(Distance, desiredDistance, ref refVelocity, smoothScrollFactor * Time.deltaTime);
+
 }   
