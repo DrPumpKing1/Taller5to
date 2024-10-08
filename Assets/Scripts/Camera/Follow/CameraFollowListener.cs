@@ -24,23 +24,6 @@ public class CameraFollowListener : MonoBehaviour
         ClearCurrentCameraTransition();
     }
 
-    private void Update()
-    {
-        Test();
-    }
-
-    private void Test()
-    {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            GameLogManager.Instance.Log("test");
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            GameLogManager.Instance.Log("test2");
-        }
-    }
-
     private void CheckStartTransition(string log)
     {
         foreach (CameraTransition cameraTransition in cameraTransitions)

@@ -18,7 +18,7 @@ public class CameraFollowHandler : MonoBehaviour
 
     private Vector3 originalPlayerCameraFollowPointPosition;
 
-    public enum State { FollowingPlayer, MovingIn, LookingTarget, MovingOut }
+    public enum State {FollowingPlayer, StallingIn, MovingIn, LookingTarget, MovingOut, StallingOut}
 
     public State CameraState => state;
 
@@ -68,10 +68,12 @@ public class CameraFollowHandler : MonoBehaviour
     }
 
     private void SetCameraState(State state) => this.state = state;
-
     private void SetCurrentCameraFollowTransform(Transform transform) => currentCameraFollowTransform = transform;
     private void ClearCurrentCameraFollowTransform() => currentCameraFollowTransform = null;
     private void SetPreviousCameraDistance(float distance) => previousCameraDistance = distance;
+
+    public bool AllowCameraInputProcessing() => state == State.FollowingPlayer || state == State.StallingOut;
+    public bool AllowMovementInputProcessing() => state == State.FollowingPlayer || state == State.StallingOut;
 
     public void TransitionMoveCamera(CameraTransition cameraTransition)
     {
@@ -93,8 +95,6 @@ public class CameraFollowHandler : MonoBehaviour
 
     private IEnumerator TransitionMoveCameraCoroutine(CameraTransition cameraTransition)
     {
-        SetCameraState(State.MovingIn);
-
         OnCameraTransitionInStart?.Invoke(this, new OnCameraTransitionEventArgs { cameraTransition = cameraTransition});
 
         GameObject cameraFollowGameObject = new GameObject("CameraFollowGameObject");
@@ -108,7 +108,11 @@ public class CameraFollowHandler : MonoBehaviour
 
         Vector3 startingPositionIn = currentCameraFollowTransform.position;
 
+        SetCameraState(State.StallingIn);
+
         yield return new WaitForSeconds(cameraTransition.stallTimeIn);
+
+        SetCameraState(State.MovingIn);
 
         float time = 0f;
         float positionDifferenceMagnitude = float.MaxValue;
@@ -128,11 +132,11 @@ public class CameraFollowHandler : MonoBehaviour
 
         currentCameraFollowTransform.position = cameraTransition.targetTransform.position;
 
-        SetCameraState(State.LookingTarget);
-
         OnCameraTransitionInEnd?.Invoke(this, new OnCameraTransitionEventArgs {cameraTransition = cameraTransition});
 
         if (!cameraTransition.endInTime) yield break;
+        
+        SetCameraState(State.LookingTarget);
 
         yield return new WaitForSeconds(cameraTransition.stallTime);
 
@@ -164,11 +168,15 @@ public class CameraFollowHandler : MonoBehaviour
             yield return null;
         }
 
+        SetCameraState(State.StallingOut);
+
         time = 0f;
 
         while (time <= cameraTransition.stallTimeOut) //To rectify position during stallTimeOut
         {
             currentCameraFollowTransform.position = playerCameraFollowPoint.position;
+            CameraScroll.Instance.LerpTowardsTargetDistance(previousCameraDistance, time / (cameraTransition.stallTimeOut) * 1 / (DISTANCE_CAMERA_TIME_FACTOR * cameraTransition.stallTimeOut));
+
             time += Time.deltaTime;
             yield return null;
         }
@@ -188,6 +196,7 @@ public class CameraFollowHandler : MonoBehaviour
 [Serializable]
 public class CameraTransition
 {
+    public int id;
     public string logToStart;
     public string logToEnd;
     public Transform targetTransform;

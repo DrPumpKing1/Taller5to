@@ -74,7 +74,8 @@ public class CameraScroll : MonoBehaviour
     private void HandlePlayerCameraScroll()
     {
         if (!enableCameraScroll) return;
-        if (CameraFollowHandler.Instance.CameraState != CameraFollowHandler.State.FollowingPlayer) return;
+
+        if (!CameraFollowHandler.Instance.AllowCameraInputProcessing()) return;
 
         SmoothInput();
         CalculateDesiredDistance();

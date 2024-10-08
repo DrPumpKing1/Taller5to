@@ -184,19 +184,6 @@ public class BossBeam : MonoBehaviour
         OnCooldownEnd();
     }
 
-    private void Test()
-    {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            OnBeamChargeStart?.Invoke(this, new OnBeamEventArgs { bossPhase = BossPhase.Phase3 });
-        }
-
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            OnBeamChargeEnd?.Invoke(this, new OnBeamEventArgs { bossPhase = BossPhase.Phase3 });
-        }
-    }
-
     private void CheckBossBeamEnable(BossPhase bossPhase)
     {
         ResetTimer();

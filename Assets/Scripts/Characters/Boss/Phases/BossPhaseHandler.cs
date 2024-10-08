@@ -62,10 +62,7 @@ public class BossPhaseHandler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M) && CheckPlayerClose())
-        {
-            ChangeToNextPhase();
-        }
+        Test();
     }
 
     private void SetSingleton()
@@ -78,6 +75,14 @@ public class BossPhaseHandler : MonoBehaviour
         {
             Debug.LogWarning("There is more than one BossPhaseHandler, proceding to destroy duplicate");
             Destroy(gameObject);
+        }
+    }
+
+    private void Test()
+    {
+        if (Input.GetKeyDown(KeyCode.M) && CheckPlayerClose())
+        {
+            ChangeToNextPhase();
         }
     }
 
