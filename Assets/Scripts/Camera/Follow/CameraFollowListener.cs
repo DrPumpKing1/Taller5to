@@ -4,21 +4,6 @@ using UnityEngine;
 
 public class CameraFollowListener : MonoBehaviour
 {
-    [System.Serializable]
-    public class CameraTransition
-    {
-        public string logToStart;
-        public string logToEnd;
-        public Transform targetTransform;
-        [Range(0.5f, 4f)] public float stallTimeIn;
-        [Range(0.5f, 4f)] public float moveInTime;
-        [Range(0.5f, 10f)] public float stallTime;
-        [Range(0.5f, 4f)] public float moveOutTime;
-        [Range(0.5f, 4f)] public float stallTimeOut;
-        [Range(2.5f, 8f)] public float targetDistance;
-        public bool endInTime;
-    }
-
     [Header("Camera Transitions")]
     [SerializeField] private List<CameraTransition> cameraTransitions;
 
@@ -83,9 +68,10 @@ public class CameraFollowListener : MonoBehaviour
     private void SetCurrentCameraTransition(CameraTransition cameraTransition) => currentCameraTransition = cameraTransition;
     private void ClearCurrentCameraTransition() => currentCameraTransition = null;
 
-    private void StartTransition(CameraTransition cameraTransition) => CameraFollowHandler.Instance.TransitionMoveCamera(cameraTransition.targetTransform, cameraTransition.stallTimeIn, cameraTransition.moveInTime, cameraTransition.stallTime, cameraTransition.moveOutTime, cameraTransition.stallTimeOut, cameraTransition.targetDistance, cameraTransition.endInTime);
-    private void EndTransition(CameraTransition cameraTransition) => CameraFollowHandler.Instance.EndTransition(cameraTransition.targetTransform, cameraTransition.stallTimeIn, cameraTransition.moveInTime, cameraTransition.stallTime, cameraTransition.moveOutTime, cameraTransition.stallTimeOut, cameraTransition.targetDistance, cameraTransition.endInTime);
-    #region GameLogManager Subscriptions
+    private void StartTransition(CameraTransition cameraTransition) => CameraFollowHandler.Instance.TransitionMoveCamera(cameraTransition);
+    private void EndTransition(CameraTransition cameraTransition) => CameraFollowHandler.Instance.EndTransition(cameraTransition);
+
+    #region GameLogManagerSubscriptions
     private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
         CheckStartTransition(e.gameplayAction.log);

@@ -50,13 +50,7 @@ public class CameraScroll : MonoBehaviour
 
     private void Update()
     {
-        if (!enableCameraScroll) return;
-
-        SmoothInput();
-        CalculateDesiredDistance();
-        SmoothDistance();
-
-        CalculateCurrentScrollFactor();
+        HandlePlayerCameraScroll();
     }
 
     private void LateUpdate()
@@ -75,6 +69,17 @@ public class CameraScroll : MonoBehaviour
             Debug.LogWarning("There is more than one CameraScroll instance, proceding to destroy duplicate");
             Destroy(gameObject);
         }
+    }
+
+    private void HandlePlayerCameraScroll()
+    {
+        if (!enableCameraScroll) return;
+        if (CameraFollowHandler.Instance.CameraState != CameraFollowHandler.State.FollowingPlayer) return;
+
+        SmoothInput();
+        CalculateDesiredDistance();
+        SmoothDistance();
+        CalculateCurrentScrollFactor();
     }
 
     private void SetOrthoSizeRefferences()
@@ -109,6 +114,6 @@ public class CameraScroll : MonoBehaviour
     }
 
     //For CameraFollowHandler
-    public void LerpTowardsTargetDistance(float desiredDistance, float smoothFactor) => Distance = Mathf.SmoothDamp(Distance, desiredDistance, ref refVelocity, smoothScrollFactor * Time.deltaTime);
-
+    public void LerpTowardsTargetDistance(float desiredDistance, float smoothFactor) => Distance = Mathf.Lerp(Distance, desiredDistance, smoothFactor * Time.deltaTime);
+    public void SetTargetDistance(float desiredDistance) => Distance = desiredDistance;
 }   
