@@ -24,14 +24,14 @@ public class InventoryUI : BaseUI
     protected override void OnEnable()
     {
         base.OnEnable();
-        InventoryOpeningManager.OnInventoryOpen += InventoryOpeningManager_OnIventoryOpen;
+        InventoryOpeningManager.OnInventoryOpen += InventoryOpeningManager_OnInventoryOpen;
         InventoryOpeningManager.OnInventoryClose += InventoryOpeningManager_OnInventoryClose;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        InventoryOpeningManager.OnInventoryOpen -= InventoryOpeningManager_OnIventoryOpen;
+        InventoryOpeningManager.OnInventoryOpen -= InventoryOpeningManager_OnInventoryOpen;
         InventoryOpeningManager.OnInventoryClose -= InventoryOpeningManager_OnInventoryClose;
     }
 
@@ -104,7 +104,7 @@ public class InventoryUI : BaseUI
 
 
     #region InventoryOpeningManager Subscriptions
-    private void InventoryOpeningManager_OnIventoryOpen(object sender, EventArgs e)
+    private void InventoryOpeningManager_OnInventoryOpen(object sender, EventArgs e)
     {
         OpenUI();
     }

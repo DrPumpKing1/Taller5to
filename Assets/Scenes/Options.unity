@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 169482947}
+  - component: {fileID: 169482948}
   m_Layer: 0
   m_Name: --CANVASES--
   m_TagString: Untagged
@@ -155,6 +156,18 @@ Transform:
   - {fileID: 1692986525}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &169482948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169482946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c8a0875562c7734986ec96173755cf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &278682736
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,6 +533,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3363664220749745082, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 169482948}
+    - target: {fileID: 3363664220749745082, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFXButtonClick1
+      objectReference: {fileID: 0}
     - target: {fileID: 3805058848606417945, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -539,6 +560,14 @@ PrefabInstance:
     - target: {fileID: 3927536530595962559, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
       propertyPath: m_text
       value: SFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 4164506617957868069, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 169482948}
+    - target: {fileID: 4164506617957868069, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFXButtonClick1
       objectReference: {fileID: 0}
     - target: {fileID: 4201294270370339206, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -998,6 +1027,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3363664220749745082, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 169482948}
+    - target: {fileID: 3363664220749745082, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFXButtonClick1
+      objectReference: {fileID: 0}
     - target: {fileID: 3805058848606417945, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1017,6 +1054,14 @@ PrefabInstance:
     - target: {fileID: 3927536530595962559, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
       propertyPath: m_text
       value: Music
+      objectReference: {fileID: 0}
+    - target: {fileID: 4164506617957868069, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 169482948}
+    - target: {fileID: 4164506617957868069, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFXButtonClick1
       objectReference: {fileID: 0}
     - target: {fileID: 4201294270370339206, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1635,7 +1680,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1462151426}
+      - m_Target: {fileID: 169482948}
         m_TargetAssemblyTypeName: ButtonSoundHandler, Assembly-CSharp
         m_MethodName: PlaySFXButtonClick1
         m_Mode: 1
@@ -1813,6 +1858,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3363664220749745082, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 169482948}
+    - target: {fileID: 3363664220749745082, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFXButtonClick1
+      objectReference: {fileID: 0}
     - target: {fileID: 3805058848606417945, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1834,6 +1887,14 @@ PrefabInstance:
       value: 'Master
 
 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 4164506617957868069, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 169482948}
+    - target: {fileID: 4164506617957868069, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFXButtonClick1
       objectReference: {fileID: 0}
     - target: {fileID: 4201294270370339206, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2316,7 +2377,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1462151426}
+      - m_Target: {fileID: 169482948}
         m_TargetAssemblyTypeName: ButtonSoundHandler, Assembly-CSharp
         m_MethodName: PlaySFXButtonClick1
         m_Mode: 1
@@ -2809,7 +2870,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1462151426}
+      - m_Target: {fileID: 169482948}
         m_TargetAssemblyTypeName: ButtonSoundHandler, Assembly-CSharp
         m_MethodName: PlaySFXButtonClick1
         m_Mode: 1
@@ -3003,7 +3064,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1462151424}
   - component: {fileID: 1462151425}
-  - component: {fileID: 1462151426}
   m_Layer: 5
   m_Name: OptionsUI
   m_TagString: Untagged
@@ -3046,18 +3106,6 @@ MonoBehaviour:
   mainContentAnimator: {fileID: 1261112107}
   audioContentAnimator: {fileID: 1591990939}
   graphicsContentAnimator: {fileID: 479077597}
---- !u!114 &1462151426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1462151423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c8a0875562c7734986ec96173755cf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1537032860
 GameObject:
   m_ObjectHideFlags: 0
@@ -3141,7 +3189,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1462151426}
+      - m_Target: {fileID: 169482948}
         m_TargetAssemblyTypeName: ButtonSoundHandler, Assembly-CSharp
         m_MethodName: PlaySFXButtonClick1
         m_Mode: 1
@@ -3385,6 +3433,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3363664220749745082, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 169482948}
+    - target: {fileID: 3363664220749745082, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFXButtonClick1
+      objectReference: {fileID: 0}
     - target: {fileID: 3805058848606417945, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3404,6 +3460,14 @@ PrefabInstance:
     - target: {fileID: 3927536530595962559, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
       propertyPath: m_text
       value: Bloom
+      objectReference: {fileID: 0}
+    - target: {fileID: 4164506617957868069, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 169482948}
+    - target: {fileID: 4164506617957868069, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFXButtonClick1
       objectReference: {fileID: 0}
     - target: {fileID: 4201294270370339206, guid: 6668a7add3dcf76489106dd238d2323f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4816,7 +4880,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1462151426}
+      - m_Target: {fileID: 169482948}
         m_TargetAssemblyTypeName: ButtonSoundHandler, Assembly-CSharp
         m_MethodName: PlaySFXButtonClick1
         m_Mode: 1

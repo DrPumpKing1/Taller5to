@@ -349,6 +349,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DevMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""9818aad9-4430-4678-ae46-c3038d0e8cc4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -382,6 +391,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Journal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""74c7563d-bbe7-400b-93d7-33cc0fcde5ca"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DevMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -453,6 +473,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
         m_UI_Inventory = m_UI.FindAction("Inventory", throwIfNotFound: true);
         m_UI_Journal = m_UI.FindAction("Journal", throwIfNotFound: true);
+        m_UI_DevMenu = m_UI.FindAction("DevMenu", throwIfNotFound: true);
         // Dialogues
         m_Dialogues = asset.FindActionMap("Dialogues", throwIfNotFound: true);
         m_Dialogues_Skip = m_Dialogues.FindAction("Skip", throwIfNotFound: true);
@@ -760,6 +781,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_Pause;
     private readonly InputAction m_UI_Inventory;
     private readonly InputAction m_UI_Journal;
+    private readonly InputAction m_UI_DevMenu;
     public struct UIActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -767,6 +789,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Pause => m_Wrapper.m_UI_Pause;
         public InputAction @Inventory => m_Wrapper.m_UI_Inventory;
         public InputAction @Journal => m_Wrapper.m_UI_Journal;
+        public InputAction @DevMenu => m_Wrapper.m_UI_DevMenu;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -785,6 +808,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Journal.started += instance.OnJournal;
             @Journal.performed += instance.OnJournal;
             @Journal.canceled += instance.OnJournal;
+            @DevMenu.started += instance.OnDevMenu;
+            @DevMenu.performed += instance.OnDevMenu;
+            @DevMenu.canceled += instance.OnDevMenu;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -798,6 +824,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Journal.started -= instance.OnJournal;
             @Journal.performed -= instance.OnJournal;
             @Journal.canceled -= instance.OnJournal;
+            @DevMenu.started -= instance.OnDevMenu;
+            @DevMenu.performed -= instance.OnDevMenu;
+            @DevMenu.canceled -= instance.OnDevMenu;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -889,6 +918,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
         void OnJournal(InputAction.CallbackContext context);
+        void OnDevMenu(InputAction.CallbackContext context);
     }
     public interface IDialoguesActions
     {

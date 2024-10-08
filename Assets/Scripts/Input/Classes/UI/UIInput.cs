@@ -24,6 +24,6 @@ public abstract class UIInput : MonoBehaviour, IUIInput
     public abstract bool GetPauseDown();
     public abstract bool GetInventoryDown();
     public abstract bool GetJournalDown();
-
+    public abstract bool GetDevMenuDown();
     public abstract void UseInput();
 }

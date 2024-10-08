@@ -273,6 +273,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 169482947}
+  - component: {fileID: 169482948}
   m_Layer: 0
   m_Name: --CANVASES--
   m_TagString: Untagged
@@ -296,6 +297,18 @@ Transform:
   - {fileID: 1692986525}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &169482948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169482946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c8a0875562c7734986ec96173755cf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &342627474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1168,7 +1181,6 @@ GameObject:
   - component: {fileID: 1462151424}
   - component: {fileID: 1462151425}
   - component: {fileID: 1462151426}
-  - component: {fileID: 1462151427}
   m_Layer: 5
   m_Name: CreditsUI
   m_TagString: Untagged
@@ -1226,18 +1238,6 @@ MonoBehaviour:
   scrollSpeed: 75
   anchoredPositionLimit: 2800
   sceneToTransition: MainMenu
---- !u!114 &1462151427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1462151423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c8a0875562c7734986ec96173755cf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1525731723
 GameObject:
   m_ObjectHideFlags: 0
@@ -2092,7 +2092,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1462151427}
+      - m_Target: {fileID: 169482948}
         m_TargetAssemblyTypeName: ButtonSoundHandler, Assembly-CSharp
         m_MethodName: PlaySFXButtonClick1
         m_Mode: 1

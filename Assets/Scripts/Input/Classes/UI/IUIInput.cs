@@ -9,4 +9,5 @@ public interface IUIInput
     public bool GetPauseDown();
     public bool GetInventoryDown();
     public bool GetJournalDown();
+    public bool GetDevMenuDown();
 }

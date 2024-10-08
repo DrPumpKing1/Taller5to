@@ -70,6 +70,12 @@ public class NewUIInput : UIInput
         return true;
     }
 
+    private bool CanProcessDevMenuInput()
+    {
+        if (PauseManager.Instance.GamePaused) return false;
+        return true;
+    }
+
     public override bool GetPauseDown()
     {
         if (!CanProcessUIInput()) return false;
@@ -99,6 +105,16 @@ public class NewUIInput : UIInput
 
         bool UIInput = playerInputActions.UI.Journal.WasPerformedThisFrame();
 
+        return UIInput;
+    }
+
+    public override bool GetDevMenuDown()
+    {
+        //if (!CanProcessUIInput()) return false;
+        if (!CanProcessDevMenuInput()) return false;
+        if (InputOnCooldown()) return false;
+
+        bool UIInput = playerInputActions.UI.DevMenu.WasPerformedThisFrame();
         return UIInput;
     }
 
