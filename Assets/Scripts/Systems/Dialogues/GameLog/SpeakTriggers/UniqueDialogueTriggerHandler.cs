@@ -159,7 +159,7 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
     {
         foreach (UniqueDialogueEvent uniqueDialogueEvent in uniqueDialogueEvents)
         {
-            uniqueDialogueEvent.triggered = false;
+            uniqueDialogueEvent.triggered = !triggered;
         }
 
         foreach (DialogueSO dialogueSO in dialogueSOs)

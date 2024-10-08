@@ -73,6 +73,8 @@ public class NewUIInput : UIInput
     private bool CanProcessDevMenuInput()
     {
         if (PauseManager.Instance.GamePaused) return false;
+        if (hasGameManager && GameManager.Instance.GameState == GameManager.State.OnCinematic) return false;
+
         return true;
     }
 
@@ -110,7 +112,7 @@ public class NewUIInput : UIInput
 
     public override bool GetDevMenuDown()
     {
-        //if (!CanProcessUIInput()) return false;
+        if (!CanProcessUIInput()) return false;
         if (!CanProcessDevMenuInput()) return false;
         if (InputOnCooldown()) return false;
 

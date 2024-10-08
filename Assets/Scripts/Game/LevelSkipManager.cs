@@ -8,6 +8,9 @@ public class LevelSkipManager : MonoBehaviour
 {
     public static LevelSkipManager Instance { get; private set; }
 
+    [Header("Game Start Settings")]
+    [SerializeField] private LevelSettings gameStartSettings;
+
     [Header("Level1 Settings")]
     [SerializeField] private LevelSettings level1Settings;
 
@@ -32,6 +35,7 @@ public class LevelSkipManager : MonoBehaviour
         [Space]
         public List<DialogueSO> uniqueDialoguesTriggered;
         public List<MonologueSO> uniqueMonologuesTriggered;
+        public List<int> cinematicsTriggeredIDs;
         [Space]
         public List<int> switchesToggledIDs;
         [Space]
@@ -77,6 +81,9 @@ public class LevelSkipManager : MonoBehaviour
 
         switch (id)
         {
+            case 0:
+                levelSettings = gameStartSettings;
+                break;
             case 1:
                 levelSettings = level1Settings;
                 break;
@@ -113,7 +120,7 @@ public class LevelSkipManager : MonoBehaviour
 
         UniqueDialogueTriggerHandler.Instance.ReplaceUniqueDialoguesTriggered(levelSettings.uniqueDialoguesTriggered, true);
         UniqueMonologueTriggerHandler.Instance.ReplaceUniqueMonologuesTriggered(levelSettings.uniqueMonologuesTriggered, true);
-
+        CinematicsManager.Instance.ReplaceCinematicsTriggered(levelSettings.cinematicsTriggeredIDs, true);
         //
 
         PlayerDataPersistenceManager.Instance.SaveGameData();

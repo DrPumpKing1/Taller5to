@@ -129,6 +129,32 @@ public class CinematicsManager : MonoBehaviour
         }
     }
 
+    public void ReplaceCinematicsTriggered(List<int> IDs, bool triggered)
+    {
+        foreach(Cinematic cinematic in cinematics)
+        {
+            cinematic.triggered = !triggered;
+        }
+
+        foreach (int id in IDs)
+        {
+            Cinematic cinematic = GetCinematicByID(id);
+            if (cinematic == null) continue;
+
+            cinematic.triggered = triggered;
+        }
+    }
+
+    private Cinematic GetCinematicByID(int id)
+    {
+        foreach (Cinematic cinematic in cinematics)
+        {
+            if (cinematic.id == id) return cinematic;
+        }
+
+        return null;
+    }
+
     private void SetCurrentCinematic(Cinematic cinematic) =>  currentCinematic = cinematic;
     private void ClearCurrentCinematic() => currentCinematic = null;
 

@@ -12,10 +12,12 @@ public class DebugScriptGameplay : MonoBehaviour
         CheckHideInstruction();
         CheckSkipCinematic();
 
+        /*
         CheckSkipLevel1();
         CheckSkipLevel2();
         CheckSkipLevel3();
         CheckSkipBoss();
+        */
     }
 
     private void CheckHideInstruction()

@@ -54,6 +54,7 @@ public class PetRotationHandler : MonoBehaviour
     private void Update()
     {
         HandleRotationState();
+        AvoidXZRotation();
     }
 
     private void InitializeVariables()
@@ -140,7 +141,8 @@ public class PetRotationHandler : MonoBehaviour
 
         transform.localRotation = Quaternion.LookRotation(FacingDirection);
     }
-
+    private void AvoidXZRotation() => transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
+    
     #region Interaction Methods
     private void SetInteractionAttentionTransform(Transform interactionAttentionTransform) => currentInteractionAttentionTransform = interactionAttentionTransform;
     private void ClearInteractionAttentionTransform() => currentInteractionAttentionTransform = null;

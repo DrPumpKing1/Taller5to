@@ -160,7 +160,7 @@ public class UniqueMonologueTriggerHandler : MonoBehaviour
     {
         foreach (UniqueMonologueEvent uniqueMonologueEvent in uniqueMonologueEvents)
         {
-            uniqueMonologueEvent.triggered = false;
+            uniqueMonologueEvent.triggered = !triggered;
         }
 
         foreach (MonologueSO monologueSO in monologueSOs)
