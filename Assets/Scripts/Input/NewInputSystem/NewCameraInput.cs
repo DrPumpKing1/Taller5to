@@ -26,7 +26,8 @@ public class NewCameraInput : CameraInput
         if (ScenesManager.Instance.SceneState == ScenesManager.State.TransitionOut) return false;
         if (ScenesManager.Instance.SceneState == ScenesManager.State.FullBlack) return false;
 
-        if (!CameraFollowHandler.Instance.AllowCameraInputProcessing()) return false;
+        if (!CameraTransitionHandler.Instance.AllowCameraInputProcessing()) return false;
+        if (!CameraZoomHandler.Instance.AllowCameraInputProcessing()) return false;
 
         return true;
     }
