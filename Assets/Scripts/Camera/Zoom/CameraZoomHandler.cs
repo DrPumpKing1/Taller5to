@@ -56,12 +56,15 @@ public class CameraZoomHandler : MonoBehaviour
     public bool AllowMovementInputProcessing() => state == State.ListeningPlayer || state == State.StallingOut;
 
     private bool CanStartZoom() => state == State.ListeningPlayer || state == State.ZoomingOut || state == State.StallingOut;
+    private bool WasListeningToPlayer() => state == State.ListeningPlayer;
     private bool CanEndZoom() => state != State.ZoomingOut && state != State.ListeningPlayer;
 
     public void ZoomCamera(CameraZoom cameraZoom)
     {
         if (CameraTransitionHandler.Instance.CameraState != CameraTransitionHandler.State.FollowingPlayer) return;
         if (!CanStartZoom()) return;
+
+        if(WasListeningToPlayer()) SetPreviousCameraDistance(CameraScroll.Instance.Distance);
 
         StopAllCoroutines();
         StartCoroutine(ZoomCameraCoroutine(cameraZoom));
@@ -86,8 +89,6 @@ public class CameraZoomHandler : MonoBehaviour
     private IEnumerator ZoomCameraCoroutine(CameraZoom cameraZoom)
     {
         OnCameraZoomInStart?.Invoke(this, new OnCameraZoomEventArgs { cameraZoom = cameraZoom });
-
-        SetPreviousCameraDistance(CameraScroll.Instance.Distance);
 
         SetCameraState(State.StallingIn);
 
