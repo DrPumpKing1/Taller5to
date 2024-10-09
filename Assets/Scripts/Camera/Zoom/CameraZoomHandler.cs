@@ -57,6 +57,7 @@ public class CameraZoomHandler : MonoBehaviour
 
     public void ZoomCamera(CameraZoom cameraZoom)
     {
+        if (CameraTransitionHandler.Instance.CameraState != CameraTransitionHandler.State.LookingTarget) return;
         if (state != State.ListeningPlayer) return;
 
         StopAllCoroutines();
@@ -70,6 +71,14 @@ public class CameraZoomHandler : MonoBehaviour
 
         StopAllCoroutines();
         StartCoroutine(EndZoomCoroutine(cameraZoom));
+    }
+
+    public void CancelZoom()
+    {
+        if (state == State.ListeningPlayer) return;
+
+        StopAllCoroutines();
+        SetCameraState(State.ListeningPlayer);
     }
 
     private IEnumerator ZoomCameraCoroutine(CameraZoom cameraZoom)

@@ -12,11 +12,13 @@ public class CameraZoomListener : MonoBehaviour
     private void OnEnable()
     {
         GameLogManager.OnLogAdd += GameLogManager_OnLogAdd;
+        CameraTransitionHandler.OnCameraTransitionInStart += CameraTransitionHandler_OnCameraTransitionInStart;
     }
 
     private void OnDisable()
     {
         GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
+        CameraTransitionHandler.OnCameraTransitionInStart -= CameraTransitionHandler_OnCameraTransitionInStart;
     }
 
     private void Start()
@@ -53,12 +55,24 @@ public class CameraZoomListener : MonoBehaviour
 
     private void StartZoom(CameraZoom cameraZoom) => CameraZoomHandler.Instance.ZoomCamera(cameraZoom);
     private void EndZoom(CameraZoom cameraZoom) => CameraZoomHandler.Instance.EndZoom(cameraZoom);
+    private void CancelZoom()
+    {
+        ClearCurrentCameraZoom();
+        CameraZoomHandler.Instance.CancelZoom();
+    }
 
     #region GameLogManagerSubscriptions
     private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
         CheckStartZoom(e.gameplayAction.log);
         CheckEndZoom(e.gameplayAction.log);
+    }
+    #endregion
+
+    #region CameraTransitionHandler Subscriptions
+    private void CameraTransitionHandler_OnCameraTransitionInStart(object sender, CameraTransitionHandler.OnCameraTransitionEventArgs e)
+    {
+        CancelZoom();
     }
     #endregion
 }
