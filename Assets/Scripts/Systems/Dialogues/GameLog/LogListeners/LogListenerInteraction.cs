@@ -10,6 +10,9 @@ public class LogListenerInteraction : MonoBehaviour
         InscriptionRead.OnInscriptionRead += InscriptionRead_OnInscriptionRead;
         NarrativeElement.OnNarrativeElementInteracted += NarrativeElement_OnNarrativeElementInteracted;
 
+        LearningPlatformLearn.OnStartLearning += LearningPlatformLearn_OnStartLearning;
+        LearningPlatformLearn.OnEndLearning += LearningPlatformLearn_OnEndLearning;
+
         ProjectableObjectsLearningManager.OnProjectableObjectLearned += ProjectableObjectsLearningManager_OnProjectableObjectLearned;
         ProjectionGemsManager.OnTotalProjectionGemsIncreased += ProjectionGemsManager_OnTotalProjectionGemsIncreased;
 
@@ -24,6 +27,9 @@ public class LogListenerInteraction : MonoBehaviour
         InscriptionRead.OnInscriptionRead -= InscriptionRead_OnInscriptionRead;
         NarrativeElement.OnNarrativeElementInteracted -= NarrativeElement_OnNarrativeElementInteracted;
 
+        LearningPlatformLearn.OnStartLearning -= LearningPlatformLearn_OnStartLearning;
+        LearningPlatformLearn.OnEndLearning -= LearningPlatformLearn_OnEndLearning;
+
         ProjectableObjectsLearningManager.OnProjectableObjectLearned -= ProjectableObjectsLearningManager_OnProjectableObjectLearned;
         ProjectionGemsManager.OnTotalProjectionGemsIncreased -= ProjectionGemsManager_OnTotalProjectionGemsIncreased;
 
@@ -34,7 +40,19 @@ public class LogListenerInteraction : MonoBehaviour
 
     private void InscriptionRead_OnInscriptionRead(object sender, InscriptionRead.OnInscriptionReadEventArgs e) => GameLogManager.Instance.Log($"Interaction/InscriptionRead/{e.inscriptionSO.id}");
     private void NarrativeElement_OnNarrativeElementInteracted(object sender, NarrativeElement.OnCommonInteractableElementInteractedEventArgs e) => GameLogManager.Instance.Log($"Interaction/NarrativeElement/{e.id}");
-    private void ProjectableObjectsLearningManager_OnProjectableObjectLearned(object sender, ProjectableObjectsLearningManager.OnProjectableObjectLearnedEventArgs e) => GameLogManager.Instance.Log($"Interaction/LearnObject/{e.projectableObjectLearned.id}");
+
+    private void LearningPlatformLearn_OnStartLearning(object sender, LearningPlatformLearn.OnLearningEventArgs e)
+    {
+        GameLogManager.Instance.Log($"Interaction/Learning/Start");
+        GameLogManager.Instance.Log($"Interaction/LearningExact/Start/{e.projectableOjectSO.id}");
+    }
+    private void LearningPlatformLearn_OnEndLearning(object sender, LearningPlatformLearn.OnLearningEventArgs e)
+    {
+        GameLogManager.Instance.Log($"Interaction/Learning/End");
+        GameLogManager.Instance.Log($"Interaction/LearningExact/End/{e.projectableOjectSO.id}");
+    }
+
+    private void ProjectableObjectsLearningManager_OnProjectableObjectLearned(object sender, ProjectableObjectsLearningManager.OnProjectableObjectLearnedEventArgs e) =>GameLogManager.Instance.Log($"Interaction/LearnObject/{e.projectableObjectLearned.id}");
     private void ProjectionGemsManager_OnTotalProjectionGemsIncreased(object sender, ProjectionGemsManager.OnProjectionGemsEventArgs e) => GameLogManager.Instance.Log($"Interaction/GrabGems/{e.projectionGems}");
 
     private void ProjectableObjectRotation_OnAnyObjectRotated(object sender, ProjectableObjectRotation.OnAnyObjectRotatedEventArgs e)

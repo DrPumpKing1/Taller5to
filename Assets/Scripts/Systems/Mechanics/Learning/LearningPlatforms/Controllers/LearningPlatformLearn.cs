@@ -64,6 +64,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
 
     public class OnLearningEventArgs : EventArgs
     {
+        public ProjectableObjectSO projectableOjectSO;
         public Transform interactionAttentionTransform;
         public float holdDuration;
     }
@@ -142,14 +143,14 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     public void HoldInteractionStart()
     {
         OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
-        OnStartLearning?.Invoke(this, new OnLearningEventArgs { interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
+        OnStartLearning?.Invoke(this, new OnLearningEventArgs { projectableOjectSO = ProjectableObjectToLearn,interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
     }
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
 
     public void HoldInteractionEnd()
     {
         OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
-        OnEndLearning?.Invoke(this, new OnLearningEventArgs { interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
+        OnEndLearning?.Invoke(this, new OnLearningEventArgs { projectableOjectSO = ProjectableObjectToLearn, interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
     }
 
     public Transform GetTransform() => transform;

@@ -55,10 +55,13 @@ public class CameraZoomHandler : MonoBehaviour
     public bool AllowCameraInputProcessing() => state == State.ListeningPlayer || state == State.StallingOut;
     public bool AllowMovementInputProcessing() => state == State.ListeningPlayer || state == State.StallingOut;
 
+    private bool CanStartZoom() => state == State.ListeningPlayer || state == State.ZoomingOut || state == State.StallingOut;
+    private bool CanEndZoom() => state != State.ZoomingOut && state != State.ListeningPlayer;
+
     public void ZoomCamera(CameraZoom cameraZoom)
     {
-        if (CameraTransitionHandler.Instance.CameraState != CameraTransitionHandler.State.LookingTarget) return;
-        if (state != State.ListeningPlayer) return;
+        if (CameraTransitionHandler.Instance.CameraState != CameraTransitionHandler.State.FollowingPlayer) return;
+        if (!CanStartZoom()) return;
 
         StopAllCoroutines();
         StartCoroutine(ZoomCameraCoroutine(cameraZoom));
@@ -66,8 +69,7 @@ public class CameraZoomHandler : MonoBehaviour
 
     public void EndZoom(CameraZoom cameraZoom)
     {
-        if (state == State.ZoomingOut) return;
-        if (state == State.ListeningPlayer) return;
+        if (!CanEndZoom()) return;
 
         StopAllCoroutines();
         StartCoroutine(EndZoomCoroutine(cameraZoom));
@@ -165,7 +167,7 @@ public class CameraZoom
     [Range(0.5f, 4f)] public float zoomInTime;
     [Range(0.5f, 10f)] public float stallTime;
     [Range(0.5f, 4f)] public float zoomOutTime;
-    [Range(0f, 4f)] public float stallTimeOut;
+    [Range(0.01f, 4f)] public float stallTimeOut;
     [Range(2.5f, 8f)] public float targetDistance;
     public bool endInTime;
 }
