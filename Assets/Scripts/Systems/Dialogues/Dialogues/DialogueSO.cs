@@ -8,6 +8,7 @@ public class DialogueSO : ScriptableObject
     public int id;
     public MovementLimitType movementLimitType;
     public bool allowSkip;
+    public bool lookAtPlayer;
     public List<Sentence> sentences;
 }
 
