@@ -8,7 +8,7 @@ public class WinManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private string logToWin;
     [SerializeField] private string transitionScene;
-    [SerializeField, Range(1f, 10f)] private float timeToTransitioAfterWin;
+    [SerializeField, Range(1f, 10f)] private float timeToTransitionAfterWin;
 
     public static event EventHandler OnWin;
 
@@ -35,11 +35,12 @@ public class WinManager : MonoBehaviour
         ObjectsDataPersistenceManager.Instance.DeleteGameData();
         UIDataPersistenceManager.Instance.DeleteGameData();
         LogDataPersistenceManager.Instance.DeleteGameData();
+        JournalDataPersistenceManager.Instance.DeleteGameData();
     }
 
     private IEnumerator WinCoroutine()
     {
-        yield return new WaitForSeconds(timeToTransitioAfterWin);
+        yield return new WaitForSeconds(timeToTransitionAfterWin);
         ScenesManager.Instance.FadeLoadTargetScene(transitionScene);
 
         DeleteAllData();
