@@ -64,6 +64,7 @@ public class CameraZoomHandler : MonoBehaviour
         if (CameraTransitionHandler.Instance.CameraState != CameraTransitionHandler.State.FollowingPlayer) return;
         if (!CanStartZoom()) return;
 
+
         if(WasListeningToPlayer()) SetPreviousCameraDistance(CameraScroll.Instance.Distance);
 
         StopAllCoroutines();
