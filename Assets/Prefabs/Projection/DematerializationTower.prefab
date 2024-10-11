@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6474147807706156611}
   - component: {fileID: 2915279001639238036}
+  - component: {fileID: 853453343231729269}
   - component: {fileID: 9098106110735691728}
   m_Layer: 0
   m_Name: Visual
@@ -56,6 +57,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &853453343231729269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824658276799290046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e23802839093ec48befcacbd79f24c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectionResetObject: {fileID: 4093772753987404056}
+  objectsDematerializedUIPrefab: {fileID: 7432648003712889798, guid: ca4331aa660859741a1096f651acbf7a, type: 3}
+  instantiationPositionOffset: {x: 0, y: 2.75, z: 0}
 --- !u!114 &9098106110735691728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -489,11 +505,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_SizeDelta.x
@@ -505,7 +521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.25
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
