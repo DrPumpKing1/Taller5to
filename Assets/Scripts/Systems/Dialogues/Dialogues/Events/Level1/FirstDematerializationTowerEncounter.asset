@@ -15,8 +15,11 @@ MonoBehaviour:
   id: 23
   movementLimitType: 2
   allowSkip: 1
+  lookAtPlayer: 0
+  lookAtPet: 0
   sentences:
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
-    text: That is <i>D'hemat</i>, a <b>dematerialization tower</b>. I can dematerialize
+    text: This is <i>D'hemat</i>, a <b>dematerialization tower</b>. I can dematerialize
       all my projected objects with it.
     time: 7
+    audioClip: {fileID: 0}

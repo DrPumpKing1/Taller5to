@@ -9,11 +9,12 @@ public class EventCollider : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] protected int eventID;
-
     [Space]
     [SerializeField] protected float timeToTrigger;
     [SerializeField] protected bool multipleTriggers;
     [SerializeField] protected bool hasBeenTriggered;
+    [Space]
+    [SerializeField] protected bool onlyIfPetFollowingPlayer;
 
     public static event EventHandler<OnEventColliderTriggerEventArgs> OnEventColliderTrigger;
 
@@ -32,6 +33,7 @@ public class EventCollider : MonoBehaviour
     protected virtual void HandleColliderTrigger()
     {
         if (hasBeenTriggered && !multipleTriggers) return;
+        if (onlyIfPetFollowingPlayer && (PetStateHandler.Instance.PetState != PetStateHandler.State.FollowingPlayer)) return;
 
         TriggerCollider();
         hasBeenTriggered = true;

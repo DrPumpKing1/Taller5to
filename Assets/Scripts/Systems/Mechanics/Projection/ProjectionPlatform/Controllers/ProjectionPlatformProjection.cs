@@ -29,7 +29,7 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     #region IHoldInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
     public float VerticalInteractionRange => verticalInteractionRange;
-    public bool IsSelectable => canBeSelected && !projectionPlatform.ObjectAbove && ProjectableObjectSelectionManager.Instance.ProjectableObjectsIndexed.Count>0;
+    public bool IsSelectable => canBeSelected && !projectionPlatform.ObjectAbove && ProjectableObjectSelectionManager.Instance.ProjectableObjectsIndexed.Count>0 && PetStateHandler.Instance.PetState == PetStateHandler.State.FollowingPlayer;
     public bool IsInteractable => isInteractable;
     public bool HasAlreadyBeenInteracted => hasAlreadyBeenInteracted;
     public string TooltipMessage => tooltipMessage;

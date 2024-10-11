@@ -15,7 +15,10 @@ MonoBehaviour:
   id: 17
   movementLimitType: 1
   allowSkip: 1
+  lookAtPlayer: 1
+  lookAtPet: 0
   sentences:
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: I want to read what those naive <i>Rathiku</i> have to say.
     time: 6
+    audioClip: {fileID: 0}

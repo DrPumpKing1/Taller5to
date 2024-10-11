@@ -15,9 +15,11 @@ MonoBehaviour:
   id: 18
   movementLimitType: 2
   allowSkip: 1
+  lookAtPlayer: 0
+  lookAtPet: 0
   sentences:
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
-    text: That is <i>P'royat</i> a <b>projection platform</b>. I can project objects
+    text: This is <i>P'royat</i>, a <b>projection platform</b>. I can project objects
       on it.
     time: 6
     audioClip: {fileID: 0}
