@@ -25,6 +25,9 @@ public class LogListenerEvents : MonoBehaviour
         BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
         AncientRelic.OnAncientRelicCollected += AncientRelic_OnAncientRelicCollected;
+
+        //VYRX
+        PetPlayerAttachment.OnVyrxInitialAttachToPlayer += PetPlayerAttachment_OnVyrxInitialAttachToPlayer;
     }
 
     private void OnDisable()
@@ -49,6 +52,9 @@ public class LogListenerEvents : MonoBehaviour
         BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
         AncientRelic.OnAncientRelicCollected -= AncientRelic_OnAncientRelicCollected;
+
+        //VYRX
+        PetPlayerAttachment.OnVyrxInitialAttachToPlayer -= PetPlayerAttachment_OnVyrxInitialAttachToPlayer;
     }
 
     //EVENT COLLIDERS
@@ -68,4 +74,7 @@ public class LogListenerEvents : MonoBehaviour
     private void BossStateHandler_OnBossDefeated(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Events/BossDefeated");
     private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e) => GameLogManager.Instance.Log($"Events/BossPhaseChange/{e.nextPhase}");
     private void AncientRelic_OnAncientRelicCollected(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Events/AncientRelicCollected");
+
+    //VYRX
+    private void PetPlayerAttachment_OnVyrxInitialAttachToPlayer(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Events/Vyrx/InitialAttachToPlayer");
 }

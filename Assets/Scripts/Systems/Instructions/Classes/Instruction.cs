@@ -6,8 +6,9 @@ using System.Linq;
 
 public abstract class Instruction : MonoBehaviour
 {
-    [Header("Log")]
+    [Header("Settings")]
     [SerializeField] protected string logToAcomplish;
+    [SerializeField,Range(0f,3f)] protected float timeToShow;
 
     [Header("Booleans")]
     [SerializeField] protected bool hasBeenAcomplished;
@@ -63,6 +64,12 @@ public abstract class Instruction : MonoBehaviour
         if (hasBeenAcomplished) return;
         if (isShowing) return;
 
+        StartCoroutine(ShowInstructionCoroutine());
+    }
+
+    private IEnumerator ShowInstructionCoroutine()
+    {
+        yield return new WaitForSeconds(timeToShow);
         ShowInstruction();
     }
 
@@ -71,6 +78,7 @@ public abstract class Instruction : MonoBehaviour
         if (!isShowing) return;
         if (!hasBeenAcomplished) return;
 
+        StopAllCoroutines();
         HideInstruction();
     }
 
