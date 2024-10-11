@@ -2,14 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class JournalPagesHandler : MonoBehaviour
 {
+    public static JournalPagesHandler Instance { get; private set; }
+
     [Header("Settings")]
     [SerializeField] private List<JournalPageButton> journalPageButtons;
     [SerializeField] private JournalPageButton currentJournalPageButton;
+    [Space]
+    [SerializeField] private bool journalPagesHierarchyOverPopUps;
 
     public bool JournalInfoPopUpOpen { get; private set; }
+    public bool JournalPagesHierarchyOverPopUps => journalPagesHierarchyOverPopUps;
+
+    public static event EventHandler<OnJournalPageEventArgs> OnJournalPageOpen;
+    public static event EventHandler<OnJournalPageEventArgs> OnJournalPageClose;
 
     [System.Serializable]
     public class JournalPageButton
@@ -17,6 +26,11 @@ public class JournalPagesHandler : MonoBehaviour
         public int pageNumber;
         public Button pageButton;
         public JournalPageUI journalPageUI;
+    }
+
+    public class OnJournalPageEventArgs : EventArgs
+    {
+        public JournalPageButton journalPageButton;
     }
 
     private void OnEnable()
@@ -32,6 +46,7 @@ public class JournalPagesHandler : MonoBehaviour
 
     private void Awake()
     {
+        SetSingleton();
         InitializeButtonsListeners();
     }
 
@@ -40,6 +55,19 @@ public class JournalPagesHandler : MonoBehaviour
         InitializeVariables();
         HideAllPagesInmediately();
         ShowJournalPageInmediatelyByPageNumber(1);
+    }
+
+    private void SetSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("There is more than one JournalPagesHandler instance, proceding to destroy duplicate");
+            Destroy(gameObject);
+        }
     }
 
     private void InitializeButtonsListeners()
@@ -53,7 +81,7 @@ public class JournalPagesHandler : MonoBehaviour
     private void OnJournalPageButtonClick(JournalPageButton journalPageButton)
     {
         if (currentJournalPageButton == journalPageButton) return;
-        if (JournalInfoPopUpOpen) return;
+        if (JournalInfoPopUpOpen && !journalPagesHierarchyOverPopUps) return;
 
         if(currentJournalPageButton != null) 
         {
@@ -72,12 +100,16 @@ public class JournalPagesHandler : MonoBehaviour
     {
         journalPageButton.journalPageUI.ShowPage();
         SetCurrentJournalPage(journalPageButton);
+
+        OnJournalPageOpen?.Invoke(this, new OnJournalPageEventArgs { journalPageButton = journalPageButton });
     }
 
     private void HideJournalPage(JournalPageButton journalPageButton)
     {
         journalPageButton.journalPageUI.HidePage();
-        ClearCurrentJournalPage();
+        if(journalPageButton == currentJournalPageButton) ClearCurrentJournalPage();
+
+        OnJournalPageClose?.Invoke(this, new OnJournalPageEventArgs { journalPageButton = journalPageButton });
     }
 
     private void ShowJournalPageInmediately(JournalPageButton journalPageButton)

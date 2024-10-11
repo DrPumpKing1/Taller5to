@@ -71,7 +71,7 @@ public class JournalOpeningManager : MonoBehaviour
     public void SetCanOpenJournal(bool canOpen) => canOpenJournal = canOpen;
     private void CheckOpenCloseJournal()
     {
-        if (!canOpenJournal) return;
+        if (!EnableOpenJournal()) return;
         if (!JournalInput) return;
 
         if (!JournalOpen)
@@ -89,6 +89,14 @@ public class JournalOpeningManager : MonoBehaviour
             UIInput.UseInput();
             
         }
+    }
+
+    private bool EnableOpenJournal()
+    {
+        if (!canOpenJournal) return false;
+        if (DialogueManager.Instance._ManagerState != DialogueManager.ManagerState.NotOnDialogue) return false;
+
+        return true;
     }
 
     private void OpenJournal()

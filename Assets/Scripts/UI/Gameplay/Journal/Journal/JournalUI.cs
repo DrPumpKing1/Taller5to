@@ -12,8 +12,6 @@ public class JournalUI : BaseUI
     [Header("UI Components")]
     [SerializeField] private Button closeButton;
 
-    private CanvasGroup canvasGroup;
-
     public static event EventHandler OnCloseFromUI;
     public static event EventHandler OnJournalUIOpen;
     public static event EventHandler OnJournalUIClose;
@@ -37,26 +35,17 @@ public class JournalUI : BaseUI
 
     private void Awake()
     {
-        canvasGroup = GetComponent<CanvasGroup>();
         InitializeButtonsListeners();
     }
 
     private void Start()
     {
-        InitializeVariables();
         SetUIState(State.Closed);
     }
 
     private void InitializeButtonsListeners()
     {
         closeButton.onClick.AddListener(CloseFromUI);
-    }
-
-    private void InitializeVariables()
-    {
-        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
-        canvasGroup.interactable = false;
-        canvasGroup.blocksRaycasts = false;
     }
 
     private void OpenUI()

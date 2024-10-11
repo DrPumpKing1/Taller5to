@@ -69,7 +69,7 @@ public class InventoryOpeningManager : MonoBehaviour
     public void SetCanOpenInventory(bool canOpen) => canOpenInventory = canOpen;
     private void CheckOpenCloseInventory()
     {
-        if (!canOpenInventory) return;
+        if (!EnableOpenInventory()) return;
         if (!InventoryInput) return;
 
         if (!InventoryOpen)
@@ -86,6 +86,14 @@ public class InventoryOpeningManager : MonoBehaviour
             UIInput.UseInput();
             
         }
+    }
+
+    private bool EnableOpenInventory()
+    {
+        if (!canOpenInventory) return false;
+        if (DialogueManager.Instance._ManagerState != DialogueManager.ManagerState.NotOnDialogue) return false;
+
+        return true;
     }
 
     private void OpenInventory()

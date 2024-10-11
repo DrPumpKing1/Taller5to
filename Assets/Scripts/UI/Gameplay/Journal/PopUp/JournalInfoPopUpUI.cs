@@ -16,6 +16,15 @@ public class JournalInfoPopUpUI : MonoBehaviour
     public static event EventHandler OnJournalInfoPopUpOpen;
     public static event EventHandler OnJournalInfoPopUpClose;
 
+    private void OnEnable()
+    {
+        JournalPagesHandler.OnJournalPageOpen += JournalPagesHandler_OnJournalPageOpen;
+    }
+    private void OnDisable()
+    {
+        JournalPagesHandler.OnJournalPageOpen -= JournalPagesHandler_OnJournalPageOpen;
+    }
+
     private void Awake()
     {
         AddButtonsListeners();
@@ -41,4 +50,11 @@ public class JournalInfoPopUpUI : MonoBehaviour
 
         OnJournalInfoPopUpClose?.Invoke(this, EventArgs.Empty);
     }
+
+    #region JournalPagesHandler Subscriptions
+    private void JournalPagesHandler_OnJournalPageOpen(object sender, JournalPagesHandler.OnJournalPageEventArgs e)
+    {
+        if (JournalPagesHandler.Instance.JournalPagesHierarchyOverPopUps) ClosePopUp();
+    }
+    #endregion
 }
