@@ -15,6 +15,8 @@ MonoBehaviour:
   id: 15
   movementLimitType: 2
   allowSkip: 1
+  lookAtPlayer: 1
+  lookAtPet: 0
   sentences:
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: It seems I learned <b><i>C'ibla</i></b>, some kind of <i>K'aerum</i> conductor.

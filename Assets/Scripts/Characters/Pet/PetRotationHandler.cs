@@ -10,6 +10,7 @@ public class PetRotationHandler : MonoBehaviour
     [SerializeField] private PlayerRotationHandler playerRotationHandler;
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
+    [Space]
     [SerializeField] private Transform playerFacePoint;
 
     [Header("Rotation Settings")]
@@ -28,7 +29,6 @@ public class PetRotationHandler : MonoBehaviour
     private bool interactingRotate;
 
     private bool lookAtPlayerDialogue;
-
 
     private void OnEnable()
     {

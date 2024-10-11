@@ -10,6 +10,8 @@ public class PlayerRotationHandler : MonoBehaviour
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
     [SerializeField] private CheckGround checkGround;
+    [Space]
+    [SerializeField] private Transform petFacePoint;
 
     [Header("Rotation Settings")]
     [SerializeField, Range(1f, 100f)] private float smoothRotateFactor = 10f;
@@ -27,6 +29,8 @@ public class PlayerRotationHandler : MonoBehaviour
     private Transform currentInteractionAttentionTransform;
     private bool interactingRotate;
 
+    private bool lookAtPetDialogue;
+
     private void OnEnable()
     {
         PlayerDirectionHandler.OnPlayerStartDirectioned += PlayerStartDirection_OnPlayerStartDirectioned;
@@ -36,7 +40,10 @@ public class PlayerRotationHandler : MonoBehaviour
         playerInteract.OnInteractionEnded += PlayerInteract_OnInteractionEnded;
 
         playerInteractAlternate.OnInteractionAlternateStarted += PlayerInteractAlternate_OnInteractionAlternateStarted;
-        playerInteractAlternate.OnInteractionAlternateEnded += PlayerInteractAlternate_OnInteractionAlternateEnded;   
+        playerInteractAlternate.OnInteractionAlternateEnded += PlayerInteractAlternate_OnInteractionAlternateEnded;
+
+        DialogueManager.OnDialogueStart += DialogueManager_OnDialogueStart;
+        DialogueManager.OnDialogueEnd += DialogueManager_OnDialogueEnd;
     }
 
     private void OnDisable()
@@ -49,6 +56,9 @@ public class PlayerRotationHandler : MonoBehaviour
 
         playerInteractAlternate.OnInteractionAlternateStarted -= PlayerInteractAlternate_OnInteractionAlternateStarted;
         playerInteractAlternate.OnInteractionAlternateEnded -= PlayerInteractAlternate_OnInteractionAlternateEnded;
+
+        DialogueManager.OnDialogueStart -= DialogueManager_OnDialogueStart;
+        DialogueManager.OnDialogueEnd -= DialogueManager_OnDialogueEnd;
     }
 
     private void Start()
@@ -92,6 +102,12 @@ public class PlayerRotationHandler : MonoBehaviour
         {
             SetDesiredFacingDirectionTowardsTransform(currentInteractionAttentionTransform);
             if (!interactingRotate) ClearInteractionAttentionTransform();
+            return;
+        }
+
+        if (lookAtPetDialogue)
+        {
+            SetDesiredFacingDirectionTowardsTransform(petFacePoint);
             return;
         }
 
@@ -186,6 +202,20 @@ public class PlayerRotationHandler : MonoBehaviour
     {
         interactingRotate = false;
     }
+    #endregion
+
+    #region DialogueManager Subscriptions
+    private void DialogueManager_OnDialogueStart(object sender, DialogueManager.OnDialogueEventArgs e)
+    {
+        if (e.dialogueSO.lookAtPet) lookAtPetDialogue = true;
+        else lookAtPetDialogue = false;
+    }
+
+    private void DialogueManager_OnDialogueEnd(object sender, DialogueManager.OnDialogueEventArgs e)
+    {
+        lookAtPetDialogue = false;
+    }
+
     #endregion
 
 }

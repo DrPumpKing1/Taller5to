@@ -49,6 +49,7 @@ MonoBehaviour:
   playerRotationHandler: {fileID: 0}
   playerInteract: {fileID: 0}
   playerInteractAlternate: {fileID: 0}
+  playerFacePoint: {fileID: 0}
   smoothRotateFactor: 3
   applyStartingRotation: 1
   startingFacingDirection: {x: -1, y: 0, z: 0}
@@ -206,6 +207,7 @@ Transform:
   m_Children:
   - {fileID: 7762422532195686897}
   - {fileID: 144160859035733218}
+  - {fileID: 6125825594369626017}
   - {fileID: 8135469180389639760}
   - {fileID: 8712415838178567264}
   m_Father: {fileID: 0}
@@ -599,6 +601,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3347468614378750834}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5790924200046266558
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6125825594369626017}
+  m_Layer: 8
+  m_Name: PetFacePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6125825594369626017
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5790924200046266558}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
