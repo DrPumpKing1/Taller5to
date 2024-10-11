@@ -204,6 +204,6 @@ public class CameraTransition
     [Range(0.5f, 10f)] public float stallTime;
     [Range(0.5f, 4f)] public float moveOutTime;
     [Range(0.01f, 4f)] public float stallTimeOut;
-    [Range(2.5f, 8f)] public float targetDistance;
+    [Range(2.5f, 10f)] public float targetDistance;
     public bool endInTime;
 }

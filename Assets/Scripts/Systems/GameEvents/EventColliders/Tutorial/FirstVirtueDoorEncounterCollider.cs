@@ -5,9 +5,6 @@ using System;
 
 public class FirstVirtueDoorEncounterCollider : ConditionalEventCollider
 {
-    protected override bool MeetsCondition()
-    {
-        return !ShieldPiecesManager.Instance.HasCompletedShield(Dialect.Zurryth);
-    }
+    protected override bool MeetsCondition() => !ShieldPiecesManager.Instance.HasCompletedShield(Dialect.Zurryth);
 }
 
