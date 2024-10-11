@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+
 public class JournalInfoPopUpUI : MonoBehaviour
 {
     [Header("Components")]
@@ -10,6 +12,9 @@ public class JournalInfoPopUpUI : MonoBehaviour
 
     private const string SHOW_TRIGGER = "Show";
     private const string HIDE_TRIGGER = "Hide";
+
+    public static event EventHandler OnJournalInfoPopUpOpen;
+    public static event EventHandler OnJournalInfoPopUpClose;
 
     private void Awake()
     {
@@ -25,11 +30,15 @@ public class JournalInfoPopUpUI : MonoBehaviour
     {
         journalInfoPopUpUIAnimator.ResetTrigger(HIDE_TRIGGER);
         journalInfoPopUpUIAnimator.SetTrigger(SHOW_TRIGGER);
+
+        OnJournalInfoPopUpOpen?.Invoke(this, EventArgs.Empty);
     }
 
     public void ClosePopUp()
     {
         journalInfoPopUpUIAnimator.ResetTrigger(SHOW_TRIGGER);
         journalInfoPopUpUIAnimator.SetTrigger(HIDE_TRIGGER);
+
+        OnJournalInfoPopUpClose?.Invoke(this, EventArgs.Empty);
     }
 }

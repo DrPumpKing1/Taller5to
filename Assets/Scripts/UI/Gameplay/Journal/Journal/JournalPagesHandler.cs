@@ -9,12 +9,25 @@ public class JournalPagesHandler : MonoBehaviour
     [SerializeField] private List<JournalPageButton> journalPageButtons;
     [SerializeField] private JournalPageButton currentJournalPageButton;
 
+    public bool JournalInfoPopUpOpen { get; private set; }
+
     [System.Serializable]
     public class JournalPageButton
     {
         public int pageNumber;
         public Button pageButton;
         public JournalPageUI journalPageUI;
+    }
+
+    private void OnEnable()
+    {
+        JournalInfoPopUpUI.OnJournalInfoPopUpOpen += JournalInfoPopUpUI_OnJournalInfoPopUpOpen;
+        JournalInfoPopUpUI.OnJournalInfoPopUpClose += JournalInfoPopUpUI_OnJournalInfoPopUpClose;
+    }
+    private void OnDisable()
+    {
+        JournalInfoPopUpUI.OnJournalInfoPopUpOpen -= JournalInfoPopUpUI_OnJournalInfoPopUpOpen;
+        JournalInfoPopUpUI.OnJournalInfoPopUpClose -= JournalInfoPopUpUI_OnJournalInfoPopUpClose;
     }
 
     private void Awake()
@@ -24,6 +37,7 @@ public class JournalPagesHandler : MonoBehaviour
 
     private void Start()
     {
+        InitializeVariables();
         HideAllPagesInmediately();
         ShowJournalPageInmediatelyByPageNumber(1);
     }
@@ -39,6 +53,7 @@ public class JournalPagesHandler : MonoBehaviour
     private void OnJournalPageButtonClick(JournalPageButton journalPageButton)
     {
         if (currentJournalPageButton == journalPageButton) return;
+        if (JournalInfoPopUpOpen) return;
 
         if(currentJournalPageButton != null) 
         {
@@ -46,6 +61,11 @@ public class JournalPagesHandler : MonoBehaviour
         }
 
         ShowJournalPage(journalPageButton);
+    }
+
+    private void InitializeVariables()
+    {
+        JournalInfoPopUpOpen = false;
     }
 
     private void ShowJournalPage(JournalPageButton journalPageButton)
@@ -94,4 +114,16 @@ public class JournalPagesHandler : MonoBehaviour
             HideJournalPageInmediately(journalPageButton); 
         }
     }
+
+    #region JournalInfoPopUpUI Subscriptions
+    private void JournalInfoPopUpUI_OnJournalInfoPopUpOpen(object sender, System.EventArgs e)
+    {
+        JournalInfoPopUpOpen = true;
+    }
+    private void JournalInfoPopUpUI_OnJournalInfoPopUpClose(object sender, System.EventArgs e)
+    {
+        JournalInfoPopUpOpen = false;
+    }
+
+    #endregion
 }
