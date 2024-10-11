@@ -140,7 +140,7 @@ public class GameplayMusicManager : MonoBehaviour
         MusicManager.Instance.PlayMusic(gameplayMusic);
         currentGameplayMusic = gameplayMusic;
 
-        Debug.Log($"GameplayMusicPlay : {gameplayMusic}");
+        Debug.Log($"GameplayMusicPlay: {gameplayMusic}");
     }
 
     private void FadeTransitionGameplayMusic(AudioClip gameplayMusic)
