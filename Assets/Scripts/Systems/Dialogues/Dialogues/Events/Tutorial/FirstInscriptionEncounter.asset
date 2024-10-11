@@ -15,8 +15,13 @@ MonoBehaviour:
   id: 10
   movementLimitType: 0
   allowSkip: 1
+  lookAtPlayer: 0
   sentences:
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
-    text: Oh <i>Midrita Katryssa</i>. It is an inscription from my people, turn on
-      that switch to energize it, I need to read it.
-    time: 7
+    text: 'Oh <i>Midrita Katryssa</i>. It is an inscription from my people. '
+    time: 5
+    audioClip: {fileID: 0}
+  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+    text: I am able read inscriptions while they're energyzed.
+    time: 5
+    audioClip: {fileID: 0}

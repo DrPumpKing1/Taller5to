@@ -65,7 +65,6 @@ public class PetRotationHandler : MonoBehaviour
     private void Update()
     {
         HandleRotationState();
-        AvoidXZRotation();
     }
 
     private void InitializeVariables()
@@ -109,6 +108,7 @@ public class PetRotationHandler : MonoBehaviour
     {
         DefineDesiredPlayerFollowFacingDirection();
         ApplyRotation();
+        AvoidXZRotation();
     }
 
     private void OnGuidanceLogic()

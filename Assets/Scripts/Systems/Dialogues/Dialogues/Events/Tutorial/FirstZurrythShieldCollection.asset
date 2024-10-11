@@ -15,11 +15,14 @@ MonoBehaviour:
   id: 12
   movementLimitType: 2
   allowSkip: 1
+  lookAtPlayer: 1
   sentences:
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: Remember that big door? We can use this to open it. Go back and get close
       to it.
     time: 8
+    audioClip: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
     text: You can see your collected shield pieces in your inventory.
     time: 6
+    audioClip: {fileID: 0}

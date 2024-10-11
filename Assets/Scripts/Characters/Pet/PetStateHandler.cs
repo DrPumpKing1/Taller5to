@@ -42,11 +42,6 @@ public class PetStateHandler : MonoBehaviour
         ClearPetGuidanceObject();
     }
 
-    private void Update()
-    {
-        HandlePetState();
-    }
-
     private void SetSingleton()
     {
         if (Instance == null)
@@ -62,11 +57,6 @@ public class PetStateHandler : MonoBehaviour
     }
 
     private void SetPetState(State state) => this.state = state;
-
-    private void HandlePetState()
-    {
-
-    }
 
     #region GuidanceMethods
     private bool CanStartGuidance() => state != State.Still;

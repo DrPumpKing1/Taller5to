@@ -15,14 +15,16 @@ MonoBehaviour:
   id: 11
   movementLimitType: 2
   allowSkip: 1
+  lookAtPlayer: 0
   sentences:
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
-    text: "Good, now it's connected to the <i>K\xB4aerum</i>. Now get me closer to
-      read it.\r\n"
+    text: This seems familiar, it it the <i>Zurryth</i> shield. It was contained
+      whithin the inscription
     time: 7
+    audioClip: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
-    text: 'That seems familiar, it it the <i>Zurryth</i> shield. Get close to collect
-      it.
+    text: 'Get close to collect it.
 
 '
     time: 6
+    audioClip: {fileID: 0}
