@@ -37,11 +37,11 @@ public class SignalProjectile : MonoBehaviour
         OnProjectileImpact?.Invoke(this, new OnProjectileImpactEventArgs { contactPoint = collision.contacts[0] });
         OnAnyProjectileImpact?.Invoke(this, EventArgs.Empty);
 
-        /*
-        if (collision.gameObject != sender)
+        SignalSender signalSender = collision.gameObject.GetComponentInParent<SignalSender>();
+
+        if (signalSender != null)
         {
             Electrode component = collision.gameObject.GetComponent<Electrode>();
-
             if (component != null)
             {
                 if (!component.Source) component.ReceiveSignal(intensity);
@@ -63,10 +63,7 @@ public class SignalProjectile : MonoBehaviour
                     Electricity.Instance.UpdateElectrode(component);
                 }
             }
-
-            Destroy(gameObject);
         }
-        */
 
         Destroy(gameObject);
     }
