@@ -15,8 +15,11 @@ MonoBehaviour:
   id: 34
   movementLimitType: 2
   allowSkip: 1
+  lookAtPlayer: 0
+  lookAtPet: 0
   sentences:
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
-    text: Look at that cube, it is a <i>K'aerum</i> receiver. Rotate the projected
+    text: Look at this cube, it is a <i>K'aerum</i> receiver. Rotate the projected
       <i>S'oota</i> towards it to transmit the <i>K'aerum</i>.
     time: 6
+    audioClip: {fileID: 0}
