@@ -19,6 +19,8 @@ public class LogListenerInteraction : MonoBehaviour
         ProjectableObjectRotation.OnAnyObjectRotated += ProjectableObjectRotation_OnAnyObjectRotated;
         ProjectableObjectActivation.OnAnyObjectActivated += ProjectableObjectActivation_OnAnyObjectActivated;
         ProjectableObjectActivation.OnAnyObjectDeactivated += ProjectableObjectActivation_OnAnyObjectDeactivated;
+
+        ProjectionResetObject.OnAnyProjectionResetObjectUsed += ProjectionResetObject_OnAnyProjectionResetObjectUsed;
     }
 
     private void OnDisable()
@@ -36,6 +38,8 @@ public class LogListenerInteraction : MonoBehaviour
         ProjectableObjectRotation.OnAnyObjectRotated -= ProjectableObjectRotation_OnAnyObjectRotated;
         ProjectableObjectActivation.OnAnyObjectActivated -= ProjectableObjectActivation_OnAnyObjectActivated;
         ProjectableObjectActivation.OnAnyObjectDeactivated -= ProjectableObjectActivation_OnAnyObjectDeactivated;
+
+        ProjectionResetObject.OnAnyProjectionResetObjectUsed -= ProjectionResetObject_OnAnyProjectionResetObjectUsed;
     }
 
     private void InscriptionRead_OnInscriptionRead(object sender, InscriptionRead.OnInscriptionReadEventArgs e) => GameLogManager.Instance.Log($"Interaction/InscriptionRead/{e.inscriptionSO.id}");
@@ -70,4 +74,6 @@ public class LogListenerInteraction : MonoBehaviour
         GameLogManager.Instance.Log($"Interaction/DeactivateObject/{e.projectableObjectSO.id}");
         GameLogManager.Instance.Log($"Interaction/DeactivateObjectExact/{e.projectableObjectSO.id}/{e.projectionPlatformID}");
     }
+
+    private void ProjectionResetObject_OnAnyProjectionResetObjectUsed(object sender, System.EventArgs e) => GameLogManager.Instance.Log($"Interaction/ProjectionResetObjectUsed");
 }
