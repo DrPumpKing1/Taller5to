@@ -20,7 +20,7 @@ public class BossSourceStunVisualOld : MonoBehaviour
     private void OnDisable()
     {
         BossSourceStunOld.OnSourceStunned -= BossSourceStun_OnSourceStunned;
-        BossSourceStunOld.OnSourceStunnedEnd -= BossSourceStun_OnSourceStunnedEnd; ;
+        BossSourceStunOld.OnSourceStunnedEnd -= BossSourceStun_OnSourceStunnedEnd;
         BossObjectDestructionOld.OnBossAllProjectionGemsLocked -= BossObjectDestruction_OnBossAllProjectionGemsLocked;
     }
 

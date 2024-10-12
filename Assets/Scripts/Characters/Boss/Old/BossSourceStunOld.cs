@@ -45,7 +45,6 @@ public class BossSourceStunOld : MonoBehaviour
         BossStateHandlerOld.OnPlayerDefeated += BossStateHandler_OnPlayerDefeated;
     }
 
-
     private void OnDisable()
     {
         BossStateHandlerOld.OnBossActiveStart -= BossStateHandler_OnBossActiveStart;

@@ -25,7 +25,7 @@ public class LogListenerInteraction : MonoBehaviour
 
     private void OnDisable()
     {
-        //PROJECTION
+        //INTERACTION
         InscriptionRead.OnInscriptionRead -= InscriptionRead_OnInscriptionRead;
         NarrativeElement.OnNarrativeElementInteracted -= NarrativeElement_OnNarrativeElementInteracted;
 

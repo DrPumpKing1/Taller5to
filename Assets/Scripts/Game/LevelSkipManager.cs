@@ -41,6 +41,7 @@ public class LevelSkipManager : MonoBehaviour
         [Space]
         public int projectionGems;
         public bool canOpenInventory;
+        public bool canOpenJournal;
         public bool projectionHUDVisible;
         public bool attachToPlayer;
     }
@@ -115,6 +116,7 @@ public class LevelSkipManager : MonoBehaviour
 
         ProjectionGemsManager.Instance.SetTotalProjectionGems(levelSettings.projectionGems);
         InventoryOpeningManager.Instance.SetCanOpenInventory(levelSettings.canOpenInventory);
+        JournalOpeningManager.Instance.SetCanOpenJournal(levelSettings.canOpenJournal);
         ProjectionHUDVisibilityHandler.Instance.SetIsVisible(levelSettings.projectionHUDVisible);
         PetPlayerAttachment.Instance.SetAttachToPlayer(levelSettings.attachToPlayer,false);
 

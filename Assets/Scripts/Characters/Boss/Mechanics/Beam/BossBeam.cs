@@ -73,8 +73,8 @@ public class BossBeam : MonoBehaviour
 
     private void OnEnable()
     {
-        BossStateHandler.OnBossPhaseChangeEnd += BossStateHandler_OnBossPhaseChangeEnd;
         BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
+        BossStateHandler.OnBossPhaseChangeEnd += BossStateHandler_OnBossPhaseChangeEnd;
 
         BossPhaseHandler.OnLastPhaseCompleated += BossPhaseHandler_OnLastPhaseCompleated;
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;

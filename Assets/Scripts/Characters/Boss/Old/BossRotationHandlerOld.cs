@@ -53,7 +53,7 @@ public class BossRotationHandlerOld : MonoBehaviour
         BossStateHandlerOld.OnPlayerDefeated -= BossStateHandler_OnPlayerDefeated;
 
         BossObjectDestructionOld.OnProjectionPlatformTarget -= BossObjectDestruction_OnProjectionPlatformTarget;
-        BossObjectDestructionOld.OnProjectionPlatformTarget -= BossObjectDestruction_OnProjectionPlatformTarget;
+        BossSourceStunOld.OnSourceStunned -= BossSourceStun_OnSourceStunned;
     }
 
     private void Awake()

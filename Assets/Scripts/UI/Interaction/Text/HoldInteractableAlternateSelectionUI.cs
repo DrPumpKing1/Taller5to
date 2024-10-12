@@ -29,7 +29,7 @@ public class HoldInteractableAlternateSelectionUI : MonoBehaviour
         holdInteractableAlternate.OnObjectSelectedAlternate += HoldInteractableAlternate_OnObjectSelected;
         holdInteractableAlternate.OnObjectDeselectedAlternate += HoldInteractableAlternate_OnObjectDeselected;
 
-        holdInteractableAlternate.OnHoldInteractionAlternateStart += HoldInteractableAlternate_OnHoldInteractionAlternateStart; ;
+        holdInteractableAlternate.OnHoldInteractionAlternateStart += HoldInteractableAlternate_OnHoldInteractionAlternateStart;
         holdInteractableAlternate.OnContinousHoldInteractionAlternate += HoldInteractableAlternate_OnContinousHoldInteractionAlternate;
         holdInteractableAlternate.OnHoldInteractionAlternateEnd += HoldInteractableAlternate_OnHoldInteractionAlternateEnd;
 
@@ -41,7 +41,7 @@ public class HoldInteractableAlternateSelectionUI : MonoBehaviour
         holdInteractableAlternate.OnObjectSelectedAlternate -= HoldInteractableAlternate_OnObjectSelected;
         holdInteractableAlternate.OnObjectDeselectedAlternate -= HoldInteractableAlternate_OnObjectDeselected;
 
-        holdInteractableAlternate.OnHoldInteractionAlternateStart -= HoldInteractableAlternate_OnHoldInteractionAlternateStart; ;
+        holdInteractableAlternate.OnHoldInteractionAlternateStart -= HoldInteractableAlternate_OnHoldInteractionAlternateStart;
         holdInteractableAlternate.OnContinousHoldInteractionAlternate -= HoldInteractableAlternate_OnContinousHoldInteractionAlternate;
         holdInteractableAlternate.OnHoldInteractionAlternateEnd -= HoldInteractableAlternate_OnHoldInteractionAlternateEnd;
 

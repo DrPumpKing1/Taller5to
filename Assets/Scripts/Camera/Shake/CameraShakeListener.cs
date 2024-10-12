@@ -28,9 +28,6 @@ public class CameraShakeListener : MonoBehaviour
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
     }
 
-
- 
-
     private void OnDisable()
     {
         ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
