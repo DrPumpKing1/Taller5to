@@ -101,14 +101,14 @@ public class RoomManager : MonoBehaviour
         List<RoomCollider> newCollidersBlockingView = roomCollidersBlockingView.Except(previousCollidersBlockingView).ToList();
         List<RoomCollider> oldCollidersBlockingView = previousCollidersBlockingView.Except(roomCollidersBlockingView).ToList();
 
-        if(newCollidersBlockingView.Count > 0)
+        if(newCollidersBlockingView.Count > 0 && previousCollidersBlockingView.Count > 0)
         {
             OnEnterBlockingViewColliders?.Invoke(this, new OnBlockingViewCollidersEnterEventArgs { previousRoomVisibilityColliders = previousCollidersBlockingView, newRoomVisibilityColliders = newCollidersBlockingView });
             OnRoomEnter?.Invoke(this, new OnRoomEventArgs { id = newCollidersBlockingView.First().ID, roomName = newCollidersBlockingView.First().RoomName });
 
         }
 
-        if (oldCollidersBlockingView.Count > 0)
+        if (oldCollidersBlockingView.Count > 0 && previousCollidersBlockingView.Count > 0)
         {
             OnExitBlockingViewColliders?.Invoke(this, new OnBlockingViewCollidersExitEventArgs { previousRoomVisibilityColliders = previousCollidersBlockingView, currentRoomVisibilityColliders = roomCollidersBlockingView});
             OnRoomExit?.Invoke(this, new OnRoomEventArgs { id = oldCollidersBlockingView.First().ID, roomName = oldCollidersBlockingView.First().RoomName });
