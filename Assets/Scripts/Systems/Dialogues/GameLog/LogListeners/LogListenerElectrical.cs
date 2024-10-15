@@ -19,8 +19,8 @@ public class LogListenerElectrical : MonoBehaviour
         ElectricalDrawbridge.OnDrawbridgePower += ElectricalDrawbridge_OnDrawbridgePower;
         ElectricalDrawbridge.OnDrawbridgeDePower += ElectricalDrawbridge_OnDrawbridgeDePower;
 
-        ElectricalExtensibleBridge.OnExtensibleBridgePower += ElectricalExtensibleBridge_OnExtensibleBridgePower;
-        ElectricalExtensibleBridge.OnExtensibleBridgeDePower += ElectricalExtensibleBridge_OnExtensibleBridgeDePower;
+        ElectricalExtensibleBridgeOld.OnExtensibleBridgePower += ElectricalExtensibleBridge_OnExtensibleBridgePower;
+        ElectricalExtensibleBridgeOld.OnExtensibleBridgeDePower += ElectricalExtensibleBridge_OnExtensibleBridgeDePower;
 
         HiddenSourceReceiver.OnAnyHiddenSourceReceiverPower += HiddenSourceReceiver_OnAnyHiddenSourceReceiverPower;
         HiddenSourceReceiver.OnAnyHiddenSourceReceiverDePower += HiddenSourceReceiver_OnAnyHiddenSourceReceiverDePower;
@@ -43,8 +43,8 @@ public class LogListenerElectrical : MonoBehaviour
         ElectricalDrawbridge.OnDrawbridgePower -= ElectricalDrawbridge_OnDrawbridgePower;
         ElectricalDrawbridge.OnDrawbridgeDePower -= ElectricalDrawbridge_OnDrawbridgeDePower;
 
-        ElectricalExtensibleBridge.OnExtensibleBridgePower -= ElectricalExtensibleBridge_OnExtensibleBridgePower;
-        ElectricalExtensibleBridge.OnExtensibleBridgeDePower -= ElectricalExtensibleBridge_OnExtensibleBridgeDePower;
+        ElectricalExtensibleBridgeOld.OnExtensibleBridgePower -= ElectricalExtensibleBridge_OnExtensibleBridgePower;
+        ElectricalExtensibleBridgeOld.OnExtensibleBridgeDePower -= ElectricalExtensibleBridge_OnExtensibleBridgeDePower;
 
         HiddenSourceReceiver.OnAnyHiddenSourceReceiverPower -= HiddenSourceReceiver_OnAnyHiddenSourceReceiverPower;
         HiddenSourceReceiver.OnAnyHiddenSourceReceiverDePower -= HiddenSourceReceiver_OnAnyHiddenSourceReceiverDePower;
@@ -66,8 +66,8 @@ public class LogListenerElectrical : MonoBehaviour
     private void ElectricalDrawbridge_OnDrawbridgePower(object sender, ElectricalDrawbridge.OnDrawbridgePoweredEventArgs e) => GameLogManager.Instance.Log($"Electrical/PowerDrawbridge/{e.id}");
     private void ElectricalDrawbridge_OnDrawbridgeDePower(object sender, ElectricalDrawbridge.OnDrawbridgePoweredEventArgs e) => GameLogManager.Instance.Log($"Electrical/DePowerDrawbridge/{e.id}");
 
-    private void ElectricalExtensibleBridge_OnExtensibleBridgePower(object sender, ElectricalExtensibleBridge.OnExtensibleBridgePowerEventArgs e) => GameLogManager.Instance.Log($"Electrical/PowerExtensibleBridge/{e.id}");
-    private void ElectricalExtensibleBridge_OnExtensibleBridgeDePower(object sender, ElectricalExtensibleBridge.OnExtensibleBridgePowerEventArgs e) => GameLogManager.Instance.Log($"Electrical/DePowerExtensibleBridge/{e.id}");
+    private void ElectricalExtensibleBridge_OnExtensibleBridgePower(object sender, ElectricalExtensibleBridgeOld.OnExtensibleBridgePowerEventArgs e) => GameLogManager.Instance.Log($"Electrical/PowerExtensibleBridge/{e.id}");
+    private void ElectricalExtensibleBridge_OnExtensibleBridgeDePower(object sender, ElectricalExtensibleBridgeOld.OnExtensibleBridgePowerEventArgs e) => GameLogManager.Instance.Log($"Electrical/DePowerExtensibleBridge/{e.id}");
 
     private void HiddenSourceReceiver_OnAnyHiddenSourceReceiverPower(object sender, HiddenSourceReceiver.OnHiddenSourcePowerEventArgs e) => GameLogManager.Instance.Log($"Electrical/PowerReceiver/{e.id}");
     private void HiddenSourceReceiver_OnAnyHiddenSourceReceiverDePower(object sender, HiddenSourceReceiver.OnHiddenSourcePowerEventArgs e) => GameLogManager.Instance.Log($"Electrical/DePowerReceiver/{e.id}");

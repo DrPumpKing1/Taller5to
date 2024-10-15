@@ -17,8 +17,8 @@ public class PausableSFXManager : SFXManager
         ElectricalDoor.OnDoorDePowered += ElectricalDoor_OnDoorDePowered;
         ElectricalDrawbridge.OnDrawbridgePower += ElectricalDrawbridge_OnDrawbridgePower;
         ElectricalDrawbridge.OnDrawbridgeDePower += ElectricalDrawbridge_OnDrawbridgeDePower;
-        ElectricalExtensibleBridge.OnExtensibleBridgePower += ElectricalExtensibleBridge_OnExtensibleBridgePower;
-        ElectricalExtensibleBridge.OnExtensibleBridgeDePower += ElectricalExtensibleBridge_OnExtensibleBridgeDePower;
+        ElectricalExtensibleBridgeOld.OnExtensibleBridgePower += ElectricalExtensibleBridge_OnExtensibleBridgePower;
+        ElectricalExtensibleBridgeOld.OnExtensibleBridgeDePower += ElectricalExtensibleBridge_OnExtensibleBridgeDePower;
         HiddenSourceReceiver.OnAnyHiddenSourceReceiverPower += HiddenSourceReceiver_OnAnyHiddenSourceReceiverPower;
         HiddenSourceReceiver.OnAnyHiddenSourceReceiverDePower += HiddenSourceReceiver_OnAnyHiddenSourceReceiverDePower;
 
@@ -57,8 +57,8 @@ public class PausableSFXManager : SFXManager
         ElectricalDoor.OnDoorDePowered -= ElectricalDoor_OnDoorDePowered;
         ElectricalDrawbridge.OnDrawbridgePower -= ElectricalDrawbridge_OnDrawbridgePower;
         ElectricalDrawbridge.OnDrawbridgeDePower -= ElectricalDrawbridge_OnDrawbridgeDePower;
-        ElectricalExtensibleBridge.OnExtensibleBridgePower -= ElectricalExtensibleBridge_OnExtensibleBridgePower;
-        ElectricalExtensibleBridge.OnExtensibleBridgeDePower -= ElectricalExtensibleBridge_OnExtensibleBridgeDePower;
+        ElectricalExtensibleBridgeOld.OnExtensibleBridgePower -= ElectricalExtensibleBridge_OnExtensibleBridgePower;
+        ElectricalExtensibleBridgeOld.OnExtensibleBridgeDePower -= ElectricalExtensibleBridge_OnExtensibleBridgeDePower;
         HiddenSourceReceiver.OnAnyHiddenSourceReceiverPower -= HiddenSourceReceiver_OnAnyHiddenSourceReceiverPower;
         HiddenSourceReceiver.OnAnyHiddenSourceReceiverDePower -= HiddenSourceReceiver_OnAnyHiddenSourceReceiverDePower;
 
@@ -143,15 +143,15 @@ public class PausableSFXManager : SFXManager
         PlaySoundAtPoint(SFXPoolSO.drawbridgeDePowered, electricalDrawbridge.transform.position);
     }
 
-    private void ElectricalExtensibleBridge_OnExtensibleBridgePower(object sender, ElectricalExtensibleBridge.OnExtensibleBridgePowerEventArgs e)
+    private void ElectricalExtensibleBridge_OnExtensibleBridgePower(object sender, ElectricalExtensibleBridgeOld.OnExtensibleBridgePowerEventArgs e)
     {
-        ElectricalExtensibleBridge extensibleBridge = sender as ElectricalExtensibleBridge;
+        ElectricalExtensibleBridgeOld extensibleBridge = sender as ElectricalExtensibleBridgeOld;
         PlaySoundAtPoint(SFXPoolSO.extensibleBridgePowered, extensibleBridge.transform.position);
     }
 
-    private void ElectricalExtensibleBridge_OnExtensibleBridgeDePower(object sender, ElectricalExtensibleBridge.OnExtensibleBridgePowerEventArgs e)
+    private void ElectricalExtensibleBridge_OnExtensibleBridgeDePower(object sender, ElectricalExtensibleBridgeOld.OnExtensibleBridgePowerEventArgs e)
     {
-        ElectricalExtensibleBridge extensibleBridge = sender as ElectricalExtensibleBridge;
+        ElectricalExtensibleBridgeOld extensibleBridge = sender as ElectricalExtensibleBridgeOld;
         PlaySoundAtPoint(SFXPoolSO.extensibleBridgeDePowered, extensibleBridge.transform.position);
     }
 

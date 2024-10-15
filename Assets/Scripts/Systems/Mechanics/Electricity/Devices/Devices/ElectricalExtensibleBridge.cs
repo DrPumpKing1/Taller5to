@@ -1,80 +1,94 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class ElectricalExtensibleBridge : MonoBehaviour
 {
     [Header("Identifiers")]
     [SerializeField] private int id;
 
-    [Header("Electrical Component")]
-    [SerializeField] private Electrode electrode;
+    [Header("Electricity")]
+    [SerializeField] private ElectricalDevice device;
+    [SerializeField] private bool isPowered;
 
     [Header("Device Settings")]
-    [SerializeField] private Transform model;
-    [SerializeField] private BoxCollider boxCollider;
-    [SerializeField] private float extension;
-    [SerializeField] private Vector3 minScale;
-    [SerializeField] private Vector3 maxScale;
-    [SerializeField] private float scalingTime;
-    [SerializeField] private AnimationCurve scalingCurve;
+    [SerializeField] private Transform bridgeTransform;
+    [SerializeField] private Transform restPosition;
+    [SerializeField] private Transform powerPosition;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private AnimationCurve moveCurve;
 
-    [Header("Device Control")]
+    [Header("State")]
     [SerializeField] private bool state;
-    private bool IsPowered => electrode.Power >= Electrode.ACTIVATION_THRESHOLD;
+    private GameObject player;
+    private Coroutine doorMovement;
 
-    private const float NOT_POWERED_TIME_THRESHOLD = 0.2f;
     private float notPoweredTimer;
+    private const float NOT_POWERED_TIME_THRESHOLD = 0.1f;
+
     private bool previousPowered;
-    private bool coherence => state == IsPowered;
 
-    private Vector3 minPos;
-    private Vector3 maxPos;
+    public static event EventHandler<OnDoowPoweredEventArgs> OnDoorPower;
+    public static event EventHandler<OnDoowPoweredEventArgs> OnDoorDePowered;
 
-    public static event EventHandler<OnExtensibleBridgePowerEventArgs> OnExtensibleBridgePower;
-    public static event EventHandler<OnExtensibleBridgePowerEventArgs> OnExtensibleBridgeDePower;
-
-    public class OnExtensibleBridgePowerEventArgs : EventArgs
+    public class OnDoowPoweredEventArgs : EventArgs
     {
         public int id;
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        minScale = model.localScale;
-        maxScale = new Vector3(model.localScale.x, model.localScale.y, model.localScale.z + extension);
-
-        minPos = model.localPosition;
-        maxPos = new Vector3(model.localPosition.x, model.localPosition.y, model.localPosition.z + extension/2);
+        device.OnStateChange += CheckPower;
     }
 
-    private void Update()
+    private void OnDisable()
     {
+        device.OnStateChange -= CheckPower;
+    }
+
+    private void Start()
+    {
+        InitializeVariables();
+    }
+
+    private void InitializeVariables()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        notPoweredTimer = 0f;
+        previousPowered = isPowered;
+    }
+
+    void Update()
+    {
+        ManageState();
+
         HandlePowered();
+    }
 
-        if (coherence) return;
+    private void ManageState()
+    {
+        if (state == isPowered) return;
 
-        state = IsPowered;
-
-        if (!IsPowered)
+        if (state) state = false;
+        else
         {
-            Contract();
-        } else
-        {
-            Extend();
+            state = true;
         }
+
+
+        TriggerMovement(state);
     }
 
     private void HandlePowered()
     {
-        if (!IsPowered)
+        if (!isPowered)
         {
             notPoweredTimer += Time.deltaTime;
 
             if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD && previousPowered)
             {
-                OnExtensibleBridgeDePower?.Invoke(this, new OnExtensibleBridgePowerEventArgs { id = id });
+                OnDoorDePowered?.Invoke(this, new OnDoowPoweredEventArgs { id = id });
                 previousPowered = false;
             }
         }
@@ -82,7 +96,7 @@ public class ElectricalExtensibleBridge : MonoBehaviour
         {
             if (!previousPowered)
             {
-                OnExtensibleBridgePower?.Invoke(this, new OnExtensibleBridgePowerEventArgs { id = id });
+                OnDoorPower?.Invoke(this, new OnDoowPoweredEventArgs { id = id });
             }
 
             notPoweredTimer = 0;
@@ -90,43 +104,34 @@ public class ElectricalExtensibleBridge : MonoBehaviour
         }
     }
 
-    private void Contract()
+    private void CheckPower(bool isPowered)
     {
-        StopAllCoroutines();
-        StartCoroutine(ScaleObstacle(minScale, minPos));
+        this.isPowered = isPowered;
     }
 
-    private void Extend()
+    private void TriggerMovement(bool state)
     {
-        StopAllCoroutines();
-        StartCoroutine(ScaleObstacle(maxScale, maxPos));
+        if (doorMovement != null) StopCoroutine(doorMovement);
+        doorMovement = StartCoroutine(MoveToPosition(state ? powerPosition.position : restPosition.position));
     }
 
-    private IEnumerator ScaleObstacle(Vector3 scale, Vector3 position)
+    private IEnumerator MoveToPosition(Vector3 position)
     {
-        Vector3 startScale = model.localScale;
-        Vector3 endScale = scale;
-
-        Vector3 startPos = model.localPosition;
-        Vector3 endPos = position;
-
-        float time = scalingTime;
+        Vector3 startPosition = bridgeTransform.position;
+        Vector3 endPosition = position;
+        float distance = Vector3.Distance(startPosition, endPosition);
+        float time = distance / moveSpeed;
         float t = 0f;
 
         while (t < time)
         {
             t += Time.deltaTime;
 
-            model.localScale = Vector3.Lerp(startScale, endScale, scalingCurve.Evaluate(t / time));
-            model.localPosition = Vector3.Lerp(startPos, endPos, scalingCurve.Evaluate(t / time));
-
-            boxCollider.size = Vector3.Lerp(startScale, endScale, scalingCurve.Evaluate(t / time));
-            boxCollider.center = Vector3.Lerp(startPos, endPos, scalingCurve.Evaluate(t / time));
+            bridgeTransform.position = Vector3.Lerp(startPosition, endPosition, moveCurve.Evaluate(t / time));
 
             yield return null;
         }
 
-        model.localScale = endScale;
-        model.localPosition = position;
+        bridgeTransform.position = endPosition;
     }
 }
