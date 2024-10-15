@@ -100,7 +100,6 @@ public class JournalPageUI : MonoBehaviour
         if(journalInfoUIs.Count <= 0)
         {
             HideNotCheckedIndicator();
-            Debug.Log("Test");
             return;
         }
 

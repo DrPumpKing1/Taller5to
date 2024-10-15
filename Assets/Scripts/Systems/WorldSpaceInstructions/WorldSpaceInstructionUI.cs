@@ -13,7 +13,6 @@ public class WorldSpaceInstructionUI : MonoBehaviour
     private const string SHOW_TRIGGER = "Show";
     private const string HIDE_TRIGGER = "Hide";
 
-
     private void Start()
     {
         ShowInstructionUI();
