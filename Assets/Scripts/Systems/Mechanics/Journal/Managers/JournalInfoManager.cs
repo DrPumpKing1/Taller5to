@@ -67,14 +67,6 @@ public class JournalInfoManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            GameLogManager.Instance.Log("None2");
-        }
-    }
-
     #region Collection By Log
     private void CheckJournalInfoCollectionByLog(string log)
     {

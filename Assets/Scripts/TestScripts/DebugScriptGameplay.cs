@@ -8,9 +8,9 @@ public class DebugScriptGameplay : MonoBehaviour
     private void Update()
     {
         CheckSkipDialogue();
-        CheckReloadScene();
         CheckHideInstruction();
         CheckSkipCinematic();
+        //CheckReloadScene();
 
         /*
         CheckSkipLevel1();
