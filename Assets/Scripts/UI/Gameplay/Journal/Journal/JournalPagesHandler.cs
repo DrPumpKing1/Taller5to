@@ -99,6 +99,8 @@ public class JournalPagesHandler : MonoBehaviour
     private void ShowJournalPage(JournalPageButton journalPageButton)
     {
         journalPageButton.journalPageUI.ShowPage();
+        journalPageButton.journalPageUI.transform.SetAsLastSibling();
+
         SetCurrentJournalPage(journalPageButton);
 
         OnJournalPageOpen?.Invoke(this, new OnJournalPageEventArgs { journalPageButton = journalPageButton });
@@ -107,7 +109,9 @@ public class JournalPagesHandler : MonoBehaviour
     private void HideJournalPage(JournalPageButton journalPageButton)
     {
         journalPageButton.journalPageUI.HidePage();
-        if(journalPageButton == currentJournalPageButton) ClearCurrentJournalPage();
+        journalPageButton.journalPageUI.transform.SetAsFirstSibling();
+
+        if (journalPageButton == currentJournalPageButton) ClearCurrentJournalPage();
 
         OnJournalPageClose?.Invoke(this, new OnJournalPageEventArgs { journalPageButton = journalPageButton });
     }
@@ -115,12 +119,16 @@ public class JournalPagesHandler : MonoBehaviour
     private void ShowJournalPageInmediately(JournalPageButton journalPageButton)
     {
         journalPageButton.journalPageUI.ShowPageInmediately();
+        journalPageButton.journalPageUI.transform.SetAsLastSibling();
+
         SetCurrentJournalPage(journalPageButton);
     }
 
     private void HideJournalPageInmediately(JournalPageButton journalPageButton)
     {
         journalPageButton.journalPageUI.HidePageInmediately();
+        journalPageButton.journalPageUI.transform.SetAsFirstSibling();
+
         ClearCurrentJournalPage();
     }
 

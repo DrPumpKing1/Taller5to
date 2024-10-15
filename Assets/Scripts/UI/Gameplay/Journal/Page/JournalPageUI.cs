@@ -97,6 +97,13 @@ public class JournalPageUI : MonoBehaviour
     }
     private void CheckHideIndicator()
     {
+        if(journalInfoUIs.Count <= 0)
+        {
+            HideNotCheckedIndicator();
+            Debug.Log("Test");
+            return;
+        }
+
         foreach (JournalInfoUI journalInfoUI in journalInfoUIs)
         {
             JournalInfoManager.JournalInfoCheck journalInfoCheck = JournalInfoManager.Instance.GetJournalInfoCheckInJournal(journalInfoUI.JournalInfoSO);
