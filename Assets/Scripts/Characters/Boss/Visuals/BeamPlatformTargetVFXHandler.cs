@@ -39,8 +39,6 @@ public class BeamPlatformTargetVFXHandler : MonoBehaviour
     private const string NOISE_POWER_PROPERTY = "NoisePower";
     private const string THICKNESS_PROPERTY = "Thickness";
 
-    private const float BEAM_THICKNESS_OFF = 0f;
-
     private Transform currentTargetProjectableObjectCenter;
     private bool isTargeting;
     private bool isCharging;
