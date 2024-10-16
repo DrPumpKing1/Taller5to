@@ -316,6 +316,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   electrode: {fileID: 6545335404376616405}
+--- !u!1 &2609662612207557820
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7124801395030769105}
+  m_Layer: 9
+  m_Name: Center
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7124801395030769105
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2609662612207557820}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7028397045733667877}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2911150443789489299
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,6 +759,7 @@ Transform:
   - {fileID: 7584356121331720847}
   - {fileID: 3946357674900027994}
   - {fileID: 9083115083421274600}
+  - {fileID: 7124801395030769105}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4829961881678464048
@@ -765,6 +797,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectableObjectSO: {fileID: 11400000, guid: 4a61262e6bd41594b87bc789059aae5e, type: 2}
   projectionPlatform: {fileID: 0}
+  projectableObjectCenter: {fileID: 7124801395030769105}
 --- !u!114 &6719406281843646087
 MonoBehaviour:
   m_ObjectHideFlags: 0

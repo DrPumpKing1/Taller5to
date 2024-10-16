@@ -8,6 +8,7 @@ public class ProjectableObject : MonoBehaviour
     [Header("Projectable Object Settings")]
     [SerializeField] private ProjectableObjectSO projectableObjectSO;
     [SerializeField] private ProjectionPlatform projectionPlatform;
+    [SerializeField] private Transform projectableObjectCenter;
 
     public event EventHandler<OnProjectionPlatformSetEventArgs> OnProjectionPlatformSet;
     public event EventHandler OnProjectableObjectDestroyed;
@@ -25,6 +26,7 @@ public class ProjectableObject : MonoBehaviour
 
     public ProjectableObjectSO ProjectableObjectSO => projectableObjectSO;
     public ProjectionPlatform ProjectionPlatform => projectionPlatform;
+    public Transform ProjectableObjectCenter => projectableObjectCenter;
 
     public void SetProjectionPlatform(ProjectionPlatform projectionPlatform)
     {

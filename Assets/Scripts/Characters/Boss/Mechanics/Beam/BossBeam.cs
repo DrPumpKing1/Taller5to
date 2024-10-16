@@ -262,6 +262,7 @@ public class BossBeam : MonoBehaviour
         StunableProjectionPlatformProjection targetPlatform = platformsPool[randomIndex];
 
         SetTargetedProjectionPlatform(targetPlatform);
+
     }
 
     private void CheckReTargetProjectionPlatform()
