@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class AncientRelicDoor : MonoBehaviour
+public class AncientRelicShield : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Transform transformToDisable;
@@ -15,8 +15,8 @@ public class AncientRelicDoor : MonoBehaviour
 
     private bool previouslyPowered;
 
-    public static event EventHandler OnAncientRelicDoorPowered;
-    public static event EventHandler OnAncientRelicDoorDepowered;
+    public static event EventHandler OnAncientRelicShieldPowered;
+    public static event EventHandler OnAncientRelicShieldDepowered;
 
     private void Start()
     {
@@ -37,13 +37,13 @@ public class AncientRelicDoor : MonoBehaviour
     {
         if(AllPlatformsWithDrainer() && !previouslyPowered)
         {
-            DisableDoor();
+            DisableShield();
             previouslyPowered = true;
         }
         
         if(!AllPlatformsWithDrainer() && previouslyPowered)
         {
-            EnableDoor();
+            EnableShield();
             previouslyPowered = false;
         }
 
@@ -59,15 +59,15 @@ public class AncientRelicDoor : MonoBehaviour
 
         return true;
     }
-    private void EnableDoor()
+    private void EnableShield()
     {
         transformToDisable.gameObject.SetActive(true);
-        OnAncientRelicDoorPowered?.Invoke(this, EventArgs.Empty);
+        OnAncientRelicShieldPowered?.Invoke(this, EventArgs.Empty);
     }
 
-    private void DisableDoor()
+    private void DisableShield()
     {
         transformToDisable.gameObject.SetActive(false);
-        OnAncientRelicDoorDepowered?.Invoke(this, EventArgs.Empty);
+        OnAncientRelicShieldDepowered?.Invoke(this, EventArgs.Empty);
     }
 }

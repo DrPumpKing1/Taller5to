@@ -208,13 +208,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 342070133667790189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92b300b9a717dfe4580b0f6650780266, type: 3}
+  m_Script: {fileID: 11500000, guid: 42b03d2b2cd6a784dbabeca07048bcee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   transformToDisable: {fileID: 4449916747798241719}
-  timeDisabledAfterDepowered: 1.25
-  controllingElectrodes: []
-  timer: 0
+  controllingProjectionPlatforms: []
 --- !u!1 &667869691290702291
 GameObject:
   m_ObjectHideFlags: 0
