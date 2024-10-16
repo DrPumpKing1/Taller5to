@@ -32,6 +32,7 @@ public class BossBeam : MonoBehaviour
     public static event EventHandler<OnBeamPlatformTargetEventArgs> OnBeamPlatformTargeted;
     public static event EventHandler<OnBeamPlatformTargetEventArgs> OnBeamPlatformTargetCleared;
     public static event EventHandler<OnBeamPlatformStunEventArgs> OnBeamPlatformStun;
+    public static event EventHandler<OnBeamObjectDematerializationEventArgs> OnBeamObjectDematerialization;
 
     public static event EventHandler<OnBeamSphereEventArgs> OnBeamSphereSelected;
     public static event EventHandler<OnBeamSphereEventArgs> OnBeamSphereCleared;
@@ -69,6 +70,11 @@ public class BossBeam : MonoBehaviour
     {
         public StunableProjectionPlatformProjection stunableProjectionPlatformProjection;
         public float stunTime;
+    }
+
+    public class OnBeamObjectDematerializationEventArgs : EventArgs
+    {
+        public StunableProjectionPlatformProjection stunableProjectionPlatformProjection;
     }
 
     private void OnEnable()
@@ -281,6 +287,8 @@ public class BossBeam : MonoBehaviour
         if (!currentTargetedProjectionPlatform) return;
 
         BossObjectDematerialization.Instance.DematerializeInTargetPlatform(currentTargetedProjectionPlatform.ProjectionPlatform);
+
+        OnBeamObjectDematerialization?.Invoke(this, new OnBeamObjectDematerializationEventArgs { stunableProjectionPlatformProjection = currentTargetedProjectionPlatform });
     }
 
     private void StunProjectionPlatform()
