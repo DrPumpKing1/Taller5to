@@ -81,6 +81,12 @@ MonoBehaviour:
   position2: {fileID: 1238253081559167792}
   position3: {fileID: 4158283676226302366}
   position4: {fileID: 4220421753312345804}
+  startLightningColor: {r: 0, g: 1.3041191, b: 0.43226424, a: 1}
+  endLightningColor: {r: 0, g: 11.471699, b: 0.8408578, a: 1}
+  startParticleColor: {r: 0, g: 1.3041191, b: 0.43226424, a: 1}
+  endParticleColor: {r: 0, g: 11.471699, b: 0.8408578, a: 1}
+  startNoisePower: 0.1
+  endNoisePower: 0.3
   beamThickness: 0.2
   bezierPointsDistortion: 0.3
 --- !u!1 &3700031504638766999

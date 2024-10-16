@@ -57,13 +57,14 @@ public class BossBeam : MonoBehaviour
 
     public class OnBeamEventArgs : EventArgs
     {
-        public BossPhase bossPhase;
+        public PhaseBeam phaseBeam;
     }
 
     public class OnBeamPlatformTargetEventArgs : EventArgs
     {
         public Transform beamSphere;
         public StunableProjectionPlatformProjection stunableProjectionPlatformProjection;
+        public float chargeTime;
     }
 
     public class OnBeamPlatformStunEventArgs : EventArgs
@@ -218,7 +219,7 @@ public class BossBeam : MonoBehaviour
 
         SetBeamState(State.Charging);
 
-        OnBeamChargeStart?.Invoke(this, new OnBeamEventArgs { bossPhase = currentPhaseBeam.bossPhase });
+        OnBeamChargeStart?.Invoke(this, new OnBeamEventArgs { phaseBeam = currentPhaseBeam });
     }
 
     private void OnChargeEnd()
@@ -233,7 +234,7 @@ public class BossBeam : MonoBehaviour
 
         SetBeamState(State.OnCooldown);
 
-        OnBeamChargeEnd?.Invoke(this, new OnBeamEventArgs { bossPhase = currentPhaseBeam.bossPhase });
+        OnBeamChargeEnd?.Invoke(this, new OnBeamEventArgs { phaseBeam = currentPhaseBeam });
     }
 
     private void OnCooldownEnd()
@@ -245,7 +246,7 @@ public class BossBeam : MonoBehaviour
 
         SetBeamState(State.Charging);
 
-        OnBeamChargeStart?.Invoke(this, new OnBeamEventArgs { bossPhase = currentPhaseBeam.bossPhase });
+        OnBeamChargeStart?.Invoke(this, new OnBeamEventArgs {phaseBeam = currentPhaseBeam });
     }
     #endregion
 
@@ -381,11 +382,11 @@ public class BossBeam : MonoBehaviour
     private void SetTargetedProjectionPlatform(StunableProjectionPlatformProjection stunableProjectionPlatform)
     {
         currentTargetedProjectionPlatform = stunableProjectionPlatform;
-        OnBeamPlatformTargeted?.Invoke(this,new OnBeamPlatformTargetEventArgs { stunableProjectionPlatformProjection= currentTargetedProjectionPlatform, beamSphere = currentBeamSphere });
+        OnBeamPlatformTargeted?.Invoke(this,new OnBeamPlatformTargetEventArgs { stunableProjectionPlatformProjection= currentTargetedProjectionPlatform, beamSphere = currentBeamSphere, chargeTime = currentPhaseBeam.chargeTime });
     }
     private void ClearCurrentTargetedProjectionPlatform()
     {
-        OnBeamPlatformTargetCleared?.Invoke(this, new OnBeamPlatformTargetEventArgs { stunableProjectionPlatformProjection = currentTargetedProjectionPlatform, beamSphere = currentBeamSphere });
+        OnBeamPlatformTargetCleared?.Invoke(this, new OnBeamPlatformTargetEventArgs { stunableProjectionPlatformProjection = currentTargetedProjectionPlatform, beamSphere = currentBeamSphere, chargeTime = 0f });
         currentTargetedProjectionPlatform = null;
     }
 
@@ -396,14 +397,9 @@ public class BossBeam : MonoBehaviour
     {
         if(state == State.Charging)
         {
-            //EndCharge
+            OnBeamChargeEnd?.Invoke(this, new OnBeamEventArgs { phaseBeam = currentPhaseBeam });
         }
-
-        if(state == State.OnCooldown)
-        {
-            //EndCooldown
-        }
-
+        
         ResetTimer();
         ClearCurrentTargetedProjectionPlatform();
         ClearCurrentBeamSphere();

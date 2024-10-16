@@ -225,13 +225,12 @@ public class BossWeakPointsHandler : MonoBehaviour
     #region BossBeam Subscriptions
     private void BossBeam_OnBeamStart(object sender, BossBeam.OnBeamEventArgs e)
     {
-        EnableWeakPointsByBeamStart(e.bossPhase);
+        EnableWeakPointsByBeamStart(e.phaseBeam.bossPhase);
     }
 
     private void BossBeam_OnBeamEnd(object sender, BossBeam.OnBeamEventArgs e)
     {
-        DisableWeakPointsByBeamEnd(e.bossPhase);
-
+        DisableWeakPointsByBeamEnd(e.phaseBeam.bossPhase);
     }
     #endregion
 }
