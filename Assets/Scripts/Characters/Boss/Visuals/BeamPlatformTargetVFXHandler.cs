@@ -26,14 +26,18 @@ public class BeamPlatformTargetVFXHandler : MonoBehaviour
     [SerializeField, Range(0.05f, 0.3f)] private float startNoisePower;
     [SerializeField, Range(0.05f, 0.3f)] private float endNoisePower;
 
-    [Header("Settings")]
-    [SerializeField, Range(0.05f,0.5f)] private float beamThickness;
-    [SerializeField, Range(0f, 1f)] private float bezierPointsDistortion;
+    [Header("Thickness")]
+    [SerializeField, Range(0.05f,0.2f)] private float startThickness;
+    [SerializeField, Range(0.05f,0.2f)] private float endThickness;
 
-    private const string THICKNESS_PROPERTY = "Thickness";
+    [Header("Bezier Curve")]
+    [SerializeField, Range(0f, 1f)] private float startBezierPointsDistortion;
+    [SerializeField, Range(0f, 1f)] private float endBezierPointsDistortion;
+
     private const string LIGHTNING_COLOR_PROPERTY = "Color";
     private const string PARTICLES_COLOR_PROPERTY = "ParticleColor";
     private const string NOISE_POWER_PROPERTY = "NoisePower";
+    private const string THICKNESS_PROPERTY = "Thickness";
 
     private const float BEAM_THICKNESS_OFF = 0f;
 
@@ -43,6 +47,9 @@ public class BeamPlatformTargetVFXHandler : MonoBehaviour
 
     private float chargeTime;
     private float timeCharging;
+
+    private Vector3 position2UnitaryVector;
+    private Vector3 position3UnitaryVector;
 
     private void OnEnable()
     {
@@ -90,8 +97,11 @@ public class BeamPlatformTargetVFXHandler : MonoBehaviour
         HandleLighningColor();
         HandleParticleColor();
         HandleNoisePower();
+        HandleThickness();
+        HandleMiddleBezierPoints();
     }
 
+    #region Lerp Handlers
     private void HandleFourthBezierPointPosition()
     {
         if (!isTargeting) return;
@@ -141,50 +151,92 @@ public class BeamPlatformTargetVFXHandler : MonoBehaviour
 
         if (!platformTargetVFX.HasFloat(NOISE_POWER_PROPERTY)) return;
 
-        float color = Mathf.Lerp(startNoisePower, endNoisePower, timeCharging / chargeTime);
+        float noisePower = Mathf.Lerp(startNoisePower, endNoisePower, timeCharging / chargeTime);
 
-        platformTargetVFX.SetFloat(NOISE_POWER_PROPERTY, color);
+        platformTargetVFX.SetFloat(NOISE_POWER_PROPERTY, noisePower);
     }
 
-    private void SetBeam(bool on)
+    private void HandleThickness()
     {
+        if (!isTargeting) return;
+        if (!isCharging) return;
+        if (chargeTime <= 0) return;
+
         if (!platformTargetVFX.HasFloat(THICKNESS_PROPERTY)) return;
-        
-        if(on)
-        {
-            platformTargetVFX.SetFloat(THICKNESS_PROPERTY, beamThickness);
-        }
-        else
-        {
-            platformTargetVFX.SetFloat(THICKNESS_PROPERTY, BEAM_THICKNESS_OFF);
-        }
+
+        float thickness = Mathf.Lerp(startThickness, endThickness, timeCharging / chargeTime);
+
+        platformTargetVFX.SetFloat(THICKNESS_PROPERTY, thickness);
     }
 
-    private void RepositionBezierPoints(Vector3 startPos, Vector3 endPos)
+    private void HandleMiddleBezierPoints()
     {
-        float distanceBetween = Vector3.Distance(startPos, endPos);
+        if (!isTargeting) return;
+        if (!isCharging) return;
+        if (chargeTime <= 0) return;
 
-        position1.position = startPos;
-        position4.position = endPos;
+        float bezierPointsDistortion = Mathf.Lerp(startBezierPointsDistortion, endBezierPointsDistortion, timeCharging / chargeTime);
 
-        position2.position = startPos + (endPos - startPos) * 1 / 3 + GetRandomBezierPointDistortion(distanceBetween);
-        position3.position = startPos + (endPos - startPos) * 2 / 3 + GetRandomBezierPointDistortion(distanceBetween);
+        Vector3 startPos = position1.position;
+        Vector3 endPos = position4.position;
+
+        float distaceBetween = Vector3.Distance(startPos, endPos);
+
+        position2.position = startPos + (endPos - startPos) * 1 / 3 + position2UnitaryVector * distaceBetween * bezierPointsDistortion;
+        position3.position = startPos + (endPos - startPos) * 2 / 3 + position2UnitaryVector * distaceBetween * bezierPointsDistortion;
     }
+
+    #endregion
 
     private void TargetPlatformVFX(Vector3 beamSpherePos, Vector3 projectionPlatformPos)
     {
-        SetBeam(true);
         platformTargetVFX.Play();
 
-        RepositionBezierPoints (beamSpherePos, projectionPlatformPos);
+        RepositionEndBezierPoints(beamSpherePos, projectionPlatformPos);
+        RepositionMiddleBezierPoints();
         isTargeting = true;
+        SetVFX(true);
     }
 
     private void StopPlatformVFX()
     {
-        SetBeam(false);
         platformTargetVFX.Stop();
         isTargeting = false;
+        SetVFX(false);
+    }
+
+    private void RepositionEndBezierPoints(Vector3 startPos, Vector3 endPos)
+    {
+        position1.position = startPos;
+        position4.position = endPos;
+    }
+
+    private void RepositionMiddleBezierPoints()
+    {
+        ChooseMiddleUnitaryVectors();
+
+        Vector3 startPos = position1.position;
+        Vector3 endPos = position4.position;
+
+        float distaceBetween = Vector3.Distance(startPos, endPos);
+
+        position2.position = startPos + (endPos - startPos) * 1 / 3 + position2UnitaryVector * distaceBetween * startBezierPointsDistortion;
+        position3.position = startPos + (endPos - startPos) * 2 / 3 + position2UnitaryVector * distaceBetween * startBezierPointsDistortion;
+    }
+
+    private void ChooseMiddleUnitaryVectors()
+    {
+        position2UnitaryVector = GetRandomUnitaryVector();
+        position3UnitaryVector = GetRandomUnitaryVector();
+    }
+
+    private Vector3 GetRandomUnitaryVector()
+    {
+        float randomX = Random.Range(0f, 1f);
+        float randomY = Random.Range(0f, 1f);
+        float randomZ = Random.Range(0f, 1f);
+
+        return new Vector3(randomX, randomY, randomZ);
     }
 
     private void SetCurrentTargetProjectableObjectCenter(Transform target) => currentTargetProjectableObjectCenter = target;
@@ -192,6 +244,7 @@ public class BeamPlatformTargetVFXHandler : MonoBehaviour
 
     private void SetChargeTime(float time) => chargeTime = time;
     private void ResetTimer() => timeCharging = 0;
+    private void SetVFX(bool on) => platformTargetVFX.enabled = on;
 
 
     #region BossBeam Subscriptions
@@ -217,15 +270,5 @@ public class BeamPlatformTargetVFXHandler : MonoBehaviour
         ResetTimer();
         isCharging = false;
     }
-
     #endregion
-
-    private Vector3 GetRandomBezierPointDistortion(float distanceBetween)
-    {
-        float randomX = Random.Range(0f, bezierPointsDistortion);
-        float randomY = Random.Range(0f, bezierPointsDistortion);
-        float randomZ = Random.Range(0f, bezierPointsDistortion);
-
-        return new Vector3 (randomX, randomY, randomZ) * distanceBetween;
-    }
 }

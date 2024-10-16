@@ -819,14 +819,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7881402616386405376}
     m_Modifications:
+    - target: {fileID: 109299641242258007, guid: 60048c90453249d4bb1785b4860938cb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2114523213227374570, guid: 60048c90453249d4bb1785b4860938cb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3060278629999617465, guid: 60048c90453249d4bb1785b4860938cb, type: 3}
       propertyPath: stunableProjectionPlatform
       value: 
       objectReference: {fileID: -7844609768730437856}
-    - target: {fileID: 4818030276913950074, guid: 60048c90453249d4bb1785b4860938cb, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5049562122566250444, guid: 60048c90453249d4bb1785b4860938cb, type: 3}
       propertyPath: m_Name
       value: ProjectionPlatformStunVFX

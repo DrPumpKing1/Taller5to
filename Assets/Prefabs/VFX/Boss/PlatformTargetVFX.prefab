@@ -87,8 +87,10 @@ MonoBehaviour:
   endParticleColor: {r: 0, g: 11.471699, b: 0.8408578, a: 1}
   startNoisePower: 0.1
   endNoisePower: 0.3
-  beamThickness: 0.2
-  bezierPointsDistortion: 0.3
+  startThickness: 0.08
+  endThickness: 0.125
+  startBezierPointsDistortion: 0.75
+  endBezierPointsDistortion: 0
 --- !u!1 &3700031504638766999
 GameObject:
   m_ObjectHideFlags: 0
