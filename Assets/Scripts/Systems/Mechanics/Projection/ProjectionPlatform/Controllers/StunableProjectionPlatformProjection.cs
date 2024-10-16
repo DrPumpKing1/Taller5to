@@ -105,7 +105,6 @@ public class StunableProjectionPlatformProjection : ProjectionPlatformProjection
 
         if (state != State.Stunned) return;
         OnProjectionPlatformFailInteractStun?.Invoke(this, EventArgs.Empty);
-        Debug.Log("Stunned!");
     }
 
 

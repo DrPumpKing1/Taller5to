@@ -7,6 +7,9 @@ public class PlatformStunVFXHandler : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private StunableProjectionPlatformProjection stunableProjectionPlatform;
+    [Space]
+    [SerializeField] private GameObject stunnedPlatformModel;
+    [SerializeField] private VisualEffect platformStunVFX;
 
     private void OnEnable()
     {
@@ -19,15 +22,34 @@ public class PlatformStunVFXHandler : MonoBehaviour
         stunableProjectionPlatform.OnProjectionPlatformEndStun -= StunableProjectionPlatform_OnProjectionPlatformEndStun;
     }
 
-    #region StunableProjectionPlatform Subscriptions
-    private void StunableProjectionPlatform_OnProjectionPlatformEndStun(object sender, System.EventArgs e)
+    private void Start()
     {
-        
+        EndVFX();
     }
 
+    private void StartVFX()
+    {
+        SetModel(true);
+        platformStunVFX.Play();
+    }
+
+    private void EndVFX()
+    {
+        SetModel(false);
+        platformStunVFX.Stop();
+    }
+
+    private void SetModel(bool enabled) => stunnedPlatformModel.SetActive(enabled);
+
+    #region StunableProjectionPlatform Subscriptions
     private void StunableProjectionPlatform_OnProjectionPlatformStun(object sender, System.EventArgs e)
     {
-        
+        StartVFX();
+    }
+
+    private void StunableProjectionPlatform_OnProjectionPlatformEndStun(object sender, System.EventArgs e)
+    {
+        EndVFX();
     }
     #endregion
 }
