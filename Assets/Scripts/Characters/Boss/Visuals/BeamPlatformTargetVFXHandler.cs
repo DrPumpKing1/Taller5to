@@ -72,20 +72,6 @@ public class BeamPlatformTargetVFXHandler : MonoBehaviour
         InitializeVFX();
         InitializeVariables();
     }
-
-    private void InitializeVFX()
-    {
-        platformTargetVFX.gameObject.SetActive(true);
-        StopPlatformVFX();
-        isTargeting = false;
-    }
-
-    private void InitializeVariables()
-    {
-        SetChargeTime(0f);
-        ResetTimer();
-    }
-
     private void Update()
     {
         HandleFourthBezierPointPosition();
@@ -98,6 +84,21 @@ public class BeamPlatformTargetVFXHandler : MonoBehaviour
         HandleThickness();
         HandleMiddleBezierPoints();
     }
+
+    private void InitializeVFX()
+    {
+        platformTargetVFX.gameObject.SetActive(true);
+        StopPlatformVFX();
+        isTargeting = false;
+        isCharging = false;
+    }
+
+    private void InitializeVariables()
+    {
+        SetChargeTime(0f);
+        ResetTimer();
+    }
+
 
     #region Lerp Handlers
     private void HandleFourthBezierPointPosition()

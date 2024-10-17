@@ -58,6 +58,7 @@ public class BossBeam : MonoBehaviour
     public class OnBeamEventArgs : EventArgs
     {
         public PhaseBeam phaseBeam;
+        public Transform beamSphere;
     }
 
     public class OnBeamPlatformTargetEventArgs : EventArgs
@@ -219,7 +220,7 @@ public class BossBeam : MonoBehaviour
 
         SetBeamState(State.Charging);
 
-        OnBeamChargeStart?.Invoke(this, new OnBeamEventArgs { phaseBeam = currentPhaseBeam });
+        OnBeamChargeStart?.Invoke(this, new OnBeamEventArgs { phaseBeam = currentPhaseBeam, beamSphere = currentBeamSphere });
     }
 
     private void OnChargeEnd()
@@ -230,11 +231,13 @@ public class BossBeam : MonoBehaviour
         StunProjectionPlatform();
 
         ClearCurrentTargetedProjectionPlatform();
+
+        Transform previousBeamSphere = currentBeamSphere;
         ClearCurrentBeamSphere();
 
         SetBeamState(State.OnCooldown);
 
-        OnBeamChargeEnd?.Invoke(this, new OnBeamEventArgs { phaseBeam = currentPhaseBeam });
+        OnBeamChargeEnd?.Invoke(this, new OnBeamEventArgs { phaseBeam = currentPhaseBeam, beamSphere = previousBeamSphere });
     }
 
     private void OnCooldownEnd()
@@ -246,7 +249,7 @@ public class BossBeam : MonoBehaviour
 
         SetBeamState(State.Charging);
 
-        OnBeamChargeStart?.Invoke(this, new OnBeamEventArgs {phaseBeam = currentPhaseBeam });
+        OnBeamChargeStart?.Invoke(this, new OnBeamEventArgs {phaseBeam = currentPhaseBeam, beamSphere = currentBeamSphere });
     }
     #endregion
 
@@ -397,7 +400,7 @@ public class BossBeam : MonoBehaviour
     {
         if(state == State.Charging)
         {
-            OnBeamChargeEnd?.Invoke(this, new OnBeamEventArgs { phaseBeam = currentPhaseBeam });
+            OnBeamChargeEnd?.Invoke(this, new OnBeamEventArgs { phaseBeam = currentPhaseBeam , beamSphere = currentBeamSphere });
         }
         
         ResetTimer();
