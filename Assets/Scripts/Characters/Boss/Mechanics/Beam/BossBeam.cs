@@ -23,8 +23,8 @@ public class BossBeam : MonoBehaviour
 
     private const int DRAINER_ID = 4;
     private PhaseBeam currentPhaseBeam;
-    public Transform currentBeamSphere;
-    public StunableProjectionPlatformProjection currentTargetedProjectionPlatform;
+    private Transform currentBeamSphere;
+    private StunableProjectionPlatformProjection currentTargetedProjectionPlatform;
 
     public static event EventHandler<OnBeamEventArgs> OnBeamChargeStart;
     public static event EventHandler<OnBeamEventArgs> OnBeamChargeEnd;

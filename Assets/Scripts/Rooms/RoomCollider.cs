@@ -9,9 +9,11 @@ public class RoomCollider : MonoBehaviour
     [SerializeField] private string roomName;
     [SerializeField] private MusicLevel musicLevel;
     [SerializeField] private TitleLevel titleLevel;
+    [SerializeField] private RoomSubArea roomSubArea;
 
     public int ID => id;
     public string RoomName => roomName;
     public MusicLevel MusicLevel => musicLevel;
     public TitleLevel TitleLevel => titleLevel;
+    public RoomSubArea RoomSubArea => roomSubArea;
 }
