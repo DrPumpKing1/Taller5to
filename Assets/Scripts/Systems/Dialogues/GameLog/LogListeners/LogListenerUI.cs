@@ -15,6 +15,9 @@ public class LogListenerUI : MonoBehaviour
 
         JournalOpeningManager.OnJournalOpen += JournalOpeningManager_OnJournalOpen;
         JournalOpeningManager.OnJournalClose += JournalOpeningManager_OnJournalClose;
+
+        WorldSpaceInstructionManager.OnWorldSpaceInstructionAcomplished += WorldSpaceInstructionManager_OnWorldSpaceInstructionAcomplished;
+        WorldSpaceInstructionManager.OnWorldSpaceInstructionShow += WorldSpaceInstructionManager_OnWorldSpaceInstructionShow;
     }
 
     private void OnDisable()
@@ -28,6 +31,9 @@ public class LogListenerUI : MonoBehaviour
 
         JournalOpeningManager.OnJournalOpen -= JournalOpeningManager_OnJournalOpen;
         JournalOpeningManager.OnJournalClose -= JournalOpeningManager_OnJournalClose;
+
+        WorldSpaceInstructionManager.OnWorldSpaceInstructionAcomplished -= WorldSpaceInstructionManager_OnWorldSpaceInstructionAcomplished;
+        WorldSpaceInstructionManager.OnWorldSpaceInstructionShow -= WorldSpaceInstructionManager_OnWorldSpaceInstructionShow;
     }
 
     private void PauseManager_OnGamePaused(object sender, System.EventArgs e) => GameLogManager.Instance.Log($"UI/GamePaused");
@@ -38,4 +44,8 @@ public class LogListenerUI : MonoBehaviour
 
     private void JournalOpeningManager_OnJournalOpen(object sender, System.EventArgs e) => GameLogManager.Instance.Log($"UI/JournalOpen");
     private void JournalOpeningManager_OnJournalClose(object sender, System.EventArgs e) => GameLogManager.Instance.Log($"UI/JournalClose");
+
+    private void WorldSpaceInstructionManager_OnWorldSpaceInstructionShow(object sender, WorldSpaceInstructionManager.OnWorldSpaceInstructionEventArgs e) => GameLogManager.Instance.Log($"UI/WorldSpaceInstruction/Show/{e.id}");
+    private void WorldSpaceInstructionManager_OnWorldSpaceInstructionAcomplished(object sender, WorldSpaceInstructionManager.OnWorldSpaceInstructionEventArgs e) => GameLogManager.Instance.Log($"UI/WorldSpaceInstruction/Acomplish/{e.id}");
+
 }
