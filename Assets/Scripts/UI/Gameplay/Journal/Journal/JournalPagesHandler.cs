@@ -13,12 +13,15 @@ public class JournalPagesHandler : MonoBehaviour
     [SerializeField] private JournalPageButton currentJournalPageButton;
     [Space]
     [SerializeField] private bool journalPagesHierarchyOverPopUps;
+    [SerializeField, Range(0f, 1f)] private float buttonsCooldown;
 
     public bool JournalInfoPopUpOpen { get; private set; }
     public bool JournalPagesHierarchyOverPopUps => journalPagesHierarchyOverPopUps;
 
     public static event EventHandler<OnJournalPageEventArgs> OnJournalPageOpen;
     public static event EventHandler<OnJournalPageEventArgs> OnJournalPageClose;
+
+    public float cooldownTimer;
 
     [System.Serializable]
     public class JournalPageButton
@@ -55,6 +58,12 @@ public class JournalPagesHandler : MonoBehaviour
         InitializeVariables();
         HideAllPagesInmediately();
         ShowJournalPageInmediatelyByPageNumber(1);
+        ResetCooldownTimer();
+    }
+
+    private void Update()
+    {
+        HandleButtonCooldown();
     }
 
     private void SetSingleton()
@@ -78,10 +87,16 @@ public class JournalPagesHandler : MonoBehaviour
         }
     }
 
+    private void HandleButtonCooldown()
+    {
+        if (cooldownTimer > 0f) cooldownTimer -= Time.deltaTime;
+    }
+
     private void OnJournalPageButtonClick(JournalPageButton journalPageButton)
     {
         if (currentJournalPageButton == journalPageButton) return;
         if (JournalInfoPopUpOpen && !journalPagesHierarchyOverPopUps) return;
+        if (ButtonsOnCooldown()) return;
 
         if(currentJournalPageButton != null) 
         {
@@ -89,7 +104,8 @@ public class JournalPagesHandler : MonoBehaviour
         }
 
         ShowJournalPage(journalPageButton);
-    }
+        SetButtonsOnCooldown();
+    } 
 
     private void InitializeVariables()
     {
@@ -133,7 +149,11 @@ public class JournalPagesHandler : MonoBehaviour
     }
 
     private void SetCurrentJournalPage(JournalPageButton journalPageButton) => currentJournalPageButton = journalPageButton;
-    private void ClearCurrentJournalPage() => currentJournalPageButton = null;  
+    private void ClearCurrentJournalPage() => currentJournalPageButton = null;
+
+    private void ResetCooldownTimer() => cooldownTimer = 0f;
+    private void SetButtonsOnCooldown() => cooldownTimer = buttonsCooldown;
+    private bool ButtonsOnCooldown() => cooldownTimer > 0f;
 
     private void ShowJournalPageInmediatelyByPageNumber(int pageNumber)
     {
