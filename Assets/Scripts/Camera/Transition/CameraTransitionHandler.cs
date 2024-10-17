@@ -72,7 +72,7 @@ public class CameraTransitionHandler : MonoBehaviour
     private void SetPreviousCameraDistance(float distance) => previousCameraDistance = distance;
 
     public bool AllowCameraInputProcessing() => state == State.FollowingPlayer || state == State.StallingOut;
-    public bool AllowMovementInputProcessing() => state == State.FollowingPlayer || state == State.StallingOut;
+    public bool AllowMovementInputProcessing() => state == State.FollowingPlayer || state == State.StallingOut || state == State.MovingOut;
 
     public void TransitionMoveCamera(CameraTransition cameraTransition)
     {
