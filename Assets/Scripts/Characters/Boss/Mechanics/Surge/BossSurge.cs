@@ -8,10 +8,6 @@ public class BossSurge : MonoBehaviour
 {
     public static BossSurge Instance { get; private set; }
 
-    [Header("Positions")]
-    [SerializeField] private Transform activeLayoutPosition;
-    [SerializeField] private Transform disabledLayoutPosition;
-
     [Header("Components")]
     [SerializeField] private List<PhaseActiveLayout> phaseActiveLayouts;
 
@@ -31,6 +27,8 @@ public class BossSurge : MonoBehaviour
     {
         public BossPhase activePhase;
         public Transform layoutTransform;
+        public Transform activeLayoutPosition;
+        public Transform disabledLayoutPosition;
     }
 
     private void OnEnable()
@@ -70,13 +68,13 @@ public class BossSurge : MonoBehaviour
 
     private void Surge(PhaseActiveLayout targetPhaseActiveLayout, bool triggerEvents)
     {
-        foreach (PhaseActiveLayout phaseActiveLayout in phaseActiveLayouts)
+        foreach (PhaseActiveLayout phaseActiveLayout in phaseActiveLayouts) //Move all nonActives underground;
         {
             if (phaseActiveLayout != targetPhaseActiveLayout) SetLayout(phaseActiveLayout, false);
         }
 
-        SetCurrentActiveLayout(targetPhaseActiveLayout);
-        SetLayout(targetPhaseActiveLayout, true);
+        SetCurrentActiveLayout(targetPhaseActiveLayout); 
+        SetLayout(targetPhaseActiveLayout, true); //Move Active layout up
         if(triggerEvents) OnBossSurge?.Invoke(this, new OnBossSurgeEventArgs { phaseActiveLayout = targetPhaseActiveLayout });
     }
 
@@ -94,8 +92,8 @@ public class BossSurge : MonoBehaviour
 
     private void SetLayout(PhaseActiveLayout phaseActiveLayout, bool active)
     {
-        if (active) phaseActiveLayout.layoutTransform.position = activeLayoutPosition.position;
-        else phaseActiveLayout.layoutTransform.position = disabledLayoutPosition.position;
+        if (active) phaseActiveLayout.layoutTransform.position = phaseActiveLayout.activeLayoutPosition.position;
+        else phaseActiveLayout.layoutTransform.position = phaseActiveLayout.disabledLayoutPosition.position;
     }
 
     private void SetCurrentActiveLayout(PhaseActiveLayout phaseActiveLayout) => currentActiveLayout = phaseActiveLayout;
