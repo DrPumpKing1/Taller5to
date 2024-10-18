@@ -171,7 +171,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4275540399648634832}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 94.5, y: 3, z: 164.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -487,6 +487,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 7.517
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 00304084d6164d544b651907c51d209f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c99c49304563cd9499ec19f6dfd30680, type: 2}
     - target: {fileID: 919132149155446097, guid: 00304084d6164d544b651907c51d209f, type: 3}
       propertyPath: m_Name
       value: ClawPiece3
