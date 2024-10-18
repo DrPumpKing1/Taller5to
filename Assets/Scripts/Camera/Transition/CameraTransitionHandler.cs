@@ -155,7 +155,7 @@ public class CameraTransitionHandler : MonoBehaviour
         float positionDifferenceMagnitude = float.MaxValue;
         float distanceDifferenceMagnitude = float.MaxValue;
 
-        while (positionDifferenceMagnitude > 0.2f)
+        while (positionDifferenceMagnitude > 0.3f)
         {
             currentCameraFollowTransform.position = Vector3.Lerp(currentCameraFollowTransform.position, playerCameraFollowPoint.position, time / (cameraTransition.moveOutTime) * 1 / (MOVE_CAMERA_TIME_FACTOR * cameraTransition.moveOutTime) * Time.deltaTime);
             positionDifferenceMagnitude = (currentCameraFollowTransform.position - playerCameraFollowPoint.position).magnitude;
