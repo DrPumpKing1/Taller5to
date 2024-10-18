@@ -23,6 +23,8 @@ public class LogListenerEvents : MonoBehaviour
 
         //BOSS
         BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
+        BossStateHandler.OnBossPhaseChangeEnd += BossStateHandler_OnBossPhaseChangeEnd;
+
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
         AncientRelic.OnAncientRelicCollected += AncientRelic_OnAncientRelicCollected;
 
@@ -50,6 +52,8 @@ public class LogListenerEvents : MonoBehaviour
 
         //BOSS
         BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
+        BossStateHandler.OnBossPhaseChangeEnd -= BossStateHandler_OnBossPhaseChangeEnd;
+
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
         AncientRelic.OnAncientRelicCollected -= AncientRelic_OnAncientRelicCollected;
 
@@ -71,8 +75,10 @@ public class LogListenerEvents : MonoBehaviour
     //LEVEL3
 
     //BOSS
+    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e) => GameLogManager.Instance.Log($"Events/BossPhaseChange/Start/{e.nextPhase}");
+    private void BossStateHandler_OnBossPhaseChangeEnd(object sender, BossStateHandler.OnPhaseChangeEventArgs e) => GameLogManager.Instance.Log($"Events/BossPhaseChange/End/{e.nextPhase}");
+
     private void BossStateHandler_OnBossDefeated(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Events/BossDefeated");
-    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e) => GameLogManager.Instance.Log($"Events/BossPhaseChange/{e.nextPhase}");
     private void AncientRelic_OnAncientRelicCollected(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Events/AncientRelicCollected");
 
     //VYRX
