@@ -46,6 +46,7 @@ public class CameraTransitionHandler : MonoBehaviour
     {
         InitializeVariables();
         SetCameraState(State.FollowingPlayer);
+        SetCurrentCameraFollowTransform(playerCameraFollowPoint);
     }
 
     private void SetSingleton()
@@ -76,7 +77,7 @@ public class CameraTransitionHandler : MonoBehaviour
 
     public void TransitionMoveCamera(CameraTransition cameraTransition)
     {
-        if (state != State.FollowingPlayer) return;
+        if (state == State.MovingIn) return;
 
         StopAllCoroutines();
         StartCoroutine(TransitionMoveCameraCoroutine(cameraTransition));
@@ -91,10 +92,11 @@ public class CameraTransitionHandler : MonoBehaviour
         StartCoroutine(EndTransitionCoroutine(cameraTransition));
     }
 
-
     private IEnumerator TransitionMoveCameraCoroutine(CameraTransition cameraTransition)
     {
         OnCameraTransitionInStart?.Invoke(this, new OnCameraTransitionEventArgs { cameraTransition = cameraTransition});
+
+        Transform previousCameraFollowTransform = currentCameraFollowTransform;
 
         GameObject cameraFollowGameObject = new GameObject("CameraFollowGameObject");
         Transform cameraFollowTransform = cameraFollowGameObject.transform;
@@ -102,10 +104,13 @@ public class CameraTransitionHandler : MonoBehaviour
         SetCurrentCameraFollowTransform(cameraFollowTransform);
         SetPreviousCameraDistance(CameraScroll.Instance.Distance);
 
-        currentCameraFollowTransform.position = playerCameraFollowPoint.position;
+        currentCameraFollowTransform.position = previousCameraFollowTransform.position;
         CMVCam.Follow = currentCameraFollowTransform;
 
         Vector3 startingPositionIn = currentCameraFollowTransform.position;
+
+        //If previous CameraFollowTransform wasn't the original playerCameraFollowTransform (Transition started while another transition was happening)
+        if(previousCameraFollowTransform != playerCameraFollowPoint) Destroy(previousCameraFollowTransform.gameObject);
 
         SetCameraState(State.StallingIn);
 
@@ -133,10 +138,10 @@ public class CameraTransitionHandler : MonoBehaviour
 
         OnCameraTransitionInEnd?.Invoke(this, new OnCameraTransitionEventArgs {cameraTransition = cameraTransition});
 
-        if (!cameraTransition.endInTime) yield break;
-        
         SetCameraState(State.LookingTarget);
 
+        if (!cameraTransition.endInTime) yield break;
+        
         yield return new WaitForSeconds(cameraTransition.stallTime);
 
         yield return StartCoroutine(EndTransitionCoroutine(cameraTransition));
@@ -184,7 +189,7 @@ public class CameraTransitionHandler : MonoBehaviour
         CMVCam.Follow = playerCameraFollowPoint;
 
         Destroy(currentCameraFollowTransform.gameObject);
-        ClearCurrentCameraFollowTransform();
+        SetCurrentCameraFollowTransform(playerCameraFollowPoint);
 
         SetCameraState(State.FollowingPlayer);
 

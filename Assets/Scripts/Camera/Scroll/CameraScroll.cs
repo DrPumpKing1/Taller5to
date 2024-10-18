@@ -73,8 +73,6 @@ public class CameraScroll : MonoBehaviour
 
     private void HandlePlayerCameraScroll()
     {
-        if (!enableCameraScroll) return;
-
         if (!CameraTransitionHandler.Instance.AllowCameraInputProcessing()) return;
         if (!CameraZoomHandler.Instance.AllowCameraInputProcessing()) return;
 
@@ -102,6 +100,9 @@ public class CameraScroll : MonoBehaviour
     private void CalculateDesiredDistance()
     {
         float processedScrollInput = invertScroll ? -smoothInput : smoothInput;
+
+        if (!enableCameraScroll) processedScrollInput = 0f;
+
         desiredDistance = Mathf.Clamp(desiredDistance - scrollSensitivity * processedScrollInput, minDistance, maxDistance);   
     }
 
