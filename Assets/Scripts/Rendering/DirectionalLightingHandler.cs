@@ -6,9 +6,14 @@ using System.Linq;
 
 public class DirectionalLightingHandler : MonoBehaviour
 {
+    public static DirectionalLightingHandler Instance;
+
     [Header("Components")]
     [SerializeField] private Light directionalLight;
     [SerializeField] private List<RoomCollider> controllingColliders;
+
+    public bool overrideAlwaysOn;
+    private bool shouldBeEnabled;
 
     private void OnEnable()
     {
@@ -24,8 +29,59 @@ public class DirectionalLightingHandler : MonoBehaviour
         RoomManager.OnExitBlockingViewColliders -= RoomVisibilityManager_OnExitBlockingViewColliders;
     }
 
-    private void EnableDirectionalLight() => directionalLight.enabled = true;
-    private void DisableDirectionalLight() => directionalLight.enabled = false;
+    private void Awake()
+    {
+        SetSingleton();
+    }
+
+    private void Update()
+    {
+        HandleDirectionalLight();
+    }
+
+    private void SetSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("There is more than one CameraFollowPointHandler instance, proceding to destroy duplicate");
+            Destroy(gameObject);
+        }
+    }
+
+    private void HandleDirectionalLight()
+    {
+        if (overrideAlwaysOn) 
+        { 
+            if(!directionalLight.enabled)
+            {
+                directionalLight.enabled = true;              
+            }
+
+            return;
+        }
+
+        if (shouldBeEnabled && !directionalLight.enabled)
+        {
+            directionalLight.enabled = true;
+        }
+
+        if (!shouldBeEnabled && directionalLight.enabled)
+        {
+            directionalLight.enabled = false;
+        }
+    }
+
+    public void OverrideOnDirectionalLights(bool alwaysOn)
+    {
+        overrideAlwaysOn = alwaysOn;
+    }
+
+    private void EnableDirectionalLight() => shouldBeEnabled = true;
+    private void DisableDirectionalLight() => shouldBeEnabled = false;
 
     private void CheckStartVisibility(List<RoomCollider> currentCollidersBlockingView)
     {
@@ -46,6 +102,7 @@ public class DirectionalLightingHandler : MonoBehaviour
         if (!(controllingColliders.Intersect(enterVisibilityColliders).Any())) return;
 
         EnableDirectionalLight();
+        HandleDirectionalLight();
     }
 
     private void CheckExitVisibility(List<RoomCollider> previousCollidersBlockingView, List<RoomCollider> currentVisibilityColliders)
@@ -57,6 +114,7 @@ public class DirectionalLightingHandler : MonoBehaviour
         //At this point, there was at least one collider blocking view, but now there is none
 
         DisableDirectionalLight();
+        HandleDirectionalLight();
     }
 
     private void RoomVisibilityManager_OnStartBlockingViewColliders(object sender, RoomManager.OnBlockingViewCollidersStartEventArgs e)
