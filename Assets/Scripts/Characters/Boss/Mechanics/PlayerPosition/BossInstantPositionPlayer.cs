@@ -45,6 +45,7 @@ public class BossInstantPositionPlayer : MonoBehaviour
     {
         PlayerPositioningHandler.Instance.InstantPositionPlayer(phasePlayerPosition.positionTransform.position);
         PlayerDirectionHandler.Instance.InstantDirectionPlayer(phasePlayerPosition.rotationDirection);
+        PlayerPositioningHandler.Instance.gameObject.transform.SetParent(null);
     }
 
     private void Awake()

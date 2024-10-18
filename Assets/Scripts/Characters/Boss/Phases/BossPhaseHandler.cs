@@ -62,7 +62,7 @@ public class BossPhaseHandler : MonoBehaviour
 
     private void Update()
     {
-        Test();
+        CheckForceChangePhase();
     }
 
     private void SetSingleton()
@@ -78,11 +78,11 @@ public class BossPhaseHandler : MonoBehaviour
         }
     }
 
-    private void Test()
+    private void CheckForceChangePhase()
     {
-        if (Input.GetKeyDown(KeyCode.M) && CheckPlayerClose())
+        if (Input.GetKeyDown(KeyCode.M))
         {
-            ChangeToNextPhase();
+            ForceChangeToNextPhase();   
         }
     }
 
@@ -101,6 +101,12 @@ public class BossPhaseHandler : MonoBehaviour
             default:
                 return BossPhase.Defeated;
         }
+    }
+
+    public void ForceChangeToNextPhase()
+    {
+        if (!CheckPlayerClose()) return;
+        ChangeToNextPhase();
     }
 
     private void ChangeToNextPhase()

@@ -17,6 +17,7 @@ public class DevMenuButtonsHandler : MonoBehaviour
     [SerializeField] private Button dematerializeAllObjectsButton;
     [SerializeField] private Button skipDialogueButton;
     [SerializeField] private Button clearInstructionButton;
+    [SerializeField] private Button skipBossPhaseButton;
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class DevMenuButtonsHandler : MonoBehaviour
         dematerializeAllObjectsButton.onClick.AddListener(DematerializeAllObjects);
         skipDialogueButton.onClick.AddListener(SkipDialogue);
         clearInstructionButton.onClick.AddListener(ClearInstruction);
+        skipBossPhaseButton.onClick.AddListener(SkipBossPhase);
     }
     private void RestartGame() => LevelSkipManager.Instance.SkipLevel(0);
     private void GoToLevel1() => LevelSkipManager.Instance.SkipLevel(1);
@@ -46,4 +48,5 @@ public class DevMenuButtonsHandler : MonoBehaviour
     private void DematerializeAllObjects() => ProjectionManager.Instance.DematerializeAllObjects();
     private void SkipDialogue() => DialogueManager.Instance.EndDialogue();
     private void ClearInstruction() => InstructionsManager.Instance.HideInstruction();
+    private void SkipBossPhase() => BossPhaseHandler.Instance.ForceChangeToNextPhase();
 }
