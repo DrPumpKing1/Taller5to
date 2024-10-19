@@ -15,33 +15,38 @@ MonoBehaviour:
   id: 3
   movementLimitType: 2
   allowSkip: 1
+  lookAtPlayer: 0
+  lookAtPet: 0
   sentences:
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
-    text: "What the\u2026.? Stay there and don't move!\r\n"
+    text: Stay there and don't move!
     time: 5
     audioClip: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
-    text: 'There''s no need to fight, human.
+    text: No need to fight, put that down.
+    time: 5
+    audioClip: {fileID: 0}
+  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
+    text: On the ground, mutt!
+    time: 4
+    audioClip: {fileID: 0}
+  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+    text: "Hey, listen, I know your type, the so-called \u2018space pirates\u2019,
+      not everything must end in death. Let's make a survival deal."
+    time: 8
+    audioClip: {fileID: 0}
+  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
+    text: Why should I trust you?
+    time: 4
+    audioClip: {fileID: 0}
+  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+    text: 'I have the advantage here, you are stepping on my land.
 
-'
-    time: 5
+      Take advantage
+      of the opportunities you have in front of you, human. This must not end badly. '
+    time: 9
     audioClip: {fileID: 0}
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
-    text: Give me one reason to not blow your brains out.
-    time: 5
-    audioClip: {fileID: 0}
-  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
-    text: I don't know what you want from here, but you certainly need me. I know
-      the languages here and you don't, also I know this place way more than you,
-      so be smart about this, human.
-    time: 10
-    audioClip: {fileID: 0}
-  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
-    text: Give me your set of skills and I will give you my constant guide. What
-      more can you ask?
-    time: 7
-    audioClip: {fileID: 0}
-  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
-    text: Okay, fine, move quickly then, I don't have all day.
-    time: 5
+    text: You better be worth it.
+    time: 4
     audioClip: {fileID: 0}
