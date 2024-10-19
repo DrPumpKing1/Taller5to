@@ -13,6 +13,10 @@ public class LogListenerEvents : MonoBehaviour
         CinematicsManager.OnCinematicStart += CinematicsManager_OnCinematicStart;
         CinematicsManager.OnCinematicEnd += CinematicsManager_OnCinematicEnd;
 
+        //CAMERA TRANSITION
+        CameraTransitionHandler.OnCameraTransitionInStart += CameraTransitionHandler_OnCameraTransitionInStart;
+        CameraTransitionHandler.OnCameraTransitionOutStart += CameraTransitionHandler_OnCameraTransitionOutStart;
+
         //TUTORIAL
 
         //LEVEL1
@@ -41,6 +45,10 @@ public class LogListenerEvents : MonoBehaviour
         CinematicsManager.OnCinematicStart -= CinematicsManager_OnCinematicStart;
         CinematicsManager.OnCinematicEnd -= CinematicsManager_OnCinematicEnd;
 
+        //CAMERA TRANSITION
+        CameraTransitionHandler.OnCameraTransitionInStart -= CameraTransitionHandler_OnCameraTransitionInStart;
+        CameraTransitionHandler.OnCameraTransitionOutStart -= CameraTransitionHandler_OnCameraTransitionOutStart;
+
         //TUTORIAL
 
         //LEVEL1
@@ -67,6 +75,12 @@ public class LogListenerEvents : MonoBehaviour
     //CINEMATICS
     private void CinematicsManager_OnCinematicStart(object sender, CinematicsManager.OnCinematicEventArgs e) => GameLogManager.Instance.Log($"Cinematics/Start/{e.cinematic.id}");
     private void CinematicsManager_OnCinematicEnd(object sender, CinematicsManager.OnCinematicEventArgs e) => GameLogManager.Instance.Log($"Cinematics/End/{e.cinematic.id}");
+
+
+    //CAMERA TRANSITIONS
+    private void CameraTransitionHandler_OnCameraTransitionInStart(object sender, CameraTransitionHandler.OnCameraTransitionEventArgs e) => GameLogManager.Instance.Log($"CameraTransition/In/Start/{e.cameraTransition.id}");
+    private void CameraTransitionHandler_OnCameraTransitionOutStart(object sender, CameraTransitionHandler.OnCameraTransitionEventArgs e) => GameLogManager.Instance.Log($"CameraTransition/Out/Start/{e.cameraTransition.id}");
+
 
     //TUTORIAL
 

@@ -15,8 +15,10 @@ MonoBehaviour:
   id: 201
   movementLimitType: 0
   allowSkip: 1
+  lookAtPlayer: 0
+  lookAtPet: 0
   sentences:
   - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
-    text: Sun Amulet Dialogue
+    text: Why does this bring me memories?
     time: 5
     audioClip: {fileID: 0}
