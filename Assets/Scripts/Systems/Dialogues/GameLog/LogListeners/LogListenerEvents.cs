@@ -13,6 +13,9 @@ public class LogListenerEvents : MonoBehaviour
         CinematicsManager.OnCinematicStart += CinematicsManager_OnCinematicStart;
         CinematicsManager.OnCinematicEnd += CinematicsManager_OnCinematicEnd;
 
+        //CAMERA SHAKE
+        CameraShakeHandler.OnCameraShakeStart += CameraShakeHandler_OnCameraShakeStart;
+
         //CAMERA TRANSITION
         CameraTransitionHandler.OnCameraTransitionInStart += CameraTransitionHandler_OnCameraTransitionInStart;
         CameraTransitionHandler.OnCameraTransitionOutStart += CameraTransitionHandler_OnCameraTransitionOutStart;
@@ -24,13 +27,6 @@ public class LogListenerEvents : MonoBehaviour
         //LEVEL2
 
         //LEVEL3
-
-        //BOSS
-        BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
-        BossStateHandler.OnBossPhaseChangeEnd += BossStateHandler_OnBossPhaseChangeEnd;
-
-        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
-        AncientRelic.OnAncientRelicCollected += AncientRelic_OnAncientRelicCollected;
 
         //VYRX
         PetPlayerAttachment.OnVyrxInitialAttachToPlayer += PetPlayerAttachment_OnVyrxInitialAttachToPlayer;
@@ -45,6 +41,9 @@ public class LogListenerEvents : MonoBehaviour
         CinematicsManager.OnCinematicStart -= CinematicsManager_OnCinematicStart;
         CinematicsManager.OnCinematicEnd -= CinematicsManager_OnCinematicEnd;
 
+        //CAMERA SHAKE
+        CameraShakeHandler.OnCameraShakeStart -= CameraShakeHandler_OnCameraShakeStart;
+
         //CAMERA TRANSITION
         CameraTransitionHandler.OnCameraTransitionInStart -= CameraTransitionHandler_OnCameraTransitionInStart;
         CameraTransitionHandler.OnCameraTransitionOutStart -= CameraTransitionHandler_OnCameraTransitionOutStart;
@@ -57,14 +56,6 @@ public class LogListenerEvents : MonoBehaviour
 
         //LEVEL3
 
-
-        //BOSS
-        BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
-        BossStateHandler.OnBossPhaseChangeEnd -= BossStateHandler_OnBossPhaseChangeEnd;
-
-        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
-        AncientRelic.OnAncientRelicCollected -= AncientRelic_OnAncientRelicCollected;
-
         //VYRX
         PetPlayerAttachment.OnVyrxInitialAttachToPlayer -= PetPlayerAttachment_OnVyrxInitialAttachToPlayer;
     }
@@ -76,6 +67,12 @@ public class LogListenerEvents : MonoBehaviour
     private void CinematicsManager_OnCinematicStart(object sender, CinematicsManager.OnCinematicEventArgs e) => GameLogManager.Instance.Log($"Cinematics/Start/{e.cinematic.id}");
     private void CinematicsManager_OnCinematicEnd(object sender, CinematicsManager.OnCinematicEventArgs e) => GameLogManager.Instance.Log($"Cinematics/End/{e.cinematic.id}");
 
+    //CAMERA SHAKES
+    private void CameraShakeHandler_OnCameraShakeStart(object sender, CameraShakeHandler.OnCameraShakeEventArgs e)
+    {
+        GameLogManager.Instance.Log($"CameraShake/Start/Any");
+        GameLogManager.Instance.Log($"CameraShake/Start/{e.cameraShake.id}");
+    }
 
     //CAMERA TRANSITIONS
     private void CameraTransitionHandler_OnCameraTransitionInStart(object sender, CameraTransitionHandler.OnCameraTransitionEventArgs e) => GameLogManager.Instance.Log($"CameraTransition/In/Start/{e.cameraTransition.id}");
@@ -87,13 +84,6 @@ public class LogListenerEvents : MonoBehaviour
     //LEVEL1
 
     //LEVEL3
-
-    //BOSS
-    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e) => GameLogManager.Instance.Log($"Events/BossPhaseChange/Start/{e.nextPhase}");
-    private void BossStateHandler_OnBossPhaseChangeEnd(object sender, BossStateHandler.OnPhaseChangeEventArgs e) => GameLogManager.Instance.Log($"Events/BossPhaseChange/End/{e.nextPhase}");
-
-    private void BossStateHandler_OnBossDefeated(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Events/BossDefeated");
-    private void AncientRelic_OnAncientRelicCollected(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Events/AncientRelicCollected");
 
     //VYRX
     private void PetPlayerAttachment_OnVyrxInitialAttachToPlayer(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Events/Vyrx/InitialAttachToPlayer");

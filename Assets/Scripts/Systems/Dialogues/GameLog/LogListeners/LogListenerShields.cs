@@ -20,6 +20,7 @@ public class LogListenerShields : MonoBehaviour
 
     private void ShieldDoor_OnShieldDoorOpen(object sender, ShieldDoor.OnShieldDoorOpenEventArgs e)
     {
+        GameLogManager.Instance.Log($"Shields/OpenDoor/Any");
         GameLogManager.Instance.Log($"Shields/OpenDoor/{e.dialect}");
         GameLogManager.Instance.Log($"Shields/OpenDoorExact/{e.dialect}/{e.id}");
     }
