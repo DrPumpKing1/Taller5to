@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwitchElectrodeEmissionVisual : MonoBehaviour
+public class SwitchElectrodeMaterialVisual : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private SwitchElectrode switchElectrode;
