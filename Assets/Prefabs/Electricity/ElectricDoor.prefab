@@ -235,7 +235,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  resistance: 1
   type: 02000000
   contacts: []
 --- !u!114 &6943706257806782275
@@ -402,7 +401,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4430932799444874151}
-  - component: {fileID: 1038195759753626738}
+  - component: {fileID: 7557504746117177421}
   - component: {fileID: 4756687545577584907}
   m_Layer: 0
   m_Name: Visual
@@ -429,7 +428,7 @@ Transform:
   - {fileID: 5286159556421757066}
   m_Father: {fileID: 4110467250782593210}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1038195759753626738
+--- !u!114 &7557504746117177421
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -438,11 +437,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5485211273459723315}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db806b947cd4c9c44bb3f4bf365fe7c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 26cc36334c6125442bfdbb8b41066c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   electrode: {fileID: 135983727060811256}
   _renderer: {fileID: 6401164115871632859}
+  offMaterial: {fileID: 2100000, guid: 625f091b80efb484184fecc88c9ef1f4, type: 2}
+  onMaterial: {fileID: 2100000, guid: 63ff3b29570d308458d0083f27bf1a30, type: 2}
 --- !u!114 &4756687545577584907
 MonoBehaviour:
   m_ObjectHideFlags: 0

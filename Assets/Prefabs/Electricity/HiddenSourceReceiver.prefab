@@ -292,7 +292,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1594175006376810535}
-  - component: {fileID: 6459592231860802293}
+  - component: {fileID: 4176350329492951087}
   - component: {fileID: 1773021774541315115}
   m_Layer: 0
   m_Name: Visual
@@ -318,7 +318,7 @@ Transform:
   - {fileID: 121135922199534015}
   m_Father: {fileID: 6556187143256860468}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6459592231860802293
+--- !u!114 &4176350329492951087
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -327,11 +327,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8314587104371161473}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18e091061a6fd3a41a288eed2f64d78d, type: 3}
+  m_Script: {fileID: 11500000, guid: e3beba6d2b3eacc46b8205d6a16eaa36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hiddenSourceReceiver: {fileID: 3500307112054235035}
   _renderer: {fileID: 176177136053219530}
+  offMaterial: {fileID: 2100000, guid: 29f8831b11ddf294b823c9a1692aa81f, type: 2}
+  onMaterial: {fileID: 2100000, guid: 8e64e8466d7c9e749842ab1e4e33cab5, type: 2}
 --- !u!114 &1773021774541315115
 MonoBehaviour:
   m_ObjectHideFlags: 0

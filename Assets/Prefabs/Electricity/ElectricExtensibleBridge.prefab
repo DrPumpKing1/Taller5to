@@ -441,7 +441,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2015067302748784081}
-  - component: {fileID: 8044807365215623498}
+  - component: {fileID: 384983660012561120}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -465,7 +465,7 @@ Transform:
   - {fileID: 6439509906429402212}
   m_Father: {fileID: 7965449172434267014}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8044807365215623498
+--- !u!114 &384983660012561120
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -474,11 +474,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7425439573730703369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db806b947cd4c9c44bb3f4bf365fe7c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 26cc36334c6125442bfdbb8b41066c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   electrode: {fileID: 135983727060811256}
   _renderer: {fileID: 6720358639574139683}
+  offMaterial: {fileID: 0}
+  onMaterial: {fileID: 0}
 --- !u!1 &7865935223017737024
 GameObject:
   m_ObjectHideFlags: 0
