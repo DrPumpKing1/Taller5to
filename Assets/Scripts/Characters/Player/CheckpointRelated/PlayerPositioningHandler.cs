@@ -74,7 +74,7 @@ public class PlayerPositioningHandler : MonoBehaviour
     public void InstantPositionPlayer(Vector3 desiredPosition)
     {
         transform.position = desiredPosition;
-        OnPlayerInstantPositioned?.Invoke(this,new OnPlayerPositionedEventArgs { playerPosition= desiredPosition });
+        OnPlayerInstantPositioned?.Invoke(this,new OnPlayerPositionedEventArgs { playerPosition = desiredPosition });
     }
 
     private void StartPositionFirstUpdate() //Trigger Event For PetPlayerPositioning (Should happen after PetPlayerAttachment.OnVyrxAttachToPlayer)
