@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2630516112869913088}
-  - component: {fileID: 3213866567015791503}
+  - component: {fileID: 9122444597664152378}
   - component: {fileID: 6746412623046429210}
   - component: {fileID: 5867351382568689579}
   m_Layer: 0
@@ -69,7 +69,7 @@ Transform:
   - {fileID: 8649243181734596487}
   m_Father: {fileID: 352028062762035767}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3213866567015791503
+--- !u!114 &9122444597664152378
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,11 +78,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1028894116089602803}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db806b947cd4c9c44bb3f4bf365fe7c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 26cc36334c6125442bfdbb8b41066c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   electrode: {fileID: 750605459082898045}
   _renderer: {fileID: 8867157423260009910}
+  offMaterial: {fileID: 2100000, guid: 0ba66cb643644994d8b21fadad7541ab, type: 2}
+  onMaterial: {fileID: 2100000, guid: c50a092e0bb39514aaf74741951f5ba4, type: 2}
 --- !u!114 &6746412623046429210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -631,7 +633,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4521459802438627879}
-  - component: {fileID: 3736885125591156705}
+  - component: {fileID: 7308392107216825077}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -656,7 +658,7 @@ Transform:
   - {fileID: 2221860310201238597}
   m_Father: {fileID: 4233435990086893953}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3736885125591156705
+--- !u!114 &7308392107216825077
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -665,11 +667,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7769144334727807604}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db806b947cd4c9c44bb3f4bf365fe7c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 26cc36334c6125442bfdbb8b41066c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   electrode: {fileID: 750605459082898045}
   _renderer: {fileID: 5793366837231443588}
+  offMaterial: {fileID: 2100000, guid: 4f4c0e64b7430e745b6ff77cbb001107, type: 2}
+  onMaterial: {fileID: 2100000, guid: a4ed1392b2324654e981e161ac688c4c, type: 2}
 --- !u!1 &7846699443738207763
 GameObject:
   m_ObjectHideFlags: 0
