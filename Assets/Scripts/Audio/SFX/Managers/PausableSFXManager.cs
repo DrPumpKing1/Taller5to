@@ -30,6 +30,8 @@ public class PausableSFXManager : SFXManager
 
         ProjectableObjectsLearningManager.OnProjectableObjectLearned += ProjectableObjectsLearningManager_OnProjectableObjectLearned;
 
+        ProjectableObjectSelectionManager.OnProjectableObjectSelected += ProjectableObjectSelectionManager_OnProjectableObjectSelected;
+
         ProjectionPlatformProjection.OnAnyObjectProjectionSuccess += ProjectionPlatformProjection_OnAnyObjectProjectionSuccess;
         ProjectionPlatformProjection.OnAnyObjectProjectionFailedInsuficientGems += ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems;
         ProjectableObjectDematerialization.OnAnyObjectDematerialized += ProjectableObjectDematerialization_OnAnyObjectDematerialized;
@@ -45,6 +47,8 @@ public class PausableSFXManager : SFXManager
         SignalSender.OnAnyProjectileShot += SignalSender_OnProjectileShot;
         SignalProjectile.OnAnyProjectileImpact += SignalProjectile_OnAnyProjectileImpact;
     }
+
+
     private void OnDisable()
     {
         PlayerLand.OnPlayerNormalLand -= PlayerLand_OnPlayerNormalLand;
@@ -69,6 +73,8 @@ public class PausableSFXManager : SFXManager
         ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
 
         ProjectableObjectsLearningManager.OnProjectableObjectLearned -= ProjectableObjectsLearningManager_OnProjectableObjectLearned;
+
+        ProjectableObjectSelectionManager.OnProjectableObjectSelected -= ProjectableObjectSelectionManager_OnProjectableObjectSelected;
 
         ProjectionPlatformProjection.OnAnyObjectProjectionSuccess -= ProjectionPlatformProjection_OnAnyObjectProjectionSuccess;
         ProjectionPlatformProjection.OnAnyObjectProjectionFailedInsuficientGems -= ProjectionPlatformProjection_OnAnyObjectProjectionFailedInsuficientGems;
@@ -197,6 +203,31 @@ public class PausableSFXManager : SFXManager
                 break;
             case 4:
                 PlaySound(SFXPoolSO.drainerLearned);
+                break;
+        }
+    }
+    #endregion
+
+    #region Projection Selection
+    private void ProjectableObjectSelectionManager_OnProjectableObjectSelected(object sender, ProjectableObjectSelectionManager.OnSelectionEventArgs e)
+    {
+        if (e.isFirstSelected) return;
+
+        PlaySound(SFXPoolSO.objectSelected);
+
+        switch (e.projectableObjectIndexed.projectableObjectSO.id)
+        {
+            case 1:
+                PlaySound(SFXPoolSO.cableSelected);
+                break;
+            case 2:
+                PlaySound(SFXPoolSO.magicBoxSelected);
+                break;
+            case 3:
+                PlaySound(SFXPoolSO.senderSelected);
+                break;
+            case 4:
+                PlaySound(SFXPoolSO.drainerSelected);
                 break;
         }
     }

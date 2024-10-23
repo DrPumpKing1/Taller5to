@@ -43,7 +43,7 @@ public class MagicBoxDevice : ActivableDevice
         }
         else
         {
-            canBeActivated = !CheckObjectAbove() || !useObjectAvobe;
+            canBeActivated = !(CheckObjectAbove() && useObjectAvobe);
         }
     }
     private bool CheckObjectAbove()

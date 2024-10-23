@@ -122,16 +122,14 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
     private void Update()
     {
         HandlePowered();
+        HandleActivation();
     }
 
     private void HandlePowered()
     {
-        if (Power && activableDevice.canBeActivated)
+        if (Power)
         {
             notPoweredTimer = 0f;
-
-            canBeSelectedAlternate = true;
-            isInteractableAlternate = true;
 
             if(!previousPowered && activableDevice.IsActive)
             {
@@ -145,17 +143,28 @@ public class ProjectableObjectActivation : MonoBehaviour, IInteractableAlternate
             notPoweredTimer += Time.deltaTime;
         }
 
-        if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD || !activableDevice.canBeActivated)
+        if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD)
         {
-            canBeSelectedAlternate = false;
-            isInteractableAlternate = false;
-
             if (previousPowered && activableDevice.IsActive)
             {
                 OnAnyObjectDeactivated?.Invoke(this, new OnAnyObjectActivatedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO, projectionPlatformID = projectableObject.ProjectionPlatform.ID });
             }
 
             previousPowered = false;
+        }
+    }
+
+    private void HandleActivation()
+    {
+        if (activableDevice.canBeActivated && Power)
+        {
+            canBeSelectedAlternate = true;
+            isInteractableAlternate = true;
+        }
+        else
+        {
+            canBeSelectedAlternate = false;
+            isInteractableAlternate = false;
         }
     }
 

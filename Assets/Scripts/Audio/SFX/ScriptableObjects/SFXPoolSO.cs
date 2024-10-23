@@ -22,6 +22,15 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip[] senderLearned;
     public AudioClip[] drainerLearned;
 
+    [Header("Projectable Object Selection")]
+    public AudioClip[] objectSelected;
+
+    [Header("Exact Projectable Object Selection")]
+    public AudioClip[] cableSelected;
+    public AudioClip[] magicBoxSelected;
+    public AudioClip[] senderSelected;
+    public AudioClip[] drainerSelected;
+
     [Header("Projection")]
     public AudioClip startProjection;
     public AudioClip[] objectProjected;
