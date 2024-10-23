@@ -35,14 +35,12 @@ public class MonologueTriggerHandler : MonoBehaviour
         GameLogManager.OnLogAdd -= GameLogManager_OnLogAdd;
     }
 
-    private IEnumerator ReadLogMonologueCoroutine()
+    private IEnumerator ReadLogMonologueCoroutine(string log)
     {
         if (DialogueManager.Instance.PlayingDialogue()) yield break; //Monologues can't play while another dialogue is playing
         if (MonologueManager.Instance.PlayingMonologue()) yield break; //Monologues can't play while another monologue is playing
 
-        string lastLog = GameLogManager.Instance.GameLog[^1].log;
-
-        var compatibleMonologues = monologues.Where(x => x.eventCode == lastLog);
+        var compatibleMonologues = monologues.Where(x => x.eventCode == log);
 
         if (!compatibleMonologues.Any()) yield break;
 
@@ -70,7 +68,7 @@ public class MonologueTriggerHandler : MonoBehaviour
     {
         if (!enableTriggerMonologues) return;
 
-        StartCoroutine(ReadLogMonologueCoroutine());
+        StartCoroutine(ReadLogMonologueCoroutine(e.gameplayAction.log));
     }
     #endregion
 }
