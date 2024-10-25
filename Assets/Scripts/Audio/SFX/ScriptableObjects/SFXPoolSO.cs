@@ -112,6 +112,14 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip[] monologueOpen;
     public AudioClip[] monologueClose;
 
+    [Header("Boss")]
+    public AudioClip[] bossBeamSphereCast;
+    public AudioClip[] bossBeamSphereFade;
+    public AudioClip[] bossBeamSphereTargetLocked;
+    public AudioClip[] bossDematerializationLightning;
+    public AudioClip[] bossShieldDeactivated;
+    public AudioClip[] bossNextPhase;
+
     [Header("UI")]
     public AudioClip[] pauseOpen;
     public AudioClip[] pauseClose;
