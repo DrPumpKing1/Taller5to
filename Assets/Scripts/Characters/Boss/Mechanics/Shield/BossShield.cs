@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,8 @@ public class BossShield : MonoBehaviour
     private const float NOT_POWERED_TIME_THRESHOLD = 0.25f;
     private float notPoweredTimer;
     private bool previousPowered;
+
+    public static event EventHandler OnBossShieldDeactivated;
 
     private void Start()
     {
@@ -73,6 +76,8 @@ public class BossShield : MonoBehaviour
         else LetNodesElectricity();
 
         shieldActive = active;
+
+        if(!active) OnBossShieldDeactivated?.Invoke(this, EventArgs.Empty);
     }
 
     private void CutNodesElectricity()

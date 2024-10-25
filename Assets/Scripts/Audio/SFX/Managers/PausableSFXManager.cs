@@ -46,8 +46,14 @@ public class PausableSFXManager : SFXManager
 
         SignalSender.OnAnyProjectileShot += SignalSender_OnProjectileShot;
         SignalProjectile.OnAnyProjectileImpact += SignalProjectile_OnAnyProjectileImpact;
-    }
 
+        BossBeam.OnBeamChargeStart += BossBeam_OnBeamChargeStart;
+        BossBeam.OnBeamChargeEnd += BossBeam_OnBeamChargeEnd;
+        BossBeam.OnBeamPlatformTargeted += BossBeam_OnBeamPlatformTargeted;
+        BossBeam.OnBeamPlatformStun += BossBeam_OnBeamPlatformStun;
+        BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
+        BossShield.OnBossShieldDeactivated += BossShield_OnBossShieldDeactivated;
+    }
 
     private void OnDisable()
     {
@@ -90,6 +96,13 @@ public class PausableSFXManager : SFXManager
 
         SignalSender.OnAnyProjectileShot -= SignalSender_OnProjectileShot;
         SignalProjectile.OnAnyProjectileImpact -= SignalProjectile_OnAnyProjectileImpact;
+
+        BossBeam.OnBeamChargeStart -= BossBeam_OnBeamChargeStart;
+        BossBeam.OnBeamChargeEnd -= BossBeam_OnBeamChargeEnd;
+        BossBeam.OnBeamPlatformTargeted -= BossBeam_OnBeamPlatformTargeted;
+        BossBeam.OnBeamPlatformStun -= BossBeam_OnBeamPlatformStun;
+        BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
+        BossShield.OnBossShieldDeactivated -= BossShield_OnBossShieldDeactivated;
     } 
 
     #region Player
@@ -404,5 +417,38 @@ public class PausableSFXManager : SFXManager
         PlaySoundAtPoint(SFXPoolSO.projectileImpact, singalProjectile.transform.position);
     }
 
+    #endregion
+
+    #region Boss
+    private void BossBeam_OnBeamChargeStart(object sender, BossBeam.OnBeamEventArgs e)
+    {
+        PlaySoundAtPoint(SFXPoolSO.bossBeamSphereCast, e.beamSphere.position);
+    }
+
+    private void BossBeam_OnBeamChargeEnd(object sender, BossBeam.OnBeamEventArgs e)
+    {
+        PlaySoundAtPoint(SFXPoolSO.bossBeamSphereFade, e.beamSphere.position);
+    }
+
+    private void BossBeam_OnBeamPlatformTargeted(object sender, BossBeam.OnBeamPlatformTargetEventArgs e)
+    {
+        PlaySoundAtPoint(SFXPoolSO.bossBeamSphereTargetLocked, e.stunableProjectionPlatformProjection.transform.position);
+    }
+
+    private void BossBeam_OnBeamPlatformStun(object sender, BossBeam.OnBeamPlatformStunEventArgs e)
+    {
+        PlaySoundAtPoint(SFXPoolSO.bossDematerializationLightning, e.stunableProjectionPlatformProjection.transform.position);
+    }
+
+    private void BossStateHandler_OnBossPhaseChangeStart(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
+    {
+        PlaySound(SFXPoolSO.bossNextPhase);
+    }
+
+    private void BossShield_OnBossShieldDeactivated(object sender, System.EventArgs e)
+    {
+        BossShield bossShield = sender as BossShield;
+        PlaySoundAtPoint(SFXPoolSO.bossShieldDeactivated, bossShield.transform.position);
+    }
     #endregion
 }
