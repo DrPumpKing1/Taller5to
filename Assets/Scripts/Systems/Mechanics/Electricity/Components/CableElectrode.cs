@@ -6,11 +6,7 @@ public class CableElectrode : Electrode
 {
     [Header("Cable Specifics")]
     [SerializeField] private Transform[] corners;
-    [SerializeField] private LineRenderer lineRenderer;
-    [Space]
     [SerializeField] private float radius;
-    [SerializeField] private float thickness;
-    [SerializeField] private bool updateLineRenderer;
     [Space]
     [SerializeField] private bool enableDistanceCheckOverride;
 
@@ -27,17 +23,11 @@ public class CableElectrode : Electrode
         base.Start();
         InitializeVariables();
         ResetFrameNumber();
-        DrawLineRenderer();
     }
 
     private void FixedUpdate()
     {
         FrameUpdateLogic();
-    }
-
-    private void LateUpdate()
-    {       
-        UpdateLineRenderer();
     }
 
     private void InitializeVariables()
@@ -100,25 +90,6 @@ public class CableElectrode : Electrode
 
             ToRemove.ForEach(contact => RemoveContact(contact));
         }
-    }
-
-    private void DrawLineRenderer()
-    {
-        lineRenderer.startWidth = thickness;
-        lineRenderer.endWidth = thickness;
-        lineRenderer.positionCount = corners.Length;
-
-        for (int i = 0; i < corners.Length; i++)
-        {
-            lineRenderer.SetPosition(i, corners[i].position);
-        }
-    }
-
-    private void UpdateLineRenderer()
-    {
-        if (!updateLineRenderer) return;
-
-        DrawLineRenderer();
     }
 
     //public override bool CheckContact(Electrode other)
