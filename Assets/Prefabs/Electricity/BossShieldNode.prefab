@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3314061822548845467}
-  - component: {fileID: 5490959684146879380}
+  - component: {fileID: 4694166710316068670}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 4892204551274501422}
   m_Father: {fileID: 5711864985630757780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5490959684146879380
+--- !u!114 &4694166710316068670
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,11 +42,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1111227004568141245}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db806b947cd4c9c44bb3f4bf365fe7c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 26cc36334c6125442bfdbb8b41066c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   electrode: {fileID: 315110364263604670}
   _renderer: {fileID: 7411855556062656459}
+  offMaterial: {fileID: 2100000, guid: e4c4b72255eae394180223001599055f, type: 2}
+  onMaterial: {fileID: 2100000, guid: 70fb0283049725743b62e627208d3711, type: 2}
 --- !u!1 &4442979233219563528
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +110,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b7ea717647f64cd4ca4f4e912482f38c, type: 2}
+  - {fileID: 2100000, guid: e4c4b72255eae394180223001599055f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
