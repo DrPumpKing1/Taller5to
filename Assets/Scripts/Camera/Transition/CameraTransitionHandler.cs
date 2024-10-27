@@ -72,7 +72,7 @@ public class CameraTransitionHandler : MonoBehaviour
     private void ClearCurrentCameraFollowTransform() => currentCameraFollowTransform = null;
     private void SetPreviousCameraDistance(float distance) => previousCameraDistance = distance;
 
-    public bool AllowCameraInputProcessing() => state == State.FollowingPlayer || state == State.StallingOut;
+    public bool AllowCameraInputProcessing() => state == State.FollowingPlayer; //|| state == State.StallingOut
     public bool AllowMovementInputProcessing() => state == State.FollowingPlayer || state == State.StallingOut || state == State.MovingOut;
 
     public void TransitionMoveCamera(CameraTransition cameraTransition)
@@ -176,7 +176,7 @@ public class CameraTransitionHandler : MonoBehaviour
 
         time = 0f;
 
-        while (time <= cameraTransition.stallTimeOut) //To rectify position during stallTimeOut
+        while (time <= cameraTransition.stallTimeOut) //To rectify position & camera distance during stallTimeOut
         {
             currentCameraFollowTransform.position = playerCameraFollowPoint.position;
             CameraScroll.Instance.LerpTowardsTargetDistance(previousCameraDistance, time / (cameraTransition.stallTimeOut) * 1 / (DISTANCE_CAMERA_TIME_FACTOR * cameraTransition.stallTimeOut));
