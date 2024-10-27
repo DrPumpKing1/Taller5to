@@ -7,6 +7,7 @@ public class DialogueSO : ScriptableObject
 {
     public int id;
     public MovementLimitType movementLimitType;
+    public DialogueType dialogueType;
     public bool allowSkip;
     public bool lookAtPlayer;
     public bool lookAtPet;
@@ -14,3 +15,4 @@ public class DialogueSO : ScriptableObject
 }
 
 public enum MovementLimitType {FreeMovement,RestrictedMovement,ZeroMovement}
+public enum DialogueType {Mechanics, Narrative}

@@ -14,6 +14,15 @@ public class DialogueUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI speakerNameText;
     [SerializeField] private TextMeshProUGUI sentenceText;
     [SerializeField] private Image speakerImage;
+    [SerializeField] private Image speakerBoxImage;
+    [SerializeField] private Image sentenceBoxImage;
+
+    [Header("Dialogue Type Sprites")]
+    [SerializeField] private Sprite speakerBoxSpriteMechanicsDialogue;
+    [SerializeField] private Sprite sentenceBoxSpriteMechanicsDialogue;
+    [Space]
+    [SerializeField] private Sprite speakerBoxSpriteNarrativeDialogue;
+    [SerializeField] private Sprite sentenceBoxSpriteNarrativeDialogue;
 
     private const string OPEN_TRIGGER = "Open";
     private const string CLOSE_TRIGGER = "Close";
@@ -65,6 +74,26 @@ public class DialogueUI : MonoBehaviour
     private void SetSpeakerImage(Sprite sprite) => speakerImage.sprite = sprite;
     private void SetSentenceText(string text) => sentenceText.text = text;
 
+    private void SetSpeakerBoxSprite(Sprite sprite) => speakerBoxImage.sprite = sprite;
+    private void SetSentenceBoxSprite(Sprite sprite) => sentenceBoxImage.sprite = sprite;
+
+    private void SetDialogueSprites(DialogueType dialogueType)
+    {
+        switch (dialogueType)
+        {
+            case DialogueType.Mechanics:
+            default:
+                SetSpeakerBoxSprite(speakerBoxSpriteMechanicsDialogue);
+                SetSentenceBoxSprite(sentenceBoxSpriteMechanicsDialogue);
+                break;
+            case DialogueType.Narrative:
+                SetSpeakerBoxSprite(speakerBoxSpriteNarrativeDialogue);
+                SetSentenceBoxSprite(sentenceBoxSpriteNarrativeDialogue);
+                break;
+        }
+    }
+
+
     private void PlaySentence(Sentence sentence, bool isFirstSentence)
     {
         SetDialogueUI(sentence);
@@ -89,6 +118,7 @@ public class DialogueUI : MonoBehaviour
     private void DialogueManager_OnDialogueStart(object sender, DialogueManager.OnDialogueEventArgs e)
     {
         ResetAllTriggers();
+        SetDialogueSprites(e.dialogueType);
         EnableDialogueUI();
     }
     private void DialogueManager_OnDialogueEnd(object sender, DialogueManager.OnDialogueEventArgs e)
