@@ -99,9 +99,9 @@ public class ProjectionPlatformProjectionVFXHandler : MonoBehaviour
         if(orientation == Vector2.zero) return boxSize;
         if (orientation.x == orientation.y) return boxSize;
 
-        if (orientation.x > orientation.y) return boxSize;
+        if (Math.Abs(orientation.x) > Math.Abs(orientation.y)) return boxSize;
 
-        if(orientation.x < orientation.y)
+        if(Math.Abs(orientation.x) < Math.Abs(orientation.y))
         {
             Vector3 rectifiedBoxSize = new Vector3(boxSize.z, boxSize.y, boxSize.x);
             return rectifiedBoxSize;

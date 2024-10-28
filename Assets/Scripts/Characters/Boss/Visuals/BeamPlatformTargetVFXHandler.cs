@@ -82,6 +82,7 @@ public class BeamPlatformTargetVFXHandler : MonoBehaviour
         HandleParticleColor();
         HandleNoisePower();
         HandleThickness();
+
         HandleMiddleBezierPoints();
     }
 
