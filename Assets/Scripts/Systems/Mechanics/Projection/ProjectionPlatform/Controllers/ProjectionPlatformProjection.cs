@@ -74,6 +74,9 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
 
     public class OnProjectionEventArgs : EventArgs
     {
+        public ProjectableObjectSO projectableObjectSO;
+        public ProjectionPlatformProjection projectionPlatformProjection;
+        public Vector2 orientation;
         public Transform interactionAttentionTransform;
         public float holdDuration;
     }
@@ -180,13 +183,13 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     public void HoldInteractionStart()
     {
         OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
-        OnStartProjection?.Invoke(this, new OnProjectionEventArgs { interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
+        OnStartProjection?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectIndexed.projectableObjectSO, projectionPlatformProjection = this, orientation = projectionPlatform.StartingDirection, interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
     }
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
     public void HoldInteractionEnd()
     {
         OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
-        OnEndProjection?.Invoke(this, new OnProjectionEventArgs { interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
+        OnEndProjection?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectIndexed.projectableObjectSO, projectionPlatformProjection = this, orientation = projectionPlatform.StartingDirection, interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
     }
 
     public Transform GetTransform() => transform;

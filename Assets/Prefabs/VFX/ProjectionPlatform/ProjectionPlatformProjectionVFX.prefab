@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5577876917114009687}
   - component: {fileID: 8795049352071219306}
   m_Layer: 0
-  m_Name: ProjectingVFX
+  m_Name: ProjectionPlatformProjectionVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,9 +45,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eca03a4f9292ff84dae974159c2b526e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectingVFX: {fileID: 4644740330609389429}
-  velocity: 3
-  randomLifetimeRatio: 2
+  projectionPlatformProjectionVFX: {fileID: 4644740330609389429}
+  projectionPlatformProjection: {fileID: 0}
+  projectionVFXSettings:
+  - projectableObjectSO: {fileID: 11400000, guid: ed5989b0e0432a24ea4bc2867aa81b86, type: 2}
+    boxOffset: {x: 0, y: 0.075, z: 0}
+    boxSize: {x: 2, y: 0.15, z: 0.15}
+    rectifyDueToOrientation: 1
+  - projectableObjectSO: {fileID: 11400000, guid: a7ec37b997ae92f409ef433af1b0b518, type: 2}
+    boxOffset: {x: 0, y: 0.075, z: 0}
+    boxSize: {x: 2, y: 0.15, z: 2}
+    rectifyDueToOrientation: 0
+  - projectableObjectSO: {fileID: 11400000, guid: 9eb63b332a820ec458c942e4a68212e5, type: 2}
+    boxOffset: {x: 0, y: 0.5, z: 0}
+    boxSize: {x: 1, y: 1, z: 1}
+    rectifyDueToOrientation: 0
+  - projectableObjectSO: {fileID: 11400000, guid: 4a61262e6bd41594b87bc789059aae5e, type: 2}
+    boxOffset: {x: 0, y: 1, z: 0}
+    boxSize: {x: 1, y: 2, z: 1}
+    rectifyDueToOrientation: 0
 --- !u!1 &1294021515506514291
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,7 +76,7 @@ GameObject:
   - component: {fileID: 4644740330609389429}
   - component: {fileID: 7053735611889270029}
   m_Layer: 0
-  m_Name: ProjectingVFX
+  m_Name: ProjectionPlatformProjectionVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,6 +117,15 @@ VisualEffect:
       m_Array:
       - m_Value: 0.99
         m_Name: Delay
+        m_Overridden: 1
+      - m_Value: 0.05
+        m_Name: ParticleSize
+        m_Overridden: 1
+      - m_Value: 2500
+        m_Name: ParticleSpawnRate
+        m_Overridden: 1
+      - m_Value: 0.35
+        m_Name: ParticleLifetime
         m_Overridden: 1
     m_Vector2f:
       m_Array: []
