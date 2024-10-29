@@ -150,6 +150,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 2f67a215af2c7084fa5aca14a1faeee5, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: df1de8539dc39f54981efa33445b4943, type: 2}
     - target: {fileID: 919132149155446097, guid: 2f67a215af2c7084fa5aca14a1faeee5, type: 3}
       propertyPath: m_Name
       value: IdliitziMask2_Happy
