@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7503059881210651049, guid: 26e2b55603cdba844af4bcd36211d035, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 984685e249c9b4247a02153adf82bf0f, type: 2}
     - target: {fileID: 919132149155446097, guid: 26e2b55603cdba844af4bcd36211d035, type: 3}
       propertyPath: m_Name
       value: LeafEnvelope2_Small
