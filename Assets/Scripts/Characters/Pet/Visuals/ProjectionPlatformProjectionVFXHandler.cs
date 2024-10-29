@@ -7,8 +7,8 @@ using UnityEngine.VFX;
 public class ProjectionPlatformProjectionVFXHandler : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private VisualEffect projectionPlatformProjectionVFX;
     [SerializeField] private ProjectionPlatformProjection projectionPlatformProjection;
+    [SerializeField] private VisualEffect projectionPlatformProjectionVFX;
     [Space]
     [SerializeField] private List<ProjectionVFXSetting> projectionVFXSettings;
 
@@ -26,14 +26,14 @@ public class ProjectionPlatformProjectionVFXHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        ProjectionPlatformProjection.OnStartProjection += ProjectionPlatformProjection_OnStartProjection;   
-        ProjectionPlatformProjection.OnEndProjection += ProjectionPlatformProjection_OnEndProjection;
+        projectionPlatformProjection.OnStartProjection += ProjectionPlatformProjection_OnStartProjection;
+        projectionPlatformProjection.OnEndProjection += ProjectionPlatformProjection_OnEndProjection;
     }
 
     private void OnDisable()
     {
-        ProjectionPlatformProjection.OnStartProjection -= ProjectionPlatformProjection_OnStartProjection;
-        ProjectionPlatformProjection.OnEndProjection -= ProjectionPlatformProjection_OnEndProjection;
+        projectionPlatformProjection.OnStartProjection -= ProjectionPlatformProjection_OnStartProjection;
+        projectionPlatformProjection.OnEndProjection -= ProjectionPlatformProjection_OnEndProjection;
     }
 
     private void Start()
@@ -112,15 +112,11 @@ public class ProjectionPlatformProjectionVFXHandler : MonoBehaviour
 
     private void ProjectionPlatformProjection_OnStartProjection(object sender, ProjectionPlatformProjection.OnProjectionEventArgs e)
     {
-        if (projectionPlatformProjection != e.projectionPlatformProjection) return;
-
         StartVFX(e.projectableObjectSO, e.projectionPlatformProjection.transform.position, e.orientation);
     }
 
     private void ProjectionPlatformProjection_OnEndProjection(object sender, ProjectionPlatformProjection.OnProjectionEventArgs e)
     {
-        if (projectionPlatformProjection != e.projectionPlatformProjection) return;
-
         projectionPlatformProjectionVFX.Stop();
     }
 }

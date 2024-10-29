@@ -59,8 +59,11 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     public static event EventHandler<OnAnyProjectionEventArgs> OnAnyObjectProjectionFailed;
     public static event EventHandler<OnAnyProjectionEventArgs> OnAnyObjectProjectionFailedInsuficientGems;
 
-    public static event EventHandler<OnProjectionEventArgs> OnStartProjection;
-    public static event EventHandler<OnProjectionEventArgs> OnEndProjection;
+    public static event EventHandler<OnProjectionEventArgs> OnAnyStartProjection;
+    public static event EventHandler<OnProjectionEventArgs> OnAnyEndProjection;
+
+    public event EventHandler<OnProjectionEventArgs> OnStartProjection;
+    public event EventHandler<OnProjectionEventArgs> OnEndProjection;
 
     public class OnObjectProjectionEventArgs : EventArgs
     {
@@ -184,12 +187,14 @@ public class ProjectionPlatformProjection : MonoBehaviour, IHoldInteractable
     {
         OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
         OnStartProjection?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectIndexed.projectableObjectSO, projectionPlatformProjection = this, orientation = projectionPlatform.StartingDirection, interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
+        OnAnyStartProjection?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectIndexed.projectableObjectSO, projectionPlatformProjection = this, orientation = projectionPlatform.StartingDirection, interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
     }
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
     public void HoldInteractionEnd()
     {
         OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
         OnEndProjection?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectIndexed.projectableObjectSO, projectionPlatformProjection = this, orientation = projectionPlatform.StartingDirection, interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
+        OnAnyEndProjection?.Invoke(this, new OnProjectionEventArgs { projectableObjectSO = ProjectableObjectSelectionManager.Instance.SelectedProjectableObjectIndexed.projectableObjectSO, projectionPlatformProjection = this, orientation = projectionPlatform.StartingDirection, interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
     }
 
     public Transform GetTransform() => transform;
