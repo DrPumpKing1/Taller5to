@@ -52,7 +52,7 @@ public class PausableSFXManager : SFXManager
         BossBeam.OnBeamPlatformTargeted += BossBeam_OnBeamPlatformTargeted;
         BossBeam.OnBeamPlatformStun += BossBeam_OnBeamPlatformStun;
         BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
-        BossShield.OnBossShieldDeactivated += BossShield_OnBossShieldDeactivated;
+        BossShield.OnAnyBossShieldDeactivated += BossShield_OnBossShieldDeactivated;
     }
 
     private void OnDisable()
@@ -102,7 +102,7 @@ public class PausableSFXManager : SFXManager
         BossBeam.OnBeamPlatformTargeted -= BossBeam_OnBeamPlatformTargeted;
         BossBeam.OnBeamPlatformStun -= BossBeam_OnBeamPlatformStun;
         BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
-        BossShield.OnBossShieldDeactivated -= BossShield_OnBossShieldDeactivated;
+        BossShield.OnAnyBossShieldDeactivated -= BossShield_OnBossShieldDeactivated;
     } 
 
     #region Player

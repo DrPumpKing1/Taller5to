@@ -6,7 +6,7 @@ using UnityEngine;
 public class BossShield : MonoBehaviour
 {
     [Header("Compoments")]
-    [SerializeField] private Transform shieldTransform;
+    [SerializeField] private Transform collidersTransform;
 
     [Header("Settings")]
     [SerializeField] private List<Electrode> controllingNodes; //All should be deenergized to deactivate shield
@@ -21,7 +21,11 @@ public class BossShield : MonoBehaviour
     private float notPoweredTimer;
     private bool previousPowered;
 
-    public static event EventHandler OnBossShieldDeactivated;
+    public static event EventHandler OnAnyBossShieldActivated;
+    public static event EventHandler OnAnyBossShieldDeactivated;
+
+    public event EventHandler OnBossShieldActivated;
+    public event EventHandler OnBossShieldDeactivated;
 
     private void Start()
     {
@@ -70,15 +74,26 @@ public class BossShield : MonoBehaviour
     }
     private void SetShieldActive(bool active)
     {
-        shieldTransform.gameObject.SetActive(active);
+        SetColliders(active);
         
         if (active) CutNodesElectricity();
         else LetNodesElectricity();
 
         shieldActive = active;
 
-        if(!active) OnBossShieldDeactivated?.Invoke(this, EventArgs.Empty);
+        if (active)
+        {
+            OnAnyBossShieldActivated?.Invoke(this, EventArgs.Empty);
+            OnBossShieldActivated?.Invoke(this, EventArgs.Empty);
+        }
+        else
+        {
+            OnAnyBossShieldDeactivated?.Invoke(this, EventArgs.Empty);
+            OnBossShieldDeactivated?.Invoke(this, EventArgs.Empty);
+        }
     }
+
+    private void SetColliders(bool active) => collidersTransform.gameObject.SetActive(active);
 
     private void CutNodesElectricity()
     {
