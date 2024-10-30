@@ -22,12 +22,18 @@ public class BossShieldMaterialVisual : MonoBehaviour
     private List<Material> materials = new List<Material>();
 
     private const string ALPHA_PROPERTY = "_Alpha";
+    private const string TILING_MULTIPLIER_PROPERTY = "_TilingMultiplier";
+
     private const float ON_ALPHA = 1f;
     private const float OFF_ALPHA = 0f;
+
+    private const float ON_TILING_MULTIPLIER = 1f;
+    private const float OFF_TILING_MULTIPLIER = 0.25f;
 
     private const float THRESHOLD = 0.025f;
 
     private float currentAlpha;
+    private float currentTilingMultiplier;
 
     private void OnEnable()
     {
@@ -51,6 +57,7 @@ public class BossShieldMaterialVisual : MonoBehaviour
     {
         SetVisualState(ShieldVisualState.On);
         SetCurrentAlpha(ON_ALPHA);
+        SetMaterialsTilingMultiplierByAlpha(ON_ALPHA);
     }
 
     private void AddRenderersMaterials()
@@ -92,6 +99,7 @@ public class BossShieldMaterialVisual : MonoBehaviour
         if(currentAlpha != ON_ALPHA)
         {
             SetMaterialsAlpha(ON_ALPHA);
+            SetMaterialsTilingMultiplierByAlpha(ON_ALPHA);
             SetCurrentAlpha(ON_ALPHA); 
         }
     }
@@ -101,6 +109,7 @@ public class BossShieldMaterialVisual : MonoBehaviour
         if (currentAlpha != OFF_ALPHA)
         {
             SetMaterialsAlpha(OFF_ALPHA);
+            SetMaterialsTilingMultiplierByAlpha(OFF_ALPHA);
             SetCurrentAlpha(OFF_ALPHA);
         }
     }
@@ -109,6 +118,7 @@ public class BossShieldMaterialVisual : MonoBehaviour
     {
         currentAlpha = Mathf.Lerp(currentAlpha, ON_ALPHA, turnOnSpeed * Time.deltaTime);
         SetMaterialsAlpha(currentAlpha);
+        SetMaterialsTilingMultiplierByAlpha(currentAlpha);
 
         if (ON_ALPHA -currentAlpha < THRESHOLD)
         {
@@ -120,6 +130,7 @@ public class BossShieldMaterialVisual : MonoBehaviour
     {
         currentAlpha = Mathf.Lerp(currentAlpha, OFF_ALPHA, turnOffSpeed * Time.deltaTime);
         SetMaterialsAlpha(currentAlpha);
+        SetMaterialsTilingMultiplierByAlpha(currentAlpha);
 
         if (currentAlpha - OFF_ALPHA < THRESHOLD)
         {
@@ -129,10 +140,28 @@ public class BossShieldMaterialVisual : MonoBehaviour
 
     private void SetCurrentAlpha(float alpha) => currentAlpha = alpha;
 
+    private float GetTilingMultiplierByAlpha(float alpha)
+    {
+        float tilingMultiplier = OFF_TILING_MULTIPLIER + alpha * (ON_TILING_MULTIPLIER - OFF_TILING_MULTIPLIER)/(ON_ALPHA-OFF_ALPHA);
+        return tilingMultiplier;
+    }
+
+    private void SetMaterialsTilingMultiplierByAlpha(float alpha) => SetMaterialsTilingMultiplier(GetTilingMultiplierByAlpha(alpha));
+
+    private void SetMaterialsTilingMultiplier(float multiplier)
+    {
+        foreach (Material material in materials)
+        {
+            if (!material.HasFloat(TILING_MULTIPLIER_PROPERTY)) continue;
+            material.SetFloat(TILING_MULTIPLIER_PROPERTY, multiplier);
+        }
+    }
+
     private void SetMaterialsAlpha(float alpha)
     {
         foreach(Material material in materials)
         {
+            if (!material.HasFloat(ALPHA_PROPERTY)) continue;
             material.SetFloat(ALPHA_PROPERTY, alpha);
         }
     }
