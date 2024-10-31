@@ -177,7 +177,7 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
 
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
 
-        Destroy(gameObject);
+        Destroy(gameObject); //Remember Destroy(gameObject) happens at END OF FRAME
     }
 
     public void ForceDematerializeObject(bool triggerEvents)
