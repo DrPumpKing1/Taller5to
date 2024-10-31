@@ -16,12 +16,16 @@ public class HoldInteractableCrossSelectionInteractableAlternateUI : MonoBehavio
     {
         holdInteractable.OnHoldInteractionStart += HoldInteractable_OnHoldInteractionStart;
         holdInteractable.OnHoldInteractionEnd += HoldInteractable_OnHoldInteractionEnd;
+
+        holdInteractable.OnObjectDeselected += HoldInteractable_OnObjectDeselected;
     }
 
     private void OnDisable()
     {
         holdInteractable.OnHoldInteractionStart -= HoldInteractable_OnHoldInteractionStart;
         holdInteractable.OnHoldInteractionEnd -= HoldInteractable_OnHoldInteractionEnd;
+
+        holdInteractable.OnObjectDeselected -= HoldInteractable_OnObjectDeselected;
     }
 
     private void Awake()
@@ -44,7 +48,13 @@ public class HoldInteractableCrossSelectionInteractableAlternateUI : MonoBehavio
     private void HoldInteractable_OnHoldInteractionEnd(object sender, System.EventArgs e)
     {
         if (!PlayerInteractAlternate.Instance.InteractionAlternateEnabled) return;
+
         interactableAlternateSelectionUI.ShowSelectionUI();
+    }
+
+    private void HoldInteractable_OnObjectDeselected(object sender, System.EventArgs e)
+    {
+        interactableAlternateSelectionUI.HideSelectionUI();
     }
     #endregion
 }

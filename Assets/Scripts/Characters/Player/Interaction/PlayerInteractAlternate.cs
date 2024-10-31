@@ -30,6 +30,7 @@ public class PlayerInteractAlternate : MonoBehaviour
     private bool previousCanHoldInteractAlternate;
 
     private IInteractableAlternate curentInteractableAlternate;
+    public IInteractableAlternate CurrentInteractableAlternate => curentInteractableAlternate;
 
     public event EventHandler<OnInteractionAlternateEventArgs> OnInteractableAlternateSelected;
     public event EventHandler<OnInteractionAlternateEventArgs> OnInteractableAlternateDeselected;
