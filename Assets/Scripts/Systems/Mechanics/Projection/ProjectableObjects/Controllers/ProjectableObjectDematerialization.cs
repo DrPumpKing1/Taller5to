@@ -24,7 +24,6 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     [SerializeField] private Transform interactionAttentionTransform;
     [SerializeField] private Transform interactionPositionTransform;
 
-
     #region IHoldInteractable Properties
     public float HorizontalInteractionRange => horizontalInteractionRange;
     public float VerticalInteractionRange => verticalInteractionRange;
@@ -56,11 +55,15 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     public static event EventHandler<OnAnyObjectDematerializedEventArgs> OnAnyObjectDematerialized;
     public static event EventHandler<OnAnyObjectDematerializedEventArgs> OnAnyObjectForceDematerialized;
 
-    public static event EventHandler<OnAnyObjectDematerializedEventArgs> OnStartDematerialization;
-    public static event EventHandler<OnAnyObjectDematerializedEventArgs> OnEndDematerialization;
+    public static event EventHandler<OnAnyObjectDematerializedEventArgs> OnAnyStartDematerialization;
+    public static event EventHandler<OnAnyObjectDematerializedEventArgs> OnAnyEndDematerialization;
+
+    public event EventHandler<OnAnyObjectDematerializedEventArgs> OnStartDematerialization;
+    public event EventHandler<OnAnyObjectDematerializedEventArgs> OnEndDematerialization;
 
     public class OnAnyObjectDematerializedEventArgs : EventArgs
     {
+        public ProjectableObjectDematerialization projectableObjectDematerialization;
         public ProjectableObjectSO projectableObjectSO;
     }
 
@@ -145,7 +148,8 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     public void HoldInteractionStart()
     {
         OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
-        OnStartDematerialization?.Invoke(this, new OnAnyObjectDematerializedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
+        OnStartDematerialization?.Invoke(this, new OnAnyObjectDematerializedEventArgs {projectableObjectDematerialization = this, projectableObjectSO = projectableObject.ProjectableObjectSO });
+        OnAnyStartDematerialization?.Invoke(this, new OnAnyObjectDematerializedEventArgs { projectableObjectDematerialization = this, projectableObjectSO = projectableObject.ProjectableObjectSO });
     }
 
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
@@ -153,7 +157,8 @@ public class ProjectableObjectDematerialization : MonoBehaviour, IHoldInteractab
     public void HoldInteractionEnd()
     {
         OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
-        OnEndDematerialization?.Invoke(this, new OnAnyObjectDematerializedEventArgs { projectableObjectSO = projectableObject.ProjectableObjectSO });
+        OnEndDematerialization?.Invoke(this, new OnAnyObjectDematerializedEventArgs { projectableObjectDematerialization = this, projectableObjectSO = projectableObject.ProjectableObjectSO });
+        OnAnyEndDematerialization?.Invoke(this, new OnAnyObjectDematerializedEventArgs { projectableObjectDematerialization = this, projectableObjectSO = projectableObject.ProjectableObjectSO });
     }
 
     public Transform GetTransform() => transform;

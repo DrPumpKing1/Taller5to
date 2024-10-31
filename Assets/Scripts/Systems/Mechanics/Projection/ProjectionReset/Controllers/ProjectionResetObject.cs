@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using static ProjectableObjectDematerialization;
 
 public class ProjectionResetObject : MonoBehaviour, IHoldInteractable
 {
@@ -50,6 +51,10 @@ public class ProjectionResetObject : MonoBehaviour, IHoldInteractable
     public event EventHandler OnNoObjectsToDematerialize;
 
     public static event EventHandler OnAnyProjectionResetObjectUsed;
+
+    public static event EventHandler OnAnyStartProjectionResetObjectUse;
+    public static event EventHandler OnAnyEndProjectionResetObjectUse;
+
 
     #region IHoldInteractable Methods
     public void Select()
@@ -124,9 +129,19 @@ public class ProjectionResetObject : MonoBehaviour, IHoldInteractable
 
         return true;
     }
-    public void HoldInteractionStart() => OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
+    public void HoldInteractionStart()
+    {
+        OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
+        OnAnyStartProjectionResetObjectUse?.Invoke(this, EventArgs.Empty);
+    }
+
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
-    public void HoldInteractionEnd() => OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
+    public void HoldInteractionEnd()
+    {
+        OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
+        OnAnyEndProjectionResetObjectUse?.Invoke(this, EventArgs.Empty);
+    }
+
     public Transform GetTransform() => transform;
     public Transform GetInteractionAttentionTransform() => interactionAttentionTransform;
     public Transform GetInteractionPositionTransform() => interactionPositionTransform;
