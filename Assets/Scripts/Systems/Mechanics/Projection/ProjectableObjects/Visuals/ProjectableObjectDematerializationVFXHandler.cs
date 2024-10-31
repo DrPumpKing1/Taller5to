@@ -9,13 +9,12 @@ public class ProjectableObjectDematerializationVFXHandler : MonoBehaviour
     [Header("Components")]
     [SerializeField] private ProjectableObjectSO projectableObjectSO;
     [SerializeField] private ProjectableObjectDematerialization projectableObjectDematerialization;
-    [SerializeField] private ProjectableObjectRotation projectableObjectRotation;
     [SerializeField] private VisualEffect projectableObjectDematerializationVFX;
     [Space]
     [SerializeField] private List<ProjectionVFXSetting> projectionVFXSettings;
 
     [Header("Settings")]
-    [SerializeField, Range(1f,3f)] private float lifespan;
+    [SerializeField, Range(1f,3f)] private float detachedLifespan;
 
     private const string BOX_CENTER_PROPERTY = "BoxCenter";
     private const string BOX_SIZE_PROPERTY = "BoxSize";
@@ -28,7 +27,6 @@ public class ProjectableObjectDematerializationVFXHandler : MonoBehaviour
         public ProjectableObjectSO projectableObjectSO;
         public Vector3 boxOffset;
         public Vector3 boxSize;
-        public bool rectifyDueToOrientation;
     }
 
     private void OnEnable()
@@ -105,32 +103,10 @@ public class ProjectableObjectDematerializationVFXHandler : MonoBehaviour
         Vector3 boxCenter  = projectionVFXSetting.boxOffset;
         Vector3 boxSize = projectionVFXSetting.boxSize;
 
-        if (projectionVFXSetting.rectifyDueToOrientation) boxSize = RectifyBoxSizeDueToOrientation(boxSize);
-
         SetVFXBoxCenter(boxCenter);
         SetVFXBoxSize(boxSize);
 
         projectableObjectDematerializationVFX.Play();
-    }
-
-    private Vector3 RectifyBoxSizeDueToOrientation(Vector3 boxSize)
-    {
-        if (!projectableObjectRotation) return boxSize;
-
-        Vector2 orientation = GeneralMethods.Vector3ToVector2(projectableObjectRotation.DesiredDirection);
-
-        if (orientation == Vector2.zero) return boxSize;
-        if (orientation.x == orientation.y) return boxSize;
-
-        if (Math.Abs(orientation.x) > Math.Abs(orientation.y)) return boxSize;
-
-        if (Math.Abs(orientation.x) < Math.Abs(orientation.y))
-        {
-            Vector3 rectifiedBoxSize = new Vector3(boxSize.z, boxSize.y, boxSize.x);
-            return rectifiedBoxSize;
-        }
-
-        return boxSize;
     }
 
     private void StopVFX() => projectableObjectDematerializationVFX.Stop();
@@ -148,7 +124,7 @@ public class ProjectableObjectDematerializationVFXHandler : MonoBehaviour
         hasUnsubscribed = true;
     }
 
-    private void DestroyAfterLifespan() => Destroy(gameObject, lifespan);
+    private void DestroyAfterLifespan() => Destroy(gameObject, detachedLifespan);
 
     #region ProjectableObjectDematerialization Subscriptions
     private void ProjectableObjectDematerialization_OnStartDematerialization(object sender, ProjectableObjectDematerialization.OnAnyObjectDematerializedEventArgs e)

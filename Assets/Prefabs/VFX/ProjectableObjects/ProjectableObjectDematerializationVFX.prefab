@@ -168,14 +168,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91993735bbdb00f47ba811cb8711d8f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectableObjectSO: {fileID: 0}
   projectableObjectDematerialization: {fileID: 0}
-  projectableObjectDematerializationVFX: {fileID: 7857037516855397509}
   projectableObjectRotation: {fileID: 0}
+  projectableObjectDematerializationVFX: {fileID: 7857037516855397509}
   projectionVFXSettings:
   - projectableObjectSO: {fileID: 11400000, guid: ed5989b0e0432a24ea4bc2867aa81b86, type: 2}
     boxOffset: {x: 0, y: 0.075, z: 0}
-    boxSize: {x: 2, y: 0.15, z: 0.15}
-    rectifyDueToOrientation: 1
+    boxSize: {x: 0.15, y: 0.15, z: 2}
+    rectifyDueToOrientation: 0
   - projectableObjectSO: {fileID: 11400000, guid: a7ec37b997ae92f409ef433af1b0b518, type: 2}
     boxOffset: {x: 0, y: 0.075, z: 0}
     boxSize: {x: 2, y: 0.15, z: 2}
@@ -188,4 +189,4 @@ MonoBehaviour:
     boxOffset: {x: 0, y: 1, z: 0}
     boxSize: {x: 1, y: 2, z: 1}
     rectifyDueToOrientation: 0
-  lifespan: 2
+  detachedLifespan: 2
