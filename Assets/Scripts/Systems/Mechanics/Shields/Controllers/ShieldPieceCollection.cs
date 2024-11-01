@@ -119,7 +119,7 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
         hasAlreadyBeenInteracted = true;
 
         AddShieldPieceToInventory();
-        DisableModel();
+        DisableVisual();
 
         shieldPiece.SetIsCollected(true);
         OnShieldPieceCollected?.Invoke(this, new OnShieldPieceCollectedEventArgs { shieldPieceSO = shieldPiece.ShieldPieceSO });
@@ -127,7 +127,7 @@ public class ShieldPieceCollection : MonoBehaviour, IInteractable
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
     }
 
-    private void DisableModel() => model.gameObject.SetActive(false);
+    private void DisableVisual() => model.gameObject.SetActive(false);
 
     private void AddShieldPieceToInventory() => ShieldPiecesManager.Instance.CollectShieldPiece(shieldPiece.ShieldPieceSO);
 }
