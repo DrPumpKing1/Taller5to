@@ -134,11 +134,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: e6ad254dd332df04fb42e53db9a12314, type: 2}
     - target: {fileID: 7670523040524792548, guid: 347f58362b888284b93c35830067cdfc, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7670523040524792548, guid: 347f58362b888284b93c35830067cdfc, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[1].m_Name
       value: FlareColor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7670523040524792548, guid: 347f58362b888284b93c35830067cdfc, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[2].m_Name
+      value: GodRaysColor
       objectReference: {fileID: 0}
     - target: {fileID: 7670523040524792548, guid: 347f58362b888284b93c35830067cdfc, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.x
@@ -161,7 +165,23 @@ PrefabInstance:
       value: 1.4980392
       objectReference: {fileID: 0}
     - target: {fileID: 7670523040524792548, guid: 347f58362b888284b93c35830067cdfc, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[2].m_Value.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7670523040524792548, guid: 347f58362b888284b93c35830067cdfc, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[2].m_Value.x
+      value: 1.310497
+      objectReference: {fileID: 0}
+    - target: {fileID: 7670523040524792548, guid: 347f58362b888284b93c35830067cdfc, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[2].m_Value.y
+      value: 1.4980392
+      objectReference: {fileID: 0}
+    - target: {fileID: 7670523040524792548, guid: 347f58362b888284b93c35830067cdfc, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[1].m_Overridden
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7670523040524792548, guid: 347f58362b888284b93c35830067cdfc, type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[2].m_Overridden
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
