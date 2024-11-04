@@ -55,6 +55,8 @@ public class PausableSFXManager : SFXManager
         BossShield.OnAnyBossShieldDeactivated += BossShield_OnBossShieldDeactivated;
         BossStateHandler.OnBossAlmostDefeated += BossStateHandler_OnBossAlmostDefeated;
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
+
+        AncientRelicShield.OnAncientRelicShieldDepowered += AncientRelicShield_OnAncientRelicShieldDepowered;
     }
 
     private void OnDisable()
@@ -107,7 +109,9 @@ public class PausableSFXManager : SFXManager
         BossShield.OnAnyBossShieldDeactivated -= BossShield_OnBossShieldDeactivated;
         BossStateHandler.OnBossAlmostDefeated -= BossStateHandler_OnBossAlmostDefeated;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
-    } 
+
+        AncientRelicShield.OnAncientRelicShieldDepowered -= AncientRelicShield_OnAncientRelicShieldDepowered;
+    }
 
     #region Player
     private void PlayerLand_OnPlayerNormalLand(object sender, System.EventArgs e)
@@ -463,6 +467,14 @@ public class PausableSFXManager : SFXManager
     private void BossStateHandler_OnBossDefeated(object sender, System.EventArgs e)
     {
         PlaySound(SFXPoolSO.bossDefeated);
+    }
+    #endregion
+
+    #region Ancient Relic
+    private void AncientRelicShield_OnAncientRelicShieldDepowered(object sender, System.EventArgs e)
+    {
+        AncientRelicShield ancientRelicShield = sender as AncientRelicShield;
+        PlaySoundAtPoint(SFXPoolSO.ancientRelicShieldDepowered, ancientRelicShield.transform.position);
     }
     #endregion
 }

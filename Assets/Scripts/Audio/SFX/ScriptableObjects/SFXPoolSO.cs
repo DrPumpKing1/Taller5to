@@ -123,6 +123,9 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip[] bossAlmostDefeated;
     public AudioClip[] bossDefeated;
 
+    [Header("Ancient Relic")]
+    public AudioClip[] ancientRelicShieldDepowered;
+
     [Header("UI")]
     public AudioClip[] pauseOpen;
     public AudioClip[] pauseClose;

@@ -17,7 +17,7 @@ public class BossShield : MonoBehaviour
 
     public bool ShieldActive => shieldActive;
 
-    private const float NOT_POWERED_TIME_THRESHOLD = 0.25f;
+    private const float NOT_POWERED_TIME_THRESHOLD = 0.45f;
     private float notPoweredTimer;
     private bool previousPowered;
 
