@@ -7,6 +7,9 @@ public class CustomSFXManager : MonoBehaviour
     [Header("Components")]
     [SerializeField] protected SFXPoolSO SFXPoolSO;
 
+    [Header("Settings")]
+    [SerializeField] protected bool stopOnPause;
+
     [Header("Debug")]
     [SerializeField] protected bool debug;
 
@@ -36,6 +39,18 @@ public class CustomSFXManager : MonoBehaviour
         audioSource.clip = null;
     }
 
+    protected void PauseAudioSource()
+    {
+        if (audioSource.clip == null) return;
+        audioSource.Pause();
+    }
+
+    protected void ResumeAudioSource()
+    {
+        if (audioSource.clip == null) return;
+        audioSource.Play();
+    }
+
     protected void ReplaceAudioClip(AudioClip clip)
     {
         audioSource.Stop();
@@ -54,11 +69,13 @@ public class CustomSFXManager : MonoBehaviour
     #region PauseManager Subscriptions
     private void PauseManager_OnGamePaused(object sender, System.EventArgs e)
     {
-        StopAudioSource();
+        if (stopOnPause) StopAudioSource();
+        else PauseAudioSource();
     }
     private void PauseManager_OnGameResumed(object sender, System.EventArgs e)
     {
-        StopAudioSource();
+        if (stopOnPause) StopAudioSource();
+        else ResumeAudioSource();
     }
     #endregion
 }
