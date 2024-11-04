@@ -6,7 +6,7 @@ public class DebugScriptCinematic : MonoBehaviour
 {
     private void Update()
     {
-        CheckSkipCinematic();
+        //CheckSkipCinematic();
     }
 
     private void CheckSkipCinematic()
