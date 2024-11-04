@@ -36,16 +36,18 @@ public class CinematicsVideoUIHandler : MonoBehaviour
         ClearVideoClip();
     }
 
-    private void HideVideoUI()
-    {
-        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
-        canvasGroup.blocksRaycasts = false;
-    }
-
     private void ShowVideoUI()
     {
         GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 1f);
         canvasGroup.blocksRaycasts = true;
+        canvasGroup.interactable = true;
+    }
+
+    private void HideVideoUI()
+    {
+        GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.interactable = false;
     }
 
     private void SetVideoOutputMode() => videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;

@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Video;
-using static PetGuidanceListener;
-using static CinematicsManager;
-using static UniqueDialogueTriggerHandler;
 
 public class CinematicsManager : MonoBehaviour
 {

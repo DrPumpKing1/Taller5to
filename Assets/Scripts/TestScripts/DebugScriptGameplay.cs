@@ -9,7 +9,7 @@ public class DebugScriptGameplay : MonoBehaviour
     {
         CheckSkipDialogue();
         CheckHideInstruction();
-        CheckSkipCinematic();
+        //CheckSkipCinematic();
         //CheckReloadScene();
 
         /*
