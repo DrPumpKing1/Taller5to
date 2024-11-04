@@ -100,6 +100,7 @@ MonoBehaviour:
   dialogueClose: []
   monologueOpen: []
   monologueClose: []
+  bossBeamSphereStart: {fileID: 0}
   bossBeamSphereCast:
   - {fileID: 8300000, guid: 9c21dc5d23e11c543a992982875509ce, type: 3}
   bossBeamSphereFade:
@@ -111,6 +112,10 @@ MonoBehaviour:
   bossShieldDeactivated:
   - {fileID: 8300000, guid: e7636588403f7a045b4a63f86d4b37a4, type: 3}
   bossNextPhase:
+  - {fileID: 8300000, guid: ac7c6e515901aa643a13976993a697de, type: 3}
+  bossAlmostDefeated:
+  - {fileID: 8300000, guid: ac7c6e515901aa643a13976993a697de, type: 3}
+  bossDefeated:
   - {fileID: 8300000, guid: ac7c6e515901aa643a13976993a697de, type: 3}
   pauseOpen: []
   pauseClose: []

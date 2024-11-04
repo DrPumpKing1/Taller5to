@@ -27,7 +27,6 @@ public class CustomSFXManager : MonoBehaviour
         PauseManager.OnGameResumed -= PauseManager_OnGameResumed;
     }
 
-
     protected void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -64,6 +63,11 @@ public class CustomSFXManager : MonoBehaviour
 
         audioSource.clip = clip;
         audioSource.Play();
+    }
+
+    protected void RepositionSFXManager(Vector3 position)
+    {
+        transform.position = position;
     }
 
     #region PauseManager Subscriptions

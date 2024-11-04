@@ -53,6 +53,8 @@ public class PausableSFXManager : SFXManager
         BossBeam.OnBeamPlatformStun += BossBeam_OnBeamPlatformStun;
         BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
         BossShield.OnAnyBossShieldDeactivated += BossShield_OnBossShieldDeactivated;
+        BossStateHandler.OnBossAlmostDefeated += BossStateHandler_OnBossAlmostDefeated;
+        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
     }
 
     private void OnDisable()
@@ -103,6 +105,8 @@ public class PausableSFXManager : SFXManager
         BossBeam.OnBeamPlatformStun -= BossBeam_OnBeamPlatformStun;
         BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
         BossShield.OnAnyBossShieldDeactivated -= BossShield_OnBossShieldDeactivated;
+        BossStateHandler.OnBossAlmostDefeated -= BossStateHandler_OnBossAlmostDefeated;
+        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
     } 
 
     #region Player
@@ -449,6 +453,16 @@ public class PausableSFXManager : SFXManager
     {
         BossShield bossShield = sender as BossShield;
         PlaySoundAtPoint(SFXPoolSO.bossShieldDeactivated, bossShield.transform.position);
+    }
+
+    private void BossStateHandler_OnBossAlmostDefeated(object sender, System.EventArgs e)
+    {
+        PlaySound(SFXPoolSO.bossAlmostDefeated);
+    }
+
+    private void BossStateHandler_OnBossDefeated(object sender, System.EventArgs e)
+    {
+        PlaySound(SFXPoolSO.bossDefeated);
     }
     #endregion
 }
