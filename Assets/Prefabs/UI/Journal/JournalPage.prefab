@@ -369,7 +369,8 @@ GameObject:
   - component: {fileID: 1563565526852024117}
   - component: {fileID: 6475208450950715917}
   - component: {fileID: 8035186220370363281}
-  - component: {fileID: 2120791140328926092}
+  - component: {fileID: 3150027610826995394}
+  - component: {fileID: 7480993596339930896}
   m_Layer: 5
   m_Name: JournalPageBackground
   m_TagString: Untagged
@@ -434,7 +435,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2120791140328926092
+--- !u!114 &3150027610826995394
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -447,7 +448,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
-  m_VerticalFit: 0
+  m_VerticalFit: 2
+--- !u!114 &7480993596339930896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6881677399393351745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: 880
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &8899343714548236725
 GameObject:
   m_ObjectHideFlags: 0
