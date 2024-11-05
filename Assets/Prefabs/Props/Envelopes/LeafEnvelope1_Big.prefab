@@ -158,6 +158,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeafEnvelope1_Big
       objectReference: {fileID: 0}
+    - target: {fileID: 6524301542656719852, guid: 41dd4c75251795a46b67945bd5f00162, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1865c4fe5331cfe4484c94def24771f8, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
