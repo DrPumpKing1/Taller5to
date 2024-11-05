@@ -21,7 +21,7 @@ public class JournalPagesHandler : MonoBehaviour
     public static event EventHandler<OnJournalPageEventArgs> OnJournalPageOpen;
     public static event EventHandler<OnJournalPageEventArgs> OnJournalPageClose;
 
-    public float cooldownTimer;
+    private float cooldownTimer;
 
     [System.Serializable]
     public class JournalPageButton
