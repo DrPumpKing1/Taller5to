@@ -128,7 +128,7 @@ public class JournalPageUI : MonoBehaviour
 
     private void SetScrollable(bool scrollable)
     {
-        scrollRect.enabled = scrollable;
+        //scrollRect.enabled = scrollable;
         scrollbar.enabled = scrollable;
         scrollBarImage.enabled = scrollable;
         scrollBarHandleImage.enabled = scrollable;

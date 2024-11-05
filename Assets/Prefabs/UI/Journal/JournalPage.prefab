@@ -121,7 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9134999651308605726}
   - component: {fileID: 3929799217229628531}
-  - component: {fileID: 1060385975359954372}
+  - component: {fileID: 8921991553819623727}
   - component: {fileID: 6125394785640677461}
   - component: {fileID: 2621837523079550110}
   m_Layer: 5
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1060385975359954372
+--- !u!114 &8921991553819623727
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3418653856786936892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Script: {fileID: 11500000, guid: c191c02587135c842ab81792b9791f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 1563565526852024117}
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 0
-  m_DecelerationRate: 0
+  m_DecelerationRate: 0.135
   m_ScrollSensitivity: 20
   m_Viewport: {fileID: 0}
   m_HorizontalScrollbar: {fileID: 0}
@@ -536,7 +536,7 @@ MonoBehaviour:
   journalInfoUIs: []
   pageNotCheckedIndicator: {fileID: 0}
   journalPageAnimator: {fileID: 3363448857771679979}
-  scrollRect: {fileID: 1060385975359954372}
+  scrollRect: {fileID: 8921991553819623727}
   scrollbar: {fileID: 1382515268435135368}
   scrollBarImage: {fileID: 1925378348203902934}
   scrollBarHandleImage: {fileID: 6299732494351892521}
