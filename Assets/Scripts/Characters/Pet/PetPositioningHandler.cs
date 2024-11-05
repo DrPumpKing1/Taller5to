@@ -180,6 +180,7 @@ public class PetPositioningHandler : MonoBehaviour
         playerFollowDesiredDirectionVector = dirVector;
         playerFollowTargetRadius = radius;
     }
+
     private Vector3 CalculateLocalPreferredPositionVector(Vector3 worldPreferredPosition, Transform refferenceTransform)
     {
         if (worldPreferredPosition.magnitude == 0f) return refferenceTransform.up;

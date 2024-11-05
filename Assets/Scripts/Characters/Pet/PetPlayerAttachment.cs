@@ -8,7 +8,7 @@ public class PetPlayerAttachment : MonoBehaviour
     public static PetPlayerAttachment Instance { get; private set; }
 
     [Header("Settings")]
-    [SerializeField] private string logToAttach;
+    [SerializeField] private string logToInitialAttach;
 
     [Header("Debug")]
     [SerializeField] private bool overrideAttachToPlayer;
@@ -19,6 +19,8 @@ public class PetPlayerAttachment : MonoBehaviour
     public static event EventHandler OnVyrxAttachToPlayer;
     public static event EventHandler OnVyrxUnattachToPlayer;
     public static event EventHandler OnVyrxInitialAttachToPlayer;
+
+    public static event EventHandler OnAttachToPlayerConditionsChecked;
 
     private bool initialAttachFromSave;
 
@@ -40,9 +42,9 @@ public class PetPlayerAttachment : MonoBehaviour
 
     private void Start()
     {
-        CheckSetInitialAttachToPlayer();
-        SetIntialOverrideAttachToPlayer(attachToPlayer);
+        CheckAttachConditions();
     }
+
 
     private void SetSingleton()
     {
@@ -60,7 +62,15 @@ public class PetPlayerAttachment : MonoBehaviour
 
     private void IgnorePetPlayerCollisions() => Physics.IgnoreLayerCollision(6, 8);
 
-    public void SetInitialAttachToPlayer(bool attach) => initialAttachFromSave = attach;
+    public void SetInitialAttachToPlayer(bool attach) => initialAttachFromSave = attach; //Called in Awake() by PetPlayerAttachmentPersistence
+
+    private void CheckAttachConditions()
+    {
+        CheckSetInitialAttachToPlayer();
+        SetIntialOverrideAttachToPlayer(attachToPlayer);
+
+        OnAttachToPlayerConditionsChecked?.Invoke(this, EventArgs.Empty);
+    }
 
     private void CheckSetInitialAttachToPlayer()
     {
@@ -88,12 +98,18 @@ public class PetPlayerAttachment : MonoBehaviour
         }
     }
 
+    private void InitialAttachToPlayer()
+    {
+        SetAttachToPlayer(true, true);
+        OnVyrxInitialAttachToPlayer?.Invoke(this, EventArgs.Empty);
+    }
+
     #region GameLogManagerSubscriptions
     private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
-        if (e.gameplayAction.log != logToAttach) return;
-        SetAttachToPlayer(true,true);
-        OnVyrxInitialAttachToPlayer?.Invoke(this, EventArgs.Empty);
+        if (e.gameplayAction.log != logToInitialAttach) return;
+        InitialAttachToPlayer();
     }
+
     #endregion
 }

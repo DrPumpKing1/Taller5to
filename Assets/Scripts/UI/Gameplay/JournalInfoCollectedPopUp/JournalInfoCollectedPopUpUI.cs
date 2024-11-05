@@ -51,6 +51,7 @@ public class JournalInfoCollectedPopUpUI : MonoBehaviour
 
     private void JournalInfoManager_OnJournalInfoCollected(object sender, JournalInfoManager.OnJournalInfoEventArgs e)
     {
+        StopAllCoroutines();
         StartCoroutine(PopUpIndicatorCoroutine());
     }
 }
