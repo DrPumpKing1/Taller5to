@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class JournalPageUI : MonoBehaviour
 {
@@ -10,6 +11,15 @@ public class JournalPageUI : MonoBehaviour
     [SerializeField] private GameObject pageNotCheckedIndicator;
     [Space]
     [SerializeField] private Animator journalPageAnimator;
+
+    [Header("Scroll Components")]
+    [SerializeField] private ScrollRect scrollRect;
+    [SerializeField] private Scrollbar scrollbar;
+    [SerializeField] private Image scrollBarImage;
+    [SerializeField] private Image scrollBarHandleImage;
+    
+    [Header("Settings")]
+    [SerializeField] private bool scrollable;
 
     private const string SHOW_TRIGGER = "Show";
     private const string HIDE_TRIGGER = "Hide";
@@ -32,6 +42,7 @@ public class JournalPageUI : MonoBehaviour
     private void Start()
     {
         CheckJournalPageState();
+        SetScrollable(scrollable);
     }
 
     private void CheckJournalPageState()
@@ -114,6 +125,14 @@ public class JournalPageUI : MonoBehaviour
     }
 
     #endregion
+
+    private void SetScrollable(bool scrollable)
+    {
+        scrollRect.enabled = scrollable;
+        scrollbar.enabled = scrollable;
+        scrollBarImage.enabled = scrollable;
+        scrollBarHandleImage.enabled = scrollable;
+    }
 
     #region JournalInfoManager Susbcriptions
     private void JournalInfoManager_OnJournalInfoCollected(object sender, JournalInfoManager.OnJournalInfoEventArgs e)
