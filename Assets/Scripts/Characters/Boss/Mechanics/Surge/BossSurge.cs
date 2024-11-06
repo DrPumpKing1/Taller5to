@@ -65,7 +65,6 @@ public class BossSurge : MonoBehaviour
         }
     }
 
-
     private void Surge(PhaseActiveLayout targetPhaseActiveLayout, bool triggerEvents)
     {
         foreach (PhaseActiveLayout phaseActiveLayout in phaseActiveLayouts) //Move all nonActives underground;
