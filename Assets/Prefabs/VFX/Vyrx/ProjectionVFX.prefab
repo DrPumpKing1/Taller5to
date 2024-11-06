@@ -57,21 +57,27 @@ VisualEffect:
       - m_Value: 0.05
         m_Name: ParticleSize
         m_Overridden: 1
-      - m_Value: 2.5
+      - m_Value: 1.5
         m_Name: Speed
         m_Overridden: 1
       - m_Value: 0.65
         m_Name: SphereRadius
         m_Overridden: 1
-      - m_Value: 0.75
+      - m_Value: 0.8
         m_Name: ConformSphereRadius
+        m_Overridden: 1
+      - m_Value: 4
+        m_Name: TurbulenceIntensity
         m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
       m_Array: []
     m_Vector4f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 0, y: 2.9960785, z: 0.69847643, w: 1}
+        m_Name: Color1
+        m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:

@@ -9,6 +9,8 @@ public class PetProjectionVFXHandler : MonoBehaviour
     [Header("Components")]
     [SerializeField] private VisualEffect projectionVFX;
 
+    private const string SPHERE_WORLD_POSITION_PROPERTY = "SphereWorldPosition";
+
     private void OnEnable()
     {
         ProjectionPlatformProjection.OnAnyStartProjection += ProjectionPlatformProjection_OnAnyStartProjection;
@@ -29,6 +31,7 @@ public class PetProjectionVFXHandler : MonoBehaviour
     private void Update()
     {
         HandleRotation();
+        HandleSphereWorldPosition();
     }
 
     private void InitializeVFX()
@@ -40,6 +43,13 @@ public class PetProjectionVFXHandler : MonoBehaviour
     private void HandleRotation()
     {
         projectionVFX.transform.rotation = Quaternion.identity;
+    }
+
+    private void HandleSphereWorldPosition()
+    {
+        if (!projectionVFX.HasVector3(SPHERE_WORLD_POSITION_PROPERTY)) return;
+
+        projectionVFX.SetVector3(SPHERE_WORLD_POSITION_PROPERTY, transform.position);
     }
 
     private void StartVFX() => projectionVFX.Play();

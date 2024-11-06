@@ -9,6 +9,8 @@ public class PetDematerializeAllVFXHandler : MonoBehaviour
     [Header("Components")]
     [SerializeField] private VisualEffect dematerializeAllVFX;
 
+    private const string SPHERE_WORLD_POSITION_PROPERTY = "SphereWorldPosition";
+
     private void OnEnable()
     {
         ProjectionResetObject.OnAnyStartProjectionResetObjectUse += ProjectionResetObject_OnAnyStartProjectionResetObjectUse;
@@ -29,6 +31,7 @@ public class PetDematerializeAllVFXHandler : MonoBehaviour
     private void Update()
     {
         HandleRotation();
+        HandleSphereWorldPosition();
     }
 
     private void InitializeVFX()
@@ -39,6 +42,13 @@ public class PetDematerializeAllVFXHandler : MonoBehaviour
     private void HandleRotation()
     {
         dematerializeAllVFX.transform.rotation = Quaternion.identity;
+    }
+
+    private void HandleSphereWorldPosition()
+    {
+        if (!dematerializeAllVFX.HasVector3(SPHERE_WORLD_POSITION_PROPERTY)) return;
+
+        dematerializeAllVFX.SetVector3(SPHERE_WORLD_POSITION_PROPERTY, transform.position);
     }
 
     private void StartVFX() => dematerializeAllVFX.Play();
