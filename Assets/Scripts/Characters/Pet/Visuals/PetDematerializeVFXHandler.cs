@@ -26,21 +26,31 @@ public class PetDematerializeVFXHandler : MonoBehaviour
         InitializeVFX();
     }
 
+    private void Update()
+    {
+        HandleRotation();
+    }
+
     private void InitializeVFX()
     {
         dematerializeVFX.gameObject.SetActive(true);
         dematerializeVFX.Stop();
     }
 
+    private void HandleRotation()
+    {
+        dematerializeVFX.transform.rotation = Quaternion.identity;
+    }
+
     private void StartVFX() => dematerializeVFX.Play();
     private void StopVFX() => dematerializeVFX.Stop();
 
-    private void ProjectableObjectDematerialization_OnAnyStartDematerialization(object sender, EventArgs e)
+    private void ProjectableObjectDematerialization_OnAnyStartDematerialization(object sender, ProjectableObjectDematerialization.OnAnyObjectDematerializedEventArgs e)
     {
         StartVFX();
     }
 
-    private void ProjectableObjectDematerialization_OnAnyEndDematerialization(object sender, EventArgs e)
+    private void ProjectableObjectDematerialization_OnAnyEndDematerialization(object sender, ProjectableObjectDematerialization.OnAnyObjectDematerializedEventArgs e)
     {
         StopVFX();
     }

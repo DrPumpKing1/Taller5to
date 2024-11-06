@@ -50,7 +50,31 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 300
+        m_Name: SpawnRate
+        m_Overridden: 1
+      - m_Value: 2.5
+        m_Name: Speed
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: SphereY
+        m_Overridden: 1
+      - m_Value: 0.9
+        m_Name: SphereRadius
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: KillSphereY
+        m_Overridden: 1
+      - m_Value: 0.25
+        m_Name: KilSphereRadius
+        m_Overridden: 1
+      - m_Value: 0.65
+        m_Name: ConformSphereRadius
+        m_Overridden: 1
+      - m_Value: 0.05
+        m_Name: ParticleSize
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:

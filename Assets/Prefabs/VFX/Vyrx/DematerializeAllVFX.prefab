@@ -100,24 +100,30 @@ VisualEffect:
       - m_Value: 0.075
         m_Name: ParticleSize
         m_Overridden: 1
-      - m_Value: 1.25
+      - m_Value: 1.1
         m_Name: SphereRadius
         m_Overridden: 1
       - m_Value: 2.5
         m_Name: Speed
         m_Overridden: 1
-      - m_Value: 150
+      - m_Value: 350
         m_Name: SpawnRate
         m_Overridden: 1
       - m_Value: 2
         m_Name: Enlargement
+        m_Overridden: 1
+      - m_Value: 0.7
+        m_Name: ConformSphereRadius
         m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
       m_Array: []
     m_Vector4f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 0, y: 0.74177355, z: 2, w: 1}
+        m_Name: Color1
+        m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:
