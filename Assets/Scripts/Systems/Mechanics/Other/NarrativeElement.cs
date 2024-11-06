@@ -23,9 +23,9 @@ public class NarrativeElement : MonoBehaviour, IInteractable
     [Space]
     [SerializeField] private string tooltipMessage;
 
-    public static event EventHandler<OnCommonInteractableElementInteractedEventArgs> OnNarrativeElementInteracted;
+    public static event EventHandler<OnNarrativeElementInteractedEventArgs> OnNarrativeElementInteracted;
 
-    public class OnCommonInteractableElementInteractedEventArgs : EventArgs
+    public class OnNarrativeElementInteractedEventArgs : EventArgs
     {
         public int id;
     }
@@ -108,6 +108,6 @@ public class NarrativeElement : MonoBehaviour, IInteractable
 
     private void InteractElement()
     {
-        OnNarrativeElementInteracted?.Invoke(this, new OnCommonInteractableElementInteractedEventArgs { id = id });
+        OnNarrativeElementInteracted?.Invoke(this, new OnNarrativeElementInteractedEventArgs { id = id });
     }
 }

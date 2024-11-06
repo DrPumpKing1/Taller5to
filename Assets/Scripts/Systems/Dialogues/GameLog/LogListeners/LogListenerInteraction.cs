@@ -9,6 +9,7 @@ public class LogListenerInteraction : MonoBehaviour
         //INTERACTION
         InscriptionRead.OnInscriptionRead += InscriptionRead_OnInscriptionRead;
         NarrativeElement.OnNarrativeElementInteracted += NarrativeElement_OnNarrativeElementInteracted;
+        TeleportationObject.OnTeleportationObjectInteracted += TeleportationObject_OnTeleportationObjectInteracted;
 
         LearningPlatformLearn.OnStartLearning += LearningPlatformLearn_OnStartLearning;
         LearningPlatformLearn.OnEndLearning += LearningPlatformLearn_OnEndLearning;
@@ -23,11 +24,13 @@ public class LogListenerInteraction : MonoBehaviour
         ProjectionResetObject.OnAnyProjectionResetObjectUsed += ProjectionResetObject_OnAnyProjectionResetObjectUsed;
     }
 
+
     private void OnDisable()
     {
         //INTERACTION
         InscriptionRead.OnInscriptionRead -= InscriptionRead_OnInscriptionRead;
         NarrativeElement.OnNarrativeElementInteracted -= NarrativeElement_OnNarrativeElementInteracted;
+        TeleportationObject.OnTeleportationObjectInteracted -= TeleportationObject_OnTeleportationObjectInteracted;
 
         LearningPlatformLearn.OnStartLearning -= LearningPlatformLearn_OnStartLearning;
         LearningPlatformLearn.OnEndLearning -= LearningPlatformLearn_OnEndLearning;
@@ -43,7 +46,8 @@ public class LogListenerInteraction : MonoBehaviour
     }
 
     private void InscriptionRead_OnInscriptionRead(object sender, InscriptionRead.OnInscriptionReadEventArgs e) => GameLogManager.Instance.Log($"Interaction/InscriptionRead/{e.inscriptionSO.id}");
-    private void NarrativeElement_OnNarrativeElementInteracted(object sender, NarrativeElement.OnCommonInteractableElementInteractedEventArgs e) => GameLogManager.Instance.Log($"Interaction/NarrativeElement/{e.id}");
+    private void NarrativeElement_OnNarrativeElementInteracted(object sender, NarrativeElement.OnNarrativeElementInteractedEventArgs e) => GameLogManager.Instance.Log($"Interaction/NarrativeElement/{e.id}");
+    private void TeleportationObject_OnTeleportationObjectInteracted(object sender, TeleportationObject.OnTeleportationObjectInteractedEventArgs e) => GameLogManager.Instance.Log($"Interaction/TeleportationObject/{e.id}");
 
     private void LearningPlatformLearn_OnStartLearning(object sender, LearningPlatformLearn.OnLearningEventArgs e)
     {
