@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ZelkorTreeLeafsMaterial
+  m_Name: ZelkorTreeLeafs4
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -28,11 +28,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 1d62be092f1b99842bf0d9430bc4094e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5af76c67135c84847a39c8a77719958b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 6c33b42fad39c2e448fe70ee59d7a50a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 225d5fad01ee7db4cbaeec430eb22cdd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -48,15 +48,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: 6eabc504add1b8341b484811fe9f25e8, type: 3}
+        m_Texture: {fileID: 2800000, guid: c7d80dabc374af945b8bec35ea7e9962, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 1d62be092f1b99842bf0d9430bc4094e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5af76c67135c84847a39c8a77719958b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: b32b38ebbcc94fd468fcaafc6a4f9c16, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8f981520079226948ad1667ca946b84e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -118,10 +118,10 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0.41106153, g: 1, b: 0, a: 1}
+    - _EmissionColor: {r: 0.03529412, g: 0.74509805, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &5479556097680894069
+--- !u!114 &4235105812264216636
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

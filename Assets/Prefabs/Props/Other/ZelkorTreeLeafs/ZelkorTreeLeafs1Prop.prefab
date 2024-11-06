@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: b3bf3de4337a3ce4e8bc0e41b59f44e8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 64378c8f3d5a33f4b96cd866f27289f2, type: 2}
     - target: {fileID: 919132149155446097, guid: b3bf3de4337a3ce4e8bc0e41b59f44e8, type: 3}
       propertyPath: m_Name
       value: ZelkorTreeLeafs1
