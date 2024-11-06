@@ -12,11 +12,13 @@ public class PlayerTeleportationManager : MonoBehaviour
 
     public TeleportationState State => state;
 
-    public enum TeleportationState { NotTeleporting, StartingTeleportation, EndingTelelportation };
+    public enum TeleportationState { NotTeleporting, StallingStart, StartingTeleportation, EndingTelelportation, StallingEnd };
 
+    public static event EventHandler<OnTeleportationEventArgs> OnTeleportationStallStarted;
     public static event EventHandler<OnTeleportationEventArgs> OnTeleportationStarted;
     public static event EventHandler<OnTeleportationEventArgs> OnTeleportationCompleted;
     public static event EventHandler<OnTeleportationEventArgs> OnTeleportationEnded;
+    public static event EventHandler<OnTeleportationEventArgs> OnTeleportationStallEnded;
 
     public class OnTeleportationEventArgs : EventArgs
     {
@@ -46,7 +48,7 @@ public class PlayerTeleportationManager : MonoBehaviour
         }
     }
 
-    private void SetTeleportationState(TeleportationState state) => state = this.state;
+    private void SetTeleportationState(TeleportationState state) => this.state = state;
 
     public void StartTeleportation(TeleportationSetting teleportationSetting)
     {
@@ -56,8 +58,20 @@ public class PlayerTeleportationManager : MonoBehaviour
         StartCoroutine(TeleportPlayerCoroutine(teleportationSetting));
     }
 
+    public bool AllowMovementInputProcessing() => state == TeleportationState.NotTeleporting;
+    public bool AllowInteractionInputProcessing() => state == TeleportationState.NotTeleporting; 
+    public bool AllowProjectionInputProcessing() => state == TeleportationState.NotTeleporting; 
+    public bool AllowInventoryInputProcessing() => state == TeleportationState.NotTeleporting;
+    public bool AllowJournalInputProcessing() => state == TeleportationState.NotTeleporting;
+
     private IEnumerator TeleportPlayerCoroutine(TeleportationSetting teleportationSetting)
     {
+        SetTeleportationState(TeleportationState.StallingStart);
+
+        OnTeleportationStallStarted?.Invoke(this, new OnTeleportationEventArgs { teleportationSetting = teleportationSetting });
+
+        yield return new WaitForSeconds(teleportationSetting.stallStartTeleportationTime);
+
         SetTeleportationState(TeleportationState.StartingTeleportation);
 
         OnTeleportationStarted?.Invoke(this, new OnTeleportationEventArgs { teleportationSetting = teleportationSetting });
@@ -72,9 +86,15 @@ public class PlayerTeleportationManager : MonoBehaviour
 
         yield return new WaitForSeconds(teleportationSetting.endingTeleportationTime);
 
-        SetTeleportationState(TeleportationState.NotTeleporting);
-
         OnTeleportationEnded?.Invoke(this, new OnTeleportationEventArgs { teleportationSetting = teleportationSetting });
+
+        SetTeleportationState(TeleportationState.StallingEnd);
+
+        yield return new WaitForSeconds(teleportationSetting.stallEndTeleportationTime);
+
+        OnTeleportationStallEnded?.Invoke(this, new OnTeleportationEventArgs { teleportationSetting = teleportationSetting });
+        
+        SetTeleportationState(TeleportationState.NotTeleporting);
     }
 }
 
@@ -84,6 +104,8 @@ public class TeleportationSetting
     public int id;
     public string logToStart;
     public Transform teleportPosition;
+    [Range(0.5f, 2f)] public float stallStartTeleportationTime;
     [Range(0.5f, 2f)] public float startingTeleportationTime;
     [Range(0.5f, 2f)] public float endingTeleportationTime;
+    [Range(0.5f, 2f)] public float stallEndTeleportationTime;
 }

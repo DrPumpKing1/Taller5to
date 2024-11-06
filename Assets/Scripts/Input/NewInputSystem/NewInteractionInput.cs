@@ -27,6 +27,8 @@ public class NewInteractionInput : InteractionInput
         if (ScenesManager.Instance.SceneState == ScenesManager.State.TransitionOut) return false;
         if (ScenesManager.Instance.SceneState == ScenesManager.State.FullBlack) return false;
 
+        if (!PlayerTeleportationManager.Instance.AllowInteractionInputProcessing()) return false;
+
         return true;
     }
 

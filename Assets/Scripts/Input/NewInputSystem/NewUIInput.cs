@@ -57,6 +57,7 @@ public class NewUIInput : UIInput
         if (PauseManager.Instance.GamePaused) return false;
         if (hasGameManager && GameManager.Instance.GameState == GameManager.State.OnCinematic) return false;
         if (hasDialogueManager && DialogueManager.Instance._ManagerState == DialogueManager.ManagerState.ZeroMovementDialogue) return false;
+        if (!PlayerTeleportationManager.Instance.AllowInventoryInputProcessing()) return false;
 
         return true;
     }
@@ -66,6 +67,7 @@ public class NewUIInput : UIInput
         if (PauseManager.Instance.GamePaused) return false;
         if (hasGameManager && GameManager.Instance.GameState == GameManager.State.OnCinematic) return false;
         if (hasDialogueManager && DialogueManager.Instance._ManagerState == DialogueManager.ManagerState.ZeroMovementDialogue) return false;
+        if (!PlayerTeleportationManager.Instance.AllowJournalInputProcessing()) return false;
 
         return true;
     }

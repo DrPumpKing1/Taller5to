@@ -42,6 +42,8 @@ public class NewMovementInput : MovementInput
         if (ScenesManager.Instance.SceneState == ScenesManager.State.FullBlack) return false;
 
         if (!CameraTransitionHandler.Instance.AllowMovementInputProcessing()) return false;
+        
+        if (!PlayerTeleportationManager.Instance.AllowMovementInputProcessing()) return false;
 
         return true;
     }

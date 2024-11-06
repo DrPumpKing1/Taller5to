@@ -27,6 +27,8 @@ public class NewProjectionInput : ProjectionInput
         if (ScenesManager.Instance.SceneState == ScenesManager.State.TransitionOut) return false;
         if (ScenesManager.Instance.SceneState == ScenesManager.State.FullBlack) return false;
 
+        if (!PlayerTeleportationManager.Instance.AllowProjectionInputProcessing()) return false;
+
         return true;
     }
 
