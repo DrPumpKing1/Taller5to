@@ -18,6 +18,11 @@ public class LevelTitleUI : MonoBehaviour
     [SerializeField,Range(2f,5f)] private float timeShowingLevelTitle;
     [SerializeField, Range(0.5f, 2f)] private float transitionTime;
 
+    [Header("States")]
+    [SerializeField] private LevelTitleState state;
+
+    private enum LevelTitleState { Hidden, FadingIn, Showing, FadingOut}
+
     private const string SHOW_TRIGGER = "Show";
     private const string HIDE_TRIGGER = "Hide";
 
@@ -32,6 +37,9 @@ public class LevelTitleUI : MonoBehaviour
     private const string BOSS_TITLE = "Warden's Room";
     private const string FINAL_ROOM_TITLE = "<i>Katryssa Midrita</i> Sacred Chamber";
 
+    public static event EventHandler OnLevelTitleShow;
+    public static event EventHandler OnLevelTitleHide;
+
     private void OnEnable()
     {
         RoomManager.OnStartBlockingViewColliders += RoomManager_OnStartBlockingViewColliders;
@@ -43,6 +51,13 @@ public class LevelTitleUI : MonoBehaviour
         RoomManager.OnStartBlockingViewColliders -= RoomManager_OnStartBlockingViewColliders;
         RoomManager.OnEnterBlockingViewColliders -= RoomManager_OnEnterBlockingViewColliders;
     }
+
+    private void Awake()
+    {
+        SetLevelTitleState(LevelTitleState.Hidden);
+    }
+
+    private void SetLevelTitleState(LevelTitleState state) => this.state = state;
 
     private void ShowLevelTitle()
     {
@@ -111,21 +126,36 @@ public class LevelTitleUI : MonoBehaviour
         if (isStart) timeToShow = timeToShowLevelTitleStart;
         else timeToShow = timeToShowLevelTitleRegular;
 
+        SetLevelTitleState(LevelTitleState.FadingIn);
+
+        OnLevelTitleShow?.Invoke(this, EventArgs.Empty);
+
         yield return new WaitForSeconds(timeToShow);
 
         SetLevelTitleText(levelTitle);
+
+        SetLevelTitleState(LevelTitleState.Showing);
 
         ShowLevelTitle();
 
         yield return new WaitForSeconds(timeShowingLevelTitle);
 
         HideLevelTitle();
+
+        OnLevelTitleHide?.Invoke(this, EventArgs.Empty);
     }
 
     private IEnumerator HideCurrentLevelTitleCoroutine()
     {
+        SetLevelTitleState(LevelTitleState.FadingOut);
+
         HideLevelTitle();
+
         yield return new WaitForSeconds(transitionTime);
+
+        OnLevelTitleHide?.Invoke(this, EventArgs.Empty);
+
+        SetLevelTitleState(LevelTitleState.Hidden);
     }
 
     private void SetLevelTitleText(string title) => levelTitleText.text = title;

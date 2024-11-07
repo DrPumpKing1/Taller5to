@@ -106,7 +106,11 @@ public class GameplayMusicManager : MonoBehaviour
             case MusicLevel.Boss:
                 musicToPlay = CheckBossMusicToPlay();
                 break;
+            case MusicLevel.Showcase:
+                musicToPlay = CheckShowcaseMusicToPlay();
+                break;
             default:
+                Debug.Log("Playing Default Music");
                 break;
         }
 

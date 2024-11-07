@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -18,6 +19,11 @@ public class RoomNameUI : MonoBehaviour
     [SerializeField, Range(0.5f, 2f)] private float transitionTime;
     [Space]
     [SerializeField] private bool enableRoomNameOnStart;
+
+    [Header("States")]
+    [SerializeField] private RoomNameState state;
+
+    private enum RoomNameState { Hidden, FadingIn, Showing, FadingOut }
 
     private const string SHOW_TRIGGER = "Show";
     private const string HIDE_TRIGGER = "Hide";
@@ -40,6 +46,9 @@ public class RoomNameUI : MonoBehaviour
     private const string SHOWCASE_ROOM_2_NAME = "Showcase Room 2";
     private const string SHOWCASE_ROOM_3_NAME = "Showcase Room 3";
 
+    public static event EventHandler OnRoomNameShow;
+    public static event EventHandler OnRoomNameHide;
+
     private void OnEnable()
     {
         RoomManager.OnStartBlockingViewColliders += RoomManager_OnStartBlockingViewColliders;
@@ -51,6 +60,13 @@ public class RoomNameUI : MonoBehaviour
         RoomManager.OnStartBlockingViewColliders -= RoomManager_OnStartBlockingViewColliders;
         RoomManager.OnEnterBlockingViewColliders -= RoomManager_OnEnterBlockingViewColliders;
     }
+
+    private void Awake()
+    {
+        SetRoomNameState(RoomNameState.Hidden);
+    }
+
+    private void SetRoomNameState(RoomNameState state) => this.state = state;
 
     private void ShowRoomName()
     {
@@ -140,21 +156,36 @@ public class RoomNameUI : MonoBehaviour
         if (isStart) timeToShow = timeToShowRoomNameStart;
         else timeToShow = timeToShowRoomNameRegular;
 
+        SetRoomNameState(RoomNameState.FadingIn);
+
+        OnRoomNameShow?.Invoke(this, EventArgs.Empty);
+
         yield return new WaitForSeconds(timeToShow);
 
         SetRoomNameText(roomName);
+
+        SetRoomNameState(RoomNameState.Showing);
 
         ShowRoomName();
 
         yield return new WaitForSeconds(timeShowingRoomName);
 
         HideRoomName();
+
+        OnRoomNameHide?.Invoke(this, EventArgs.Empty);
     }
 
     private IEnumerator HideCurrentRoomNameCoroutine()
     {
+        SetRoomNameState(RoomNameState.FadingOut);
+
         HideRoomName();
+
         yield return new WaitForSeconds(transitionTime);
+
+        OnRoomNameHide.Invoke(this, EventArgs.Empty);
+
+        SetRoomNameState(RoomNameState.Hidden);
     }
 
     private void SetRoomNameText(string title) => roomNameText.text = title;
