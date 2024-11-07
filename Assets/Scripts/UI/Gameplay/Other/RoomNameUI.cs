@@ -53,12 +53,16 @@ public class RoomNameUI : MonoBehaviour
     {
         RoomManager.OnStartBlockingViewColliders += RoomManager_OnStartBlockingViewColliders;
         RoomManager.OnEnterBlockingViewColliders += RoomManager_OnEnterBlockingViewColliders;
+
+        LevelTitleUI.OnLevelTitleShow += LevelTitleUI_OnLevelTitleShow;
     }
 
     private void OnDisable()
     {
         RoomManager.OnStartBlockingViewColliders -= RoomManager_OnStartBlockingViewColliders;
         RoomManager.OnEnterBlockingViewColliders -= RoomManager_OnEnterBlockingViewColliders;
+
+        LevelTitleUI.OnLevelTitleShow -= LevelTitleUI_OnLevelTitleShow;
     }
 
     private void Awake()
@@ -204,6 +208,17 @@ public class RoomNameUI : MonoBehaviour
         if (e.previousRoomVisibilityColliders[0].RoomSubArea == e.newRoomVisibilityColliders[0].RoomSubArea) return;
 
         CheckRoomNameToShow(e.newRoomVisibilityColliders[0].RoomSubArea, false);
+    }
+    #endregion
+
+    #region LevelTitleUI Subscriptions
+    private void LevelTitleUI_OnLevelTitleShow(object sender, EventArgs e)
+    {
+        if (state == RoomNameState.Hidden) return;
+        if (state == RoomNameState.FadingOut) return;
+
+        StopAllCoroutines();
+        StartCoroutine(HideCurrentRoomNameCoroutine());
     }
     #endregion
 }
