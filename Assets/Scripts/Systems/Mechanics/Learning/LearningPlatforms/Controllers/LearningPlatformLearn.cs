@@ -55,6 +55,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
 
     public event EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
     public event EventHandler<OnObjectLearnedEventArgs> OnObjectAlreadyLearned;
+
     public static event EventHandler<OnLearningEventArgs> OnStartLearning;
     public static event EventHandler<OnLearningEventArgs> OnEndLearning;
 

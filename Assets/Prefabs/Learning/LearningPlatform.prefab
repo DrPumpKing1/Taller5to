@@ -504,11 +504,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_SizeDelta.x
@@ -520,7 +520,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -541,6 +541,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 5317452787623605092}
     m_Modifications:
     - target: {fileID: 550823311045937791, guid: 8e12ac9083cb82b459b6e7d842c61c86, type: 3}
+      propertyPath: learningPlatformLearn
+      value: 
+      objectReference: {fileID: 2484868549342802020}
+    - target: {fileID: 1843234907055511936, guid: 8e12ac9083cb82b459b6e7d842c61c86, type: 3}
       propertyPath: learningPlatformLearn
       value: 
       objectReference: {fileID: 2484868549342802020}
