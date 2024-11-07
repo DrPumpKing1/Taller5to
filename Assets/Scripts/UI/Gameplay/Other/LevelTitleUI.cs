@@ -44,12 +44,16 @@ public class LevelTitleUI : MonoBehaviour
     {
         RoomManager.OnStartBlockingViewColliders += RoomManager_OnStartBlockingViewColliders;
         RoomManager.OnEnterBlockingViewColliders += RoomManager_OnEnterBlockingViewColliders;
+
+        RoomNameUI.OnRoomNameShow += RoomNameUI_OnRoomNameShow;
     }
 
     private void OnDisable()
     {
         RoomManager.OnStartBlockingViewColliders -= RoomManager_OnStartBlockingViewColliders;
         RoomManager.OnEnterBlockingViewColliders -= RoomManager_OnEnterBlockingViewColliders;
+
+        RoomNameUI.OnRoomNameShow -= RoomNameUI_OnRoomNameShow;
     }
 
     private void Awake()
@@ -140,9 +144,7 @@ public class LevelTitleUI : MonoBehaviour
 
         yield return new WaitForSeconds(timeShowingLevelTitle);
 
-        HideLevelTitle();
-
-        OnLevelTitleHide?.Invoke(this, EventArgs.Empty);
+        yield return StartCoroutine(HideCurrentLevelTitleCoroutine());
     }
 
     private IEnumerator HideCurrentLevelTitleCoroutine()
@@ -161,6 +163,7 @@ public class LevelTitleUI : MonoBehaviour
     private void SetLevelTitleText(string title) => levelTitleText.text = title;
     private void ClearLevelTitleText() => levelTitleText.text = "";
 
+    #region RoomManager Subcriptions
     private void RoomManager_OnStartBlockingViewColliders(object sender, RoomManager.OnBlockingViewCollidersStartEventArgs e)
     {
         if (e.currentRoomVisibilityColliders.Count == 0) return;
@@ -175,4 +178,16 @@ public class LevelTitleUI : MonoBehaviour
 
         CheckLevelTitleToShow(e.newRoomVisibilityColliders[0].TitleLevel, false);
     }
+    #endregion
+
+    #region RoomNameUI Subscriptions
+    private void RoomNameUI_OnRoomNameShow(object sender, EventArgs e)
+    {
+        if(state == LevelTitleState.Hidden) return;
+        if(state == LevelTitleState.FadingOut) return;
+
+        StopAllCoroutines();
+        StartCoroutine(HideCurrentLevelTitleCoroutine());
+    }
+    #endregion
 }

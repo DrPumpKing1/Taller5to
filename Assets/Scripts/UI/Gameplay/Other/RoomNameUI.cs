@@ -170,9 +170,7 @@ public class RoomNameUI : MonoBehaviour
 
         yield return new WaitForSeconds(timeShowingRoomName);
 
-        HideRoomName();
-
-        OnRoomNameHide?.Invoke(this, EventArgs.Empty);
+        yield return StartCoroutine(HideCurrentRoomNameCoroutine());
     }
 
     private IEnumerator HideCurrentRoomNameCoroutine()
@@ -183,7 +181,7 @@ public class RoomNameUI : MonoBehaviour
 
         yield return new WaitForSeconds(transitionTime);
 
-        OnRoomNameHide.Invoke(this, EventArgs.Empty);
+        OnRoomNameHide?.Invoke(this, EventArgs.Empty);
 
         SetRoomNameState(RoomNameState.Hidden);
     }
@@ -191,6 +189,7 @@ public class RoomNameUI : MonoBehaviour
     private void SetRoomNameText(string title) => roomNameText.text = title;
     private void ClearRoomNameText() => roomNameText.text = "";
 
+    #region RoomManager Subcriptions
     private void RoomManager_OnStartBlockingViewColliders(object sender, RoomManager.OnBlockingViewCollidersStartEventArgs e)
     {
         if (e.currentRoomVisibilityColliders.Count == 0) return;
@@ -206,4 +205,5 @@ public class RoomNameUI : MonoBehaviour
 
         CheckRoomNameToShow(e.newRoomVisibilityColliders[0].RoomSubArea, false);
     }
+    #endregion
 }
