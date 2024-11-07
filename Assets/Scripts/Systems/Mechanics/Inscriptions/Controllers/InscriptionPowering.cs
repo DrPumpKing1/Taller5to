@@ -12,6 +12,7 @@ public class InscriptionPowering : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private Vector3 shieldDropForce;
+    [SerializeField] private Vector3 shieldRotation;
     [SerializeField] private bool shieldParenting;
 
     [Header("State")]
@@ -95,7 +96,7 @@ public class InscriptionPowering : MonoBehaviour
 
     private void DropShieldPiece()
     {
-        Transform shieldPieceTransform = Instantiate(inscription.ShieldPieceSO.prefab, dropPoint.position, dropPoint.rotation);
+        Transform shieldPieceTransform = Instantiate(inscription.ShieldPieceSO.prefab, dropPoint.position, Quaternion.Euler(shieldRotation));
         AddShieldPieceDropForce(shieldPieceTransform);
 
         if (shieldParenting) shieldPieceTransform.SetParent(dropPoint);
