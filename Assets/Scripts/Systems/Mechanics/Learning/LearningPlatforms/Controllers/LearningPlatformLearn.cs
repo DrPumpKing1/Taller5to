@@ -7,7 +7,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
 {
     [Header("Components")]
     [SerializeField] private LearningPlatform learningPlatform;
-    [SerializeField] private Transform rotatingGem;
+    [SerializeField] private Transform projectionGemCenter;
 
     [Header("Interactable Settings")]
     [SerializeField, Range(1f, 100f)] private float horizontalInteractionRange;
@@ -54,6 +54,7 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     #endregion
 
     public event EventHandler<OnObjectLearnedEventArgs> OnObjectLearned;
+    public event EventHandler<OnObjectLearnedEventArgs> OnObjectAlreadyLearned;
     public static event EventHandler<OnLearningEventArgs> OnStartLearning;
     public static event EventHandler<OnLearningEventArgs> OnEndLearning;
 
@@ -66,20 +67,21 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     {
         public ProjectableObjectSO projectableOjectSO;
         public Transform interactionAttentionTransform;
+        public Transform projectionGemCenter;
         public float holdDuration;
     }
 
     private void Start()
     {
-        CheckIsLearned();
+        CheckIsAlreadyLearned();
     }
 
-    private void CheckIsLearned()
+    private void CheckIsAlreadyLearned()
     {
         if (learningPlatform.ObjectHasBeenLearned())
         {
             DisableInteractability();
-            DisableRotatingGem();
+            OnObjectAlreadyLearned?.Invoke(this, new OnObjectLearnedEventArgs { projectableOjectSO = ProjectableObjectToLearn });
         }
     }
 
@@ -143,14 +145,14 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     public void HoldInteractionStart()
     {
         OnHoldInteractionStart?.Invoke(this, EventArgs.Empty);
-        OnStartLearning?.Invoke(this, new OnLearningEventArgs { projectableOjectSO = ProjectableObjectToLearn,interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
+        OnStartLearning?.Invoke(this, new OnLearningEventArgs { projectableOjectSO = ProjectableObjectToLearn,interactionAttentionTransform = interactionAttentionTransform, projectionGemCenter = projectionGemCenter, holdDuration = holdDuration });
     }
     public void ContinousHoldInteraction(float holdTimer) => OnContinousHoldInteraction?.Invoke(this, new IHoldInteractable.OnHoldInteractionEventArgs { holdTimer = holdTimer, holdDuration = holdDuration });
 
     public void HoldInteractionEnd()
     {
         OnHoldInteractionEnd?.Invoke(this, EventArgs.Empty);
-        OnEndLearning?.Invoke(this, new OnLearningEventArgs { projectableOjectSO = ProjectableObjectToLearn, interactionAttentionTransform = interactionAttentionTransform, holdDuration = holdDuration });
+        OnEndLearning?.Invoke(this, new OnLearningEventArgs { projectableOjectSO = ProjectableObjectToLearn, interactionAttentionTransform = interactionAttentionTransform, projectionGemCenter = projectionGemCenter, holdDuration = holdDuration });
     }
 
     public Transform GetTransform() => transform;
@@ -158,12 +160,9 @@ public class LearningPlatformLearn : MonoBehaviour, IHoldInteractable
     public Transform GetInteractionPositionTransform() => interactionPositionTransform;
     #endregion
 
-    private void DisableRotatingGem() => rotatingGem.gameObject.SetActive(false); 
-
     private void LearnObject()
     {
         DisableInteractability();
-        DisableRotatingGem();
 
         AddObjectToLearnedList();
         AddProjectionGems();

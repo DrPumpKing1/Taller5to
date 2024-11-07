@@ -9,9 +9,8 @@ public class PetLearningVFXHandler : MonoBehaviour
     [Header("Components")]
     [SerializeField] private VisualEffect learningVFX;
 
-    private Transform currentAttentionTransform = null;
-
     private const string DURATION_PROPERTY = "Duration";
+    private const string SPHERE_WORLD_POSITION_PROPERTY = "SphereWorldPosition";
 
     private void OnEnable()
     {
@@ -42,10 +41,7 @@ public class PetLearningVFXHandler : MonoBehaviour
 
     private void HandleVFXRotation()
     {
-        if (!currentAttentionTransform) return;
-
-        Vector3 direction = (currentAttentionTransform.position - learningVFX.transform.position).normalized;
-        learningVFX.transform.rotation = Quaternion.LookRotation(direction);
+        learningVFX.transform.rotation = Quaternion.identity;
     }
 
     private void SetVFXDuration(float duration)
@@ -56,17 +52,31 @@ public class PetLearningVFXHandler : MonoBehaviour
         }
     }
 
-    private void LearningPlatformLearn_OnStartLearning(object sender, LearningPlatformLearn.OnLearningEventArgs e)
+    private void SetVFXSphereWorldPosition(Vector3 position)
     {
-        SetVFXDuration(e.holdDuration);
+        if (learningVFX.HasVector3(SPHERE_WORLD_POSITION_PROPERTY))
+        {
+            learningVFX.SetVector3(SPHERE_WORLD_POSITION_PROPERTY, position);
+        }
+    }
+
+    private void StartVFX(float holdDuration, Vector3 projectionGemPosition)
+    {
+        SetVFXDuration(holdDuration);
+        SetVFXSphereWorldPosition(projectionGemPosition);
 
         learningVFX.Play();
-        currentAttentionTransform = e.interactionAttentionTransform;
+    }
+
+    private void StopVFX() => learningVFX.Stop();
+
+    private void LearningPlatformLearn_OnStartLearning(object sender, LearningPlatformLearn.OnLearningEventArgs e)
+    {
+        StartVFX(e.holdDuration, e.projectionGemCenter.position);
     }
 
     private void LearningPlatformLearn_OnEndLearning(object sender, LearningPlatformLearn.OnLearningEventArgs e)
     {
-        learningVFX.Stop();
-        currentAttentionTransform = null;
+        StopVFX();
     }
 }
