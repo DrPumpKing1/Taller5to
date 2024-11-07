@@ -349,6 +349,7 @@ GameObject:
   - component: {fileID: 7846662925050479611}
   - component: {fileID: 6265826671895022892}
   - component: {fileID: 2856413567954985433}
+  - component: {fileID: 5454034415575743500}
   m_Layer: 8
   m_Name: Visual
   m_TagString: Untagged
@@ -409,6 +410,21 @@ MonoBehaviour:
   frequencyY: 1
   amplitudeZ: 0
   frequencyZ: 1
+--- !u!114 &5454034415575743500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376142338285860018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0f831abacad89743ba9e253ed40822b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderer: {fileID: 8907363850857872132}
+  vyrxMaterial: {fileID: 2100000, guid: 512ece9fe3123ef4ca52a7a8eac273e0, type: 2}
+  vyrxPowerMaterial: {fileID: 2100000, guid: ef8a44af6017a9c42995d67fe94a56c2, type: 2}
 --- !u!1 &4515691063624333679
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,5 +933,10 @@ PrefabInstance:
 --- !u!4 &7770535534553071723 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 617d1b9dc66747e479148ca40a704a3e, type: 3}
+  m_PrefabInstance: {fileID: 7808333125429979008}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8907363850857872132 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 617d1b9dc66747e479148ca40a704a3e, type: 3}
   m_PrefabInstance: {fileID: 7808333125429979008}
   m_PrefabAsset: {fileID: 0}
