@@ -12,5 +12,8 @@ public enum RoomSubArea
     RakithuChamber,
     XotarkChamber,
     VythanuChamber,
-    ZurrythChamber
+    ZurrythChamber,
+    Showcase1,
+    Showcase2,
+    Showcase3
 }

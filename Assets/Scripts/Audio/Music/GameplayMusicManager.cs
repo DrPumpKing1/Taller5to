@@ -72,6 +72,9 @@ public class GameplayMusicManager : MonoBehaviour
             case MusicLevel.Boss:
                 musicToPlay = CheckBossMusicToPlay();
                 break;
+            case MusicLevel.Showcase:
+                musicToPlay = CheckShowcaseMusicToPlay();
+                break;
             default:
                 break;
         }
@@ -263,6 +266,13 @@ public class GameplayMusicManager : MonoBehaviour
         if (BossStateHandler.Instance.BossDefeated) return musicPoolSO.afterBoss;
         else return musicPoolSO.boss;
         */
+    }
+    #endregion
+
+    #region ShowcaseMusic
+    private AudioClip CheckShowcaseMusicToPlay()
+    {
+        return musicPoolSO.showcase;
     }
     #endregion
 

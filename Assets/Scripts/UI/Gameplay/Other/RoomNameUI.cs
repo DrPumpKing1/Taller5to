@@ -16,6 +16,8 @@ public class RoomNameUI : MonoBehaviour
     [SerializeField, Range(0, 2f)] private float timeToShowRoomNameRegular;
     [SerializeField, Range(2f, 5f)] private float timeShowingRoomName;
     [SerializeField, Range(0.5f, 2f)] private float transitionTime;
+    [Space]
+    [SerializeField] private bool enableRoomNameOnStart;
 
     private const string SHOW_TRIGGER = "Show";
     private const string HIDE_TRIGGER = "Hide";
@@ -34,6 +36,9 @@ public class RoomNameUI : MonoBehaviour
     private const string XOTARK_CHAMBER_NAME = "Xotark Chamber";
     private const string VYTHANU_CHAMBER_NAME = "Vythanu Chamber";
     private const string ZURRYTH_CHAMBER_NAME = "Zurryth Chamber";
+    private const string SHOWCASE_ROOM_1_NAME = "Showcase Room 1";
+    private const string SHOWCASE_ROOM_2_NAME = "Showcase Room 2";
+    private const string SHOWCASE_ROOM_3_NAME = "Showcase Room 3";
 
     private void OnEnable()
     {
@@ -101,6 +106,15 @@ public class RoomNameUI : MonoBehaviour
             case RoomSubArea.ZurrythChamber:
                 roomName = ZURRYTH_CHAMBER_NAME;
                 break;
+            case RoomSubArea.Showcase1:
+                roomName = SHOWCASE_ROOM_1_NAME;
+                break;
+            case RoomSubArea.Showcase2:
+                roomName = SHOWCASE_ROOM_2_NAME;
+                break;
+            case RoomSubArea.Showcase3:
+                roomName = SHOWCASE_ROOM_3_NAME;
+                break;
             default:
                 return;
         }
@@ -149,8 +163,9 @@ public class RoomNameUI : MonoBehaviour
     private void RoomManager_OnStartBlockingViewColliders(object sender, RoomManager.OnBlockingViewCollidersStartEventArgs e)
     {
         if (e.currentRoomVisibilityColliders.Count == 0) return;
+        if (!enableRoomNameOnStart) return;
 
-        //CheckRoomNameToShow(e.currentRoomVisibilityColliders[0].RoomSubArea, true);
+        CheckRoomNameToShow(e.currentRoomVisibilityColliders[0].RoomSubArea, true);
     }
 
     private void RoomManager_OnEnterBlockingViewColliders(object sender, RoomManager.OnBlockingViewCollidersEnterEventArgs e)

@@ -41,4 +41,7 @@ public class MusicPoolSO : ScriptableObject
     [Header("Boss")]
     public AudioClip boss;
     public AudioClip afterBoss;
+
+    [Header("Showcase")]
+    public AudioClip showcase;
 }
