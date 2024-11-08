@@ -1,12 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public abstract class BossWeakPoint : MonoBehaviour
+public abstract class ShowcaseRoomWeakpoint : MonoBehaviour
 {
     [Header("Identifiers")]
     [SerializeField] private int id;
+
+    [Header("Components")]
+    [SerializeField] private GameObject visual;
 
     [Header("Settings")]
     [SerializeField] private bool isEnabled;
@@ -21,27 +25,27 @@ public abstract class BossWeakPoint : MonoBehaviour
     private const string PLAYER_TAG = "Player";
     private const float PLAYER_DISTANCE_TO_HIT = 100f;
 
-    public static event EventHandler<OnBossWeakPointEventArgs> OnBossWeakpointEnable;
-    public static event EventHandler<OnBossWeakPointEventArgs> OnBossWeakpointDisable;
+    public static event EventHandler<OnShowcaseRoomWeakPointEventArgs> OnShowcaseRoomWeakpointEnable;
+    public static event EventHandler<OnShowcaseRoomWeakPointEventArgs> OnShowcaseRoomWeakpointDisable;
 
     public event EventHandler OnWeakPointEnable;
     public event EventHandler OnWeakPointDisable;
 
     private void OnEnable()
     {
-        BossWeakPointsHandler.OnWeakPointsEnable += BossWeakPointsHandler_OnWeakPointsEnable;
-        BossWeakPointsHandler.OnWeakPointsDisable += BossWeakPointsHandler_OnWeakPointsDisable;
+        //ShowcaseRoomWeakPointsHandler.OnWeakPointsEnable += ShowcaseRoomWeakPointsHandler_OnWeakPointsEnable;
+        //ShowcaseRoomWeakPointsHandler.OnWeakPointsDisable += ShowcaseRoomWeakPointsHandler_OnWeakPointsDisable;
     }
 
     private void OnDisable()
     {
-        BossWeakPointsHandler.OnWeakPointsEnable -= BossWeakPointsHandler_OnWeakPointsEnable;
-        BossWeakPointsHandler.OnWeakPointsDisable -= BossWeakPointsHandler_OnWeakPointsDisable;
+        //ShowcaseRoomWeakPointsHandler.OnWeakPointsEnable -= ShowcaseRoomWeakPointsHandler_OnWeakPointsEnable;
+        //ShowcaseRoomWeakPointsHandler.OnWeakPointsDisable -= ShowcaseRoomWeakPointsHandler_OnWeakPointsDisable;
     }
 
-    public class OnBossWeakPointEventArgs : EventArgs
+    public class OnShowcaseRoomWeakPointEventArgs : EventArgs
     {
-        public BossWeakPoint bossWeakPoint;
+        public ShowcaseRoomWeakpoint showcaseRoomWeakpoint;
     }
 
     private void Awake()
@@ -66,29 +70,34 @@ public abstract class BossWeakPoint : MonoBehaviour
 
     protected abstract void HandleWeakPointPower();
 
-    public void SetWeakPoint(bool enable) => isEnabled = enable;
-
+    public void SetWeakPoint(bool enable)
+    {
+        isEnabled = enable;
+        SetVisual(enable);
+    }
     public void SetIsHit(bool isHit) => this.isHit = isHit;
 
-    private void CheckEnable(List<BossWeakPoint> weakPointsToEnable)
+    private void CheckEnable(List<ShowcaseRoomWeakpoint> weakPointsToEnable)
     {
-        if(weakPointsToEnable.Contains(this))
+        if (weakPointsToEnable.Contains(this))
         {
             SetWeakPoint(true);
-            OnBossWeakpointEnable?.Invoke(this, new OnBossWeakPointEventArgs { bossWeakPoint = this });
+            OnShowcaseRoomWeakpointEnable?.Invoke(this, new OnShowcaseRoomWeakPointEventArgs { showcaseRoomWeakpoint = this });
             OnWeakPointEnable?.Invoke(this, EventArgs.Empty);
         }
     }
 
-    private void CheckDisable(List<BossWeakPoint> weakPointsToDisable)
+    private void CheckDisable(List<ShowcaseRoomWeakpoint> weakPointsToDisable)
     {
         if (weakPointsToDisable.Contains(this))
         {
             SetWeakPoint(false);
-            OnBossWeakpointDisable?.Invoke(this, new OnBossWeakPointEventArgs { bossWeakPoint = this });
+            OnShowcaseRoomWeakpointDisable?.Invoke(this, new OnShowcaseRoomWeakPointEventArgs { showcaseRoomWeakpoint = this });
             OnWeakPointDisable?.Invoke(this, EventArgs.Empty);
         }
     }
+
+    private void SetVisual(bool active) => visual.SetActive(active);
 
     protected bool CheckPlayerClose()
     {
@@ -98,15 +107,15 @@ public abstract class BossWeakPoint : MonoBehaviour
         return false;
     }
 
-    #region BossWeakPointsHandler Subscriptions
+    #region ShowcaseRoomWeakpointsHandler Subscriptions
     private void BossWeakPointsHandler_OnWeakPointsEnable(object sender, BossWeakPointsHandler.OnWeakPointsEventArgs e)
     {
-        CheckEnable(e.weakPoints);
+        //CheckEnable(e.weakPoints);
     }
 
     private void BossWeakPointsHandler_OnWeakPointsDisable(object sender, BossWeakPointsHandler.OnWeakPointsEventArgs e)
     {
-        CheckDisable(e.weakPoints);
+        //CheckDisable(e.weakPoints);
     }
     #endregion
 }

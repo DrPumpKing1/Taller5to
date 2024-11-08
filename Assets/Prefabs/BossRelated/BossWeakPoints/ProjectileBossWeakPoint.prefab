@@ -156,6 +156,8 @@ MonoBehaviour:
   visual: {fileID: 2543399283296426818}
   isEnabled: 0
   isHit: 0
+  poweredTimeThreshold: 5
+  poweredTimePerProjectile: 4.5
 --- !u!65 &3295836126887515806
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -186,6 +188,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1635103752738492167}
+  - component: {fileID: 1160034750676988239}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -209,6 +212,20 @@ Transform:
   - {fileID: 194233270902760109}
   m_Father: {fileID: 7201879571109408548}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1160034750676988239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6499984962450078299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdb6a5c44bb502146b9fd14aa73720fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossWeakpoint: {fileID: 391058023074211898}
+  model: {fileID: 2543399283296426818}
 --- !u!1001 &1557168928170543039
 PrefabInstance:
   m_ObjectHideFlags: 0

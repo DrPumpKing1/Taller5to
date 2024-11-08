@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileBossWeakPoint : BossWeakPoint
+public class ProjectileShowcaseRoomWeakpoint : ShowcaseRoomWeakpoint
 {
     [Header("Projectile Weakpoint Specifics")]
     [SerializeField] private float poweredTimeThreshold = 5f;
