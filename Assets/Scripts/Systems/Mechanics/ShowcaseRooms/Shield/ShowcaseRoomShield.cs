@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossShield : MonoBehaviour
+public class ShowcaseRoomShield : MonoBehaviour
 {
     [Header("Compoments")]
     [SerializeField] private Transform collidersTransform;
@@ -21,11 +21,11 @@ public class BossShield : MonoBehaviour
     private float notPoweredTimer;
     private bool previousPowered;
 
-    public static event EventHandler OnAnyBossShieldActivated;
-    public static event EventHandler OnAnyBossShieldDeactivated;
+    public static event EventHandler OnAnyShowcaseRoomShieldActivated;
+    public static event EventHandler OnAnyShowcaseRoomShieldDeactivated;
 
-    public event EventHandler OnBossShieldActivated;
-    public event EventHandler OnBossShieldDeactivated;
+    public event EventHandler OnShowcaseRoomShieldActivated;
+    public event EventHandler OnShowcaseRoomShieldDeactivated;
 
     private void Start()
     {
@@ -75,7 +75,7 @@ public class BossShield : MonoBehaviour
     private void SetShieldActive(bool active)
     {
         SetColliders(active);
-        
+
         if (active) CutNodesElectricity();
         else LetNodesElectricity();
 
@@ -83,13 +83,13 @@ public class BossShield : MonoBehaviour
 
         if (active)
         {
-            OnAnyBossShieldActivated?.Invoke(this, EventArgs.Empty);
-            OnBossShieldActivated?.Invoke(this, EventArgs.Empty);
+            OnAnyShowcaseRoomShieldActivated?.Invoke(this, EventArgs.Empty);
+            OnShowcaseRoomShieldActivated?.Invoke(this, EventArgs.Empty);
         }
         else
         {
-            OnAnyBossShieldDeactivated?.Invoke(this, EventArgs.Empty);
-            OnBossShieldDeactivated?.Invoke(this, EventArgs.Empty);
+            OnAnyShowcaseRoomShieldDeactivated?.Invoke(this, EventArgs.Empty);
+            OnShowcaseRoomShieldDeactivated?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -97,7 +97,7 @@ public class BossShield : MonoBehaviour
 
     private void CutNodesElectricity()
     {
-        foreach(ElectricityCutNode electricityCutNode in electricityCutNodes)
+        foreach (ElectricityCutNode electricityCutNode in electricityCutNodes)
         {
             electricityCutNode.CutElectricity();
         }
