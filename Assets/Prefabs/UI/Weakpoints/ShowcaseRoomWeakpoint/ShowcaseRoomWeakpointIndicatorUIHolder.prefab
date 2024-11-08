@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 1660875988552474311}
   - component: {fileID: 165147066141074043}
   - component: {fileID: 5407675022739307505}
-  - component: {fileID: 1402651200035356294}
+  - component: {fileID: 3340774638842910961}
   m_Layer: 10
   m_Name: IndicatorUI
   m_TagString: Untagged
@@ -174,7 +174,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1402651200035356294
+--- !u!114 &3340774638842910961
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,10 +183,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2862767772226681300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a16d1730eb75969448ad79505cb6b652, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b0446fa1d23e4849af951151ca2d10e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossWeakPoint: {fileID: 0}
+  showcaseRoomWeakpoint: {fileID: 0}
   indicatorUIAnimator: {fileID: 5407675022739307505}
 --- !u!1 &3131364551617232197
 GameObject:
