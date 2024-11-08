@@ -53,7 +53,6 @@ public class BossWeakPointsHandler : MonoBehaviour
 
         BossBeam.OnBeamChargeStart += BossBeam_OnBeamStart;
         BossBeam.OnBeamChargeEnd += BossBeam_OnBeamEnd;
-
     }
 
     private void OnDisable()
