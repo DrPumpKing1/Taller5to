@@ -9,9 +9,6 @@ public abstract class ShowcaseRoomWeakpoint : MonoBehaviour
     [Header("Identifiers")]
     [SerializeField] private int id;
 
-    [Header("Components")]
-    [SerializeField] private GameObject visual;
-
     [Header("Settings")]
     [SerializeField] private bool isEnabled;
     [SerializeField] private bool isHit;
@@ -70,11 +67,7 @@ public abstract class ShowcaseRoomWeakpoint : MonoBehaviour
 
     protected abstract void HandleWeakPointPower();
 
-    public void SetWeakPoint(bool enable)
-    {
-        isEnabled = enable;
-        SetVisual(enable);
-    }
+    public void SetWeakPoint(bool enable) => isEnabled = enable;
     public void SetIsHit(bool isHit) => this.isHit = isHit;
 
     private void CheckEnable(List<ShowcaseRoomWeakpoint> weakPointsToEnable)
@@ -96,8 +89,6 @@ public abstract class ShowcaseRoomWeakpoint : MonoBehaviour
             OnWeakPointDisable?.Invoke(this, EventArgs.Empty);
         }
     }
-
-    private void SetVisual(bool active) => visual.SetActive(active);
 
     protected bool CheckPlayerClose()
     {
