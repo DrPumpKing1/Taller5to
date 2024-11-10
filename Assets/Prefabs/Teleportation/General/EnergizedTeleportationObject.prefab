@@ -93,6 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 182216798161245756}
   - component: {fileID: 5924863758892551625}
+  - component: {fileID: 9185980427169088815}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -137,6 +138,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 0.1, z: 2}
   m_Center: {x: 0, y: 0.05, z: 0}
+--- !u!114 &9185980427169088815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055906180783511475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26cc36334c6125442bfdbb8b41066c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  electrode: {fileID: 2331501434737603959}
+  _renderer: {fileID: 5505507447307088730}
+  offMaterial: {fileID: 2100000, guid: 2e0fb1f17679ec94a92ed3aa844722be, type: 2}
+  onMaterial: {fileID: 2100000, guid: 18688f1a6f0a29c4db6600692140fe6a, type: 2}
 --- !u!1 &1058237428609547761
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,7 +278,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 78985ab21ee254e4da488a8b3d8234c7, type: 2}
+  - {fileID: 2100000, guid: 2e0fb1f17679ec94a92ed3aa844722be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
