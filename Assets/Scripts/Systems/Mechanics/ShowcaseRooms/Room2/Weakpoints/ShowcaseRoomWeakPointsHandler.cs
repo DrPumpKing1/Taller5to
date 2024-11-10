@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShowcaseRoomsWeakPointsHandler : MonoBehaviour
+public class ShowcaseRoomWeakPointsHandler : MonoBehaviour
 {
     public static event EventHandler<OnWeakPointsEventArgs> OnWeakPointsEnable;
     public static event EventHandler<OnWeakPointsEventArgs> OnWeakPointsDisable;

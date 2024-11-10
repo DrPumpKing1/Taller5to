@@ -30,14 +30,14 @@ public abstract class ShowcaseRoomWeakpoint : MonoBehaviour
 
     private void OnEnable()
     {
-        ShowcaseRoomsWeakPointsHandler.OnWeakPointsEnable += ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnable;
-        ShowcaseRoomsWeakPointsHandler.OnWeakPointsDisable += ShowcaseRoomsWeakPointsHandler_OnWeakPointsDisable;
+        ShowcaseRoomWeakPointsHandler.OnWeakPointsEnable += ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnable;
+        ShowcaseRoomWeakPointsHandler.OnWeakPointsDisable += ShowcaseRoomsWeakPointsHandler_OnWeakPointsDisable;
     }
 
     private void OnDisable()
     {
-        ShowcaseRoomsWeakPointsHandler.OnWeakPointsEnable -= ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnable;
-        ShowcaseRoomsWeakPointsHandler.OnWeakPointsDisable -= ShowcaseRoomsWeakPointsHandler_OnWeakPointsDisable;
+        ShowcaseRoomWeakPointsHandler.OnWeakPointsEnable -= ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnable;
+        ShowcaseRoomWeakPointsHandler.OnWeakPointsDisable -= ShowcaseRoomsWeakPointsHandler_OnWeakPointsDisable;
     }
 
     public class OnShowcaseRoomWeakPointEventArgs : EventArgs
@@ -99,12 +99,12 @@ public abstract class ShowcaseRoomWeakpoint : MonoBehaviour
     }
 
     #region ShowcaseRoomWeakpointsHandler Subscriptions
-    private void ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnable(object sender, ShowcaseRoomsWeakPointsHandler.OnWeakPointsEventArgs e)
+    private void ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnable(object sender, ShowcaseRoomWeakPointsHandler.OnWeakPointsEventArgs e)
     {
         CheckEnable(e.weakPoints);
     }
 
-    private void ShowcaseRoomsWeakPointsHandler_OnWeakPointsDisable(object sender, ShowcaseRoomsWeakPointsHandler.OnWeakPointsEventArgs e)
+    private void ShowcaseRoomsWeakPointsHandler_OnWeakPointsDisable(object sender, ShowcaseRoomWeakPointsHandler.OnWeakPointsEventArgs e)
     {
         CheckDisable(e.weakPoints);
     }

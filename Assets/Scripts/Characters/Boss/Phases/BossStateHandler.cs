@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BossStateHandler : MonoBehaviour
 {
-    public static BossStateHandler Instance;
+    public static BossStateHandler Instance { get; private set; }
 
     [Header("States")]
     [SerializeField] private State state;
@@ -16,10 +16,6 @@ public class BossStateHandler : MonoBehaviour
 
     [Header("Booleans")]
     [SerializeField] private bool bossDefeated;
-
-    [Header("Player Instant Position")]
-    [SerializeField] private Transform playerInstantPositionTransform;
-    [SerializeField] private Vector2 playerInstantDirection;
 
     [Header("Debug")]
     [SerializeField] private bool debug;

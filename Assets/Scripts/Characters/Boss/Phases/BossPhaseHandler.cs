@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BossPhaseHandler : MonoBehaviour
 {
-    public static BossPhaseHandler Instance;
+    public static BossPhaseHandler Instance { get; private set; }
 
     [Header("Phases")]
     [SerializeField] BossPhase currentPhase;
@@ -24,7 +24,7 @@ public class BossPhaseHandler : MonoBehaviour
 
     private GameObject player;//
     private const string PLAYER_TAG = "Player";//
-    private const float PLAYER_DISTANCE_TO_UPDATE = 30f;//
+    private const float PLAYER_DISTANCE_TO_FORCE_PHASE_CHANGE = 30f;//
 
     public class OnPhaseEventArgs : EventArgs
     {
@@ -60,11 +60,6 @@ public class BossPhaseHandler : MonoBehaviour
         SetCurrentPhase(FIRST_PHASE);
     }
 
-    private void Update()
-    {
-        CheckForceChangePhase();
-    }
-
     private void SetSingleton()
     {
         if (Instance == null)
@@ -75,14 +70,6 @@ public class BossPhaseHandler : MonoBehaviour
         {
             Debug.LogWarning("There is more than one BossPhaseHandler, proceding to destroy duplicate");
             Destroy(gameObject);
-        }
-    }
-
-    private void CheckForceChangePhase()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            ForceChangeToNextPhase();   
         }
     }
 
@@ -156,7 +143,7 @@ public class BossPhaseHandler : MonoBehaviour
     private bool CheckPlayerClose()
     {
         if (!player) return true;
-        if (Vector3.Distance(transform.position, player.transform.position) <= PLAYER_DISTANCE_TO_UPDATE) return true;
+        if (Vector3.Distance(transform.position, player.transform.position) <= PLAYER_DISTANCE_TO_FORCE_PHASE_CHANGE) return true;
 
         return false;
     }
