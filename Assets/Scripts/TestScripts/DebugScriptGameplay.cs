@@ -49,7 +49,7 @@ public class DebugScriptGameplay : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
-            ShowcaseRoomPhaseHandler.Instance.ForceChangeToNextPhase();
+            //ShowcaseRoomPhaseHandler.Instance.ForceChangeToNextPhase();
         }
     }
 
