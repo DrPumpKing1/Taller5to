@@ -65,18 +65,6 @@ public class BossSurge : MonoBehaviour
         }
     }
 
-    private void Surge(PhaseActiveLayout targetPhaseActiveLayout, bool triggerEvents)
-    {
-        foreach (PhaseActiveLayout phaseActiveLayout in phaseActiveLayouts) //Move all nonActives underground;
-        {
-            if (phaseActiveLayout != targetPhaseActiveLayout) SetLayout(phaseActiveLayout, false);
-        }
-
-        SetCurrentActiveLayout(targetPhaseActiveLayout); 
-        SetLayout(targetPhaseActiveLayout, true); //Move Active layout up
-        if(triggerEvents) OnBossSurge?.Invoke(this, new OnBossSurgeEventArgs { phaseActiveLayout = targetPhaseActiveLayout });
-    }
-
     private void CheckSurge(BossPhase phase, bool triggerEvents)
     {
         foreach(PhaseActiveLayout phaseActiveLayout in phaseActiveLayouts)
@@ -87,6 +75,18 @@ public class BossSurge : MonoBehaviour
                 return;
             }
         }
+    }
+
+    private void Surge(PhaseActiveLayout targetPhaseActiveLayout, bool triggerEvents)
+    {
+        foreach (PhaseActiveLayout phaseActiveLayout in phaseActiveLayouts) //Move all nonActives underground;
+        {
+            if (phaseActiveLayout != targetPhaseActiveLayout) SetLayout(phaseActiveLayout, false);
+        }
+
+        SetCurrentActiveLayout(targetPhaseActiveLayout); 
+        SetLayout(targetPhaseActiveLayout, true); //Move Active layout up
+        if(triggerEvents) OnBossSurge?.Invoke(this, new OnBossSurgeEventArgs { phaseActiveLayout = targetPhaseActiveLayout });
     }
 
     private void SetLayout(PhaseActiveLayout phaseActiveLayout, bool active)

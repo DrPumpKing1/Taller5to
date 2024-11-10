@@ -112,6 +112,7 @@ public class BossWeakPointsHandler : MonoBehaviour
     private void HandlePhaseWeakPoints(PhaseWeakPoints phaseWeakPoints)
     {
         if (phaseWeakPoints.allHit) return;
+        if (phaseWeakPoints.weakPoints.Count <= 0) return;
 
         foreach (BossWeakPoint bossWeakPoint in phaseWeakPoints.weakPoints)
         {

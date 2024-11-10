@@ -94,6 +94,7 @@ public class ShowcaseRoomWeakPointsHandler : MonoBehaviour
     private void HandlePhaseWeakPoints(PhaseWeakPoints phaseWeakPoints)
     {
         if (phaseWeakPoints.allHit) return;
+        if (phaseWeakPoints.weakPoints.Count <= 0) return;
 
         foreach (ShowcaseRoomWeakpoint showcaseRoomWeakpoint in phaseWeakPoints.weakPoints)
         {

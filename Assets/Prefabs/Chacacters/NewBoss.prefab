@@ -1989,12 +1989,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68b5bdf0cd4ce947969a77c61f4cfd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 2
+  state: 1
   timePrePhaseChange: 1
   timePostPhaseChange: 1
   bossDefeated: 0
-  playerInstantPositionTransform: {fileID: 3334493958244921622}
-  playerInstantDirection: {x: 0, y: -1}
   debug: 0
 --- !u!114 &4896868718216200822
 MonoBehaviour:
@@ -2044,17 +2042,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46cb9a27cf3e8e64ca52b4316558d5b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeLayoutPosition: {fileID: 0}
-  disabledLayoutPosition: {fileID: 0}
   phaseActiveLayouts:
   - activePhase: 0
     layoutTransform: {fileID: 0}
+    activeLayoutPosition: {fileID: 0}
+    disabledLayoutPosition: {fileID: 0}
   - activePhase: 1
     layoutTransform: {fileID: 0}
+    activeLayoutPosition: {fileID: 0}
+    disabledLayoutPosition: {fileID: 0}
   - activePhase: 2
     layoutTransform: {fileID: 0}
+    activeLayoutPosition: {fileID: 0}
+    disabledLayoutPosition: {fileID: 0}
   - activePhase: 3
     layoutTransform: {fileID: 0}
+    activeLayoutPosition: {fileID: 0}
+    disabledLayoutPosition: {fileID: 0}
 --- !u!114 &6656985683733314877
 MonoBehaviour:
   m_ObjectHideFlags: 0
