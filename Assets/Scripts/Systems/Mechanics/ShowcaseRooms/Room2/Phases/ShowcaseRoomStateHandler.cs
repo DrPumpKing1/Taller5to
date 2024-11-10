@@ -33,7 +33,6 @@ public class ShowcaseRoomStateHandler : MonoBehaviour
     public static event EventHandler<OnPhaseChangeEventArgs> OnShowcaseRoomPhaseChangeMidB;
     public static event EventHandler<OnPhaseChangeEventArgs> OnShowcaseRoomPhaseChangeMidC;
     public static event EventHandler<OnPhaseChangeEventArgs> OnShowcaseRoomPhaseChangeEnd;
-    public static event EventHandler OnShowcaseRoomAlmostDefeated;
     public static event EventHandler OnShowcaseRoomDefeated;
 
     public static event EventHandler<OnPhaseChangeEventArgs> OnShowcaseRoomPhaseChangePreMid;
@@ -47,16 +46,14 @@ public class ShowcaseRoomStateHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        //BossPhaseHandler.OnPhaseCompleated += BossPhaseHandler_OnPhaseCompleated;
-        //BossPhaseHandler.OnLastPhaseCompleated += BossPhaseHandler_OnLastPhaseCompleated;
-        //BossPhaseHandler.OnAlmostDefeatedPhaseCompleated += BossPhaseHandler_OnAlmostDefeatedPhaseCompleated;
+        ShowcaseRoomPhaseHandler.OnPhaseCompleated += ShowcaseRoomPhaseHandler_OnPhaseCompleated;
+        ShowcaseRoomPhaseHandler.OnLastPhaseCompleated += ShowcaseRoomPhaseHandler_OnLastPhaseCompleated;
     }
 
     private void OnDisable()
     {
-        //BossPhaseHandler.OnPhaseCompleated -= BossPhaseHandler_OnPhaseCompleated;
-        //BossPhaseHandler.OnLastPhaseCompleated -= BossPhaseHandler_OnLastPhaseCompleated;
-        //BossPhaseHandler.OnAlmostDefeatedPhaseCompleated -= BossPhaseHandler_OnAlmostDefeatedPhaseCompleated;
+        ShowcaseRoomPhaseHandler.OnPhaseCompleated -= ShowcaseRoomPhaseHandler_OnPhaseCompleated;
+        ShowcaseRoomPhaseHandler.OnLastPhaseCompleated -= ShowcaseRoomPhaseHandler_OnLastPhaseCompleated;
     }
 
     private void Awake()
@@ -112,7 +109,7 @@ public class ShowcaseRoomStateHandler : MonoBehaviour
         SetShowcaseRoomState(State.OnPhase);
     }
 
-    private void DefeatBoss()
+    private void DefeatShowcaseRoom()
     {
         SetShowcaseRoomState(State.Defeated);
         SetShowcaseRoomDefeated(true);
@@ -122,6 +119,19 @@ public class ShowcaseRoomStateHandler : MonoBehaviour
         if (debug) Debug.Log("Showcase Room Defeated");
     }
 
-
     private bool SetShowcaseRoomDefeated(bool defeated) => showcaseRoomDefeated = defeated;
+
+    #region ShowcaseRoomPhaseHandler Subscriptions
+
+    private void ShowcaseRoomPhaseHandler_OnPhaseCompleated(object sender, ShowcaseRoomPhaseHandler.OnPhaseEventArgs e)
+    {
+        if (state != State.OnPhase) return;
+        StartCoroutine(ChangePhaseCoroutine(e.currentPhase, e.nextPhase));
+    }
+
+    private void ShowcaseRoomPhaseHandler_OnLastPhaseCompleated(object sender, EventArgs e)
+    {
+        DefeatShowcaseRoom();
+    }
+    #endregion
 }

@@ -10,6 +10,7 @@ public class DebugScriptGameplay : MonoBehaviour
         CheckSkipDialogue();
         CheckHideInstruction();
         CheckSkipBossPhase();
+        CheckSkipShowcaseRoomPhase();
         //CheckSkipCinematic();
         //CheckReloadScene();
 
@@ -41,6 +42,14 @@ public class DebugScriptGameplay : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M))
         {
             BossPhaseHandler.Instance.ForceChangeToNextPhase();
+        }
+    }
+
+    private void CheckSkipShowcaseRoomPhase()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            ShowcaseRoomPhaseHandler.Instance.ForceChangeToNextPhase();
         }
     }
 

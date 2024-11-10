@@ -122,6 +122,14 @@ public class BossPhaseHandler : MonoBehaviour
 
     private void SetDefeated(bool defeated) => isDefeated = defeated;
 
+    //
+    private bool CheckPlayerClose()
+    {
+        if (!player) return true;
+        if (Vector3.Distance(transform.position, player.transform.position) <= PLAYER_DISTANCE_TO_FORCE_PHASE_CHANGE) return true;
+
+        return false;
+    }
 
     #region BossStateHandler Subscriptions
     private void BossStateHandler_OnBossPhaseChangeMidA(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
@@ -138,13 +146,4 @@ public class BossPhaseHandler : MonoBehaviour
         ChangeToNextPhase();
     }
     #endregion
-
-    //
-    private bool CheckPlayerClose()
-    {
-        if (!player) return true;
-        if (Vector3.Distance(transform.position, player.transform.position) <= PLAYER_DISTANCE_TO_FORCE_PHASE_CHANGE) return true;
-
-        return false;
-    }
 }

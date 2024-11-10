@@ -149,7 +149,5 @@ public class BossStateHandler : MonoBehaviour
     {
         DefeatBoss();
     }
-
     #endregion
-
 }

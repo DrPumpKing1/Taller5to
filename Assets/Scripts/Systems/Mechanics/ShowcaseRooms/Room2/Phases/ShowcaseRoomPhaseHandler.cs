@@ -19,7 +19,6 @@ public class ShowcaseRoomPhaseHandler : MonoBehaviour
 
     public static event EventHandler<OnPhaseEventArgs> OnPhaseCompleated;
     public static event EventHandler OnLastPhaseCompleated;
-    public static event EventHandler OnAlmostDefeatedPhaseCompleated;
 
     private GameObject player;//
     private const string PLAYER_TAG = "Player";//
@@ -36,7 +35,7 @@ public class ShowcaseRoomPhaseHandler : MonoBehaviour
         ShowcaseRoomStateHandler.OnShowcaseRoomPhaseChangeMidA += ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeMidA;
         ShowcaseRoomStateHandler.OnShowcaseRoomDefeated += ShowcaseRoomStateHandler_OnShowcaseRoomDefeated;
 
-        //ShowcaseRoomWeakPointsHandler.OnPhaseWeakPointsHit += BossWeakPointsHandler_OnPhaseWeakPointsHit;
+        ShowcaseRoomWeakPointsHandler.OnPhaseWeakPointsHit += ShowcaseRoomWeakPointsHandler_OnPhaseWeakPointsHit;
     }
 
     private void OnDisable()
@@ -44,7 +43,7 @@ public class ShowcaseRoomPhaseHandler : MonoBehaviour
         ShowcaseRoomStateHandler.OnShowcaseRoomPhaseChangeMidA -= ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeMidA;
         ShowcaseRoomStateHandler.OnShowcaseRoomDefeated -= ShowcaseRoomStateHandler_OnShowcaseRoomDefeated;
 
-        //ShowcaseRoomWeakPointsHandler.OnPhaseWeakPointsHit -= BossWeakPointsHandler_OnPhaseWeakPointsHit;
+        ShowcaseRoomWeakPointsHandler.OnPhaseWeakPointsHit -= ShowcaseRoomWeakPointsHandler_OnPhaseWeakPointsHit;
     }
 
     private void Awake()
@@ -113,6 +112,15 @@ public class ShowcaseRoomPhaseHandler : MonoBehaviour
 
     private void SetDefeated(bool defeated) => isDefeated = defeated;
 
+    //
+    private bool CheckPlayerClose()
+    {
+        if (!player) return true;
+        if (Vector3.Distance(transform.position, player.transform.position) <= PLAYER_DISTANCE_TO_FORCE_PHASE_CHANGE) return true;
+
+        return false;
+    }
+
     #region ShowcaseRoomStateHandler Subscriptions
 
     private void ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeMidA(object sender, ShowcaseRoomStateHandler.OnPhaseChangeEventArgs e)
@@ -123,12 +131,11 @@ public class ShowcaseRoomPhaseHandler : MonoBehaviour
     private void ShowcaseRoomStateHandler_OnShowcaseRoomDefeated(object sender, EventArgs e) => SetDefeated(true);
     #endregion
 
-    //
-    private bool CheckPlayerClose()
+    #region ShowcaseRoomWeakpointsHandler Subscriptions
+    private void ShowcaseRoomWeakPointsHandler_OnPhaseWeakPointsHit(object sender, ShowcaseRoomWeakPointsHandler.OnPhaseWeakPointsHitEventArgs e)
     {
-        if (!player) return true;
-        if (Vector3.Distance(transform.position, player.transform.position) <= PLAYER_DISTANCE_TO_FORCE_PHASE_CHANGE) return true;
-
-        return false;
+        if (currentPhase != e.phaseWeakPoints.showcaseRoomPhase) return;
+        ChangeToNextPhase();
     }
+    #endregion
 }
