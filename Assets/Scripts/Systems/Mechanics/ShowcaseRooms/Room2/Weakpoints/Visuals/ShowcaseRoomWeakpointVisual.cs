@@ -25,7 +25,6 @@ public class ShowcaseRoomWeakpointVisual : MonoBehaviour
     private void ShowcaseRoomWeakpoint_OnWeakPointEnable(object sender, System.EventArgs e)
     {
         SetVisual(true);
-        Debug.Log(model.name);
     }
 
     private void ShowcaseRoomWeakpoint_OnWeakPointDisable(object sender, System.EventArgs e)

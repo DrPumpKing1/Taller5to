@@ -188,6 +188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1635103752738492167}
   - component: {fileID: 7261288589622193384}
+  - component: {fileID: 8088451338079195840}
   - component: {fileID: 8672352460425478255}
   m_Layer: 0
   m_Name: Visual
@@ -226,6 +227,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showcaseRoomWeakpoint: {fileID: 6932668214719071324}
   model: {fileID: 2543399283296426818}
+--- !u!114 &8088451338079195840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6499984962450078299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b55a4ecdefb5604dacf383b38693c56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showcaseRoomWeakpoint: {fileID: 6932668214719071324}
+  _renderer: {fileID: 5279535271540937492}
+  hitMaterial: {fileID: 2100000, guid: 5d05116d8d5d7fb4d9135a02a05be0f1, type: 2}
+  unHitMaterial: {fileID: 2100000, guid: cb395123a2881484da9a45d469b6e4f5, type: 2}
 --- !u!114 &8672352460425478255
 MonoBehaviour:
   m_ObjectHideFlags: 0

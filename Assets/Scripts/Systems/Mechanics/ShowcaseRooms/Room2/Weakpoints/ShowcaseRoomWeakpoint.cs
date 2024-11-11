@@ -28,6 +28,11 @@ public abstract class ShowcaseRoomWeakpoint : MonoBehaviour
     public event EventHandler OnWeakPointEnable;
     public event EventHandler OnWeakPointDisable;
 
+    public static event EventHandler OnAnyWeakpointUnHit;
+    public static event EventHandler OnAnyWeakpointHit;
+    public event EventHandler OnWeakpointHit;
+    public event EventHandler OnWeakpointUnHit;
+
     private void OnEnable()
     {
         ShowcaseRoomWeakPointsHandler.OnWeakPointsEnable += ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnable;
@@ -52,7 +57,7 @@ public abstract class ShowcaseRoomWeakpoint : MonoBehaviour
 
     protected virtual void Start()
     {
-        SetIsHit(false);
+        SetIsHit(false,false);
     }
 
     private void Update()
@@ -68,7 +73,23 @@ public abstract class ShowcaseRoomWeakpoint : MonoBehaviour
     protected abstract void HandleWeakPointPower();
 
     public void SetWeakPoint(bool enable) => isEnabled = enable;
-    public void SetIsHit(bool isHit) => this.isHit = isHit;
+    public void SetIsHit(bool isHit, bool triggerEvents)
+    {
+        this.isHit = isHit;
+
+        if (!triggerEvents) return;
+
+        if (isHit)
+        {
+            OnWeakpointHit?.Invoke(this, EventArgs.Empty);
+            OnAnyWeakpointHit?.Invoke(this, EventArgs.Empty);
+        }
+        else
+        {
+            OnWeakpointUnHit?.Invoke(this, EventArgs.Empty);
+            OnAnyWeakpointUnHit?.Invoke(this, EventArgs.Empty);
+        }
+    }
 
     private void CheckEnable(List<ShowcaseRoomWeakpoint> weakPointsToEnable)
     {

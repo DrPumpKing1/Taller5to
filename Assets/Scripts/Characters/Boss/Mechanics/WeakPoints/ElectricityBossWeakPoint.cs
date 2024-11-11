@@ -26,7 +26,7 @@ public class ElectricityBossWeakPoint : BossWeakPoint
         if (!CableEnergyzed())
         {
             ResetTimer();
-            SetIsHit(false);
+            SetIsHit(false,true);
             SetPreviouslypowered(false);
         }
         else
@@ -35,7 +35,7 @@ public class ElectricityBossWeakPoint : BossWeakPoint
 
             if (poweredTimer >= POWERED_TIME_THRESHOLD && !previousPowered)
             {
-                SetIsHit(true);
+                SetIsHit(true,true);
                 SetPreviouslypowered(true);
             }
         }

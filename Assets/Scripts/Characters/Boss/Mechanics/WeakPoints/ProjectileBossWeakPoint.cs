@@ -23,11 +23,11 @@ public class ProjectileBossWeakPoint : BossWeakPoint
 
         if (poweredAccumulatedTimer >= poweredTimeThreshold)
         {
-            SetIsHit(true);
+            SetIsHit(true,true);
         }
         else
         {
-            SetIsHit(false);
+            SetIsHit(false, true);
         }
 
         if (poweredAccumulatedTimer > 0f) poweredAccumulatedTimer -= Time.deltaTime;
