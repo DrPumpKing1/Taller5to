@@ -35,7 +35,7 @@ public class RoomVisibilityObject : MonoBehaviour
     #region Renderers
     private void UpdateRenderersList()
     {
-        renderers = GetComponentsInChildren<Renderer>().ToList();
+        renderers = GetComponentsInChildren<Renderer>(true).ToList();
     }
 
     private void EnableMeshRenderers()
@@ -62,7 +62,7 @@ public class RoomVisibilityObject : MonoBehaviour
     #region Lights
     private void UpdateLightsList()
     {
-        lights = GetComponentsInChildren<Light>().ToList();
+        lights = GetComponentsInChildren<Light>(true).ToList();
     }
 
     private void EnableLights()
