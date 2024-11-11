@@ -246,11 +246,13 @@ public class BossWeakPointsHandler : MonoBehaviour
         foreach (PhaseWeakPoints phaseWeakPoints in regularPhaseWeakPointsList)
         {
             OnWeakPointsDisableA?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+            OnWeakPointsDisableB?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
         }
 
         foreach (PhaseWeakPoints phaseWeakPoints in beamPhaseWeakPointsList)
         {
             OnWeakPointsDisableA?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+            OnWeakPointsDisableB?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
         }
     }
 

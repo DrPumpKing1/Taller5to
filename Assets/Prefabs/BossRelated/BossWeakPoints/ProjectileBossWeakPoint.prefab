@@ -153,11 +153,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  visual: {fileID: 2543399283296426818}
   isEnabled: 0
   isHit: 0
-  poweredTimeThreshold: 5
-  poweredTimePerProjectile: 4.5
+  poweredTimeThreshold: 1
+  poweredTimePerProjectile: 5
+  timerClamp: 6
 --- !u!65 &3295836126887515806
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -189,6 +189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1635103752738492167}
   - component: {fileID: 1160034750676988239}
+  - component: {fileID: 7400515713448906346}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -226,6 +227,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossWeakpoint: {fileID: 391058023074211898}
   model: {fileID: 2543399283296426818}
+--- !u!114 &7400515713448906346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6499984962450078299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758dafbbf7c786344b2e3e04cb790ea1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossWeakpoint: {fileID: 391058023074211898}
+  _renderer: {fileID: 5279535271540937492}
+  hitMaterial: {fileID: 2100000, guid: 45f2b814693a6e0409c78f0811b97b4f, type: 2}
+  unHitMaterial: {fileID: 2100000, guid: 5b8bb852222377b4b9c7883c7c9bae8a, type: 2}
 --- !u!1001 &1557168928170543039
 PrefabInstance:
   m_ObjectHideFlags: 0

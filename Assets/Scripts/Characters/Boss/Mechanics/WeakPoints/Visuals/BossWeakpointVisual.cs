@@ -10,24 +10,24 @@ public class BossWeakpointVisual : MonoBehaviour
 
     private void OnEnable()
     {
-        bossWeakpoint.OnWeakPointEnableB += BossWeakpoint_OnWeakPointEnableB;
-        bossWeakpoint.OnWeakPointDisableA += BossWeakpoint_OnWeakPointDisableA;
+        bossWeakpoint.OnWeakPointEnableA += BossWeakpoint_OnWeakPointEnableA;
+        bossWeakpoint.OnWeakPointDisableB += BossWeakpoint_OnWeakPointDisableB;
     }
 
     private void OnDisable()
     {
-        bossWeakpoint.OnWeakPointEnableB -= BossWeakpoint_OnWeakPointEnableB;
-        bossWeakpoint.OnWeakPointDisableA -= BossWeakpoint_OnWeakPointDisableA;
+        bossWeakpoint.OnWeakPointEnableA -= BossWeakpoint_OnWeakPointEnableA;
+        bossWeakpoint.OnWeakPointDisableB -= BossWeakpoint_OnWeakPointDisableB;
     }
 
     private void SetVisual(bool active) => model.SetActive(active);
 
-    private void BossWeakpoint_OnWeakPointEnableB(object sender, System.EventArgs e)
+    private void BossWeakpoint_OnWeakPointEnableA(object sender, System.EventArgs e)
     {
         SetVisual(true);
     }
 
-    private void BossWeakpoint_OnWeakPointDisableA(object sender, System.EventArgs e)
+    private void BossWeakpoint_OnWeakPointDisableB(object sender, System.EventArgs e)
     {
         SetVisual(false);
     }
