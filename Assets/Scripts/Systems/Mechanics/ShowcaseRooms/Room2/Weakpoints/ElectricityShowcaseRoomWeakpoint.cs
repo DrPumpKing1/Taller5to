@@ -8,7 +8,9 @@ public class ElectricityShowcaseRoomWeakpoint : ShowcaseRoomWeakpoint
     [SerializeField] private CableElectrode controlingCable;
 
     private const float POWERED_TIME_THRESHOLD = 0.25f;
+    private const float NOT_POWERED_TIME_THRESHOLD = 0.25f;
     private float poweredTimer;
+    private float notPoweredTimer;
     private bool previousPowered;
 
     protected override void Start()
@@ -18,7 +20,7 @@ public class ElectricityShowcaseRoomWeakpoint : ShowcaseRoomWeakpoint
         ResetTimer();
     }
 
-    protected override void HandleWeakPointPower()
+    private void HandleWeakPointPowerInverted()
     {
         if (!IsEnabled) return;
         if (!CheckPlayerClose()) return;
@@ -38,6 +40,33 @@ public class ElectricityShowcaseRoomWeakpoint : ShowcaseRoomWeakpoint
                 SetIsHit(true, true);
                 SetPreviouslypowered(true);
             }
+        }
+    }
+
+    protected override void HandleWeakPointPower()
+    {
+        if (!IsEnabled) return;
+        if (!CheckPlayerClose()) return;
+
+        if (!CableEnergyzed())
+        {
+            notPoweredTimer += Time.deltaTime;
+
+            if (notPoweredTimer >= NOT_POWERED_TIME_THRESHOLD && previousPowered)
+            {
+                SetIsHit(false, true);
+                SetPreviouslypowered(false);
+            }
+        }
+        else
+        {
+            if (!previousPowered)
+            {
+                SetIsHit(true, true);
+            }
+
+            SetPreviouslypowered(true);
+            ResetTimer();
         }
     }
 
