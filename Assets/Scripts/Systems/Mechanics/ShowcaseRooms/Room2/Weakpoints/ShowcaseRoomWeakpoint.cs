@@ -25,8 +25,10 @@ public abstract class ShowcaseRoomWeakpoint : MonoBehaviour
     public static event EventHandler<OnShowcaseRoomWeakPointEventArgs> OnShowcaseRoomWeakpointEnable;
     public static event EventHandler<OnShowcaseRoomWeakPointEventArgs> OnShowcaseRoomWeakpointDisable;
 
-    public event EventHandler OnWeakPointEnable;
-    public event EventHandler OnWeakPointDisable;
+    public event EventHandler OnWeakPointEnableA;
+    public event EventHandler OnWeakPointEnableB;
+    public event EventHandler OnWeakPointDisableA;
+    public event EventHandler OnWeakPointDisableB;
 
     public static event EventHandler OnAnyWeakpointUnHit;
     public static event EventHandler OnAnyWeakpointHit;
@@ -35,14 +37,18 @@ public abstract class ShowcaseRoomWeakpoint : MonoBehaviour
 
     private void OnEnable()
     {
-        ShowcaseRoomWeakPointsHandler.OnWeakPointsEnable += ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnable;
-        ShowcaseRoomWeakPointsHandler.OnWeakPointsDisable += ShowcaseRoomsWeakPointsHandler_OnWeakPointsDisable;
+        ShowcaseRoomWeakPointsHandler.OnWeakPointsEnableA += ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnableA;
+        ShowcaseRoomWeakPointsHandler.OnWeakPointsEnableB += ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnableB;
+        ShowcaseRoomWeakPointsHandler.OnWeakPointsDisableA += ShowcaseRoomsWeakPointsHandler_OnWeakPointsDisableA;
+        ShowcaseRoomWeakPointsHandler.OnWeakPointsDisableB += ShowcaseRoomsWeakPointsHandler_OnWeakPointsDisableB;
     }
 
     private void OnDisable()
     {
-        ShowcaseRoomWeakPointsHandler.OnWeakPointsEnable -= ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnable;
-        ShowcaseRoomWeakPointsHandler.OnWeakPointsDisable -= ShowcaseRoomsWeakPointsHandler_OnWeakPointsDisable;
+        ShowcaseRoomWeakPointsHandler.OnWeakPointsEnableA -= ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnableA;
+        ShowcaseRoomWeakPointsHandler.OnWeakPointsEnableB -= ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnableB;
+        ShowcaseRoomWeakPointsHandler.OnWeakPointsDisableA -= ShowcaseRoomsWeakPointsHandler_OnWeakPointsDisableA;
+        ShowcaseRoomWeakPointsHandler.OnWeakPointsDisableB -= ShowcaseRoomsWeakPointsHandler_OnWeakPointsDisableB;
     }
 
     public class OnShowcaseRoomWeakPointEventArgs : EventArgs
@@ -91,23 +97,39 @@ public abstract class ShowcaseRoomWeakpoint : MonoBehaviour
         }
     }
 
-    private void CheckEnable(List<ShowcaseRoomWeakpoint> weakPointsToEnable)
+    private void CheckEnableA(List<ShowcaseRoomWeakpoint> weakPointsToEnable) //Enable Visual
+    {
+        if (weakPointsToEnable.Contains(this))
+        {
+            OnWeakPointEnableA?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    private void CheckEnableB(List<ShowcaseRoomWeakpoint> weakPointsToEnable) //Enable Functionality
     {
         if (weakPointsToEnable.Contains(this))
         {
             SetWeakPoint(true);
             OnShowcaseRoomWeakpointEnable?.Invoke(this, new OnShowcaseRoomWeakPointEventArgs { showcaseRoomWeakpoint = this });
-            OnWeakPointEnable?.Invoke(this, EventArgs.Empty);
+            OnWeakPointEnableB?.Invoke(this, EventArgs.Empty);
         }
     }
 
-    private void CheckDisable(List<ShowcaseRoomWeakpoint> weakPointsToDisable)
+    private void CheckDisableA(List<ShowcaseRoomWeakpoint> weakPointsToDisable) //Disable Functionality
     {
         if (weakPointsToDisable.Contains(this))
         {
             SetWeakPoint(false);
             OnShowcaseRoomWeakpointDisable?.Invoke(this, new OnShowcaseRoomWeakPointEventArgs { showcaseRoomWeakpoint = this });
-            OnWeakPointDisable?.Invoke(this, EventArgs.Empty);
+            OnWeakPointDisableA?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    private void CheckDisableB(List<ShowcaseRoomWeakpoint> weakPointsToDisable) //Disable Visual
+    {
+        if (weakPointsToDisable.Contains(this))
+        {
+            OnWeakPointDisableB?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -120,14 +142,24 @@ public abstract class ShowcaseRoomWeakpoint : MonoBehaviour
     }
 
     #region ShowcaseRoomWeakpointsHandler Subscriptions
-    private void ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnable(object sender, ShowcaseRoomWeakPointsHandler.OnWeakPointsEventArgs e)
+
+    private void ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnableA(object sender, ShowcaseRoomWeakPointsHandler.OnWeakPointsEventArgs e)
     {
-        CheckEnable(e.weakPoints);
+        CheckEnableA(e.weakPoints);
+    }
+    private void ShowcaseRoomsWeakPointsHandler_OnWeakPointsEnableB(object sender, ShowcaseRoomWeakPointsHandler.OnWeakPointsEventArgs e)
+    {
+        CheckEnableB(e.weakPoints);
     }
 
-    private void ShowcaseRoomsWeakPointsHandler_OnWeakPointsDisable(object sender, ShowcaseRoomWeakPointsHandler.OnWeakPointsEventArgs e)
+    private void ShowcaseRoomsWeakPointsHandler_OnWeakPointsDisableA(object sender, ShowcaseRoomWeakPointsHandler.OnWeakPointsEventArgs e)
     {
-        CheckDisable(e.weakPoints);
+        CheckDisableA(e.weakPoints);
+    }
+
+    private void ShowcaseRoomsWeakPointsHandler_OnWeakPointsDisableB(object sender, ShowcaseRoomWeakPointsHandler.OnWeakPointsEventArgs e)
+    {
+        CheckDisableB(e.weakPoints);
     }
     #endregion
 }

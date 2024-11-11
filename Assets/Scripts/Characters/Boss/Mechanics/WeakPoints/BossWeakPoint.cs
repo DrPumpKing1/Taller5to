@@ -34,14 +34,14 @@ public abstract class BossWeakPoint : MonoBehaviour
 
     private void OnEnable()
     {
-        BossWeakPointsHandler.OnWeakPointsEnable += BossWeakPointsHandler_OnWeakPointsEnable;
-        BossWeakPointsHandler.OnWeakPointsDisable += BossWeakPointsHandler_OnWeakPointsDisable;
+        BossWeakPointsHandler.OnWeakPointsEnableB += BossWeakPointsHandler_OnWeakPointsEnable;
+        BossWeakPointsHandler.OnWeakPointsDisableA += BossWeakPointsHandler_OnWeakPointsDisable;
     }
 
     private void OnDisable()
     {
-        BossWeakPointsHandler.OnWeakPointsEnable -= BossWeakPointsHandler_OnWeakPointsEnable;
-        BossWeakPointsHandler.OnWeakPointsDisable -= BossWeakPointsHandler_OnWeakPointsDisable;
+        BossWeakPointsHandler.OnWeakPointsEnableB -= BossWeakPointsHandler_OnWeakPointsEnable;
+        BossWeakPointsHandler.OnWeakPointsDisableA -= BossWeakPointsHandler_OnWeakPointsDisable;
     }
 
     public class OnBossWeakPointEventArgs : EventArgs

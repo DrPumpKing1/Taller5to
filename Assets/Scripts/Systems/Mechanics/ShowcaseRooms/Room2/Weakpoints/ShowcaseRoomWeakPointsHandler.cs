@@ -21,8 +21,10 @@ public class ShowcaseRoomWeakPointsHandler : MonoBehaviour
         public bool allHit;
     }
 
-    public static event EventHandler<OnWeakPointsEventArgs> OnWeakPointsEnable;
-    public static event EventHandler<OnWeakPointsEventArgs> OnWeakPointsDisable;
+    public static event EventHandler<OnWeakPointsEventArgs> OnWeakPointsEnableA;
+    public static event EventHandler<OnWeakPointsEventArgs> OnWeakPointsEnableB;
+    public static event EventHandler<OnWeakPointsEventArgs> OnWeakPointsDisableA;
+    public static event EventHandler<OnWeakPointsEventArgs> OnWeakPointsDisableB;
 
     public static event EventHandler<OnPhaseWeakPointsHitEventArgs> OnPhaseWeakPointsHit;
 
@@ -40,16 +42,19 @@ public class ShowcaseRoomWeakPointsHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        ShowcaseRoomPhaseHandler.OnPhaseCompleated += ShowcaseRoomPhaseHandler_OnPhaseCompleated;
         ShowcaseRoomStateHandler.OnShowcaseRoomPhaseChangeEnd += ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeEnd;
+        ShowcaseRoomPhaseHandler.OnPhaseCompleated += ShowcaseRoomPhaseHandler_OnPhaseCompleated;
+        ShowcaseRoomStateHandler.OnShowcaseRoomPhaseChangeMidC += ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeMidC;
 
         ShowcaseRoomPhaseHandler.OnLastPhaseCompleated += ShowcaseRoomPhaseHandler_OnLastPhaseCompleated;
     }
 
+
     private void OnDisable()
     {
-        ShowcaseRoomPhaseHandler.OnPhaseCompleated -= ShowcaseRoomPhaseHandler_OnPhaseCompleated;
         ShowcaseRoomStateHandler.OnShowcaseRoomPhaseChangeEnd -= ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeEnd;
+        ShowcaseRoomPhaseHandler.OnPhaseCompleated -= ShowcaseRoomPhaseHandler_OnPhaseCompleated;
+        ShowcaseRoomStateHandler.OnShowcaseRoomPhaseChangeMidC -= ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeMidC;
 
         ShowcaseRoomPhaseHandler.OnLastPhaseCompleated -= ShowcaseRoomPhaseHandler_OnLastPhaseCompleated;
     }
@@ -62,7 +67,7 @@ public class ShowcaseRoomWeakPointsHandler : MonoBehaviour
     private void Start()
     {
         DisableAllWeakPoints();
-        EnableWeakPointsByPhaseChange(FIRST_WEAK_POINTS_PHASE);
+        TotalEnableWeakPointsByPhase(FIRST_WEAK_POINTS_PHASE);
     }
 
     private void Update()
@@ -114,7 +119,29 @@ public class ShowcaseRoomWeakPointsHandler : MonoBehaviour
         {
             if (phaseWeakPoints.showcaseRoomPhase == showcaseRoomPhase)
             {
-                OnWeakPointsEnable?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+                OnWeakPointsEnableA?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+            }
+        }
+    }
+
+    private void EnableWeakPointsByPhaseChangeCompleated(ShowcaseRoomPhase showcaseRoomPhase)
+    {
+        foreach (PhaseWeakPoints phaseWeakPoints in regularPhaseWeakPointsList)
+        {
+            if (phaseWeakPoints.showcaseRoomPhase == showcaseRoomPhase)
+            {
+                OnWeakPointsEnableB?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+            }
+        }
+    }
+
+    private void DisableWeakPointsByPhaseCompleated(ShowcaseRoomPhase showcaseRoomPhase)
+    {
+        foreach (PhaseWeakPoints phaseWeakPoints in regularPhaseWeakPointsList)
+        {
+            if (phaseWeakPoints.showcaseRoomPhase == showcaseRoomPhase)
+            {
+                OnWeakPointsDisableA?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
             }
         }
     }
@@ -125,27 +152,44 @@ public class ShowcaseRoomWeakPointsHandler : MonoBehaviour
         {
             if (phaseWeakPoints.showcaseRoomPhase == showcaseRoomPhase)
             {
-                OnWeakPointsDisable?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+                OnWeakPointsDisableB?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
             }
         }
     }
     #endregion
+    private void TotalEnableWeakPointsByPhase(ShowcaseRoomPhase showcaseRoomPhase)
+    {
+        foreach (PhaseWeakPoints phaseWeakPoints in regularPhaseWeakPointsList)
+        {
+            if (phaseWeakPoints.showcaseRoomPhase == showcaseRoomPhase)
+            {
+                OnWeakPointsEnableA?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+                OnWeakPointsEnableB?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+            }
+        }
+    }
 
     private void DisableAllWeakPoints()
     {
         foreach (PhaseWeakPoints phaseWeakPoints in regularPhaseWeakPointsList)
         {
-            OnWeakPointsDisable?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+            OnWeakPointsDisableA?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+            OnWeakPointsDisableB?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
         }
     }
 
     #region ShowcaseRoomPhase&StateHandler Subscriptions
-    private void ShowcaseRoomPhaseHandler_OnPhaseCompleated(object sender, ShowcaseRoomPhaseHandler.OnPhaseEventArgs e)
-    {
-        DisableWeakPointsByPhaseChange(e.currentPhase);
-    }
     private void ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeEnd(object sender, ShowcaseRoomStateHandler.OnPhaseChangeEventArgs e)
     {
+        EnableWeakPointsByPhaseChangeCompleated(e.nextPhase);
+    }
+    private void ShowcaseRoomPhaseHandler_OnPhaseCompleated(object sender, ShowcaseRoomPhaseHandler.OnPhaseEventArgs e)
+    {
+        DisableWeakPointsByPhaseCompleated(e.currentPhase);
+    }
+    private void ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeMidC(object sender, ShowcaseRoomStateHandler.OnPhaseChangeEventArgs e)
+    {
+        DisableWeakPointsByPhaseChange(e.currentPhase);
         EnableWeakPointsByPhaseChange(e.nextPhase);
     }
     private void ShowcaseRoomPhaseHandler_OnLastPhaseCompleated(object sender, EventArgs e)

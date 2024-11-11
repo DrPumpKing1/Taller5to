@@ -31,6 +31,7 @@ public class ShowcaseRoomStateHandler : MonoBehaviour
     public static event EventHandler<OnPhaseChangeEventArgs> OnShowcaseRoomPhaseChangeStart;
     public static event EventHandler<OnPhaseChangeEventArgs> OnShowcaseRoomPhaseChangeMidA;
     public static event EventHandler<OnPhaseChangeEventArgs> OnShowcaseRoomPhaseChangeMidB;
+    public static event EventHandler<OnPhaseChangeEventArgs> OnShowcaseRoomPhaseChangeMidC;
     public static event EventHandler<OnPhaseChangeEventArgs> OnShowcaseRoomPhaseChangeEnd;
     public static event EventHandler OnShowcaseRoomDefeated;
 
@@ -95,6 +96,7 @@ public class ShowcaseRoomStateHandler : MonoBehaviour
 
         OnShowcaseRoomPhaseChangeMidA?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
         OnShowcaseRoomPhaseChangeMidB?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
+        OnShowcaseRoomPhaseChangeMidC?.Invoke(this, new OnPhaseChangeEventArgs { currentPhase = currentPhase, nextPhase = nextPhase });
 
         yield return new WaitForSeconds(SHOWCASE_ROOM_PHASE_CHANGE_TIME_B);
 

@@ -10,24 +10,24 @@ public class ShowcaseRoomWeakpointVisual : MonoBehaviour
 
     private void OnEnable()
     {
-        showcaseRoomWeakpoint.OnWeakPointEnable += ShowcaseRoomWeakpoint_OnWeakPointEnable;
-        showcaseRoomWeakpoint.OnWeakPointDisable += ShowcaseRoomWeakpoint_OnWeakPointDisable;
+        showcaseRoomWeakpoint.OnWeakPointEnableA += ShowcaseRoomWeakpoint_OnWeakPointEnableA;
+        showcaseRoomWeakpoint.OnWeakPointDisableB += ShowcaseRoomWeakpoint_OnWeakPointDisableB;
     }
 
     private void OnDisable()
     {
-        showcaseRoomWeakpoint.OnWeakPointEnable -= ShowcaseRoomWeakpoint_OnWeakPointEnable;
-        showcaseRoomWeakpoint.OnWeakPointDisable -= ShowcaseRoomWeakpoint_OnWeakPointDisable;
+        showcaseRoomWeakpoint.OnWeakPointEnableA -= ShowcaseRoomWeakpoint_OnWeakPointEnableA;
+        showcaseRoomWeakpoint.OnWeakPointDisableB -= ShowcaseRoomWeakpoint_OnWeakPointDisableB;
     }
 
     private void SetVisual(bool active) => model.SetActive(active);
 
-    private void ShowcaseRoomWeakpoint_OnWeakPointEnable(object sender, System.EventArgs e)
+    private void ShowcaseRoomWeakpoint_OnWeakPointEnableA(object sender, System.EventArgs e)
     {
         SetVisual(true);
     }
 
-    private void ShowcaseRoomWeakpoint_OnWeakPointDisable(object sender, System.EventArgs e)
+    private void ShowcaseRoomWeakpoint_OnWeakPointDisableB(object sender, System.EventArgs e)
     {
         SetVisual(false);
     }

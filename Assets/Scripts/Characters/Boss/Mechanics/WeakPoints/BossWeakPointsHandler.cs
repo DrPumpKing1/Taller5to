@@ -23,8 +23,10 @@ public class BossWeakPointsHandler : MonoBehaviour
         public bool allHit;
     }
 
-    public static event EventHandler<OnWeakPointsEventArgs> OnWeakPointsEnable;
-    public static event EventHandler<OnWeakPointsEventArgs> OnWeakPointsDisable;
+    public static event EventHandler<OnWeakPointsEventArgs> OnWeakPointsEnableA;
+    public static event EventHandler<OnWeakPointsEventArgs> OnWeakPointsEnableB;
+    public static event EventHandler<OnWeakPointsEventArgs> OnWeakPointsDisableA;
+    public static event EventHandler<OnWeakPointsEventArgs> OnWeakPointsDisableB;
 
     public static event EventHandler<OnPhaseWeakPointsHitEventArgs> OnPhaseWeakPointsHit;
 
@@ -75,7 +77,7 @@ public class BossWeakPointsHandler : MonoBehaviour
     private void Start()
     {
         DisableAllWeakPoints();
-        EnableWeakPointsByPhaseChange(FIRST_WEAK_POINTS_PHASE);
+        TotalEnableWeakPointsByPhase(FIRST_WEAK_POINTS_PHASE);
     }
 
     private void Update()
@@ -128,7 +130,7 @@ public class BossWeakPointsHandler : MonoBehaviour
     private IEnumerator EnableAlmostDefeatedWeakPointsCoroutine()
     {
         yield return new WaitForSeconds(TIME_TO_ENABLE_ALMOST_DEFEATED_WEAK_POINTS);
-        EnableWeakPointsByPhaseChange(ALMOST_DEFEATED_WEAK_POINTS_PHASE);
+        EnableWeakPointsByPhaseChangeCompleated(ALMOST_DEFEATED_WEAK_POINTS_PHASE);
     }
 
     #region PhaseChange
@@ -138,18 +140,29 @@ public class BossWeakPointsHandler : MonoBehaviour
         {
             if (phaseWeakPoints.bossPhase == bossPhase)
             {
-                OnWeakPointsEnable?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+                OnWeakPointsEnableA?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
             }
         }
     }
 
-    private void DisableWeakPointsByPhaseChange(BossPhase bossPhase)
+    private void EnableWeakPointsByPhaseChangeCompleated(BossPhase bossPhase)
     {
         foreach (PhaseWeakPoints phaseWeakPoints in regularPhaseWeakPointsList)
         {
             if (phaseWeakPoints.bossPhase == bossPhase)
             {
-                OnWeakPointsDisable?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+                OnWeakPointsEnableB?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+            }
+        }
+    }
+
+    private void DisableWeakPointsByPhaseCompleated(BossPhase bossPhase)
+    {
+        foreach (PhaseWeakPoints phaseWeakPoints in regularPhaseWeakPointsList)
+        {
+            if (phaseWeakPoints.bossPhase == bossPhase)
+            {
+                OnWeakPointsDisableA?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
             }
         }
 
@@ -157,7 +170,26 @@ public class BossWeakPointsHandler : MonoBehaviour
         {
             if (phaseWeakPoints.bossPhase == bossPhase)
             {
-                OnWeakPointsDisable?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+                OnWeakPointsDisableA?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+            }
+        }
+    }
+
+    private void DisableWeakPointsByPhaseChangeCompleated(BossPhase bossPhase)
+    {
+        foreach (PhaseWeakPoints phaseWeakPoints in regularPhaseWeakPointsList)
+        {
+            if (phaseWeakPoints.bossPhase == bossPhase)
+            {
+                OnWeakPointsDisableB?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+            }
+        }
+
+        foreach (PhaseWeakPoints phaseWeakPoints in beamPhaseWeakPointsList)
+        {
+            if (phaseWeakPoints.bossPhase == bossPhase)
+            {
+                OnWeakPointsDisableB?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
             }
         }
     }
@@ -170,7 +202,7 @@ public class BossWeakPointsHandler : MonoBehaviour
         {
             if (phaseWeakPoints.bossPhase == bossPhase)
             {
-                OnWeakPointsEnable?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+                OnWeakPointsEnableB?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
             }
         }
     }
@@ -181,34 +213,54 @@ public class BossWeakPointsHandler : MonoBehaviour
         {
             if (phaseWeakPoints.bossPhase == bossPhase)
             {
-                OnWeakPointsDisable?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+                OnWeakPointsDisableA?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
             }
         }
     }
     #endregion
 
-    private void DisableAllWeakPoints()
+    private void TotalEnableWeakPointsByPhase(BossPhase bossPhase)
     {
         foreach (PhaseWeakPoints phaseWeakPoints in regularPhaseWeakPointsList)
         {
-            OnWeakPointsDisable?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+            if (phaseWeakPoints.bossPhase == bossPhase)
+            {
+                OnWeakPointsEnableA?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+                OnWeakPointsEnableB?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+            }
         }
 
         foreach (PhaseWeakPoints phaseWeakPoints in beamPhaseWeakPointsList)
         {
-            OnWeakPointsDisable?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+            if (phaseWeakPoints.bossPhase == bossPhase)
+            {
+                OnWeakPointsEnableA?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+                OnWeakPointsEnableB?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+            }
+        }
+    }
+    private void DisableAllWeakPoints()
+    {
+        foreach (PhaseWeakPoints phaseWeakPoints in regularPhaseWeakPointsList)
+        {
+            OnWeakPointsDisableA?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
+        }
+
+        foreach (PhaseWeakPoints phaseWeakPoints in beamPhaseWeakPointsList)
+        {
+            OnWeakPointsDisableA?.Invoke(this, new OnWeakPointsEventArgs { weakPoints = phaseWeakPoints.weakPoints });
         }
     }
 
     #region BossPhase&StateHandler Subscriptions
     private void BossPhaseHandler_OnPhaseCompleated(object sender, BossPhaseHandler.OnPhaseEventArgs e)
     {
-        DisableWeakPointsByPhaseChange(e.currentPhase);
+        DisableWeakPointsByPhaseChangeCompleated(e.currentPhase);
     }
 
     private void BossStateHandler_OnBossPhaseChangeEnd(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
     {
-        EnableWeakPointsByPhaseChange(e.nextPhase);
+        EnableWeakPointsByPhaseChangeCompleated(e.nextPhase);
     }
     private void BossPhaseHandler_OnLastPhaseCompleated(object sender, EventArgs e)
     {

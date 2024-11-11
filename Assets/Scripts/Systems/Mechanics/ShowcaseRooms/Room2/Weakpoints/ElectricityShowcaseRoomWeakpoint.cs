@@ -7,8 +7,8 @@ public class ElectricityShowcaseRoomWeakpoint : ShowcaseRoomWeakpoint
     [Header("Components")]
     [SerializeField] private CableElectrode controlingCable;
 
-    private const float POWERED_TIME_THRESHOLD = 0.25f;
-    private const float NOT_POWERED_TIME_THRESHOLD = 0.25f;
+    private const float POWERED_TIME_THRESHOLD = 0.45f;
+    private const float NOT_POWERED_TIME_THRESHOLD = 0.45f;
     private float poweredTimer;
     private float notPoweredTimer;
     private bool previousPowered;

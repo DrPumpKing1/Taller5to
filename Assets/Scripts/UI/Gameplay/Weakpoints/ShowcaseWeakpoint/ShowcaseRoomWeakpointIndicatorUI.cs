@@ -13,13 +13,13 @@ public class ShowcaseRoomWeakpointIndicatorUI : MonoBehaviour
 
     private void OnEnable()
     {
-        showcaseRoomWeakpoint.OnWeakPointEnable += ShowcaseRoom_OnWeakPointEnable;
-        showcaseRoomWeakpoint.OnWeakPointDisable += ShowcaseRoom_OnWeakPointDisable;
+        showcaseRoomWeakpoint.OnWeakPointEnableB += ShowcaseRoom_OnWeakPointEnableB;
+        showcaseRoomWeakpoint.OnWeakPointDisableA += ShowcaseRoom_OnWeakPointDisableA;
     }
     private void OnDisable()
     {
-        showcaseRoomWeakpoint.OnWeakPointEnable -= ShowcaseRoom_OnWeakPointEnable;
-        showcaseRoomWeakpoint.OnWeakPointDisable -= ShowcaseRoom_OnWeakPointDisable;
+        showcaseRoomWeakpoint.OnWeakPointEnableB -= ShowcaseRoom_OnWeakPointEnableB;
+        showcaseRoomWeakpoint.OnWeakPointDisableA -= ShowcaseRoom_OnWeakPointDisableA;
     }
 
 
@@ -36,11 +36,11 @@ public class ShowcaseRoomWeakpointIndicatorUI : MonoBehaviour
     }
 
     #region ShowcaseRoomWeakpoint Subscriptions
-    private void ShowcaseRoom_OnWeakPointEnable(object sender, System.EventArgs e)
+    private void ShowcaseRoom_OnWeakPointEnableB(object sender, System.EventArgs e)
     {
         ShowWeakpoint();
     }
-    private void ShowcaseRoom_OnWeakPointDisable(object sender, System.EventArgs e)
+    private void ShowcaseRoom_OnWeakPointDisableA(object sender, System.EventArgs e)
     {
         HideWeakpoint();
     }
