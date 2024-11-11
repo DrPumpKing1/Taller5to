@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Threading;
-using static BossBeam;
 using UnityEngine.SocialPlatforms;
 
 public class BossBeam : MonoBehaviour
