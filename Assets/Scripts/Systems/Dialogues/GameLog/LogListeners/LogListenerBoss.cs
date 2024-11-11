@@ -13,6 +13,9 @@ public class LogListenerBoss : MonoBehaviour
         BossStateHandler.OnBossAlmostDefeated += BossStateHandler_OnBossAlmostDefeated;
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
 
+        BossFightDetection.OnBossStartFight += BossFightDetection_OnBossStartFight;
+        BossFightDetection.OnBossEndFight += BossFightDetection_OnBossEndFight;
+
         //ANCIENT RELIC
         AncientRelic.OnAncientRelicCollected += AncientRelic_OnAncientRelicCollected;
     }
@@ -26,6 +29,9 @@ public class LogListenerBoss : MonoBehaviour
 
         BossStateHandler.OnBossAlmostDefeated -= BossStateHandler_OnBossAlmostDefeated;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
+
+        BossFightDetection.OnBossStartFight -= BossFightDetection_OnBossStartFight;
+        BossFightDetection.OnBossEndFight -= BossFightDetection_OnBossEndFight;
 
         //ANCIENT RELIC
         AncientRelic.OnAncientRelicCollected -= AncientRelic_OnAncientRelicCollected;
@@ -44,7 +50,8 @@ public class LogListenerBoss : MonoBehaviour
     }
 
     private void BossStateHandler_OnBossAlmostDefeated(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Boss/AlmostDefeated");
-
     private void BossStateHandler_OnBossDefeated(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Boss/Defeated");
+    private void BossFightDetection_OnBossStartFight(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Boss/StartFight");
+    private void BossFightDetection_OnBossEndFight(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Boss/EndFight");
     private void AncientRelic_OnAncientRelicCollected(object sender, System.EventArgs e) => GameLogManager.Instance.Log("Events/AncientRelicCollected");
 }
