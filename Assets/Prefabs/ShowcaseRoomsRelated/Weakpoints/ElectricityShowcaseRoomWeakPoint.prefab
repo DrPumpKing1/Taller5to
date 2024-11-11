@@ -219,6 +219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1635103752738492167}
   - component: {fileID: 392845773790708615}
+  - component: {fileID: 6629908190613349396}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -256,6 +257,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showcaseRoomWeakpoint: {fileID: 8576618946777133411}
   model: {fileID: 2543399283296426818}
+--- !u!114 &6629908190613349396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6499984962450078299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c94302747dc0cf41b948fb6153b0aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8087882253522845847
 PrefabInstance:
   m_ObjectHideFlags: 0
