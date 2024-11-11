@@ -13,13 +13,13 @@ public class BossWeakPointIndicatorUI : MonoBehaviour
 
     private void OnEnable()
     {
-        bossWeakPoint.OnWeakPointEnable += BossWeakPoint_OnWeakPointEnable;
-        bossWeakPoint.OnWeakPointDisable += BossWeakPoint_OnWeakPointDisable;
+        bossWeakPoint.OnWeakPointEnableB += BossWeakPoint_OnWeakPointEnable;
+        bossWeakPoint.OnWeakPointDisableA += BossWeakPoint_OnWeakPointDisableA;
     }
     private void OnDisable()
     {
-        bossWeakPoint.OnWeakPointEnable -= BossWeakPoint_OnWeakPointEnable;
-        bossWeakPoint.OnWeakPointDisable -= BossWeakPoint_OnWeakPointDisable;
+        bossWeakPoint.OnWeakPointEnableB -= BossWeakPoint_OnWeakPointEnable;
+        bossWeakPoint.OnWeakPointDisableA -= BossWeakPoint_OnWeakPointDisableA;
     }
 
 
@@ -40,7 +40,7 @@ public class BossWeakPointIndicatorUI : MonoBehaviour
     {
         ShowWeakpoint();
     }
-    private void BossWeakPoint_OnWeakPointDisable(object sender, System.EventArgs e)
+    private void BossWeakPoint_OnWeakPointDisableA(object sender, System.EventArgs e)
     {
         HideWeakpoint();
     }

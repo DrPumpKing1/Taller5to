@@ -181,15 +181,15 @@ public class ShowcaseRoomWeakPointsHandler : MonoBehaviour
     #region ShowcaseRoomPhase&StateHandler Subscriptions
     private void ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeEnd(object sender, ShowcaseRoomStateHandler.OnPhaseChangeEventArgs e)
     {
-        EnableWeakPointsByPhaseChangeCompleated(e.nextPhase);
+        EnableWeakPointsByPhaseChangeCompleated(e.nextPhase); //Functionality
     }
     private void ShowcaseRoomPhaseHandler_OnPhaseCompleated(object sender, ShowcaseRoomPhaseHandler.OnPhaseEventArgs e)
     {
-        DisableWeakPointsByPhaseCompleated(e.currentPhase);
+        DisableWeakPointsByPhaseCompleated(e.currentPhase); //Functionality
     }
     private void ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeMidC(object sender, ShowcaseRoomStateHandler.OnPhaseChangeEventArgs e)
     {
-        DisableWeakPointsByPhaseChange(e.currentPhase);
+        DisableWeakPointsByPhaseChange(e.currentPhase); //Visual
         EnableWeakPointsByPhaseChange(e.nextPhase);
     }
     private void ShowcaseRoomPhaseHandler_OnLastPhaseCompleated(object sender, EventArgs e)

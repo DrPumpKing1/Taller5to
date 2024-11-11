@@ -24,8 +24,10 @@ public abstract class BossWeakPoint : MonoBehaviour
     public static event EventHandler<OnBossWeakPointEventArgs> OnBossWeakpointEnable;
     public static event EventHandler<OnBossWeakPointEventArgs> OnBossWeakpointDisable;
 
-    public event EventHandler OnWeakPointEnable;
-    public event EventHandler OnWeakPointDisable;
+    public event EventHandler OnWeakPointEnableA;
+    public event EventHandler OnWeakPointEnableB;
+    public event EventHandler OnWeakPointDisableA;
+    public event EventHandler OnWeakPointDisableB;
 
     public static event EventHandler OnAnyWeakpointUnHit;
     public static event EventHandler OnAnyWeakpointHit;
@@ -34,14 +36,18 @@ public abstract class BossWeakPoint : MonoBehaviour
 
     private void OnEnable()
     {
-        BossWeakPointsHandler.OnWeakPointsEnableB += BossWeakPointsHandler_OnWeakPointsEnable;
-        BossWeakPointsHandler.OnWeakPointsDisableA += BossWeakPointsHandler_OnWeakPointsDisable;
+        BossWeakPointsHandler.OnWeakPointsEnableA += BossWeakPointsHandler_OnWeakPointsEnableA;
+        BossWeakPointsHandler.OnWeakPointsEnableB += BossWeakPointsHandler_OnWeakPointsEnableB;
+        BossWeakPointsHandler.OnWeakPointsDisableA += BossWeakPointsHandler_OnWeakPointsDisableA;
+        BossWeakPointsHandler.OnWeakPointsDisableB += BossWeakPointsHandler_OnWeakPointsDisableB;
     }
 
     private void OnDisable()
     {
-        BossWeakPointsHandler.OnWeakPointsEnableB -= BossWeakPointsHandler_OnWeakPointsEnable;
-        BossWeakPointsHandler.OnWeakPointsDisableA -= BossWeakPointsHandler_OnWeakPointsDisable;
+        BossWeakPointsHandler.OnWeakPointsEnableA -= BossWeakPointsHandler_OnWeakPointsEnableA;
+        BossWeakPointsHandler.OnWeakPointsEnableB -= BossWeakPointsHandler_OnWeakPointsEnableB;
+        BossWeakPointsHandler.OnWeakPointsDisableA -= BossWeakPointsHandler_OnWeakPointsDisableA;
+        BossWeakPointsHandler.OnWeakPointsDisableB -= BossWeakPointsHandler_OnWeakPointsDisableB;
     }
 
     public class OnBossWeakPointEventArgs : EventArgs
@@ -91,23 +97,39 @@ public abstract class BossWeakPoint : MonoBehaviour
         }
     }
 
-    private void CheckEnable(List<BossWeakPoint> weakPointsToEnable)
+    private void CheckEnableA(List<BossWeakPoint> weakPointsToEnable)
+    {
+        if (weakPointsToEnable.Contains(this))
+        {
+            OnWeakPointEnableA?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    private void CheckEnableB(List<BossWeakPoint> weakPointsToEnable)
     {
         if(weakPointsToEnable.Contains(this))
         {
             SetWeakPoint(true);
             OnBossWeakpointEnable?.Invoke(this, new OnBossWeakPointEventArgs { bossWeakPoint = this });
-            OnWeakPointEnable?.Invoke(this, EventArgs.Empty);
+            OnWeakPointEnableB?.Invoke(this, EventArgs.Empty);
         }
     }
 
-    private void CheckDisable(List<BossWeakPoint> weakPointsToDisable)
+    private void CheckDisableA(List<BossWeakPoint> weakPointsToDisable)
     {
         if (weakPointsToDisable.Contains(this))
         {
             SetWeakPoint(false);
             OnBossWeakpointDisable?.Invoke(this, new OnBossWeakPointEventArgs { bossWeakPoint = this });
-            OnWeakPointDisable?.Invoke(this, EventArgs.Empty);
+            OnWeakPointDisableA?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    private void CheckDisableB(List<BossWeakPoint> weakPointsToDisable)
+    {
+        if (weakPointsToDisable.Contains(this))
+        {
+            OnWeakPointDisableB?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -120,14 +142,24 @@ public abstract class BossWeakPoint : MonoBehaviour
     }
 
     #region BossWeakPointsHandler Subscriptions
-    private void BossWeakPointsHandler_OnWeakPointsEnable(object sender, BossWeakPointsHandler.OnWeakPointsEventArgs e)
+
+    private void BossWeakPointsHandler_OnWeakPointsEnableA(object sender, BossWeakPointsHandler.OnWeakPointsEventArgs e)
     {
-        CheckEnable(e.weakPoints);
+        CheckEnableA(e.weakPoints);
     }
 
-    private void BossWeakPointsHandler_OnWeakPointsDisable(object sender, BossWeakPointsHandler.OnWeakPointsEventArgs e)
+    private void BossWeakPointsHandler_OnWeakPointsEnableB(object sender, BossWeakPointsHandler.OnWeakPointsEventArgs e)
     {
-        CheckDisable(e.weakPoints);
+        CheckEnableB(e.weakPoints);
+    }
+
+    private void BossWeakPointsHandler_OnWeakPointsDisableA(object sender, BossWeakPointsHandler.OnWeakPointsEventArgs e)
+    {
+        CheckDisableA(e.weakPoints);
+    }
+    private void BossWeakPointsHandler_OnWeakPointsDisableB(object sender, BossWeakPointsHandler.OnWeakPointsEventArgs e)
+    {
+        CheckDisableB(e.weakPoints);
     }
     #endregion
 }
