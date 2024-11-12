@@ -10,6 +10,11 @@ public class JournalInfoUI : MonoBehaviour
     [SerializeField] private JournalInfoSO journalInfoSO;
     [SerializeField] private JournalInfoContentUI journalInfoContentUI;
 
+    [Header("Settings")]
+    [SerializeField] private CollectionType collectionType;
+
+    private enum CollectionType { PopUpOpen, MouseEnter}
+
     public event EventHandler OnJournalInfoHide;
     public event EventHandler OnJournalInfoCollected;
     public event EventHandler OnJournalInfoChecked;
@@ -22,6 +27,7 @@ public class JournalInfoUI : MonoBehaviour
         JournalInfoManager.OnJournalInfoChecked += JournalInfoManager_OnJournalInfoChecked;
 
         journalInfoContentUI.OnPopUpOpened += JournalInfoContentUI_OnPopUpOpened;
+        journalInfoContentUI.OnMouseEnterContent += JournalInfoContentUI_OnMouseEnterContent;
     }
 
     private void OnDisable()
@@ -30,6 +36,7 @@ public class JournalInfoUI : MonoBehaviour
         JournalInfoManager.OnJournalInfoChecked -= JournalInfoManager_OnJournalInfoChecked;
 
         journalInfoContentUI.OnPopUpOpened -= JournalInfoContentUI_OnPopUpOpened;
+        journalInfoContentUI.OnMouseEnterContent -= JournalInfoContentUI_OnMouseEnterContent;
     }
 
     private void Start()
@@ -66,11 +73,25 @@ public class JournalInfoUI : MonoBehaviour
         OnJournalInfoChecked?.Invoke(this, EventArgs.Empty);
     }
 
-    private void JournalInfoContentUI_OnPopUpOpened(object sender, EventArgs e)
+    private void TryCheckJournalInfo()
     {
         if (!JournalInfoManager.Instance.CheckIfJournalContainsJournalInfoCheck(journalInfoSO)) return; //JournalInfo not collected
         if (JournalInfoManager.Instance.CheckIfJournalInfoIsChecked(journalInfoSO)) return; //JournalInfo alreadyChecked
 
         JournalInfoManager.Instance.CheckJournalInfo(journalInfoSO);
+    }
+
+    private void JournalInfoContentUI_OnPopUpOpened(object sender, EventArgs e)
+    {
+        if(collectionType != CollectionType.PopUpOpen) return;
+
+        TryCheckJournalInfo();
+    }
+
+    private void JournalInfoContentUI_OnMouseEnterContent(object sender, EventArgs e)
+    {
+        if (collectionType != CollectionType.MouseEnter) return;
+
+        TryCheckJournalInfo();
     }
 }
