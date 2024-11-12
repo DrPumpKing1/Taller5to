@@ -141,13 +141,14 @@ public class SFXPoolSO : ScriptableObject
     [Header("UI")]
     public AudioClip[] pauseOpen;
     public AudioClip[] pauseClose;
-
+    [Space]
     public AudioClip[] inventoryOpen;
     public AudioClip[] inventoryClose;
-
+    [Space]
     public AudioClip[] journalOpen;
     public AudioClip[] journalClose;
-
+    public AudioClip[] journalInfoCollected;
+    [Space]
     public AudioClip[] buttonClick1;
     public AudioClip[] buttonClick2;
     public AudioClip[] buttonClick3;

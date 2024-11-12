@@ -13,6 +13,8 @@ public class UnPausableSFXManager : SFXManager
         JournalOpeningManager.OnJournalOpen += JournalOpeningManager_OnJournalOpen;
         JournalOpeningManager.OnJournalClose += JournalOpeningManager_OnJournalClose;
 
+        JournalInfoManager.OnJournalInfoCollected += JournalInfoManager_OnJournalInfoCollected;
+
         PauseManager.OnGamePaused += PauseManager_OnGamePaused;
         PauseManager.OnGameResumed += PauseManager_OnGameResumed;
     }
@@ -24,6 +26,8 @@ public class UnPausableSFXManager : SFXManager
 
         JournalOpeningManager.OnJournalOpen -= JournalOpeningManager_OnJournalOpen;
         JournalOpeningManager.OnJournalClose -= JournalOpeningManager_OnJournalClose;
+
+        JournalInfoManager.OnJournalInfoCollected -= JournalInfoManager_OnJournalInfoCollected;
 
         PauseManager.OnGamePaused -= PauseManager_OnGamePaused;
         PauseManager.OnGameResumed -= PauseManager_OnGameResumed;
@@ -48,7 +52,7 @@ public class UnPausableSFXManager : SFXManager
         }
     }
 
-    #region  UI
+    #region  Inventory
     private void InventoryOpeningManager_OnInventoryOpen(object sender, System.EventArgs e)
     {
         PlaySound(SFXPoolSO.inventoryOpen);
@@ -59,6 +63,10 @@ public class UnPausableSFXManager : SFXManager
         PlaySound(SFXPoolSO.inventoryClose);
     }
 
+    #endregion
+
+    #region Journal
+
     private void JournalOpeningManager_OnJournalOpen(object sender, System.EventArgs e)
     {
         PlaySound(SFXPoolSO.journalOpen);
@@ -68,7 +76,14 @@ public class UnPausableSFXManager : SFXManager
     {
         PlaySound(SFXPoolSO.journalClose);
     }
+    private void JournalInfoManager_OnJournalInfoCollected(object sender, JournalInfoManager.OnJournalInfoEventArgs e)
+    {
+        PlaySound(SFXPoolSO.journalInfoCollected);
+    }
 
+    #endregion
+
+    #region Pause
     private void PauseManager_OnGamePaused(object sender, System.EventArgs e)
     {
         PlaySound(SFXPoolSO.pauseOpen);
