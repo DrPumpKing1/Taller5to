@@ -52,12 +52,25 @@ public class PausableSFXManager : SFXManager
         BossBeam.OnBeamPlatformTargeted += BossBeam_OnBeamPlatformTargeted;
         BossBeam.OnBeamPlatformStun += BossBeam_OnBeamPlatformStun;
         BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
+        BossShield.OnAnyBossShieldActivated += BossShield_OnAnyBossShieldActivated;
         BossShield.OnAnyBossShieldDeactivated += BossShield_OnBossShieldDeactivated;
         BossStateHandler.OnBossAlmostDefeated += BossStateHandler_OnBossAlmostDefeated;
         BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
 
+        ShowcaseRoomBeam.OnBeamChargeStart += ShowcaseRoomBeam_OnBeamChargeStart;
+        ShowcaseRoomBeam.OnBeamChargeEnd += ShowcaseRoomBeam_OnBeamChargeEnd;
+        ShowcaseRoomBeam.OnBeamPlatformTargeted += ShowcaseRoomBeam_OnBeamPlatformTargeted;
+        ShowcaseRoomBeam.OnBeamPlatformStun += ShowcaseRoomBeam_OnBeamPlatformStun;
+        ShowcaseRoomStateHandler.OnShowcaseRoomPhaseChangeStart += ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeStart;
+        ShowcaseRoomShield.OnAnyShowcaseRoomShieldActivated += ShowcaseRoomShield_OnAnyShowcaseRoomShieldActivated;
+        ShowcaseRoomShield.OnAnyShowcaseRoomShieldDeactivated += ShowcaseRoomShield_OnAnyShowcaseRoomShieldDeactivated;
+
         AncientRelicShield.OnAncientRelicShieldDepowered += AncientRelicShield_OnAncientRelicShieldDepowered;
+
+
     }
+
+    
 
     private void OnDisable()
     {
@@ -109,6 +122,14 @@ public class PausableSFXManager : SFXManager
         BossShield.OnAnyBossShieldDeactivated -= BossShield_OnBossShieldDeactivated;
         BossStateHandler.OnBossAlmostDefeated -= BossStateHandler_OnBossAlmostDefeated;
         BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
+
+        ShowcaseRoomBeam.OnBeamChargeStart -= ShowcaseRoomBeam_OnBeamChargeStart;
+        ShowcaseRoomBeam.OnBeamChargeEnd -= ShowcaseRoomBeam_OnBeamChargeEnd;
+        ShowcaseRoomBeam.OnBeamPlatformTargeted -= ShowcaseRoomBeam_OnBeamPlatformTargeted;
+        ShowcaseRoomBeam.OnBeamPlatformStun -= ShowcaseRoomBeam_OnBeamPlatformStun;
+        ShowcaseRoomStateHandler.OnShowcaseRoomPhaseChangeStart -= ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeStart;
+        ShowcaseRoomShield.OnAnyShowcaseRoomShieldActivated -= ShowcaseRoomShield_OnAnyShowcaseRoomShieldActivated;
+        ShowcaseRoomShield.OnAnyShowcaseRoomShieldDeactivated -= ShowcaseRoomShield_OnAnyShowcaseRoomShieldDeactivated;
 
         AncientRelicShield.OnAncientRelicShieldDepowered -= AncientRelicShield_OnAncientRelicShieldDepowered;
     }
@@ -453,6 +474,12 @@ public class PausableSFXManager : SFXManager
         PlaySound(SFXPoolSO.bossNextPhase);
     }
 
+    private void BossShield_OnAnyBossShieldActivated(object sender, System.EventArgs e)
+    {
+        BossShield bossShield = sender as BossShield;
+        PlaySoundAtPoint(SFXPoolSO.bossShieldActivated, bossShield.transform.position);
+    }
+
     private void BossShield_OnBossShieldDeactivated(object sender, System.EventArgs e)
     {
         BossShield bossShield = sender as BossShield;
@@ -475,6 +502,44 @@ public class PausableSFXManager : SFXManager
     {
         AncientRelicShield ancientRelicShield = sender as AncientRelicShield;
         PlaySoundAtPoint(SFXPoolSO.ancientRelicShieldDepowered, ancientRelicShield.transform.position);
+    }
+    #endregion
+
+    #region Showcase Rooms
+
+    private void ShowcaseRoomBeam_OnBeamChargeStart(object sender, ShowcaseRoomBeam.OnBeamEventArgs e)
+    {
+        PlaySoundAtPoint(SFXPoolSO.showcaseRoomBeamSphereCast, e.beamSphere.position);
+    }
+
+    private void ShowcaseRoomBeam_OnBeamChargeEnd(object sender, ShowcaseRoomBeam.OnBeamEventArgs e)
+    {
+        PlaySoundAtPoint(SFXPoolSO.showcaseRoomBeamSphereFade, e.beamSphere.position);
+    }
+
+    private void ShowcaseRoomBeam_OnBeamPlatformTargeted(object sender, ShowcaseRoomBeam.OnBeamPlatformTargetEventArgs e)
+    {
+        PlaySoundAtPoint(SFXPoolSO.showcaseRoomBeamSphereTargetLocked, e.stunableProjectionPlatformProjection.transform.position);
+    }
+
+    private void ShowcaseRoomBeam_OnBeamPlatformStun(object sender, ShowcaseRoomBeam.OnBeamPlatformStunEventArgs e)
+    {
+        PlaySoundAtPoint(SFXPoolSO.showcaseRoomDematerializationLightning, e.stunableProjectionPlatformProjection.transform.position);
+    }
+    private void ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeStart(object sender, ShowcaseRoomStateHandler.OnPhaseChangeEventArgs e)
+    {
+        PlaySound(SFXPoolSO.showcaseRoomNextPhase);
+    }
+    private void ShowcaseRoomShield_OnAnyShowcaseRoomShieldActivated(object sender, System.EventArgs e)
+    {
+        ShowcaseRoomShield showcaseRoomShield = sender as ShowcaseRoomShield;
+        PlaySoundAtPoint(SFXPoolSO.showcaseRoomShieldActivated, showcaseRoomShield.transform.position);
+    }
+
+    private void ShowcaseRoomShield_OnAnyShowcaseRoomShieldDeactivated(object sender, System.EventArgs e)
+    {
+        ShowcaseRoomShield showcaseRoomShield = sender as ShowcaseRoomShield;
+        PlaySoundAtPoint(SFXPoolSO.showcaseRoomShieldDeactivated, showcaseRoomShield.transform.position);
     }
     #endregion
 }

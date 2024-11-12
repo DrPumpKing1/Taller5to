@@ -37,6 +37,7 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip[] objectFailedProjection;
     public AudioClip startDematerialization;
     public AudioClip[] objectDematerialization;
+    public AudioClip startDematerializationAll;
     public AudioClip[] projectionResetObjectUsed;
 
     [Header("Exact Object Projection")]
@@ -118,10 +119,21 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip[] bossBeamSphereFade;
     public AudioClip[] bossBeamSphereTargetLocked;
     public AudioClip[] bossDematerializationLightning;
+    public AudioClip[] bossShieldActivated;
     public AudioClip[] bossShieldDeactivated;
     public AudioClip[] bossNextPhase;
     public AudioClip[] bossAlmostDefeated;
     public AudioClip[] bossDefeated;
+
+    [Header("Showcase Rooms")]
+    public AudioClip showcaseRoomBeamSphereStart;
+    public AudioClip[] showcaseRoomBeamSphereCast;
+    public AudioClip[] showcaseRoomBeamSphereFade;
+    public AudioClip[] showcaseRoomBeamSphereTargetLocked;
+    public AudioClip[] showcaseRoomDematerializationLightning;
+    public AudioClip[] showcaseRoomShieldActivated;
+    public AudioClip[] showcaseRoomShieldDeactivated;
+    public AudioClip[] showcaseRoomNextPhase;
 
     [Header("Ancient Relic")]
     public AudioClip[] ancientRelicShieldDepowered;
