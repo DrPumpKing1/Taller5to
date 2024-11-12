@@ -150,6 +150,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skull2
       objectReference: {fileID: 0}
+    - target: {fileID: 2093751788050869619, guid: 612ea8a7b81f691499fee8130f65866c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6545dded677432d4f992d5d25f31d471, type: 2}
     - target: {fileID: 6740429407350700355, guid: 612ea8a7b81f691499fee8130f65866c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

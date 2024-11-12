@@ -170,6 +170,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ribs2
       objectReference: {fileID: 0}
+    - target: {fileID: 2019184089454999823, guid: 6f09f32e6a4638046b36b0b1d4476fb3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cc5c847c3bfbc9b4eaf5a2544380b38f, type: 2}
+    - target: {fileID: 2019184089454999823, guid: 6f09f32e6a4638046b36b0b1d4476fb3, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: d93147592f536e249aab0fc4e54327eb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -150,6 +150,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bone2
       objectReference: {fileID: 0}
+    - target: {fileID: 1660699601133117161, guid: 65450ff02c7f1274991c2f6bc7c67bd6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f544fa7792752f14298ef4ddba69486d, type: 2}
     - target: {fileID: 2489902105813755480, guid: 65450ff02c7f1274991c2f6bc7c67bd6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

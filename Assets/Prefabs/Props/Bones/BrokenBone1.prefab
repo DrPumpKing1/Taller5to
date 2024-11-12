@@ -170,6 +170,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BrokenBone1
       objectReference: {fileID: 0}
+    - target: {fileID: 8007291899976969898, guid: f2b61bd62f895524db995198dd94c33a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e41f2f72cabf1fc4f9763fc0d3209091, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

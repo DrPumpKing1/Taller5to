@@ -146,6 +146,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7187993937413616092, guid: e5bbea9ed0d3e6144a4b1874973a6f83, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ee134b8e9dbcb2e4986c90dfbfe133ba, type: 2}
+    - target: {fileID: -7187993937413616092, guid: e5bbea9ed0d3e6144a4b1874973a6f83, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a4269604698e5c438898c0f5cfaf2cc, type: 2}
     - target: {fileID: 919132149155446097, guid: e5bbea9ed0d3e6144a4b1874973a6f83, type: 3}
       propertyPath: m_Name
       value: Ribs1
