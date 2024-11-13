@@ -72,6 +72,9 @@ VisualEffect:
       - m_Value: 1
         m_Name: ParticleLifetime
         m_Overridden: 1
+      - m_Value: 0.075
+        m_Name: Dispersion
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -242,6 +245,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166f64f34337edc41bf91c20af5641bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableVFX: 1
   electrode: {fileID: 0}
   cableVFX: {fileID: 4183070693908683159}
+  enableVFX: 1
+  onColor: {r: 0, g: 2.9960785, b: 0.287767, a: 1}
+  onParticleRatio: 200
+  onParticleScale: 0.1
+  onDispersion: 0.075
+  offColor: {r: 0.24047701, g: 0.26415092, b: 0.24478136, a: 1}
+  offParticleRatio: 200
+  offParticleScale: 0.15
+  offDispersion: 0.05
