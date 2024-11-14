@@ -8,11 +8,11 @@ public class AchievementsDataPersistenceManager : DataPersistenceManager<Achieve
 
     private void OnEnable()
     {
-        AchievementManager.OnAchievementAchieved += AchievementManager_OnAchievementAchieved;
+        AchievementsManager.OnAchievementAchieved += AchievementsManager_OnAchievementAchieved;
     }
     private void OnDisable()
     {
-        AchievementManager.OnAchievementAchieved -= AchievementManager_OnAchievementAchieved;
+        AchievementsManager.OnAchievementAchieved -= AchievementsManager_OnAchievementAchieved;
     }
 
     protected override void SetSingleton()
@@ -30,7 +30,7 @@ public class AchievementsDataPersistenceManager : DataPersistenceManager<Achieve
 
     #region CheckpointManager Subscriptions
 
-    private void AchievementManager_OnAchievementAchieved(object sender, AchievementManager.OnAchievementAchievedEventArgs e)
+    private void AchievementsManager_OnAchievementAchieved(object sender, AchievementsManager.OnAchievementAchievedEventArgs e)
     {
         SaveGameData();
     }

@@ -149,6 +149,8 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip[] journalClose;
     public AudioClip[] journalInfoCollected;
     [Space]
+    public AudioClip[] achievementAchieved;
+    [Space]
     public AudioClip[] buttonClick1;
     public AudioClip[] buttonClick2;
     public AudioClip[] buttonClick3;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class UnPausableSFXManager : SFXManager
 {
     public static UnPausableSFXManager Instance { get; private set; }
+
     private void OnEnable()
     {
         InventoryOpeningManager.OnInventoryOpen += InventoryOpeningManager_OnInventoryOpen;
@@ -14,6 +15,8 @@ public class UnPausableSFXManager : SFXManager
         JournalOpeningManager.OnJournalClose += JournalOpeningManager_OnJournalClose;
 
         JournalInfoManager.OnJournalInfoCollected += JournalInfoManager_OnJournalInfoCollected;
+
+        AchievementsManager.OnAchievementAchieved += AchievementsManager_OnAchievementAchieved;
 
         PauseManager.OnGamePaused += PauseManager_OnGamePaused;
         PauseManager.OnGameResumed += PauseManager_OnGameResumed;
@@ -28,6 +31,8 @@ public class UnPausableSFXManager : SFXManager
         JournalOpeningManager.OnJournalClose -= JournalOpeningManager_OnJournalClose;
 
         JournalInfoManager.OnJournalInfoCollected -= JournalInfoManager_OnJournalInfoCollected;
+
+        AchievementsManager.OnAchievementAchieved -= AchievementsManager_OnAchievementAchieved;
 
         PauseManager.OnGamePaused -= PauseManager_OnGamePaused;
         PauseManager.OnGameResumed -= PauseManager_OnGameResumed;
@@ -81,6 +86,13 @@ public class UnPausableSFXManager : SFXManager
         PlaySound(SFXPoolSO.journalInfoCollected);
     }
 
+    #endregion
+
+    #region Achievements
+    private void AchievementsManager_OnAchievementAchieved(object sender, AchievementsManager.OnAchievementAchievedEventArgs e)
+    {
+        PlaySound(SFXPoolSO.achievementAchieved);
+    }
     #endregion
 
     #region Pause

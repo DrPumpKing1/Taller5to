@@ -29,12 +29,12 @@ public class AchievementsUI : MonoBehaviour
 
     private void OnEnable()
     {
-        AchievementManager.OnAchievementAchieved += AchievementManager_OnAchievementAchieved;
+        AchievementsManager.OnAchievementAchieved += AchievementsManager_OnAchievementAchieved;
     }
 
     private void OnDisable()
     {
-        AchievementManager.OnAchievementAchieved -= AchievementManager_OnAchievementAchieved;
+        AchievementsManager.OnAchievementAchieved -= AchievementsManager_OnAchievementAchieved;
     }
 
     private void Start()
@@ -81,7 +81,7 @@ public class AchievementsUI : MonoBehaviour
         SetState(State.Hidden);
     }
 
-    private void AchievementManager_OnAchievementAchieved(object sender, AchievementManager.OnAchievementAchievedEventArgs e)
+    private void AchievementsManager_OnAchievementAchieved(object sender, AchievementsManager.OnAchievementAchievedEventArgs e)
     {
         if (state != State.Hidden) return;
         StopAllCoroutines();

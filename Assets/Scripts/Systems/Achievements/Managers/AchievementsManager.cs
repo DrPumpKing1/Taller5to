@@ -4,9 +4,9 @@ using UnityEngine;
 using System;
 using JetBrains.Annotations;
 
-public class AchievementManager : MonoBehaviour
+public class AchievementsManager : MonoBehaviour
 {
-    public static AchievementManager Instance { get; private set; }
+    public static AchievementsManager Instance { get; private set; }
 
     [Header("Debug")]
     [SerializeField] private bool debug;    
