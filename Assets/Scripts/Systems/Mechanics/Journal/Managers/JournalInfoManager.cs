@@ -164,6 +164,12 @@ public class JournalInfoManager : MonoBehaviour
     }
     #endregion
 
+    #region Count
+    public int GetJournalInfoCompletePoolQuantity() => completeJournalInfoLogPool.Count;
+    public int GetJournalInfoCollectedQuantity() => journalInfoCollectedChecked.Count;
+    public bool HasCollectedAllJournalInfo() => GetJournalInfoCollectedQuantity() >= GetJournalInfoCompletePoolQuantity();
+    #endregion
+
     #region Check Journal Info
     public void CheckJournalInfo(JournalInfoSO journalInfoToCheck)
     {
