@@ -11,6 +11,8 @@ public abstract class Achievement : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private bool hasBeenAchieved;
 
+    public int ID => achievementSO.id;
+    public bool IsAchieved => hasBeenAchieved;
 
     public static event EventHandler<OnAchievementAchievedEventArgs> OnAchievementAchieved;
 

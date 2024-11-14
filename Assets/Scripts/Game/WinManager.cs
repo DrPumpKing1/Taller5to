@@ -9,6 +9,8 @@ public class WinManager : MonoBehaviour
     [SerializeField] private string logToWin;
     [SerializeField] private string transitionScene;
     [SerializeField, Range(1f, 10f)] private float timeToTransitionAfterWin;
+    [Space]
+    [SerializeField] private bool deleteAchievementsDataOnWin;
 
     public static event EventHandler OnWin;
 
@@ -27,6 +29,15 @@ public class WinManager : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(WinCoroutine());
     }
+    private IEnumerator WinCoroutine()
+    {
+        OnWin?.Invoke(this, EventArgs.Empty);
+
+        yield return new WaitForSeconds(timeToTransitionAfterWin);
+        ScenesManager.Instance.FadeLoadTargetScene(transitionScene);
+
+        DeleteAllData();
+    }
 
     private void DeleteAllData()
     {
@@ -36,20 +47,13 @@ public class WinManager : MonoBehaviour
         UIDataPersistenceManager.Instance.DeleteGameData();
         LogDataPersistenceManager.Instance.DeleteGameData();
         JournalDataPersistenceManager.Instance.DeleteGameData();
-    }
 
-    private IEnumerator WinCoroutine()
-    {
-        yield return new WaitForSeconds(timeToTransitionAfterWin);
-        ScenesManager.Instance.FadeLoadTargetScene(transitionScene);
-
-        DeleteAllData();
+        if(deleteAchievementsDataOnWin) AchievementsDataPersistenceManager.Instance.DeleteGameData();
     }
 
     private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
         if (e.gameplayAction.log != logToWin) return;
         Win();
-        OnWin?.Invoke(this, EventArgs.Empty);
     }
 }
