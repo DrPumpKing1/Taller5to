@@ -12,7 +12,7 @@ public class ScaleToCamera : MonoBehaviour
     private GameObject player;
 
     private const string PLAYER_TAG = "Player";
-    private const float PLAYER_DISTANCE_TO_UPDATE = 10f;
+    private const float PLAYER_DISTANCE_TO_UPDATE = 12.5f;
 
     private void Start()
     {

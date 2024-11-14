@@ -11,6 +11,11 @@ public class JournalInfoCollectedPopUpUI : MonoBehaviour
     [Header("Settings")]
     [SerializeField, Range(2f, 10f)] private float timeShowingPopUp;
 
+    [Header("States")]
+    [SerializeField] private State state;
+
+    private enum State { Hidden, ShowingIn, Showing, ShowingOut } 
+
     private const string SHOW_TRIGGER = "Show";
     private const string HIDE_TRIGGER = "Hide";
 
@@ -27,6 +32,13 @@ public class JournalInfoCollectedPopUpUI : MonoBehaviour
         JournalInfoManager.OnJournalInfoCollected -= JournalInfoManager_OnJournalInfoCollected;
     }
 
+    private void Start()
+    {
+        SetState(State.Hidden);
+    }
+
+    private void SetState(State state) => this.state = state;
+
     private void ShowPopUp()
     {
         journalInfoCollectedPopUpUIAnimator.ResetTrigger(HIDE_TRIGGER);
@@ -40,17 +52,27 @@ public class JournalInfoCollectedPopUpUI : MonoBehaviour
 
     private IEnumerator PopUpIndicatorCoroutine()
     {
+        SetState(State.ShowingIn);
+
         ShowPopUp();
         yield return new WaitForSeconds(SHOW_TIME);
 
+        SetState(State.Showing);
+
         yield return new WaitForSeconds(timeShowingPopUp);
+
+        SetState(State.ShowingOut);
+
         HidePopUp();
 
         yield return new WaitForSeconds(HIDE_TIME);
+
+        SetState(State.Hidden);
     }
 
     private void JournalInfoManager_OnJournalInfoCollected(object sender, JournalInfoManager.OnJournalInfoEventArgs e)
     {
+        if (state != State.Hidden) return;
         StopAllCoroutines();
         StartCoroutine(PopUpIndicatorCoroutine());
     }

@@ -51,6 +51,7 @@ public class CameraScroll : MonoBehaviour
     private void Update()
     {
         HandlePlayerCameraScroll();
+        CalculateCurrentScrollFactor();
     }
 
     private void LateUpdate()
@@ -79,7 +80,6 @@ public class CameraScroll : MonoBehaviour
         SmoothInput();
         CalculateDesiredDistance();
         SmoothDistance();
-        CalculateCurrentScrollFactor();
     }
 
     private void SetOrthoSizeRefferences()

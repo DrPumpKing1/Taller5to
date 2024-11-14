@@ -296,7 +296,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2481312280221989330}
   - component: {fileID: 6792362280331906923}
-  - component: {fileID: 4533296404294551339}
   m_Layer: 0
   m_Name: Visuals
   m_TagString: Untagged
@@ -336,18 +335,6 @@ MonoBehaviour:
   turnOnSpeed: 5
   turnOffSpeed: 5
   state: 0
---- !u!114 &4533296404294551339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8425329861806723703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c94302747dc0cf41b948fb6153b0aa2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3862432537885306206
 PrefabInstance:
   m_ObjectHideFlags: 0
