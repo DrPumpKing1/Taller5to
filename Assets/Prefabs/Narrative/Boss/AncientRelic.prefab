@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3260369499609817628}
   - component: {fileID: 4150414072591329746}
+  - component: {fileID: 6321920029641249112}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -31,6 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5710743149406395123}
+  - {fileID: 4151485102202084113}
   m_Father: {fileID: 1286970370104639652}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4150414072591329746
@@ -54,6 +56,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8, y: 0.8, z: 0.8}
   m_Center: {x: 0, y: 0.4, z: 0}
+--- !u!114 &6321920029641249112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113903034484247514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 277002decf6bb244795a2638650ae0aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ancientRelic: {fileID: 4600703275319845849}
+  visual: {fileID: 5710743149406395123}
+  _collider: {fileID: 4150414072591329746}
 --- !u!1 &1178955993307754970
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed72115d573758a41b850ed836db2a3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 3260369499609817628}
   horizontalInteractionRange: 4
   verticalInteractionRange: 2
   canBeSelected: 1
@@ -289,6 +305,72 @@ MonoBehaviour:
   grabPlayerAttention: 1
   interactionAttentionTransform: {fileID: 8113911913073056384}
   interactionPositionTransform: {fileID: 0}
+--- !u!1001 &4597885632162955546
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3260369499609817628}
+    m_Modifications:
+    - target: {fileID: 455973155788741131, guid: 616802c694bb8414092144c0d245a2a8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 455973155788741131, guid: 616802c694bb8414092144c0d245a2a8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 455973155788741131, guid: 616802c694bb8414092144c0d245a2a8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 455973155788741131, guid: 616802c694bb8414092144c0d245a2a8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 455973155788741131, guid: 616802c694bb8414092144c0d245a2a8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 455973155788741131, guid: 616802c694bb8414092144c0d245a2a8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 455973155788741131, guid: 616802c694bb8414092144c0d245a2a8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 455973155788741131, guid: 616802c694bb8414092144c0d245a2a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 455973155788741131, guid: 616802c694bb8414092144c0d245a2a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 455973155788741131, guid: 616802c694bb8414092144c0d245a2a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 672458857205168113, guid: 616802c694bb8414092144c0d245a2a8, type: 3}
+      propertyPath: ancientRelic
+      value: 
+      objectReference: {fileID: 4600703275319845849}
+    - target: {fileID: 4905254238748244668, guid: 616802c694bb8414092144c0d245a2a8, type: 3}
+      propertyPath: m_Name
+      value: AncientRelicCollectedVFX
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 616802c694bb8414092144c0d245a2a8, type: 3}
+--- !u!4 &4151485102202084113 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 455973155788741131, guid: 616802c694bb8414092144c0d245a2a8, type: 3}
+  m_PrefabInstance: {fileID: 4597885632162955546}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5001334690578495481
 PrefabInstance:
   m_ObjectHideFlags: 0
