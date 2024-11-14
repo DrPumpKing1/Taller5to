@@ -134,6 +134,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 45fbfbd8468df29448d390e304346b26, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a2d5852d3aff6614a935be12821d36dc, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 45fbfbd8468df29448d390e304346b26, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 289d5433757c0794b90922b69a0d8828, type: 2}
     - target: {fileID: 919132149155446097, guid: 45fbfbd8468df29448d390e304346b26, type: 3}
       propertyPath: m_Name
       value: Flowers11
