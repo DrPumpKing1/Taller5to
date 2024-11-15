@@ -14,12 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 42
   movementLimitType: 1
+  dialogueType: 0
   allowSkip: 1
+  lookAtPlayer: 0
+  lookAtPet: 0
   sentences:
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
     text: The Ancient Relic! It's protected by some kind of shield.
     time: 6
-  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+    audioClip: {fileID: 0}
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
     text: To disable that shield, we need to drain all the <i>K'aerum</i> powering
       it. We need to use the <i>D'ryna</i>!
     time: 8
+    audioClip: {fileID: 0}

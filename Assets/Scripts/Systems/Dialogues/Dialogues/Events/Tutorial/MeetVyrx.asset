@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   movementLimitType: 2
+  dialogueType: 0
   allowSkip: 1
   lookAtPlayer: 0
   lookAtPet: 0
@@ -22,7 +23,7 @@ MonoBehaviour:
     text: Stay there and don't move!
     time: 5
     audioClip: {fileID: 0}
-  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
     text: No need to fight, put that down.
     time: 5
     audioClip: {fileID: 0}
@@ -30,7 +31,7 @@ MonoBehaviour:
     text: On the ground, mutt!
     time: 4
     audioClip: {fileID: 0}
-  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
     text: "Hey, listen, I know your type, the so-called \u2018space pirates\u2019,
       not everything must end in death. Let's make a survival deal."
     time: 8
@@ -39,7 +40,7 @@ MonoBehaviour:
     text: Why should I trust you?
     time: 4
     audioClip: {fileID: 0}
-  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
     text: 'I have the advantage here, you are stepping on my land.
 
       Take advantage

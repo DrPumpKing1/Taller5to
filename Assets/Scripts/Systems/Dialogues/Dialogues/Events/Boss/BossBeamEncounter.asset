@@ -14,19 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 38
   movementLimitType: 2
+  dialogueType: 0
   allowSkip: 1
   lookAtPlayer: 0
   lookAtPet: 0
   sentences:
-  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
     text: The <i>Sinaru Ga'adian</i> has the ability to channel an energy beam!
     time: 7
     audioClip: {fileID: 0}
-  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
     text: It can dematerialize my projected objects at will.
     time: 5
     audioClip: {fileID: 0}
-  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
     text: The <i>D'ryna</i> was known as a counter to this ability. It redirects
       the beam target!
     time: 6.5

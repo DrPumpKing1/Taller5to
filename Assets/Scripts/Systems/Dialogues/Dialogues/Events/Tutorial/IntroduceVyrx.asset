@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 4
   movementLimitType: 0
+  dialogueType: 0
   allowSkip: 1
   lookAtPlayer: 1
+  lookAtPet: 0
   sentences:
-  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
     text: This is the sacred house of <i>Ka'hoshita</i>, the temple <i>Katzilonhys</i>,
       so I can only ask you kindly, to show the respect my lady deserves.
     time: 9

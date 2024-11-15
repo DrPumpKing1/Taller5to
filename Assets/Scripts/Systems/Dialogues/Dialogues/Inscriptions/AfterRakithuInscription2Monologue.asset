@@ -14,23 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   movementLimitType: 0
+  dialogueType: 0
   allowSkip: 1
+  lookAtPlayer: 0
+  lookAtPet: 0
   sentences:
-  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
     text: As if they know all the context. Zurryth is a race not everyone is able
       to understand, my people are stronger than they give credit for.
     time: 9
+    audioClip: {fileID: 0}
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
     text: "You defend your people over everything\u2026 being loyal is not always
       good. These words\u2026 made them look like true assholes.\r\n"
     time: 9
-  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+    audioClip: {fileID: 0}
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
     text: "You have no right to judge me, you don't know anything about us. \r\n"
     time: 5
-  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+    audioClip: {fileID: 0}
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
     text: 'The Zurryth are powerful because of the way they are raised, you, human,
       wouldn''t get it. You might think you are so tough,but you haven''t seen my
       people. We only need ourselves, unless necessity tells us otherwise.
 
 '
     time: 13
+    audioClip: {fileID: 0}

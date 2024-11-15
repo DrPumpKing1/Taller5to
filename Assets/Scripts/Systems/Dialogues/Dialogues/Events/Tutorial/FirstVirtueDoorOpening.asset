@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 13
   movementLimitType: 1
+  dialogueType: 0
   allowSkip: 1
   lookAtPlayer: 1
+  lookAtPet: 0
   sentences:
-  - speaker: {fileID: 11400000, guid: 3af24f04af4ade34eacfbe83f7f5c05e, type: 2}
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
     text: This is one of many trials, the shield of the <i>Zurryth</i> is showing
       its value and letting you pass.
     time: 7

@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 202
   movementLimitType: 0
+  dialogueType: 0
   allowSkip: 1
   lookAtPlayer: 0
   lookAtPet: 0
   sentences:
-  - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
     text: Just weird looking seeds, nothing special.
     time: 5
     audioClip: {fileID: 0}
