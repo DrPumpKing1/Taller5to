@@ -16,7 +16,7 @@ public class CollectAllJournalInfoAchievement : Achievement
 
     protected override bool CheckCondition()
     {
-        if (JournalInfoManager.Instance.HasCollectedAllJournalInfo()) return true;
+        //if (JournalInfoManager.Instance.HasCollectedAllJournalInfo()) return true;
         return false;
     }
 
