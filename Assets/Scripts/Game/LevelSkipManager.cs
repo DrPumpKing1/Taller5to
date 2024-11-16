@@ -132,6 +132,8 @@ public class LevelSkipManager : MonoBehaviour
         ObjectsDataPersistenceManager.Instance.SaveGameData();
         UIDataPersistenceManager.Instance.SaveGameData();
         LogDataPersistenceManager.Instance.SaveGameData();
+        JournalDataPersistenceManager.Instance.SaveGameData();
+        AchievementsDataPersistenceManager.Instance.SaveGameData();
 
         ScenesManager.Instance.FadeReloadCurrentScene();
     }
