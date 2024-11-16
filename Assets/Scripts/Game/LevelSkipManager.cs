@@ -32,6 +32,7 @@ public class LevelSkipManager : MonoBehaviour
         [Space]
         public List<ProjectableObjectSO> projectableObjectsSOs;
         public List<ShieldPieceSO> shieldPiecesSOs;
+        public List<JournalInfoSO> journalInfoSOs;
         [Space]
         public List<DialogueSO> uniqueDialoguesTriggered;
         public List<MonologueSO> uniqueMonologuesTriggered;
@@ -111,6 +112,7 @@ public class LevelSkipManager : MonoBehaviour
 
         ProjectableObjectsLearningManager.Instance.ReplaceProjectableObjectsList(levelSettings.projectableObjectsSOs);
         ShieldPiecesManager.Instance.ReplaceShieldPiecesCollectedList(levelSettings.shieldPiecesSOs);
+        JournalInfoManager.Instance.ReplaceJournalInfoCollectedList(levelSettings.journalInfoSOs);
 
         ReplaceSwitchesToggled(levelSettings.switchesToggledIDs);
 
