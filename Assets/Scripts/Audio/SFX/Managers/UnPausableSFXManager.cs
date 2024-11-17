@@ -106,7 +106,7 @@ public class UnPausableSFXManager : SFXManager
     }
     #endregion
 
-    #region Buttons
+    #region Regular Buttons
     public void PlaySFXButtonClick1()
     {
         PlaySound(SFXPoolSO.buttonClick1);
@@ -120,6 +120,23 @@ public class UnPausableSFXManager : SFXManager
     public void PlaySFXButtonClick3()
     {
         PlaySound(SFXPoolSO.buttonClick3);
+    }
+    #endregion
+
+    #region Journal Buttons
+    public void PlaySFXJournalButtonClick1()
+    {
+        PlaySound(SFXPoolSO.journalButtonClick1);
+    }
+
+    public void PlaySFXJournalButtonClick2()
+    {
+        PlaySound(SFXPoolSO.journalButtonClick2);
+    }
+
+    public void PlaySFXJournalButtonClick3()
+    {
+        PlaySound(SFXPoolSO.journalButtonClick3);
     }
     #endregion
 }

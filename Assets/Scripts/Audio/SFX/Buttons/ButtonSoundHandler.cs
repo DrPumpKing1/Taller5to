@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ButtonSoundHandler : MonoBehaviour
 {
+    #region Relugar Buttons
     public void PlaySFXButtonClick1()
     {
         if (!UnPausableSFXManager.Instance) return;
@@ -21,4 +22,26 @@ public class ButtonSoundHandler : MonoBehaviour
         if (!UnPausableSFXManager.Instance) return;
         UnPausableSFXManager.Instance.PlaySFXButtonClick3();
     }
+
+    #endregion
+
+    #region Journal Buttons
+    public void PlaySFXJournalButtonClick1()
+    {
+        if (!UnPausableSFXManager.Instance) return;
+        UnPausableSFXManager.Instance.PlaySFXButtonClick3();
+    }
+
+    public void PlaySFXJournalButtonClick2()
+    {
+        if (!UnPausableSFXManager.Instance) return;
+        UnPausableSFXManager.Instance.PlaySFXButtonClick3();
+    }
+
+    public void PlaySFXJournalButtonClick3()
+    {
+        if (!UnPausableSFXManager.Instance) return;
+        UnPausableSFXManager.Instance.PlaySFXButtonClick3();
+    }
+    #endregion
 }

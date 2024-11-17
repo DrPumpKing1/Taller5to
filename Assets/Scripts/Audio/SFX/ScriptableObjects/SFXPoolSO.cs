@@ -154,4 +154,8 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip[] buttonClick1;
     public AudioClip[] buttonClick2;
     public AudioClip[] buttonClick3;
+    [Space]
+    public AudioClip[] journalButtonClick1;
+    public AudioClip[] journalButtonClick2;
+    public AudioClip[] journalButtonClick3;
 }

@@ -12,6 +12,7 @@ public class PetPositioningHandler : MonoBehaviour
     [SerializeField] private PlayerInteractAlternate playerInteractAlternate;
 
     [Header("Initial Position Settings")]
+    [SerializeField] private bool instantPositionOnInitialAttach;
     [SerializeField] private Vector3 startPositionOffsetFromOrbitPoint;
 
     [Header("Player Follow Settings")]
@@ -57,6 +58,8 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void OnEnable()
     {
+        PetPlayerAttachment.OnVyrxInitialAttachToPlayer += PetPlayerAttachment_OnVyrxInitialAttachToPlayer;
+
         PlayerPositioningHandler.OnPlayerStartPositionedFirstUpdate += PlayerStartPositioning_OnPlayerStartPositionedFirstUpdate;
         PlayerPositioningHandler.OnPlayerInstantPositioned += PlayerPositioningHandler_OnPlayerInstantPositioned;
 
@@ -69,6 +72,8 @@ public class PetPositioningHandler : MonoBehaviour
 
     private void OnDisable()
     {
+        PetPlayerAttachment.OnVyrxInitialAttachToPlayer -= PetPlayerAttachment_OnVyrxInitialAttachToPlayer;
+
         PlayerPositioningHandler.OnPlayerStartPositionedFirstUpdate -= PlayerStartPositioning_OnPlayerStartPositionedFirstUpdate;
         PlayerPositioningHandler.OnPlayerInstantPositioned -= PlayerPositioningHandler_OnPlayerInstantPositioned;
 
@@ -265,6 +270,14 @@ public class PetPositioningHandler : MonoBehaviour
     private void PlayerInteractAlternate_OnInteractionAlternateEnded(object sender, PlayerInteractAlternate.OnInteractionAlternateEventArgs e)
     {
         ClearInteractionPositionTransform();
+    }
+    #endregion
+
+    #region PetPlayerAttachment Subscriptions
+    private void PetPlayerAttachment_OnVyrxInitialAttachToPlayer(object sender, EventArgs e)
+    {
+        if (!instantPositionOnInitialAttach) return;
+        InstantPositionPet(preferredDirectionVectors[0], orbitRadius);
     }
     #endregion
 }
