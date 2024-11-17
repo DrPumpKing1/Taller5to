@@ -29,19 +29,19 @@ public class ButtonSoundHandler : MonoBehaviour
     public void PlaySFXJournalButtonClick1()
     {
         if (!UnPausableSFXManager.Instance) return;
-        UnPausableSFXManager.Instance.PlaySFXButtonClick3();
+        UnPausableSFXManager.Instance.PlaySFXJournalButtonClick1();
     }
 
     public void PlaySFXJournalButtonClick2()
     {
         if (!UnPausableSFXManager.Instance) return;
-        UnPausableSFXManager.Instance.PlaySFXButtonClick3();
+        UnPausableSFXManager.Instance.PlaySFXJournalButtonClick2();
     }
 
     public void PlaySFXJournalButtonClick3()
     {
         if (!UnPausableSFXManager.Instance) return;
-        UnPausableSFXManager.Instance.PlaySFXButtonClick3();
+        UnPausableSFXManager.Instance.PlaySFXJournalButtonClick3();
     }
     #endregion
 }
