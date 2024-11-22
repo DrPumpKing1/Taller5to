@@ -5,6 +5,9 @@ using System;
 
 public class ProjectionResetObject : MonoBehaviour, IHoldInteractable
 {
+    [Header("Identifiers")]
+    [SerializeField] private int id;
+
     [Header("Interactable Settings")]
     [SerializeField, Range(1f, 100f)] private float horizontalInteractionRange;
     [SerializeField, Range(1f, 100f)] private float verticalInteractionRange;
@@ -49,11 +52,15 @@ public class ProjectionResetObject : MonoBehaviour, IHoldInteractable
     public event EventHandler OnObjectsDematerialized;
     public event EventHandler OnNoObjectsToDematerialize;
 
-    public static event EventHandler OnAnyProjectionResetObjectUsed;
+    public static event EventHandler<OnProjectionResetObjectEventArgs> OnAnyProjectionResetObjectUsed;
 
     public static event EventHandler OnAnyStartProjectionResetObjectUse;
     public static event EventHandler OnAnyEndProjectionResetObjectUse;
 
+    public class OnProjectionResetObjectEventArgs : EventArgs
+    {
+        public int id;
+    }
 
     #region IHoldInteractable Methods
     public void Select()
@@ -152,6 +159,6 @@ public class ProjectionResetObject : MonoBehaviour, IHoldInteractable
         OnUpdatedInteractableState?.Invoke(this, EventArgs.Empty);
 
         ProjectionManager.Instance.DematerializeAllObjects();
-        OnAnyProjectionResetObjectUsed?.Invoke(this, EventArgs.Empty);
+        OnAnyProjectionResetObjectUsed?.Invoke(this, new OnProjectionResetObjectEventArgs { id = id});
     }
 }

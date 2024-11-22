@@ -79,5 +79,9 @@ public class LogListenerInteraction : MonoBehaviour
         GameLogManager.Instance.Log($"Interaction/DeactivateObjectExact/{e.projectableObjectSO.id}/{e.projectionPlatformID}");
     }
 
-    private void ProjectionResetObject_OnAnyProjectionResetObjectUsed(object sender, System.EventArgs e) => GameLogManager.Instance.Log($"Interaction/ProjectionResetObjectUsed");
+    private void ProjectionResetObject_OnAnyProjectionResetObjectUsed(object sender, ProjectionResetObject.OnProjectionResetObjectEventArgs e)
+    {
+        GameLogManager.Instance.Log($"Interaction/ProjectionResetObjectUsed");
+        GameLogManager.Instance.Log($"Interaction/ProjectionResetObjectUsedExact/{e.id}");
+    }
 }
