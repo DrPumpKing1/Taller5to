@@ -17,6 +17,16 @@ public static class GeneralRenderingMethods
     }
     #endregion
 
+    public static void SetMaterialEmissionColor(Material material, Color color, float intensity)
+    {
+        if (!material.HasProperty("_EmissionColor")) return;
+
+        Color finalColor = color * Mathf.LinearToGammaSpace(intensity);
+
+        material.EnableKeyword("_EMISSION");
+        material.SetColor("_EmissionColor", finalColor);
+    }
+
     #region Lights
     public static void SetLightIntensity(Light light, float intensity) => light.intensity = intensity;
     public static void SetLightsIntensity(List<Light> lights, float intensity)
