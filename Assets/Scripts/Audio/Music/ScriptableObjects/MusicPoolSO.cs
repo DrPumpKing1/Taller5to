@@ -39,8 +39,12 @@ public class MusicPoolSO : ScriptableObject
     public AudioClip vythanu4;
 
     [Header("Boss")]
-    public AudioClip boss;
-    public AudioClip afterBoss;
+    public AudioClip boss0;
+    public AudioClip boss1;
+    public AudioClip boss2;
+    public AudioClip boss3;
+    public AudioClip bossAlmostDefeated;
+    public AudioClip bossDefeated;
 
     [Header("Showcase")]
     public AudioClip showcase;

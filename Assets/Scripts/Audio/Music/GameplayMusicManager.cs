@@ -30,10 +30,11 @@ public class GameplayMusicManager : MonoBehaviour
         CinematicsManager.OnCinematicStart += CinematicsManager_OnCinematicStart;
         CinematicsManager.OnCinematicEnd += CinematicsManager_OnCinematicEnd;
 
-        BossStateHandlerOld.OnBossDefeated += BossStateHandler_OnBossDefeated;
+        BossStateHandler.OnBossPhaseChangeMidA += BossStateHandler_OnBossPhaseChangeMidA;
+        BossStateHandler.OnBossAlmostDefeated += BossStateHandler_OnBossAlmostDefeated;
+        BossStateHandler.OnBossDefeated += BossStateHandler_OnBossDefeated;
     }
 
-    
 
     private void OnDisable()
     {
@@ -45,7 +46,9 @@ public class GameplayMusicManager : MonoBehaviour
         CinematicsManager.OnCinematicStart -= CinematicsManager_OnCinematicStart;
         CinematicsManager.OnCinematicEnd -= CinematicsManager_OnCinematicEnd;
 
-        BossStateHandlerOld.OnBossDefeated -= BossStateHandler_OnBossDefeated;
+        BossStateHandler.OnBossPhaseChangeMidA -= BossStateHandler_OnBossPhaseChangeMidA;
+        BossStateHandler.OnBossAlmostDefeated -= BossStateHandler_OnBossAlmostDefeated;
+        BossStateHandler.OnBossDefeated -= BossStateHandler_OnBossDefeated;
     }
 
     private void CheckStartMusicToPlay(MusicLevel level)
@@ -117,7 +120,7 @@ public class GameplayMusicManager : MonoBehaviour
         FadeTransitionGameplayMusic(musicToPlay);
     }
 
-    private void CheckShieldCollectedMusicToPlay(Dialect dialect)
+    private void PlayMusicByDialect(Dialect dialect)
     {
         AudioClip musicToPlay = musicPoolSO.zurryth0;
 
@@ -262,14 +265,57 @@ public class GameplayMusicManager : MonoBehaviour
     #endregion
 
     #region BossMusic
+
     private AudioClip CheckBossMusicToPlay()
     {
-        return musicPoolSO.boss;
+        BossPhase bossPhase = BossPhaseHandler.Instance.CurrentPhase;
 
-        /*
-        if (BossStateHandler.Instance.BossDefeated) return musicPoolSO.afterBoss;
-        else return musicPoolSO.boss;
-        */
+        switch (bossPhase)
+        {
+            case BossPhase.Phase0:
+            default:
+                return musicPoolSO.boss0;
+            case BossPhase.Phase1:
+                return musicPoolSO.boss1;
+            case BossPhase.Phase2:
+                return musicPoolSO.boss2;
+            case BossPhase.Phase3:
+                return musicPoolSO.boss3;
+            case BossPhase.AlmostDefeated:
+                return musicPoolSO.bossAlmostDefeated;
+            case BossPhase.Defeated:
+                return musicPoolSO.bossDefeated;
+        }
+    }
+
+    private void PlayBossMusicByBossPhase(BossPhase bossPhase)
+    {
+        AudioClip musicToPlay = musicPoolSO.boss0;
+
+        switch (bossPhase)
+        {
+            case BossPhase.Phase0:
+            default:
+                musicToPlay = musicPoolSO.boss0;
+                break;
+            case BossPhase.Phase1:
+                musicToPlay = musicPoolSO.boss1;
+                break;
+            case BossPhase.Phase2:
+                musicToPlay = musicPoolSO.boss2;
+                break;
+            case BossPhase.Phase3:
+                musicToPlay = musicPoolSO.boss3;
+                break;
+            case BossPhase.AlmostDefeated:
+                musicToPlay = musicPoolSO.bossAlmostDefeated;
+                break;
+            case BossPhase.Defeated:
+                musicToPlay = musicPoolSO.bossDefeated;
+                break;
+        }
+
+        FadeTransitionGameplayMusic(musicToPlay);
     }
     #endregion
 
@@ -300,12 +346,23 @@ public class GameplayMusicManager : MonoBehaviour
     #region ShieldPiecesManagerSubscriptions
     private void ShieldPiecesManager_OnShieldPieceCollected(object sender, ShieldPiecesManager.OnShieldPieceCollectedEventArgs e)
     {
-        CheckShieldCollectedMusicToPlay(e.shieldPieceSO.dialect);
+        PlayMusicByDialect(e.shieldPieceSO.dialect);
     }
+    #endregion
 
+    #region Boss Subscriptions
+
+    private void BossStateHandler_OnBossPhaseChangeMidA(object sender, BossStateHandler.OnPhaseChangeEventArgs e)
+    {
+        PlayBossMusicByBossPhase(e.nextPhase);
+    }
+    private void BossStateHandler_OnBossAlmostDefeated(object sender, EventArgs e)
+    {
+        PlayBossMusicByBossPhase(BossPhase.AlmostDefeated);
+    }
     private void BossStateHandler_OnBossDefeated(object sender, EventArgs e)
     {
-        FadeTransitionGameplayMusic(musicPoolSO.afterBoss);
+        PlayBossMusicByBossPhase(BossPhase.Defeated);
     }
     #endregion
 

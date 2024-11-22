@@ -26,6 +26,8 @@ public class BossPhaseHandler : MonoBehaviour
     private const string PLAYER_TAG = "Player";//
     private const float PLAYER_DISTANCE_TO_FORCE_PHASE_CHANGE = 30f;//
 
+    public BossPhase CurrentPhase => currentPhase;
+
     public class OnPhaseEventArgs : EventArgs
     {
         public BossPhase currentPhase;
