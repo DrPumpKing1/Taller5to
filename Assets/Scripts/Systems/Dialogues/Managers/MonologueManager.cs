@@ -35,6 +35,8 @@ public class MonologueManager : MonoBehaviour
 
     private float timer;
 
+    public MonologueSO CurrentMonologueSO => currentMonologueSO;
+
     public class OnMonologueEventArgs : EventArgs
     {
         public MonologueSO monologueSO;

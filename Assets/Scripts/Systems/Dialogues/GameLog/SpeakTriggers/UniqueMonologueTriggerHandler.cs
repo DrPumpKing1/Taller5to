@@ -100,6 +100,11 @@ public class UniqueMonologueTriggerHandler : MonoBehaviour
 
         UniqueMonologueEvent monologueEvent = compatibleMonologues.First();
 
+        if (monologueEvent != null)
+        {
+            if (monologueEvent.monologue == MonologueManager.Instance.CurrentMonologueSO) yield break;
+        }
+
         if (MonologueManager.Instance.PlayingMonologue())
         {
             MonologueManager.Instance.EndMonologue();

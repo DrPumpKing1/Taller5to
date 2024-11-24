@@ -42,6 +42,7 @@ public class DialogueManager : MonoBehaviour
     private Sentence currentSentence;
 
     private float timer;
+    public DialogueSO CurrentDialogueSO => currentDialogueSO;
 
     public class OnDialogueEventArgs : EventArgs
     {

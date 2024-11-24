@@ -37,14 +37,19 @@ public class DialogueTriggerHandler : MonoBehaviour
 
     private IEnumerator ReadLogDialogueCoroutine(string log)
     {
-        if (MonologueManager.Instance.PlayingMonologue()) yield break; //Dialogues can't play while another monologue is playing
-        if (DialogueManager.Instance.PlayingDialogue()) yield break; //Dialogues can't play while another dialogue is playing
+        //if (MonologueManager.Instance.PlayingMonologue()) yield break; //Dialogues can't play while another monologue is playing
+        //if (DialogueManager.Instance.PlayingDialogue()) yield break; //Dialogues can't play while another dialogue is playing
 
         var compatibleDialogues = dialogues.Where(x => x.eventCode == log);
 
         if (!compatibleDialogues.Any()) yield break;
 
         DialogueEvent dialogueEvent = compatibleDialogues.First();
+
+        if (dialogueEvent != null)
+        {
+            if (dialogueEvent.dialogue == DialogueManager.Instance.CurrentDialogueSO) yield break;
+        }
 
         if (DialogueManager.Instance.PlayingDialogue())
         {

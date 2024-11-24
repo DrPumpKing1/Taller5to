@@ -97,7 +97,7 @@ public class DialogueUI : MonoBehaviour
     private void PlaySentence(Sentence sentence, bool isFirstSentence)
     {
         SetDialogueUI(sentence);
-        animator.SetTrigger(isFirstSentence? OPEN_TRIGGER:PLAY_TRIGGER);
+        animator.SetTrigger(isFirstSentence? OPEN_TRIGGER : PLAY_TRIGGER);
     }
 
     private void SkipSentence(bool isLastSentence)
@@ -105,11 +105,15 @@ public class DialogueUI : MonoBehaviour
         animator.SetTrigger(isLastSentence ? CLOSE_TRIGGER : SKIP_TRIGGER);
     }
 
-    private void ResetAllTriggers()
+    private void ResetShowTriggers()
     {
         animator.ResetTrigger(OPEN_TRIGGER);
-        animator.ResetTrigger(CLOSE_TRIGGER);
         animator.ResetTrigger(PLAY_TRIGGER);
+    }
+
+    private void ResetHideTriggers()
+    {
+        animator.ResetTrigger(CLOSE_TRIGGER);
         animator.ResetTrigger(SKIP_TRIGGER);
     }
 
@@ -117,22 +121,25 @@ public class DialogueUI : MonoBehaviour
     #region DialogueManager Subscriptions
     private void DialogueManager_OnDialogueStart(object sender, DialogueManager.OnDialogueEventArgs e)
     {
-        ResetAllTriggers();
+        ResetHideTriggers();
         SetDialogueSprites(e.dialogueType);
         EnableDialogueUI();
     }
     private void DialogueManager_OnDialogueEnd(object sender, DialogueManager.OnDialogueEventArgs e)
     {
         DisableDialogueUI();
-        ResetAllTriggers();
+        ResetShowTriggers();
     }
 
     private void DialogueManager_OnSentencePlay(object sender, DialogueManager.OnSentencePlayEventArgs e)
     {
+        ResetHideTriggers();
         PlaySentence(e.sentence, e.isFirstSentence);
     }
+
     private void DialogueManager_OnSentenceSkip(object sender, DialogueManager.OnSentenceSkipEventArgs e)
     {
+        ResetShowTriggers();
         SkipSentence(e.isLastSentence);
     }
     #endregion

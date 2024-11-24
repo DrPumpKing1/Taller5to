@@ -69,11 +69,15 @@ public class MonologueUI : MonoBehaviour
         animator.SetTrigger(isLastSentence ? CLOSE_TRIGGER : SKIP_TRIGGER);
     }
 
-    private void ResetAllTriggers()
+    private void ResetShowTriggers()
     {
         animator.ResetTrigger(OPEN_TRIGGER);
-        animator.ResetTrigger(CLOSE_TRIGGER);
         animator.ResetTrigger(PLAY_TRIGGER);
+    }
+
+    private void ResetHideTriggers()
+    {
+        animator.ResetTrigger(CLOSE_TRIGGER);
         animator.ResetTrigger(SKIP_TRIGGER);
     }
 
@@ -81,20 +85,23 @@ public class MonologueUI : MonoBehaviour
     #region DialogueManager Subscriptions
     private void MonologueManager_OnMonologueStart(object sender, MonologueManager.OnMonologueEventArgs e)
     {
+        ResetHideTriggers();
         EnableDialogueUI();
     }
     private void DialogueManager_OnDialogueEnd(object sender, MonologueManager.OnMonologueEventArgs e)
     {
         DisableDialogueUI();
-        ResetAllTriggers();
+        ResetShowTriggers();
     }
 
     private void MonologueManager_OnSentencePlay(object sender, MonologueManager.OnSentencePlayEventArgs e)
     {
+        ResetHideTriggers();
         PlaySentence(e.sentence, e.isFirstSentence);
     }
     private void MonologueManager_OnSentenceSkip(object sender, MonologueManager.OnSentenceSkipEventArgs e)
     {
+        ResetShowTriggers();
         SkipSentence(e.isLastSentence);
     }
     #endregion

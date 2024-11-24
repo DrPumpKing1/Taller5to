@@ -98,6 +98,11 @@ public class UniqueDialogueTriggerHandler : MonoBehaviour
 
         UniqueDialogueEvent dialogueEvent = compatibleDialogues.First();
 
+        if(dialogueEvent != null)
+        {
+            if (dialogueEvent.dialogue == DialogueManager.Instance.CurrentDialogueSO) yield break;
+        }
+
         if (MonologueManager.Instance.PlayingMonologue())
         {
             MonologueManager.Instance.EndMonologue();
