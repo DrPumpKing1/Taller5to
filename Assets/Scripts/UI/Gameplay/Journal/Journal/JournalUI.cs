@@ -56,7 +56,7 @@ public class JournalUI : BaseUI
 
         AddToUILayersList();
 
-        ShowInventoryUI();
+        ShowJournalUI();
 
         OnJournalUIOpen?.Invoke(this, EventArgs.Empty);
     }
@@ -69,7 +69,7 @@ public class JournalUI : BaseUI
 
         RemoveFromUILayersList();
 
-        HideInventoryUI();
+        HideJournalUI();
 
         OnJournalUIClose?.Invoke(this, EventArgs.Empty);
     }
@@ -79,13 +79,13 @@ public class JournalUI : BaseUI
         OnCloseFromUI?.Invoke(this, EventArgs.Empty);
     }
 
-    public void ShowInventoryUI()
+    public void ShowJournalUI()
     {
         journalUIAnimator.ResetTrigger(HIDE_TRIGGER);
         journalUIAnimator.SetTrigger(SHOW_TRIGGER);
     }
 
-    public void HideInventoryUI()
+    public void HideJournalUI()
     {
         journalUIAnimator.ResetTrigger(SHOW_TRIGGER);
         journalUIAnimator.SetTrigger(HIDE_TRIGGER);

@@ -69,7 +69,7 @@ public class JournalInfoContentUI : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         if (!journalInfoPopUpUI) return;
 
-        journalInfoPopUpUI.OpenPopUp();
+        journalInfoPopUpUI.OpenUIFromButton();
         OnPopUpOpened?.Invoke(this, EventArgs.Empty);
     }
 

@@ -23,7 +23,7 @@ public class JournalPagesHandler : MonoBehaviour
 
     private float cooldownTimer;
 
-    [System.Serializable]
+    [Serializable]
     public class JournalPageButton
     {
         public int pageNumber;
