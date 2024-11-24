@@ -67,10 +67,11 @@ public class PausableSFXManager : SFXManager
 
         AncientRelicShield.OnAncientRelicShieldDepowered += AncientRelicShield_OnAncientRelicShieldDepowered;
 
-
+        DialogueManager.OnDialogueStart += DialogueManager_OnDialogueStart;
+        DialogueManager.OnDialogueEnd += DialogueManager_OnDialogueEnd;
+        MonologueManager.OnMonologueStart += MonologueManager_OnMonologueStart;
+        MonologueManager.OnMonologueEnd += MonologueManager_OnMonologueEnd;
     }
-
-    
 
     private void OnDisable()
     {
@@ -132,6 +133,11 @@ public class PausableSFXManager : SFXManager
         ShowcaseRoomShield.OnAnyShowcaseRoomShieldDeactivated -= ShowcaseRoomShield_OnAnyShowcaseRoomShieldDeactivated;
 
         AncientRelicShield.OnAncientRelicShieldDepowered -= AncientRelicShield_OnAncientRelicShieldDepowered;
+
+        DialogueManager.OnDialogueStart -= DialogueManager_OnDialogueStart;
+        DialogueManager.OnDialogueEnd -= DialogueManager_OnDialogueEnd;
+        MonologueManager.OnMonologueStart -= MonologueManager_OnMonologueStart;
+        MonologueManager.OnMonologueEnd -= MonologueManager_OnMonologueEnd;
     }
 
     #region Player
@@ -540,6 +546,25 @@ public class PausableSFXManager : SFXManager
     {
         ShowcaseRoomShield showcaseRoomShield = sender as ShowcaseRoomShield;
         PlaySoundAtPoint(SFXPoolSO.showcaseRoomShieldDeactivated, showcaseRoomShield.transform.position);
+    }
+    #endregion
+
+    #region Dialogues & Monologues
+    private void DialogueManager_OnDialogueStart(object sender, DialogueManager.OnDialogueEventArgs e)
+    {
+        PlaySound(SFXPoolSO.dialogueOpen);
+    }
+    private void DialogueManager_OnDialogueEnd(object sender, DialogueManager.OnDialogueEventArgs e)
+    {
+        PlaySound(SFXPoolSO.dialogueClose);
+    }
+    private void MonologueManager_OnMonologueStart(object sender, MonologueManager.OnMonologueEventArgs e)
+    {
+        PlaySound(SFXPoolSO.monologueOpen);
+    }
+    private void MonologueManager_OnMonologueEnd(object sender, MonologueManager.OnMonologueEventArgs e)
+    {
+        PlaySound(SFXPoolSO.monologueClose);
     }
     #endregion
 }
