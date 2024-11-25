@@ -424,12 +424,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 1124600445129115598}
-  emissionColor: {r: 0, g: 8, b: 0.5044117, a: 1}
-  smoothColorFactor: 10
-  powerIntensity: 0
-  baseColor: {r: 0, g: 0, b: 0, a: 0}
-  targetIntensity: 0
-  currentIntensity: 0
+  emissionColor: {r: 0, g: 29.886793, b: 0.5616799, a: 1}
+  smoothColorFactorPower: 0.75
+  smoothColorFactorDePower: 10
 --- !u!1 &4515691063624333679
 GameObject:
   m_ObjectHideFlags: 0

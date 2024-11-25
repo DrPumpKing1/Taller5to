@@ -9,7 +9,8 @@ public class PetMaterialSmoothVisual : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField, ColorUsage(true, true)] Color emissionColor;
-    [SerializeField, Range(1f, 10f)] private float smoothColorFactor;
+    [SerializeField, Range(0.01f, 10f)] private float smoothColorFactorPower;
+    [SerializeField, Range(1f, 10f)] private float smoothColorFactorDePower;
 
     private Material _material;
     private float powerIntensity;
@@ -17,6 +18,7 @@ public class PetMaterialSmoothVisual : MonoBehaviour
 
     private float targetIntensity;
     private float currentIntensity;
+    private float currentSmoothColorFactor;
 
     private const float INTENSITY_THRESHOLD = 0.005f;
 
@@ -77,12 +79,22 @@ public class PetMaterialSmoothVisual : MonoBehaviour
     {
         if (Mathf.Abs(currentIntensity - targetIntensity) <= INTENSITY_THRESHOLD) return;
 
-        currentIntensity = Mathf.Lerp(currentIntensity, targetIntensity, smoothColorFactor * Time.deltaTime);
+        currentIntensity = Mathf.Lerp(currentIntensity, targetIntensity, currentSmoothColorFactor * Time.deltaTime);
         SetIntensity(currentIntensity);
     }
 
-    private void SetNormalIntensity() => targetIntensity = 0f;
-    private void SetPowerIntensity() => targetIntensity = powerIntensity;
+    private void SetNormalIntensity()
+    {
+        currentSmoothColorFactor = smoothColorFactorDePower;
+        targetIntensity = 0f;
+    }
+
+    private void SetPowerIntensity()
+    {
+        currentSmoothColorFactor = smoothColorFactorPower;
+        targetIntensity = powerIntensity;
+    }
+
     private void SetIntensity(float intensity) => GeneralRenderingMethods.SetMaterialEmissionColor(_material, baseColor, intensity);
 
 
