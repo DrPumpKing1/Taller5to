@@ -23,6 +23,9 @@ public class LevelSkipManager : MonoBehaviour
     [Header("Boss Settings")]
     [SerializeField] private LevelSettings bossSettings;
 
+    [Header("Boss Settings")]
+    [SerializeField] private LevelSettings bossFightSettings;
+
     private bool skippingLevel;
 
     [Serializable]
@@ -84,6 +87,7 @@ public class LevelSkipManager : MonoBehaviour
         switch (id)
         {
             case 0:
+            default:
                 levelSettings = gameStartSettings;
                 break;
             case 1:
@@ -98,8 +102,8 @@ public class LevelSkipManager : MonoBehaviour
             case 4:
                 levelSettings = bossSettings;
                 break;
-            default:
-                levelSettings = level1Settings;
+            case 5:
+                levelSettings = bossFightSettings;
                 break;
         }
 

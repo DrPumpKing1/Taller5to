@@ -11,6 +11,7 @@ public class DevMenuButtonsHandler : MonoBehaviour
     [SerializeField] private Button level2Button;
     [SerializeField] private Button level3Button;
     [SerializeField] private Button bossButton;
+    [SerializeField] private Button bossFightButton;
 
     [Header("Other Settings Buttons")]
     [SerializeField] private Button backToLastCheckpointButton;
@@ -34,6 +35,7 @@ public class DevMenuButtonsHandler : MonoBehaviour
         level2Button.onClick.AddListener(GoToLevel2);
         level3Button.onClick.AddListener(GoToLevel3);
         bossButton.onClick.AddListener(GoToBoss);
+        bossFightButton.onClick.AddListener(GoToBossFight);
 
         backToLastCheckpointButton.onClick.AddListener(BackToLastCheckpoint);
         dematerializeAllObjectsButton.onClick.AddListener(DematerializeAllObjects);
@@ -48,6 +50,7 @@ public class DevMenuButtonsHandler : MonoBehaviour
     private void GoToLevel2() => LevelSkipManager.Instance.SkipLevel(2);
     private void GoToLevel3() => LevelSkipManager.Instance.SkipLevel(3);
     private void GoToBoss() => LevelSkipManager.Instance.SkipLevel(4);
+    private void GoToBossFight() => LevelSkipManager.Instance.SkipLevel(5);
 
     private void BackToLastCheckpoint() => ScenesManager.Instance.FadeReloadCurrentScene();
     private void DematerializeAllObjects() => ProjectionManager.Instance.DematerializeAllObjects();
