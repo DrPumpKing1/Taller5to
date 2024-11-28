@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using UnityEngine.UI;
 
 public class RoomVisibilityObject : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class RoomVisibilityObject : MonoBehaviour
 
     private List<Renderer> renderers = new List<Renderer>();
     private List<Light> lights = new List<Light>();
+    private List<Image> images = new List<Image>();
 
     private void OnEnable()
     {
@@ -30,6 +32,7 @@ public class RoomVisibilityObject : MonoBehaviour
     {
         UpdateRenderersList();
         UpdateLightsList();
+        UpdateImagesList();
     }
 
     #region Renderers
@@ -86,17 +89,46 @@ public class RoomVisibilityObject : MonoBehaviour
     }
     #endregion
 
+    #region Images
+    private void UpdateImagesList()
+    {
+        images = GetComponentsInChildren<Image>(true).ToList();
+    }
+
+    private void EnableImages()
+    {
+        UpdateImagesList();
+
+        foreach (Image image in images)
+        {
+            image.enabled = true;
+        }
+    }
+
+    private void DisableImages()
+    {
+        UpdateImagesList();
+
+        foreach (Image image in images)
+        {
+            image.enabled = false;
+        }
+    }
+    #endregion
+
     private void CheckStartVisibility(List<RoomCollider> currentCollidersBlockingView)
     {
         if (controllingColliders.Intersect(currentCollidersBlockingView).Any())
         {
             EnableMeshRenderers();
             EnableLights();
+            EnableImages();
         }
         else
         {
             DisableMeshRenderers();
             DisableLights();
+            DisableImages();
         }
     }
 
@@ -108,6 +140,7 @@ public class RoomVisibilityObject : MonoBehaviour
 
         EnableMeshRenderers();
         EnableLights();
+        EnableImages();
     }
 
     private void CheckExitVisibility(List<RoomCollider> previousCollidersBlockingView, List<RoomCollider> currentVisibilityColliders)
@@ -120,6 +153,7 @@ public class RoomVisibilityObject : MonoBehaviour
 
         DisableMeshRenderers();
         DisableLights();
+        DisableImages();
     }
 
     #region RoomVisibilityManager Subscriptions
