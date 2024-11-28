@@ -6,6 +6,9 @@ public class LogListenerBoss : MonoBehaviour
 {
     private void OnEnable()
     {
+        //SHOWCASE ROOMS
+        ShowcaseRoomStateHandler.OnShowcaseRoomPhaseChangeStart += ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeStart;
+
         //BOSS
         BossStateHandler.OnBossPhaseChangeStart += BossStateHandler_OnBossPhaseChangeStart;
         BossStateHandler.OnBossPhaseChangeEnd += BossStateHandler_OnBossPhaseChangeEnd;
@@ -20,9 +23,11 @@ public class LogListenerBoss : MonoBehaviour
         AncientRelic.OnAncientRelicCollected += AncientRelic_OnAncientRelicCollected;
     }
 
-
     private void OnDisable()
     {
+        //SHOWCASE ROOMS
+        ShowcaseRoomStateHandler.OnShowcaseRoomPhaseChangeStart -= ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeStart;
+
         //BOSS
         BossStateHandler.OnBossPhaseChangeStart -= BossStateHandler_OnBossPhaseChangeStart;
         BossStateHandler.OnBossPhaseChangeEnd -= BossStateHandler_OnBossPhaseChangeEnd;
@@ -35,6 +40,13 @@ public class LogListenerBoss : MonoBehaviour
 
         //ANCIENT RELIC
         AncientRelic.OnAncientRelicCollected -= AncientRelic_OnAncientRelicCollected;
+    }
+
+    //SHOWCASE ROOMS
+    private void ShowcaseRoomStateHandler_OnShowcaseRoomPhaseChangeStart(object sender, ShowcaseRoomStateHandler.OnPhaseChangeEventArgs e)
+    {
+        GameLogManager.Instance.Log($"ShowcaseRooms/PhaseChange/Start/Any");
+        GameLogManager.Instance.Log($"ShowcaseRooms/PhaseChange/Start/{e.nextPhase}");
     }
 
     //BOSS
