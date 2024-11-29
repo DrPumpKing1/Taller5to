@@ -158,4 +158,5 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip[] journalButtonClick1;
     public AudioClip[] journalButtonClick2;
     public AudioClip[] journalButtonClick3;
+    public AudioClip[] journalButtonClick4;
 }

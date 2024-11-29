@@ -43,5 +43,11 @@ public class ButtonSoundHandler : MonoBehaviour
         if (!UnPausableSFXManager.Instance) return;
         UnPausableSFXManager.Instance.PlaySFXJournalButtonClick3();
     }
+
+    public void PlaySFXJournalButtonClick4()
+    {
+        if (!UnPausableSFXManager.Instance) return;
+        UnPausableSFXManager.Instance.PlaySFXJournalButtonClick4();
+    }
     #endregion
 }

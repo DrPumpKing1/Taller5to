@@ -138,5 +138,10 @@ public class UnPausableSFXManager : SFXManager
     {
         PlaySound(SFXPoolSO.journalButtonClick3);
     }
+
+    public void PlaySFXJournalButtonClick4()
+    {
+        PlaySound(SFXPoolSO.journalButtonClick4);
+    }
     #endregion
 }
