@@ -47,5 +47,8 @@ public class MusicPoolSO : ScriptableObject
     public AudioClip bossDefeated;
 
     [Header("Showcase")]
+    public AudioClip finalRoom;
+
+    [Header("Showcase")]
     public AudioClip showcase;
 }

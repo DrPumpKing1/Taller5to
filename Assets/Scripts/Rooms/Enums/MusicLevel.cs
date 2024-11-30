@@ -6,5 +6,6 @@ public enum MusicLevel
     Level2,
     Level3,
     Boss,
+    FinalRoom,
     Showcase
 }

@@ -75,6 +75,9 @@ public class GameplayMusicManager : MonoBehaviour
             case MusicLevel.Boss:
                 musicToPlay = CheckBossMusicToPlay();
                 break;
+            case MusicLevel.FinalRoom:
+                musicToPlay = CheckFinalRoomMusicToPlay();
+                break;
             case MusicLevel.Showcase:
                 musicToPlay = CheckShowcaseMusicToPlay();
                 break;
@@ -108,6 +111,9 @@ public class GameplayMusicManager : MonoBehaviour
                 break;
             case MusicLevel.Boss:
                 musicToPlay = CheckBossMusicToPlay();
+                break;
+            case MusicLevel.FinalRoom:
+                musicToPlay = CheckFinalRoomMusicToPlay();
                 break;
             case MusicLevel.Showcase:
                 musicToPlay = CheckShowcaseMusicToPlay();
@@ -316,6 +322,13 @@ public class GameplayMusicManager : MonoBehaviour
         }
 
         FadeTransitionGameplayMusic(musicToPlay);
+    }
+    #endregion
+
+    #region FinalRoomMusic
+    private AudioClip CheckFinalRoomMusicToPlay()
+    {
+        return musicPoolSO.finalRoom;
     }
     #endregion
 
