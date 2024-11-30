@@ -68,6 +68,7 @@ public class BossFightDetection : MonoBehaviour
     private void CheckBossQuitMidFight(string log)
     {
         if (!bossAwaken) return;
+        if (bossDefeated) return;
         if (!onFight) return;
 
         foreach(string logToQuitMidFight in logsToQuitMidFight)
@@ -83,6 +84,7 @@ public class BossFightDetection : MonoBehaviour
     private void CheckBossReturnMidFight(string log)
     {
         if (!bossAwaken) return;
+        if (bossDefeated) return;
         if (onFight) return;
 
         foreach (string logToReturnMidFight in logsToReturnMidFight)
