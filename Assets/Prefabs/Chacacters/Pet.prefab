@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20991ddc844fd12489fccefacc94553a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logToInitialAttach: Dialogues/End/3
+  logToInitialAttach: Cinematics/End/1
   overrideAttachToPlayer: 0
   attachToPlayer: 0
 --- !u!114 &3985624961970628698
@@ -390,6 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c6b8041b1b58541a4fb0bae7ddc9a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!114 &2856413567954985433
 MonoBehaviour:
   m_ObjectHideFlags: 0
