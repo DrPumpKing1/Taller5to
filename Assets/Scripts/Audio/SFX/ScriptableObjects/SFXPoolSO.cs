@@ -72,6 +72,10 @@ public class SFXPoolSO : ScriptableObject
     [Header("Shields")]
     public AudioClip[] shieldCollected;
     public AudioClip[] valueDoorOpened;
+    [Space]
+    public AudioClip[] shieldPopUpShow;
+    public AudioClip[] shieldPopUpComplete;
+    public AudioClip[] shieldPopUpHide;
 
     [Header("Exact Shields")]
     public AudioClip[] zurrythShieldCollected;

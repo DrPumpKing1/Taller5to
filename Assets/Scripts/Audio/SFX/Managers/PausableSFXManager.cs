@@ -27,6 +27,9 @@ public class PausableSFXManager : SFXManager
 
         ShieldPieceCollection.OnAnyShieldPieceCollected += ShieldPieceCollection_OnAnyShieldPieceCollected;
         ShieldDoor.OnShieldDoorOpen += ShieldDoor_OnShieldDoorOpen;
+        ShieldsPopUpUI.OnShieldPopUpShow += ShieldsPopUpUI_OnShieldPopUpShow;
+        ShieldsPopUpUI.OnShieldPopUpComplete += ShieldsPopUpUI_OnShieldPopUpComplete;
+        ShieldsPopUpUI.OnShieldPopUpHide += ShieldsPopUpUI_OnShieldPopUpHide;
 
         ProjectableObjectsLearningManager.OnProjectableObjectLearned += ProjectableObjectsLearningManager_OnProjectableObjectLearned;
 
@@ -95,6 +98,9 @@ public class PausableSFXManager : SFXManager
 
         ShieldPieceCollection.OnAnyShieldPieceCollected -= ShieldPieceCollection_OnAnyShieldPieceCollected;
         ShieldDoor.OnShieldDoorOpen -= ShieldDoor_OnShieldDoorOpen;
+        ShieldsPopUpUI.OnShieldPopUpShow -= ShieldsPopUpUI_OnShieldPopUpShow;
+        ShieldsPopUpUI.OnShieldPopUpComplete -= ShieldsPopUpUI_OnShieldPopUpComplete;
+        ShieldsPopUpUI.OnShieldPopUpHide -= ShieldsPopUpUI_OnShieldPopUpHide;
 
         ProjectableObjectsLearningManager.OnProjectableObjectLearned -= ProjectableObjectsLearningManager_OnProjectableObjectLearned;
 
@@ -437,6 +443,21 @@ public class PausableSFXManager : SFXManager
                 PlaySoundAtPoint(SFXPoolSO.vythanuValueDoorOpened, shieldDoor.transform.position);
                 break;
         }
+    }
+
+    private void ShieldsPopUpUI_OnShieldPopUpShow(object sender, ShieldsPopUpUI.OnShieldPopUpEventArgs e)
+    {
+        PlaySound(SFXPoolSO.shieldPopUpShow);
+    }
+
+    private void ShieldsPopUpUI_OnShieldPopUpComplete(object sender, ShieldsPopUpUI.OnShieldPopUpEventArgs e)
+    {
+        PlaySound(SFXPoolSO.shieldPopUpComplete);
+    }
+
+    private void ShieldsPopUpUI_OnShieldPopUpHide(object sender, ShieldsPopUpUI.OnShieldPopUpEventArgs e)
+    {
+        PlaySound(SFXPoolSO.shieldPopUpHide);
     }
     #endregion
 
