@@ -31,6 +31,7 @@ public class JournalInfoManager : MonoBehaviour
     {
         public JournalInfoSO journalInfoSO;
         public string logToCollect;
+        public float timeToCollect;
     }
 
     public class OnJournalInfoEventArgs : EventArgs
@@ -71,12 +72,32 @@ public class JournalInfoManager : MonoBehaviour
     {
         foreach (JournalInfoLog journalInfoLog in completeJournalInfoLogPool)
         {
-            if (journalInfoLog.logToCollect == log) CollectJournalInfo(journalInfoLog.journalInfoSO);
+            if (journalInfoLog.logToCollect == log) StartCoroutine(CollectJournalInfoCoroutine(journalInfoLog.journalInfoSO,journalInfoLog.timeToCollect));
         }
     }
     #endregion
 
     #region Addition To List
+
+    private IEnumerator CollectJournalInfoCoroutine(JournalInfoSO journalInfoToCollect, float timeToCollect)
+    {
+        foreach (JournalInfoCheck journalInfoCheck in journalInfoCollectedChecked)
+        {
+            if (journalInfoCheck.journalInfoSO == journalInfoToCollect)
+            {
+                if (debug) Debug.Log($"Journal already contains info with name: {journalInfoToCollect.infoName}");
+                yield break;
+            }
+        }
+
+        JournalInfoCheck journalInfoCheckToAdd = new JournalInfoCheck { journalInfoSO = journalInfoToCollect, hasBeenChecked = false };
+        journalInfoCollectedChecked.Add(journalInfoCheckToAdd);
+
+        yield return new WaitForSeconds(timeToCollect);
+
+        OnJournalInfoCollected?.Invoke(this, new OnJournalInfoEventArgs { journalInfoSO = journalInfoToCollect });
+    }
+
     public void CollectJournalInfo(JournalInfoSO journalInfoToCollect)
     {
         foreach(JournalInfoCheck journalInfoCheck in journalInfoCollectedChecked)
