@@ -10,6 +10,6 @@ public class ShieldPieceCollectionUI : FeedbackUI
 
     public void SetShieldPieceCollectionText(ShieldPieceSO shieldPiece)
     {
-        shieldPieceCollectedText.text = $"{shieldPiece.dialect} shield piece collected";
+        shieldPieceCollectedText.text = $"{shieldPiece.dialect} shield piece collected!";
     }
 }

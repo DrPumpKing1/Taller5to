@@ -10,6 +10,6 @@ public class LearningSuccessUI : FeedbackUI
 
     public void SetLearningSuccessText(ProjectableObjectSO learnedObject)
     {
-        learningSuccessText.text = $"{learnedObject.objectName} projection learned";
+        learningSuccessText.text = $"{learnedObject.objectName} projection learned!";
     }
 }

@@ -121,9 +121,9 @@ Material:
     - _OutlineWidth: 0
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
-    - _ScaleRatioA: 1
-    - _ScaleRatioB: 1
-    - _ScaleRatioC: 1
+    - _ScaleRatioA: 0.8333333
+    - _ScaleRatioB: 0.6770833
+    - _ScaleRatioC: 0.6770833
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
@@ -143,7 +143,7 @@ Material:
     - _VertexOffsetX: 0
     - _VertexOffsetY: 0
     - _WeightBold: 0.75
-    - _WeightNormal: 0
+    - _WeightNormal: 0.3
     m_Colors:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
     - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
@@ -168,9 +168,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: Quicksand-VariableFont_wght SDF
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: 1956460647
   material: {fileID: -5618305156200639407}
-  materialHashCode: 0
+  materialHashCode: 1429916263
   m_Version: 1.1.0
   m_SourceFontFileGUID: 2b9b5f6a9bdd4004990c91056ce1c7fc
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 2b9b5f6a9bdd4004990c91056ce1c7fc, type: 3}
@@ -5826,9 +5826,9 @@ MonoBehaviour:
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
   fontWeights: []
-  normalStyle: 0
-  normalSpacingOffset: 0
+  normalStyle: 0.3
+  normalSpacingOffset: -2
   boldStyle: 0.75
-  boldSpacing: 7
+  boldSpacing: 4
   italicStyle: 35
   tabSize: 10
