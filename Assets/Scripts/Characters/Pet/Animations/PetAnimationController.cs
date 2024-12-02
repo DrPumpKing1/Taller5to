@@ -55,8 +55,8 @@ public class PetAnimationController : MonoBehaviour
 
     private void UpdateAnimatorBooleans()
     {
-        //animator.SetBool(LEARNING_BOOLEAN, learning);
-        //animator.SetBool(POWERING_BOOLEAN, powering);
+        animator.SetBool(LEARNING_BOOLEAN, learning);
+        animator.SetBool(POWERING_BOOLEAN, powering);
     }
 
     private void SetLearning(bool learning) => this.learning = learning;
