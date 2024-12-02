@@ -18,6 +18,7 @@ public class DevMenuButtonsHandler : MonoBehaviour
     [SerializeField] private Button dematerializeAllObjectsButton;
     [SerializeField] private Button skipDialogueButton;
     [SerializeField] private Button clearInstructionButton;
+    [SerializeField] private Button skipShowcasePhaseButton;
     [SerializeField] private Button skipBossPhaseButton;
 
     [Header("Light Settings")]
@@ -41,6 +42,7 @@ public class DevMenuButtonsHandler : MonoBehaviour
         dematerializeAllObjectsButton.onClick.AddListener(DematerializeAllObjects);
         skipDialogueButton.onClick.AddListener(SkipDialogue);
         clearInstructionButton.onClick.AddListener(ClearInstruction);
+        skipShowcasePhaseButton.onClick.AddListener(SkipShowcasePhase);
         skipBossPhaseButton.onClick.AddListener(SkipBossPhase);
 
         directionalLightToggle.onValueChanged.AddListener(ToggleOverrideDirectionalLight);
@@ -56,6 +58,7 @@ public class DevMenuButtonsHandler : MonoBehaviour
     private void DematerializeAllObjects() => ProjectionManager.Instance.DematerializeAllObjects();
     private void SkipDialogue() => DialogueManager.Instance.EndDialogue();
     private void ClearInstruction() => InstructionsManager.Instance.HideInstruction();
+    private void SkipShowcasePhase() => ShowcaseRoomPhaseHandler.Instance.ForceChangeToNextPhase();
     private void SkipBossPhase() => BossPhaseHandler.Instance.ForceChangeToNextPhase();
 
     private void ToggleOverrideDirectionalLight(bool overrideDirectionalLight) => DirectionalLightingHandler.Instance.OverrideOnDirectionalLights(overrideDirectionalLight);
