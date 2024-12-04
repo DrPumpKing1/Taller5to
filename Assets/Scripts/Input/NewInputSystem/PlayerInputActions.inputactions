@@ -423,6 +423,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Scenes",
+            "id": "572cda6d-007b-4fc8-834c-e4fac20bbab8",
+            "actions": [
+                {
+                    "name": "Skip",
+                    "type": "Button",
+                    "id": "e84895fc-b34c-44b1-8427-fad37c76b38c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "530cfa4d-98b6-47b8-804f-93e18eb715c8",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

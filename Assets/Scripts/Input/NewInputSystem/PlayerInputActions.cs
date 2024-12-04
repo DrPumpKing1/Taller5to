@@ -445,6 +445,34 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Scenes"",
+            ""id"": ""572cda6d-007b-4fc8-834c-e4fac20bbab8"",
+            ""actions"": [
+                {
+                    ""name"": ""Skip"",
+                    ""type"": ""Button"",
+                    ""id"": ""e84895fc-b34c-44b1-8427-fad37c76b38c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""530cfa4d-98b6-47b8-804f-93e18eb715c8"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -477,6 +505,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Dialogues
         m_Dialogues = asset.FindActionMap("Dialogues", throwIfNotFound: true);
         m_Dialogues_Skip = m_Dialogues.FindAction("Skip", throwIfNotFound: true);
+        // Scenes
+        m_Scenes = asset.FindActionMap("Scenes", throwIfNotFound: true);
+        m_Scenes_Skip = m_Scenes.FindAction("Skip", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -890,6 +921,52 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public DialoguesActions @Dialogues => new DialoguesActions(this);
+
+    // Scenes
+    private readonly InputActionMap m_Scenes;
+    private List<IScenesActions> m_ScenesActionsCallbackInterfaces = new List<IScenesActions>();
+    private readonly InputAction m_Scenes_Skip;
+    public struct ScenesActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public ScenesActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Skip => m_Wrapper.m_Scenes_Skip;
+        public InputActionMap Get() { return m_Wrapper.m_Scenes; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ScenesActions set) { return set.Get(); }
+        public void AddCallbacks(IScenesActions instance)
+        {
+            if (instance == null || m_Wrapper.m_ScenesActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_ScenesActionsCallbackInterfaces.Add(instance);
+            @Skip.started += instance.OnSkip;
+            @Skip.performed += instance.OnSkip;
+            @Skip.canceled += instance.OnSkip;
+        }
+
+        private void UnregisterCallbacks(IScenesActions instance)
+        {
+            @Skip.started -= instance.OnSkip;
+            @Skip.performed -= instance.OnSkip;
+            @Skip.canceled -= instance.OnSkip;
+        }
+
+        public void RemoveCallbacks(IScenesActions instance)
+        {
+            if (m_Wrapper.m_ScenesActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IScenesActions instance)
+        {
+            foreach (var item in m_Wrapper.m_ScenesActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_ScenesActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public ScenesActions @Scenes => new ScenesActions(this);
     public interface IMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -921,6 +998,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnDevMenu(InputAction.CallbackContext context);
     }
     public interface IDialoguesActions
+    {
+        void OnSkip(InputAction.CallbackContext context);
+    }
+    public interface IScenesActions
     {
         void OnSkip(InputAction.CallbackContext context);
     }
