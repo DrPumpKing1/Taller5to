@@ -9,6 +9,7 @@ public class ScrollingCredits : MonoBehaviour
     [Header("Components")]
     [SerializeField] private ScenesInput scenesInput;
     [SerializeField] private RectTransform creditsTransform;
+    [SerializeField] private UIHoverDetector backToMenuButtonHoverDetector;
 
     [Header("Settings")]
     [SerializeField] private float baseScrollSpeed = 20f;
@@ -36,7 +37,7 @@ public class ScrollingCredits : MonoBehaviour
 
     private void ScrollCredits()
     {
-        bool skipping = scenesInput.GetSkipHold();
+        bool skipping = scenesInput.GetSkipHold() && !backToMenuButtonHoverDetector.IsHovering;
 
         float speed = skipping? baseScrollSpeed * scrollSpeedMultiplier : baseScrollSpeed;
 
