@@ -75,6 +75,7 @@ public class MusicManager : MonoBehaviour
     {
         audioSource.Stop();
         audioSource.clip = null;
+        currentMusic = null;
     }
 
     private void HandleScenesMusicPlay(string sceneName)
