@@ -138,6 +138,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fruit3
       objectReference: {fileID: 0}
+    - target: {fileID: 6884105094697022824, guid: 0df37a3d5280b0047a5bb5aa72e5e49b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9c4d4b927dc740c459ecb5c570176a2d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -9,8 +9,8 @@ public class ShowcaseRoomBeamSphereVFXHandler : MonoBehaviour
     [SerializeField] private VisualEffect beamSphereVFX;
 
     [Header("Sphere Size")]
-    [SerializeField, Range(0.5f, 1f)] private float startSphereSize;
-    [SerializeField, Range(0.5f, 2f)] private float endSphereSize;
+    [SerializeField, Range(0.25f, 1f)] private float startSphereSize;
+    [SerializeField, Range(0.25f, 2f)] private float endSphereSize;
 
     private const string SPHERE_SIZE_PROPERTY = "SphereRadius";
 

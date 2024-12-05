@@ -15,7 +15,7 @@ public abstract class DialogueInput : MonoBehaviour, IDialogueInput
     {
         if (Instance != null)
         {
-            Debug.LogError("There is more than one MovementInput instance");
+            Debug.LogError("There is more than one DialogueInput instance");
         }
 
         Instance = this;

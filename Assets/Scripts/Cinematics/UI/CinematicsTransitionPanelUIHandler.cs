@@ -9,8 +9,10 @@ public class CinematicsTransitionPanelUIHandler : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField, Range(0.5f, 2f)] private float fullBlackTime;
+    [SerializeField, Range(0.5f, 2f)] private float fullBlackTimeAfterPlayStart;
 
     public float FullBlackTime => fullBlackTime;
+    public float FullBlackTimeAfterPlayStart => fullBlackTimeAfterPlayStart;
     public float TransitionTime => TRANSITION_TIME;
 
     private const float TRANSITION_TIME = 0.5f;

@@ -24,6 +24,8 @@ public class ShowcaseRoomPhaseHandler : MonoBehaviour
     private const string PLAYER_TAG = "Player";//
     private const float PLAYER_DISTANCE_TO_FORCE_PHASE_CHANGE = 30f;//
 
+    public ShowcaseRoomPhase CurrentPhase => currentPhase;
+
     public class OnPhaseEventArgs : EventArgs
     {
         public ShowcaseRoomPhase currentPhase;

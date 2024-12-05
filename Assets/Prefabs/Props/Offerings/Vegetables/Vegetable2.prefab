@@ -138,6 +138,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vegetable2
       objectReference: {fileID: 0}
+    - target: {fileID: 2924301453809932546, guid: a90c0d52d8ba4d6479a37575b1bf3ed4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a6c620e8585424d48906102a3e504b80, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

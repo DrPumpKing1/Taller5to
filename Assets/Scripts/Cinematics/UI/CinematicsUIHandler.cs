@@ -30,18 +30,20 @@ public class CinematicsUIHandler : MonoBehaviour
     private IEnumerator PlayCinematic(VideoClip videoClip)
     {
         float duration = videoClip.frameCount / (float)videoClip.frameRate;
-        float ininterruptedDuration = duration - cinematicsTransitionPanelUIHandler.FullBlackTime;
+        float ininterruptedDuration = duration - cinematicsTransitionPanelUIHandler.FullBlackTime - cinematicsTransitionPanelUIHandler.FullBlackTimeAfterPlayStart;
 
         OnCinematicUIStarting?.Invoke(this, EventArgs.Empty);
 
         cinematicsTransitionPanelUIHandler.ShowTransitionPanel();
         yield return new WaitForSeconds(cinematicsTransitionPanelUIHandler.TransitionTime);
         yield return new WaitForSeconds(cinematicsTransitionPanelUIHandler.FullBlackTime);
-        cinematicsTransitionPanelUIHandler.HideTransitionPanel();
 
         OnCinematicUIStart?.Invoke(this, EventArgs.Empty);
-
         cinematicsVideoUIHandler.PlayVideoComplete(videoClip);
+
+        yield return new WaitForSeconds(cinematicsTransitionPanelUIHandler.FullBlackTimeAfterPlayStart);
+
+        cinematicsTransitionPanelUIHandler.HideTransitionPanel();
 
         yield return new WaitForSeconds(ininterruptedDuration);
 
