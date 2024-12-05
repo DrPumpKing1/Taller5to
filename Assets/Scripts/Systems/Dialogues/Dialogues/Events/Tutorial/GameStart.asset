@@ -14,8 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   movementLimitType: 0
+  dialogueType: 0
   allowSkip: 0
+  lookAtPlayer: 0
+  lookAtPet: 0
   sentences:
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
-    text: Let's get this over with. Just get the relic and get out of here for good.
+    text: Janet I swear the <b>relic</b> will bring us together. I won't let you
+      down again.
     time: 5
+    audioClip: {fileID: 0}
