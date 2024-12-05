@@ -138,6 +138,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Meat1
       objectReference: {fileID: 0}
+    - target: {fileID: 8119605241519841587, guid: 573d333241a25ba46812acf193fef92e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 506431f6f933e3445a46d0856e2d535c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
