@@ -69,6 +69,7 @@ public class PausableSFXManager : SFXManager
         ShowcaseRoomShield.OnAnyShowcaseRoomShieldDeactivated += ShowcaseRoomShield_OnAnyShowcaseRoomShieldDeactivated;
 
         AncientRelicShield.OnAncientRelicShieldDepowered += AncientRelicShield_OnAncientRelicShieldDepowered;
+        AncientRelic.OnAncientRelicCollected += AncientRelic_OnAncientRelicCollected;
 
         DialogueManager.OnDialogueStart += DialogueManager_OnDialogueStart;
         DialogueManager.OnDialogueEnd += DialogueManager_OnDialogueEnd;
@@ -139,6 +140,7 @@ public class PausableSFXManager : SFXManager
         ShowcaseRoomShield.OnAnyShowcaseRoomShieldDeactivated -= ShowcaseRoomShield_OnAnyShowcaseRoomShieldDeactivated;
 
         AncientRelicShield.OnAncientRelicShieldDepowered -= AncientRelicShield_OnAncientRelicShieldDepowered;
+        AncientRelic.OnAncientRelicCollected -= AncientRelic_OnAncientRelicCollected;
 
         DialogueManager.OnDialogueStart -= DialogueManager_OnDialogueStart;
         DialogueManager.OnDialogueEnd -= DialogueManager_OnDialogueEnd;
@@ -529,6 +531,12 @@ public class PausableSFXManager : SFXManager
     {
         AncientRelicShield ancientRelicShield = sender as AncientRelicShield;
         PlaySoundAtPoint(SFXPoolSO.ancientRelicShieldDepowered, ancientRelicShield.transform.position);
+    }
+
+    private void AncientRelic_OnAncientRelicCollected(object sender, System.EventArgs e)
+    {
+        AncientRelic ancientRelic = sender as AncientRelic;
+        PlaySoundAtPoint(SFXPoolSO.ancientRelicCollected, ancientRelic.transform.position);
     }
     #endregion
 
