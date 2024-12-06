@@ -46,9 +46,9 @@ public class BossAnimationController : MonoBehaviour
 
     private void UpdateAnimatorBooleans()
     {
-        //animator.SetBool(CHARGING_BOOLEAN, charging);
-        //animator.SetBool(ALMOST_DEFEATED_BOOLEAN, almostDefeated);
-        //animator.SetBool(DEFEATED_BOOLEAN, defeated);
+        animator.SetBool(CHARGING_BOOLEAN, charging);
+        animator.SetBool(ALMOST_DEFEATED_BOOLEAN, almostDefeated);
+        animator.SetBool(DEFEATED_BOOLEAN, defeated);
     }
 
     private void SetCharging(bool charging) => this.charging = charging;
