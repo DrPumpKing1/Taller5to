@@ -15,6 +15,7 @@ public class UnPausableSFXManager : SFXManager
         JournalOpeningManager.OnJournalClose += JournalOpeningManager_OnJournalClose;
 
         JournalInfoManager.OnJournalInfoCollected += JournalInfoManager_OnJournalInfoCollected;
+        JournalInfoPopUpUI.OnJournalInfoPopUpCloseFromUI += JournalInfoPopUpUI_OnJournalInfoPopUpCloseFromUI;
 
         AchievementsManager.OnAchievementAchieved += AchievementsManager_OnAchievementAchieved;
 
@@ -31,6 +32,7 @@ public class UnPausableSFXManager : SFXManager
         JournalOpeningManager.OnJournalClose -= JournalOpeningManager_OnJournalClose;
 
         JournalInfoManager.OnJournalInfoCollected -= JournalInfoManager_OnJournalInfoCollected;
+        JournalInfoPopUpUI.OnJournalInfoPopUpCloseFromUI -= JournalInfoPopUpUI_OnJournalInfoPopUpCloseFromUI;
 
         AchievementsManager.OnAchievementAchieved -= AchievementsManager_OnAchievementAchieved;
 
@@ -84,6 +86,11 @@ public class UnPausableSFXManager : SFXManager
     private void JournalInfoManager_OnJournalInfoCollected(object sender, JournalInfoManager.OnJournalInfoEventArgs e)
     {
         PlaySound(SFXPoolSO.journalInfoCollected);
+    }
+
+    private void JournalInfoPopUpUI_OnJournalInfoPopUpCloseFromUI(object sender, JournalInfoPopUpUI.OnJournalInfoPopUpEventArgs e)
+    {
+        PlaySound(SFXPoolSO.journalButtonClick4);
     }
 
     #endregion

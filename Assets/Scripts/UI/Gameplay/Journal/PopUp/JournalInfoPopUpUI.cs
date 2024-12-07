@@ -13,8 +13,15 @@ public class JournalInfoPopUpUI : BaseUI
     private const string SHOW_TRIGGER = "Show";
     private const string HIDE_TRIGGER = "Hide";
 
-    public static event EventHandler OnJournalInfoPopUpOpen;
-    public static event EventHandler OnJournalInfoPopUpClose;
+    public static event EventHandler<OnJournalInfoPopUpEventArgs> OnJournalInfoPopUpOpen;
+    public static event EventHandler<OnJournalInfoPopUpEventArgs> OnJournalInfoPopUpClose;
+
+    public static event EventHandler<OnJournalInfoPopUpEventArgs> OnJournalInfoPopUpCloseFromUI;
+
+    public class OnJournalInfoPopUpEventArgs : EventArgs
+    {
+        public JournalInfoPopUpUI journalInfoPopUpUI;
+    }
 
     protected override void OnEnable()
     {
@@ -54,7 +61,7 @@ public class JournalInfoPopUpUI : BaseUI
 
         ShowPopUpUI();
 
-        OnJournalInfoPopUpOpen?.Invoke(this, EventArgs.Empty);
+        OnJournalInfoPopUpOpen?.Invoke(this, new OnJournalInfoPopUpEventArgs { journalInfoPopUpUI = this});
     }
 
     private void CloseUI()
@@ -67,10 +74,16 @@ public class JournalInfoPopUpUI : BaseUI
 
         HidePopUpUI();
 
-        OnJournalInfoPopUpClose?.Invoke(this, EventArgs.Empty);
+        OnJournalInfoPopUpClose?.Invoke(this, new OnJournalInfoPopUpEventArgs { journalInfoPopUpUI = this });
     }
 
     protected override void CloseFromUI()
+    {
+        CloseUI();
+        OnJournalInfoPopUpCloseFromUI?.Invoke(this, new OnJournalInfoPopUpEventArgs { journalInfoPopUpUI = this });
+    }
+
+    public void CloseFromPhysicalButtonClick()
     {
         CloseUI();
     }
