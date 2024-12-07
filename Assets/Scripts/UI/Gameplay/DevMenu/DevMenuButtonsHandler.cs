@@ -21,8 +21,9 @@ public class DevMenuButtonsHandler : MonoBehaviour
     [SerializeField] private Button skipShowcasePhaseButton;
     [SerializeField] private Button skipBossPhaseButton;
 
-    [Header("Light Settings")]
+    [Header("ExtraSettings Settings")]
     [SerializeField] private Toggle directionalLightToggle;
+    [SerializeField] private Button simulateFallButton;
 
     private void Awake()
     {
@@ -46,7 +47,9 @@ public class DevMenuButtonsHandler : MonoBehaviour
         skipBossPhaseButton.onClick.AddListener(SkipBossPhase);
 
         directionalLightToggle.onValueChanged.AddListener(ToggleOverrideDirectionalLight);
+        simulateFallButton.onClick.AddListener(SimulateFall);
     }
+
     private void RestartGame() => LevelSkipManager.Instance.SkipLevel(0);
     private void GoToLevel1() => LevelSkipManager.Instance.SkipLevel(1);
     private void GoToLevel2() => LevelSkipManager.Instance.SkipLevel(2);
@@ -62,4 +65,5 @@ public class DevMenuButtonsHandler : MonoBehaviour
     private void SkipBossPhase() => BossPhaseHandler.Instance.ForceChangeToNextPhase();
 
     private void ToggleOverrideDirectionalLight(bool overrideDirectionalLight) => DirectionalLightingHandler.Instance.OverrideOnDirectionalLights(overrideDirectionalLight);
+    private void SimulateFall() => PlayerLand.Instance.SimulateSoftLanding();
 }

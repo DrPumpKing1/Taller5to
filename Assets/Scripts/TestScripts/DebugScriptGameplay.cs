@@ -11,6 +11,7 @@ public class DebugScriptGameplay : MonoBehaviour
         CheckHideInstruction();
         CheckSkipBossPhase();
         CheckSkipShowcaseRoomPhase();
+        CheckSimulateSoftLanding();
         //CheckSkipCinematic();
         //CheckReloadScene();
 
@@ -20,6 +21,14 @@ public class DebugScriptGameplay : MonoBehaviour
         CheckSkipLevel3();
         CheckSkipBoss();
         */
+    }
+
+    private void CheckSimulateSoftLanding()
+    {
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            PlayerLand.Instance.SimulateSoftLanding();
+        }
     }
 
     private void CheckHideInstruction()
