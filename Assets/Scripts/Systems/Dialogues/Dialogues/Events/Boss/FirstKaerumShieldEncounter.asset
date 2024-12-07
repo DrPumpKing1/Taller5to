@@ -20,6 +20,14 @@ MonoBehaviour:
   lookAtPet: 0
   sentences:
   - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
-    text: First Kaerum Shield Encounter Dialogue
-    time: 5
+    text: 'This is ancient technology. It is a <i>K''aerum</i> barrier! '
+    time: 6
+    audioClip: {fileID: 0}
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
+    text: It's energyzed with <i>K'aerum</i> and it is blocking our way.
+    time: 6
+    audioClip: {fileID: 0}
+  - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
+    text: We need to disable it to keep going. Turn off that switch.
+    time: 6
     audioClip: {fileID: 0}

@@ -1990,7 +1990,7 @@ MonoBehaviour:
   state: 0
   phaseBeams:
   - bossPhase: 2
-    activationTime: 10
+    activationTime: 3
     chargeTime: 15
     cooldownTime: 15
     stunTime: 5
@@ -2003,7 +2003,7 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
   - bossPhase: 3
-    activationTime: 7.5
+    activationTime: 4
     chargeTime: 10
     cooldownTime: 10
     stunTime: 5
