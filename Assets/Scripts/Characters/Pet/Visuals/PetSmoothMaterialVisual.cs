@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PetMaterialSmoothVisual : MonoBehaviour
+public class PetSmoothMaterialVisual : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Renderer _renderer;
