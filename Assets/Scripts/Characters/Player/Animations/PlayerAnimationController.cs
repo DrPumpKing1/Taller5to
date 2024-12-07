@@ -56,7 +56,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void LateUpdate()
     {
-        //HandleTriggerReset();
+        HandleTriggerReset();
     }
 
     private void HandleHorizontalSpeedBlend()
@@ -71,7 +71,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void HandleTriggerReset()
     {
-        //if (animator.IsInTransition(0)) return;
+        if (!checkGround.IsGrounded) return;
 
         animator.ResetTrigger(FALL_TRIGGER);
         //ResetLandingTriggers();

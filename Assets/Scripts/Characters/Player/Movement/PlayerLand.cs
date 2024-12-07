@@ -105,12 +105,17 @@ public class PlayerLand : MonoBehaviour
                 OnPlayerNormalLand?.Invoke(this, EventArgs.Empty);
                 SetLandState(State.NormalLanding);
             }
-            else if(landHeight >= softLandingThreshold)
+            else //if(landHeight >= softLandingThreshold)
             {
                 OnPlayerSoftLand?.Invoke(this, EventArgs.Empty);
                 SetLandState(State.SoftLanding);
             }
         }
+    }
+
+    public void SimulateSoftLanding()
+    {
+
     }
 
     private void SoftLandingLogic()
