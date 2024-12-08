@@ -9,6 +9,8 @@ public class PlayerFall : MonoBehaviour
     [SerializeField] private CheckGround checkGround;
 
     [Header("Fall Settings")]
+    [SerializeField] private bool enableFallVelocityThreshold;
+    [SerializeField] private bool enableFallDistanceThreshold;
     [SerializeField, Range(-1f,0f)] private float fallVelocityThreshold;
     [SerializeField, Range(0f,1f)] private float fallDistanceFromGroundThreshold;
 
@@ -56,8 +58,8 @@ public class PlayerFall : MonoBehaviour
     private bool CheckIsFalling() 
     {
         if (checkGround.IsGrounded) return false;
-        if (checkGround.DistanceFromGround < fallDistanceFromGroundThreshold) return false;
-        if (_rigidbody.velocity.y > fallVelocityThreshold) return false;
+        if (checkGround.DistanceFromGround < fallDistanceFromGroundThreshold && enableFallDistanceThreshold) return false;
+        if (_rigidbody.velocity.y > fallVelocityThreshold && enableFallVelocityThreshold) return false;
 
         return true;
     }

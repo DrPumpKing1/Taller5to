@@ -100,6 +100,7 @@ public class PlayerAnimationController : MonoBehaviour
 
         animator.SetTrigger(FALL_TRIGGER);
     }
+
     private void PlayerLand_OnPlayerSoftLand(object sender, EventArgs e)
     {
         //if (animator.GetCurrentAnimatorStateInfo(0).IsName(MOVEMENT_ANIMATION_NAME)) return;
@@ -121,6 +122,7 @@ public class PlayerAnimationController : MonoBehaviour
 
         animator.SetTrigger(NORMAL_LAND_TRIGGER);
     }
+
     private void PlayerLand_OnPlayerHardLand(object sender, EventArgs e)
     {
         //if (animator.GetCurrentAnimatorStateInfo(0).IsName(HARD_LAND_ANIMATION_NAME)) return;
