@@ -14,8 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 30
   movementLimitType: 0
+  dialogueType: 0
   allowSkip: 1
+  lookAtPlayer: 0
+  lookAtPet: 0
   sentences:
   - speaker: {fileID: 11400000, guid: ec4e40192bec081458d4b721907ed7fb, type: 2}
-    text: I wonder what will you learn with that <i>L'ern</i>.
+    text: I'm curious what you will learn now, fellow
     time: 5
+    audioClip: {fileID: 0}

@@ -20,14 +20,15 @@ MonoBehaviour:
   lookAtPet: 0
   sentences:
   - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
-    text: 'This is ancient technology. It is a <i>K''aerum</i> barrier! '
+    text: This is arcane technology, the <b>k'aerum barrier</b>!
     time: 6
     audioClip: {fileID: 0}
   - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
-    text: It's energyzed with <i>K'aerum</i> and it is blocking our way.
+    text: It's created by a <b>generator</b> that transforms k'aerum into a material
+      stronger than metal
     time: 6
     audioClip: {fileID: 0}
   - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
-    text: We need to disable it to keep going. Turn off that switch.
+    text: But we've the knowledge to <b>disable</b> it
     time: 6
     audioClip: {fileID: 0}

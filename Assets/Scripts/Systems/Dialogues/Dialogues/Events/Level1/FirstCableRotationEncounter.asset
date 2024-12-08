@@ -14,8 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 22
   movementLimitType: 2
+  dialogueType: 0
   allowSkip: 1
+  lookAtPlayer: 0
+  lookAtPet: 0
   sentences:
   - speaker: {fileID: 11400000, guid: a5c4172e4be8a9340a084e1117a3a5a6, type: 2}
-    text: We can rotate a projected <i>C'ibla</i>.
+    text: One p'royat, <b>two paths</b>, How can we solve this?
     time: 6
+    audioClip: {fileID: 0}
