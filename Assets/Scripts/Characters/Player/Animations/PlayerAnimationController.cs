@@ -17,6 +17,9 @@ public class PlayerAnimationController : MonoBehaviour
     public float HorizontalSpeed => playerHorizontalMovement.FinalMoveVector.magnitude;
 
     private const string FALL_ANIMATION_NAME = "Fall";
+    private const string HARD_LAND_ANIMATION_NAME = "HardLand";
+    private const string NORMAL_LAND_ANIMATION_NAME = "NormalLand";
+    private const string MOVEMENT_ANIMATION_NAME = "IdleMove Blend Tree";
 
     private const string HORIZONTAL_SPEED_FLOAT = "HorizontalSpeed";
 
@@ -71,9 +74,12 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void HandleTriggerReset()
     {
-        //if (animator.IsInTransition(0)) return;
+        if (!checkGround.IsGrounded) return;
 
-        animator.ResetTrigger(FALL_TRIGGER);
+        //animator.ResetTrigger(FALL_TRIGGER);
+        //animator.ResetTrigger(SOFT_LAND_TRIGGER);
+        //animator.ResetTrigger(NORMAL_LAND_TRIGGER);
+        //animator.ResetTrigger(HARD_LAND_TRIGGER);
         //ResetLandingTriggers();
     }
 
@@ -94,24 +100,33 @@ public class PlayerAnimationController : MonoBehaviour
 
         animator.SetTrigger(FALL_TRIGGER);
     }
+
     private void PlayerLand_OnPlayerSoftLand(object sender, EventArgs e)
     {
+        //if (animator.GetCurrentAnimatorStateInfo(0).IsName(MOVEMENT_ANIMATION_NAME)) return;
+
         animator.ResetTrigger(FALL_TRIGGER);
         animator.ResetTrigger(NORMAL_LAND_TRIGGER);
         animator.ResetTrigger(HARD_LAND_TRIGGER);
 
         animator.SetTrigger(SOFT_LAND_TRIGGER);
     }
+
     private void PlayerLand_OnPlayerNormalLand(object sender, EventArgs e)
     {
+        //if (animator.GetCurrentAnimatorStateInfo(0).IsName(NORMAL_LAND_ANIMATION_NAME)) return;
+
         animator.ResetTrigger(FALL_TRIGGER);
         animator.ResetTrigger(SOFT_LAND_TRIGGER);
         animator.ResetTrigger(HARD_LAND_TRIGGER);
 
         animator.SetTrigger(NORMAL_LAND_TRIGGER);
     }
+
     private void PlayerLand_OnPlayerHardLand(object sender, EventArgs e)
     {
+        //if (animator.GetCurrentAnimatorStateInfo(0).IsName(HARD_LAND_ANIMATION_NAME)) return;
+
         animator.ResetTrigger(FALL_TRIGGER);
         animator.ResetTrigger(SOFT_LAND_TRIGGER);
         animator.ResetTrigger(NORMAL_LAND_TRIGGER);

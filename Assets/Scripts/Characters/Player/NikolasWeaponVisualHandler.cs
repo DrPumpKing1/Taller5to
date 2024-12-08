@@ -7,6 +7,9 @@ public class NikolasWeaponVisualHandler : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Transform model;
 
+    [Header("Settings")]
+    [SerializeField] private bool weaponLogicEnabled;
+
     private void OnEnable()
     {
         PetPlayerAttachment.OnVyrxAttachToPlayer += PetPlayerAttachment_OnVyrxAttachToPlayer;
@@ -21,6 +24,8 @@ public class NikolasWeaponVisualHandler : MonoBehaviour
 
     private void PetPlayerAttachment_OnVyrxAttachToPlayer(object sender, System.EventArgs e)
     {
+        if (!weaponLogicEnabled) return;
+
         SetModel(true);
     }
 }

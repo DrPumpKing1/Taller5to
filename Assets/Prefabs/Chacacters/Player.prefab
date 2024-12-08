@@ -657,8 +657,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkGround: {fileID: 2176356878162520009}
-  fallVelocityThreshold: -0.2
-  fallDistanceFromGroundThreshold: 0.4
+  enableFallVelocityThreshold: 1
+  enableFallDistanceThreshold: 1
+  fallVelocityThreshold: -0.25
+  fallDistanceFromGroundThreshold: 0
 --- !u!114 &545511874797415526
 MonoBehaviour:
   m_ObjectHideFlags: 0

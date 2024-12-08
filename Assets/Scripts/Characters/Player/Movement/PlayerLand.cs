@@ -5,6 +5,8 @@ using System;
 
 public class PlayerLand : MonoBehaviour
 {
+    public static PlayerLand Instance { get; private set; }
+
     [Header("Components")]
     [SerializeField] private PlayerFall playerFall;
     [SerializeField] private CheckGround checkGround;
@@ -43,6 +45,7 @@ public class PlayerLand : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        SetSingleton();
     }
 
     private void Start()
@@ -53,6 +56,19 @@ public class PlayerLand : MonoBehaviour
     private void Update()
     {
         HandleLandStates();
+    }
+
+    private void SetSingleton()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("There is more than one PlayerLand instance, proceding to destroy duplicate");
+            Destroy(gameObject);
+        }
     }
 
     private void InitializeVariables()
@@ -111,6 +127,12 @@ public class PlayerLand : MonoBehaviour
                 SetLandState(State.SoftLanding);
             }
         }
+    }
+
+    public void SimulateSoftLanding()
+    {
+        OnPlayerSoftLand?.Invoke(this, EventArgs.Empty);
+        SetLandState(State.SoftLanding);
     }
 
     private void SoftLandingLogic()

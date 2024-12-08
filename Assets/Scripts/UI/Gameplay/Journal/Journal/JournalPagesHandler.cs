@@ -11,17 +11,19 @@ public class JournalPagesHandler : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private List<JournalPageButton> journalPageButtons;
     [SerializeField] private JournalPageButton currentJournalPageButton;
+    [SerializeField] private JournalInfoPopUpUI currentJournalInfoPopUpUI;
     [Space]
     [SerializeField] private bool journalPagesHierarchyOverPopUps;
     [SerializeField, Range(0f, 1f)] private float buttonsCooldown;
 
-    public bool JournalInfoPopUpOpen { get; private set; }
     public bool JournalPagesHierarchyOverPopUps => journalPagesHierarchyOverPopUps;
 
     public static event EventHandler<OnJournalPageEventArgs> OnJournalPageOpen;
     public static event EventHandler<OnJournalPageEventArgs> OnJournalPageClose;
 
     private float cooldownTimer;
+
+    private const int FIRST_PAGE_NUMBER = 1;
 
     [Serializable]
     public class JournalPageButton
@@ -55,9 +57,9 @@ public class JournalPagesHandler : MonoBehaviour
 
     private void Start()
     {
-        InitializeVariables();
+        ClearCurrentJournalInfoPopUpUI();
         HideAllPagesInmediately();
-        ShowJournalPageInmediatelyByPageNumber(1);
+        ShowJournalPageInmediatelyByPageNumber(FIRST_PAGE_NUMBER);
         ResetCooldownTimer();
     }
 
@@ -94,27 +96,41 @@ public class JournalPagesHandler : MonoBehaviour
 
     private void OnJournalPageButtonClick(JournalPageButton journalPageButton)
     {
-        if (currentJournalPageButton == journalPageButton) return;
-        if (JournalInfoPopUpOpen && !journalPagesHierarchyOverPopUps) return;
         if (ButtonsOnCooldown()) return;
+        if (currentJournalPageButton == journalPageButton && !currentJournalInfoPopUpUI) return; //If PageAlreadyOpen & JournalPopUp Not Opened
+        //if (JournalInfoPopUpOpen && !journalPagesHierarchyOverPopUps) return;
 
-        if(currentJournalPageButton != null) 
+        if (currentJournalPageButton == journalPageButton && currentJournalInfoPopUpUI)
         {
-            HideJournalPage(currentJournalPageButton);
+            currentJournalInfoPopUpUI.CloseFromPhysicalButtonClick();
+            SetButtonsOnCooldown();
+            return;
         }
 
-        ShowJournalPage(journalPageButton);
-        SetButtonsOnCooldown();
+        if(currentJournalPageButton != journalPageButton && !currentJournalInfoPopUpUI) 
+        {
+            HideJournalPage(currentJournalPageButton, false);
+            ShowJournalPage(journalPageButton, false);
+            SetButtonsOnCooldown();
+            return;
+        }
+
+        if (currentJournalPageButton != journalPageButton && currentJournalInfoPopUpUI)
+        {
+            currentJournalInfoPopUpUI.CloseFromPhysicalButtonClick();
+            HideJournalPage(currentJournalPageButton, true);
+            ShowJournalPage(journalPageButton, true);
+            SetButtonsOnCooldown();
+            return;
+        }
     } 
 
-    private void InitializeVariables()
+    private void ShowJournalPage(JournalPageButton journalPageButton, bool inmediately)
     {
-        JournalInfoPopUpOpen = false;
-    }
+        if(!inmediately) journalPageButton.journalPageUI.ShowPage();
+        else journalPageButton.journalPageUI.ShowPageInmediately();
 
-    private void ShowJournalPage(JournalPageButton journalPageButton)
-    {
-        journalPageButton.journalPageUI.ShowPage();
+
         journalPageButton.journalPageUI.transform.SetAsLastSibling();
 
         SetCurrentJournalPage(journalPageButton);
@@ -122,9 +138,12 @@ public class JournalPagesHandler : MonoBehaviour
         OnJournalPageOpen?.Invoke(this, new OnJournalPageEventArgs { journalPageButton = journalPageButton });
     }
 
-    private void HideJournalPage(JournalPageButton journalPageButton)
+    private void HideJournalPage(JournalPageButton journalPageButton, bool inmediately)
     {
-        journalPageButton.journalPageUI.HidePage();
+        if (!inmediately) journalPageButton.journalPageUI.HidePage();
+        else journalPageButton.journalPageUI.HidePageInmediately();
+
+
         journalPageButton.journalPageUI.transform.SetAsFirstSibling();
 
         if (journalPageButton == currentJournalPageButton) ClearCurrentJournalPage();
@@ -175,14 +194,17 @@ public class JournalPagesHandler : MonoBehaviour
         }
     }
 
+    private void SetCurrentJournalInfoPopUpUI(JournalInfoPopUpUI journalInfoPopUpUI) => currentJournalInfoPopUpUI = journalInfoPopUpUI;
+    private void ClearCurrentJournalInfoPopUpUI() => currentJournalInfoPopUpUI = null;
+
     #region JournalInfoPopUpUI Subscriptions
-    private void JournalInfoPopUpUI_OnJournalInfoPopUpOpen(object sender, System.EventArgs e)
+    private void JournalInfoPopUpUI_OnJournalInfoPopUpOpen(object sender, JournalInfoPopUpUI.OnJournalInfoPopUpEventArgs e)
     {
-        JournalInfoPopUpOpen = true;
+        SetCurrentJournalInfoPopUpUI(e.journalInfoPopUpUI);
     }
-    private void JournalInfoPopUpUI_OnJournalInfoPopUpClose(object sender, System.EventArgs e)
+    private void JournalInfoPopUpUI_OnJournalInfoPopUpClose(object sender, JournalInfoPopUpUI.OnJournalInfoPopUpEventArgs e)
     {
-        JournalInfoPopUpOpen = false;
+        ClearCurrentJournalInfoPopUpUI();
     }
 
     #endregion

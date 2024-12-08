@@ -52,7 +52,7 @@ MonoBehaviour:
   playerFacePoint: {fileID: 0}
   smoothRotateFactor: 3
   applyStartingRotation: 1
-  startingFacingDirection: {x: 1, y: 0, z: 0}
+  startingFacingDirection: {x: -1, y: 0, z: 0}
 --- !u!1 &1835222234857732829
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20991ddc844fd12489fccefacc94553a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logToInitialAttach: Cinematics/End/1
+  logToInitialAttach: Dialogues/End/3
   overrideAttachToPlayer: 0
   attachToPlayer: 0
 --- !u!114 &3985624961970628698
