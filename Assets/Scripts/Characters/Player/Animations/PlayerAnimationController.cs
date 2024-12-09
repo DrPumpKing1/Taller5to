@@ -17,8 +17,9 @@ public class PlayerAnimationController : MonoBehaviour
     [Header("Settings")]
     [SerializeField,Range(0.1f,1f)] private float maxTimeFallingWhileGrounded;
     [SerializeField,Range(0.1f,0.5f)] private float forceFallCooldownTime;
-    [SerializeField] private bool playingFallAnimation;
-    [SerializeField] private bool grounded;
+
+    [Header("Debug")]
+    [SerializeField] private bool debug;    
 
     public float HorizontalSpeed => playerHorizontalMovement.FinalMoveVector.magnitude;
 
@@ -156,9 +157,6 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void HandleForceFallLogic()
     {
-        playingFallAnimation = PlayingFallAnimation();
-        grounded = PlayerGrounded();
-
         if(!PlayingFallAnimation() || !PlayerGrounded())
         {
             ResetFallingWhileGroundedTimer();
@@ -195,7 +193,7 @@ public class PlayerAnimationController : MonoBehaviour
 
         animator.SetTrigger(SOFT_LAND_TRIGGER);
 
-        Debug.Log("Forcing Fall");
+        if(debug) Debug.Log("Forcing Fall");
     }
 
     private bool PlayingFallAnimation()

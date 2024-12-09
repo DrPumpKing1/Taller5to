@@ -79,7 +79,7 @@ MonoBehaviour:
   - 0.95
   diagonalRayLength: 0.75
   diagonalWallDetectionPoints:
-  - 0.1
+  - 0.125
   - 0.5
   - 0.95
   cornerRayLength: 0.75
@@ -197,7 +197,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6561227762315041100}
   - component: {fileID: 5974458824621029870}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,8 +241,7 @@ MonoBehaviour:
   checkGround: {fileID: 2176356878162520009}
   maxTimeFallingWhileGrounded: 0.2
   forceFallCooldownTime: 0.2
-  playingFallAnimation: 0
-  grounded: 0
+  debug: 1
 --- !u!1 &2712992456979249516
 GameObject:
   m_ObjectHideFlags: 0
