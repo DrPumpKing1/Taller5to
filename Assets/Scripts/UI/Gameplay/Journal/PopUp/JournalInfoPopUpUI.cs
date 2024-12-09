@@ -23,17 +23,6 @@ public class JournalInfoPopUpUI : BaseUI
         public JournalInfoPopUpUI journalInfoPopUpUI;
     }
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        JournalPagesHandler.OnJournalPageOpen += JournalPagesHandler_OnJournalPageOpen;
-    }
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-        JournalPagesHandler.OnJournalPageOpen -= JournalPagesHandler_OnJournalPageOpen;
-    }
-
     private void Awake()
     {
         InitializeButtonsListeners();
@@ -99,11 +88,4 @@ public class JournalInfoPopUpUI : BaseUI
         journalInfoPopUpUIAnimator.ResetTrigger(SHOW_TRIGGER);
         journalInfoPopUpUIAnimator.SetTrigger(HIDE_TRIGGER);
     }
-
-    #region JournalPagesHandler Subscriptions
-    private void JournalPagesHandler_OnJournalPageOpen(object sender, JournalPagesHandler.OnJournalPageEventArgs e)
-    {
-        if (JournalPagesHandler.Instance.JournalPagesHierarchyOverPopUps) CloseUI();
-    }
-    #endregion
 }

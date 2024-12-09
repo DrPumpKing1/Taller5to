@@ -16,8 +16,6 @@ public class JournalPagesHandler : MonoBehaviour
     [SerializeField] private bool journalPagesHierarchyOverPopUps;
     [SerializeField, Range(0f, 1f)] private float buttonsCooldown;
 
-    public bool JournalPagesHierarchyOverPopUps => journalPagesHierarchyOverPopUps;
-
     public static event EventHandler<OnJournalPageEventArgs> OnJournalPageOpen;
     public static event EventHandler<OnJournalPageEventArgs> OnJournalPageClose;
 
@@ -97,17 +95,16 @@ public class JournalPagesHandler : MonoBehaviour
     private void OnJournalPageButtonClick(JournalPageButton journalPageButton)
     {
         if (ButtonsOnCooldown()) return;
-        if (currentJournalPageButton == journalPageButton && !currentJournalInfoPopUpUI) return; //If PageAlreadyOpen & JournalPopUp Not Opened
-        //if (JournalInfoPopUpOpen && !journalPagesHierarchyOverPopUps) return;
+        if (currentJournalPageButton == journalPageButton && !currentJournalInfoPopUpUI) return; //If page already open & JournalPopUp not open, Do nothing
 
-        if (currentJournalPageButton == journalPageButton && currentJournalInfoPopUpUI)
+        if (currentJournalPageButton == journalPageButton && currentJournalInfoPopUpUI) //If page already open && JournalPopUp open, Close that JournalPopUp
         {
             currentJournalInfoPopUpUI.CloseFromPhysicalButtonClick();
             SetButtonsOnCooldown();
             return;
         }
 
-        if(currentJournalPageButton != journalPageButton && !currentJournalInfoPopUpUI) 
+        if(currentJournalPageButton != journalPageButton && !currentJournalInfoPopUpUI) //If other page clicked and JournalPopUp not open, Close current page and Open clicked Page (not inmediately)
         {
             HideJournalPage(currentJournalPageButton, false);
             ShowJournalPage(journalPageButton, false);
@@ -115,7 +112,7 @@ public class JournalPagesHandler : MonoBehaviour
             return;
         }
 
-        if (currentJournalPageButton != journalPageButton && currentJournalInfoPopUpUI)
+        if (currentJournalPageButton != journalPageButton && currentJournalInfoPopUpUI) //If other page clicked and JournalPopUp open, Close that JournalPopUp, Close current page and Open clicked Page (inmediately)
         {
             currentJournalInfoPopUpUI.CloseFromPhysicalButtonClick();
             HideJournalPage(currentJournalPageButton, true);
