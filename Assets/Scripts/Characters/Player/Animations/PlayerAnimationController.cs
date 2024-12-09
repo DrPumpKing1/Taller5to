@@ -14,6 +14,12 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField] private PlayerInteract playerInteract;
     [SerializeField] private CheckGround checkGround;
 
+    [Header("Settings")]
+    [SerializeField,Range(0.1f,1f)] private float maxTimeFallingWhileGrounded;
+    [SerializeField,Range(0.1f,0.5f)] private float forceFallCooldownTime;
+    [SerializeField] private bool playingFallAnimation;
+    [SerializeField] private bool grounded;
+
     public float HorizontalSpeed => playerHorizontalMovement.FinalMoveVector.magnitude;
 
     private const string FALL_ANIMATION_NAME = "Fall";
@@ -33,6 +39,9 @@ public class PlayerAnimationController : MonoBehaviour
 
     private const string GROUNDED_BOOL = "Grounded";
 
+    private float fallingWhileGroundedTimer = 0f;
+    private float forceFallCooldownTimer = 0f;
+
     private void OnEnable()
     {
         PlayerFall.OnPlayerFall += PlayerFall_OnPlayerFall;
@@ -51,10 +60,18 @@ public class PlayerAnimationController : MonoBehaviour
         PlayerLand.OnPlayerHardLand -= PlayerLand_OnPlayerHardLand;
     }
 
+    private void Start()
+    {
+        ResetFallingWhileGroundedTimer();
+        ResetForceFallCooldown();
+    }
+
     private void Update()
     {
         HandleHorizontalSpeedBlend();
         UpdateBooleans();
+
+        HandleForceFallLogic();
     }
 
     private void LateUpdate()
@@ -133,4 +150,67 @@ public class PlayerAnimationController : MonoBehaviour
 
         animator.SetTrigger(HARD_LAND_TRIGGER);
     }
+
+
+    #region ForceFall
+
+    private void HandleForceFallLogic()
+    {
+        playingFallAnimation = PlayingFallAnimation();
+        grounded = PlayerGrounded();
+
+        if(!PlayingFallAnimation() || !PlayerGrounded())
+        {
+            ResetFallingWhileGroundedTimer();
+            ResetForceFallCooldown();
+            return;
+        }
+
+        if(fallingWhileGroundedTimer < maxTimeFallingWhileGrounded)
+        {
+            fallingWhileGroundedTimer += Time.deltaTime;
+            return;
+        }
+
+        HandleForceFall();
+    }
+
+    private void HandleForceFall()
+    {
+        if (ForceFallOnCooldown())
+        {
+            forceFallCooldownTimer -= Time.deltaTime;
+            return;
+        }
+
+        SetForceFallOnCooldown();
+        ForceFall();
+    }
+
+    private void ForceFall()
+    {
+        animator.ResetTrigger(FALL_TRIGGER);
+        animator.ResetTrigger(NORMAL_LAND_TRIGGER);
+        animator.ResetTrigger(HARD_LAND_TRIGGER);
+
+        animator.SetTrigger(SOFT_LAND_TRIGGER);
+
+        Debug.Log("Forcing Fall");
+    }
+
+    private bool PlayingFallAnimation()
+    {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName(FALL_ANIMATION_NAME)) return false;
+        return true;
+    }
+
+    private bool PlayerGrounded() => checkGround.IsGrounded;
+
+    private void ResetFallingWhileGroundedTimer() => fallingWhileGroundedTimer = 0;
+
+    private void ResetForceFallCooldown() => forceFallCooldownTimer = 0;
+    private void SetForceFallOnCooldown() => forceFallCooldownTimer = forceFallCooldownTime;
+    private bool ForceFallOnCooldown() => forceFallCooldownTimer > 0;
+
+    #endregion
 }

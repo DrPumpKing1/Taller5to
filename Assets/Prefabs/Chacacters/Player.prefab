@@ -239,6 +239,10 @@ MonoBehaviour:
   playerLand: {fileID: 545511874797415526}
   playerInteract: {fileID: 4536946071876244043}
   checkGround: {fileID: 2176356878162520009}
+  maxTimeFallingWhileGrounded: 0.2
+  forceFallCooldownTime: 0.2
+  playingFallAnimation: 0
+  grounded: 0
 --- !u!1 &2712992456979249516
 GameObject:
   m_ObjectHideFlags: 0
