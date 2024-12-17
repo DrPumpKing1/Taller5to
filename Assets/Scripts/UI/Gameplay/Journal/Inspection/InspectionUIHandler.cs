@@ -45,7 +45,7 @@ public class InspectionUIHandler : MonoBehaviour
 
     private void HandleInspectionPrefab(Transform prefab)
     {
-        inspectionUIDragHandler.ResetDragHolderRotation();
+        inspectionUIDragHandler.ResetDragHolderRotationInmediately();
 
         if(currentInspectionPrefab != null)
         {
