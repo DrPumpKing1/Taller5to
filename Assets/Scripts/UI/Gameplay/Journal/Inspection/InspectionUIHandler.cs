@@ -43,6 +43,11 @@ public class InspectionUIHandler : MonoBehaviour
         inspectionLight.intensity = intensity;
     }
 
+    private void SetDefaultInspectionAngles(Vector2 angles)
+    {
+        inspectionUIDragHandler.SetDefaultAngles(angles);
+    }
+
     private void HandleInspectionPrefab(Transform prefab)
     {
         inspectionUIDragHandler.ResetDragHolderRotationInmediately();
@@ -57,6 +62,7 @@ public class InspectionUIHandler : MonoBehaviour
         SetCurrentInspectionPrefab(inspectionPrefab);
     }
 
+
     private void SetCurrentInspectionPrefab(Transform prefab) => currentInspectionPrefab = prefab;
 
     private void ClearCurrentInspectionPrefab() => currentInspectionPrefab = null;
@@ -67,6 +73,7 @@ public class InspectionUIHandler : MonoBehaviour
         SetBackgroundColor(e.inspectBackgroundColor);
         SetLightColor(e.lightColor);
         SetLightIntensity(e.lightIntensity);
+        SetDefaultInspectionAngles(e.inspectionDefaultAngles);
         HandleInspectionPrefab(e.inspectionPrefab);
     }
     #endregion

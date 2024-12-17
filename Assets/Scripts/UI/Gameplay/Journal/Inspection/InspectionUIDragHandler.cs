@@ -19,7 +19,7 @@ public class InspectionUIDragHandler : MonoBehaviour,IDragHandler
     [SerializeField, Range(0.01f, 100f)] private float smoothResetFactor;
 
     private Vector2 currentAngles;
-
+    private Vector2 defaultAngles;
     private bool shouldReset;
 
     private void Awake()
@@ -45,6 +45,7 @@ public class InspectionUIDragHandler : MonoBehaviour,IDragHandler
 
     private void InitializeVariables()
     {
+        defaultAngles = Vector2.zero;
         shouldReset = false;
     }
 
@@ -52,19 +53,20 @@ public class InspectionUIDragHandler : MonoBehaviour,IDragHandler
     {
         if (!shouldReset) return;
 
-        currentAngles.x = Mathf.LerpAngle(currentAngles.x, 0f, Time.deltaTime * smoothResetFactor);
-        currentAngles.y = Mathf.LerpAngle(currentAngles.y, 0f, Time.deltaTime * smoothResetFactor);
+        currentAngles.x = Mathf.LerpAngle(currentAngles.x, defaultAngles.x, Time.deltaTime * smoothResetFactor);
+        currentAngles.y = Mathf.LerpAngle(currentAngles.y, defaultAngles.y, Time.deltaTime * smoothResetFactor);
 
         CalculateRotations(currentAngles);
     }
 
     public void ResetDragHolderRotationInmediately()
     {
-        yawHolder.localEulerAngles = Vector3.zero;
-        pitchHolder.localEulerAngles = Vector3.zero;
+        currentAngles = defaultAngles;
 
-        currentAngles = Vector2.zero;
+        CalculateRotations(currentAngles);
     }
+
+    public void SetDefaultAngles(Vector2 defaultAngles) => this.defaultAngles = defaultAngles;
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -78,7 +80,7 @@ public class InspectionUIDragHandler : MonoBehaviour,IDragHandler
         Vector2 newAngles = currentAngles + new Vector2(eventData.delta.y, -eventData.delta.x) * dragSensibility;
         Vector2 normalizedNewAngles = new Vector2(NormalizeAngle(newAngles.x), NormalizeAngle(newAngles.y));
 
-        CalculateRotations2(newAngles);
+        CalculateRotations(newAngles);
     }
 
     private void CalculateRotations2(Vector2 newAngles)
@@ -103,12 +105,12 @@ public class InspectionUIDragHandler : MonoBehaviour,IDragHandler
         currentAngles = newAngles;
     }
 
-    private void CalculateRotations(Vector2 newAngles)
+    private void CalculateRotations(Vector2 angles)
     {
-        float yawAngle = newAngles.y;
-        float pitchAngle = newAngles.x;
+        float yawAngle = angles.y;
+        float pitchAngle = angles.x;
 
-        //float pitchAngle = Mathf.Clamp(newAngles.x, -90f, 90f);
+        //float pitchAngle = Mathf.Clamp(angles.x, -90f, 90f);
 
         Quaternion yawRotation = Quaternion.AngleAxis(yawAngle, refferenceHolder.up);
         Quaternion pitchRotation = Quaternion.AngleAxis(pitchAngle, GetPitchCompensatedVector(yawAngle));
@@ -116,7 +118,7 @@ public class InspectionUIDragHandler : MonoBehaviour,IDragHandler
         yawHolder.localRotation = yawRotation;
         pitchHolder.localRotation = pitchRotation;
 
-        currentAngles = newAngles;
+        currentAngles = angles;
     }
 
     private Vector3 GetPitchCompensatedVector(float yawAngle)

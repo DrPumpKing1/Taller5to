@@ -15,6 +15,7 @@ public class InspectableJournalInfoPopUpHandler : MonoBehaviour
     [Space]
     [SerializeField] private Color lightColor;
     [SerializeField,Range(5f,40f)] private float lightIntensity;
+    [SerializeField] private Vector2 inspectionDefaultAngles;
 
     public static event EventHandler<OnInspectionUIOpenEventArgs> OnInspectionUIOpen;
 
@@ -24,6 +25,7 @@ public class InspectableJournalInfoPopUpHandler : MonoBehaviour
         public Color inspectBackgroundColor;
         public Color lightColor;
         public float lightIntensity;
+        public Vector2 inspectionDefaultAngles;
     }
 
     private void Awake()
@@ -38,6 +40,6 @@ public class InspectableJournalInfoPopUpHandler : MonoBehaviour
 
     private void OpenInspectUI()
     {
-        OnInspectionUIOpen?.Invoke(this, new OnInspectionUIOpenEventArgs { inspectionPrefab = inspectionPrefab, inspectBackgroundColor = inspectBackgroundColor, lightColor = lightColor, lightIntensity= lightIntensity });
+        OnInspectionUIOpen?.Invoke(this, new OnInspectionUIOpenEventArgs { inspectionPrefab = inspectionPrefab, inspectBackgroundColor = inspectBackgroundColor, lightColor = lightColor, lightIntensity= lightIntensity, inspectionDefaultAngles = inspectionDefaultAngles});
     }
 }
