@@ -8,6 +8,9 @@ public class JournalPagesHandler : MonoBehaviour
 {
     public static JournalPagesHandler Instance { get; private set; }
 
+    [Header("Components")]
+    [SerializeField] private InspectionUI inspectionUI;
+
     [Header("Settings")]
     [SerializeField] private List<JournalPageButton> journalPageButtons;
     [SerializeField] private JournalPageButton currentJournalPageButton;
@@ -22,6 +25,8 @@ public class JournalPagesHandler : MonoBehaviour
     private float cooldownTimer;
 
     private const int FIRST_PAGE_NUMBER = 1;
+
+    private bool onInspection;
 
     [Serializable]
     public class JournalPageButton
@@ -40,11 +45,18 @@ public class JournalPagesHandler : MonoBehaviour
     {
         JournalInfoPopUpUI.OnJournalInfoPopUpOpen += JournalInfoPopUpUI_OnJournalInfoPopUpOpen;
         JournalInfoPopUpUI.OnJournalInfoPopUpClose += JournalInfoPopUpUI_OnJournalInfoPopUpClose;
+
+        InspectionUI.OnInspectionUIOpen += InspectionUI_OnInspectionUIOpen;
+        InspectionUI.OnInspectionUIClose += InspectionUI_OnInspectionUIClose;
     }
+
     private void OnDisable()
     {
         JournalInfoPopUpUI.OnJournalInfoPopUpOpen -= JournalInfoPopUpUI_OnJournalInfoPopUpOpen;
         JournalInfoPopUpUI.OnJournalInfoPopUpClose -= JournalInfoPopUpUI_OnJournalInfoPopUpClose;
+
+        InspectionUI.OnInspectionUIOpen -= InspectionUI_OnInspectionUIOpen;
+        InspectionUI.OnInspectionUIClose -= InspectionUI_OnInspectionUIClose;
     }
 
     private void Awake()
@@ -55,6 +67,7 @@ public class JournalPagesHandler : MonoBehaviour
 
     private void Start()
     {
+        InitializeVariables();
         ClearCurrentJournalInfoPopUpUI();
         HideAllPagesInmediately();
         ShowJournalPageInmediatelyByPageNumber(FIRST_PAGE_NUMBER);
@@ -79,6 +92,10 @@ public class JournalPagesHandler : MonoBehaviour
         }
     }
 
+    private void InitializeVariables()
+    {
+        onInspection = false;
+    }
     private void InitializeButtonsListeners()
     {
         foreach(JournalPageButton journalPageButton in journalPageButtons)
@@ -95,6 +112,12 @@ public class JournalPagesHandler : MonoBehaviour
     private void OnJournalPageButtonClick(JournalPageButton journalPageButton)
     {
         if (ButtonsOnCooldown()) return;
+
+        if (onInspection)
+        {
+            inspectionUI.CloseFromPhysicalButtonClick();
+        }
+
         if (currentJournalPageButton == journalPageButton && !currentJournalInfoPopUpUI) return; //If page already open & JournalPopUp not open, Do nothing
 
         if (currentJournalPageButton == journalPageButton && currentJournalInfoPopUpUI) //If page already open && JournalPopUp open, Close that JournalPopUp
@@ -202,6 +225,18 @@ public class JournalPagesHandler : MonoBehaviour
     private void JournalInfoPopUpUI_OnJournalInfoPopUpClose(object sender, JournalInfoPopUpUI.OnJournalInfoPopUpEventArgs e)
     {
         ClearCurrentJournalInfoPopUpUI();
+    }
+
+    #endregion
+
+    #region InspectableJournalInfoPopUpHandler Subscriptions
+    private void InspectionUI_OnInspectionUIOpen(object sender, EventArgs e)
+    {
+        onInspection = true;
+    }
+    private void InspectionUI_OnInspectionUIClose(object sender, EventArgs e)
+    {
+        onInspection = false;
     }
 
     #endregion

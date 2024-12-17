@@ -16,6 +16,7 @@ public class UnPausableSFXManager : SFXManager
 
         JournalInfoManager.OnJournalInfoCollected += JournalInfoManager_OnJournalInfoCollected;
         JournalInfoPopUpUI.OnJournalInfoPopUpCloseFromUI += JournalInfoPopUpUI_OnJournalInfoPopUpCloseFromUI;
+        InspectionUI.OnInspectionUICloseFromUI += InspectionUI_OnInspectionUICloseFromUI;
 
         AchievementsManager.OnAchievementAchieved += AchievementsManager_OnAchievementAchieved;
 
@@ -33,6 +34,7 @@ public class UnPausableSFXManager : SFXManager
 
         JournalInfoManager.OnJournalInfoCollected -= JournalInfoManager_OnJournalInfoCollected;
         JournalInfoPopUpUI.OnJournalInfoPopUpCloseFromUI -= JournalInfoPopUpUI_OnJournalInfoPopUpCloseFromUI;
+        InspectionUI.OnInspectionUICloseFromUI -= InspectionUI_OnInspectionUICloseFromUI;
 
         AchievementsManager.OnAchievementAchieved -= AchievementsManager_OnAchievementAchieved;
 
@@ -93,6 +95,11 @@ public class UnPausableSFXManager : SFXManager
         PlaySound(SFXPoolSO.journalButtonClick4);
     }
 
+    private void InspectionUI_OnInspectionUICloseFromUI(object sender, System.EventArgs e)
+    {
+        PlaySound(SFXPoolSO.journalButtonClick6);
+    }
+
     #endregion
 
     #region Achievements
@@ -149,6 +156,16 @@ public class UnPausableSFXManager : SFXManager
     public void PlaySFXJournalButtonClick4()
     {
         PlaySound(SFXPoolSO.journalButtonClick4);
+    }
+
+    public void PlaySFXJournalButtonClick5()
+    {
+        PlaySound(SFXPoolSO.journalButtonClick5);
+    }
+
+    public void PlaySFXJournalButtonClick6()
+    {
+        PlaySound(SFXPoolSO.journalButtonClick6);
     }
     #endregion
 }
