@@ -7,6 +7,7 @@ public class InspectionUIDragHandler : MonoBehaviour,IDragHandler
 {
     [Header("Components")]
     [SerializeField] private Transform yawHolder;
+    [SerializeField] private Transform refferenceHolder;
     [SerializeField] private Transform pitchHolder;
 
     [Header("Settings")]
@@ -41,11 +42,17 @@ public class InspectionUIDragHandler : MonoBehaviour,IDragHandler
 
         Vector3 yawVector = new Vector3(0f, 1f, 0f);
 
-        Vector3 yawRotation = yawAngle * yawVector;
-        Vector3 pitchRotation = pitchAngle * GetPitchCompensatedVector(yawAngle);
+        //Vector3 yawRotation = yawAngle * yawVector;
+        //Vector3 pitchRotation = pitchAngle * GetPitchCompensatedVector(yawAngle);
 
-        yawHolder.localRotation = Quaternion.Euler(yawRotation);
-        pitchHolder.localRotation = Quaternion.Euler(pitchRotation);
+        Quaternion yawRotation = Quaternion.AngleAxis(yawAngle, refferenceHolder.transform.up);
+        Quaternion pitchRotation = Quaternion.AngleAxis(pitchAngle, refferenceHolder.transform.right);
+        Quaternion currentRotation = yawHolder.transform.rotation;
+
+        yawHolder.rotation = yawRotation * pitchRotation;
+
+        //yawHolder.localRotation = Quaternion.Euler(yawRotation) * Quaternion.Euler(pitchRotation);
+        //pitchHolder.localRotation = Quaternion.Euler(pitchRotation);
 
         currentAngles = newAngles;
     }
