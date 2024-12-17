@@ -5,12 +5,12 @@ using UnityEngine;
 public class InspectionUIHandler : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private InspectionPrefabHolderHandler inspectionPrefabHolderHandler;
+    [SerializeField] private Transform prefabHolder;
+    [SerializeField] private InspectionUIDragHandler inspectionUIDragHandler;
     [SerializeField] private Camera inspectionCamera;
+    [SerializeField] private Light inspectionLight;
 
     private Transform currentInspectionPrefab;
-
-    public InspectionPrefabHolderHandler InspectionPrefabHolderHandler => inspectionPrefabHolderHandler;
 
     private void OnEnable()
     {
@@ -27,19 +27,25 @@ public class InspectionUIHandler : MonoBehaviour
         ClearCurrentInspectionPrefab();
     }
 
-    private void ResetDragHolderRotation()
-    {
-        inspectionPrefabHolderHandler.ResetDragHolderRotation();
-    }
 
     private void SetBackgroundColor(Color backgroundColor)
     {
         inspectionCamera.backgroundColor = backgroundColor;
     }
 
+    private void SetLightColor(Color lightColor)
+    {
+        inspectionLight.color = lightColor;
+    }
+
+    private void SetLightIntensity(float intensity)
+    {
+        inspectionLight.intensity = intensity;
+    }
+
     private void HandleInspectionPrefab(Transform prefab)
     {
-        ResetDragHolderRotation();
+        inspectionUIDragHandler.ResetDragHolderRotation();
 
         if(currentInspectionPrefab != null)
         {
@@ -47,7 +53,7 @@ public class InspectionUIHandler : MonoBehaviour
             ClearCurrentInspectionPrefab();
         }
 
-        Transform inspectionPrefab = Instantiate(prefab, inspectionPrefabHolderHandler.DragHolder);
+        Transform inspectionPrefab = Instantiate(prefab, prefabHolder);
         SetCurrentInspectionPrefab(inspectionPrefab);
     }
 
@@ -59,6 +65,8 @@ public class InspectionUIHandler : MonoBehaviour
     private void InspectableJournalInfoPopUpHandler_OnInspectionUIOpen(object sender, InspectableJournalInfoPopUpHandler.OnInspectionUIOpenEventArgs e)
     {
         SetBackgroundColor(e.inspectBackgroundColor);
+        SetLightColor(e.lightColor);
+        SetLightIntensity(e.lightIntensity);
         HandleInspectionPrefab(e.inspectionPrefab);
     }
     #endregion

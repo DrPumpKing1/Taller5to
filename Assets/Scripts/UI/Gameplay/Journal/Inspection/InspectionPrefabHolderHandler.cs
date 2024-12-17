@@ -5,12 +5,9 @@ using UnityEngine;
 public class InspectionPrefabHolderHandler : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private Transform dragHolder;
+    [SerializeField] private Transform yawHolder;
+    [SerializeField] private Transform pitchHolder;
 
-    public Transform DragHolder => dragHolder;
-
-    public void ResetDragHolderRotation()
-    {
-        dragHolder.rotation = Quaternion.identity;
-    }
+    public Transform YawHolder => yawHolder;
+    public Transform PitchHolder => pitchHolder;
 }

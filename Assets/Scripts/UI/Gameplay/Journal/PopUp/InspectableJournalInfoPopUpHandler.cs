@@ -12,6 +12,9 @@ public class InspectableJournalInfoPopUpHandler : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private Transform inspectionPrefab;
     [SerializeField] private Color inspectBackgroundColor;
+    [Space]
+    [SerializeField] private Color lightColor;
+    [SerializeField,Range(5f,40f)] private float lightIntensity;
 
     public static event EventHandler<OnInspectionUIOpenEventArgs> OnInspectionUIOpen;
 
@@ -19,6 +22,8 @@ public class InspectableJournalInfoPopUpHandler : MonoBehaviour
     {
         public Transform inspectionPrefab;
         public Color inspectBackgroundColor;
+        public Color lightColor;
+        public float lightIntensity;
     }
 
     private void Awake()
@@ -33,6 +38,6 @@ public class InspectableJournalInfoPopUpHandler : MonoBehaviour
 
     private void OpenInspectUI()
     {
-        OnInspectionUIOpen?.Invoke(this, new OnInspectionUIOpenEventArgs { inspectionPrefab = inspectionPrefab, inspectBackgroundColor = inspectBackgroundColor });
+        OnInspectionUIOpen?.Invoke(this, new OnInspectionUIOpenEventArgs { inspectionPrefab = inspectionPrefab, inspectBackgroundColor = inspectBackgroundColor, lightColor = lightColor, lightIntensity= lightIntensity });
     }
 }

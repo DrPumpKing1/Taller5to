@@ -434,8 +434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0b7a94e8419b44ca2b35accdfefdb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inspectionUIHandler: {fileID: 7216052691363605104}
-  dragSensibility: 1
+  dragHolder: {fileID: 0}
+  dragSensibility: 0.5
 --- !u!1 &8999217639880531029
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,5 +590,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4025ef34e41bee9439b74e60f588f493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inspectionPrefabHolderHandler: {fileID: 0}
+  dragHolder: {fileID: 0}
+  inspectionUIDragHandler: {fileID: 2754161479774211817}
   inspectionCamera: {fileID: 0}
