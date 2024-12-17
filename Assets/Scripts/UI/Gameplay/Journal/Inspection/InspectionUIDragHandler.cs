@@ -78,7 +78,29 @@ public class InspectionUIDragHandler : MonoBehaviour,IDragHandler
         Vector2 newAngles = currentAngles + new Vector2(eventData.delta.y, -eventData.delta.x) * dragSensibility;
         Vector2 normalizedNewAngles = new Vector2(NormalizeAngle(newAngles.x), NormalizeAngle(newAngles.y));
 
-        CalculateRotations(newAngles);
+        CalculateRotations2(newAngles);
+    }
+
+    private void CalculateRotations2(Vector2 newAngles)
+    {
+        float yawAngle = newAngles.y;
+        float pitchAngle = newAngles.x;
+
+        //float pitchAngle = Mathf.Clamp(newAngles.x, -90f, 90f);
+
+        Quaternion yawRotation = Quaternion.AngleAxis(yawAngle, refferenceHolder.up);
+
+        float yawRadians = yawAngle * Mathf.Deg2Rad;  // Convert yaw angle to radians
+
+        // Use sine and cosine to blend between right and forward axes
+        Vector3 compensatedPitchAxis = Mathf.Cos(yawRadians) * yawHolder.right + Mathf.Sin(yawRadians) * yawHolder.forward;
+
+        Quaternion pitchRotation = Quaternion.AngleAxis(pitchAngle, compensatedPitchAxis);
+
+        yawHolder.localRotation = yawRotation;
+        pitchHolder.localRotation = pitchRotation;
+
+        currentAngles = newAngles;
     }
 
     private void CalculateRotations(Vector2 newAngles)
@@ -86,7 +108,9 @@ public class InspectionUIDragHandler : MonoBehaviour,IDragHandler
         float yawAngle = newAngles.y;
         float pitchAngle = newAngles.x;
 
-        Quaternion yawRotation = Quaternion.AngleAxis(yawAngle, refferenceHolder.transform.up);
+        //float pitchAngle = Mathf.Clamp(newAngles.x, -90f, 90f);
+
+        Quaternion yawRotation = Quaternion.AngleAxis(yawAngle, refferenceHolder.up);
         Quaternion pitchRotation = Quaternion.AngleAxis(pitchAngle, GetPitchCompensatedVector(yawAngle));
 
         yawHolder.localRotation = yawRotation;
@@ -97,7 +121,7 @@ public class InspectionUIDragHandler : MonoBehaviour,IDragHandler
 
     private Vector3 GetPitchCompensatedVector(float yawAngle)
     {
-        float yawRadians = yawAngle * Mathf.PI / 180f;
+        float yawRadians = yawAngle * Mathf.Deg2Rad;
 
         Vector3 pitchVector = new Vector3(Mathf.Cos(yawRadians),0f,Mathf.Sin(yawRadians));
 
