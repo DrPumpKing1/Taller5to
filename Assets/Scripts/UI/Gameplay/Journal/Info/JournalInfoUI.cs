@@ -13,7 +13,7 @@ public class JournalInfoUI : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private CollectionType collectionType;
 
-    private enum CollectionType { PopUpOpen, MouseEnter}
+    private enum CollectionType {PopUpOpen, MouseEnter}
 
     public event EventHandler OnJournalInfoHide;
     public event EventHandler OnJournalInfoCollected;

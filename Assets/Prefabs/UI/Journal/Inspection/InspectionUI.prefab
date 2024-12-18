@@ -150,15 +150,15 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 548678051365612912}
   - {fileID: 2404125426259606578}
   - {fileID: 7254718455633130263}
+  - {fileID: 548678051365612912}
   m_Father: {fileID: 387897399221920670}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 600}
+  m_SizeDelta: {x: 700, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6355339713220621761
 CanvasRenderer:
@@ -385,7 +385,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 15}
+  m_AnchoredPosition: {x: 0, y: 50}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &7434206774861725747
@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 166794268573921108}
   - component: {fileID: 2754161479774211817}
   m_Layer: 5
-  m_Name: RawImage
+  m_Name: ImageRender
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -506,7 +506,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -100, y: -100}
+  m_SizeDelta: {x: -50, y: -50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4006188576183097118
 CanvasRenderer:
@@ -560,7 +560,7 @@ MonoBehaviour:
   refferenceHolder: {fileID: 0}
   pitchHolder: {fileID: 0}
   dragSensibility: 0.35
-  smoothResetFactor: 10
+  smoothResetFactor: 7.5
 --- !u!1 &8999217639880531029
 GameObject:
   m_ObjectHideFlags: 0
