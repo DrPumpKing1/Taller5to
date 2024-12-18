@@ -80,7 +80,7 @@ public class InspectionUIDragHandler : MonoBehaviour,IDragHandler
         Vector2 newAngles = currentAngles + new Vector2(eventData.delta.y, -eventData.delta.x) * dragSensibility;
         Vector2 normalizedNewAngles = new Vector2(NormalizeAngle(newAngles.x), NormalizeAngle(newAngles.y));
 
-        CalculateRotations(newAngles);
+        CalculateRotations(normalizedNewAngles);
     }
 
     private void CalculateRotations2(Vector2 newAngles)
@@ -110,10 +110,8 @@ public class InspectionUIDragHandler : MonoBehaviour,IDragHandler
         float yawAngle = angles.y;
         float pitchAngle = angles.x;
 
-        //float pitchAngle = Mathf.Clamp(angles.x, -90f, 90f);
-
         Quaternion yawRotation = Quaternion.AngleAxis(yawAngle, refferenceHolder.up);
-        Quaternion pitchRotation = Quaternion.AngleAxis(pitchAngle, GetPitchCompensatedVector(yawAngle));
+        Quaternion pitchRotation = Quaternion.AngleAxis(pitchAngle, GetPitchCompensatedVector(yawAngle, pitchAngle));
 
         yawHolder.localRotation = yawRotation;
         pitchHolder.localRotation = pitchRotation;
@@ -121,12 +119,12 @@ public class InspectionUIDragHandler : MonoBehaviour,IDragHandler
         currentAngles = angles;
     }
 
-    private Vector3 GetPitchCompensatedVector(float yawAngle)
+    private Vector3 GetPitchCompensatedVector(float yawAngle, float pitchAngle)
     {
         float yawRadians = yawAngle * Mathf.Deg2Rad;
+        float pitchRadians = pitchAngle * Mathf.Deg2Rad;
 
         Vector3 pitchVector = new Vector3(Mathf.Cos(yawRadians),0f,Mathf.Sin(yawRadians));
-
         return pitchVector;
     }
 

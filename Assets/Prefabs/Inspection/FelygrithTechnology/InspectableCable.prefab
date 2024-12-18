@@ -115,7 +115,7 @@ MonoBehaviour:
   - {fileID: 5284106583755218911}
   lineRenderer: {fileID: 5713230612413250580}
   enableLineRenderer: 1
-  thickness: 0.2
+  thickness: 0.1
   updateLineRenderer: 1
 --- !u!1 &2520592862564966541
 GameObject:
@@ -316,7 +316,7 @@ VisualEffect:
       - m_Value: 0.075
         m_Name: Dispesion
         m_Overridden: 1
-      - m_Value: 0.05
+      - m_Value: 0.015
         m_Name: ParticleScale
         m_Overridden: 1
       - m_Value: 200

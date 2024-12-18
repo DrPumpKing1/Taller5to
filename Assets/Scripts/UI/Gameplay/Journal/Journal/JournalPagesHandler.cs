@@ -8,25 +8,22 @@ public class JournalPagesHandler : MonoBehaviour
 {
     public static JournalPagesHandler Instance { get; private set; }
 
-    [Header("Components")]
-    [SerializeField] private InspectionUI inspectionUI;
-
     [Header("Settings")]
     [SerializeField] private List<JournalPageButton> journalPageButtons;
     [SerializeField] private JournalPageButton currentJournalPageButton;
-    [SerializeField] private JournalInfoPopUpUI currentJournalInfoPopUpUI;
     [Space]
-    [SerializeField] private bool journalPagesHierarchyOverPopUps;
     [SerializeField, Range(0f, 1f)] private float buttonsCooldown;
 
     public static event EventHandler<OnJournalPageEventArgs> OnJournalPageOpen;
     public static event EventHandler<OnJournalPageEventArgs> OnJournalPageClose;
 
+    public static event EventHandler OnJournalPageButtonEffectiveClick;
+
     private float cooldownTimer;
 
     private const int FIRST_PAGE_NUMBER = 1;
 
-    private bool onInspection;
+    private bool onPopUp;
 
     [Serializable]
     public class JournalPageButton
@@ -45,18 +42,12 @@ public class JournalPagesHandler : MonoBehaviour
     {
         JournalInfoPopUpUI.OnJournalInfoPopUpOpen += JournalInfoPopUpUI_OnJournalInfoPopUpOpen;
         JournalInfoPopUpUI.OnJournalInfoPopUpClose += JournalInfoPopUpUI_OnJournalInfoPopUpClose;
-
-        InspectionUI.OnInspectionUIOpen += InspectionUI_OnInspectionUIOpen;
-        InspectionUI.OnInspectionUIClose += InspectionUI_OnInspectionUIClose;
     }
 
     private void OnDisable()
     {
         JournalInfoPopUpUI.OnJournalInfoPopUpOpen -= JournalInfoPopUpUI_OnJournalInfoPopUpOpen;
         JournalInfoPopUpUI.OnJournalInfoPopUpClose -= JournalInfoPopUpUI_OnJournalInfoPopUpClose;
-
-        InspectionUI.OnInspectionUIOpen -= InspectionUI_OnInspectionUIOpen;
-        InspectionUI.OnInspectionUIClose -= InspectionUI_OnInspectionUIClose;
     }
 
     private void Awake()
@@ -68,7 +59,6 @@ public class JournalPagesHandler : MonoBehaviour
     private void Start()
     {
         InitializeVariables();
-        ClearCurrentJournalInfoPopUpUI();
         HideAllPagesInmediately();
         ShowJournalPageInmediatelyByPageNumber(FIRST_PAGE_NUMBER);
         ResetCooldownTimer();
@@ -94,8 +84,9 @@ public class JournalPagesHandler : MonoBehaviour
 
     private void InitializeVariables()
     {
-        onInspection = false;
+        onPopUp = true;
     }
+
     private void InitializeButtonsListeners()
     {
         foreach(JournalPageButton journalPageButton in journalPageButtons)
@@ -113,43 +104,29 @@ public class JournalPagesHandler : MonoBehaviour
     {
         if (ButtonsOnCooldown()) return;
 
-        if (onInspection)
+        if(currentJournalPageButton != journalPageButton) //Only if other page clicked
         {
-            inspectionUI.CloseFromPhysicalButtonClick();
+            if (onPopUp) //If is onPopUp, do an inmediate transition. The popUp hiding will hide the inmediate change of the new journal page
+            {
+                HideJournalPage(currentJournalPageButton, true);
+                ShowJournalPage(journalPageButton, true);    
+            }
+            else //Otherwise, do a normal(not inmediate) transition
+            {
+                HideJournalPage(currentJournalPageButton, false);
+                ShowJournalPage(journalPageButton, false);
+            }
         }
 
-        if (currentJournalPageButton == journalPageButton && !currentJournalInfoPopUpUI) return; //If page already open & JournalPopUp not open, Do nothing
+        OnJournalPageButtonEffectiveClick?.Invoke(this, EventArgs.Empty);
 
-        if (currentJournalPageButton == journalPageButton && currentJournalInfoPopUpUI) //If page already open && JournalPopUp open, Close that JournalPopUp
-        {
-            currentJournalInfoPopUpUI.CloseFromPhysicalButtonClick();
-            SetButtonsOnCooldown();
-            return;
-        }
-
-        if(currentJournalPageButton != journalPageButton && !currentJournalInfoPopUpUI) //If other page clicked and JournalPopUp not open, Close current page and Open clicked Page (not inmediately)
-        {
-            HideJournalPage(currentJournalPageButton, false);
-            ShowJournalPage(journalPageButton, false);
-            SetButtonsOnCooldown();
-            return;
-        }
-
-        if (currentJournalPageButton != journalPageButton && currentJournalInfoPopUpUI) //If other page clicked and JournalPopUp open, Close that JournalPopUp, Close current page and Open clicked Page (inmediately)
-        {
-            currentJournalInfoPopUpUI.CloseFromPhysicalButtonClick();
-            HideJournalPage(currentJournalPageButton, true);
-            ShowJournalPage(journalPageButton, true);
-            SetButtonsOnCooldown();
-            return;
-        }
+        SetButtonsOnCooldown();
     } 
 
     private void ShowJournalPage(JournalPageButton journalPageButton, bool inmediately)
     {
         if(!inmediately) journalPageButton.journalPageUI.ShowPage();
         else journalPageButton.journalPageUI.ShowPageInmediately();
-
 
         journalPageButton.journalPageUI.transform.SetAsLastSibling();
 
@@ -214,29 +191,14 @@ public class JournalPagesHandler : MonoBehaviour
         }
     }
 
-    private void SetCurrentJournalInfoPopUpUI(JournalInfoPopUpUI journalInfoPopUpUI) => currentJournalInfoPopUpUI = journalInfoPopUpUI;
-    private void ClearCurrentJournalInfoPopUpUI() => currentJournalInfoPopUpUI = null;
-
     #region JournalInfoPopUpUI Subscriptions
     private void JournalInfoPopUpUI_OnJournalInfoPopUpOpen(object sender, JournalInfoPopUpUI.OnJournalInfoPopUpEventArgs e)
     {
-        SetCurrentJournalInfoPopUpUI(e.journalInfoPopUpUI);
+        onPopUp = true;
     }
     private void JournalInfoPopUpUI_OnJournalInfoPopUpClose(object sender, JournalInfoPopUpUI.OnJournalInfoPopUpEventArgs e)
     {
-        ClearCurrentJournalInfoPopUpUI();
-    }
-
-    #endregion
-
-    #region InspectableJournalInfoPopUpHandler Subscriptions
-    private void InspectionUI_OnInspectionUIOpen(object sender, EventArgs e)
-    {
-        onInspection = true;
-    }
-    private void InspectionUI_OnInspectionUIClose(object sender, EventArgs e)
-    {
-        onInspection = false;
+        onPopUp = false;
     }
 
     #endregion

@@ -23,6 +23,18 @@ public class JournalInfoPopUpUI : BaseUI
         public JournalInfoPopUpUI journalInfoPopUpUI;
     }
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        JournalPagesHandler.OnJournalPageButtonEffectiveClick += JournalPagesHandler_OnJournalPageButtonEffectiveClick;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        JournalPagesHandler.OnJournalPageButtonEffectiveClick -= JournalPagesHandler_OnJournalPageButtonEffectiveClick;
+    }
+
     private void Awake()
     {
         InitializeButtonsListeners();
@@ -88,4 +100,14 @@ public class JournalInfoPopUpUI : BaseUI
         journalInfoPopUpUIAnimator.ResetTrigger(SHOW_TRIGGER);
         journalInfoPopUpUIAnimator.SetTrigger(HIDE_TRIGGER);
     }
+
+    #region JournalPagesHandler Subscriptions
+    private void JournalPagesHandler_OnJournalPageButtonEffectiveClick(object sender, EventArgs e)
+    {
+        if (state == State.Closed) return;
+        if (state == State.Closing) return;
+
+        CloseFromPhysicalButtonClick();
+    }
+    #endregion
 }

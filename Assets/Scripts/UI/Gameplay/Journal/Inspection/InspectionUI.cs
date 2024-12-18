@@ -22,12 +22,14 @@ public class InspectionUI : BaseUI
     {
         base.OnEnable();
         InspectableJournalInfoPopUpHandler.OnInspectionUIOpen += InspectableJournalInfoPopUpHandler_OnInspectionUIOpen;
+        JournalPagesHandler.OnJournalPageButtonEffectiveClick += JournalPagesHandler_OnJournalPageButtonEffectiveClick;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
         InspectableJournalInfoPopUpHandler.OnInspectionUIOpen -= InspectableJournalInfoPopUpHandler_OnInspectionUIOpen;
+        JournalPagesHandler.OnJournalPageButtonEffectiveClick -= JournalPagesHandler_OnJournalPageButtonEffectiveClick;
     }
 
     private void Awake()
@@ -99,6 +101,16 @@ public class InspectionUI : BaseUI
     private void InspectableJournalInfoPopUpHandler_OnInspectionUIOpen(object sender, InspectableJournalInfoPopUpHandler.OnInspectionUIOpenEventArgs e)
     {
         OpenUI();
+    }
+    #endregion
+
+    #region JournalPagesHandler Subscriptions
+    private void JournalPagesHandler_OnJournalPageButtonEffectiveClick(object sender, EventArgs e)
+    {
+        if (state == State.Closed) return;
+        if (state == State.Closing) return;
+
+        CloseFromPhysicalButtonClick();
     }
     #endregion
 }
