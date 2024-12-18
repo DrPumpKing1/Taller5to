@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InspectionUIHandler : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class InspectionUIHandler : MonoBehaviour
     [SerializeField] private InspectionUIDragHandler inspectionUIDragHandler;
     [SerializeField] private Camera inspectionCamera;
     [SerializeField] private Light inspectionLight;
+    [SerializeField] private Image inspectionBG;
 
     private Transform currentInspectionPrefab;
 
@@ -48,6 +50,11 @@ public class InspectionUIHandler : MonoBehaviour
         inspectionUIDragHandler.SetDefaultAngles(angles);
     }
 
+    private void SetInspectionBackground(Sprite backgroundSprite)
+    {
+        inspectionBG.sprite = backgroundSprite;
+    }
+
     private void HandleInspectionPrefab(Transform prefab)
     {
         inspectionUIDragHandler.ResetDragHolderRotationInmediately();
@@ -70,6 +77,7 @@ public class InspectionUIHandler : MonoBehaviour
     #region InspectableJournalInfoPopUpHandler Subscriptions
     private void InspectableJournalInfoPopUpHandler_OnInspectionUIOpen(object sender, InspectableJournalInfoPopUpHandler.OnInspectionUIOpenEventArgs e)
     {
+        SetInspectionBackground(e.inspectionBGSprite);
         SetBackgroundColor(e.inspectBackgroundColor);
         SetLightColor(e.lightColor);
         SetLightIntensity(e.lightIntensity);
