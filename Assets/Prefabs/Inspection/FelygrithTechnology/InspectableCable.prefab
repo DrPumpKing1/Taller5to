@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1041912401282806955}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: -0.000006591901}
+  m_LocalPosition: {x: 0.75, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -115,7 +115,7 @@ MonoBehaviour:
   - {fileID: 5284106583755218911}
   lineRenderer: {fileID: 5713230612413250580}
   enableLineRenderer: 1
-  thickness: 0.1
+  thickness: 0.075
   updateLineRenderer: 1
 --- !u!1 &2520592862564966541
 GameObject:
@@ -316,7 +316,7 @@ VisualEffect:
       - m_Value: 0.075
         m_Name: Dispesion
         m_Overridden: 1
-      - m_Value: 0.015
+      - m_Value: 0.0125
         m_Name: ParticleScale
         m_Overridden: 1
       - m_Value: 200
@@ -325,17 +325,17 @@ VisualEffect:
       - m_Value: 1
         m_Name: ParticleLifetime
         m_Overridden: 1
-      - m_Value: 0.075
+      - m_Value: 0.05
         m_Name: Dispersion
         m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
       m_Array:
-      - m_Value: {x: 1, y: 0, z: -0.000006591901}
+      - m_Value: {x: 0.75, y: 0, z: 0}
         m_Name: Pos1
         m_Overridden: 1
-      - m_Value: {x: -1, y: 0, z: 0}
+      - m_Value: {x: -0.75, y: 0, z: 0}
         m_Name: Pos2
         m_Overridden: 1
       - m_Value: {x: 0, y: 0, z: 0}
@@ -510,7 +510,7 @@ Transform:
   m_GameObject: {fileID: 5147029114108883871}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalPosition: {x: -0.75, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
