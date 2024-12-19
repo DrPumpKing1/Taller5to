@@ -325,6 +325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7881402616386405376}
+  - component: {fileID: 1018160561044685267}
   - component: {fileID: 925953812673219491}
   m_Layer: 0
   m_Name: Visual
@@ -351,6 +352,22 @@ Transform:
   - {fileID: 9025035180693709893}
   m_Father: {fileID: 3061237008394950533}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1018160561044685267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5576991132002602105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c15c6822eca51448a822b54e48eb9de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectionPlatform: {fileID: 4122835829791645480}
+  _renderer: {fileID: 5503237954577967689}
+  notProjectedMaterial: {fileID: 2100000, guid: 96164b9b391207f48ba7a5fa58b3aaf7, type: 2}
+  projectedMaterial: {fileID: 2100000, guid: 15d7702414f58e840b62daaeee6a5dd1, type: 2}
 --- !u!114 &925953812673219491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -843,7 +860,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 5.5750003
+      value: 5.575
       objectReference: {fileID: 0}
     - target: {fileID: 8482878927722210812, guid: 8eda59524bd77ed4a99ae55a6386d23b, type: 3}
       propertyPath: m_AnchoredPosition.y
