@@ -7,8 +7,9 @@ using System.IO;
 
 public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class, new()
 {
-    [Header("Enabler")]
+    [Header("Enablers")]
     [SerializeField] private bool enableDataPersistence;
+    [SerializeField] private bool enableDataSaveOnStart;
     [SerializeField] private bool enableDataSaveOnQuit;
 
     [Header("File Storage Config")]
@@ -27,6 +28,11 @@ public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class,
     {
         SetSingleton();
         InitializeDataPersistenceManager();
+    }
+
+    private void Start()
+    {
+        CheckDataSaveOnStart();
     }
 
     protected void InitializeDataPersistenceManager()
@@ -106,4 +112,9 @@ public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class,
         SaveGameData();
     }
 
+    private void CheckDataSaveOnStart()
+    {
+        if (!enableDataSaveOnStart) return;
+        SaveGameData();
+    }
 }

@@ -22,7 +22,6 @@ public class MainMenuUIButtonsHandler : MonoBehaviour
 
     [Header("Data Paths")]
     [SerializeField] private DataPathsSO dataPathsSO;
-    [SerializeField] private string dataPathToCheck;
 
     private void Awake()
     {
