@@ -11,7 +11,7 @@ public class DeleteDataButton : MonoBehaviour
     [SerializeField] private Button deleteDataButton;
 
     [Header("Data Paths")]
-    [SerializeField] private List<string> dataPaths;
+    [SerializeField] private DataPathsSO dataPathsSO;
 
     private void Awake()
     {
@@ -25,21 +25,6 @@ public class DeleteDataButton : MonoBehaviour
 
     private void DeleteData()
     {
-        string dirPath = Application.persistentDataPath;
-
-        foreach(string dataPath in dataPaths)
-        {
-            string path = Path.Combine(dirPath, dataPath);
-
-            if (!File.Exists(path))
-            {
-                Debug.Log("No data to delete");
-            }
-            else
-            {
-                File.Delete(path);
-                Debug.Log("Data Deleted");
-            }
-        }
+        GeneralDataMethods.DeleteDataInPaths(dataPathsSO.dataPaths);
     }
 }

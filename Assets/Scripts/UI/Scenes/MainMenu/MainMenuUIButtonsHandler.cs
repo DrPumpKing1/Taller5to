@@ -2,78 +2,74 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 using System.IO;
-
 
 public class MainMenuUIButtonsHandler : MonoBehaviour
 {
-    [Header("Play Button")]
-    [SerializeField] private Button playButton;
+    [Header("Buttons")]
+    [SerializeField] private Button newGameButton;
+    [SerializeField] private Button continueButton;
+    [SerializeField] private Button optionsButton;
+    [SerializeField] private Button creditsButton;
+    [SerializeField] private Button quitButton;
+    [SerializeField] private Button deleteDataButton;
+
+    [Header("Scenes")]
     [SerializeField] private string startCinematicScene;
     [SerializeField] private string gameplayScene;
-    [Space]
-    [SerializeField] private string dataPathToCheck;
-
-    [Header("Options Button")]
-    [SerializeField] private Button optionsButton;
     [SerializeField] private string optionsScene;
-
-    [Header("Credits Button")]
-    [SerializeField] private Button creditsButton;
     [SerializeField] private string creditsScene;
 
-    [Header("Quit Button")]
-    [SerializeField] private Button quitButton;
+    [Header("Data Paths")]
+    [SerializeField] private DataPathsSO dataPathsSO;
+    [SerializeField] private string dataPathToCheck;
 
     private void Awake()
     {
         InitializeButtonsListeners();
     }
+    private void Start()
+    {
+        CheckContiueButtonAvailable();
+    }
+
 
     private void InitializeButtonsListeners()
     {
-        playButton.onClick.AddListener(PlayGame);
-        optionsButton.onClick.AddListener(Options);
-        creditsButton.onClick.AddListener(Credits);
+        newGameButton.onClick.AddListener(StartNewGame);
+        continueButton.onClick.AddListener(LoadGameScene);
+        optionsButton.onClick.AddListener(LoadOptionsScene);
+        creditsButton.onClick.AddListener(LoadCreditsScene);
         quitButton.onClick.AddListener(QuitGame);
+        deleteDataButton.onClick.AddListener(DeleteData);
     }
 
-    private void PlayGame()
+    private void CheckContiueButtonAvailable()
     {
-        if (CheckIfDataPathExists()) StartGame();
-        else PlayFirstCinematic();
+        if (!GeneralDataMethods.CheckIfDataPathsExist(dataPathsSO.dataPaths)) SetContinueButton(false);
+        else SetContinueButton(true);
     }
 
-    private bool CheckIfDataPathExists()
+    private void SetContinueButton(bool enable)
     {
-        string dirPath = Application.persistentDataPath;
-        string path = Path.Combine(dirPath, dataPathToCheck);
-
-        if (File.Exists(path)) return true;
-
-        return false;
+        if(enable) continueButton.gameObject.SetActive(true);
+        else continueButton.gameObject.SetActive(false);
     }
 
-    private void PlayFirstCinematic()
+    private void StartNewGame()
     {
-        ScenesManager.Instance.FadeLoadTargetScene(startCinematicScene);
+        GeneralDataMethods.DeleteDataInPaths(dataPathsSO.dataPaths);
+        LoadStartCinematicScene();
     }
 
-    private void StartGame()
-    {
-        ScenesManager.Instance.FadeLoadTargetScene(gameplayScene);
-    }
-
-    private void Options()
-    {
-        ScenesManager.Instance.FadeLoadTargetScene(optionsScene);
-    }
-
-    private void Credits()
-    {
-        ScenesManager.Instance.FadeLoadTargetScene(creditsScene);
-    }
-
+    private void LoadStartCinematicScene()=> ScenesManager.Instance.FadeLoadTargetScene(startCinematicScene);
+    private void LoadGameScene()=> ScenesManager.Instance.FadeLoadTargetScene(gameplayScene);
+    private void LoadOptionsScene() => ScenesManager.Instance.FadeLoadTargetScene(optionsScene);
+    private void LoadCreditsScene() => ScenesManager.Instance.FadeLoadTargetScene(creditsScene);
     private void QuitGame() => ScenesManager.Instance.QuitGame();
+    private void DeleteData()
+    {
+        GeneralDataMethods.DeleteDataInPaths(dataPathsSO.dataPaths);
+        CheckContiueButtonAvailable();
+    }     
 }
