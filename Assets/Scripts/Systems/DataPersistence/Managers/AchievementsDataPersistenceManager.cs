@@ -28,7 +28,7 @@ public class AchievementsDataPersistenceManager : DataPersistenceManager<Achieve
         }
     }
 
-    #region CheckpointManager Subscriptions
+    #region AchievementsManager Subscriptions
 
     private void AchievementsManager_OnAchievementAchieved(object sender, AchievementsManager.OnAchievementAchievedEventArgs e)
     {
