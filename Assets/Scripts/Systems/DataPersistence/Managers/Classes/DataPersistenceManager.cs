@@ -24,15 +24,17 @@ public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class,
     private T persistentData;
     private List<IDataPersistence<T>> dataPersistenceObjects;
 
+    private bool hasSavedOnFirstUpdate = false;
+
     protected void Awake()
     {
         SetSingleton();
         InitializeDataPersistenceManager();
     }
 
-    private void Start()
+    private void Update()
     {
-        CheckDataSaveOnStart();
+        CheckDataSaveOnStart(); //Needs to be on first update (Data is set on start, and collected after it (first update))
     }
 
     protected void InitializeDataPersistenceManager()
@@ -115,6 +117,10 @@ public abstract class DataPersistenceManager<T> : MonoBehaviour where T : class,
     private void CheckDataSaveOnStart()
     {
         if (!enableDataSaveOnStart) return;
+        if (hasSavedOnFirstUpdate) return;
+
         SaveGameData();
+
+        hasSavedOnFirstUpdate = true;
     }
 }
