@@ -66,7 +66,7 @@ public abstract class PostProcessingManager : MonoBehaviour
     protected void SetIntensityNormalized(float normalizedIntensity) => SetIntensity(GetMinIntensity() + normalizedIntensity * (GetMaxIntensity() - GetMinIntensity()));
     protected void SetDefaultNormalizedIntensity(float defaultNormalizedIntensity) => this.defaultNormalizedIntensity = defaultNormalizedIntensity; 
     protected abstract void SetIntensity(float intensity);
-    public float GetNormalizedIntensity() => GetIntensity() / GetMaxIntensity();
+    public float GetNormalizedIntensity() => (GetIntensity() - GetMinIntensity()) / (GetMaxIntensity()-GetMinIntensity());
     protected abstract float GetIntensity();
     public abstract float GetMaxIntensity();
     public abstract float GetMinIntensity();
