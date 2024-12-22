@@ -17,10 +17,12 @@ public class BloomIntensityUIHandler : PostProcessingUIHandler
     }
 
     protected override void SetPostProcessingManager() => postProcessingManager = BloomIntensityManager.Instance;
+
     private void BloomIntensityManager_OnBloomIntensityManagerInitialized(object sender, System.EventArgs e)
     {
         InitializeUI();
     }
+
     private void BloomIntensityManager_OnBloomIntensityChanged(object sender, BloomIntensityManager.OnIntensityChangedEventArgs e)
     {
         if (!postProcessingManager) return;

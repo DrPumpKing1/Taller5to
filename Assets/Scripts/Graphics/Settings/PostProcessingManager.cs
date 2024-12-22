@@ -51,6 +51,7 @@ public abstract class PostProcessingManager : MonoBehaviour
 
     public virtual void ChangeIntensity(float normalizedIntensity)
     {
+
         normalizedIntensity = normalizedIntensity < GetMinNormalizedIntensity() ? GetMinNormalizedIntensity() : normalizedIntensity;
         normalizedIntensity = normalizedIntensity > GetMaxNormalizedIntensity() ? GetMaxNormalizedIntensity() : normalizedIntensity;
 
