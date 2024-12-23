@@ -58,9 +58,10 @@ public abstract class PostProcessingUIHandler : MonoBehaviour
         float currentIntensity = postProcessingManager.GetNormalizedIntensity();
         float desiredIntensity = currentIntensity + INTENSITY_BUTTON_CHANGE;
 
+        desiredIntensity = GeneralMethods.RoundToNDecimalPlaces(desiredIntensity, 1);
+
         if (desiredIntensity > postProcessingManager.GetMaxNormalizedIntensity()) return;
 
-        desiredIntensity = GeneralMethods.RoundToNDecimalPlaces(desiredIntensity, 1);
         postProcessingManager.ChangeIntensity(desiredIntensity);
     }
 
