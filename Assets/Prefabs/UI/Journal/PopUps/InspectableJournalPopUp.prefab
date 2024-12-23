@@ -270,7 +270,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278321207
-  m_fontColor: {r: 0.21698111, g: 0, b: 0.008583635, a: 1}
+  m_fontColor: {r: 0.1792453, g: 0.027023645, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -481,7 +481,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4292214695
-  m_fontColor: {r: 0.654902, g: 1, b: 0.8352941, a: 1}
+  m_fontColor: {r: 0, g: 0.7529412, b: 0.39607844, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -829,7 +829,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278199904
-  m_fontColor: {r: 0.3773585, g: 0.14804064, b: 0, a: 1}
+  m_fontColor: {r: 0.23584908, g: 0.09335693, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -973,7 +973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShowMaskGraphic: 1
+  m_ShowMaskGraphic: 0
 --- !u!225 &3143708709359281151
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1045,3 +1045,7 @@ MonoBehaviour:
   inspectButton: {fileID: 4534512543652750078}
   inspectionPrefab: {fileID: 0}
   inspectBackgroundColor: {r: 0.7865614, g: 1, b: 0.6933962, a: 1}
+  lightColor: {r: 0, g: 0, b: 0, a: 0}
+  lightIntensity: 0
+  inspectionDefaultAngles: {x: 0, y: 0}
+  inspectionBGSprite: {fileID: 0}
