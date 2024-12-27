@@ -58,6 +58,11 @@ public class DialogueUI : MonoBehaviour
         DisableDialogueUI();
     }
 
+    private void SkipDialogue()
+    {
+        DialogueManager.Instance.EndDialogue();
+    }
+
     private void EnableDialogueUI() => GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 1f);
     private void DisableDialogueUI() => GeneralUIMethods.SetCanvasGroupAlpha(canvasGroup, 0f);
 
