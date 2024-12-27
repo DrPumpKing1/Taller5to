@@ -14,7 +14,7 @@ public class CinematicSceneManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private string nextScene;
 
-    private const float sceneFadeOutTime = 0.5f;
+    private const float SCENE_FADE_OUT_TIME = 0.5f;
 
     private void Awake()
     {
@@ -42,7 +42,7 @@ public class CinematicSceneManager : MonoBehaviour
     private IEnumerator CinematicCoroutine()
     {
         float duration = videoPlayer.frameCount / (float)videoPlayer.frameRate;
-        float ininterruptedDuration = duration - sceneFadeOutTime;
+        float ininterruptedDuration = duration - SCENE_FADE_OUT_TIME;
 
         yield return new WaitForSeconds(ininterruptedDuration);
 
