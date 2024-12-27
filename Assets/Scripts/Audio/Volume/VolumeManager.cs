@@ -45,7 +45,13 @@ public abstract class VolumeManager : MonoBehaviour
     protected virtual void InitializeVolume() => ChangeVolume(initialVolume);
     public abstract void ChangeVolume(float volume);
     public abstract float GetLogarithmicVolume();
-    public abstract float GetLinearVolume();
+    public float GetLinearVolume()
+    {
+        float logarithmicVolume = GetLogarithmicVolume();
+        float linearVolume = Mathf.Pow(10f, logarithmicVolume / 20f);
+        return linearVolume;
+    }
+
     public float GetMaxVolume() => MAX_VOLUME;
     public float GetMinVolume() => MIN_VOLUME;
 }

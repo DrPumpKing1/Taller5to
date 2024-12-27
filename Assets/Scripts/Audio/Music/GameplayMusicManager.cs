@@ -167,13 +167,13 @@ public class GameplayMusicManager : MonoBehaviour
 
     private IEnumerator FadeTransitionGameplayMusicCoroutine(AudioClip gameplayMusic)
     {
-        yield return StartCoroutine(MusicFadeManager.Instance.FadeOutMusicCoroutine(fadeOutTime));
+        yield return StartCoroutine(MusicVolumeFadeManager.Instance.FadeOutVolumeCoroutine(fadeOutTime));
 
         yield return new WaitForSecondsRealtime(muteTime);
 
         PlayGameplayMusic(gameplayMusic);
 
-        yield return StartCoroutine(MusicFadeManager.Instance.FadeInMusicCoroutine(fadeInTime));
+        yield return StartCoroutine(MusicVolumeFadeManager.Instance.FadeInVolumeCoroutine(fadeInTime));
 
     }
 
@@ -382,12 +382,12 @@ public class GameplayMusicManager : MonoBehaviour
     #region CinematicsManagerSubscriptions
     private void CinematicsManager_OnCinematicStart(object sender, CinematicsManager.OnCinematicEventArgs e)
     {
-        StartCoroutine(MusicFadeManager.Instance.FadeOutMusicCoroutine(fadeOutTimeCinematics));
+        StartCoroutine(MusicVolumeFadeManager.Instance.FadeOutVolumeCoroutine(fadeOutTimeCinematics));
     }
 
     private void CinematicsManager_OnCinematicEnd(object sender, CinematicsManager.OnCinematicEventArgs e)
     {
-        StartCoroutine(MusicFadeManager.Instance.FadeInMusicCoroutine(fadeInTimeCinematics));
+        StartCoroutine(MusicVolumeFadeManager.Instance.FadeInVolumeCoroutine(fadeInTimeCinematics));
     }
     #endregion
 }

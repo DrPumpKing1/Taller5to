@@ -52,11 +52,4 @@ public class MasterVolumeManager : VolumeManager
         masterAudioMixer.GetFloat(MASTER_VOLUME, out float logarithmicVolume);
         return logarithmicVolume;
     }
-
-    public override float GetLinearVolume()
-    {
-        float logarithmicVolume = GetLogarithmicVolume();
-        float linearVolume = Mathf.Pow(10f, logarithmicVolume / 20f);
-        return linearVolume;
-    }
 }
