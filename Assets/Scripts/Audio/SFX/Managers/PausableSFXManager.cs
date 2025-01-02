@@ -5,6 +5,9 @@ using UnityEngine.Audio;
 
 public class PausableSFXManager : SFXManager
 {
+    private const float PROJECTABLE_OBJECT_SELECTION_SFX_COOLDOWN = 0.15f;
+    private float projectableObjectSelectionSFXCooldownTimer;
+
     private void OnEnable()
     {
         PlayerLand.OnPlayerNormalLand += PlayerLand_OnPlayerNormalLand;
@@ -148,6 +151,24 @@ public class PausableSFXManager : SFXManager
         MonologueManager.OnMonologueEnd -= MonologueManager_OnMonologueEnd;
     }
 
+    private void Start()
+    {
+        SetProjectableObjectSelectionSFXOnCooldown();
+    }
+
+    private void Update()
+    {
+        HandleProjectableObjectSelectionSFXCooldown();
+    }
+
+    private void HandleProjectableObjectSelectionSFXCooldown()
+    {
+        if (ProjectableObjectSelectionSFXOnCooldown()) projectableObjectSelectionSFXCooldownTimer -= Time.deltaTime;
+    }
+
+    private void SetProjectableObjectSelectionSFXOnCooldown() => projectableObjectSelectionSFXCooldownTimer = PROJECTABLE_OBJECT_SELECTION_SFX_COOLDOWN;
+    private bool ProjectableObjectSelectionSFXOnCooldown() => projectableObjectSelectionSFXCooldownTimer > 0f;
+
     #region Player
     private void PlayerLand_OnPlayerNormalLand(object sender, System.EventArgs e)
     {
@@ -267,6 +288,7 @@ public class PausableSFXManager : SFXManager
     #region Projection Selection
     private void ProjectableObjectSelectionManager_OnProjectableObjectSelected(object sender, ProjectableObjectSelectionManager.OnSelectionEventArgs e)
     {
+        if (ProjectableObjectSelectionSFXOnCooldown()) return;
         if (e.isFirstSelected) return;
 
         PlaySound(SFXPoolSO.objectSelected);
@@ -286,6 +308,8 @@ public class PausableSFXManager : SFXManager
                 PlaySound(SFXPoolSO.drainerSelected);
                 break;
         }
+
+        SetProjectableObjectSelectionSFXOnCooldown();
     }
     #endregion
 
