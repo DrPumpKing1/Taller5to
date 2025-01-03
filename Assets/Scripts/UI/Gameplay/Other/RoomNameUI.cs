@@ -42,9 +42,7 @@ public class RoomNameUI : MonoBehaviour
     private const string XOTARK_CHAMBER_NAME = "Xotark Chamber";
     private const string VYTHANU_CHAMBER_NAME = "Vythanu Chamber";
     private const string ZURRYTH_CHAMBER_NAME = "Zurryth Chamber";
-    private const string SHOWCASE_ROOM_1_NAME = "Showcase Room 1";
-    private const string SHOWCASE_ROOM_2_NAME = "Showcase Room 2";
-    private const string SHOWCASE_ROOM_3_NAME = "Showcase Room 3";
+    private const string EASTER_EGG_1_NAME = "Easter Egg 1";
 
     public static event EventHandler OnRoomNameShow;
     public static event EventHandler OnRoomNameHide;
@@ -126,14 +124,8 @@ public class RoomNameUI : MonoBehaviour
             case RoomSubArea.ZurrythChamber:
                 roomName = ZURRYTH_CHAMBER_NAME;
                 break;
-            case RoomSubArea.Showcase1:
-                roomName = SHOWCASE_ROOM_1_NAME;
-                break;
-            case RoomSubArea.Showcase2:
-                roomName = SHOWCASE_ROOM_2_NAME;
-                break;
-            case RoomSubArea.Showcase3:
-                roomName = SHOWCASE_ROOM_3_NAME;
+            case RoomSubArea.EasterEgg1:
+                roomName = EASTER_EGG_1_NAME;
                 break;
             default:
                 return;

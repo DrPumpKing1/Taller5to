@@ -8,5 +8,6 @@ public enum TitleLevel
     Level3,
     Boss,
     FinalRoom,
+    EasterEgg,
     UnnamedRoom
 }

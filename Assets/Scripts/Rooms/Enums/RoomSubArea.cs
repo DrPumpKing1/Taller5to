@@ -13,7 +13,5 @@ public enum RoomSubArea
     XotarkChamber,
     VythanuChamber,
     ZurrythChamber,
-    Showcase1,
-    Showcase2,
-    Showcase3
+    EasterEgg1
 }

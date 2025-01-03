@@ -78,8 +78,8 @@ public class GameplayMusicManager : MonoBehaviour
             case MusicLevel.FinalRoom:
                 musicToPlay = CheckFinalRoomMusicToPlay();
                 break;
-            case MusicLevel.Showcase:
-                musicToPlay = CheckShowcaseMusicToPlay();
+            case MusicLevel.EasterEgg:
+                musicToPlay = CheckEasterEggMusicToPlay();
                 break;
             default:
                 break;
@@ -115,8 +115,8 @@ public class GameplayMusicManager : MonoBehaviour
             case MusicLevel.FinalRoom:
                 musicToPlay = CheckFinalRoomMusicToPlay();
                 break;
-            case MusicLevel.Showcase:
-                musicToPlay = CheckShowcaseMusicToPlay();
+            case MusicLevel.EasterEgg:
+                musicToPlay = CheckEasterEggMusicToPlay();
                 break;
             default:
                 Debug.Log("Playing Default Music");
@@ -332,10 +332,11 @@ public class GameplayMusicManager : MonoBehaviour
     }
     #endregion
 
-    #region ShowcaseMusic
-    private AudioClip CheckShowcaseMusicToPlay()
+
+    #region EasterEgg Music
+    private AudioClip CheckEasterEggMusicToPlay()
     {
-        return musicPoolSO.showcase;
+        return musicPoolSO.easterEgg1;
     }
     #endregion
 

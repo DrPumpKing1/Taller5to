@@ -7,5 +7,5 @@ public enum MusicLevel
     Level3,
     Boss,
     FinalRoom,
-    Showcase
+    EasterEgg
 }

@@ -21,7 +21,7 @@ public class LevelTitleUI : MonoBehaviour
     [Header("States")]
     [SerializeField] private LevelTitleState state;
 
-    private enum LevelTitleState { Hidden, FadingIn, Showing, FadingOut}
+    private enum LevelTitleState {Hidden, FadingIn, Showing, FadingOut}
 
     private const string SHOW_TRIGGER = "Show";
     private const string HIDE_TRIGGER = "Hide";
@@ -36,6 +36,7 @@ public class LevelTitleUI : MonoBehaviour
     private const string LEVEL3_TITLE = "Rest of the Lost Souls";
     private const string BOSS_TITLE = "Warden's Room";
     private const string FINAL_ROOM_TITLE = "<i>Katryssa Midrita</i> Sacred Chamber";
+    private const string EASTER_EGG_TITLE = "Easter Egg";
 
     public static event EventHandler OnLevelTitleShow;
     public static event EventHandler OnLevelTitleHide;
@@ -104,6 +105,9 @@ public class LevelTitleUI : MonoBehaviour
                 break;
             case TitleLevel.FinalRoom:
                 levelTitle = FINAL_ROOM_TITLE;
+                break;
+            case TitleLevel.EasterEgg:
+                levelTitle = EASTER_EGG_TITLE;
                 break;
             default:
                 return;

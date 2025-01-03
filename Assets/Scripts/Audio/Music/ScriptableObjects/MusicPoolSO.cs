@@ -46,9 +46,10 @@ public class MusicPoolSO : ScriptableObject
     public AudioClip bossAlmostDefeated;
     public AudioClip bossDefeated;
 
-    [Header("Showcase")]
+    [Header("FinalRoom")]
     public AudioClip finalRoom;
 
-    [Header("Showcase")]
-    public AudioClip showcase;
+    [Header("EasterEgg")]
+    public AudioClip easterEgg1;
+
 }
