@@ -10,6 +10,9 @@ public class EasterEggsManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private int seed;
 
+    [Header("Debug")]
+    [SerializeField] private bool debug;
+
     public static event EventHandler<OnSeedEventArgs> OnSeedSet;
     public static event EventHandler<OnSeedEventArgs> OnSeedGenerated;
 
@@ -54,6 +57,8 @@ public class EasterEggsManager : MonoBehaviour
 
         this.seed = seed;
         OnSeedSet?.Invoke(this, new OnSeedEventArgs { seed = seed });
+
+        if (debug) Debug.Log($"Seed Set: {seed}");
     }
 
     private void GenerateSeed()
@@ -62,6 +67,8 @@ public class EasterEggsManager : MonoBehaviour
 
         seed = UnityEngine.Random.Range(MIN_SEED_NUMBER,MAX_SEED_NUMBER+1);
         OnSeedGenerated?.Invoke(this, new OnSeedEventArgs {seed = seed});
+
+        if(debug) Debug.Log($"Seed Generated: {seed}");
     }
 
     private bool SeedGenerated(int seedToCheck) => seedToCheck > 0; //If seedToCheck is 0, seed has not been generated
