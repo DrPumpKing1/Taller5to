@@ -176,6 +176,18 @@ public class NarrativeRoomsManager : MonoBehaviour
     public bool HasVisitedAllNarrativeRooms() => GetNarrativeRoomsVisitedQuantity() >= GetNarrativeRoomsCompletePoolQuantity();
     #endregion
 
+    public void ReplaceNarrativeRoomsVisitedList(List<NarrativeRoomSO> narrativeRoomSOs)
+    {
+        narrativeRoomsVisited.Clear();
+
+        foreach (NarrativeRoomSO narrativeRoomSO in narrativeRoomSOs)
+        {
+            if (CheckIfNarrativeRoomsVisitedContainsNarrativeRoom(narrativeRoomSO)) continue;
+
+            narrativeRoomsVisited.Add(narrativeRoomSO);
+        }
+    }
+
     #region GameLogManager Subscriptions
     private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {

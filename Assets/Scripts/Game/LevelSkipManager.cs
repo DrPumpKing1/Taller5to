@@ -20,10 +20,10 @@ public class LevelSkipManager : MonoBehaviour
     [Header("Level3 Settings")]
     [SerializeField] private LevelSettings level3Settings;
 
-    [Header("Boss Settings")]
+    [Header("Boss Zone Settings")]
     [SerializeField] private LevelSettings bossSettings;
 
-    [Header("Boss Settings")]
+    [Header("Boss Fight Settings")]
     [SerializeField] private LevelSettings bossFightSettings;
 
     private bool skippingLevel;
@@ -36,6 +36,7 @@ public class LevelSkipManager : MonoBehaviour
         public List<ProjectableObjectSO> projectableObjectsSOs;
         public List<ShieldPieceSO> shieldPiecesSOs;
         public List<JournalInfoSO> journalInfoSOs;
+        public List<NarrativeRoomSO> narrativeRoomsVisited;
         [Space]
         public List<DialogueSO> uniqueDialoguesTriggered;
         public List<MonologueSO> uniqueMonologuesTriggered;
@@ -117,6 +118,7 @@ public class LevelSkipManager : MonoBehaviour
         ProjectableObjectsLearningManager.Instance.ReplaceProjectableObjectsList(levelSettings.projectableObjectsSOs);
         ShieldPiecesManager.Instance.ReplaceShieldPiecesCollectedList(levelSettings.shieldPiecesSOs);
         JournalInfoManager.Instance.ReplaceJournalInfoCollectedList(levelSettings.journalInfoSOs);
+        NarrativeRoomsManager.Instance.ReplaceNarrativeRoomsVisitedList(levelSettings.narrativeRoomsVisited);
 
         ReplaceSwitchesToggled(levelSettings.switchesToggledIDs);
 
