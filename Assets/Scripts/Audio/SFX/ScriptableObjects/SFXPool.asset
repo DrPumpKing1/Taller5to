@@ -25,8 +25,7 @@ MonoBehaviour:
   magicBoxLearned: []
   senderLearned: []
   drainerLearned: []
-  objectSelected:
-  - {fileID: 8300000, guid: e9d20932eebc63c4eb02de7cd3a5c863, type: 3}
+  objectSelected: []
   cableSelected: []
   magicBoxSelected: []
   senderSelected: []
@@ -140,6 +139,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e7636588403f7a045b4a63f86d4b37a4, type: 3}
   showcaseRoomNextPhase:
   - {fileID: 8300000, guid: ac7c6e515901aa643a13976993a697de, type: 3}
+  narrativeRoomVisited: []
   ancientRelicShieldDepowered:
   - {fileID: 8300000, guid: e7636588403f7a045b4a63f86d4b37a4, type: 3}
   ancientRelicCollected:

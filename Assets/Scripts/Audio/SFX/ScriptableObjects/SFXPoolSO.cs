@@ -139,6 +139,9 @@ public class SFXPoolSO : ScriptableObject
     public AudioClip[] showcaseRoomShieldDeactivated;
     public AudioClip[] showcaseRoomNextPhase;
 
+    [Header("Narrative Rooms")]
+    public AudioClip[] narrativeRoomVisited;
+
     [Header("Ancient Relic")]
     public AudioClip[] ancientRelicShieldDepowered;
     public AudioClip[] ancientRelicCollected;

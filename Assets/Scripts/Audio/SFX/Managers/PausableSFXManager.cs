@@ -78,6 +78,8 @@ public class PausableSFXManager : SFXManager
         DialogueManager.OnDialogueEnd += DialogueManager_OnDialogueEnd;
         MonologueManager.OnMonologueStart += MonologueManager_OnMonologueStart;
         MonologueManager.OnMonologueEnd += MonologueManager_OnMonologueEnd;
+
+        NarrativeRoomsManager.OnNarrativeRoomVisited += NarrativeRoomsManager_OnNarrativeRoomVisited;
     }
 
     private void OnDisable()
@@ -149,6 +151,8 @@ public class PausableSFXManager : SFXManager
         DialogueManager.OnDialogueEnd -= DialogueManager_OnDialogueEnd;
         MonologueManager.OnMonologueStart -= MonologueManager_OnMonologueStart;
         MonologueManager.OnMonologueEnd -= MonologueManager_OnMonologueEnd;
+
+        NarrativeRoomsManager.OnNarrativeRoomVisited -= NarrativeRoomsManager_OnNarrativeRoomVisited;
     }
 
     private void Start()
@@ -618,6 +622,13 @@ public class PausableSFXManager : SFXManager
     private void MonologueManager_OnMonologueEnd(object sender, MonologueManager.OnMonologueEventArgs e)
     {
         PlaySound(SFXPoolSO.monologueClose);
+    }
+    #endregion
+
+    #region Narrative Rooms
+    private void NarrativeRoomsManager_OnNarrativeRoomVisited(object sender, NarrativeRoomsManager.OnNarrativeRoomEventArgs e)
+    {
+        PlaySound(SFXPoolSO.narrativeRoomVisited);
     }
     #endregion
 }
