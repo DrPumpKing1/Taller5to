@@ -26,7 +26,7 @@ public class NarrativeRoomsManager : MonoBehaviour
     {
         public NarrativeRoomSO narrativeRoomSO;
         public string logToVisit;
-        public float timeToVisit;
+        [Range(0f,2f)] public float timeToVisit;
     }
 
     public class OnNarrativeRoomEventArgs : EventArgs
@@ -179,7 +179,7 @@ public class NarrativeRoomsManager : MonoBehaviour
     #region GameLogManager Subscriptions
     private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
     {
-        throw new NotImplementedException();
+        CheckNarrativeRoomVisitByLog(e.gameplayAction.log);
     }
     #endregion
 }
