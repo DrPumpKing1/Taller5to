@@ -13,6 +13,7 @@ public class JournalInfoManager : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] private bool debug;
+
     public List<JournalInfoCheck> JournalInfoCollectedChecked => journalInfoCollectedChecked;
     public List<JournalInfoLog> CompleteJournalInfoLogPool => completeJournalInfoLogPool;
 
@@ -31,7 +32,7 @@ public class JournalInfoManager : MonoBehaviour
     {
         public JournalInfoSO journalInfoSO;
         public string logToCollect;
-        public float timeToCollect;
+        [Range(0f,2f)] public float timeToCollect;
     }
 
     public class OnJournalInfoEventArgs : EventArgs

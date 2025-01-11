@@ -97,6 +97,7 @@ public class JournalPageUI : MonoBehaviour
         foreach (JournalInfoUI journalInfoUI in journalInfoUIs)
         {
             JournalInfoManager.JournalInfoCheck journalInfoCheck = JournalInfoManager.Instance.GetJournalInfoCheckInJournal(journalInfoUI.JournalInfoSO);
+
             if (journalInfoCheck == null) continue;
 
             if (!journalInfoCheck.hasBeenChecked)
@@ -106,6 +107,7 @@ public class JournalPageUI : MonoBehaviour
             }
         }
     }
+
     private void CheckHideIndicator()
     {
         if(journalInfoUIs.Count <= 0)
@@ -117,6 +119,7 @@ public class JournalPageUI : MonoBehaviour
         foreach (JournalInfoUI journalInfoUI in journalInfoUIs)
         {
             JournalInfoManager.JournalInfoCheck journalInfoCheck = JournalInfoManager.Instance.GetJournalInfoCheckInJournal(journalInfoUI.JournalInfoSO);
+
             if (journalInfoCheck == null) continue;
             if (!journalInfoCheck.hasBeenChecked) return;
         }
