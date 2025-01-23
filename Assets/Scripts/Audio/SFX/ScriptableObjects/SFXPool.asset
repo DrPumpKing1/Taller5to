@@ -26,10 +26,14 @@ MonoBehaviour:
   senderLearned: []
   drainerLearned: []
   objectSelected: []
-  cableSelected: []
-  magicBoxSelected: []
-  senderSelected: []
-  drainerSelected: []
+  cableSelected:
+  - {fileID: 8300000, guid: 5cbcbd52e00a47d4abcafab44d19d209, type: 3}
+  magicBoxSelected:
+  - {fileID: 8300000, guid: 1f050213bbc157a409538e31d3a35dd6, type: 3}
+  senderSelected:
+  - {fileID: 8300000, guid: b446c6a0926f3b045bce40a2b066fb3d, type: 3}
+  drainerSelected:
+  - {fileID: 8300000, guid: 20e3c0853e155ec45a19e8c1518f095f, type: 3}
   startProjection: {fileID: 0}
   objectProjected: []
   objectFailedProjection: []
