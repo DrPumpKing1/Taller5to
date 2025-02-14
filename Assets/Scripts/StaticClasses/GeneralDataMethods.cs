@@ -5,10 +5,21 @@ using System.IO;
 
 public static class GeneralDataMethods
 {
+    private const string ACHIEVEMENTS_DATA_PATH = "achievementsData.wwdata";
+
     public static void DeleteDataInPaths(IEnumerable<string> dataPaths)
     {
         foreach (string dataPath in dataPaths)
         {
+            DeleteDataInPath(dataPath);
+        }
+    }
+
+    public static void DeleteDataInPathsExceptAchievements(IEnumerable<string> dataPaths)
+    {
+        foreach (string dataPath in dataPaths)
+        {
+            if (dataPath == ACHIEVEMENTS_DATA_PATH) continue;
             DeleteDataInPath(dataPath);
         }
     }

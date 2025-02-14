@@ -5,6 +5,9 @@ using System;
 
 public class WinManager : MonoBehaviour
 {
+    [Header("Components")]
+    [SerializeField] private DataPathsSO dataPathsSO;
+
     [Header("Settings")]
     [SerializeField] private string logToWin;
     [SerializeField] private string transitionScene;
@@ -41,14 +44,8 @@ public class WinManager : MonoBehaviour
 
     private void DeleteAllData()
     {
-        PlayerDataPersistenceManager.Instance.DeleteGameData();
-        PetDataPersistenceManager.Instance.DeleteGameData();
-        ObjectsDataPersistenceManager.Instance.DeleteGameData();
-        UIDataPersistenceManager.Instance.DeleteGameData();
-        LogDataPersistenceManager.Instance.DeleteGameData();
-        JournalDataPersistenceManager.Instance.DeleteGameData();
-
-        if(deleteAchievementsDataOnWin) AchievementsDataPersistenceManager.Instance.DeleteGameData();
+        if (deleteAchievementsDataOnWin) GeneralDataMethods.DeleteDataInPaths(dataPathsSO.dataPaths);
+        else GeneralDataMethods.DeleteDataInPathsExceptAchievements(dataPathsSO.dataPaths);
     }
 
     private void GameLogManager_OnLogAdd(object sender, GameLogManager.OnLogAddEventArgs e)
