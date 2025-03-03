@@ -8,6 +8,9 @@ public class ShieldDoor : MonoBehaviour
     [Header("Identifiers")]
     [SerializeField] private int id;
     [SerializeField] protected Dialect dialect;
+
+    [Header("Dev Settings")]
+    [SerializeField] private bool devTeamEnabled;
     
     [Header("Device Settings")]
     [SerializeField] private Transform gateTransform;
@@ -55,6 +58,8 @@ public class ShieldDoor : MonoBehaviour
 
     private void ManageState()
     {
+        if (!devTeamEnabled) return;
+
         if(state == isWorthy) return;
         
         if(!isNextToPlayer) return;
